@@ -1,0 +1,3 @@
+//
+// Sciptable is header-only
+//
