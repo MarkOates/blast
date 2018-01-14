@@ -2,8 +2,60 @@
 
 #include <Blast/FileSystemChangeNotifier.hpp>
 
+#include <CoreServices/CoreServices.h>
+#include <thread>
 
-void FileSystemChangeNotifier::__watcher_callback(
+
+class FileSystemChangeNotifier::Implementation
+{
+private:
+   FileSystemChangeNotifier *notifier;
+   FSEventStreamRef stream;
+   static void __watcher_callback(
+         ConstFSEventStreamRef streamRef,
+         void *clientCallBackInfo,
+         size_t numEvents,
+         void *eventPaths,
+         const FSEventStreamEventFlags eventFlags[],
+         const FSEventStreamEventId eventIds[]
+      );
+
+   void watcher_process();
+   std::thread *watcher;
+
+public:
+   CFRunLoopRef current_run_loop = 0;
+
+   Implementation(FileSystemChangeNotifier *notifier);
+   ~Implementation();
+   void initialize();
+};
+
+
+FileSystemChangeNotifier::Implementation::Implementation(FileSystemChangeNotifier *notifier)
+   : notifier(notifier)
+   , stream()
+   , watcher(nullptr)
+   , current_run_loop(0)
+{ }
+
+
+void FileSystemChangeNotifier::Implementation::initialize()
+{
+   watcher = new std::thread(&FileSystemChangeNotifier::Implementation::watcher_process, this);
+   while (current_run_loop == 0) {}
+}
+
+
+FileSystemChangeNotifier::Implementation::~Implementation()
+{
+   CFRunLoopStop(current_run_loop);
+   watcher->join();
+   delete watcher;
+}
+
+
+void FileSystemChangeNotifier::Implementation::__watcher_callback(
       ConstFSEventStreamRef streamRef,
       void *clientCallBackInfo,
       size_t numEvents,
@@ -31,21 +83,21 @@ void FileSystemChangeNotifier::__watcher_callback(
 }
 
 
-void FileSystemChangeNotifier::watcher_process()
+void FileSystemChangeNotifier::Implementation::watcher_process()
 {
-   CFStringRef strs[paths.size()];
-   for (int i=0; i<paths.size(); i++)
+   CFStringRef strs[notifier->paths.size()];
+   for (int i=0; i<notifier->paths.size(); i++)
    {
-      CFStringRef cf_string_ref = CFStringCreateWithCString(NULL, paths[i].c_str(), kCFStringEncodingMacRoman);
+      CFStringRef cf_string_ref = CFStringCreateWithCString(NULL, notifier->paths[i].c_str(), kCFStringEncodingMacRoman);
       strs[i] = cf_string_ref;
    }
 
-   CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&strs, paths.size(), NULL);
-   FSEventStreamContext callbackInfo = {NULL, this, NULL, NULL, NULL};
+   CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&strs, notifier->paths.size(), NULL);
+   FSEventStreamContext callbackInfo = {NULL, this->notifier, NULL, NULL, NULL};
    CFAbsoluteTime latency = 0.01;
 
    stream = FSEventStreamCreate(NULL,
-         &FileSystemChangeNotifier::__watcher_callback,
+         &FileSystemChangeNotifier::Implementation::__watcher_callback,
          &callbackInfo,
          pathsToWatch,
          kFSEventStreamEventIdSinceNow,
@@ -68,22 +120,16 @@ void FileSystemChangeNotifier::watcher_process()
 
 
 FileSystemChangeNotifier::FileSystemChangeNotifier(std::vector<std::string> paths, void(* callback)(std::string path))
-   : current_run_loop(0)
-   , stream()
-   , paths(paths)
-   , watcher(nullptr)
+   : paths(paths)
    , callback(callback)
+   , implementation(new Implementation(this))
 {
-   watcher = new std::thread(&FileSystemChangeNotifier::watcher_process, this);
-   while (current_run_loop == 0) {}
+   implementation->initialize();
 }
 
 
 FileSystemChangeNotifier::~FileSystemChangeNotifier()
 {
-   CFRunLoopStop(current_run_loop);
-   watcher->join();
-   delete watcher;
 }
 
 
