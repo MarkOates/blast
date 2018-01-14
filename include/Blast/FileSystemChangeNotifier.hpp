@@ -14,7 +14,7 @@ private:
    std::unique_ptr<Implementation> implementation;
 
 public:
-   FileSystemChangeNotifier(std::vector<std::string> paths, void(* callback)(std::string));
+   FileSystemChangeNotifier(std::vector<std::string> paths={}, void(* callback)(std::string)=nullptr);
    ~FileSystemChangeNotifier();
 };
 
