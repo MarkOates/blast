@@ -2,23 +2,25 @@
 
 #include <Blast/FileSystemChangeNotifier.hpp>
 
-
-#include <fstream>
 #include <iostream>
+#include <sstream>
 
 
 int main(int argc, char *argv[])
 {
-   std::vector<std::string> paths = { "./bin/examples" };
+   std::vector<std::string> paths = { "./bin/foo", "./bin/bar" };
 
-   FileSystemChangeNotifier file_system_change_notifier(paths, []{
-      std::cout << "File changed in the folder!" << std::endl;
+   FileSystemChangeNotifier file_system_change_notifier(paths, [](std::string path){
+      std::cout << "A file was changed in " << path << std::endl;
    });
 
-   std::ofstream myfile;
-   myfile.open("./bin/examples/test_file.txt");
-   myfile << "Writing this to a file.\n";
-   myfile.close();
+   std::stringstream path_strs;
+   for (auto &path : paths) path_strs << path << " ";
+   std::cout << "Currently watching for file changes in " << path_strs.str() << std::endl;
+   std::cout << "Enter any characters to quit." << std::endl;
+
+   int i;
+   std::cin >> i;
 
    return 0;
 }
