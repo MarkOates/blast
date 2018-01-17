@@ -3,8 +3,8 @@
 #include <Blast/RailsInflector.hpp>
 
 #include <Blast/ShellCommandExecutor.hpp>
-#include <fstream>
 #include <sstream>
+#include <vector>
 
 
 static const std::string rails_inflector_ruby_source = R"END(
@@ -14,16 +14,14 @@ rescue LoadError
   print 'error: Could not load dependency "active_support"; Rails must be installed in your local system to use this feature.' and abort
 end
 
-# validate missing arguments
-print 'error: Must pass "-singularize" or "-pluralize" as the first argument and a string as the second argument' and abort if ARGV.count != 2
+print 'error: Must pass "singularize" or "pluralize" as the first argument and a string as the second argument' and abort if ARGV.count != 2
 
-# validate first argument
-print 'error: Must pass "-singularize" or "-pluralize" as the first argument' and abort unless %w(-pluralize -singularize).include?(ARGV[0])
+print 'error: Must pass "singularize" or "pluralize" as the first argument' and abort unless %w(pluralize singularize).include?(ARGV[0])
 
 case ARGV[0]
-when '-singularize'
+when 'singularize'
   print ActiveSupport::Inflector.singularize(ARGV[1])
-when '-pluralize'
+when 'pluralize'
   print ActiveSupport::Inflector.pluralize(ARGV[1])
 end
 )END";
@@ -69,16 +67,22 @@ RailsInflector::~RailsInflector()
 
 std::string RailsInflector::inflect()
 {
-   std::string tmp_output_filename = "ruby_command_output~TMP.rb";
+   std::string compressed_single_line_ruby_source = rails_inflector_ruby_source;
+   std::replace(compressed_single_line_ruby_source.begin(), compressed_single_line_ruby_source.end(), '\n', ';');
 
-   std::ofstream file(tmp_output_filename, std::ofstream::out);
-   file << rails_inflector_ruby_source;
-   file.close();
+   std::string inflection_command = inflection_operation == PLURALIZE ? "pluralize" : "singularize";
 
-   std::string inflection_command = inflection_operation == PLURALIZE ? "-pluralize" : "-singularize";
+   std::stringstream command;
 
-   std::string command = std::string("ruby ") + tmp_output_filename + " " + inflection_command + " \"" + ___sanitize(term) + "\"";
-   ShellCommandExecutor shell_command_executor(command);
+   command << std::string("ruby -e \"")
+      << ___sanitize(compressed_single_line_ruby_source)
+      << "\" "
+      << inflection_command
+      << " \""
+      << ___sanitize(term)
+      << "\"";
+
+   ShellCommandExecutor shell_command_executor(command.str());
    std::string output = shell_command_executor.execute();
 
    if (output.substr(0, 6) == "error:")
@@ -92,9 +96,6 @@ std::string RailsInflector::inflect()
 
       throw std::runtime_error(error_message.str());
    }
-
-   command = std::string("rm ") + tmp_output_filename;
-   ShellCommandExecutor(command).execute();
 
    return output;
 }
