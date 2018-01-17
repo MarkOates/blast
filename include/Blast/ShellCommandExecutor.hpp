@@ -4,16 +4,19 @@
 #include <string>
 
 
-class ShellCommandExecutor
+namespace Blast
 {
-private:
-   std::string command;
+   class ShellCommandExecutor
+   {
+   private:
+      std::string command;
 
-public:
-   ShellCommandExecutor(std::string command);
-   ~ShellCommandExecutor();
+   public:
+      ShellCommandExecutor(std::string command);
+      ~ShellCommandExecutor();
 
-   std::string execute();
-};
+      std::string execute();
+   };
+}
 
 

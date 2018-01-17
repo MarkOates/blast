@@ -9,6 +9,10 @@
 #include <stdexcept>
 
 
+namespace Blast
+{
+
+
 ShellCommandExecutor::ShellCommandExecutor(std::string command)
    : command(command)
 {
@@ -36,5 +40,8 @@ std::string ShellCommandExecutor::execute()
 
    return result;
 }
+
+
+} // namespace Blast
 
 

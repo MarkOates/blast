@@ -9,7 +9,7 @@
 
 TEST(ShellCommandExecutorTest, can_be_created)
 {
-   ShellCommandExecutor shell_command_executor("ls");
+   Blast::ShellCommandExecutor shell_command_executor("ls");
 }
 
 
@@ -19,7 +19,7 @@ TEST(ShellCommandExecutorTest, executes_a_shell_command_and_returns_the_output)
    std::stringstream command;
    command << "printf \"" << expected_string << "\"";
 
-   ShellCommandExecutor shell_command_executor(command.str());
+   Blast::ShellCommandExecutor shell_command_executor(command.str());
 
    ASSERT_EQ(expected_string, shell_command_executor.execute());
 }

@@ -8,7 +8,7 @@
 int main(int, char**)
 {
    std::string command = "echo \"hello shell command!\"";
-   ShellCommandExecutor shell_command_executor(command);
+   Blast::ShellCommandExecutor shell_command_executor(command);
 
    std::string result = shell_command_executor.execute();
 
