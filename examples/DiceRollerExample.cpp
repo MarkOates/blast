@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-void roll_roller(DiceRoller &dice_roller, int num_times)
+void roll_roller(Blast::DiceRoller &dice_roller, int num_times)
 {
    std::cout << "Rolling "
       << dice_roller.get_num_die()
@@ -25,7 +25,7 @@ void roll_roller(DiceRoller &dice_roller, int num_times)
 
 int main(int argc, char **argv)
 {
-   DiceRoller dice_roller;
+   Blast::DiceRoller dice_roller;
 
    roll_roller(dice_roller, 5);
 

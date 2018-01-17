@@ -3,6 +3,10 @@
 #include <Blast/DiceRoller.hpp>
 
 
+namespace Blast
+{
+
+
 DiceRoller::DiceRoller(int num_sides_on_die, int num_die, unsigned int seed)
    : num_sides_on_die(num_sides_on_die)
    , num_die(num_die)
@@ -49,5 +53,8 @@ int DiceRoller::roll()
       result += random_generator.get_random_int(1, num_sides_on_die);
    return result;
 }
+
+
+} // namespace Blast
 
 
