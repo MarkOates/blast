@@ -107,6 +107,62 @@ TEST(ClassGeneratorTest, class_property_list__returns_the_expected_formatted_str
 }
 
 
+TEST(ClassGeneratorTest, getter_function_declarations__returns_the_expected_formatted_string_for_properties_with_getter_functions)
+{
+   ClassGenerator class_generator("User", {
+      //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
+      { "int", "id", "last_id++", false, true, false },
+      { "std::string", "name", "\"[unnamed]\"", false, false, true },
+      { "type_t", "type", "MAGE", false, true, true },
+   });
+
+   std::string expected_declarations_list = "   int get_id();\n   type_t get_type();\n";
+   ASSERT_EQ(expected_declarations_list, class_generator.getter_function_declarations());
+}
+
+
+TEST(ClassGeneratorTest, getter_function_definitions__returns_the_expected_formatted_definitions_for_properties_with_getter_functions)
+{
+   ClassGenerator class_generator("User", {
+      //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
+      { "int", "id", "last_id++", false, true, false },
+      { "std::string", "name", "\"[unnamed]\"", false, false, true },
+      { "type_t", "type", "MAGE", false, true, true },
+   });
+
+   std::string expected_definition_list = "int User::get_id()\n{\n   return id;\n}\n\n\ntype_t User::get_type()\n{\n   return type;\n}\n\n\n";
+   ASSERT_EQ(expected_definition_list, class_generator.getter_function_definitions());
+}
+
+
+TEST(ClassGeneratorTest, setter_function_declarations_returns_the_expected_formatted_declarations_for_properties_with_setter_functions)
+{
+   ClassGenerator class_generator("User", {
+      //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
+      { "int", "id", "last_id++", false, true, false },
+      { "std::string", "name", "\"[unnamed]\"", false, false, true },
+      { "type_t", "type", "MAGE", false, true, true },
+   });
+
+   std::string expected_declarations_list = "   void set_name(std::string name);\n   void set_type(type_t type);\n";
+   ASSERT_EQ(expected_declarations_list, class_generator.setter_function_declarations());
+}
+
+
+TEST(ClassGeneratorTest, setter_function_definitions__returns_the_expected_formatted_definitions_for_properties_with_setter_functions)
+{
+   ClassGenerator class_generator("User", {
+      //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
+      { "int", "id", "last_id++", false, true, false },
+      { "std::string", "name", "\"[unnamed]\"", false, false, true },
+      { "type_t", "type", "MAGE", false, true, true },
+   });
+
+   std::string expected_definition_list = "void User::set_name(std::string name)\n{\n   this->name = name;\n}\n\n\nvoid User::set_type(type_t type)\n{\n   this->type = type;\n}\n\n\n";
+   ASSERT_EQ(expected_definition_list, class_generator.setter_function_definitions());
+}
+
+
 TEST(ClassGeneratorTest, initialization_list__returns_the_expected_formatted_string)
 {
    ClassGenerator class_generator("User", {

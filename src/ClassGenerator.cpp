@@ -77,6 +77,42 @@ std::string ClassGenerator::class_property_list()
 }
 
 
+std::string ClassGenerator::getter_function_declarations()
+{
+   std::stringstream result;
+   for (auto &attribute_property : attribute_properties)
+      if (attribute_property.has_getter) result << "   " << attribute_property.getter_function_declaration() << "\n";
+   return result.str();
+}
+
+
+std::string ClassGenerator::getter_function_definitions()
+{
+   std::stringstream result;
+   for (auto &attribute_property : attribute_properties)
+      if (attribute_property.has_getter) result << attribute_property.getter_function_definition(class_name) << "\n\n";
+   return result.str();
+}
+
+
+std::string ClassGenerator::setter_function_declarations()
+{
+   std::stringstream result;
+   for (auto &attribute_property : attribute_properties)
+      if (attribute_property.has_setter) result << "   " << attribute_property.setter_function_declaration() << "\n";
+   return result.str();
+}
+
+
+std::string ClassGenerator::setter_function_definitions()
+{
+   std::stringstream result;
+   for (auto &attribute_property : attribute_properties)
+      if (attribute_property.has_setter) result << attribute_property.setter_function_definition(class_name) << "\n\n";
+   return result.str();
+}
+
+
 std::string ClassGenerator::initialization_list()
 {
    std::stringstream result;
