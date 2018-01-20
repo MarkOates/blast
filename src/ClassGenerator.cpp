@@ -135,7 +135,7 @@ std::string ClassGenerator::initialization_list(int indent_level)
 std::string ClassGenerator::constructor_declaration(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << class_name << "(" << __join(constructor_declaration_elements()) << ");";
+   result << std::string(3*indent_level, ' ') << class_name << "(" << __join(constructor_declaration_elements()) << ");\n";
    return result.str();
 }
 
@@ -153,7 +153,7 @@ std::string ClassGenerator::constructor_definition(int indent_level)
 std::string ClassGenerator::destructor_declaration(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << "~" << class_name << "();";
+   result << std::string(3*indent_level, ' ') << "~" << class_name << "();\n";
    return result.str();
 }
 

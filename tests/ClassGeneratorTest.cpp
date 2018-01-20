@@ -136,7 +136,7 @@ TEST_F(ClassGeneratorTest, initialization_list__returns_the_expected_formatted_s
 
 TEST_F(ClassGeneratorTest, constructor_declaration__returns_the_expected_string)
 {
-   std::string expected_constructor_declaration = "User(std::string name=\"[unnamed]\", type_t type=MAGE);";
+   std::string expected_constructor_declaration = "User(std::string name=\"[unnamed]\", type_t type=MAGE);\n";
    ASSERT_EQ(expected_constructor_declaration, class_generator_fixture.constructor_declaration());
 }
 
@@ -150,7 +150,7 @@ TEST_F(ClassGeneratorTest, constructor_definition_returns_the_expected_string)
 
 TEST_F(ClassGeneratorTest, destructor_declaration__returns_the_expected_string)
 {
-   std::string expected_destructor_declaration = "~User();";
+   std::string expected_destructor_declaration = "~User();\n";
    ASSERT_EQ(expected_destructor_declaration, class_generator_fixture.destructor_declaration());
 }
 
