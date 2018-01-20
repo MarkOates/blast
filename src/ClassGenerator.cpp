@@ -68,94 +68,94 @@ std::vector<std::string> ClassGenerator::initialization_list_elements()
 }
 
 
-std::string ClassGenerator::class_property_list()
+std::string ClassGenerator::class_property_list(int indent_level)
 {
    std::stringstream result;
    for (auto &attribute_property : attribute_properties)
-      result << "   " << attribute_property.as_class_property() << ";\n";
+      result << std::string(3*indent_level, ' ') << attribute_property.as_class_property() << ";\n";
    return result.str();
 }
 
 
-std::string ClassGenerator::getter_function_declarations()
+std::string ClassGenerator::getter_function_declarations(int indent_level)
 {
    std::stringstream result;
    for (auto &attribute_property : attribute_properties)
-      if (attribute_property.has_getter) result << "   " << attribute_property.getter_function_declaration() << "\n";
+      if (attribute_property.has_getter) result << std::string(3*indent_level, ' ') << attribute_property.getter_function_declaration() << "\n";
    return result.str();
 }
 
 
-std::string ClassGenerator::getter_function_definitions()
+std::string ClassGenerator::getter_function_definitions(int indent_level)
 {
    std::stringstream result;
    for (auto &attribute_property : attribute_properties)
-      if (attribute_property.has_getter) result << attribute_property.getter_function_definition(class_name) << "\n\n";
+      if (attribute_property.has_getter) result << std::string(3*indent_level, ' ') << attribute_property.getter_function_definition(class_name) << "\n\n";
    return result.str();
 }
 
 
-std::string ClassGenerator::setter_function_declarations()
+std::string ClassGenerator::setter_function_declarations(int indent_level)
 {
    std::stringstream result;
    for (auto &attribute_property : attribute_properties)
-      if (attribute_property.has_setter) result << "   " << attribute_property.setter_function_declaration() << "\n";
+      if (attribute_property.has_setter) result << std::string(3*indent_level, ' ') << attribute_property.setter_function_declaration() << "\n";
    return result.str();
 }
 
 
-std::string ClassGenerator::setter_function_definitions()
+std::string ClassGenerator::setter_function_definitions(int indent_level)
 {
    std::stringstream result;
    for (auto &attribute_property : attribute_properties)
-      if (attribute_property.has_setter) result << attribute_property.setter_function_definition(class_name) << "\n\n";
+      if (attribute_property.has_setter) result << std::string(3*indent_level, ' ') << attribute_property.setter_function_definition(class_name) << "\n\n";
    return result.str();
 }
 
 
-std::string ClassGenerator::initialization_list()
+std::string ClassGenerator::initialization_list(int indent_level)
 {
    std::stringstream result;
    std::vector<std::string> elements = initialization_list_elements();
 
    if (elements.empty()) return "";
 
-   result << "   : " << elements.front() << "\n";
-   for (int i=1; i<elements.size(); i++) result << "   , " << elements[i] << "\n";
+   result << std::string(3*indent_level, ' ') << ": " << elements.front() << "\n";
+   for (int i=1; i<elements.size(); i++) result << std::string(3*indent_level, ' ') << ", " << elements[i] << "\n";
    return result.str();
 }
 
 
-std::string ClassGenerator::constructor_declaration()
+std::string ClassGenerator::constructor_declaration(int indent_level)
 {
    std::stringstream result;
-   result << class_name << "(" << __join(constructor_declaration_elements()) << ");";
+   result << std::string(3*indent_level, ' ') << class_name << "(" << __join(constructor_declaration_elements()) << ");";
    return result.str();
 }
 
 
-std::string ClassGenerator::constructor_definition()
+std::string ClassGenerator::constructor_definition(int indent_level)
 {
    std::stringstream result;
-   result << class_name << "::" << class_name << "(" << __join(constructor_definition_elements()) << ")\n"
-      << initialization_list()
-      << "{\n}\n";
+   result << std::string(3*indent_level, ' ') << class_name << "::" << class_name << "(" << __join(constructor_definition_elements()) << ")\n"
+      << initialization_list(indent_level+1)
+      << std::string(3*indent_level, ' ') << "{\n" << std::string(3*indent_level, ' ') << "}\n";
    return result.str();
 }
 
 
-std::string ClassGenerator::destructor_declaration()
+std::string ClassGenerator::destructor_declaration(int indent_level)
 {
    std::stringstream result;
-   result << "~" << class_name << "();";
+   result << std::string(3*indent_level, ' ') << "~" << class_name << "();";
    return result.str();
 }
 
 
-std::string ClassGenerator::destructor_definition()
+std::string ClassGenerator::destructor_definition(int indent_level)
 {
    std::stringstream result;
-   result << class_name << "::~" << class_name << "()\n{\n}\n";
+   result << std::string(3*indent_level, ' ') << class_name << "::~" << class_name << "()\n" << std::string(3*indent_level, ' ') << "{\n" << std::string(3*indent_level, ' ') << "}\n";
    return result.str();
 }
 
