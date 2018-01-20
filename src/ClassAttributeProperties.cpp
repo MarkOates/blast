@@ -61,3 +61,35 @@ std::string ClassAttributeProperties::as_class_property()
 }
 
 
+std::string ClassAttributeProperties::getter_function_declaration()
+{
+   std::stringstream result;
+   result << datatype << " get_" << variable_name << "();";
+   return result.str();
+}
+
+
+std::string ClassAttributeProperties::getter_function_definition(std::string class_name)
+{
+   std::stringstream result;
+   result << datatype << " " << class_name << "::get_" << variable_name << "()\n{\n   return " << variable_name << ";\n}\n";
+   return result.str();
+}
+
+
+std::string ClassAttributeProperties::setter_function_declaration()
+{
+   std::stringstream result;
+   result << "void set_" << variable_name << "(" << datatype << " " << variable_name << ");";
+   return result.str();
+}
+
+
+std::string ClassAttributeProperties::setter_function_definition(std::string class_name)
+{
+   std::stringstream result;
+   result << "void " << class_name << "::set_" << variable_name << "(" << datatype << " " << variable_name << ")\n{\n   this->" << variable_name << " = " << variable_name << ";\n}\n";
+   return result.str();
+}
+
+

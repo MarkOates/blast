@@ -66,3 +66,39 @@ TEST(ClassAttributePropertiesTest, as_class_property__formats_the_attribute_as_l
 }
 
 
+TEST(ClassAttributePropertiesTest, getter_function_declaration__formats_the_function_as_a_getter_function_listed_in_a_class_declaration)
+{
+   ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false);
+
+   std::string expected_string = "std::string get_my_variable();";
+   ASSERT_EQ(expected_string, attribute_properties.getter_function_declaration());
+}
+
+
+TEST(ClassAttributePropertiesTest, getter_function_definition__formats_the_function_as_a_getter_function_listed_in_a_class_definition)
+{
+   ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false);
+
+   std::string expected_string = "std::string FooClass::get_my_variable()\n{\n   return my_variable;\n}\n";
+   ASSERT_EQ(expected_string, attribute_properties.getter_function_definition("FooClass"));
+}
+
+
+TEST(ClassAttributePropertiesTest, setter_function_declaration__formats_the_function_as_a_setter_function_listed_in_a_class_declaration)
+{
+   ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false);
+
+   std::string expected_string = "void set_my_variable(std::string my_variable);";
+   ASSERT_EQ(expected_string, attribute_properties.setter_function_declaration());
+}
+
+
+TEST(ClassAttributePropertiesTest, setter_function_definition__formats_the_function_as_a_setter_function_listed_in_a_class_definition)
+{
+   ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false);
+
+   std::string expected_string = "void FooClass::set_my_variable(std::string my_variable)\n{\n   this->my_variable = my_variable;\n}\n";
+   ASSERT_EQ(expected_string, attribute_properties.setter_function_definition("FooClass"));
+}
+
+
