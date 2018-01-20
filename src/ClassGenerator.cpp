@@ -41,6 +41,12 @@ ClassGenerator::~ClassGenerator()
 }
 
 
+std::vector<ClassAttributeProperties> &ClassGenerator::get_class_attribute_properties_ref()
+{
+   return attribute_properties;
+}
+
+
 std::vector<std::string> ClassGenerator::constructor_declaration_elements()
 {
    std::vector<std::string> elements;

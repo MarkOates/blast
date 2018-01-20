@@ -16,6 +16,8 @@ public:
    ClassGenerator(std::string class_name="ClassName", std::vector<ClassAttributeProperties> attribute_properties={});
    ~ClassGenerator();
 
+   std::vector<ClassAttributeProperties> &get_class_attribute_properties_ref();
+
    std::vector<std::string> constructor_declaration_elements();
    std::vector<std::string> constructor_definition_elements();
    std::vector<std::string> initialization_list_elements();
