@@ -20,6 +20,7 @@ public:
    std::vector<std::string> constructor_definition_elements();
    std::vector<std::string> initialization_list_elements();
 
+   std::string class_property_list();
    std::string initialization_list();
    std::string constructor_declaration();
    std::string constructor_definition();

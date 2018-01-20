@@ -68,6 +68,15 @@ std::vector<std::string> ClassGenerator::initialization_list_elements()
 }
 
 
+std::string ClassGenerator::class_property_list()
+{
+   std::stringstream result;
+   for (auto &attribute_property : attribute_properties)
+      result << "   " << attribute_property.as_class_property() << ";\n";
+   return result.str();
+}
+
+
 std::string ClassGenerator::initialization_list()
 {
    std::stringstream result;

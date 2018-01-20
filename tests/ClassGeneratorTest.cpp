@@ -93,6 +93,20 @@ TEST(ClassGeneratorTest, initialization_list_elements__when_properties_are_not_c
 }
 
 
+TEST(ClassGeneratorTest, class_property_list__returns_the_expected_formatted_string_of_class_properties)
+{
+   ClassGenerator class_generator("User", {
+      //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
+      { "int", "id", "last_id++", false, true, false },
+      { "std::string", "name", "\"[unnamed]\"", false, true, true },
+      { "type_t", "type", "MAGE", false, true, true },
+   });
+
+   std::string expected_property_list = "   int id;\n   std::string name;\n   type_t type;\n";
+   ASSERT_EQ(expected_property_list, class_generator.class_property_list());
+}
+
+
 TEST(ClassGeneratorTest, initialization_list__returns_the_expected_formatted_string)
 {
    ClassGenerator class_generator("User", {
