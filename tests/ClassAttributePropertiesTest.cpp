@@ -57,3 +57,12 @@ TEST(ClassAttributePropertiesTest, as_argument_in_initialization_list__when_is_n
 }
 
 
+TEST(ClassAttributePropertiesTest, as_class_property__formats_the_attribute_as_listed_in_a_class_declaration)
+{
+   ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false);
+
+   std::string expected_string = "std::string my_variable";
+   ASSERT_EQ(expected_string, attribute_properties.as_class_property());
+}
+
+
