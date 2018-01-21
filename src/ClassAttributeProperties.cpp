@@ -5,10 +5,11 @@
 #include <sstream>
 
 
-ClassAttributeProperties::ClassAttributeProperties(std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter)
+ClassAttributeProperties::ClassAttributeProperties(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter)
    : datatype(datatype)
    , variable_name(variable_name)
    , initialization_value(initialization_value)
+   , is_static(is_static)
    , is_constructor_parameter(is_constructor_parameter)
    , has_getter(has_getter)
    , has_setter(has_setter)

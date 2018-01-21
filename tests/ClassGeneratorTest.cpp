@@ -16,9 +16,9 @@ protected:
    {
       class_generator_fixture = ClassGenerator("User", {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
-         { "int", "id", "last_id++", false, true, false },
-         { "std::string", "name", "\"[unnamed]\"", true, true, true },
-         { "type_t", "type", "MAGE", true, true, true },
+         { "int", "id", "last_id++", false, false, true, false },
+         { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
+         { "type_t", "type", "MAGE", false, true, true, true },
       });
    }
 };

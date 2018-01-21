@@ -8,10 +8,10 @@
 int main(int argc, char **argv)
 {
    ClassGenerator class_generator("User", {
-      //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_argument, bool has_getter, bool has_setter
-      { "int", "id", "last_id++", false, true, false },
-      { "std::string", "name", "\"[unnamed]\"", false, true, true },
-      { "std::string", "type", "\"[untyped]\"", true, true, true },
+      //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_argument, bool has_getter, bool has_setter
+      { "int", "id", "last_id++", false, false, true, false },
+      { "std::string", "name", "\"[unnamed]\"", false, false, true, true },
+      { "std::string", "type", "\"[untyped]\"", false, true, true, true },
    });
 
    class_generator.constructor_declaration_elements();
