@@ -74,6 +74,22 @@ std::vector<std::string> ClassGenerator::initialization_list_elements()
 }
 
 
+std::string ClassGenerator::header_filename()
+{
+   std::stringstream result;
+   result << class_name << ".hpp";
+   return result.str();
+}
+
+
+std::string ClassGenerator::header_include_directive()
+{
+   std::stringstream result;
+   result << "#include <Blast/" << header_filename() << ">\n";
+   return result.str();
+}
+
+
 std::string ClassGenerator::class_property_list(int indent_level)
 {
    std::stringstream result;

@@ -82,6 +82,20 @@ TEST_F(ClassGeneratorTest, initialization_list_elements__when_properties_are_not
 }
 
 
+TEST_F(ClassGeneratorTest, header_filename__returns_the_filename_for_the_header_of_the_class)
+{
+   std::string expected_header_filename = "User.hpp";
+   ASSERT_EQ(expected_header_filename, class_generator_fixture.header_filename());
+}
+
+
+TEST_F(ClassGeneratorTest, header_include_directive__returns_the_include_line_to_include_the_class_header_file)
+{
+   std::string expected_header_directive = "#include <Blast/User.hpp>\n";
+   ASSERT_EQ(expected_header_directive, class_generator_fixture.header_include_directive());
+}
+
+
 TEST_F(ClassGeneratorTest, class_property_list__returns_the_expected_formatted_string_of_class_properties)
 {
    std::string expected_property_list = "   int id;\n   std::string name;\n   type_t type;\n";

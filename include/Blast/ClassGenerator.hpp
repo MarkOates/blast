@@ -22,6 +22,8 @@ public:
    std::vector<std::string> constructor_definition_elements();
    std::vector<std::string> initialization_list_elements();
 
+   std::string header_filename();
+   std::string header_include_directive();
    std::string class_property_list(int indent_level=0);
    std::string getter_function_declarations(int indent_level=0);
    std::string getter_function_definitions(int indent_level=0);
