@@ -17,10 +17,11 @@ namespace Blast
       std::vector<Blast::SymbolDependencies> symbol_dependencies;
 
    public:
-      CppClassGenerator(std::string class_name="ClassName", std::vector<ClassAttributeProperties> attribute_properties={});
+      CppClassGenerator(std::string class_name="UnnamedClass", std::vector<ClassAttributeProperties> attribute_properties={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
       ~CppClassGenerator();
 
       std::vector<ClassAttributeProperties> &get_class_attribute_properties_ref();
+      std::vector<SymbolDependencies> &get_symbol_dependencies_ref();
 
       std::vector<std::string> constructor_declaration_elements();
       std::vector<std::string> constructor_definition_elements();

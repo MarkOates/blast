@@ -48,6 +48,12 @@ TEST_F(CppClassGeneratorTest, get_class_attribute_properties_ref__returns_a_refe
 }
 
 
+TEST_F(CppClassGeneratorTest, get_symbol_dependencies_ref__returns_a_reference_to_the_symbol_dependencies)
+{
+   // TODO
+}
+
+
 TEST_F(CppClassGeneratorTest, constructor_declaration_elements__returns_the_expected_set_of_elements_in_a_declaration)
 {
    std::vector<std::string> expected_elements = { "std::string name=\"[unnamed]\"", "type_t type=MAGE" };
