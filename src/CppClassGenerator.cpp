@@ -29,6 +29,10 @@ static void __replace(std::string &str, const std::string &find_str, const std::
 }
 
 
+namespace Blast
+{
+
+
 CppClassGenerator::CppClassGenerator(std::string class_name, std::vector<ClassAttributeProperties> attribute_properties)
    : class_name(class_name)
    , attribute_properties(attribute_properties)
@@ -212,5 +216,8 @@ std::string CppClassGenerator::generate_example_file_content()
    std::stringstream content;
    return content.str();
 }
+
+
+} // namespace Blast
 
 

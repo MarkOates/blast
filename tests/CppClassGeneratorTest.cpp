@@ -10,11 +10,11 @@
 class CppClassGeneratorTest : public ::testing::Test
 {
 protected:
-   static CppClassGenerator class_generator_fixture;
+   static Blast::CppClassGenerator class_generator_fixture;
 
    virtual void SetUp()
    {
-      class_generator_fixture = CppClassGenerator("User", {
+      class_generator_fixture = Blast::CppClassGenerator("User", {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "id", "last_id++", false, false, true, false },
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
@@ -24,7 +24,7 @@ protected:
 };
 
 
-CppClassGenerator CppClassGeneratorTest::class_generator_fixture = CppClassGenerator();
+Blast::CppClassGenerator CppClassGeneratorTest::class_generator_fixture = Blast::CppClassGenerator();
 
 
 ///////
@@ -32,13 +32,13 @@ CppClassGenerator CppClassGeneratorTest::class_generator_fixture = CppClassGener
 
 TEST_F(CppClassGeneratorTest, can_be_created)
 {
-   CppClassGenerator class_generator;
+   Blast::CppClassGenerator class_generator;
 }
 
 
 TEST_F(CppClassGeneratorTest, without_arguments_sets_the_expected_default_values)
 {
-   CppClassGenerator class_generator;
+   Blast::CppClassGenerator class_generator;
 }
 
 
