@@ -6,16 +6,17 @@
 
 TEST(SymbolDependenciesTest, can_be_created)
 {
-   Blast::SymbolDependencies symbol_dependencies("std::string", "string");
+   Blast::SymbolDependencies symbol_dependencies("int");
 }
 
 
 TEST(SymbolDependenciesTest, when_created_without_arguments_sets_the_expected_values)
 {
-   Blast::SymbolDependencies symbol_dependencies("std::string", "string");
+   Blast::SymbolDependencies symbol_dependencies("int");
 
    ASSERT_EQ("", symbol_dependencies.get_dependency_include_directory());
    ASSERT_EQ("", symbol_dependencies.get_linked_library_name());
+   ASSERT_EQ("", symbol_dependencies.get_include_header_file());
 }
 
 
@@ -83,6 +84,20 @@ TEST(SymbolDependenciesTest, get_include_directive__retuns_a_string_of_the_inclu
 {
    Blast::SymbolDependencies symbol_dependencies("ALLEGRO_BITMAP", "allegro5/allegro.h");
    ASSERT_EQ("#include <allegro5/allegro.h>", symbol_dependencies.get_include_directive());
+}
+
+
+TEST(SymbolDependenciesTest, requires_header_file__returns_true_if_the_dependency_requires_a_header_file)
+{
+   Blast::SymbolDependencies symbol_dependencies{ "al_get_font_line_height", "allegro5/allegro_font.h", "~/Repos/username/allegro5/include", "-lallegro_font" };
+   ASSERT_TRUE(symbol_dependencies.requires_header_file());
+}
+
+
+TEST(SymbolDependenciesTest, requires_header_file__returns_false_if_the_dependency_does_not_require_a_header_file)
+{
+   Blast::SymbolDependencies symbol_dependencies("int");
+   ASSERT_FALSE(symbol_dependencies.requires_header_file());
 }
 
 

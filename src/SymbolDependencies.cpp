@@ -85,6 +85,12 @@ std::string SymbolDependencies::get_include_directive()
 }
 
 
+bool SymbolDependencies::requires_header_file()
+{
+   return !include_header_file.empty();
+}
+
+
 bool SymbolDependencies::has_linked_library()
 {
    return !linked_library_name.empty();

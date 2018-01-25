@@ -122,6 +122,55 @@ TEST_F(CppClassGeneratorTest, header_include_directive__returns_the_include_line
 }
 
 
+TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_directives_for_the_existing_dependencies)
+{
+   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+      { "std::string", "string" },
+      { "Blast::DiceRoller", "Blast/DiceRoller.hpp" },
+   };
+
+   class_generator_fixture = Blast::CppClassGenerator("User", {
+         { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
+         { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, true },
+      },
+      symbol_dependencies
+   );
+
+   std::string expected_dependency_directives = "#include <Blast/DiceRoller.hpp>\n#include <string>\n";
+   ASSERT_EQ(expected_dependency_directives, class_generator_fixture.dependency_include_directives());
+}
+
+
+TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencies_are_required_returns_an_empty_string)
+{
+   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+      { "int" },
+      { "float" },
+   };
+
+   class_generator_fixture = Blast::CppClassGenerator("User", {
+         //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
+         { "int", "num_sides", "0", false, false, true, false },
+         { "float", "radius", "6.0f", false, true, true, true },
+      },
+      symbol_dependencies
+   );
+
+   ASSERT_EQ("", class_generator_fixture.dependency_include_directives());
+}
+
+
+TEST_F(CppClassGeneratorTest, dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
+{
+   class_generator_fixture = Blast::CppClassGenerator("User", {
+         { "undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false },
+      }
+   );
+
+   ASSERT_THROW(class_generator_fixture.dependency_include_directives(), std::runtime_error);
+}
+
+
 TEST_F(CppClassGeneratorTest, class_property_list__returns_the_expected_formatted_string_of_class_properties)
 {
    std::string expected_property_list = "   int id;\n   std::string name;\n   type_t type;\n";

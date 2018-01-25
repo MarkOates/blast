@@ -2,6 +2,7 @@
 
 #include <Blast/CppClassGenerator.hpp>
 
+#include <set>
 #include <sstream>
 #include <iostream>
 
@@ -114,6 +115,47 @@ std::string CppClassGenerator::header_include_directive()
 }
 
 
+std::string CppClassGenerator::dependency_include_directives()
+{
+   std::stringstream result;
+
+   std::set<std::string> symbol_dependency_header_directives;
+   std::set<std::string> undefined_symbols;
+
+
+   for (auto &attribute_property : attribute_properties)
+   {
+      bool found = false;
+      for (auto &individual_symbol_dependencies : symbol_dependencies)
+      {
+         if (individual_symbol_dependencies.is_symbol(attribute_property.datatype))
+         {
+            found = true;
+            if (individual_symbol_dependencies.requires_header_file())
+               symbol_dependency_header_directives.insert(individual_symbol_dependencies.get_include_directive());
+            break;
+         }
+      }
+
+      if (!found) undefined_symbols.insert(attribute_property.datatype);
+   }
+
+   if (!undefined_symbols.empty())
+   {
+      std::stringstream error_message;
+      error_message << "Undefined symbol for datatypes [ ";
+      for (auto &undefined_symbol : undefined_symbols) error_message << "\"" << undefined_symbol << "\", ";
+      error_message << " ]";
+      throw std::runtime_error(error_message.str());
+   }
+
+   for (auto &symbol_dependency_header_directive : symbol_dependency_header_directives)
+      result << symbol_dependency_header_directive << "\n";
+
+   return result.str();
+}
+
+
 std::string CppClassGenerator::class_property_list(int indent_level)
 {
    std::stringstream result;
@@ -210,7 +252,7 @@ std::string CppClassGenerator::generate_source_file_content()
 {
    std::string source_file_template = R"END(
 
-#include <Blast/HEADER_FILENAME>
+CLASS_HEADER_INCLUDE_DIRECTIVE
 
 
 CONSTRUCTOR
@@ -225,6 +267,7 @@ GETTER_FUNCTIONS
 
    std::string result = source_file_template;
 
+   __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE", header_include_directive());
    __replace(result, "HEADER_FILENAME", header_filename());
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
    __replace(result, "DESTRUCTOR\n", destructor_definition(0));
@@ -239,6 +282,8 @@ std::string CppClassGenerator::generate_header_file_content()
 {
    std::string header_file_template = R"END(#pragma once
 
+
+DEPENDENCY_INCLUDE_DIRECTIVES
 
 class CLASS_NAME
 {
@@ -259,6 +304,7 @@ GETTER_FUNCTIONS
 
    std::string result = header_file_template;
 
+   __replace(result, "DEPENDENCY_INCLUDE_DIRECTIVES", dependency_include_directives());
    __replace(result, "CLASS_NAME", class_name);
    __replace(result, "CONSTRUCTOR\n", constructor_declaration(1));
    __replace(result, "DESTRUCTOR\n", destructor_declaration(1));

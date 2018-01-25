@@ -15,7 +15,7 @@ namespace Blast
       std::string linked_library_name;
 
    public:
-      SymbolDependencies(std::string symbol, std::string include_header_file, std::string dependency_include_directory="", std::string linked_library_name="");
+      SymbolDependencies(std::string symbol, std::string include_header_file="", std::string dependency_include_directory="", std::string linked_library_name="");
       ~SymbolDependencies();
 
       void set_symbol(std::string symbol);
@@ -30,6 +30,7 @@ namespace Blast
 
       bool is_symbol(std::string symbol);
       std::string get_include_directive();
+      bool requires_header_file();
       bool has_linked_library();
    };
 }
