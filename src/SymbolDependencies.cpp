@@ -71,6 +71,12 @@ std::string SymbolDependencies::get_linked_library_name()
 }
 
 
+bool SymbolDependencies::is_symbol(std::string symbol)
+{
+   return this->symbol == symbol;
+}
+
+
 std::string SymbolDependencies::get_include_directive()
 {
    std::stringstream result;

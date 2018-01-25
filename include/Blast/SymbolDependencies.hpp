@@ -28,6 +28,7 @@ namespace Blast
       std::string get_dependency_include_directory();
       std::string get_linked_library_name();
 
+      bool is_symbol(std::string symbol);
       std::string get_include_directive();
       bool has_linked_library();
    };

@@ -65,6 +65,20 @@ TEST(SymbolDependenciesTest, can_get_and_set_linked_library_name)
 }
 
 
+TEST(SymbolDependenciesTest, is_symbol__retuns_true_if_a_string_matches_the_current_symbol)
+{
+   Blast::SymbolDependencies symbol_dependencies("ALLEGRO_BITMAP", "allegro5/allegro.h");
+   ASSERT_TRUE(symbol_dependencies.is_symbol("ALLEGRO_BITMAP"));
+}
+
+
+TEST(SymbolDependenciesTest, is_symbol__retuns_false_if_a_string_matches_the_current_symbol)
+{
+   Blast::SymbolDependencies symbol_dependencies("ALLEGRO_BITMAP", "allegro5/allegro.h");
+   ASSERT_FALSE(symbol_dependencies.is_symbol("std::string"));
+}
+
+
 TEST(SymbolDependenciesTest, get_include_directive__retuns_a_string_of_the_include_directive)
 {
    Blast::SymbolDependencies symbol_dependencies("ALLEGRO_BITMAP", "allegro5/allegro.h");
