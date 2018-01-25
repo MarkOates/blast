@@ -6,15 +6,15 @@
 #include <vector>
 
 
-class ClassGenerator
+class CppClassGenerator
 {
 private:
    std::string class_name;
    std::vector<ClassAttributeProperties> attribute_properties;
 
 public:
-   ClassGenerator(std::string class_name="ClassName", std::vector<ClassAttributeProperties> attribute_properties={});
-   ~ClassGenerator();
+   CppClassGenerator(std::string class_name="ClassName", std::vector<ClassAttributeProperties> attribute_properties={});
+   ~CppClassGenerator();
 
    std::vector<ClassAttributeProperties> &get_class_attribute_properties_ref();
 
