@@ -188,17 +188,65 @@ std::string CppClassGenerator::destructor_definition(int indent_level)
 
 std::string CppClassGenerator::generate_source_file_content()
 {
-   throw std::runtime_error("Not implemented");
-   std::stringstream content;
-   return content.str();
+   std::string source_file_template = R"END(
+
+#include <Blast/HEADER_FILENAME>
+
+
+CONSTRUCTOR
+
+
+DESTRUCTOR
+
+
+SETTER_FUNCTIONS
+GETTER_FUNCTIONS
+)END";
+
+   std::string result = source_file_template;
+
+   __replace(result, "HEADER_FILENAME", header_filename());
+   __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
+   __replace(result, "DESTRUCTOR\n", destructor_definition(0));
+   __replace(result, "SETTER_FUNCTIONS\n", setter_function_definitions(0));
+   __replace(result, "GETTER_FUNCTIONS\n", getter_function_definitions(0));
+
+   return result;
 }
 
 
 std::string CppClassGenerator::generate_header_file_content()
 {
-   throw std::runtime_error("Not implemented");
-   std::stringstream content;
-   return content.str();
+   std::string header_file_template = R"END(#pragma once
+
+
+class CLASS_NAME
+{
+private:
+PROPERTIES
+
+public:
+CONSTRUCTOR
+DESTRUCTOR
+
+SETTER_FUNCTIONS
+
+GETTER_FUNCTIONS
+};
+
+
+)END";
+
+   std::string result = header_file_template;
+
+   __replace(result, "CLASS_NAME", class_name);
+   __replace(result, "CONSTRUCTOR\n", constructor_declaration(1));
+   __replace(result, "DESTRUCTOR\n", destructor_declaration(1));
+   __replace(result, "PROPERTIES\n", class_property_list(1));
+   __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(1));
+   __replace(result, "GETTER_FUNCTIONS\n", getter_function_declarations(1));
+
+   return result;
 }
 
 
