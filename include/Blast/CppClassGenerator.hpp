@@ -27,6 +27,10 @@ namespace Blast
       std::vector<std::string> constructor_definition_elements();
       std::vector<std::string> initialization_list_elements();
 
+      void set_class_name(std::string class_name);
+
+      std::string get_class_name();
+
       std::string header_filename();
       std::string header_include_directive();
       std::string class_property_list(int indent_level=0);

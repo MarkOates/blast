@@ -39,6 +39,26 @@ TEST_F(CppClassGeneratorTest, can_be_created)
 TEST_F(CppClassGeneratorTest, without_arguments_sets_the_expected_default_values)
 {
    Blast::CppClassGenerator class_generator;
+
+   //std::vector<Blast::ClassAttributeProperties> expected_class_attribute_properties = {};
+   //std::vector<Blast::SymbolDependencies> expected_symbol_dependencies = {};
+
+   ASSERT_EQ("UnnamedClass", class_generator.get_class_name());
+   //ASSERT_EQ(expected_class_attribute_properties, class_generator.get_class_attribute_properties_ref());
+   //ASSERT_EQ(expected_symbol_dependencies, class_generator.get_symbol_dependencies_ref());
+}
+
+
+TEST_F(CppClassGeneratorTest, can_get_and_set_the_class_name)
+{
+   Blast::CppClassGenerator class_generator;
+
+   class_generator.set_class_name("FooClass");
+   ASSERT_EQ("FooClass", class_generator.get_class_name());
+   class_generator.set_class_name("Animal");
+   ASSERT_EQ("Animal", class_generator.get_class_name());
+   class_generator.set_class_name("ClassAttributeProperties");
+   ASSERT_EQ("ClassAttributeProperties", class_generator.get_class_name());
 }
 
 

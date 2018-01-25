@@ -85,6 +85,19 @@ std::vector<std::string> CppClassGenerator::initialization_list_elements()
 }
 
 
+
+void CppClassGenerator::set_class_name(std::string class_name)
+{
+   this->class_name = class_name;
+}
+
+
+std::string CppClassGenerator::get_class_name()
+{
+   return class_name;
+}
+
+
 std::string CppClassGenerator::header_filename()
 {
    std::stringstream result;
