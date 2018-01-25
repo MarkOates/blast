@@ -1,6 +1,6 @@
 
 
-#include <Blast/ClassGenerator.hpp>
+#include <Blast/CppClassGenerator.hpp>
 
 #include <sstream>
 #include <iostream>

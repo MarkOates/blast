@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include <Blast/ClassGenerator.hpp>
+#include <Blast/CppClassGenerator.hpp>
 
 #include <cmath>
 
