@@ -5,6 +5,10 @@
 #include <sstream>
 
 
+namespace Blast
+{
+
+
 ClassAttributeProperties::ClassAttributeProperties(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter)
    : datatype(datatype)
    , variable_name(variable_name)
@@ -92,5 +96,8 @@ std::string ClassAttributeProperties::setter_function_definition(std::string cla
    result << "void " << class_name << "::set_" << variable_name << "(" << datatype << " " << variable_name << ")\n{\n   this->" << variable_name << " = " << variable_name << ";\n}\n";
    return result.str();
 }
+
+
+} // namespace Blast
 
 

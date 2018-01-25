@@ -13,7 +13,7 @@ namespace Blast
    {
    private:
       std::string class_name;
-      std::vector<ClassAttributeProperties> attribute_properties;
+      std::vector<Blast::ClassAttributeProperties> attribute_properties;
       std::vector<Blast::SymbolDependencies> symbol_dependencies;
 
    public:

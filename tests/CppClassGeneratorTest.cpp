@@ -105,7 +105,7 @@ TEST_F(CppClassGeneratorTest, class_property_list__returns_the_expected_formatte
 
 TEST_F(CppClassGeneratorTest, getter_function_declarations__returns_the_expected_formatted_string_for_properties_with_getter_functions)
 {
-   std::vector<ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
+   std::vector<Blast::ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
    class_attribute_properties[0].has_getter = true;
    class_attribute_properties[1].has_getter = false;
    class_attribute_properties[2].has_getter = true;
@@ -117,7 +117,7 @@ TEST_F(CppClassGeneratorTest, getter_function_declarations__returns_the_expected
 
 TEST_F(CppClassGeneratorTest, getter_function_definitions__returns_the_expected_formatted_definitions_for_properties_with_getter_functions)
 {
-   std::vector<ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
+   std::vector<Blast::ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
    class_attribute_properties[0].has_getter = true;
    class_attribute_properties[1].has_getter = false;
    class_attribute_properties[2].has_getter = true;
