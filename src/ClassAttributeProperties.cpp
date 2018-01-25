@@ -66,10 +66,18 @@ std::string ClassAttributeProperties::as_class_property()
 }
 
 
+std::string ClassAttributeProperties::getter_function_symbol()
+{
+   std::stringstream result;
+   result << "get_" << variable_name;
+   return result.str();
+}
+
+
 std::string ClassAttributeProperties::getter_function_declaration()
 {
    std::stringstream result;
-   result << datatype << " get_" << variable_name << "();";
+   result << datatype << " " << getter_function_symbol() << "();";
    return result.str();
 }
 
@@ -82,10 +90,18 @@ std::string ClassAttributeProperties::getter_function_definition(std::string cla
 }
 
 
+std::string ClassAttributeProperties::setter_function_symbol()
+{
+   std::stringstream result;
+   result << "set_" << variable_name;
+   return result.str();
+}
+
+
 std::string ClassAttributeProperties::setter_function_declaration()
 {
    std::stringstream result;
-   result << "void set_" << variable_name << "(" << datatype << " " << variable_name << ");";
+   result << "void " << setter_function_symbol() << "(" << datatype << " " << variable_name << ");";
    return result.str();
 }
 

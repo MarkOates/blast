@@ -25,8 +25,10 @@ namespace Blast
       std::string as_constructor_argument_in_definition();
       std::string as_argument_in_initialization_list();
       std::string as_class_property();
+      std::string getter_function_symbol();
       std::string getter_function_declaration();
       std::string getter_function_definition(std::string class_name);
+      std::string setter_function_symbol();
       std::string setter_function_declaration();
       std::string setter_function_definition(std::string class_name);
    };
