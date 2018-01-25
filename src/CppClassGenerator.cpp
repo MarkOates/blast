@@ -182,3 +182,35 @@ std::string CppClassGenerator::destructor_definition(int indent_level)
 }
 
 
+std::string CppClassGenerator::generate_source_file_content()
+{
+   throw std::runtime_error("Not implemented");
+   std::stringstream content;
+   return content.str();
+}
+
+
+std::string CppClassGenerator::generate_header_file_content()
+{
+   throw std::runtime_error("Not implemented");
+   std::stringstream content;
+   return content.str();
+}
+
+
+std::string CppClassGenerator::generate_test_file_content()
+{
+   throw std::runtime_error("Not implemented");
+   std::stringstream content;
+   return content.str();
+}
+
+
+std::string CppClassGenerator::generate_example_file_content()
+{
+   throw std::runtime_error("Not implemented");
+   std::stringstream content;
+   return content.str();
+}
+
+

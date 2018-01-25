@@ -16,7 +16,10 @@ int main(int argc, char **argv)
 
    class_generator.constructor_declaration_elements();
    class_generator.constructor_definition_elements();
-   std::cout << class_generator.generate_header_file_contnet();
+   std::cout << "////////// header file ///////////" << std::endl;
+   std::cout << class_generator.generate_header_file_content();
+   std::cout << "////////// source file ///////////" << std::endl;
+   std::cout << class_generator.generate_source_file_content();
 
    return 0;
 }

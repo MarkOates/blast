@@ -2,6 +2,7 @@
 
 
 #include <Blast/ClassAttributeProperties.hpp>
+#include <Blast/SymbolDependencies.hpp>
 #include <string>
 #include <vector>
 
@@ -11,6 +12,7 @@ class CppClassGenerator
 private:
    std::string class_name;
    std::vector<ClassAttributeProperties> attribute_properties;
+   std::vector<Blast::SymbolDependencies> symbol_dependencies;
 
 public:
    CppClassGenerator(std::string class_name="ClassName", std::vector<ClassAttributeProperties> attribute_properties={});
@@ -35,6 +37,11 @@ public:
    std::string constructor_definition(int indent_level=0);
    std::string destructor_declaration(int indent_level=0);
    std::string destructor_definition(int indent_level=0);
+
+   std::string generate_source_file_content();
+   std::string generate_header_file_content();
+   std::string generate_test_file_content();
+   std::string generate_example_file_content();
 };
 
 
