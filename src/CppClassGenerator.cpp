@@ -131,8 +131,11 @@ std::string CppClassGenerator::dependency_include_directives()
          if (individual_symbol_dependencies.is_symbol(attribute_property.datatype))
          {
             found = true;
-            if (individual_symbol_dependencies.requires_header_file())
-               symbol_dependency_header_directives.insert(individual_symbol_dependencies.get_include_directive());
+            if (individual_symbol_dependencies.requires_header_files())
+            {
+               std::vector<std::string> include_directives = individual_symbol_dependencies.get_include_directives();
+               std::copy(include_directives.begin(), include_directives.end(), std::inserter(symbol_dependency_header_directives, symbol_dependency_header_directives.end()));
+            }
             break;
          }
       }

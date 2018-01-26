@@ -125,8 +125,8 @@ TEST_F(CppClassGeneratorTest, header_include_directive__returns_the_include_line
 TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_directives_for_the_existing_dependencies)
 {
    std::vector<Blast::SymbolDependencies> symbol_dependencies = {
-      { "std::string", "string" },
-      { "Blast::DiceRoller", "Blast/DiceRoller.hpp" },
+      { "std::string", { "string" } },
+      { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
    };
 
    class_generator_fixture = Blast::CppClassGenerator("User", {

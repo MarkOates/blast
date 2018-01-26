@@ -9,9 +9,9 @@ namespace Blast
 {
 
 
-SymbolDependencies::SymbolDependencies(std::string symbol, std::string include_header_file, std::string dependency_include_directory, std::string linked_library_name)
+SymbolDependencies::SymbolDependencies(std::string symbol, std::vector<std::string> include_header_files, std::string dependency_include_directory, std::string linked_library_name)
    : symbol(symbol)
-   , include_header_file(include_header_file)
+   , include_header_files(include_header_files)
    , dependency_include_directory(dependency_include_directory)
    , linked_library_name(linked_library_name)
 {
@@ -29,9 +29,9 @@ void SymbolDependencies::set_symbol(std::string symbol)
 }
 
 
-void SymbolDependencies::set_include_header_file(std::string include_header_file)
+void SymbolDependencies::set_include_header_files(std::vector<std::string> include_header_files)
 {
-   this->include_header_file = include_header_file;
+   this->include_header_files = include_header_files;
 }
 
 
@@ -53,9 +53,9 @@ std::string SymbolDependencies::get_symbol()
 }
 
 
-std::string SymbolDependencies::get_include_header_file()
+std::vector<std::string> SymbolDependencies::get_include_header_files()
 {
-   return include_header_file;
+   return include_header_files;
 }
 
 
@@ -77,17 +77,24 @@ bool SymbolDependencies::is_symbol(std::string symbol)
 }
 
 
-std::string SymbolDependencies::get_include_directive()
+std::vector<std::string> SymbolDependencies::get_include_directives()
 {
-   std::stringstream result;
-   result << "#include <" << get_include_header_file() << ">";
-   return result.str();
+   std::vector<std::string> result;
+
+   for (auto &include_header_file : include_header_files)
+   {
+      std::stringstream directive_str;
+      directive_str << "#include <" << include_header_file << ">";
+      result.push_back(directive_str.str());
+   }
+
+   return result;
 }
 
 
-bool SymbolDependencies::requires_header_file()
+bool SymbolDependencies::requires_header_files()
 {
-   return !include_header_file.empty();
+   return !include_header_files.empty();
 }
 
 

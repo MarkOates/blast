@@ -10,14 +10,14 @@ int main(int argc, char **argv)
    std::vector<Blast::SymbolDependencies> symbol_dependencies = {
       // some simple examples of dependencies (that do not need libraries to link against when compiled)
       { "int" },
-      { "std::string", "string" },
-      { "std::vector", "vector" },
-      { "std::stringstream", "sstream" },
-      { "std::cout", "iostream" },
+      { "std::string", { "string" } },
+      { "std::vector<std::string>", { "vector", "string" } },
+      { "std::stringstream", { "sstream" } },
+      { "std::cout", { "iostream" } },
       // some more complex examples
-      { "ALLEGRO_BITMAP", "allegro5/allegro.h", "~/Repos/username/allegro5/include", "-lallegro" },
-      { "al_get_font_line_height", "allegro5/allegro_font.h", "~/Repos/username/allegro5/include", "-lallegro_font" },
-      { "FSEventStreamRef", "CoreServices/CoreServices.h", "", "-framework CoreServices" },
+      { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, "~/Repos/username/allegro5/include", "-lallegro" },
+      { "al_get_font_line_height", { "allegro5/allegro.h", "allegro5/allegro_font.h" }, "~/Repos/username/allegro5/include", "-lallegro_font" },
+      { "FSEventStreamRef", { "CoreServices/CoreServices.h" }, "", "-framework CoreServices" },
    };
 
    Blast::CppClassGenerator class_generator("User", {
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
          { "int", "id", "last_id++", false, false, true, false },
          { "std::string", "name", "\"[unnamed]\"", false, false, true, true },
          { "std::string", "type", "\"[untyped]\"", false, true, true, true },
-         { "std::vector", "typeo", "\"[untyped]\"", false, true, true, true },
+         { "std::vector<std::string>", "typeo", "{}", false, true, true, true },
          { "ALLEGRO_BITMAP", "bmp", "\"[untyped]\"", false, true, true, true },
       },
       symbol_dependencies
