@@ -9,10 +9,10 @@ namespace Blast
 {
 
 
-SymbolDependencies::SymbolDependencies(std::string symbol, std::vector<std::string> include_header_files, std::string dependency_include_directory, std::string linked_library_name)
+SymbolDependencies::SymbolDependencies(std::string symbol, std::vector<std::string> include_header_files, std::vector<std::string> dependency_include_directories, std::string linked_library_name)
    : symbol(symbol)
    , include_header_files(include_header_files)
-   , dependency_include_directory(dependency_include_directory)
+   , dependency_include_directories(dependency_include_directories)
    , linked_library_name(linked_library_name)
 {
 }
@@ -35,9 +35,9 @@ void SymbolDependencies::set_include_header_files(std::vector<std::string> inclu
 }
 
 
-void SymbolDependencies::set_dependency_include_directory(std::string dependency_include_directory)
+void SymbolDependencies::set_dependency_include_directories(std::vector<std::string> dependency_include_directories)
 {
-   this->dependency_include_directory = dependency_include_directory;
+   this->dependency_include_directories = dependency_include_directories;
 }
 
 
@@ -59,9 +59,9 @@ std::vector<std::string> SymbolDependencies::get_include_header_files()
 }
 
 
-std::string SymbolDependencies::get_dependency_include_directory()
+std::vector<std::string> SymbolDependencies::get_dependency_include_directories()
 {
-   return dependency_include_directory;
+   return dependency_include_directories;
 }
 
 

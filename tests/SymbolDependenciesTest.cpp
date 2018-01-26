@@ -14,7 +14,7 @@ TEST(SymbolDependenciesTest, when_created_without_arguments_sets_the_expected_va
 {
    Blast::SymbolDependencies symbol_dependencies("int");
 
-   ASSERT_EQ("", symbol_dependencies.get_dependency_include_directory());
+   ASSERT_EQ(std::vector<std::string>{}, symbol_dependencies.get_dependency_include_directories());
    ASSERT_EQ("", symbol_dependencies.get_linked_library_name());
    ASSERT_EQ(std::vector<std::string>{}, symbol_dependencies.get_include_header_files());
 }
@@ -53,14 +53,18 @@ TEST(SymbolDependenciesTest, can_get_and_set_include_header_files)
 }
 
 
-TEST(SymbolDependenciesTest, can_get_and_set_dependency_include_directory)
+TEST(SymbolDependenciesTest, can_get_and_set_dependency_include_directories)
 {
-   Blast::SymbolDependencies symbol_dependencies("std::string", { "string" });
+   std::vector<std::string> directories = { "string" };
+   Blast::SymbolDependencies symbol_dependencies("std::string", directories);
 
-   symbol_dependencies.set_dependency_include_directory("./include");
-   ASSERT_EQ("./include", symbol_dependencies.get_dependency_include_directory());
-   symbol_dependencies.set_dependency_include_directory("~/Repos/allegro5/include");
-   ASSERT_EQ("~/Repos/allegro5/include", symbol_dependencies.get_dependency_include_directory());
+   directories = { "./include" };
+   symbol_dependencies.set_dependency_include_directories(directories);
+   ASSERT_EQ(directories, symbol_dependencies.get_dependency_include_directories());
+
+   directories = { "~/Repos/allegro5/include" };
+   symbol_dependencies.set_dependency_include_directories(directories);
+   ASSERT_EQ(directories, symbol_dependencies.get_dependency_include_directories());
 }
 
 
@@ -104,7 +108,12 @@ TEST(SymbolDependenciesTest, get_include_directives__returns_a_list_of_formatted
 
 TEST(SymbolDependenciesTest, requires_header_files__returns_true_if_the_dependency_requires_a_header_files)
 {
-   Blast::SymbolDependencies symbol_dependencies{ "al_get_font_line_height", { "allegro5/allegro.h", "allegro5/allegro_font.h" }, "~/Repos/username/allegro5/include", "-lallegro_font" };
+   Blast::SymbolDependencies symbol_dependencies{
+      "al_get_font_line_height",
+      { "allegro5/allegro.h", "allegro5/allegro_font.h" },
+      { "~/Repos/username/allegro5/include" },
+      "-lallegro_font"
+   };
    ASSERT_TRUE(symbol_dependencies.requires_header_files());
 }
 
@@ -125,7 +134,12 @@ TEST(SymbolDependenciesTest, has_linked_library__returns_true_if_a_linked_librar
 
 TEST(SymbolDependenciesTest, has_linked_library__returns_false_if_a_linked_library_is_not_present)
 {
-   Blast::SymbolDependencies symbol_dependencies{ "al_get_font_line_height", { "allegro5/allegro.h", "allegro5/allegro_font.h" }, "~/Repos/username/allegro5/include", "-lallegro_font" };
+   Blast::SymbolDependencies symbol_dependencies{
+      "al_get_font_line_height",
+      { "allegro5/allegro.h", "allegro5/allegro_font.h" },
+      { "~/Repos/username/allegro5/include" },
+      "-lallegro_font"
+   };
    ASSERT_TRUE(symbol_dependencies.has_linked_library());
 }
 

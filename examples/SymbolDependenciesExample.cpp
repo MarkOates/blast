@@ -15,9 +15,9 @@ int main(int, char**)
       { "std::stringstream", { "sstream" } },
       { "std::cout", { "iostream" } },
       // some more complex examples
-      { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, "~/Repos/username/allegro5/include", "-lallegro" },
-      { "al_get_font_line_height", { "allegro5/allegro.h", "allegro5/allegro_font.h" }, "~/Repos/username/allegro5/include", "-lallegro_font" },
-      { "FSEventStreamRef", { "CoreServices/CoreServices.h" }, "", "-framework CoreServices" },
+      { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, { "~/Repos/username/allegro5/include" }, "-lallegro" },
+      { "al_get_font_line_height", { "allegro5/allegro.h", "allegro5/allegro_font.h" }, { "~/Repos/username/allegro5/include" }, "-lallegro_font" },
+      { "FSEventStreamRef", { "CoreServices/CoreServices.h" }, {}, "-framework CoreServices" },
    };
 
    for (auto &symbol_dependency : symbol_dependencies)
