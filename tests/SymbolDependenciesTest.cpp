@@ -15,7 +15,7 @@ TEST(SymbolDependenciesTest, when_created_without_arguments_sets_the_expected_va
    Blast::SymbolDependencies symbol_dependencies("int");
 
    ASSERT_EQ(std::vector<std::string>{}, symbol_dependencies.get_dependency_include_directories());
-   ASSERT_EQ("", symbol_dependencies.get_linked_library_name());
+   ASSERT_EQ(std::vector<std::string>{}, symbol_dependencies.get_linked_library_names());
    ASSERT_EQ(std::vector<std::string>{}, symbol_dependencies.get_include_header_files());
 }
 
@@ -68,14 +68,18 @@ TEST(SymbolDependenciesTest, can_get_and_set_dependency_include_directories)
 }
 
 
-TEST(SymbolDependenciesTest, can_get_and_set_linked_library_name)
+TEST(SymbolDependenciesTest, can_get_and_set_linked_library_names)
 {
-   Blast::SymbolDependencies symbol_dependencies("ALLEGRO_BITMAP", { "allegro5/allegro.h" });
+   std::vector<std::string> names = { "-lallegro_bitmap" };
+   Blast::SymbolDependencies symbol_dependencies("ALLEGRO_BITMAP", names);
 
-   symbol_dependencies.set_linked_library_name("-lallegro_bitmap");
-   ASSERT_EQ("-lallegro_bitmap", symbol_dependencies.get_linked_library_name());
-   symbol_dependencies.set_linked_library_name("-lallegro_monolith");
-   ASSERT_EQ("-lallegro_monolith", symbol_dependencies.get_linked_library_name());
+   names = { "-lallegro_bitmap" };
+   symbol_dependencies.set_linked_library_names(names);
+   ASSERT_EQ(names, symbol_dependencies.get_linked_library_names());
+
+   names = { "-lallegro_monolith" };
+   symbol_dependencies.set_linked_library_names(names);
+   ASSERT_EQ(names, symbol_dependencies.get_linked_library_names());
 }
 
 
@@ -112,7 +116,7 @@ TEST(SymbolDependenciesTest, requires_header_files__returns_true_if_the_dependen
       "al_get_font_line_height",
       { "allegro5/allegro.h", "allegro5/allegro_font.h" },
       { "~/Repos/username/allegro5/include" },
-      "-lallegro_font"
+      { "-lallegro_font" }
    };
    ASSERT_TRUE(symbol_dependencies.requires_header_files());
 }
@@ -125,22 +129,22 @@ TEST(SymbolDependenciesTest, requires_header_files__returns_false_if_the_depende
 }
 
 
-TEST(SymbolDependenciesTest, has_linked_library__returns_true_if_a_linked_library_is_present)
+TEST(SymbolDependenciesTest, requires_linked_libraries__returns_true_if_a_linked_library_is_required)
 {
    Blast::SymbolDependencies symbol_dependencies("std::string", { "string" });
-   ASSERT_FALSE(symbol_dependencies.has_linked_library());
+   ASSERT_FALSE(symbol_dependencies.requires_linked_libraries());
 }
 
 
-TEST(SymbolDependenciesTest, has_linked_library__returns_false_if_a_linked_library_is_not_present)
+TEST(SymbolDependenciesTest, requires_linked_libraries__returns_false_if_a_linked_library_is_not_required)
 {
    Blast::SymbolDependencies symbol_dependencies{
       "al_get_font_line_height",
       { "allegro5/allegro.h", "allegro5/allegro_font.h" },
       { "~/Repos/username/allegro5/include" },
-      "-lallegro_font"
+      { "-lallegro_font" }
    };
-   ASSERT_TRUE(symbol_dependencies.has_linked_library());
+   ASSERT_TRUE(symbol_dependencies.requires_linked_libraries());
 }
 
 

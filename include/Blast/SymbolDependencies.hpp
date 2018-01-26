@@ -13,26 +13,26 @@ namespace Blast
       std::string symbol;
       std::vector<std::string> include_header_files;
       std::vector<std::string> dependency_include_directories;
-      std::string linked_library_name;
+      std::vector<std::string> linked_library_names;
 
    public:
-      SymbolDependencies(std::string symbol, std::vector<std::string> include_header_files={}, std::vector<std::string> dependency_include_directories={}, std::string linked_library_name="");
+      SymbolDependencies(std::string symbol, std::vector<std::string> include_header_files={}, std::vector<std::string> dependency_include_directories={}, std::vector<std::string> linked_library_names={});
       ~SymbolDependencies();
 
       void set_symbol(std::string symbol);
       void set_include_header_files(std::vector<std::string> include_header_files);
       void set_dependency_include_directories(std::vector<std::string> dependency_include_directories);
-      void set_linked_library_name(std::string linked_library_name);
+      void set_linked_library_names(std::vector<std::string> linked_library_names);
 
       std::string get_symbol();
       std::vector<std::string> get_include_header_files();
       std::vector<std::string> get_dependency_include_directories();
-      std::string get_linked_library_name();
+      std::vector<std::string> get_linked_library_names();
 
       bool is_symbol(std::string symbol);
       std::vector<std::string> get_include_directives();
       bool requires_header_files();
-      bool has_linked_library();
+      bool requires_linked_libraries();
    };
 }
 
