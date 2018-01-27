@@ -130,7 +130,7 @@ std::string CppClassGenerator::get_class_name()
 }
 
 
-std::string CppClassGenerator::namespaces_scope_opening(bool indented)
+std::string CppClassGenerator::namespaces_scope_opener(bool indented)
 {
    std::stringstream result;
    int indentation_level = 0;
@@ -361,7 +361,7 @@ NAMESPACES_CLOSER
 
    std::string result = source_file_template;
 
-   __replace(result, "NAMESPACES_OPENER", namespaces_scope_opening(false));
+   __replace(result, "NAMESPACES_OPENER", namespaces_scope_opener(false));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(false));
    __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive(project_name_camelcase));
    __replace(result, "HEADER_FILENAME", header_filename());
@@ -403,7 +403,7 @@ NAMESPACES_CLOSER
 
    int required_namespace_indentation_levels = namespaces.size();
 
-   __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opening(true));
+   __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opener(true));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(true, false));
    __replace(result, "DEPENDENCY_INCLUDE_DIRECTIVES", dependency_include_directives());
    __replace(result, "CLASS_NAME", class_name);

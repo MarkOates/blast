@@ -101,25 +101,25 @@ TEST_F(CppClassGeneratorTest, protected_scope_specifier__returns_a_string_format
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_without_nested_indentations)
+TEST_F(CppClassGeneratorTest, namespaces_scope_opener__returns_a_formatted_string_of_the_opener_namespace_statement_without_nested_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
-   std::string expected_opening_namespace_statement = "namespace Fullscore\n{\nnamespace Action\n{\nnamespace Transform\n{\n";
-   ASSERT_EQ(expected_opening_namespace_statement, class_generator.namespaces_scope_opening(false));
+   std::string expected_opener_namespace_statement = "namespace Fullscore\n{\nnamespace Action\n{\nnamespace Transform\n{\n";
+   ASSERT_EQ(expected_opener_namespace_statement, class_generator.namespaces_scope_opener(false));
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_with_nested_indentations)
+TEST_F(CppClassGeneratorTest, namespaces_scope_opener__returns_a_formatted_string_of_the_opener_namespace_statement_with_nested_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
-   std::string expected_opening_namespace_statement = "namespace Fullscore\n{\n   namespace Action\n   {\n      namespace Transform\n      {\n";
-   ASSERT_EQ(expected_opening_namespace_statement, class_generator.namespaces_scope_opening(true));
+   std::string expected_opener_namespace_statement = "namespace Fullscore\n{\n   namespace Action\n   {\n      namespace Transform\n      {\n";
+   ASSERT_EQ(expected_opener_namespace_statement, class_generator.namespaces_scope_opener(true));
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_opening__without_namespaces_returns_an_empty_string)
+TEST_F(CppClassGeneratorTest, namespaces_scope_opener__without_namespaces_returns_an_empty_string)
 {
-   ASSERT_EQ("", class_generator_fixture.namespaces_scope_opening(true));
+   ASSERT_EQ("", class_generator_fixture.namespaces_scope_opener(true));
 }
 
 
@@ -153,11 +153,11 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_closer__without_namespaces_return
 }
 
 
-TEST_F(CppClassGeneratorTest, class_declaration_opener__returns_a_formatted_string_of_the_classes_opening_statement)
+TEST_F(CppClassGeneratorTest, class_declaration_opener__returns_a_formatted_string_of_the_classes_opener_statement)
 {
    Blast::CppClassGenerator class_generator("Happiness");
-   std::string expected_opening_class_statement = "   class Happiness\n   {\n";
-   ASSERT_EQ(expected_opening_class_statement, class_generator.class_declaration_opener(1));
+   std::string expected_class_opener_statement = "   class Happiness\n   {\n";
+   ASSERT_EQ(expected_class_opener_statement, class_generator.class_declaration_opener(1));
 }
 
 
