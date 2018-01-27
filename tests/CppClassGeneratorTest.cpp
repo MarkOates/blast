@@ -117,7 +117,7 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_stri
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_opening__without_namespaces_returns_en_empty_string)
+TEST_F(CppClassGeneratorTest, namespaces_scope_opening__without_namespaces_returns_an_empty_string)
 {
    ASSERT_EQ("", class_generator_fixture.namespaces_scope_opening(true));
 }
@@ -147,7 +147,7 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_closing__can_optionally_include_c
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_closing__without_namespaces_returns_en_empty_string)
+TEST_F(CppClassGeneratorTest, namespaces_scope_closing__without_namespaces_returns_an_empty_string)
 {
    ASSERT_EQ("", class_generator_fixture.namespaces_scope_closing(false));
 }
