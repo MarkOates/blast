@@ -107,6 +107,14 @@ std::string CppClassGenerator::header_filename()
 }
 
 
+std::string CppClassGenerator::source_filename()
+{
+   std::stringstream result;
+   result << class_name << ".cpp";
+   return result.str();
+}
+
+
 std::string CppClassGenerator::header_include_directive()
 {
    std::stringstream result;
@@ -332,6 +340,22 @@ std::string CppClassGenerator::generate_example_file_content()
    throw std::runtime_error("Not implemented");
    std::stringstream content;
    return content.str();
+}
+
+
+std::string CppClassGenerator::project_source_filepath()
+{
+   std::stringstream result;
+   result << "src/" << source_filename();
+   return result.str();
+}
+
+
+std::string CppClassGenerator::project_header_filepath(std::string project_name_camelcase)
+{
+   std::stringstream result;
+   result << "include/" << project_name_camelcase << "/" << header_filename();
+   return result.str();
 }
 
 

@@ -32,6 +32,7 @@ namespace Blast
       std::string get_class_name();
 
       std::string header_filename();
+      std::string source_filename();
       std::string header_include_directive();
       std::string dependency_include_directives();
       std::string class_property_list(int indent_level=0);
@@ -50,6 +51,9 @@ namespace Blast
       std::string generate_header_file_content();
       std::string generate_test_file_content();
       std::string generate_example_file_content();
+
+      std::string project_source_filepath();
+      std::string project_header_filepath(std::string project_name_camelcase);
    };
 }
 

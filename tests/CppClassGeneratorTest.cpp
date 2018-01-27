@@ -115,6 +115,13 @@ TEST_F(CppClassGeneratorTest, header_filename__returns_the_filename_for_the_head
 }
 
 
+TEST_F(CppClassGeneratorTest, source_filename__returns_the_filename_for_the_header_of_the_class)
+{
+   std::string expected_source_filename = "User.cpp";
+   ASSERT_EQ(expected_source_filename, class_generator_fixture.source_filename());
+}
+
+
 TEST_F(CppClassGeneratorTest, header_include_directive__returns_the_include_line_to_include_the_class_header_file)
 {
    std::string expected_header_directive = "#include <Blast/User.hpp>\n";
@@ -248,6 +255,20 @@ TEST_F(CppClassGeneratorTest, destructor_definition_returns_the_expected_string)
 {
    std::string expected_destructor_definition = "User::~User()\n{\n}\n";
    ASSERT_EQ(expected_destructor_definition, class_generator_fixture.destructor_definition());
+}
+
+
+TEST_F(CppClassGeneratorTest, project_source_filepath__returns_a_string_of_the_location_of_the_source_file_relative_to_the_project_root)
+{
+   std::string expected_project_source_filepath = "src/User.cpp";
+   ASSERT_EQ(expected_project_source_filepath, class_generator_fixture.project_source_filepath());
+}
+
+
+TEST_F(CppClassGeneratorTest, project_header_filepath__returns_a_string_of_the_location_of_the_header_file_relative_to_the_project_root)
+{
+   std::string expected_project_header_filepath = "include/ProjectName/User.hpp";
+   ASSERT_EQ(expected_project_header_filepath, class_generator_fixture.project_header_filepath("ProjectName"));
 }
 
 
