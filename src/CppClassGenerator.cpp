@@ -100,6 +100,30 @@ bool CppClassGenerator::has_namespaces()
 }
 
 
+std::string CppClassGenerator::private_scope_specifier(int indent_level)
+{
+   std::stringstream result;
+   result << std::string(3*indent_level, ' ') << "private:\n";
+   return result.str();
+}
+
+
+std::string CppClassGenerator::public_scope_specifier(int indent_level)
+{
+   std::stringstream result;
+   result << std::string(3*indent_level, ' ') << "public:\n";
+   return result.str();
+}
+
+
+std::string CppClassGenerator::protected_scope_specifier(int indent_level)
+{
+   std::stringstream result;
+   result << std::string(3*indent_level, ' ') << "protected:\n";
+   return result.str();
+}
+
+
 std::string CppClassGenerator::get_class_name()
 {
    return class_name;
@@ -148,7 +172,7 @@ std::string CppClassGenerator::class_declaration_opener(int indent_level)
 std::string CppClassGenerator::class_declaration_closer(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << "};";
+   result << std::string(3*indent_level, ' ') << "};\n";
    return result.str();
 }
 
@@ -338,7 +362,7 @@ NAMESPACES_CLOSER
    std::string result = source_file_template;
 
    __replace(result, "NAMESPACES_OPENER", namespaces_scope_opening(false));
-   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closing(false, true));
+   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closing(false));
    __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive(project_name_camelcase));
    __replace(result, "HEADER_FILENAME", header_filename());
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
@@ -359,10 +383,10 @@ DEPENDENCY_INCLUDE_DIRECTIVES
 
 NAMESPACES_OPENER
 CLASS_DECLARATION_OPENER
-private:
+PRIVATE_SCOPE_SPECIFIER
 PROPERTIES
 
-public:
+PUBLIC_SCOPE_SPECIFIER
 CONSTRUCTOR
 DESTRUCTOR
 
@@ -380,7 +404,7 @@ NAMESPACES_CLOSER
    int required_namespace_indentation_levels = namespaces.size();
 
    __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opening(true));
-   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closing(true, true));
+   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closing(true, false));
    __replace(result, "DEPENDENCY_INCLUDE_DIRECTIVES", dependency_include_directives());
    __replace(result, "CLASS_NAME", class_name);
    __replace(result, "CONSTRUCTOR\n", constructor_declaration(required_namespace_indentation_levels + 1));
@@ -389,7 +413,9 @@ NAMESPACES_CLOSER
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "GETTER_FUNCTIONS\n", getter_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "CLASS_DECLARATION_OPENER\n", class_declaration_opener(required_namespace_indentation_levels));
-   __replace(result, "CLASS_DECLARATION_CLOSER", class_declaration_closer(required_namespace_indentation_levels));
+   __replace(result, "CLASS_DECLARATION_CLOSER\n", class_declaration_closer(required_namespace_indentation_levels));
+   __replace(result, "PRIVATE_SCOPE_SPECIFIER\n", private_scope_specifier(required_namespace_indentation_levels));
+   __replace(result, "PUBLIC_SCOPE_SPECIFIER\n", public_scope_specifier(required_namespace_indentation_levels));
 
    return result;
 }

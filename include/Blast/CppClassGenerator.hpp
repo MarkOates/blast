@@ -34,6 +34,9 @@ namespace Blast
 
       bool has_namespaces();
 
+      std::string private_scope_specifier(int indent_level=0);
+      std::string public_scope_specifier(int indent_level=0);
+      std::string protected_scope_specifier(int indent_level=0);
       std::string namespaces_scope_opening(bool indented);
       std::string namespaces_scope_closing(bool indented, bool include_comment=false);
       std::string class_declaration_opener(int indent_level=0);

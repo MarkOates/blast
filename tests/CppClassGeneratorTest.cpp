@@ -80,6 +80,27 @@ TEST_F(CppClassGeneratorTest, has_namespaces__returns_false_if_namespaces_are_pr
 }
 
 
+TEST_F(CppClassGeneratorTest, private_scope_specifier__returns_a_string_formatted_with_the_appropriate_scope_specifier)
+{
+   std::string expected_scope_specifier = "   private:\n";
+   ASSERT_EQ(expected_scope_specifier, class_generator_fixture.private_scope_specifier(1));
+}
+
+
+TEST_F(CppClassGeneratorTest, public_scope_specifier__returns_a_string_formatted_with_the_appropriate_scope_specifier)
+{
+   std::string expected_scope_specifier = "   public:\n";
+   ASSERT_EQ(expected_scope_specifier, class_generator_fixture.public_scope_specifier(1));
+}
+
+
+TEST_F(CppClassGeneratorTest, protected_scope_specifier__returns_a_string_formatted_with_the_appropriate_scope_specifier)
+{
+   std::string expected_scope_specifier = "   protected:\n";
+   ASSERT_EQ(expected_scope_specifier, class_generator_fixture.protected_scope_specifier(1));
+}
+
+
 TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_without_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
@@ -145,7 +166,7 @@ TEST_F(CppClassGeneratorTest, class_declaration_opener__returns_a_formatted_stri
 TEST_F(CppClassGeneratorTest, class_declaration_closer_returns_a_formatted_string_of_the_classes_closing_statemet)
 {
    Blast::CppClassGenerator class_generator("Happiness");
-   std::string expected_closing_class_statement = "   };";
+   std::string expected_closing_class_statement = "   };\n";
    ASSERT_EQ(expected_closing_class_statement, class_generator.class_declaration_closer(1));
 }
 
