@@ -106,6 +106,35 @@ std::string CppClassGenerator::get_class_name()
 }
 
 
+std::string CppClassGenerator::namespaces_scope_opening(bool indented)
+{
+   std::stringstream result;
+   int indentation_level = 0;
+   for (auto &n : namespaces)
+   {
+      if (indented) result << std::string(3*indentation_level, ' ');
+      result << "namespace " << n << "\n";
+      if (indented) result << std::string(3*indentation_level, ' ');
+      result << "{\n";
+      if (indented) indentation_level++;
+   }
+   return result.str();
+}
+
+
+std::string CppClassGenerator::namespaces_scope_closing(bool indented)
+{
+   std::stringstream result;
+   for (int i=namespaces.size()-1; i>=0; i--)
+   {
+      std::string &n = namespaces[i];
+      if (indented) result << std::string(3*i, ' ');
+      result << "} // namespace " << n << "\n";
+   }
+   return result.str();
+}
+
+
 std::string CppClassGenerator::header_filename()
 {
    std::stringstream result;

@@ -34,6 +34,8 @@ namespace Blast
 
       bool has_namespaces();
 
+      std::string namespaces_scope_opening(bool indented);
+      std::string namespaces_scope_closing(bool indented);
       std::string header_filename();
       std::string source_filename();
       std::string header_include_directive(std::string project_name_camelcase);

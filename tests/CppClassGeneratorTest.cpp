@@ -80,6 +80,38 @@ TEST_F(CppClassGeneratorTest, has_namespaces__returns_false_if_namespaces_are_pr
 }
 
 
+TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_without_indentations)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_opening_namespace_statement = "namespace Fullscore\n{\nnamespace Action\n{\nnamespace Transform\n{\n";
+   ASSERT_EQ(expected_opening_namespace_statement, class_generator.namespaces_scope_opening(false));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_with_indentations)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_opening_namespace_statement = "namespace Fullscore\n{\n   namespace Action\n   {\n      namespace Transform\n      {\n";
+   ASSERT_EQ(expected_opening_namespace_statement, class_generator.namespaces_scope_opening(true));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_without_indentations)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_closing_namespace_statement = "} // namespace Transform\n} // namespace Action\n} // namespace Fullscore\n";
+   ASSERT_EQ(expected_closing_namespace_statement, class_generator.namespaces_scope_closing(false));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_with_indentations)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_closing_namespace_statement = "      } // namespace Transform\n   } // namespace Action\n} // namespace Fullscore\n";
+   ASSERT_EQ(expected_closing_namespace_statement, class_generator.namespaces_scope_closing(true));
+}
+
+
 TEST_F(CppClassGeneratorTest, get_class_attribute_properties_ref__returns_a_reference_to_the_class_attribute_properties)
 {
    // TODO
