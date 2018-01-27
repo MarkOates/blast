@@ -13,11 +13,12 @@ namespace Blast
    {
    private:
       std::string class_name;
+      std::vector<std::string> namespaces;
       std::vector<Blast::ClassAttributeProperties> attribute_properties;
       std::vector<Blast::SymbolDependencies> symbol_dependencies;
 
    public:
-      CppClassGenerator(std::string class_name="UnnamedClass", std::vector<ClassAttributeProperties> attribute_properties={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
+      CppClassGenerator(std::string class_name="UnnamedClass", std::vector<std::string> namespaces={}, std::vector<ClassAttributeProperties> attribute_properties={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
       ~CppClassGenerator();
 
       std::vector<ClassAttributeProperties> &get_class_attribute_properties_ref();
@@ -31,6 +32,15 @@ namespace Blast
 
       std::string get_class_name();
 
+      bool has_namespaces();
+
+      std::string private_scope_specifier(int indent_level=0);
+      std::string public_scope_specifier(int indent_level=0);
+      std::string protected_scope_specifier(int indent_level=0);
+      std::string namespaces_scope_opener(bool indented);
+      std::string namespaces_scope_closer(bool indented, bool include_comment=false);
+      std::string class_declaration_opener(int indent_level=0);
+      std::string class_declaration_closer(int indent_level=0);
       std::string header_filename();
       std::string source_filename();
       std::string header_include_directive(std::string project_name_camelcase);

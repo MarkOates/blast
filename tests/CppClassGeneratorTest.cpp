@@ -14,7 +14,7 @@ protected:
 
    virtual void SetUp()
    {
-      class_generator_fixture = Blast::CppClassGenerator("User", {
+      class_generator_fixture = Blast::CppClassGenerator("User", {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "id", "last_id++", false, false, true, false },
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
@@ -44,6 +44,7 @@ TEST_F(CppClassGeneratorTest, without_arguments_sets_the_expected_default_values
    //std::vector<Blast::SymbolDependencies> expected_symbol_dependencies = {};
 
    ASSERT_EQ("UnnamedClass", class_generator.get_class_name());
+   ASSERT_FALSE(class_generator.has_namespaces());
    //ASSERT_EQ(expected_class_attribute_properties, class_generator.get_class_attribute_properties_ref());
    //ASSERT_EQ(expected_symbol_dependencies, class_generator.get_symbol_dependencies_ref());
 }
@@ -59,6 +60,112 @@ TEST_F(CppClassGeneratorTest, can_get_and_set_the_class_name)
    ASSERT_EQ("Animal", class_generator.get_class_name());
    class_generator.set_class_name("ClassAttributeProperties");
    ASSERT_EQ("ClassAttributeProperties", class_generator.get_class_name());
+}
+
+
+TEST_F(CppClassGeneratorTest, has_namespaces__returns_true_if_namespaces_are_present)
+{
+   Blast::CppClassGenerator class_generator1("CppClassGenerator", { "Blast" });
+   ASSERT_TRUE(class_generator1.has_namespaces());
+
+   Blast::CppClassGenerator class_generator2("Ascend", { "Fullscore", "Action", "Transform" });
+   ASSERT_TRUE(class_generator2.has_namespaces());
+}
+
+
+TEST_F(CppClassGeneratorTest, has_namespaces__returns_false_if_namespaces_are_not_present)
+{
+   Blast::CppClassGenerator class_generator("User");
+   ASSERT_FALSE(class_generator.has_namespaces());
+}
+
+
+TEST_F(CppClassGeneratorTest, private_scope_specifier__returns_a_string_formatted_with_the_appropriate_scope_specifier)
+{
+   std::string expected_scope_specifier = "   private:\n";
+   ASSERT_EQ(expected_scope_specifier, class_generator_fixture.private_scope_specifier(1));
+}
+
+
+TEST_F(CppClassGeneratorTest, public_scope_specifier__returns_a_string_formatted_with_the_appropriate_scope_specifier)
+{
+   std::string expected_scope_specifier = "   public:\n";
+   ASSERT_EQ(expected_scope_specifier, class_generator_fixture.public_scope_specifier(1));
+}
+
+
+TEST_F(CppClassGeneratorTest, protected_scope_specifier__returns_a_string_formatted_with_the_appropriate_scope_specifier)
+{
+   std::string expected_scope_specifier = "   protected:\n";
+   ASSERT_EQ(expected_scope_specifier, class_generator_fixture.protected_scope_specifier(1));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_opener__returns_a_formatted_string_of_the_opener_namespace_statement_without_nested_indentations)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_opener_namespace_statement = "namespace Fullscore\n{\nnamespace Action\n{\nnamespace Transform\n{\n";
+   ASSERT_EQ(expected_opener_namespace_statement, class_generator.namespaces_scope_opener(false));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_opener__returns_a_formatted_string_of_the_opener_namespace_statement_with_nested_indentations)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_opener_namespace_statement = "namespace Fullscore\n{\n   namespace Action\n   {\n      namespace Transform\n      {\n";
+   ASSERT_EQ(expected_opener_namespace_statement, class_generator.namespaces_scope_opener(true));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_opener__without_namespaces_returns_an_empty_string)
+{
+   ASSERT_EQ("", class_generator_fixture.namespaces_scope_opener(true));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_closer__returns_a_formatted_string_of_the_closer_namespace_statement_without_nested_indentations)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_closer_namespace_statement = "}\n}\n}\n";
+   ASSERT_EQ(expected_closer_namespace_statement, class_generator.namespaces_scope_closer(false));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_closer__returns_a_formatted_string_of_the_closer_namespace_statement_with_nested_indentations)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_closer_namespace_statement = "      }\n   }\n}\n";
+   ASSERT_EQ(expected_closer_namespace_statement, class_generator.namespaces_scope_closer(true));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_closer__can_optionally_include_closer_comment)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_closer_namespace_statement = "      } // namespace Transform\n   } // namespace Action\n} // namespace Fullscore\n";
+   ASSERT_EQ(expected_closer_namespace_statement, class_generator.namespaces_scope_closer(true, true));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_closer__without_namespaces_returns_an_empty_string)
+{
+   ASSERT_EQ("", class_generator_fixture.namespaces_scope_closer(false));
+}
+
+
+TEST_F(CppClassGeneratorTest, class_declaration_opener__returns_a_formatted_string_of_the_classes_opener_statement)
+{
+   Blast::CppClassGenerator class_generator("Happiness");
+   std::string expected_class_opener_statement = "   class Happiness\n   {\n";
+   ASSERT_EQ(expected_class_opener_statement, class_generator.class_declaration_opener(1));
+}
+
+
+TEST_F(CppClassGeneratorTest, class_declaration_closer_returns_a_formatted_string_of_the_classes_closing_statemet)
+{
+   Blast::CppClassGenerator class_generator("Happiness");
+   std::string expected_closing_class_statement = "   };\n";
+   ASSERT_EQ(expected_closing_class_statement, class_generator.class_declaration_closer(1));
 }
 
 
@@ -136,7 +243,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_d
       { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
    };
 
-   class_generator_fixture = Blast::CppClassGenerator("User", {
+   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
          { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, true },
       },
@@ -155,7 +262,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
       { "float" },
    };
 
-   class_generator_fixture = Blast::CppClassGenerator("User", {
+   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "num_sides", "0", false, false, true, false },
          { "float", "radius", "6.0f", false, true, true, true },
@@ -169,7 +276,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
 
 TEST_F(CppClassGeneratorTest, dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
 {
-   class_generator_fixture = Blast::CppClassGenerator("User", {
+   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
          { "undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false },
       }
    );
