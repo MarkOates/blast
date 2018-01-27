@@ -101,7 +101,7 @@ TEST_F(CppClassGeneratorTest, protected_scope_specifier__returns_a_string_format
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_without_indentations)
+TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_without_nested_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
    std::string expected_opening_namespace_statement = "namespace Fullscore\n{\nnamespace Action\n{\nnamespace Transform\n{\n";
@@ -116,7 +116,7 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_opening__without_namespaces_retur
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_with_indentations)
+TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_with_nested_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
    std::string expected_opening_namespace_statement = "namespace Fullscore\n{\n   namespace Action\n   {\n      namespace Transform\n      {\n";
@@ -124,7 +124,7 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_stri
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_without_indentations)
+TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_without_nested_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
    std::string expected_closing_namespace_statement = "}\n}\n}\n";
@@ -132,7 +132,7 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_stri
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_with_indentations)
+TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_with_nested_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
    std::string expected_closing_namespace_statement = "      }\n   }\n}\n";
