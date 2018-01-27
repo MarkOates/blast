@@ -34,8 +34,9 @@ namespace Blast
 {
 
 
-CppClassGenerator::CppClassGenerator(std::string class_name, std::vector<ClassAttributeProperties> attribute_properties, std::vector<Blast::SymbolDependencies> symbol_dependencies)
+CppClassGenerator::CppClassGenerator(std::string class_name, std::vector<std::string> namespaces, std::vector<ClassAttributeProperties> attribute_properties, std::vector<Blast::SymbolDependencies> symbol_dependencies)
    : class_name(class_name)
+   , namespaces(namespaces)
    , attribute_properties(attribute_properties)
    , symbol_dependencies(symbol_dependencies)
 {
@@ -90,6 +91,12 @@ std::vector<std::string> CppClassGenerator::initialization_list_elements()
 void CppClassGenerator::set_class_name(std::string class_name)
 {
    this->class_name = class_name;
+}
+
+
+bool CppClassGenerator::has_namespaces()
+{
+   return !namespaces.empty();
 }
 
 

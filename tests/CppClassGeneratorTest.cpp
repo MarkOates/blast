@@ -14,7 +14,7 @@ protected:
 
    virtual void SetUp()
    {
-      class_generator_fixture = Blast::CppClassGenerator("User", {
+      class_generator_fixture = Blast::CppClassGenerator("User", {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "id", "last_id++", false, false, true, false },
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
@@ -44,6 +44,7 @@ TEST_F(CppClassGeneratorTest, without_arguments_sets_the_expected_default_values
    //std::vector<Blast::SymbolDependencies> expected_symbol_dependencies = {};
 
    ASSERT_EQ("UnnamedClass", class_generator.get_class_name());
+   ASSERT_FALSE(class_generator.has_namespaces());
    //ASSERT_EQ(expected_class_attribute_properties, class_generator.get_class_attribute_properties_ref());
    //ASSERT_EQ(expected_symbol_dependencies, class_generator.get_symbol_dependencies_ref());
 }
@@ -59,6 +60,23 @@ TEST_F(CppClassGeneratorTest, can_get_and_set_the_class_name)
    ASSERT_EQ("Animal", class_generator.get_class_name());
    class_generator.set_class_name("ClassAttributeProperties");
    ASSERT_EQ("ClassAttributeProperties", class_generator.get_class_name());
+}
+
+
+TEST_F(CppClassGeneratorTest, has_namespaces__returns_true_if_namespaces_are_present)
+{
+   Blast::CppClassGenerator class_generator1("CppClassGenerator", { "Blast" });
+   ASSERT_TRUE(class_generator1.has_namespaces());
+
+   Blast::CppClassGenerator class_generator2("Ascend", { "Fullscore", "Action", "Transform" });
+   ASSERT_TRUE(class_generator2.has_namespaces());
+}
+
+
+TEST_F(CppClassGeneratorTest, has_namespaces__returns_false_if_namespaces_are_present)
+{
+   Blast::CppClassGenerator class_generator("User");
+   ASSERT_FALSE(class_generator.has_namespaces());
 }
 
 
@@ -136,7 +154,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_d
       { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
    };
 
-   class_generator_fixture = Blast::CppClassGenerator("User", {
+   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
          { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, true },
       },
@@ -155,7 +173,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
       { "float" },
    };
 
-   class_generator_fixture = Blast::CppClassGenerator("User", {
+   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "num_sides", "0", false, false, true, false },
          { "float", "radius", "6.0f", false, true, true, true },
@@ -169,7 +187,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
 
 TEST_F(CppClassGeneratorTest, dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
 {
-   class_generator_fixture = Blast::CppClassGenerator("User", {
+   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
          { "undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false },
       }
    );

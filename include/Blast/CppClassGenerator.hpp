@@ -13,11 +13,12 @@ namespace Blast
    {
    private:
       std::string class_name;
+      std::vector<std::string> namespaces;
       std::vector<Blast::ClassAttributeProperties> attribute_properties;
       std::vector<Blast::SymbolDependencies> symbol_dependencies;
 
    public:
-      CppClassGenerator(std::string class_name="UnnamedClass", std::vector<ClassAttributeProperties> attribute_properties={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
+      CppClassGenerator(std::string class_name="UnnamedClass", std::vector<std::string> namespaces={}, std::vector<ClassAttributeProperties> attribute_properties={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
       ~CppClassGenerator();
 
       std::vector<ClassAttributeProperties> &get_class_attribute_properties_ref();
@@ -30,6 +31,8 @@ namespace Blast
       void set_class_name(std::string class_name);
 
       std::string get_class_name();
+
+      bool has_namespaces();
 
       std::string header_filename();
       std::string source_filename();
