@@ -88,6 +88,13 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_stri
 }
 
 
+TEST_F(CppClassGeneratorTest, namespaces_scope_opening__without_namespaces_returns_en_empty_string)
+{
+   ASSERT_EQ("", class_generator_fixture.namespaces_scope_opening(true));
+   ASSERT_EQ("", class_generator_fixture.namespaces_scope_opening(false));
+}
+
+
 TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_string_of_the_opening_namespace_statement_with_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
@@ -99,7 +106,7 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_opening__returns_a_formatted_stri
 TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_without_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
-   std::string expected_closing_namespace_statement = "} // namespace Transform\n} // namespace Action\n} // namespace Fullscore\n";
+   std::string expected_closing_namespace_statement = "}\n}\n}\n";
    ASSERT_EQ(expected_closing_namespace_statement, class_generator.namespaces_scope_closing(false));
 }
 
@@ -107,8 +114,39 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_stri
 TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_with_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
-   std::string expected_closing_namespace_statement = "      } // namespace Transform\n   } // namespace Action\n} // namespace Fullscore\n";
+   std::string expected_closing_namespace_statement = "      }\n   }\n}\n";
    ASSERT_EQ(expected_closing_namespace_statement, class_generator.namespaces_scope_closing(true));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_closing__can_optionally_include_closing_comment)
+{
+   Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
+   std::string expected_closing_namespace_statement = "      } // namespace Transform\n   } // namespace Action\n} // namespace Fullscore\n";
+   ASSERT_EQ(expected_closing_namespace_statement, class_generator.namespaces_scope_closing(true, true));
+}
+
+
+TEST_F(CppClassGeneratorTest, namespaces_scope_closing__without_namespaces_returns_en_empty_string)
+{
+   ASSERT_EQ("", class_generator_fixture.namespaces_scope_closing(true));
+   ASSERT_EQ("", class_generator_fixture.namespaces_scope_closing(false));
+}
+
+
+TEST_F(CppClassGeneratorTest, class_declaration_opener__returns_a_formatted_string_of_the_classes_opening_statement)
+{
+   Blast::CppClassGenerator class_generator("Happiness");
+   std::string expected_opening_class_statement = "   class Happiness\n   {\n";
+   ASSERT_EQ(expected_opening_class_statement, class_generator.class_declaration_opener(1));
+}
+
+
+TEST_F(CppClassGeneratorTest, class_declaration_closer_returns_a_formatted_string_of_the_classes_closing_statemet)
+{
+   Blast::CppClassGenerator class_generator("Happiness");
+   std::string expected_closing_class_statement = "   };";
+   ASSERT_EQ(expected_closing_class_statement, class_generator.class_declaration_closer(1));
 }
 
 

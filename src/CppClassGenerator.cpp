@@ -122,15 +122,33 @@ std::string CppClassGenerator::namespaces_scope_opening(bool indented)
 }
 
 
-std::string CppClassGenerator::namespaces_scope_closing(bool indented)
+std::string CppClassGenerator::namespaces_scope_closing(bool indented, bool include_comment)
 {
    std::stringstream result;
    for (int i=namespaces.size()-1; i>=0; i--)
    {
       std::string &n = namespaces[i];
       if (indented) result << std::string(3*i, ' ');
-      result << "} // namespace " << n << "\n";
+      result << "}";
+      if (include_comment) result << " // namespace " << n;
+      result << "\n";
    }
+   return result.str();
+}
+
+
+std::string CppClassGenerator::class_declaration_opener(int indent_level)
+{
+   std::stringstream result;
+   result << std::string(3*indent_level, ' ') << "class " << class_name << "\n" << std::string(3*indent_level, ' ') << "{\n";
+   return result.str();
+}
+
+
+std::string CppClassGenerator::class_declaration_closer(int indent_level)
+{
+   std::stringstream result;
+   result << std::string(3*indent_level, ' ') << "};";
    return result.str();
 }
 
@@ -302,6 +320,8 @@ std::string CppClassGenerator::generate_source_file_content(std::string project_
 CLASS_HEADER_INCLUDE_DIRECTIVE
 
 
+NAMESPACES_OPENER
+
 CONSTRUCTOR
 
 
@@ -310,10 +330,15 @@ DESTRUCTOR
 
 SETTER_FUNCTIONS
 GETTER_FUNCTIONS
+NAMESPACES_CLOSER
+
+
 )END";
 
    std::string result = source_file_template;
 
+   __replace(result, "NAMESPACES_OPENER", namespaces_scope_opening(false));
+   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closing(false, true));
    __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive(project_name_camelcase));
    __replace(result, "HEADER_FILENAME", header_filename());
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
@@ -332,8 +357,8 @@ std::string CppClassGenerator::generate_header_file_content()
 
 DEPENDENCY_INCLUDE_DIRECTIVES
 
-class CLASS_NAME
-{
+NAMESPACES_OPENER
+CLASS_DECLARATION_OPENER
 private:
 PROPERTIES
 
@@ -344,20 +369,27 @@ DESTRUCTOR
 SETTER_FUNCTIONS
 
 GETTER_FUNCTIONS
-};
+CLASS_DECLARATION_CLOSER
+NAMESPACES_CLOSER
 
 
 )END";
 
    std::string result = header_file_template;
 
+   int required_namespace_indentation_levels = namespaces.size();
+
+   __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opening(true));
+   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closing(true, true));
    __replace(result, "DEPENDENCY_INCLUDE_DIRECTIVES", dependency_include_directives());
    __replace(result, "CLASS_NAME", class_name);
-   __replace(result, "CONSTRUCTOR\n", constructor_declaration(1));
-   __replace(result, "DESTRUCTOR\n", destructor_declaration(1));
-   __replace(result, "PROPERTIES\n", class_property_list(1));
-   __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(1));
-   __replace(result, "GETTER_FUNCTIONS\n", getter_function_declarations(1));
+   __replace(result, "CONSTRUCTOR\n", constructor_declaration(required_namespace_indentation_levels + 1));
+   __replace(result, "DESTRUCTOR\n", destructor_declaration(required_namespace_indentation_levels + 1));
+   __replace(result, "PROPERTIES\n", class_property_list(required_namespace_indentation_levels + 1));
+   __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(required_namespace_indentation_levels + 1));
+   __replace(result, "GETTER_FUNCTIONS\n", getter_function_declarations(required_namespace_indentation_levels + 1));
+   __replace(result, "CLASS_DECLARATION_OPENER\n", class_declaration_opener(required_namespace_indentation_levels));
+   __replace(result, "CLASS_DECLARATION_CLOSER", class_declaration_closer(required_namespace_indentation_levels));
 
    return result;
 }

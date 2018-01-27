@@ -20,7 +20,7 @@ int main(int argc, char **argv)
       { "FSEventStreamRef", { "CoreServices/CoreServices.h" }, {}, { "-framework CoreServices" } }
    };
 
-   Blast::CppClassGenerator class_generator("User", {
+   Blast::CppClassGenerator class_generator("User", { "MyProject" }, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_argument, bool has_getter, bool has_setter
          { "int", "id", "last_id++", false, false, true, false },
          { "std::string", "name", "\"[unnamed]\"", false, false, true, true },
@@ -31,12 +31,10 @@ int main(int argc, char **argv)
       symbol_dependencies
    );
 
-   class_generator.constructor_declaration_elements();
-   class_generator.constructor_definition_elements();
    std::cout << "////////// header file ///////////" << std::endl;
    std::cout << class_generator.generate_header_file_content();
    std::cout << "////////// source file ///////////" << std::endl;
-   std::cout << class_generator.generate_source_file_content("Blast");
+   std::cout << class_generator.generate_source_file_content("MyProject");
 
    return 0;
 }
