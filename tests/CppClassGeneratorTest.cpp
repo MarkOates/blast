@@ -73,7 +73,7 @@ TEST_F(CppClassGeneratorTest, has_namespaces__returns_true_if_namespaces_are_pre
 }
 
 
-TEST_F(CppClassGeneratorTest, has_namespaces__returns_false_if_namespaces_are_present)
+TEST_F(CppClassGeneratorTest, has_namespaces__returns_false_if_namespaces_are_not_present)
 {
    Blast::CppClassGenerator class_generator("User");
    ASSERT_FALSE(class_generator.has_namespaces());
