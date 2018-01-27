@@ -123,33 +123,33 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_opening__without_namespaces_retur
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_without_nested_indentations)
+TEST_F(CppClassGeneratorTest, namespaces_scope_closer__returns_a_formatted_string_of_the_closer_namespace_statement_without_nested_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
-   std::string expected_closing_namespace_statement = "}\n}\n}\n";
-   ASSERT_EQ(expected_closing_namespace_statement, class_generator.namespaces_scope_closing(false));
+   std::string expected_closer_namespace_statement = "}\n}\n}\n";
+   ASSERT_EQ(expected_closer_namespace_statement, class_generator.namespaces_scope_closer(false));
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_closing__returns_a_formatted_string_of_the_closing_namespace_statement_with_nested_indentations)
+TEST_F(CppClassGeneratorTest, namespaces_scope_closer__returns_a_formatted_string_of_the_closer_namespace_statement_with_nested_indentations)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
-   std::string expected_closing_namespace_statement = "      }\n   }\n}\n";
-   ASSERT_EQ(expected_closing_namespace_statement, class_generator.namespaces_scope_closing(true));
+   std::string expected_closer_namespace_statement = "      }\n   }\n}\n";
+   ASSERT_EQ(expected_closer_namespace_statement, class_generator.namespaces_scope_closer(true));
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_closing__can_optionally_include_closing_comment)
+TEST_F(CppClassGeneratorTest, namespaces_scope_closer__can_optionally_include_closer_comment)
 {
    Blast::CppClassGenerator class_generator("Ascend", { "Fullscore", "Action", "Transform" });
-   std::string expected_closing_namespace_statement = "      } // namespace Transform\n   } // namespace Action\n} // namespace Fullscore\n";
-   ASSERT_EQ(expected_closing_namespace_statement, class_generator.namespaces_scope_closing(true, true));
+   std::string expected_closer_namespace_statement = "      } // namespace Transform\n   } // namespace Action\n} // namespace Fullscore\n";
+   ASSERT_EQ(expected_closer_namespace_statement, class_generator.namespaces_scope_closer(true, true));
 }
 
 
-TEST_F(CppClassGeneratorTest, namespaces_scope_closing__without_namespaces_returns_an_empty_string)
+TEST_F(CppClassGeneratorTest, namespaces_scope_closer__without_namespaces_returns_an_empty_string)
 {
-   ASSERT_EQ("", class_generator_fixture.namespaces_scope_closing(false));
+   ASSERT_EQ("", class_generator_fixture.namespaces_scope_closer(false));
 }
 
 

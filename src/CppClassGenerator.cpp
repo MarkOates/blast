@@ -146,7 +146,7 @@ std::string CppClassGenerator::namespaces_scope_opening(bool indented)
 }
 
 
-std::string CppClassGenerator::namespaces_scope_closing(bool indented, bool include_comment)
+std::string CppClassGenerator::namespaces_scope_closer(bool indented, bool include_comment)
 {
    std::stringstream result;
    for (int i=namespaces.size()-1; i>=0; i--)
@@ -362,7 +362,7 @@ NAMESPACES_CLOSER
    std::string result = source_file_template;
 
    __replace(result, "NAMESPACES_OPENER", namespaces_scope_opening(false));
-   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closing(false));
+   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(false));
    __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive(project_name_camelcase));
    __replace(result, "HEADER_FILENAME", header_filename());
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
@@ -404,7 +404,7 @@ NAMESPACES_CLOSER
    int required_namespace_indentation_levels = namespaces.size();
 
    __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opening(true));
-   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closing(true, false));
+   __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(true, false));
    __replace(result, "DEPENDENCY_INCLUDE_DIRECTIVES", dependency_include_directives());
    __replace(result, "CLASS_NAME", class_name);
    __replace(result, "CONSTRUCTOR\n", constructor_declaration(required_namespace_indentation_levels + 1));
