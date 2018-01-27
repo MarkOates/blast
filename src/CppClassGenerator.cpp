@@ -115,10 +115,10 @@ std::string CppClassGenerator::source_filename()
 }
 
 
-std::string CppClassGenerator::header_include_directive()
+std::string CppClassGenerator::header_include_directive(std::string project_name_camelcase)
 {
    std::stringstream result;
-   result << "#include <Blast/" << header_filename() << ">\n";
+   result << "#include <" << project_name_camelcase << "/" << header_filename() << ">\n";
    return result.str();
 }
 
@@ -259,7 +259,7 @@ std::string CppClassGenerator::destructor_definition(int indent_level)
 }
 
 
-std::string CppClassGenerator::generate_source_file_content()
+std::string CppClassGenerator::generate_source_file_content(std::string project_name_camelcase)
 {
    std::string source_file_template = R"END(
 
@@ -278,7 +278,7 @@ GETTER_FUNCTIONS
 
    std::string result = source_file_template;
 
-   __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE", header_include_directive());
+   __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE", header_include_directive(project_name_camelcase));
    __replace(result, "HEADER_FILENAME", header_filename());
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
    __replace(result, "DESTRUCTOR\n", destructor_definition(0));

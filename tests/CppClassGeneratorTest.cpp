@@ -124,8 +124,8 @@ TEST_F(CppClassGeneratorTest, source_filename__returns_the_filename_for_the_head
 
 TEST_F(CppClassGeneratorTest, header_include_directive__returns_the_include_line_to_include_the_class_header_file)
 {
-   std::string expected_header_directive = "#include <Blast/User.hpp>\n";
-   ASSERT_EQ(expected_header_directive, class_generator_fixture.header_include_directive());
+   std::string expected_header_directive = "#include <ProjectName/User.hpp>\n";
+   ASSERT_EQ(expected_header_directive, class_generator_fixture.header_include_directive("ProjectName"));
 }
 
 
