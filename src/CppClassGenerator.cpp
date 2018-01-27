@@ -278,7 +278,7 @@ GETTER_FUNCTIONS
 
    std::string result = source_file_template;
 
-   __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE", header_include_directive(project_name_camelcase));
+   __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive(project_name_camelcase));
    __replace(result, "HEADER_FILENAME", header_filename());
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
    __replace(result, "DESTRUCTOR\n", destructor_definition(0));
