@@ -260,7 +260,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_d
       { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
    };
 
-   class_generator_fixture = Blast::CppClassGenerator("User", {}, {}, {
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
          { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, true },
       },
@@ -268,7 +268,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_d
    );
 
    std::string expected_dependency_directives = "#include <Blast/DiceRoller.hpp>\n#include <string>\n";
-   ASSERT_EQ(expected_dependency_directives, class_generator_fixture.dependency_include_directives());
+   ASSERT_EQ(expected_dependency_directives, class_generator.dependency_include_directives());
 }
 
 
@@ -279,7 +279,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
       { "float" },
    };
 
-   class_generator_fixture = Blast::CppClassGenerator("User", {}, {}, {
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "num_sides", "0", false, false, true, false },
          { "float", "radius", "6.0f", false, true, true, true },
@@ -287,18 +287,18 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
       symbol_dependencies
    );
 
-   ASSERT_EQ("", class_generator_fixture.dependency_include_directives());
+   ASSERT_EQ("", class_generator.dependency_include_directives());
 }
 
 
 TEST_F(CppClassGeneratorTest, dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
 {
-   class_generator_fixture = Blast::CppClassGenerator("User", {}, {}, {
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
          { "undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false },
       }
    );
 
-   ASSERT_THROW(class_generator_fixture.dependency_include_directives(), std::runtime_error);
+   ASSERT_THROW(class_generator.dependency_include_directives(), std::runtime_error);
 }
 
 
