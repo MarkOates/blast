@@ -170,6 +170,15 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_closer__without_namespaces_return
 }
 
 
+TEST_F(CppClassGeneratorTest, class_declaration_inheritence_list__returns_a_formatted_string_listing_the_inherited_classes_for_a_class_opener_statement)
+{
+   Blast::CppClassGenerator class_generator("Ascend", {}, { { "Action", "\"ascend_action\"", "private" }, { "Scriptable<Ascend>", "", "protected" } });
+
+   std::string expected_elements = ": private Action, protected Scriptable<Ascend>";
+   ASSERT_EQ(expected_elements, class_generator.class_declaration_inheritence_list());
+}
+
+
 TEST_F(CppClassGeneratorTest, class_declaration_opener__returns_a_formatted_string_of_the_classes_opener_statement)
 {
    Blast::CppClassGenerator class_generator("Happiness");
@@ -229,6 +238,15 @@ TEST_F(CppClassGeneratorTest, initialization_list_elements__when_properties_are_
 
    std::vector<std::string> expected_elements = { "id(last_id++)", "name(\"[unnamed]\")", "type(MAGE)" };
    ASSERT_EQ(expected_elements, class_generator_fixture.initialization_list_elements());
+}
+
+
+TEST_F(CppClassGeneratorTest, class_declaration_opener_inheritence_elements__returns_a_list_of_formatted_inheritence_elements_for_the_class_declaration_opener)
+{
+   Blast::CppClassGenerator class_generator("Ascend", {}, { { "Action", "\"ascend_action\"", "private" }, { "Scriptable<Ascend>", "", "protected" } });
+
+   std::vector<std::string> expected_elements = { "private Action", "protected Scriptable<Ascend>" };
+   ASSERT_EQ(expected_elements, class_generator.class_declaration_opener_inheritence_elements());
 }
 
 

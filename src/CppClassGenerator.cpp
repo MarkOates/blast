@@ -90,6 +90,15 @@ std::vector<std::string> CppClassGenerator::initialization_list_elements()
 }
 
 
+std::vector<std::string> CppClassGenerator::class_declaration_opener_inheritence_elements()
+{
+   std::vector<std::string> elements;
+   for (auto &parent_class_properties : parent_classes_properties)
+      elements.push_back(parent_class_properties.as_class_inheritence_declaration());
+   return elements;
+}
+
+
 void CppClassGenerator::set_class_name(std::string class_name)
 {
    this->class_name = class_name;
@@ -169,10 +178,24 @@ std::string CppClassGenerator::namespaces_scope_closer(bool indented, bool inclu
 }
 
 
+std::string CppClassGenerator::class_declaration_inheritence_list()
+{
+   std::stringstream result;
+   if (!has_parent_classes()) return "";
+
+   result << " : ";
+   for (int i=0; i<parent_classes_properties.size()-1; i++)
+      result << parent_classes_properties[i].as_class_inheritence_declaration() << ", ";
+   result << parent_classes_properties.back().as_class_inheritence_declaration();
+
+   return result.str();
+}
+
+
 std::string CppClassGenerator::class_declaration_opener(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << "class " << class_name << "\n" << std::string(3*indent_level, ' ') << "{\n";
+   result << std::string(3*indent_level, ' ') << "class " << class_name << class_declaration_inheritence_list() << "\n" << std::string(3*indent_level, ' ') << "{\n";
    return result.str();
 }
 
