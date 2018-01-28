@@ -34,9 +34,10 @@ namespace Blast
 {
 
 
-CppClassGenerator::CppClassGenerator(std::string class_name, std::vector<std::string> namespaces, std::vector<ClassAttributeProperties> attribute_properties, std::vector<Blast::SymbolDependencies> symbol_dependencies)
+CppClassGenerator::CppClassGenerator(std::string class_name, std::vector<std::string> namespaces, std::vector<Blast::ParentClassProperties> parent_classes_properties, std::vector<ClassAttributeProperties> attribute_properties, std::vector<Blast::SymbolDependencies> symbol_dependencies)
    : class_name(class_name)
    , namespaces(namespaces)
+   , parent_classes_properties(parent_classes_properties)
    , attribute_properties(attribute_properties)
    , symbol_dependencies(symbol_dependencies)
 {
@@ -81,16 +82,32 @@ std::vector<std::string> CppClassGenerator::constructor_definition_elements()
 std::vector<std::string> CppClassGenerator::initialization_list_elements()
 {
    std::vector<std::string> elements;
+   for (auto &parent_class_properties : parent_classes_properties)
+      elements.push_back(parent_class_properties.as_argument_in_initialization_list());
    for (auto &attribute_property : attribute_properties)
       elements.push_back(attribute_property.as_argument_in_initialization_list());
    return elements;
 }
 
 
+std::vector<std::string> CppClassGenerator::class_declaration_opener_inheritence_elements()
+{
+   std::vector<std::string> elements;
+   for (auto &parent_class_properties : parent_classes_properties)
+      elements.push_back(parent_class_properties.as_class_inheritence_declaration());
+   return elements;
+}
+
 
 void CppClassGenerator::set_class_name(std::string class_name)
 {
    this->class_name = class_name;
+}
+
+
+bool CppClassGenerator::has_parent_classes()
+{
+   return !parent_classes_properties.empty();
 }
 
 
@@ -161,10 +178,24 @@ std::string CppClassGenerator::namespaces_scope_closer(bool indented, bool inclu
 }
 
 
+std::string CppClassGenerator::class_declaration_inheritence_list()
+{
+   std::stringstream result;
+   if (!has_parent_classes()) return "";
+
+   result << " : ";
+   for (int i=0; i<parent_classes_properties.size()-1; i++)
+      result << parent_classes_properties[i].as_class_inheritence_declaration() << ", ";
+   result << parent_classes_properties.back().as_class_inheritence_declaration();
+
+   return result.str();
+}
+
+
 std::string CppClassGenerator::class_declaration_opener(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << "class " << class_name << "\n" << std::string(3*indent_level, ' ') << "{\n";
+   result << std::string(3*indent_level, ' ') << "class " << class_name << class_declaration_inheritence_list() << "\n" << std::string(3*indent_level, ' ') << "{\n";
    return result.str();
 }
 

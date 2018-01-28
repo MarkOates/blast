@@ -14,7 +14,7 @@ protected:
 
    virtual void SetUp()
    {
-      class_generator_fixture = Blast::CppClassGenerator("User", {}, {
+      class_generator_fixture = Blast::CppClassGenerator("User", {}, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "id", "last_id++", false, false, true, false },
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
@@ -60,6 +60,23 @@ TEST_F(CppClassGeneratorTest, can_get_and_set_the_class_name)
    ASSERT_EQ("Animal", class_generator.get_class_name());
    class_generator.set_class_name("ClassAttributeProperties");
    ASSERT_EQ("ClassAttributeProperties", class_generator.get_class_name());
+}
+
+
+TEST_F(CppClassGeneratorTest, has_parent_classes__returns_true_if_parent_classes_are_present)
+{
+   Blast::CppClassGenerator class_generator1("CppClassGenerator", {}, { { "Blast" } });
+   ASSERT_TRUE(class_generator1.has_parent_classes());
+
+   Blast::CppClassGenerator class_generator2("Ascend", {}, { { "ActionBase" }, { "Scriptable<Ascend>" } });
+   ASSERT_TRUE(class_generator2.has_parent_classes());
+}
+
+
+TEST_F(CppClassGeneratorTest, has_parent_classes__returns_false_if_parent_classes_are_not_present)
+{
+   Blast::CppClassGenerator class_generator("User");
+   ASSERT_FALSE(class_generator.has_parent_classes());
 }
 
 
@@ -153,6 +170,15 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_closer__without_namespaces_return
 }
 
 
+TEST_F(CppClassGeneratorTest, class_declaration_inheritence_list__returns_a_formatted_string_listing_the_inherited_classes_for_a_class_opener_statement)
+{
+   Blast::CppClassGenerator class_generator("Ascend", {}, { { "Action", "\"ascend_action\"", "private" }, { "Scriptable<Ascend>", "", "protected" } });
+
+   std::string expected_elements = " : private Action, protected Scriptable<Ascend>";
+   ASSERT_EQ(expected_elements, class_generator.class_declaration_inheritence_list());
+}
+
+
 TEST_F(CppClassGeneratorTest, class_declaration_opener__returns_a_formatted_string_of_the_classes_opener_statement)
 {
    Blast::CppClassGenerator class_generator("Happiness");
@@ -215,6 +241,15 @@ TEST_F(CppClassGeneratorTest, initialization_list_elements__when_properties_are_
 }
 
 
+TEST_F(CppClassGeneratorTest, class_declaration_opener_inheritence_elements__returns_a_list_of_formatted_inheritence_elements_for_the_class_declaration_opener)
+{
+   Blast::CppClassGenerator class_generator("Ascend", {}, { { "Action", "\"ascend_action\"", "private" }, { "Scriptable<Ascend>", "", "protected" } });
+
+   std::vector<std::string> expected_elements = { "private Action", "protected Scriptable<Ascend>" };
+   ASSERT_EQ(expected_elements, class_generator.class_declaration_opener_inheritence_elements());
+}
+
+
 TEST_F(CppClassGeneratorTest, header_filename__returns_the_filename_for_the_header_of_the_class)
 {
    std::string expected_header_filename = "User.hpp";
@@ -243,7 +278,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_d
       { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
    };
 
-   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
          { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, true },
       },
@@ -251,7 +286,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_d
    );
 
    std::string expected_dependency_directives = "#include <Blast/DiceRoller.hpp>\n#include <string>\n";
-   ASSERT_EQ(expected_dependency_directives, class_generator_fixture.dependency_include_directives());
+   ASSERT_EQ(expected_dependency_directives, class_generator.dependency_include_directives());
 }
 
 
@@ -262,7 +297,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
       { "float" },
    };
 
-   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "num_sides", "0", false, false, true, false },
          { "float", "radius", "6.0f", false, true, true, true },
@@ -270,18 +305,18 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
       symbol_dependencies
    );
 
-   ASSERT_EQ("", class_generator_fixture.dependency_include_directives());
+   ASSERT_EQ("", class_generator.dependency_include_directives());
 }
 
 
 TEST_F(CppClassGeneratorTest, dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
 {
-   class_generator_fixture = Blast::CppClassGenerator("User", {}, {
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
          { "undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false },
       }
    );
 
-   ASSERT_THROW(class_generator_fixture.dependency_include_directives(), std::runtime_error);
+   ASSERT_THROW(class_generator.dependency_include_directives(), std::runtime_error);
 }
 
 
