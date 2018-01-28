@@ -7,6 +7,12 @@
 #include <cmath>
 
 
+#define ASSERT_THROW_WITH_MESSAGE(code, raised_exception_type, raised_exception_message) \
+   try { code; FAIL() << "Expected " # raised_exception_type; } \
+   catch ( raised_exception_type const &err ) { EXPECT_EQ(err.what(), std::string( raised_exception_message )); } \
+   catch (...) { FAIL() << "Expected " # raised_exception_type; }
+
+
 class CppClassGeneratorTest : public ::testing::Test
 {
 protected:
@@ -290,6 +296,39 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_d
 }
 
 
+TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_directives_for_the_existing_dependencies_for_a_classes_properties)
+{
+   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+      { "std::string", { "string" } },
+      { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
+   };
+
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
+         { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
+         { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, true },
+      },
+      symbol_dependencies
+   );
+
+   std::string expected_dependency_directives = "#include <Blast/DiceRoller.hpp>\n#include <string>\n";
+   ASSERT_EQ(expected_dependency_directives, class_generator.dependency_include_directives());
+}
+
+
+TEST_F(CppClassGeneratorTest, dependency_include_directives__includes_the_list_of_dependencies_for_parent_classes)
+{
+   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+      { "ActionBase", { "Fullscore/Action/ActionBase.hpp" } },
+      { "Scriptable<Ascend>", { "Blast/Scriptable.hpp" } },
+   };
+
+   Blast::CppClassGenerator class_generator("Ascend", {}, { { "ActionBase" }, { "Scriptable<Ascend>" } }, {}, symbol_dependencies);
+
+   std::string expected_dependency_directives = "#include <Blast/Scriptable.hpp>\n#include <Fullscore/Action/ActionBase.hpp>\n";
+   ASSERT_EQ(expected_dependency_directives, class_generator.dependency_include_directives());
+}
+
+
 TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencies_are_required_returns_an_empty_string)
 {
    std::vector<Blast::SymbolDependencies> symbol_dependencies = {
@@ -311,12 +350,13 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
 
 TEST_F(CppClassGeneratorTest, dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
 {
-   Blast::CppClassGenerator class_generator("User", {}, {}, {
-         { "undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false },
+   Blast::CppClassGenerator class_generator("User", {}, { { "SomeUndefinedParentClass" } }, {
+         { "some_undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false },
       }
    );
 
-   ASSERT_THROW(class_generator.dependency_include_directives(), std::runtime_error);
+   std::string expected_error_message = "Undefined symbol for datatypes [ \"SomeUndefinedParentClass\", \"some_undefined_symbol\",  ]";
+   ASSERT_THROW_WITH_MESSAGE(class_generator.dependency_include_directives(), std::runtime_error, expected_error_message);
 }
 
 
