@@ -22,7 +22,8 @@ int main(int argc, char **argv)
       { "AnimalBase", { "Animal/AnimalBase.hpp" } }
    };
 
-   Blast::CppClassGenerator class_generator("Kitten",
+   Blast::CppClassGenerator class_generator(
+      "Kitten",
       { "MyProject" },
       { { "AnimalBase", "\"Kitten\"" } },
       {
