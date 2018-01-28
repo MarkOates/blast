@@ -390,7 +390,6 @@ SETTER_FUNCTIONS
 GETTER_FUNCTIONS
 NAMESPACES_CLOSER
 
-
 )END";
 
    std::string result = source_file_template;
