@@ -17,12 +17,14 @@ int main(int argc, char **argv)
       // some more complex examples
       { "ALLEGRO_BITMAP*", { "allegro5/allegro.h" }, { "~/Repos/username/allegro5/include" }, { "-lallegro" } },
       { "al_get_font_line_height", { "allegro5/allegro.h", "allegro5/allegro_font.h" }, { "~/Repos/username/allegro5/include" }, { "-lallegro_font" } },
-      { "FSEventStreamRef", { "CoreServices/CoreServices.h" }, {}, { "-framework CoreServices" } }
+      { "FSEventStreamRef", { "CoreServices/CoreServices.h" }, {}, { "-framework CoreServices" } },
+      // dependencies for the parent class(es)
+      { "AnimalBase", { "Animal/AnimalBase.hpp" } }
    };
 
    Blast::CppClassGenerator class_generator("Kitten",
       { "MyProject" },
-      { { "Animal", "\"Kitten\"" } },
+      { { "AnimalBase", "\"Kitten\"" } },
       {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_argument, bool has_getter, bool has_setter
          { "int", "id", "last_id++", false, false, true, false },
