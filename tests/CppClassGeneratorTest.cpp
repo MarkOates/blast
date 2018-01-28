@@ -174,7 +174,7 @@ TEST_F(CppClassGeneratorTest, class_declaration_inheritence_list__returns_a_form
 {
    Blast::CppClassGenerator class_generator("Ascend", {}, { { "Action", "\"ascend_action\"", "private" }, { "Scriptable<Ascend>", "", "protected" } });
 
-   std::string expected_elements = ": private Action, protected Scriptable<Ascend>";
+   std::string expected_elements = " : private Action, protected Scriptable<Ascend>";
    ASSERT_EQ(expected_elements, class_generator.class_declaration_inheritence_list());
 }
 
