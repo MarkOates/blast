@@ -78,6 +78,14 @@ std::string ParentClassProperties::get_scope_specifier()
 }
 
 
+std::string ParentClassProperties::as_class_inheritence_declaration()
+{
+   std::stringstream result;
+   result << scope_specifier << ' ' << class_name;
+   return result.str();
+}
+
+
 std::string ParentClassProperties::as_argument_in_initialization_list()
 {
    std::stringstream result;

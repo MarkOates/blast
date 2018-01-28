@@ -83,6 +83,14 @@ TEST(ParentClassPropertiesTest, can_get_and_set_constructor_arguments)
 }
 
 
+TEST(ParentClassPropertiesTest, as_class_inheritence_declaration__returns_a_string_formatted_for_class_inheritence_declaration)
+{
+   Blast::ParentClassProperties parent_class_properties("Donkey", "1234, \"tree\", new SurfaceAreaBox(3, 5, 7, 13)", "private");
+   std::string expected_initialization_list_argument = "private Donkey";
+   ASSERT_EQ(expected_initialization_list_argument, parent_class_properties.as_class_inheritence_declaration());
+}
+
+
 TEST(ParentClassPropertiesTest, as_argument_in_initialization_list__returns_a_string_formatted_for_an_initialization_list)
 {
    Blast::ParentClassProperties parent_class_properties("Donkey", "1234, \"tree\", new SurfaceAreaBox(3, 5, 7, 13)", "private");
