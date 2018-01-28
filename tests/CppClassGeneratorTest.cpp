@@ -277,25 +277,6 @@ TEST_F(CppClassGeneratorTest, header_include_directive__returns_the_include_line
 }
 
 
-TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_directives_for_the_existing_dependencies)
-{
-   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
-      { "std::string", { "string" } },
-      { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
-   };
-
-   Blast::CppClassGenerator class_generator("User", {}, {}, {
-         { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
-         { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, true },
-      },
-      symbol_dependencies
-   );
-
-   std::string expected_dependency_directives = "#include <Blast/DiceRoller.hpp>\n#include <string>\n";
-   ASSERT_EQ(expected_dependency_directives, class_generator.dependency_include_directives());
-}
-
-
 TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_directives_for_the_existing_dependencies_for_a_classes_properties)
 {
    std::vector<Blast::SymbolDependencies> symbol_dependencies = {
