@@ -78,6 +78,14 @@ std::string ParentClassProperties::get_scope_specifier()
 }
 
 
+std::string ParentClassProperties::as_argument_in_initialization_list()
+{
+   std::stringstream result;
+   result << class_name << '(' << constructor_arguments << ')';
+   return result.str();
+}
+
+
 } // namespace Blast
 
 

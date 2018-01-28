@@ -27,6 +27,8 @@ namespace Blast
       std::string get_class_name();
       std::string get_constructor_arguments();
       std::string get_scope_specifier();
+
+      std::string as_argument_in_initialization_list();
    };
 }
 
