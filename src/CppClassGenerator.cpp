@@ -239,13 +239,16 @@ std::string CppClassGenerator::dependency_include_directives()
    std::set<std::string> symbol_dependency_header_directives;
    std::set<std::string> undefined_symbols;
 
+   std::set<std::string> present_symbols;
+   for (auto &attribute_property : attribute_properties) present_symbols.insert(attribute_property.datatype);
+   for (auto &parent_class_properties : parent_classes_properties) present_symbols.insert(parent_class_properties.get_class_name());
 
-   for (auto &attribute_property : attribute_properties)
+   for (auto &present_symbol : present_symbols)
    {
       bool found = false;
       for (auto &individual_symbol_dependencies : symbol_dependencies)
       {
-         if (individual_symbol_dependencies.is_symbol(attribute_property.datatype))
+         if (individual_symbol_dependencies.is_symbol(present_symbol))
          {
             found = true;
             if (individual_symbol_dependencies.requires_header_files())
@@ -257,7 +260,7 @@ std::string CppClassGenerator::dependency_include_directives()
          }
       }
 
-      if (!found) undefined_symbols.insert(attribute_property.datatype);
+      if (!found) undefined_symbols.insert(present_symbol);
    }
 
    if (!undefined_symbols.empty())
@@ -386,7 +389,6 @@ DESTRUCTOR
 SETTER_FUNCTIONS
 GETTER_FUNCTIONS
 NAMESPACES_CLOSER
-
 
 )END";
 
