@@ -2,6 +2,7 @@
 
 
 #include <Blast/ClassAttributeProperties.hpp>
+#include <Blast/ParentClassProperties.hpp>
 #include <Blast/SymbolDependencies.hpp>
 #include <string>
 #include <vector>
@@ -14,11 +15,12 @@ namespace Blast
    private:
       std::string class_name;
       std::vector<std::string> namespaces;
+      std::vector<Blast::ParentClassProperties> parent_classes_properties;
       std::vector<Blast::ClassAttributeProperties> attribute_properties;
       std::vector<Blast::SymbolDependencies> symbol_dependencies;
 
    public:
-      CppClassGenerator(std::string class_name="UnnamedClass", std::vector<std::string> namespaces={}, std::vector<ClassAttributeProperties> attribute_properties={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
+      CppClassGenerator(std::string class_name="UnnamedClass", std::vector<std::string> namespaces={}, std::vector<Blast::ParentClassProperties> parent_classes_properties={}, std::vector<ClassAttributeProperties> attribute_properties={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
       ~CppClassGenerator();
 
       std::vector<ClassAttributeProperties> &get_class_attribute_properties_ref();
@@ -32,6 +34,7 @@ namespace Blast
 
       std::string get_class_name();
 
+      bool has_parent_classes();
       bool has_namespaces();
 
       std::string private_scope_specifier(int indent_level=0);
