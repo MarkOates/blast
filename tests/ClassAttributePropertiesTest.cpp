@@ -66,6 +66,15 @@ TEST(ClassAttributePropertiesTest, as_class_property__formats_the_attribute_as_l
 }
 
 
+TEST(ClassAttributePropertiesTest, as_class_property__formats_the_attribute_as_listed_in_a_class_declaration_with_the_appropriate_static_qualifier)
+{
+   Blast::ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", true, false, false, false);
+
+   std::string expected_string = "static std::string my_variable";
+   ASSERT_EQ(expected_string, attribute_properties.as_class_property());
+}
+
+
 TEST(ClassAttributePropertiesTest, getter_function_symbol__returns_the_symbol_used_for_the_getter_function)
 {
    Blast::ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false, false);

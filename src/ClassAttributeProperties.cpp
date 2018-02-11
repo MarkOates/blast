@@ -61,6 +61,7 @@ std::string ClassAttributeProperties::as_argument_in_initialization_list()
 std::string ClassAttributeProperties::as_class_property()
 {
    std::stringstream result;
+   if (is_static) result << "static ";
    result << datatype << " " << variable_name;
    return result.str();
 }
