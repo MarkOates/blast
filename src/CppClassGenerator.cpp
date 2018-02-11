@@ -402,6 +402,7 @@ CLASS_HEADER_INCLUDE_DIRECTIVE
 
 NAMESPACES_OPENER
 
+STATIC_ATTRIBUTE_DEFINITIONS
 CONSTRUCTOR
 
 
@@ -416,6 +417,7 @@ NAMESPACES_CLOSER
 
    std::string result = source_file_template;
 
+   __replace(result, "STATIC_ATTRIBUTE_DEFINITIONS\n", static_attribute_definitions(false));
    __replace(result, "NAMESPACES_OPENER", namespaces_scope_opener(false));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(false));
    __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive(project_name_camelcase));
