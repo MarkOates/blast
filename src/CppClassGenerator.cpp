@@ -297,6 +297,15 @@ std::string CppClassGenerator::class_property_list(int indent_level)
 }
 
 
+std::string CppClassGenerator::static_attribute_definitions(int indent_level)
+{
+   std::stringstream result;
+   for (auto &static_attribute_definition : static_attribute_definition_elements())
+      result << std::string(3*indent_level, ' ') << static_attribute_definition << "\n\n\n";
+   return result.str();
+}
+
+
 std::string CppClassGenerator::getter_function_declarations(int indent_level)
 {
    std::stringstream result;

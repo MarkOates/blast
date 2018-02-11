@@ -52,6 +52,7 @@ namespace Blast
       std::string header_include_directive(std::string project_name_camelcase);
       std::string dependency_include_directives();
       std::string class_property_list(int indent_level=0);
+      std::string static_attribute_definitions(int indent_level=0);
       std::string getter_function_declarations(int indent_level=0);
       std::string getter_function_definitions(int indent_level=0);
       std::string setter_function_declarations(int indent_level=0);

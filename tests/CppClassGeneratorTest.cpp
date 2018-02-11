@@ -377,6 +377,27 @@ TEST_F(CppClassGeneratorTest, class_property_list__returns_the_expected_formatte
 }
 
 
+TEST_F(CppClassGeneratorTest, static_attribute_definitions__returns_a_string_formatted_with_the_expected_definitions)
+{
+   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+      { "int" },
+      { "float" },
+   };
+
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
+         //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
+         { "int", "next_id", "0", true, false, false, false },
+         { "int", "id", "next_id++", false, false, true, false },
+         { "float", "time_velocity", "13.0f", true, false, false, false },
+      },
+      symbol_dependencies
+   );
+
+   std::string expected_property_list = "   int User::next_id = 0;\n\n\n   float User::time_velocity = 13.0f;\n\n\n";
+   ASSERT_EQ(expected_property_list, class_generator.static_attribute_definitions(1));
+}
+
+
 TEST_F(CppClassGeneratorTest, getter_function_declarations__returns_the_expected_formatted_string_for_properties_with_getter_functions)
 {
    std::vector<Blast::ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
