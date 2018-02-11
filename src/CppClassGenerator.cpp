@@ -301,7 +301,12 @@ std::string CppClassGenerator::getter_function_declarations(int indent_level)
 {
    std::stringstream result;
    for (auto &attribute_property : attribute_properties)
-      if (attribute_property.has_getter) result << std::string(3*indent_level, ' ') << attribute_property.getter_function_declaration() << "\n";
+      if (attribute_property.has_getter)
+      {
+         result << std::string(3*indent_level, ' ');
+         if (attribute_property.is_static) result << "static ";
+         result << attribute_property.getter_function_declaration() << "\n";
+      }
    return result.str();
 }
 

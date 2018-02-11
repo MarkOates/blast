@@ -372,7 +372,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_a_symbol_depen
 
 TEST_F(CppClassGeneratorTest, class_property_list__returns_the_expected_formatted_string_of_class_properties)
 {
-   std::string expected_property_list = "   int id;\n   std::string name;\n   type_t type;\n";
+   std::string expected_property_list = "   static int last_id;\n   int id;\n   std::string name;\n   type_t type;\n";
    ASSERT_EQ(expected_property_list, class_generator_fixture.class_property_list(1));
 }
 
@@ -381,10 +381,11 @@ TEST_F(CppClassGeneratorTest, getter_function_declarations__returns_the_expected
 {
    std::vector<Blast::ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
    class_attribute_properties[0].has_getter = true;
-   class_attribute_properties[1].has_getter = false;
-   class_attribute_properties[2].has_getter = true;
+   class_attribute_properties[1].has_getter = true;
+   class_attribute_properties[2].has_getter = false;
+   class_attribute_properties[3].has_getter = true;
 
-   std::string expected_declarations_list = "   int get_id();\n   type_t get_type();\n";
+   std::string expected_declarations_list = "   static int get_last_id();\n   int get_id();\n   type_t get_type();\n";
    ASSERT_EQ(expected_declarations_list, class_generator_fixture.getter_function_declarations(1));
 }
 
@@ -393,10 +394,11 @@ TEST_F(CppClassGeneratorTest, getter_function_definitions__returns_the_expected_
 {
    std::vector<Blast::ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
    class_attribute_properties[0].has_getter = true;
-   class_attribute_properties[1].has_getter = false;
-   class_attribute_properties[2].has_getter = true;
+   class_attribute_properties[1].has_getter = true;
+   class_attribute_properties[2].has_getter = false;
+   class_attribute_properties[3].has_getter = true;
 
-   std::string expected_definition_list = "int User::get_id()\n{\n   return id;\n}\n\n\ntype_t User::get_type()\n{\n   return type;\n}\n\n\n";
+   std::string expected_definition_list = "int User::get_last_id()\n{\n   return last_id;\n}\n\n\nint User::get_id()\n{\n   return id;\n}\n\n\ntype_t User::get_type()\n{\n   return type;\n}\n\n\n";
    ASSERT_EQ(expected_definition_list, class_generator_fixture.getter_function_definitions());
 }
 
