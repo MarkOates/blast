@@ -99,6 +99,15 @@ std::vector<std::string> CppClassGenerator::class_declaration_opener_inheritence
 }
 
 
+std::vector<std::string> CppClassGenerator::static_attribute_definition_elements()
+{
+   std::vector<std::string> elements;
+   for (auto &attribute_property : attribute_properties)
+      if (attribute_property.is_static) elements.push_back(attribute_property.as_static_definition(class_name));
+   return elements;
+}
+
+
 void CppClassGenerator::set_class_name(std::string class_name)
 {
    this->class_name = class_name;

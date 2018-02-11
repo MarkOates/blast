@@ -263,6 +263,28 @@ TEST_F(CppClassGeneratorTest, class_declaration_opener_inheritence_elements__ret
 }
 
 
+TEST_F(CppClassGeneratorTest, static_attribute_definition_elements__returns_the_expected_list_of_formatted_static_attribute_definitions)
+{
+   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+      { "int" },
+      { "float" },
+   };
+
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
+         //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
+         { "int", "next_id", "0", true, false, false, false },
+         { "int", "id", "next_id++", false, false, true, false },
+         { "float", "time_velocity", "13.0f", true, false, false, false },
+      },
+      symbol_dependencies
+   );
+
+   std::vector<std::string> expected_elements = { "int User::next_id = 0;", "float User::time_velocity = 13.0f;" };
+   ASSERT_EQ(expected_elements, class_generator.static_attribute_definition_elements());
+}
+
+
+
 TEST_F(CppClassGeneratorTest, header_filename__returns_the_filename_for_the_header_of_the_class)
 {
    std::string expected_header_filename = "User.hpp";
