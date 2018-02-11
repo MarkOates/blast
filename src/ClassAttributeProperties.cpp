@@ -122,6 +122,8 @@ std::string ClassAttributeProperties::setter_function_symbol()
 
 std::string ClassAttributeProperties::setter_function_declaration()
 {
+   if (is_static) throw std::runtime_error("Setter declarations are not implemented for static properties");
+
    std::stringstream result;
    result << "void " << setter_function_symbol() << "(" << datatype << " " << variable_name << ");";
    return result.str();
@@ -130,6 +132,8 @@ std::string ClassAttributeProperties::setter_function_declaration()
 
 std::string ClassAttributeProperties::setter_function_definition(std::string class_name)
 {
+   if (is_static) throw std::runtime_error("Setter definitions are not implemented for static properties");
+
    std::stringstream result;
    result << "void " << class_name << "::set_" << variable_name << "(" << datatype << " " << variable_name << ")\n{\n   this->" << variable_name << " = " << variable_name << ";\n}\n";
    return result.str();
