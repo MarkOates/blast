@@ -85,7 +85,7 @@ std::vector<std::string> CppClassGenerator::initialization_list_elements()
    for (auto &parent_class_properties : parent_classes_properties)
       elements.push_back(parent_class_properties.as_argument_in_initialization_list());
    for (auto &attribute_property : attribute_properties)
-      elements.push_back(attribute_property.as_argument_in_initialization_list());
+      if (!attribute_property.is_static) elements.push_back(attribute_property.as_argument_in_initialization_list());
    return elements;
 }
 

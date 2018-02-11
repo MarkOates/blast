@@ -22,6 +22,7 @@ protected:
    {
       class_generator_fixture = Blast::CppClassGenerator("User", {}, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
+         { "int", "last_id", "0", true, false, false, false },
          { "int", "id", "last_id++", false, false, true, false },
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
          { "type_t", "type", "MAGE", false, true, true, true },
@@ -244,6 +245,12 @@ TEST_F(CppClassGeneratorTest, initialization_list_elements__when_properties_are_
 
    std::vector<std::string> expected_elements = { "id(last_id++)", "name(\"[unnamed]\")", "type(MAGE)" };
    ASSERT_EQ(expected_elements, class_generator_fixture.initialization_list_elements());
+}
+
+
+TEST_F(CppClassGeneratorTest, initialization_list_elements__does_not_include_static_members)
+{
+   // TODO
 }
 
 
