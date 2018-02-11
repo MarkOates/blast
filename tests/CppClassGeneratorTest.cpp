@@ -22,6 +22,7 @@ protected:
    {
       class_generator_fixture = Blast::CppClassGenerator("User", {}, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
+         { "int", "last_id", "0", true, false, false, false },
          { "int", "id", "last_id++", false, false, true, false },
          { "std::string", "name", "\"[unnamed]\"", false, true, true, true },
          { "type_t", "type", "MAGE", false, true, true, true },
@@ -247,6 +248,12 @@ TEST_F(CppClassGeneratorTest, initialization_list_elements__when_properties_are_
 }
 
 
+TEST_F(CppClassGeneratorTest, initialization_list_elements__does_not_include_static_members)
+{
+   // TODO
+}
+
+
 TEST_F(CppClassGeneratorTest, class_declaration_opener_inheritence_elements__returns_a_list_of_formatted_inheritence_elements_for_the_class_declaration_opener)
 {
    Blast::CppClassGenerator class_generator("Ascend", {}, { { "Action", "\"ascend_action\"", "private" }, { "Scriptable<Ascend>", "", "protected" } });
@@ -254,6 +261,28 @@ TEST_F(CppClassGeneratorTest, class_declaration_opener_inheritence_elements__ret
    std::vector<std::string> expected_elements = { "private Action", "protected Scriptable<Ascend>" };
    ASSERT_EQ(expected_elements, class_generator.class_declaration_opener_inheritence_elements());
 }
+
+
+TEST_F(CppClassGeneratorTest, static_attribute_definition_elements__returns_the_expected_list_of_formatted_static_attribute_definitions)
+{
+   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+      { "int" },
+      { "float" },
+   };
+
+   Blast::CppClassGenerator class_generator("User", {}, {}, {
+         //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
+         { "int", "next_id", "0", true, false, false, false },
+         { "int", "id", "next_id++", false, false, true, false },
+         { "float", "time_velocity", "13.0f", true, false, false, false },
+      },
+      symbol_dependencies
+   );
+
+   std::vector<std::string> expected_elements = { "int User::next_id = 0;", "float User::time_velocity = 13.0f;" };
+   ASSERT_EQ(expected_elements, class_generator.static_attribute_definition_elements());
+}
+
 
 
 TEST_F(CppClassGeneratorTest, header_filename__returns_the_filename_for_the_header_of_the_class)
@@ -343,7 +372,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_a_symbol_depen
 
 TEST_F(CppClassGeneratorTest, class_property_list__returns_the_expected_formatted_string_of_class_properties)
 {
-   std::string expected_property_list = "   int id;\n   std::string name;\n   type_t type;\n";
+   std::string expected_property_list = "   static int last_id;\n   int id;\n   std::string name;\n   type_t type;\n";
    ASSERT_EQ(expected_property_list, class_generator_fixture.class_property_list(1));
 }
 
@@ -352,10 +381,11 @@ TEST_F(CppClassGeneratorTest, getter_function_declarations__returns_the_expected
 {
    std::vector<Blast::ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
    class_attribute_properties[0].has_getter = true;
-   class_attribute_properties[1].has_getter = false;
-   class_attribute_properties[2].has_getter = true;
+   class_attribute_properties[1].has_getter = true;
+   class_attribute_properties[2].has_getter = false;
+   class_attribute_properties[3].has_getter = true;
 
-   std::string expected_declarations_list = "   int get_id();\n   type_t get_type();\n";
+   std::string expected_declarations_list = "   static int get_last_id();\n   int get_id();\n   type_t get_type();\n";
    ASSERT_EQ(expected_declarations_list, class_generator_fixture.getter_function_declarations(1));
 }
 
@@ -364,10 +394,11 @@ TEST_F(CppClassGeneratorTest, getter_function_definitions__returns_the_expected_
 {
    std::vector<Blast::ClassAttributeProperties> &class_attribute_properties = class_generator_fixture.get_class_attribute_properties_ref();
    class_attribute_properties[0].has_getter = true;
-   class_attribute_properties[1].has_getter = false;
-   class_attribute_properties[2].has_getter = true;
+   class_attribute_properties[1].has_getter = true;
+   class_attribute_properties[2].has_getter = false;
+   class_attribute_properties[3].has_getter = true;
 
-   std::string expected_definition_list = "int User::get_id()\n{\n   return id;\n}\n\n\ntype_t User::get_type()\n{\n   return type;\n}\n\n\n";
+   std::string expected_definition_list = "int User::get_last_id()\n{\n   return last_id;\n}\n\n\nint User::get_id()\n{\n   return id;\n}\n\n\ntype_t User::get_type()\n{\n   return type;\n}\n\n\n";
    ASSERT_EQ(expected_definition_list, class_generator_fixture.getter_function_definitions());
 }
 

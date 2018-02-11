@@ -85,7 +85,7 @@ std::vector<std::string> CppClassGenerator::initialization_list_elements()
    for (auto &parent_class_properties : parent_classes_properties)
       elements.push_back(parent_class_properties.as_argument_in_initialization_list());
    for (auto &attribute_property : attribute_properties)
-      elements.push_back(attribute_property.as_argument_in_initialization_list());
+      if (!attribute_property.is_static) elements.push_back(attribute_property.as_argument_in_initialization_list());
    return elements;
 }
 
@@ -95,6 +95,15 @@ std::vector<std::string> CppClassGenerator::class_declaration_opener_inheritence
    std::vector<std::string> elements;
    for (auto &parent_class_properties : parent_classes_properties)
       elements.push_back(parent_class_properties.as_class_inheritence_declaration());
+   return elements;
+}
+
+
+std::vector<std::string> CppClassGenerator::static_attribute_definition_elements()
+{
+   std::vector<std::string> elements;
+   for (auto &attribute_property : attribute_properties)
+      if (attribute_property.is_static) elements.push_back(attribute_property.as_static_definition(class_name));
    return elements;
 }
 
@@ -292,7 +301,11 @@ std::string CppClassGenerator::getter_function_declarations(int indent_level)
 {
    std::stringstream result;
    for (auto &attribute_property : attribute_properties)
-      if (attribute_property.has_getter) result << std::string(3*indent_level, ' ') << attribute_property.getter_function_declaration() << "\n";
+      if (attribute_property.has_getter)
+      {
+         result << std::string(3*indent_level, ' ');
+         result << attribute_property.getter_function_declaration() << "\n";
+      }
    return result.str();
 }
 

@@ -29,6 +29,12 @@ ClassAttributeProperties::~ClassAttributeProperties()
 std::string ClassAttributeProperties::as_constructor_argument_in_declaration()
 {
    if (!is_constructor_parameter) return "";
+   if (is_static)
+   {
+      std::stringstream error_message;
+      error_message << "Class attribute \"" << variable_name << "\" cannot be a constructor argument in a declaration; is static.";
+      throw std::runtime_error(error_message.str());
+   }
 
    std::stringstream result;
    result << datatype << " " << variable_name << "=" << initialization_value;
@@ -39,6 +45,12 @@ std::string ClassAttributeProperties::as_constructor_argument_in_declaration()
 std::string ClassAttributeProperties::as_constructor_argument_in_definition()
 {
    if (!is_constructor_parameter) return "";
+   if (is_static)
+   {
+      std::stringstream error_message;
+      error_message << "Class attribute \"" << variable_name << "\" cannot be a constructor argument in a definition; is static.";
+      throw std::runtime_error(error_message.str());
+   }
 
    std::stringstream result;
    result << datatype << " " << variable_name;
@@ -61,7 +73,16 @@ std::string ClassAttributeProperties::as_argument_in_initialization_list()
 std::string ClassAttributeProperties::as_class_property()
 {
    std::stringstream result;
+   if (is_static) result << "static ";
    result << datatype << " " << variable_name;
+   return result.str();
+}
+
+
+std::string ClassAttributeProperties::as_static_definition(std::string class_name)
+{
+   std::stringstream result;
+   result << datatype << " " << class_name << "::" << variable_name << " = " << initialization_value << ";";
    return result.str();
 }
 
@@ -77,6 +98,7 @@ std::string ClassAttributeProperties::getter_function_symbol()
 std::string ClassAttributeProperties::getter_function_declaration()
 {
    std::stringstream result;
+   if (is_static) result << "static ";
    result << datatype << " " << getter_function_symbol() << "();";
    return result.str();
 }
@@ -100,6 +122,8 @@ std::string ClassAttributeProperties::setter_function_symbol()
 
 std::string ClassAttributeProperties::setter_function_declaration()
 {
+   if (is_static) throw std::runtime_error("Setter declarations are not implemented for static properties");
+
    std::stringstream result;
    result << "void " << setter_function_symbol() << "(" << datatype << " " << variable_name << ");";
    return result.str();
@@ -108,6 +132,8 @@ std::string ClassAttributeProperties::setter_function_declaration()
 
 std::string ClassAttributeProperties::setter_function_definition(std::string class_name)
 {
+   if (is_static) throw std::runtime_error("Setter definitions are not implemented for static properties");
+
    std::stringstream result;
    result << "void " << class_name << "::set_" << variable_name << "(" << datatype << " " << variable_name << ")\n{\n   this->" << variable_name << " = " << variable_name << ";\n}\n";
    return result.str();

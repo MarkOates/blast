@@ -30,6 +30,7 @@ namespace Blast
       std::vector<std::string> constructor_definition_elements();
       std::vector<std::string> initialization_list_elements();
       std::vector<std::string> class_declaration_opener_inheritence_elements();
+      std::vector<std::string> static_attribute_definition_elements();
 
       void set_class_name(std::string class_name);
 
