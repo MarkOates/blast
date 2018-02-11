@@ -7,6 +7,12 @@
 #include <cmath>
 
 
+#define ASSERT_THROW_WITH_MESSAGE(code, raised_exception_type, raised_exception_message) \
+   try { code; FAIL() << "Expected " # raised_exception_type; } \
+   catch ( raised_exception_type const &err ) { EXPECT_EQ(err.what(), std::string( raised_exception_message )); } \
+   catch (...) { FAIL() << "Expected " # raised_exception_type; }
+
+
 TEST(ClassAttributePropertiesTest, can_be_created)
 {
    Blast::ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, true, false, false);
@@ -30,12 +36,30 @@ TEST(ClassAttributePropertiesTest, as_constructor_argument_in_declaration__retur
 }
 
 
+TEST(ClassAttributePropertiesTest, as_constructor_argument_in_declaration__when_called_on_a_static_variable_raises_an_exception)
+{
+   Blast::ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", true, true, false, false);
+
+   std::string expected_error_message = "Class attribute \"my_variable\" cannot be a constructor argument in a declaration; is static.";
+   ASSERT_THROW_WITH_MESSAGE(attribute_properties.as_constructor_argument_in_declaration(), std::runtime_error, expected_error_message);
+}
+
+
 TEST(ClassAttributePropertiesTest, as_constructor_argument_in_definition__returns_the_expected_string)
 {
    Blast::ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, true, false, false);
 
    std::string expected_string = "std::string my_variable";
    ASSERT_EQ(expected_string, attribute_properties.as_constructor_argument_in_definition());
+}
+
+
+TEST(ClassAttributePropertiesTest, as_constructor_argument_in_definition__when_called_on_a_static_variable_raises_an_exception)
+{
+   Blast::ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", true, true, false, false);
+
+   std::string expected_error_message = "Class attribute \"my_variable\" cannot be a constructor argument in a definition; is static.";
+   ASSERT_THROW_WITH_MESSAGE(attribute_properties.as_constructor_argument_in_definition(), std::runtime_error, expected_error_message);
 }
 
 

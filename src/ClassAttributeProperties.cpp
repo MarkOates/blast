@@ -29,6 +29,12 @@ ClassAttributeProperties::~ClassAttributeProperties()
 std::string ClassAttributeProperties::as_constructor_argument_in_declaration()
 {
    if (!is_constructor_parameter) return "";
+   if (is_static)
+   {
+      std::stringstream error_message;
+      error_message << "Class attribute \"" << variable_name << "\" cannot be a constructor argument in a declaration; is static.";
+      throw std::runtime_error(error_message.str());
+   }
 
    std::stringstream result;
    result << datatype << " " << variable_name << "=" << initialization_value;
@@ -39,6 +45,12 @@ std::string ClassAttributeProperties::as_constructor_argument_in_declaration()
 std::string ClassAttributeProperties::as_constructor_argument_in_definition()
 {
    if (!is_constructor_parameter) return "";
+   if (is_static)
+   {
+      std::stringstream error_message;
+      error_message << "Class attribute \"" << variable_name << "\" cannot be a constructor argument in a definition; is static.";
+      throw std::runtime_error(error_message.str());
+   }
 
    std::stringstream result;
    result << datatype << " " << variable_name;
