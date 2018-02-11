@@ -98,6 +98,7 @@ std::string ClassAttributeProperties::getter_function_symbol()
 std::string ClassAttributeProperties::getter_function_declaration()
 {
    std::stringstream result;
+   if (is_static) result << "static ";
    result << datatype << " " << getter_function_symbol() << "();";
    return result.str();
 }

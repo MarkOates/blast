@@ -126,6 +126,15 @@ TEST(ClassAttributePropertiesTest, getter_function_declaration__formats_the_func
 }
 
 
+TEST(ClassAttributePropertiesTest, getter_function_declaration__formats_the_function_as_a_getter_function_listed_in_a_static_class_declaration)
+{
+   Blast::ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", true, false, false, false);
+
+   std::string expected_string = "static std::string get_my_variable();";
+   ASSERT_EQ(expected_string, attribute_properties.getter_function_declaration());
+}
+
+
 TEST(ClassAttributePropertiesTest, getter_function_definition__formats_the_function_as_a_getter_function_listed_in_a_class_definition)
 {
    Blast::ClassAttributeProperties attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false, false);
