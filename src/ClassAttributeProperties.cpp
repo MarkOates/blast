@@ -79,6 +79,14 @@ std::string ClassAttributeProperties::as_class_property()
 }
 
 
+std::string ClassAttributeProperties::as_static_definition(std::string class_name)
+{
+   std::stringstream result;
+   result << datatype << " " << class_name << "::" << variable_name << " = " << initialization_value << ";";
+   return result.str();
+}
+
+
 std::string ClassAttributeProperties::getter_function_symbol()
 {
    std::stringstream result;
