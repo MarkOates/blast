@@ -1,0 +1,2 @@
+#!/bin/bash
+find quintessence/*.json | xargs bin/programs/quintessence_from_json
