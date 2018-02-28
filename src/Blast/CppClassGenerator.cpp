@@ -237,7 +237,11 @@ std::string CppClassGenerator::header_include_directive()
 {
    std::stringstream result;
    result << "#include <";
-   for (unsigned i=0; i<namespaces.size(); i++) result << "/" << namespaces[i];
+   for (unsigned i=0; i<namespaces.size(); i++)
+   {
+      result << namespaces[i];
+      if (i != (namespaces.size()-1)) result << "/";
+   }
    result << "/" << header_filename() << ">\n";
 
    return result.str();

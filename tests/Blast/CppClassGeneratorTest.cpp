@@ -20,7 +20,7 @@ protected:
 
    virtual void SetUp()
    {
-      class_generator_fixture = Blast::CppClassGenerator("User", {}, {}, {
+      class_generator_fixture = Blast::CppClassGenerator("User", { "ProjectName" }, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_constructor_parameter, bool has_getter, bool has_setter
          { "int", "last_id", "0", true, false, false, false },
          { "int", "id", "last_id++", false, false, true, false },
@@ -143,7 +143,8 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_opener__returns_a_formatted_strin
 
 TEST_F(CppClassGeneratorTest, namespaces_scope_opener__without_namespaces_returns_an_empty_string)
 {
-   ASSERT_EQ("", class_generator_fixture.namespaces_scope_opener(true));
+   Blast::CppClassGenerator class_generator("Ascend");
+   ASSERT_EQ("", class_generator.namespaces_scope_opener(true));
 }
 
 
@@ -173,7 +174,8 @@ TEST_F(CppClassGeneratorTest, namespaces_scope_closer__can_optionally_include_cl
 
 TEST_F(CppClassGeneratorTest, namespaces_scope_closer__without_namespaces_returns_an_empty_string)
 {
-   ASSERT_EQ("", class_generator_fixture.namespaces_scope_closer(false));
+   Blast::CppClassGenerator class_generator("Ascend");
+   ASSERT_EQ("", class_generator.namespaces_scope_closer(false));
 }
 
 
@@ -302,7 +304,7 @@ TEST_F(CppClassGeneratorTest, source_filename__returns_the_filename_for_the_head
 TEST_F(CppClassGeneratorTest, header_include_directive__returns_the_include_line_to_include_the_class_header_file)
 {
    std::string expected_header_directive = "#include <ProjectName/User.hpp>\n";
-   ASSERT_EQ(expected_header_directive, class_generator_fixture.header_include_directive("ProjectName"));
+   ASSERT_EQ(expected_header_directive, class_generator_fixture.header_include_directive());
 }
 
 
@@ -483,7 +485,7 @@ TEST_F(CppClassGeneratorTest, project_source_filepath__returns_a_string_of_the_l
 TEST_F(CppClassGeneratorTest, project_header_filepath__returns_a_string_of_the_location_of_the_header_file_relative_to_the_project_root)
 {
    std::string expected_project_header_filepath = "include/ProjectName/User.hpp";
-   ASSERT_EQ(expected_project_header_filepath, class_generator_fixture.project_header_filepath("ProjectName"));
+   ASSERT_EQ(expected_project_header_filepath, class_generator_fixture.project_header_filepath());
 }
 
 
