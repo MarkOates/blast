@@ -162,7 +162,7 @@ void QuintessenceLoader::load(std::string filename)
 
    cpp_class_generator = Blast::CppClassGenerator(json["class"], namespaces, parent_classes, properties, dependencies);
 
-   std::string header_filepath = cpp_class_generator.project_header_filepath("Blast");
+   std::string header_filepath = cpp_class_generator.project_header_filepath();
    std::cout << "CCCCCCCCC" << std::endl;
 
    std::ofstream header_file(header_filepath, std::ofstream::out);
@@ -178,7 +178,7 @@ void QuintessenceLoader::load(std::string filename)
    std::string source_filepath = cpp_class_generator.project_source_filepath();
    std::ofstream source_file(source_filepath, std::ofstream::out);
    if (source_file.fail()) throw std::runtime_error("Could not open source file for writing.");
-   source_file << cpp_class_generator.generate_source_file_content("Blast");
+   source_file << cpp_class_generator.generate_source_file_content();
 
    std::cout << "AAAAAAAAAA" << std::endl;
    // output success

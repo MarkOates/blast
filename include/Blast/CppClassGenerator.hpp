@@ -49,7 +49,7 @@ namespace Blast
       std::string class_declaration_closer(int indent_level=0);
       std::string header_filename();
       std::string source_filename();
-      std::string header_include_directive(std::string project_name_camelcase);
+      std::string header_include_directive();
       std::string dependency_include_directives();
       std::string class_property_list(int indent_level=0);
       std::string static_attribute_definitions(int indent_level=0);
@@ -64,13 +64,13 @@ namespace Blast
       std::string destructor_declaration(int indent_level=0);
       std::string destructor_definition(int indent_level=0);
 
-      std::string generate_source_file_content(std::string project_name_camelcase);
+      std::string generate_source_file_content();
       std::string generate_header_file_content();
       std::string generate_test_file_content();
       std::string generate_example_file_content();
 
       std::string project_source_filepath();
-      std::string project_header_filepath(std::string project_name_camelcase);
+      std::string project_header_filepath();
    };
 }
 

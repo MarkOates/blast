@@ -233,10 +233,13 @@ std::string CppClassGenerator::source_filename()
 }
 
 
-std::string CppClassGenerator::header_include_directive(std::string project_name_camelcase)
+std::string CppClassGenerator::header_include_directive()
 {
    std::stringstream result;
-   result << "#include <" << project_name_camelcase << "/" << header_filename() << ">\n";
+   result << "#include <";
+   for (unsigned i=0; i<namespaces.size(); i++) result << "/" << namespaces[i];
+   result << "/" << header_filename() << ">\n";
+
    return result.str();
 }
 
@@ -393,7 +396,7 @@ std::string CppClassGenerator::destructor_definition(int indent_level)
 }
 
 
-std::string CppClassGenerator::generate_source_file_content(std::string project_name_camelcase)
+std::string CppClassGenerator::generate_source_file_content()
 {
    std::string source_file_template = R"END(
 
@@ -420,7 +423,7 @@ NAMESPACES_CLOSER
    __replace(result, "STATIC_ATTRIBUTE_DEFINITIONS\n", static_attribute_definitions(false));
    __replace(result, "NAMESPACES_OPENER", namespaces_scope_opener(false));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(false));
-   __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive(project_name_camelcase));
+   __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive());
    __replace(result, "HEADER_FILENAME", header_filename());
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
    __replace(result, "DESTRUCTOR\n", destructor_definition(0));
@@ -502,10 +505,12 @@ std::string CppClassGenerator::project_source_filepath()
 }
 
 
-std::string CppClassGenerator::project_header_filepath(std::string project_name_camelcase)
+std::string CppClassGenerator::project_header_filepath()
 {
    std::stringstream result;
-   result << "include/" << project_name_camelcase << "/" << header_filename();
+   result << "include";
+   for (unsigned i=0; i<namespaces.size(); i++) result << "/" << namespaces[i];
+   result << "/" << header_filename();
    return result.str();
 }
 
