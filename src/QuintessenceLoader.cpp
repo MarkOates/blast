@@ -2,6 +2,7 @@
 
 #include <Blast/QuintessenceLoader.hpp>
 
+#include <Blast/CppSelectorPatternGenerator.hpp>
 #include <iostream>
 #include <fstream>
 
@@ -18,8 +19,62 @@ static void __replace(std::string &str, const std::string &find_str, const std::
 }
 
 
-static std::string pool_pattern_header_template = R"END(
 
+static std::string selector_pattern_header_template = R"END(#pragma once
+
+
+#include <vector>
+
+
+NAMESPACE_OPENER
+class CLASS_NAME;
+
+class CLASS_NAMESelector
+{
+private:
+   std::vector<CLASS_NAME *> *pool;
+
+public:
+   CLASS_NAMESelector(std::vector<CLASS_NAME *> *pool=nullptr);
+   ~CLASS_NAMESelector();
+
+SELECTOR_FUNCS
+};
+NAMESPACE_CLOSER
+
+
+)END";
+
+
+static std::string selector_pattern_source_template = R"END(
+
+#include <SELECTOR_HEADER_PATH>
+
+#include <CLASS_HEADER_PATH>
+
+
+NAMESPACE_OPENER
+
+CLASS_NAMESelector::CLASS_NAMESelector(std::vector<CLASS_NAME *> *pool)
+   : pool(pool)
+{
+}
+
+
+CLASS_NAMESelector::~CLASS_NAMESelector()
+{
+}
+
+
+SELECTOR_FUNCS
+
+
+NAMESPACE_CLOSER
+
+)END";
+
+
+static std::string pool_pattern_header_template = R"END(
 
 #pragma once
 
@@ -48,7 +103,7 @@ public:
    std::vector<CLASS_NAME *> pool;
    int next_id;
 
-   bool push_back(CLASS_NAME *measure);
+   bool push_back(CLASS_NAME *element);
    bool remove(int id);
    int count();
    bool destroy(int id);
@@ -238,9 +293,15 @@ void QuintessenceLoader::load(std::string filename)
 
 
    bool has_pool_pattern = false;
-   for (auto &pattern : json["patterns"])
-   {
+   bool has_selector_pattern = false;
+   nlohmann::json *selector_patterns = nullptr;
+   for (auto &pattern : json["patterns"]) {
       if (pattern["type"] == "pool") has_pool_pattern = true;
+      if (pattern["type"] == "selectors")
+      {
+         has_selector_pattern = true;
+         selector_patterns = &pattern;
+      }
    }
 
 
@@ -421,46 +482,96 @@ void QuintessenceLoader::load(std::string filename)
    //std::vector<auto> patterns = json["patterns"];
 
 
-   for (auto &pattern : json["patterns"])
+   std::string class_name = json["class"];
+   std::string class_header_include_filepath = std::string("RegionProject/") + class_name + ".hpp";
+
+   if (has_pool_pattern)
    {
-      std::string pattern_type = pattern["type"];
-      std::cout << std::endl << pattern_type << " --=-=-=-=-=-=-=-=-=-=-- " << std::endl;
-      if (pattern_type == "pool")
+      std::string pool_pattern_header_content = pool_pattern_header_template;
+      __replace(pool_pattern_header_content, "CLASS_NAME", json["class"]);
+      __replace(pool_pattern_header_content, "CLASS_INCLUDE_FILEPATH", class_header_include_filepath);
+      __replace(pool_pattern_header_content, "NAMESPACE_OPENER", "namespace RegionProject\n{\n");
+      __replace(pool_pattern_header_content, "NAMESPACE_CLOSER", "} // namespace RegionProject");
+      std::string pool_header_filepath = std::string("include/RegionProject/") + class_name + "Pool.hpp";
+      std::ofstream pool_header_file(pool_header_filepath, std::ofstream::out);
+      std::cout << "FILEFILEFILE: " << pool_header_filepath << std::endl;
+      if (pool_header_file.fail()) throw std::runtime_error("Could not open pool header file for writing.");
+      pool_header_file << pool_pattern_header_content;
+      test_file.close();
+
+      // source:
+
+      std::string pool_pattern_source_content = pool_pattern_source_template;
+      __replace(pool_pattern_source_content, "CLASS_NAME", json["class"]);
+      std::string pool_source_header_include_filepath = std::string("RegionProject/") + class_name + "Pool.hpp";
+      __replace(pool_pattern_source_content, "CLASS_FILENAME", pool_source_header_include_filepath);
+      __replace(pool_pattern_source_content, "NAMESPACE_OPENER", "namespace RegionProject\n{\n");
+      __replace(pool_pattern_source_content, "NAMESPACE_CLOSER", "} // namespace RegionProject");
+      std::string pool_source_filepath = std::string("src/RegionProject/") + class_name + "Pool.cpp";
+      std::ofstream pool_source_file(pool_source_filepath, std::ofstream::out);
+      std::cout << "FILEFILEFILE: " << pool_source_filepath << std::endl;
+      if (pool_source_file.fail()) throw std::runtime_error("Could not open pool source file for writing.");
+      pool_source_file << pool_pattern_source_content;
+      test_file.close();
+   }
+
+
+   if (has_selector_pattern)
+   {
+      std::vector<Blast::CppSelectorPatternGenerator> selector_functions;
+
+      std::stringstream selector_func_declarations;
+      std::stringstream selector_func_definitions;
+
+      std::cout << "=================================" << std::endl;
+      for (auto &selector_pattern : (*selector_patterns)["selectors"])
       {
-         std::string class_name = json["class"];
+         std::cout << "***************************";
+         std::cout << selector_pattern;
+         //std::string function_name = "function_name";
+         //std::string selection_condition = "selection_condition";
+         //std::string casted_type = "CastedType";
+         std::string function_name = selector_pattern["function_name"];
+         std::string selection_condition = selector_pattern["selection_condition"];
+         std::string casted_type = selector_pattern["type"];
 
-         std::string pool_pattern_header_content = pool_pattern_header_template;
-         __replace(pool_pattern_header_content, "CLASS_NAME", json["class"]);
-         std::string class_header_include_filepath = std::string("RegionProject/") + class_name + ".hpp";
-         __replace(pool_pattern_header_content, "CLASS_INCLUDE_FILEPATH", class_header_include_filepath);
-         __replace(pool_pattern_header_content, "NAMESPACE_OPENER", "namespace RegionProject\n{\n");
-         __replace(pool_pattern_header_content, "NAMESPACE_CLOSER", "} // namespace RegionProject");
-         std::string pool_header_filepath = std::string("include/RegionProject/") + class_name + "Pool.hpp";
-         std::ofstream pool_header_file(pool_header_filepath, std::ofstream::out);
-         std::cout << "FILEFILEFILE: " << pool_header_filepath << std::endl;
-         if (pool_header_file.fail()) throw std::runtime_error("Could not open pool header file for writing.");
-         pool_header_file << pool_pattern_header_content;
-         test_file.close();
-
-         // source:
-
-         std::string pool_pattern_source_content = pool_pattern_source_template;
-         __replace(pool_pattern_source_content, "CLASS_NAME", json["class"]);
-         std::string pool_source_header_include_filepath = std::string("RegionProject/") + class_name + "Pool.hpp";
-         __replace(pool_pattern_source_content, "CLASS_FILENAME", pool_source_header_include_filepath);
-         __replace(pool_pattern_source_content, "NAMESPACE_OPENER", "namespace RegionProject\n{\n");
-         __replace(pool_pattern_source_content, "NAMESPACE_CLOSER", "} // namespace RegionProject");
-         std::string pool_source_filepath = std::string("src/RegionProject/") + class_name + "Pool.cpp";
-         std::ofstream pool_source_file(pool_source_filepath, std::ofstream::out);
-         std::cout << "FILEFILEFILE: " << pool_source_filepath << std::endl;
-         if (pool_source_file.fail()) throw std::runtime_error("Could not open pool source file for writing.");
-         pool_source_file << pool_pattern_source_content;
-         test_file.close();
+         Blast::CppSelectorPatternGenerator cpp_selector_pattern_generator(class_name, function_name, selection_condition, casted_type);
+         selector_functions.push_back(cpp_selector_pattern_generator);
+         selector_func_declarations << cpp_selector_pattern_generator.render_declaration() << "\n";
+         selector_func_definitions << cpp_selector_pattern_generator.render_definition() << "\n\n";
       }
+      std::cout << "=================================" << std::endl;
+
+      std::string selector_pattern_header_content = selector_pattern_header_template;
+      __replace(selector_pattern_header_content, "CLASS_NAME", class_name);
+      __replace(selector_pattern_header_content, "NAMESPACE_OPENER", "namespace RegionProject\n{\n");
+      __replace(selector_pattern_header_content, "NAMESPACE_CLOSER", "} // namespace RegionProject");
+      __replace(selector_pattern_header_content, "SELECTOR_FUNCS", selector_func_declarations.str());
+
+      std::string selector_header_filepath = std::string("include/RegionProject/") + class_name + "Selector.hpp";
+      std::ofstream selector_header_file(selector_header_filepath, std::ofstream::out);
+      std::cout << "FILEFILEFILE: " << selector_header_filepath << std::endl;
+      if (selector_header_file.fail()) throw std::runtime_error("Could not open selector header file for writing.");
+      selector_header_file << selector_pattern_header_content;
+      test_file.close();
+
+      std::string selector_pattern_source_content = selector_pattern_source_template;
+      __replace(selector_pattern_source_content, "CLASS_NAME", class_name);
+      std::string selector_header_include_filepath = std::string("RegionProject/") + class_name + "Selector.hpp";
+      __replace(selector_pattern_source_content, "CLASS_HEADER_PATH", class_header_include_filepath);
+      __replace(selector_pattern_source_content, "SELECTOR_HEADER_PATH", selector_header_include_filepath);
+      __replace(selector_pattern_source_content, "NAMESPACE_OPENER", "namespace RegionProject\n{\n");
+      __replace(selector_pattern_source_content, "NAMESPACE_CLOSER", "} // namespace RegionProject");
+      __replace(selector_pattern_source_content, "SELECTOR_FUNCS", selector_func_definitions.str());
+
+      std::string selector_source_filepath = std::string("src/RegionProject/") + class_name + "Selector.cpp";
+      std::ofstream selector_source_file(selector_source_filepath, std::ofstream::out);
+      std::cout << "FILEFILEFILE: " << selector_source_filepath << std::endl;
+      if (selector_source_file.fail()) throw std::runtime_error("Could not open selector source file for writing.");
+      selector_source_file << selector_pattern_source_content;
+      test_file.close();
    }
 }
 
 
 } // namespace Blast
-
-

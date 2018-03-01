@@ -40,7 +40,7 @@ int main(int argc, char **argv)
    std::cout << "////////// header file ///////////" << std::endl;
    std::cout << class_generator.generate_header_file_content();
    std::cout << "////////// source file ///////////" << std::endl;
-   std::cout << class_generator.generate_source_file_content("MyProject");
+   std::cout << class_generator.generate_source_file_content();
 
    return 0;
 }
