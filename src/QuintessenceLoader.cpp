@@ -236,10 +236,48 @@ void QuintessenceLoader::load(std::string filename)
    quintessence_file >> json;
 
 
+
+   bool has_pool_pattern = false;
+   for (auto &pattern : json["patterns"])
+   {
+      if (pattern["type"] == "pool") has_pool_pattern = true;
+   }
+
+
+
    std::vector<Blast::ClassAttributeProperties> properties;
 
    if (json["properties"].empty()) throw std::runtime_error("\"properties\" is empty");
    nlohmann::json &j = json["properties"];
+
+   if (has_pool_pattern)
+   {
+      std::cout << "Pool Pattern detected" << std::endl;
+      j.insert(j.begin(),
+         nlohmann::json{
+            { "name", "type" },
+            { "type", "std::string" },
+            { "init_with", "\"[Untyped]\"" },
+            { "constructor_arg", true },
+            { "getter", true }
+         }
+      );
+      j.insert(j.begin(),
+         nlohmann::json{
+           { "name", "id" },
+           { "type", "int" },
+           { "init_with", "last_id++" }
+         }
+      );
+      j.insert(j.begin(),
+         nlohmann::json{
+            { "name", "last_id" },
+            { "type", "int" },
+            { "static", true },
+            { "init_with", "0" }
+         }
+      );
+   }
 
    std::cout << "AAAAAAAAAA" << std::endl;
 
