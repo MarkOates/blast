@@ -297,7 +297,7 @@ void QuintessenceLoader::load(std::string filename)
    nlohmann::json *selector_patterns = nullptr;
    for (auto &pattern : json["patterns"]) {
       if (pattern["type"] == "pool") has_pool_pattern = true;
-      if (pattern["type"] == "selectors")
+      if (pattern["type"] == "selector")
       {
          has_selector_pattern = true;
          selector_patterns = &pattern;
