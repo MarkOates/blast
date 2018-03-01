@@ -5,6 +5,181 @@
 #include <iostream>
 #include <fstream>
 
+
+static void __replace(std::string &str, const std::string &find_str, const std::string &replace_str)
+{
+  std::string::size_type pos = 0u;
+
+  while((pos = str.find(find_str, pos)) != std::string::npos)
+  {
+     str.replace(pos, find_str.length(), replace_str);
+     pos += replace_str.length();
+  }
+}
+
+
+static std::string pool_pattern_header_template = R"END(
+
+
+#pragma once
+
+
+#include <CLASS_INCLUDE_FILEPATH>
+#include <string>
+#include <vector>
+
+
+NAMESPACE_OPENER
+class CLASS_NAMEPool
+{
+public:
+   enum find_option_t
+   {
+      FIND_OPTION_NONE = 0,
+      FIND_OPTION_INCLUDE_NOT_FOUND,
+      FIND_OPTION_RAISE_NOT_FOUND,
+   };
+
+   int const NO_RECORD = -1;
+
+   CLASS_NAMEPool();
+   ~CLASS_NAMEPool();
+
+   std::vector<CLASS_NAME *> pool;
+   int next_id;
+
+   bool push_back(CLASS_NAME *measure);
+   bool remove(int id);
+   int count();
+   bool destroy(int id);
+   bool destroy_all();
+   CLASS_NAME *find(int id, find_option_t find_option=FIND_OPTION_NONE);
+   std::vector<CLASS_NAME *> find(std::vector<int> ids, find_option_t find_option=FIND_OPTION_NONE);
+};
+NAMESPACE_CLOSER
+
+
+
+)END";
+
+
+
+static std::string pool_pattern_source_template = R"END(
+
+#include <CLASS_FILENAME>
+
+#include <sstream>
+
+
+NAMESPACE_OPENER
+
+
+CLASS_NAMEPool::CLASS_NAMEPool()
+   : pool()
+   , next_id(0)
+{
+}
+
+
+bool CLASS_NAMEPool::push_back(CLASS_NAME *element)
+{
+   pool.push_back(element);
+   return true;
+}
+
+
+int CLASS_NAMEPool::count()
+{
+   return pool.size();
+}
+
+
+CLASS_NAME *CLASS_NAMEPool::find(int id, find_option_t find_option)
+{
+   CLASS_NAME *found_element = nullptr;
+
+   for (auto &element : pool)
+      if (element->get_id() == id) { found_element = element; break; }
+
+   if (find_option == FIND_OPTION_RAISE_NOT_FOUND && found_element == nullptr)
+   {
+      std::stringstream error_message;
+      error_message << "Looking for element with id = " << id << " but does not exist";
+      throw std::runtime_error(error_message.str());
+   }
+
+   return found_element;
+}
+
+
+std::vector<CLASS_NAME *> CLASS_NAMEPool::find(std::vector<int> ids, find_option_t find_option)
+{
+   std::vector<CLASS_NAME *> results = {};
+   std::vector<int> not_found_ids = {};
+   find_option_t element_find_option = (find_option == FIND_OPTION_RAISE_NOT_FOUND) ? FIND_OPTION_RAISE_NOT_FOUND : FIND_OPTION_NONE;
+
+   for (unsigned i=0; i<ids.size(); i++)
+   {
+      try
+      {
+         CLASS_NAME *found_element = find(ids[i], element_find_option);
+         if (found_element || (find_option == FIND_OPTION_INCLUDE_NOT_FOUND)) results.push_back(found_element);
+      }
+      catch (std::runtime_error const &e)
+      {
+         not_found_ids.push_back(ids[i]);
+      }
+   }
+
+   if (!not_found_ids.empty())
+   {
+      std::stringstream error_message;
+      error_message << "Looking for " << ids.size() << " elements but only " << results.size() << " elements found.";
+      throw std::runtime_error(error_message.str());
+   }
+
+   return results;
+}
+
+
+bool CLASS_NAMEPool::remove(int id)
+{
+   for (unsigned i=0; i<pool.size(); i++)
+      if (pool[i]->get_id() == id)
+      {
+         pool.erase(pool.begin() + i);
+         return true;
+      }
+   return false;
+}
+
+
+bool CLASS_NAMEPool::destroy(int id)
+{
+   for (unsigned i=0; i<pool.size(); i++)
+      if (pool[i]->get_id() == id)
+      {
+         delete pool[i];
+         return true;
+      }
+   return false;
+}
+
+
+bool CLASS_NAMEPool::destroy_all()
+{
+   for (unsigned i=0; i<pool.size(); i++) delete pool[i];
+   pool.clear();
+   return true;
+}
+
+
+NAMESPACE_CLOSER
+
+
+)END";
+
+
 namespace Blast
 {
 
@@ -200,6 +375,51 @@ void QuintessenceLoader::load(std::string filename)
    if (test_file.fail()) throw std::runtime_error("Could not open test file for writing.");
    test_file << test_suite_generator.render();
    test_file.close();
+
+
+   /// create the pool pattern classes:
+   // header:
+
+   //std::vector<auto> patterns = json["patterns"];
+
+
+   for (auto &pattern : json["patterns"])
+   {
+      std::string pattern_type = pattern["type"];
+      std::cout << std::endl << pattern_type << " --=-=-=-=-=-=-=-=-=-=-- " << std::endl;
+      if (pattern_type == "pool")
+      {
+         std::string class_name = json["class"];
+
+         std::string pool_pattern_header_content = pool_pattern_header_template;
+         __replace(pool_pattern_header_content, "CLASS_NAME", json["class"]);
+         std::string class_header_include_filepath = std::string("RegionProject/") + class_name + ".hpp";
+         __replace(pool_pattern_header_content, "CLASS_INCLUDE_FILEPATH", class_header_include_filepath);
+         __replace(pool_pattern_header_content, "NAMESPACE_OPENER", "namespace RegionProject\n{\n");
+         __replace(pool_pattern_header_content, "NAMESPACE_CLOSER", "} // namespace RegionProject");
+         std::string pool_header_filepath = std::string("include/RegionProject/") + class_name + "Pool.hpp";
+         std::ofstream pool_header_file(pool_header_filepath, std::ofstream::out);
+         std::cout << "FILEFILEFILE: " << pool_header_filepath << std::endl;
+         if (pool_header_file.fail()) throw std::runtime_error("Could not open pool header file for writing.");
+         pool_header_file << pool_pattern_header_content;
+         test_file.close();
+
+         // source:
+
+         std::string pool_pattern_source_content = pool_pattern_source_template;
+         __replace(pool_pattern_source_content, "CLASS_NAME", json["class"]);
+         std::string pool_source_header_include_filepath = std::string("RegionProject/") + class_name + "Pool.hpp";
+         __replace(pool_pattern_source_content, "CLASS_FILENAME", pool_source_header_include_filepath);
+         __replace(pool_pattern_source_content, "NAMESPACE_OPENER", "namespace RegionProject\n{\n");
+         __replace(pool_pattern_source_content, "NAMESPACE_CLOSER", "} // namespace RegionProject");
+         std::string pool_source_filepath = std::string("src/RegionProject/") + class_name + "Pool.cpp";
+         std::ofstream pool_source_file(pool_source_filepath, std::ofstream::out);
+         std::cout << "FILEFILEFILE: " << pool_source_filepath << std::endl;
+         if (pool_source_file.fail()) throw std::runtime_error("Could not open pool source file for writing.");
+         pool_source_file << pool_pattern_source_content;
+         test_file.close();
+      }
+   }
 }
 
 
