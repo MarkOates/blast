@@ -59,6 +59,12 @@ TEST(ProjectComponentBasenameExtractorTest, get_component_basename__returns_the_
       { "models/Foobar", "obj/models/Foobar.o" },
       { "models/Foobar", "bin/tests/models/FoobarTest" },
       { "models/Foobar", "bin/examples/models/FoobarExample" },
+      // also works with snakecase convention
+      { "models/foobar", "tests/models/foobar_test.cpp" },
+      { "models/foobar", "examples/models/foobar_example.cpp" },
+      { "models/foobar", "obj/models/foobar.o" },
+      { "models/foobar", "bin/tests/models/foobar_test" },
+      { "models/foobar", "bin/examples/models/foobar_example" },
    };
 
    for (auto test_data : test_data)

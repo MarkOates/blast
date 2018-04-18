@@ -53,6 +53,8 @@ std::pair<ProjectComponentFileTypes::project_file_type_t, std::string> ProjectCo
       extracted = extracted.substr(0, found);
       found = extracted.rfind("Test");
       extracted = extracted.substr(0, found);
+      found = extracted.rfind("_test");
+      extracted = extracted.substr(0, found);
       return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::TEST_FILE, extracted);
    }
    else if (filename.compare(0, 9, "examples/") == 0)
@@ -61,6 +63,8 @@ std::pair<ProjectComponentFileTypes::project_file_type_t, std::string> ProjectCo
       std::size_t found = extracted.find_first_of(".");
       extracted = extracted.substr(0, found);
       found = extracted.rfind("Example");
+      extracted = extracted.substr(0, found);
+      found = extracted.rfind("_example");
       extracted = extracted.substr(0, found);
       return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::EXAMPLE_FILE, extracted);
    }
@@ -78,6 +82,8 @@ std::pair<ProjectComponentFileTypes::project_file_type_t, std::string> ProjectCo
       extracted = extracted.substr(0, found);
       found = extracted.rfind("Test");
       extracted = extracted.substr(0, found);
+      found = extracted.rfind("_test");
+      extracted = extracted.substr(0, found);
       return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::TEST_BINARY, extracted);
    }
    else if (filename.compare(0, 13, "bin/examples/") == 0)
@@ -86,6 +92,8 @@ std::pair<ProjectComponentFileTypes::project_file_type_t, std::string> ProjectCo
       std::size_t found = extracted.find_first_of(".");
       extracted = extracted.substr(0, found);
       found = extracted.rfind("Example");
+      extracted = extracted.substr(0, found);
+      found = extracted.rfind("_example");
       extracted = extracted.substr(0, found);
       return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::EXAMPLE_BINARY, extracted);
    }
