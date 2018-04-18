@@ -5,22 +5,33 @@
 #include <string>
 
 
-class ProjectComponentFilenameGenerator
+namespace Blast
 {
-private:
-   std::string basename;
-   project_file_type_t project_file_type;
+   class ProjectComponentFilenameGenerator
+   {
+   private:
+      std::string basename;
+      ProjectComponentFileTypes::project_file_type_t project_file_type;
+      bool use_underscores;
 
-public:
-   ProjectComponentFilenameGenerator(std::string basename, project_file_type);
-   ~ProjectComponentFilenameGenerator();
+   public:
+      ProjectComponentFilenameGenerator(
+            std::string basename="",
+            ProjectComponentFileTypes::project_file_type_t=ProjectComponentFileTypes::SOURCE_FILE,
+            bool use_underscores=false
+         );
+      ~ProjectComponentFilenameGenerator();
 
-   void set_basename(std::string basename);
-   void set_project_file_type(project_file_type_t project_file_type);
-   std::string get_basename();
-   project_file_type_t get_project_file_type();
+      void set_basename(std::string basename);
+      void set_use_underscores(bool use_underscores);
+      void set_project_file_type(ProjectComponentFileTypes::project_file_type_t project_file_type);
 
-   std::string generate_filename();
-};
+      std::string get_basename();
+      bool get_use_underscores();
+      ProjectComponentFileTypes::project_file_type_t get_project_file_type();
+
+      std::string generate_filename();
+   };
+}
 
 
