@@ -16,3 +16,6 @@ allegro.log
 .project_info
 out.tmp
 
+# used from the builder program
+foobar.txt
+
