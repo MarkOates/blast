@@ -5,6 +5,25 @@ using json = nlohmann::json;
 #include <fstream>
 #include <iostream>
 
+void explode(std::string message)
+{
+   throw std::runtime_error(message);
+}
+
+json &get_or_explode(json &j, std::string key)
+{
+   if (j[key].empty()) explode(std::string(key) + " is required");
+
+   return j[key];
+}
+
+bool get_or_fallback(json &j, std::string key, bool fallback)
+{
+   if (j[key].empty()) return fallback;
+
+   return j[key];
+}
+
 int main(int argc, char **argv)
 {
    if (argc <= 1)
@@ -32,18 +51,20 @@ int main(int argc, char **argv)
 
       std::vector<Blast::ClassAttributeProperties> properties;
 
+      if (quintessence_json["properties"].empty()) explode("properties is required");
+
       json &j = quintessence_json["properties"];
 
       for (json::iterator it = j.begin(); it != j.end(); ++it)
       {
          properties.push_back(Blast::ClassAttributeProperties(
-            (*it)["type"],
-            (*it)["name"],
-            (*it)["init_with"],
-            (*it)["static"],
-            (*it)["constructor_arg"].empty() ? false : (*it)["constructor_arg"].get<bool>(),
-            (*it)["getter"],
-            (*it)["setter"]
+            get_or_explode((*it), "type"),
+            get_or_explode((*it), "name"),
+            get_or_explode((*it), "init_with"),
+            get_or_explode((*it), "static"),
+            get_or_fallback((*it), "constructor_arg", false),
+            get_or_explode((*it), "getter"),
+            get_or_explode((*it), "setter")
          ));
 
          std::cout << (*it) << std::endl;
@@ -54,15 +75,15 @@ int main(int argc, char **argv)
 
       std::vector<Blast::SymbolDependencies> dependencies;
 
-      json &d = quintessence_json["dependencies"];
+      json &d = get_or_explode(quintessence_json, "dependencies");
 
       for (json::iterator it = d.begin(); it != d.end(); ++it)
       {
          dependencies.push_back(Blast::SymbolDependencies(
-            (*it)["symbol"],
-            (*it)["headers"],
-            (*it)["include_directories"],
-            (*it)["linked_libraries"]
+            get_or_explode((*it), "symbol"),
+            get_or_explode((*it), "headers"),
+            get_or_explode((*it), "include_directories"),
+            get_or_explode((*it), "linked_libraries")
          ));
 
          std::cout << (*it) << std::endl;
@@ -72,13 +93,14 @@ int main(int argc, char **argv)
       // parent classes
 
       std::vector<Blast::ParentClassProperties> parent_classes;
-      json &p = quintessence_json["parent_classes"];
+      json &p = get_or_explode(quintessence_json, "parent_classes");
+
       for (json::iterator it = p.begin(); it != p.end(); ++it)
       {
          parent_classes.push_back(Blast::ParentClassProperties(
-            (*it)["class"],
-            (*it)["init_with"],
-            (*it)["scope"]
+            get_or_explode((*it), "class"),
+            get_or_explode((*it), "init_with"),
+            get_or_explode((*it), "scope")
          ));
 
          std::cout << (*it) << std::endl;
@@ -87,7 +109,10 @@ int main(int argc, char **argv)
 
       // generator
 
-      Blast::CppClassGenerator cpp_class_generator(quintessence_json["class"], quintessence_json["namespaces"], parent_classes, properties, dependencies);
+      json &klass = get_or_explode(quintessence_json, "class");
+      json &namespaces = get_or_explode(quintessence_json, "namespaces");
+
+      Blast::CppClassGenerator cpp_class_generator(klass, namespaces, parent_classes, properties, dependencies);
 
       std::string header_filepath = cpp_class_generator.project_header_filepath();
 
