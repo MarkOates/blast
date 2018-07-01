@@ -10,16 +10,40 @@ void explode(std::string message)
    throw std::runtime_error(message);
 }
 
+
+class Tabber
+{
+private:
+   int tab_level;
+
+public:
+   Tabber(int tab_level=0) : tab_level(0) {}
+   void indent() { tab_level++; }
+   void unindent() { tab_level--; }
+   int get_tab_level() { return tab_level; }
+   std::string get_string_tab() { return std::string(tab_level * 3, ' '); }
+};
+
+
+Tabber tabber;
+
+
 json &get_or_explode(json &j, std::string key)
 {
    if (j[key].empty()) explode(std::string(key) + " is required");
+
+   std::cout << tabber.get_string_tab() << "✅ " << key << " found" << std::endl;
 
    return j[key];
 }
 
 bool get_or_fallback(json &j, std::string key, bool fallback)
 {
-   if (j[key].empty()) return fallback;
+   if (j[key].empty())
+   {
+      std::cout << tabber.get_string_tab() << "⚠️ " << key << " not present, default of \"" << fallback << "\" will be used." << std::endl;
+      return fallback;
+   }
 
    return j[key];
 }
@@ -55,6 +79,7 @@ int main(int argc, char **argv)
 
       json &j = quintessence_json["properties"];
 
+      tabber.indent();
       for (json::iterator it = j.begin(); it != j.end(); ++it)
       {
          properties.push_back(Blast::ClassAttributeProperties(
@@ -69,6 +94,7 @@ int main(int argc, char **argv)
 
          std::cout << (*it) << std::endl;
       }
+      tabber.unindent();
 
 
       // dependencies
@@ -77,6 +103,7 @@ int main(int argc, char **argv)
 
       json &d = get_or_explode(quintessence_json, "dependencies");
 
+      tabber.indent();
       for (json::iterator it = d.begin(); it != d.end(); ++it)
       {
          dependencies.push_back(Blast::SymbolDependencies(
@@ -88,6 +115,7 @@ int main(int argc, char **argv)
 
          std::cout << (*it) << std::endl;
       }
+      tabber.unindent();
 
 
       // parent classes
@@ -95,6 +123,7 @@ int main(int argc, char **argv)
       std::vector<Blast::ParentClassProperties> parent_classes;
       json &p = get_or_explode(quintessence_json, "parent_classes");
 
+      tabber.indent();
       for (json::iterator it = p.begin(); it != p.end(); ++it)
       {
          parent_classes.push_back(Blast::ParentClassProperties(
@@ -105,6 +134,7 @@ int main(int argc, char **argv)
 
          std::cout << (*it) << std::endl;
       }
+      tabber.unindent();
 
 
       // generator
