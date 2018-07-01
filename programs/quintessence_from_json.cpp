@@ -11,6 +11,20 @@ void explode(std::string message)
 }
 
 
+std::ostream & operator<< (std::ostream &out, std::vector<std::string> const &object)
+{
+   out << "{ ";
+   for (auto &object_piece : object)
+   {
+      out << "\"" << object_piece << "\"";
+   }
+   out << " }";
+
+   return out;
+}
+
+
+
 class Tabber
 {
 private:
@@ -41,7 +55,8 @@ json &get_or_explode(json &j, std::string key)
    return j[key];
 }
 
-bool get_or_fallback(json &j, std::string key, bool fallback)
+template <class T>
+T get_or_fallback(json &j, std::string key, T fallback)
 {
    if (j.count(key) == 0)
    {
@@ -73,7 +88,7 @@ int main(int argc, char **argv)
       quintessence_file >> quintessence_json;
 
 
-      if (quintessence_json["format"] != "verbose") throw std::runtime_error("\"format\" : \"verbose\" string not present");
+      //if (quintessence_json["format"] != "verbose") throw std::runtime_error("\"format\" : \"verbose\" string not present");
 
       // properties
 
@@ -87,13 +102,13 @@ int main(int argc, char **argv)
       for (json::iterator it = j.begin(); it != j.end(); ++it)
       {
          properties.push_back(Blast::ClassAttributeProperties(
-            get_or_explode((*it), "type"),
+            get_or_fallback((*it), "type", std::string("")),
             get_or_explode((*it), "name"),
-            get_or_explode((*it), "init_with"),
-            get_or_explode((*it), "static"),
+            get_or_fallback((*it), "init_with", std::string("")),
+            get_or_fallback((*it), "static", false),
             get_or_fallback((*it), "constructor_arg", false),
-            get_or_explode((*it), "getter"),
-            get_or_explode((*it), "setter")
+            get_or_fallback((*it), "getter", false),
+            get_or_fallback((*it), "setter", false)
          ));
 
          std::cout << (*it) << std::endl;
@@ -124,6 +139,7 @@ int main(int argc, char **argv)
 
       // parent classes
 
+      //std::vector<std::string> fallback;
       std::vector<Blast::ParentClassProperties> parent_classes;
       json &p = get_or_explode(quintessence_json, "parent_classes");
 
