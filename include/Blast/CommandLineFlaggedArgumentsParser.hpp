@@ -16,7 +16,7 @@ namespace Blast
       CommandLineFlaggedArgumentsParser(std::vector<std::string> command_line_args);
       ~CommandLineFlaggedArgumentsParser();
 
-      bool is_flag_present(std::string flag);
+      bool has_flag(std::string flag);
       std::vector<std::vector<std::string>> get_flagged_args(std::string flag);
 
    private:

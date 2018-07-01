@@ -76,30 +76,30 @@ TEST_F(CommandLineFlaggedArgumentsParserTest, get_flagged_args__with_a_flag_that
 }
 
 
-TEST_F(CommandLineFlaggedArgumentsParserTest, is_flag_present__asdf_asdf_asdf)
+TEST_F(CommandLineFlaggedArgumentsParserTest, has_flag__raises_an_exception_if_the_passed_flag_does_not_match_the_flag_format)
 {
    Blast::CommandLineFlaggedArgumentsParser parser(args_fixture);
 
-   std::string expected_error_message = "[CommandLineFlaggedArgumentsParser::is_flag_present] error: \"not-a-flag\" is not " \
+   std::string expected_error_message = "[CommandLineFlaggedArgumentsParser::has_flag] error: \"not-a-flag\" is not " \
       "a valid formatted flag; It must start with '-' character.";
 
-   ASSERT_THROW_WITH_MESSAGE(parser.is_flag_present("not-a-flag"), std::runtime_error, expected_error_message)
+   ASSERT_THROW_WITH_MESSAGE(parser.has_flag("not-a-flag"), std::runtime_error, expected_error_message)
 }
 
 
-TEST_F(CommandLineFlaggedArgumentsParserTest, is_flag_present__returns_true_if_a_flag_is_present)
+TEST_F(CommandLineFlaggedArgumentsParserTest, has_flag__returns_true_if_a_flag_is_present)
 {
    Blast::CommandLineFlaggedArgumentsParser parser(args_fixture);
 
-   ASSERT_TRUE(parser.is_flag_present("-n"));
+   ASSERT_TRUE(parser.has_flag("-n"));
 }
 
 
-TEST_F(CommandLineFlaggedArgumentsParserTest, is_flag_present__returns_false_if_a_flag_is_present)
+TEST_F(CommandLineFlaggedArgumentsParserTest, has_flag__returns_false_if_a_flag_is_present)
 {
    Blast::CommandLineFlaggedArgumentsParser parser(args_fixture);
 
-   ASSERT_FALSE(parser.is_flag_present("-x"));
+   ASSERT_FALSE(parser.has_flag("-x"));
 }
 
 
