@@ -30,9 +30,13 @@ Tabber tabber;
 
 json &get_or_explode(json &j, std::string key)
 {
-   if (j.count(key) == 0) explode(std::string(key) + " is required");
+   if (j.count(key) == 0)
+   {
+      std::cout << tabber.get_string_tab() << "🛑 \"" << key << "\" not present and is required." << std::endl;
+      explode(std::string(key) + " is required");
+   }
 
-   std::cout << tabber.get_string_tab() << "✅ " << key << " found" << std::endl;
+   std::cout << tabber.get_string_tab() << "✅ \"" << key << "\" found" << std::endl;
 
    return j[key];
 }
@@ -41,7 +45,7 @@ bool get_or_fallback(json &j, std::string key, bool fallback)
 {
    if (j.count(key) == 0)
    {
-      std::cout << tabber.get_string_tab() << "⚠️ " << key << " not present, default of \"" << fallback << "\" will be used." << std::endl;
+      std::cout << tabber.get_string_tab() << "⚠️ \"" << key << "\" not present, default of \"" << fallback << "\" will be used." << std::endl;
       return fallback;
    }
 
