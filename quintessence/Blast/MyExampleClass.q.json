@@ -1,0 +1,37 @@
+{
+  "class": "MyExampleClass",
+  "format": "verbose",
+  "parent_classes": [
+    {
+      "class" : "DiceRoller",
+      "init_with" : "",
+      "scope" : "public"
+    }
+  ],
+  "namespaces": [ "Blast" ],
+  "properties" : [
+    {
+      "type": "std::string",
+      "name": "string",
+      "init_with": "\"foo-default-value\"",
+      "constructor_arg" : true,
+      "static": false,
+      "getter": false,
+      "setter": false
+    }
+  ],
+  "dependencies" : [
+    {
+      "symbol" : "std::string",
+      "headers" : [ "string" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "DiceRoller",
+      "headers" : [ "Blast/DiceRoller.hpp" ],
+      "include_directories" : [ "~/Repos/blast" ],
+      "linked_libraries" : [ "foolink" ]
+    }
+  ]
+}
