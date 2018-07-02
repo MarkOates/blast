@@ -19,7 +19,7 @@
     },
     {
       "name": "signature",
-      "type": "std::vector<std::tuple<std::string, std::string, std::string>>",
+      "type": "std::vector<Blast::CppFunctionArgument>",
       "init_with": "{}",
       "constructor_arg" : true,
       "getter" : true
@@ -53,6 +53,7 @@
       "getter" : true
     }
   ],
+  "functions" : [],
   "dependencies" : [
     {
       "symbol" : "std::string",
@@ -73,8 +74,8 @@
       "linked_libraries" : [ "foolib" ]
     },
     {
-      "symbol" : "std::vector<std::tuple<std::string, std::string, std::string>>",
-      "headers" : [ "vector", "tuple", "string" ],
+      "symbol" : "std::vector<Blast::CppFunctionArgument>",
+      "headers" : [ "vector", "Blast/CppFunctionArgument.hpp" ],
       "include_directories" : [ "foodir" ],
       "linked_libraries" : [ "foolib" ]
     }

@@ -7,7 +7,7 @@ namespace Blast
 {
 
 
-CppFunction::CppFunction(std::string type, std::string name, std::vector<std::tuple<std::string, std::string, std::string>> signature, std::string body, bool is_static, bool is_const, bool is_override)
+CppFunction::CppFunction(std::string type, std::string name, std::vector<Blast::CppFunctionArgument> signature, std::string body, bool is_static, bool is_const, bool is_override)
    : type(type)
    , name(name)
    , signature(signature)
@@ -36,7 +36,7 @@ std::string CppFunction::get_name()
 }
 
 
-std::vector<std::tuple<std::string, std::string, std::string>> CppFunction::get_signature()
+std::vector<Blast::CppFunctionArgument> CppFunction::get_signature()
 {
    return signature;
 }
