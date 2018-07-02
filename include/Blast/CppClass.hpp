@@ -20,9 +20,10 @@ namespace Blast
       std::vector<Blast::ClassAttributeProperties> attribute_properties;
       std::vector<Blast::CppFunction> functions;
       std::vector<Blast::SymbolDependencies> symbol_dependencies;
+      std::vector<Blast::SymbolDependencies> function_body_symbol_dependencies;
 
    public:
-      CppClass(std::string class_name="UnnamedClass", std::vector<std::string> namespaces={}, std::vector<Blast::ParentClassProperties> parent_classes_properties={}, std::vector<Blast::ClassAttributeProperties> attribute_properties={}, std::vector<Blast::CppFunction> functions={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
+      CppClass(std::string class_name="UnnamedClass", std::vector<std::string> namespaces={}, std::vector<Blast::ParentClassProperties> parent_classes_properties={}, std::vector<Blast::ClassAttributeProperties> attribute_properties={}, std::vector<Blast::CppFunction> functions={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={}, std::vector<Blast::SymbolDependencies> function_body_symbol_dependencies={});
       ~CppClass();
 
 
@@ -32,6 +33,7 @@ namespace Blast
       std::vector<Blast::ClassAttributeProperties> get_attribute_properties();
       std::vector<Blast::CppFunction> get_functions();
       std::vector<Blast::SymbolDependencies> get_symbol_dependencies();
+      std::vector<Blast::SymbolDependencies> get_function_body_symbol_dependencies();
    };
 }
 

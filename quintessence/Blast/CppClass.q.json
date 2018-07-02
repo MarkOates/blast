@@ -44,9 +44,17 @@
       "init_with": "{}",
       "constructor_arg" : true,
       "getter" : true
+    },
+    {
+      "name": "function_body_symbol_dependencies",
+      "type": "std::vector<Blast::SymbolDependencies>",
+      "init_with": "{}",
+      "constructor_arg" : true,
+      "getter" : true
     }
   ],
   "functions" : [],
+  "function_body_symbol_dependencies" : [],
   "dependencies" : [
     {
       "symbol" : "std::string",
