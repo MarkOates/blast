@@ -1,6 +1,7 @@
 
 #include <Blast/CppClassGenerator.hpp>
 #include <Blast/CppFunction.hpp>
+#include <Blast/CppFunctionArgument.hpp>
 #include <Blast/libraries/json.hpp>
 using json = nlohmann::json;
 #include <fstream>
@@ -180,12 +181,22 @@ int main(int argc, char **argv)
       tabber.indent();
       for (json::iterator it = f.begin(); it != f.end(); ++it)
       {
-         //std::vector<Blast::CppFunction> functions;
-         //std::vector &s = 
+         std::vector<Blast::CppFunctionArgument> parameters;
+         json &ptrs = get_or_explode((*it), "parameters");
+
+         for (json::iterator ptrs_it = ptrs.begin(); ptrs_it != ptrs.end(); ++ptrs_it)
+         {
+            parameters.push_back(Blast::CppFunctionArgument(
+               get_or_fallback((*ptrs_it), "type", std::string("std::string")),
+               get_or_explode((*ptrs_it), "name"),
+               get_or_fallback((*ptrs_it), "default_value", std::string("\"\""))
+            ));
+         }
+
          functions.push_back(Blast::CppFunction(
             get_or_fallback((*it), "type", std::string("void")),
             get_or_explode((*it), "name"),
-            {}, //get_or_fallback((*it), "signature", ""),
+            parameters,
             get_or_explode((*it), "body"),
             get_or_fallback((*it), "is_static", false),
             get_or_fallback((*it), "is_const", false),
