@@ -1,0 +1,82 @@
+{
+  "class": "CppFunction",
+  "parent_classes": [],
+  "namespaces": [ "Blast" ],
+  "properties" : [
+    {
+      "name": "type",
+      "type": "std::string",
+      "init_with": "\"void\"",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "name",
+      "type": "std::string",
+      "init_with": "\"unnamed_function\"",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "signature",
+      "type": "std::vector<std::tuple<std::string, std::string, std::string>>",
+      "init_with": "{}",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "body",
+      "type": "std::string",
+      "init_with": "\"return;\"",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "is_static",
+      "type": "bool",
+      "init_with": "false",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "is_const",
+      "type": "bool",
+      "init_with": "false",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "is_override",
+      "type": "bool",
+      "init_with": "false",
+      "constructor_arg" : true,
+      "getter" : true
+    }
+  ],
+  "dependencies" : [
+    {
+      "symbol" : "std::string",
+      "headers" : [ "string" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "void",
+      "headers" : [],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "bool",
+      "headers" : [],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "std::vector<std::tuple<std::string, std::string, std::string>>",
+      "headers" : [ "vector", "tuple", "string" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    }
+  ]
+}
