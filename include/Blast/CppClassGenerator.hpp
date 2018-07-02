@@ -45,6 +45,9 @@ namespace Blast
       std::string setter_function_definitions(int indent_level=0);
       std::string initialization_list(int indent_level=0);
 
+      std::vector<std::string> function_declarations(int indent_level=0);
+      std::vector<std::string> function_definitions(int indent_level=0);
+
       std::string constructor_declaration(int indent_level=0);
       std::string constructor_definition(int indent_level=0);
       std::string destructor_declaration(int indent_level=0);

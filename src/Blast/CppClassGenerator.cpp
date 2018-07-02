@@ -2,6 +2,7 @@
 
 #include <Blast/CppClassGenerator.hpp>
 
+#include <Blast/CppFunctionFormatter.hpp>
 #include <set>
 #include <sstream>
 #include <iostream>
@@ -348,6 +349,24 @@ std::string CppClassGenerator::initialization_list(int indent_level)
    result << std::string(3*indent_level, ' ') << ": " << elements.front() << "\n";
    for (int i=1; i<elements.size(); i++) result << std::string(3*indent_level, ' ') << ", " << elements[i] << "\n";
    return result.str();
+}
+
+
+std::vector<std::string> CppClassGenerator::function_declarations(int indent_level)
+{
+   std::vector<std::string> result;
+   for (auto &function : cpp_class.get_functions())
+      result.push_back(CppFunctionFormatter(function).get_function_declaration());
+   return result;
+}
+
+
+std::vector<std::string> CppClassGenerator::function_definitions(int indent_level)
+{
+   std::vector<std::string> result;
+   for (auto &function : cpp_class.get_functions())
+      result.push_back(CppFunctionFormatter(function).get_function_definition());
+   return result;
 }
 
 
