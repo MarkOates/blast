@@ -22,7 +22,7 @@ int main(int argc, char **argv)
       { "AnimalBase", { "Animal/AnimalBase.hpp" } }
    };
 
-   Blast::CppClassGenerator class_generator(
+   Blast::CppClass cpp_class(
       "Kitten",
       { "MyProject" },
       { { "AnimalBase", "\"Kitten\"" } },
@@ -36,6 +36,8 @@ int main(int argc, char **argv)
       },
       symbol_dependencies
    );
+
+   Blast::CppClassGenerator class_generator(cpp_class);
 
    std::cout << "////////// header file ///////////" << std::endl;
    std::cout << class_generator.generate_header_file_content();

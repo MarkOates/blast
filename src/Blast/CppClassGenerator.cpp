@@ -34,12 +34,8 @@ namespace Blast
 {
 
 
-CppClassGenerator::CppClassGenerator(std::string class_name, std::vector<std::string> namespaces, std::vector<Blast::ParentClassProperties> parent_classes_properties, std::vector<ClassAttributeProperties> attribute_properties, std::vector<Blast::SymbolDependencies> symbol_dependencies)
-   : class_name(class_name)
-   , namespaces(namespaces)
-   , parent_classes_properties(parent_classes_properties)
-   , attribute_properties(attribute_properties)
-   , symbol_dependencies(symbol_dependencies)
+CppClassGenerator::CppClassGenerator(CppClass cpp_class)
+   : cpp_class(cpp_class)
 {
 }
 
@@ -49,22 +45,22 @@ CppClassGenerator::~CppClassGenerator()
 }
 
 
-std::vector<ClassAttributeProperties> &CppClassGenerator::get_class_attribute_properties_ref()
-{
-   return attribute_properties;
-}
+//std::vector<ClassAttributeProperties> &CppClassGenerator::get_class_attribute_properties_ref()
+//{
+   //return class.attribute_properties;
+//}
 
 
-std::vector<SymbolDependencies> &CppClassGenerator::get_symbol_dependencies_ref()
-{
-   return symbol_dependencies;
-}
+//std::vector<SymbolDependencies> &CppClassGenerator::get_symbol_dependencies_ref()
+//{
+   //return symbol_dependencies;
+//}
 
 
 std::vector<std::string> CppClassGenerator::constructor_declaration_elements()
 {
    std::vector<std::string> elements;
-   for (auto &attribute_property : attribute_properties)
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
       if (attribute_property.is_constructor_parameter) elements.push_back(attribute_property.as_constructor_argument_in_declaration());
    return elements;
 }
@@ -73,7 +69,7 @@ std::vector<std::string> CppClassGenerator::constructor_declaration_elements()
 std::vector<std::string> CppClassGenerator::constructor_definition_elements()
 {
    std::vector<std::string> elements;
-   for (auto &attribute_property : attribute_properties)
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
       if (attribute_property.is_constructor_parameter) elements.push_back(attribute_property.as_constructor_argument_in_definition());
    return elements;
 }
@@ -82,9 +78,9 @@ std::vector<std::string> CppClassGenerator::constructor_definition_elements()
 std::vector<std::string> CppClassGenerator::initialization_list_elements()
 {
    std::vector<std::string> elements;
-   for (auto &parent_class_properties : parent_classes_properties)
+   for (auto &parent_class_properties : cpp_class.get_parent_classes_properties())
       elements.push_back(parent_class_properties.as_argument_in_initialization_list());
-   for (auto &attribute_property : attribute_properties)
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
       if (!attribute_property.is_static) elements.push_back(attribute_property.as_argument_in_initialization_list());
    return elements;
 }
@@ -93,7 +89,7 @@ std::vector<std::string> CppClassGenerator::initialization_list_elements()
 std::vector<std::string> CppClassGenerator::class_declaration_opener_inheritence_elements()
 {
    std::vector<std::string> elements;
-   for (auto &parent_class_properties : parent_classes_properties)
+   for (auto &parent_class_properties : cpp_class.get_parent_classes_properties())
       elements.push_back(parent_class_properties.as_class_inheritence_declaration());
    return elements;
 }
@@ -102,28 +98,28 @@ std::vector<std::string> CppClassGenerator::class_declaration_opener_inheritence
 std::vector<std::string> CppClassGenerator::static_attribute_definition_elements()
 {
    std::vector<std::string> elements;
-   for (auto &attribute_property : attribute_properties)
-      if (attribute_property.is_static) elements.push_back(attribute_property.as_static_definition(class_name));
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+      if (attribute_property.is_static) elements.push_back(attribute_property.as_static_definition(cpp_class.get_class_name()));
    return elements;
 }
 
 
-void CppClassGenerator::set_class_name(std::string class_name)
-{
-   this->class_name = class_name;
-}
+//void CppClassGenerator::set_class_name(std::string class_name)
+//{
+   //this->class_name = class_name;
+//}
 
 
-bool CppClassGenerator::has_parent_classes()
-{
-   return !parent_classes_properties.empty();
-}
+//bool CppClassGenerator::has_parent_classes()
+//{
+   //return !parent_classes_properties.empty();
+//}
 
 
-bool CppClassGenerator::has_namespaces()
-{
-   return !namespaces.empty();
-}
+//bool CppClassGenerator::has_namespaces()
+//{
+   //return !namespaces.empty();
+//}
 
 
 std::string CppClassGenerator::private_scope_specifier(int indent_level)
@@ -150,17 +146,17 @@ std::string CppClassGenerator::protected_scope_specifier(int indent_level)
 }
 
 
-std::string CppClassGenerator::get_class_name()
-{
-   return class_name;
-}
+//std::string CppClassGenerator::get_class_name()
+//{
+   //return class_name;
+//}
 
 
 std::string CppClassGenerator::namespaces_scope_opener(bool indented)
 {
    std::stringstream result;
    int indentation_level = 0;
-   for (auto &n : namespaces)
+   for (auto &n : cpp_class.get_namespaces())
    {
       if (indented) result << std::string(3*indentation_level, ' ');
       result << "namespace " << n << "\n";
@@ -175,9 +171,9 @@ std::string CppClassGenerator::namespaces_scope_opener(bool indented)
 std::string CppClassGenerator::namespaces_scope_closer(bool indented, bool include_comment)
 {
    std::stringstream result;
-   for (int i=namespaces.size()-1; i>=0; i--)
+   for (int i=cpp_class.get_namespaces().size()-1; i>=0; i--)
    {
-      std::string &n = namespaces[i];
+      std::string &n = cpp_class.get_namespaces()[i];
       if (indented) result << std::string(3*i, ' ');
       result << "}";
       if (include_comment) result << " // namespace " << n;
@@ -189,13 +185,15 @@ std::string CppClassGenerator::namespaces_scope_closer(bool indented, bool inclu
 
 std::string CppClassGenerator::class_declaration_inheritence_list()
 {
+   // ineffecient use of recalling this value, TODO optimize
+
    std::stringstream result;
-   if (!has_parent_classes()) return "";
+   if (cpp_class.get_parent_classes_properties().empty()) return "";
 
    result << " : ";
-   for (int i=0; i<parent_classes_properties.size()-1; i++)
-      result << parent_classes_properties[i].as_class_inheritence_declaration() << ", ";
-   result << parent_classes_properties.back().as_class_inheritence_declaration();
+   for (int i=0; i<cpp_class.get_parent_classes_properties().size()-1; i++)
+      result << cpp_class.get_parent_classes_properties()[i].as_class_inheritence_declaration() << ", ";
+   result << cpp_class.get_parent_classes_properties().back().as_class_inheritence_declaration();
 
    return result.str();
 }
@@ -204,7 +202,7 @@ std::string CppClassGenerator::class_declaration_inheritence_list()
 std::string CppClassGenerator::class_declaration_opener(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << "class " << class_name << class_declaration_inheritence_list() << "\n" << std::string(3*indent_level, ' ') << "{\n";
+   result << std::string(3*indent_level, ' ') << "class " << cpp_class.get_class_name() << class_declaration_inheritence_list() << "\n" << std::string(3*indent_level, ' ') << "{\n";
    return result.str();
 }
 
@@ -220,7 +218,7 @@ std::string CppClassGenerator::class_declaration_closer(int indent_level)
 std::string CppClassGenerator::header_filename()
 {
    std::stringstream result;
-   result << class_name << ".hpp";
+   result << cpp_class.get_class_name() << ".hpp";
    return result.str();
 }
 
@@ -228,7 +226,7 @@ std::string CppClassGenerator::header_filename()
 std::string CppClassGenerator::source_filename()
 {
    std::stringstream result;
-   result << class_name << ".cpp";
+   result << cpp_class.get_class_name() << ".cpp";
    return result.str();
 }
 
@@ -237,10 +235,10 @@ std::string CppClassGenerator::header_include_directive()
 {
    std::stringstream result;
    result << "#include <";
-   for (unsigned i=0; i<namespaces.size(); i++)
+   for (unsigned i=0; i<cpp_class.get_namespaces().size(); i++)
    {
-      result << namespaces[i];
-      if (i != (namespaces.size()-1)) result << "/";
+      result << cpp_class.get_namespaces()[i];
+      if (i != (cpp_class.get_namespaces().size()-1)) result << "/";
    }
    result << "/" << header_filename() << ">\n";
 
@@ -256,13 +254,13 @@ std::string CppClassGenerator::dependency_include_directives()
    std::set<std::string> undefined_symbols;
 
    std::set<std::string> present_symbols;
-   for (auto &attribute_property : attribute_properties) present_symbols.insert(attribute_property.datatype);
-   for (auto &parent_class_properties : parent_classes_properties) present_symbols.insert(parent_class_properties.get_class_name());
+   for (auto &attribute_property : cpp_class.get_attribute_properties()) present_symbols.insert(attribute_property.datatype);
+   for (auto &parent_class_properties : cpp_class.get_parent_classes_properties()) present_symbols.insert(parent_class_properties.get_class_name());
 
    for (auto &present_symbol : present_symbols)
    {
       bool found = false;
-      for (auto &individual_symbol_dependencies : symbol_dependencies)
+      for (auto &individual_symbol_dependencies : cpp_class.get_symbol_dependencies())
       {
          if (individual_symbol_dependencies.is_symbol(present_symbol))
          {
@@ -298,7 +296,7 @@ std::string CppClassGenerator::dependency_include_directives()
 std::string CppClassGenerator::class_property_list(int indent_level)
 {
    std::stringstream result;
-   for (auto &attribute_property : attribute_properties)
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
       result << std::string(3*indent_level, ' ') << attribute_property.as_class_property() << ";\n";
    return result.str();
 }
@@ -316,7 +314,7 @@ std::string CppClassGenerator::static_attribute_definitions(int indent_level)
 std::string CppClassGenerator::getter_function_declarations(int indent_level)
 {
    std::stringstream result;
-   for (auto &attribute_property : attribute_properties)
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
       if (attribute_property.has_getter)
       {
          result << std::string(3*indent_level, ' ');
@@ -329,8 +327,8 @@ std::string CppClassGenerator::getter_function_declarations(int indent_level)
 std::string CppClassGenerator::getter_function_definitions(int indent_level)
 {
    std::stringstream result;
-   for (auto &attribute_property : attribute_properties)
-      if (attribute_property.has_getter) result << std::string(3*indent_level, ' ') << attribute_property.getter_function_definition(class_name) << "\n\n";
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+      if (attribute_property.has_getter) result << std::string(3*indent_level, ' ') << attribute_property.getter_function_definition(cpp_class.get_class_name()) << "\n\n";
    return result.str();
 }
 
@@ -338,7 +336,7 @@ std::string CppClassGenerator::getter_function_definitions(int indent_level)
 std::string CppClassGenerator::setter_function_declarations(int indent_level)
 {
    std::stringstream result;
-   for (auto &attribute_property : attribute_properties)
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
       if (attribute_property.has_setter) result << std::string(3*indent_level, ' ') << attribute_property.setter_function_declaration() << "\n";
    return result.str();
 }
@@ -347,8 +345,8 @@ std::string CppClassGenerator::setter_function_declarations(int indent_level)
 std::string CppClassGenerator::setter_function_definitions(int indent_level)
 {
    std::stringstream result;
-   for (auto &attribute_property : attribute_properties)
-      if (attribute_property.has_setter) result << std::string(3*indent_level, ' ') << attribute_property.setter_function_definition(class_name) << "\n\n";
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+      if (attribute_property.has_setter) result << std::string(3*indent_level, ' ') << attribute_property.setter_function_definition(cpp_class.get_class_name()) << "\n\n";
    return result.str();
 }
 
@@ -369,7 +367,7 @@ std::string CppClassGenerator::initialization_list(int indent_level)
 std::string CppClassGenerator::constructor_declaration(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << class_name << "(" << __join(constructor_declaration_elements()) << ");\n";
+   result << std::string(3*indent_level, ' ') << cpp_class.get_class_name() << "(" << __join(constructor_declaration_elements()) << ");\n";
    return result.str();
 }
 
@@ -377,7 +375,7 @@ std::string CppClassGenerator::constructor_declaration(int indent_level)
 std::string CppClassGenerator::constructor_definition(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << class_name << "::" << class_name << "(" << __join(constructor_definition_elements()) << ")\n"
+   result << std::string(3*indent_level, ' ') << cpp_class.get_class_name() << "::" << cpp_class.get_class_name() << "(" << __join(constructor_definition_elements()) << ")\n"
       << initialization_list(indent_level+1)
       << std::string(3*indent_level, ' ') << "{\n" << std::string(3*indent_level, ' ') << "}\n";
    return result.str();
@@ -387,7 +385,7 @@ std::string CppClassGenerator::constructor_definition(int indent_level)
 std::string CppClassGenerator::destructor_declaration(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << "~" << class_name << "();\n";
+   result << std::string(3*indent_level, ' ') << "~" << cpp_class.get_class_name() << "();\n";
    return result.str();
 }
 
@@ -395,7 +393,7 @@ std::string CppClassGenerator::destructor_declaration(int indent_level)
 std::string CppClassGenerator::destructor_definition(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << class_name << "::~" << class_name << "()\n" << std::string(3*indent_level, ' ') << "{\n" << std::string(3*indent_level, ' ') << "}\n";
+   result << std::string(3*indent_level, ' ') << cpp_class.get_class_name() << "::~" << cpp_class.get_class_name() << "()\n" << std::string(3*indent_level, ' ') << "{\n" << std::string(3*indent_level, ' ') << "}\n";
    return result.str();
 }
 
@@ -465,12 +463,12 @@ NAMESPACES_CLOSER
 
    std::string result = header_file_template;
 
-   int required_namespace_indentation_levels = namespaces.size();
+   int required_namespace_indentation_levels = cpp_class.get_namespaces().size();
 
    __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opener(true));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(true, false));
    __replace(result, "DEPENDENCY_INCLUDE_DIRECTIVES", dependency_include_directives());
-   __replace(result, "CLASS_NAME", class_name);
+   __replace(result, "CLASS_NAME", cpp_class.get_class_name());
    __replace(result, "CONSTRUCTOR\n", constructor_declaration(required_namespace_indentation_levels + 1));
    __replace(result, "DESTRUCTOR\n", destructor_declaration(required_namespace_indentation_levels + 1));
    __replace(result, "PROPERTIES\n", class_property_list(required_namespace_indentation_levels + 1));
@@ -505,7 +503,7 @@ std::string CppClassGenerator::project_source_filepath()
 {
    std::stringstream result;
    result << "src";
-   for (unsigned i=0; i<namespaces.size(); i++) result << "/" << namespaces[i];
+   for (unsigned i=0; i<cpp_class.get_namespaces().size(); i++) result << "/" << cpp_class.get_namespaces()[i];
    result << "/" << source_filename();
    return result.str();
 }
@@ -515,7 +513,7 @@ std::string CppClassGenerator::project_header_filepath()
 {
    std::stringstream result;
    result << "include";
-   for (unsigned i=0; i<namespaces.size(); i++) result << "/" << namespaces[i];
+   for (unsigned i=0; i<cpp_class.get_namespaces().size(); i++) result << "/" << cpp_class.get_namespaces()[i];
    result << "/" << header_filename();
    return result.str();
 }

@@ -162,7 +162,8 @@ int main(int argc, char **argv)
       json &klass = get_or_explode(quintessence_json, "class");
       json &namespaces = get_or_explode(quintessence_json, "namespaces");
 
-      Blast::CppClassGenerator cpp_class_generator(klass, namespaces, parent_classes, properties, dependencies);
+      Blast::CppClass cpp_class(klass, namespaces, parent_classes, properties, dependencies);
+      Blast::CppClassGenerator cpp_class_generator(cpp_class);
 
       std::string header_filepath = cpp_class_generator.project_header_filepath();
 

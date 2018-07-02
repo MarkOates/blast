@@ -1,9 +1,7 @@
 #pragma once
 
 
-#include <Blast/ClassAttributeProperties.hpp>
-#include <Blast/ParentClassProperties.hpp>
-#include <Blast/SymbolDependencies.hpp>
+#include <Blast/CppClass.hpp>
 #include <string>
 #include <vector>
 
@@ -13,18 +11,14 @@ namespace Blast
    class CppClassGenerator
    {
    private:
-      std::string class_name;
-      std::vector<std::string> namespaces;
-      std::vector<Blast::ParentClassProperties> parent_classes_properties;
-      std::vector<Blast::ClassAttributeProperties> attribute_properties;
-      std::vector<Blast::SymbolDependencies> symbol_dependencies;
+      CppClass cpp_class;
 
    public:
-      CppClassGenerator(std::string class_name="UnnamedClass", std::vector<std::string> namespaces={}, std::vector<Blast::ParentClassProperties> parent_classes_properties={}, std::vector<ClassAttributeProperties> attribute_properties={}, std::vector<Blast::SymbolDependencies> symbol_dependencies={});
+      CppClassGenerator(CppClass cpp_class={});
       ~CppClassGenerator();
 
-      std::vector<ClassAttributeProperties> &get_class_attribute_properties_ref();
-      std::vector<SymbolDependencies> &get_symbol_dependencies_ref();
+      //std::vector<ClassAttributeProperties> &get_class_attribute_properties_ref();
+      //std::vector<SymbolDependencies> &get_symbol_dependencies_ref();
 
       std::vector<std::string> constructor_declaration_elements();
       std::vector<std::string> constructor_definition_elements();
@@ -32,12 +26,12 @@ namespace Blast
       std::vector<std::string> class_declaration_opener_inheritence_elements();
       std::vector<std::string> static_attribute_definition_elements();
 
-      void set_class_name(std::string class_name);
+      //void set_class_name(std::string class_name);
 
-      std::string get_class_name();
+      //std::string get_class_name();
 
-      bool has_parent_classes();
-      bool has_namespaces();
+      //bool has_parent_classes();
+      //bool has_namespaces();
 
       std::string private_scope_specifier(int indent_level=0);
       std::string public_scope_specifier(int indent_level=0);
