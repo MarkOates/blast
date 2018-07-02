@@ -1,0 +1,37 @@
+{
+  "class": "CppFunctionArgument",
+  "parent_classes": [],
+  "namespaces": [ "Blast" ],
+  "properties" : [
+    {
+      "name": "type",
+      "type": "std::string",
+      "init_with": "\"std::string\"",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "name",
+      "type": "std::string",
+      "init_with": "\"unnamed_function\"",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "default_value",
+      "type": "std::string",
+      "init_with": "\"\\\"\\\"\"",
+      "constructor_arg" : true,
+      "getter" : true
+    }
+  ],
+  "functions" : [],
+  "dependencies" : [
+    {
+      "symbol" : "std::string",
+      "headers" : [ "string" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    }
+  ]
+}
