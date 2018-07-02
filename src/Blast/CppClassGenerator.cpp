@@ -45,18 +45,6 @@ CppClassGenerator::~CppClassGenerator()
 }
 
 
-//std::vector<ClassAttributeProperties> &CppClassGenerator::get_class_attribute_properties_ref()
-//{
-   //return class.attribute_properties;
-//}
-
-
-//std::vector<SymbolDependencies> &CppClassGenerator::get_symbol_dependencies_ref()
-//{
-   //return symbol_dependencies;
-//}
-
-
 std::vector<std::string> CppClassGenerator::constructor_declaration_elements()
 {
    std::vector<std::string> elements;
@@ -104,24 +92,6 @@ std::vector<std::string> CppClassGenerator::static_attribute_definition_elements
 }
 
 
-//void CppClassGenerator::set_class_name(std::string class_name)
-//{
-   //this->class_name = class_name;
-//}
-
-
-//bool CppClassGenerator::has_parent_classes()
-//{
-   //return !parent_classes_properties.empty();
-//}
-
-
-//bool CppClassGenerator::has_namespaces()
-//{
-   //return !namespaces.empty();
-//}
-
-
 std::string CppClassGenerator::private_scope_specifier(int indent_level)
 {
    std::stringstream result;
@@ -144,12 +114,6 @@ std::string CppClassGenerator::protected_scope_specifier(int indent_level)
    result << std::string(3*indent_level, ' ') << "protected:\n";
    return result.str();
 }
-
-
-//std::string CppClassGenerator::get_class_name()
-//{
-   //return class_name;
-//}
 
 
 std::string CppClassGenerator::namespaces_scope_opener(bool indented)
