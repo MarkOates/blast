@@ -21,6 +21,7 @@ namespace Blast
       std::vector<std::string> constructor_definition_elements();
       std::vector<std::string> initialization_list_elements();
       std::vector<std::string> class_declaration_opener_inheritence_elements();
+      std::vector<std::string> function_body_dependency_include_directive_elements();
       std::vector<std::string> static_attribute_definition_elements();
       std::vector<std::string> function_declaration_elements(int indent_level=0);
       std::vector<std::string> function_definition_elements(int indent_level=0);
@@ -32,6 +33,7 @@ namespace Blast
       std::string namespaces_scope_closer(bool indented, bool include_comment=true);
       std::string class_declaration_inheritence_list();
       std::string class_declaration_opener(int indent_level=0);
+      std::string function_body_dependency_include_directives(int indent_level=0);
       std::string class_declaration_closer(int indent_level=0);
       std::string header_filename();
       std::string source_filename();

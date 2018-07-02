@@ -101,6 +101,22 @@ std::vector<std::string> CppClassGenerator::class_declaration_opener_inheritence
 }
 
 
+std::vector<std::string> CppClassGenerator::function_body_dependency_include_directive_elements()
+{
+   std::vector<std::string> elements;
+   
+   for (auto &function_body_symbol_dependency : cpp_class.get_function_body_symbol_dependencies())
+   {
+      for (auto &include_header_file : function_body_symbol_dependency.get_include_directives())
+      {
+         elements.push_back(include_header_file);
+      }
+   }
+
+   return elements;
+}
+
+
 std::vector<std::string> CppClassGenerator::static_attribute_definition_elements()
 {
    std::vector<std::string> elements;
@@ -205,6 +221,14 @@ std::string CppClassGenerator::class_declaration_opener(int indent_level)
    std::stringstream result;
    result << std::string(3*indent_level, ' ') << "class " << cpp_class.get_class_name() << class_declaration_inheritence_list() << "\n" << std::string(3*indent_level, ' ') << "{\n";
    return result.str();
+}
+
+
+std::string CppClassGenerator::function_body_dependency_include_directives(int indent_level)
+{
+   std::stringstream result;
+   return __join(function_body_dependency_include_directive_elements(), "\n");
+   return "";
 }
 
 
@@ -456,6 +480,9 @@ std::string CppClassGenerator::generate_source_file_content()
 
 CLASS_HEADER_INCLUDE_DIRECTIVE
 
+FUNCTION_BODY_DEPENDENCY_INCLUDE_DIRECTIVES
+
+
 
 NAMESPACES_OPENER
 
@@ -480,6 +507,7 @@ NAMESPACES_CLOSER
    __replace(result, "NAMESPACES_OPENER", namespaces_scope_opener(false));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(false));
    __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive());
+   __replace(result, "FUNCTION_BODY_DEPENDENCY_INCLUDE_DIRECTIVES\n", function_body_dependency_include_directives());
    __replace(result, "HEADER_FILENAME", header_filename());
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
    __replace(result, "DESTRUCTOR\n", destructor_definition(0));

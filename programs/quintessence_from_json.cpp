@@ -9,6 +9,7 @@ using json = nlohmann::json;
 
 void explode(std::string message)
 {
+   std::cout << "‼️ " << message << std::endl;
    throw std::runtime_error(message);
 }
 
@@ -209,12 +210,41 @@ int main(int argc, char **argv)
 
 
 
+      // function dependencies
+      std::vector<Blast::SymbolDependencies> function_body_symbol_dependencies;
+      json &fbsd = get_or_explode(quintessence_json, "function_body_symbol_dependencies");
+
+      tabber.indent();
+      for (json::iterator it = fbsd.begin(); it != fbsd.end(); ++it)
+      {
+         bool found = false;
+         std::string dependency_identifier = (*it);
+         for (auto &known_listed_dependency : dependencies)
+         {
+            if (known_listed_dependency.get_symbol() == dependency_identifier)
+            {
+               function_body_symbol_dependencies.push_back(known_listed_dependency);
+               found = true;
+               break;
+            }
+         }
+         if (!found)
+         {
+            std::stringstream error_message;
+            error_message << "Could not find " << (*it) << " dependency from function_body_symbol_dependencies";
+            explode(error_message.str());
+         }
+      }
+      tabber.unindent();
+
+
+
       // generator
 
       json &klass = get_or_explode(quintessence_json, "class");
       json &namespaces = get_or_explode(quintessence_json, "namespaces");
 
-      Blast::CppClass cpp_class(klass, namespaces, parent_classes, properties, functions, dependencies);
+      Blast::CppClass cpp_class(klass, namespaces, parent_classes, properties, functions, dependencies, function_body_symbol_dependencies);
       Blast::CppClassGenerator cpp_class_generator(cpp_class);
 
       std::string header_filepath = cpp_class_generator.project_header_filepath();
