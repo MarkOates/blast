@@ -504,7 +504,9 @@ std::string CppClassGenerator::generate_example_file_content()
 std::string CppClassGenerator::project_source_filepath()
 {
    std::stringstream result;
-   result << "src/" << source_filename();
+   result << "src";
+   for (unsigned i=0; i<namespaces.size(); i++) result << "/" << namespaces[i];
+   result << "/" << source_filename();
    return result.str();
 }
 

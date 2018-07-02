@@ -477,7 +477,7 @@ TEST_F(CppClassGeneratorTest, destructor_definition_returns_the_expected_string)
 
 TEST_F(CppClassGeneratorTest, project_source_filepath__returns_a_string_of_the_location_of_the_source_file_relative_to_the_project_root)
 {
-   std::string expected_project_source_filepath = "src/User.cpp";
+   std::string expected_project_source_filepath = "src/ProjectName/User.cpp";
    ASSERT_EQ(expected_project_source_filepath, class_generator_fixture.project_source_filepath());
 }
 
