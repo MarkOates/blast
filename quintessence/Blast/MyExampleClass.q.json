@@ -9,6 +9,18 @@
     }
   ],
   "namespaces": [ "Blast" ],
+  "functions" : [
+    {
+      "name" : "my_function",
+      "type" : "std::string",
+      "parameters" : [
+        {
+          "name" : "person_name"
+        }
+      ],
+      "body" : "return std::string(\"Hello, \") + person_name + \"!\";"
+    }
+  ],
   "properties" : [
     {
       "type": "std::string",
