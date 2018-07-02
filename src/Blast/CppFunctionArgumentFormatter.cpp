@@ -38,7 +38,7 @@ std::string CppFunctionArgumentFormatter::get_as_function_declaration()
 {
    std::stringstream result;
    result << function_argument.get_type() << " " << function_argument.get_name();
-   if (!function_argument.get_default_value().empty()) result << " " << function_argument.get_default_value();
+   if (!function_argument.get_default_value().empty()) result << "=" << function_argument.get_default_value();
    return result.str();
 }
 
