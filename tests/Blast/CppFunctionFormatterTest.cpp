@@ -19,7 +19,18 @@ TEST(CppFunctionFormatterTest, get_function_declaration__returns_the_expected_fo
    Blast::CppFunction function("void", "my_function_name", {}, "  return \"hello world!\";", false, false, false);
    Blast::CppFunctionFormatter function_formatter(function);
 
-   std::string expected_returned_string = "void my_function_name(...);\n";
+   std::string expected_returned_string = "void my_function_name();\n";
+   ASSERT_EQ(expected_returned_string, function_formatter.get_function_declaration());
+}
+
+
+TEST(CppFunctionFormatterTest, get_function_declaration__with_a_function_with_parameter__returns_the_expected_formatted_string)
+{
+   Blast::CppFunctionArgument function_argument("std::vector<std::string>", "my_parameter", "{ \"one-default-element\" }");
+   Blast::CppFunction function("void", "my_function_name", { function_argument }, "  return \"hello world!\";", false, false, false);
+   Blast::CppFunctionFormatter function_formatter(function);
+
+   std::string expected_returned_string = "void my_function_name(std::vector<std::string> my_parameter={ \"one-default-element\" });\n";
    ASSERT_EQ(expected_returned_string, function_formatter.get_function_declaration());
 }
 
@@ -29,7 +40,7 @@ TEST(CppFunctionFormatterTest, get_function_declaration__with_a_class_name_retur
    Blast::CppFunction function("void", "my_function_name", {}, "  return \"hello world!\";", false, false, false);
    Blast::CppFunctionFormatter function_formatter(function, "MyClassName");
 
-   std::string expected_returned_string = "void MyClassName::my_function_name(...);\n";
+   std::string expected_returned_string = "void MyClassName::my_function_name();\n";
    ASSERT_EQ(expected_returned_string, function_formatter.get_function_declaration());
 }
 
@@ -39,7 +50,18 @@ TEST(CppFunctionFormatterTest, get_function_definition__returns_the_expected_for
    Blast::CppFunction function("void", "my_function_name", {}, "  return \"hello world!\";", false, false, false);
    Blast::CppFunctionFormatter function_formatter(function);
 
-   std::string expected_returned_string = "void my_function_name(...)\n{\n  return \"hello world!\";\n}\n";
+   std::string expected_returned_string = "void my_function_name()\n{\n  return \"hello world!\";\n}\n";
+   ASSERT_EQ(expected_returned_string, function_formatter.get_function_definition());
+}
+
+
+TEST(CppFunctionFormatterTest, get_function_definition__with_a_function_with_parameter__returns_the_expected_formatted_string)
+{
+   Blast::CppFunctionArgument function_argument("std::vector<std::string>", "my_parameter", "{ \"one-default-element\" }");
+   Blast::CppFunction function("void", "my_function_name", { function_argument }, "  return \"hello world!\";", false, false, false);
+   Blast::CppFunctionFormatter function_formatter(function);
+
+   std::string expected_returned_string = "void my_function_name(std::vector<std::string> my_parameter)\n{\n  return \"hello world!\";\n}\n";
    ASSERT_EQ(expected_returned_string, function_formatter.get_function_definition());
 }
 
@@ -49,7 +71,7 @@ TEST(CppFunctionFormatterTest, get_function_definition__with_a_class_name_return
    Blast::CppFunction function("void", "my_function_name", {}, "  return \"hello world!\";", false, false, false);
    Blast::CppFunctionFormatter function_formatter(function, "MyClassName");
 
-   std::string expected_returned_string = "void MyClassName::my_function_name(...)\n{\n  return \"hello world!\";\n}\n";
+   std::string expected_returned_string = "void MyClassName::my_function_name()\n{\n  return \"hello world!\";\n}\n";
    ASSERT_EQ(expected_returned_string, function_formatter.get_function_definition());
 }
 
