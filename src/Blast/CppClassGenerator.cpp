@@ -8,12 +8,29 @@
 #include <iostream>
 
 
-static std::string __join(std::vector<std::string> elements)
+template<typename Out>
+void split(const std::string &s, char delim, Out result) {
+   std::stringstream ss(s);
+   std::string item;
+   while (std::getline(ss, item, delim)) {
+      *(result++) = item;
+   }
+}
+
+
+std::vector<std::string> split(const std::string &s, char delim = ' ') {
+   std::vector<std::string> elems;
+   split(s, delim, std::back_inserter(elems));
+   return elems;
+}
+
+
+static std::string __join(std::vector<std::string> elements, std::string delim=", ")
 {
    if (elements.empty()) return "";
 
    std::stringstream result;
-   for (int i=0; i<(int)(elements.size())-1; i++) result << elements[i] << ", ";
+   for (int i=0; i<(int)(elements.size())-1; i++) result << elements[i] << delim;
    result << elements.back();
    return result.str();
 }
@@ -90,6 +107,24 @@ std::vector<std::string> CppClassGenerator::static_attribute_definition_elements
    for (auto &attribute_property : cpp_class.get_attribute_properties())
       if (attribute_property.is_static) elements.push_back(attribute_property.as_static_definition(cpp_class.get_class_name()));
    return elements;
+}
+
+
+std::vector<std::string> CppClassGenerator::function_declaration_elements(int indent_level)
+{
+   std::vector<std::string> result;
+   for (auto &function : cpp_class.get_functions())
+      result.push_back(CppFunctionFormatter(function).get_function_declaration());
+   return result;
+}
+
+
+std::vector<std::string> CppClassGenerator::function_definition_elements(int indent_level)
+{
+   std::vector<std::string> result;
+   for (auto &function : cpp_class.get_functions())
+      result.push_back(CppFunctionFormatter(function, cpp_class.get_class_name()).get_function_definition());
+   return result;
 }
 
 
@@ -352,21 +387,32 @@ std::string CppClassGenerator::initialization_list(int indent_level)
 }
 
 
-std::vector<std::string> CppClassGenerator::function_declarations(int indent_level)
+std::string CppClassGenerator::function_declarations(int indent_level)
 {
-   std::vector<std::string> result;
-   for (auto &function : cpp_class.get_functions())
-      result.push_back(CppFunctionFormatter(function).get_function_declaration());
-   return result;
+   std::stringstream result;
+   for (auto &function_declaration_element : function_declaration_elements())
+      result << std::string(3*indent_level, ' ') << function_declaration_element;
+   return result.str();
 }
 
 
-std::vector<std::string> CppClassGenerator::function_definitions(int indent_level)
+std::string CppClassGenerator::function_definitions(int indent_level)
 {
-   std::vector<std::string> result;
-   for (auto &function : cpp_class.get_functions())
-      result.push_back(CppFunctionFormatter(function).get_function_definition());
-   return result;
+   std::stringstream result;
+   std::vector<std::string> indented_results;
+
+   for (auto &function_definition_element : function_definition_elements())
+   {
+      std::stringstream indented_result;
+      std::vector<std::string> tokens = split(function_definition_element, '\n');
+      for (auto &token : tokens)
+      {
+         indented_result << std::string(3*indent_level, ' ') << token << std::endl;
+      }
+      indented_results.push_back(indented_result.str());
+   }
+
+   return __join(indented_results, "\n");
 }
 
 
@@ -423,6 +469,7 @@ DESTRUCTOR
 SETTER_FUNCTIONS
 GETTER_FUNCTIONS
 GETTER_REF_FUNCTIONS
+FUNCTION_DEFINITIONS
 NAMESPACES_CLOSER
 
 )END";
@@ -438,6 +485,7 @@ NAMESPACES_CLOSER
    __replace(result, "DESTRUCTOR\n", destructor_definition(0));
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_definitions(0));
    __replace(result, "GETTER_FUNCTIONS\n", getter_function_definitions(0));
+   __replace(result, "FUNCTION_DEFINITIONS\n", function_definitions(0));
    __replace(result, "GETTER_REF_FUNCTIONS\n", getter_ref_function_definitions(0));
 
    return result;
@@ -464,6 +512,7 @@ SETTER_FUNCTIONS
 
 GETTER_FUNCTIONS
 GETTER_REF_FUNCTIONS
+FUNCTION_DECLARATIONS
 CLASS_DECLARATION_CLOSER
 NAMESPACES_CLOSER
 
@@ -487,7 +536,10 @@ NAMESPACES_CLOSER
    __replace(result, "CLASS_DECLARATION_OPENER\n", class_declaration_opener(required_namespace_indentation_levels));
    __replace(result, "CLASS_DECLARATION_CLOSER\n", class_declaration_closer(required_namespace_indentation_levels));
    __replace(result, "PRIVATE_SCOPE_SPECIFIER\n", private_scope_specifier(required_namespace_indentation_levels));
+   __replace(result, "FUNCTION_DECLARATIONS\n", function_declarations(required_namespace_indentation_levels));
    __replace(result, "PUBLIC_SCOPE_SPECIFIER\n", public_scope_specifier(required_namespace_indentation_levels));
+   
+
 
    return result;
 }
