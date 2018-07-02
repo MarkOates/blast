@@ -9,13 +9,14 @@ namespace Blast
 {
 
 
-ClassAttributeProperties::ClassAttributeProperties(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter)
+ClassAttributeProperties::ClassAttributeProperties(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_getter_ref, bool has_setter)
    : datatype(datatype)
    , variable_name(variable_name)
    , initialization_value(initialization_value)
    , is_static(is_static)
    , is_constructor_parameter(is_constructor_parameter)
    , has_getter(has_getter)
+   , has_getter_ref(has_getter_ref)
    , has_setter(has_setter)
 {
 }
@@ -108,6 +109,31 @@ std::string ClassAttributeProperties::getter_function_definition(std::string cla
 {
    std::stringstream result;
    result << datatype << " " << class_name << "::get_" << variable_name << "()\n{\n   return " << variable_name << ";\n}\n";
+   return result.str();
+}
+
+
+std::string ClassAttributeProperties::getter_ref_function_symbol()
+{
+   std::stringstream result;
+   result << "get_" << variable_name << "_ref";
+   return result.str();
+}
+
+
+std::string ClassAttributeProperties::getter_ref_function_declaration()
+{
+   std::stringstream result;
+   if (is_static) result << "static ";
+   result << datatype << " &" << getter_ref_function_symbol() << "();";
+   return result.str();
+}
+
+
+std::string ClassAttributeProperties::getter_ref_function_definition(std::string class_name)
+{
+   std::stringstream result;
+   result << datatype << " &" << class_name << "::" << getter_ref_function_symbol() << "()\n{\n   return " << variable_name << ";\n}\n";
    return result.str();
 }
 
