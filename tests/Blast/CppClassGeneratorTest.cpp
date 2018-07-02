@@ -242,6 +242,7 @@ TEST_F(CppClassGeneratorTest, static_attribute_definition_elements__returns_the_
          { "int", "id", "next_id++", false, false, true, false, false },
          { "float", "time_velocity", "13.0f", true, false, false, false, false },
       },
+      {},
       symbol_dependencies
    );
    Blast::CppClassGenerator class_generator(cpp_class);
@@ -284,6 +285,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__returns_a_list_of_d
          { "std::string", "name", "\"[unnamed]\"", false, true, true, false, true },
          { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, false, true },
       },
+      {},
       symbol_dependencies
    );
    Blast::CppClassGenerator class_generator(cpp_class);
@@ -300,7 +302,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__includes_the_list_o
       { "Scriptable<Ascend>", { "Blast/Scriptable.hpp" } },
    };
 
-   Blast::CppClass cpp_class("Ascend", {}, { { "ActionBase" }, { "Scriptable<Ascend>" } }, {}, symbol_dependencies);
+   Blast::CppClass cpp_class("Ascend", {}, { { "ActionBase" }, { "Scriptable<Ascend>" } }, {}, {}, symbol_dependencies);
    Blast::CppClassGenerator class_generator(cpp_class);
 
    std::string expected_dependency_directives = "#include <Blast/Scriptable.hpp>\n#include <Fullscore/Action/ActionBase.hpp>\n";
@@ -320,6 +322,7 @@ TEST_F(CppClassGeneratorTest, dependency_include_directives__when_no_dependencie
          { "int", "num_sides", "0", false, false, true, false, false },
          { "float", "radius", "6.0f", false, true, true, false, true },
       },
+      {},
       symbol_dependencies
    );
    Blast::CppClassGenerator class_generator(cpp_class);
@@ -361,6 +364,7 @@ TEST_F(CppClassGeneratorTest, static_attribute_definitions__returns_a_string_for
          { "int", "id", "next_id++", false, false, true, false, false },
          { "float", "time_velocity", "13.0f", true, false, false, false, false },
       },
+      {},
       symbol_dependencies
    );
    Blast::CppClassGenerator class_generator(cpp_class);

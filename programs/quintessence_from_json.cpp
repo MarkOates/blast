@@ -1,5 +1,6 @@
 
 #include <Blast/CppClassGenerator.hpp>
+#include <Blast/CppFunction.hpp>
 #include <Blast/libraries/json.hpp>
 using json = nlohmann::json;
 #include <fstream>
@@ -23,6 +24,20 @@ std::ostream & operator<< (std::ostream &out, std::vector<std::string> const &ob
    return out;
 }
 
+
+std::ostream & operator<< (std::ostream &out, std::vector<Blast::CppFunction> const &object)
+{
+   out << "{ ";
+   out << "\"[Blast::CppFunction]\"";
+   //for (auto &object_piece : object)
+   //{
+      //out << "\"[Blast::CppFunction]\"";
+   //}
+   out << " }";
+
+   return out;
+}
+      
 
 
 class Tabber
@@ -158,12 +173,37 @@ int main(int argc, char **argv)
       tabber.unindent();
 
 
+      // functions
+      std::vector<Blast::CppFunction> functions;
+      json &f = get_or_explode(quintessence_json, "functions");
+
+      tabber.indent();
+      for (json::iterator it = f.begin(); it != f.end(); ++it)
+      {
+         //std::vector<Blast::CppFunction> functions;
+         //std::vector &s = 
+         functions.push_back(Blast::CppFunction(
+            get_or_fallback((*it), "type", std::string("void")),
+            get_or_explode((*it), "name"),
+            {}, //get_or_fallback((*it), "signature", ""),
+            get_or_explode((*it), "body"),
+            get_or_fallback((*it), "is_static", false),
+            get_or_fallback((*it), "is_const", false),
+            get_or_fallback((*it), "is_override", false)
+         ));
+
+         std::cout << (*it) << std::endl;
+      }
+      tabber.unindent();
+
+
+
       // generator
 
       json &klass = get_or_explode(quintessence_json, "class");
       json &namespaces = get_or_explode(quintessence_json, "namespaces");
 
-      Blast::CppClass cpp_class(klass, namespaces, parent_classes, properties, dependencies);
+      Blast::CppClass cpp_class(klass, namespaces, parent_classes, properties, functions, dependencies);
       Blast::CppClassGenerator cpp_class_generator(cpp_class);
 
       std::string header_filepath = cpp_class_generator.project_header_filepath();

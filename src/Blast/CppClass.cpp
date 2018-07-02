@@ -7,11 +7,12 @@ namespace Blast
 {
 
 
-CppClass::CppClass(std::string class_name, std::vector<std::string> namespaces, std::vector<Blast::ParentClassProperties> parent_classes_properties, std::vector<Blast::ClassAttributeProperties> attribute_properties, std::vector<Blast::SymbolDependencies> symbol_dependencies)
+CppClass::CppClass(std::string class_name, std::vector<std::string> namespaces, std::vector<Blast::ParentClassProperties> parent_classes_properties, std::vector<Blast::ClassAttributeProperties> attribute_properties, std::vector<Blast::CppFunction> functions, std::vector<Blast::SymbolDependencies> symbol_dependencies)
    : class_name(class_name)
    , namespaces(namespaces)
    , parent_classes_properties(parent_classes_properties)
    , attribute_properties(attribute_properties)
+   , functions(functions)
    , symbol_dependencies(symbol_dependencies)
 {
 }
@@ -46,9 +47,9 @@ std::vector<Blast::ClassAttributeProperties> CppClass::get_attribute_properties(
 }
 
 
-std::vector<Blast::ClassAttributeProperties> &CppClass::get_attribute_properties_ref()
+std::vector<Blast::CppFunction> CppClass::get_functions()
 {
-   return attribute_properties;
+   return functions;
 }
 
 
@@ -58,6 +59,6 @@ std::vector<Blast::SymbolDependencies> CppClass::get_symbol_dependencies()
 }
 
 
-}
+} // namespace Blast
 
 
