@@ -14,7 +14,7 @@ namespace Blast
       std::string default_value;
 
    public:
-      CppFunctionArgument(std::string type="std::string", std::string name="unnamed_function", std::string default_value="\"\"");
+      CppFunctionArgument(std::string type="std::string", std::string name="unnamed_parameter", std::string default_value="\"\"");
       ~CppFunctionArgument();
 
 
