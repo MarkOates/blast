@@ -27,12 +27,12 @@ int main(int argc, char **argv)
       { "MyProject" },
       { { "AnimalBase", "\"Kitten\"" } },
       {
-         //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_argument, bool has_getter, bool has_setter
-         { "int", "last_id", "0", true, false, true, false },
-         { "int", "id", "last_id++", false, false, true, false },
-         { "std::string", "name", "\"[unnamed]\"", false, false, true, true },
-         { "std::vector<std::string>", "typeo", "{}", false, true, true, true },
-         { "ALLEGRO_BITMAP*", "bmp", "nullptr", false, true, true, true },
+         //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_argument, bool has_getter, bool has_getter_ref, bool has_setter
+         { "int", "last_id", "0", true, false, true, false, false },
+         { "int", "id", "last_id++", false, false, true, false, false },
+         { "std::string", "name", "\"[unnamed]\"", false, false, true, false, true },
+         { "std::vector<std::string>", "typeo", "{}", false, true, true, true, true },
+         { "ALLEGRO_BITMAP*", "bmp", "nullptr", false, true, true, false, true },
       },
       symbol_dependencies
    );

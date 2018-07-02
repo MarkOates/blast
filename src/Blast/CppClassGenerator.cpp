@@ -135,9 +135,10 @@ std::string CppClassGenerator::namespaces_scope_opener(bool indented)
 std::string CppClassGenerator::namespaces_scope_closer(bool indented, bool include_comment)
 {
    std::stringstream result;
-   for (int i=cpp_class.get_namespaces().size()-1; i>=0; i--)
+   std::vector<std::string> namespaces = cpp_class.get_namespaces();
+   for (int i=namespaces.size()-1; i>=0; i--)
    {
-      std::string &n = cpp_class.get_namespaces()[i];
+      std::string &n = namespaces[i];
       if (indented) result << std::string(3*i, ' ');
       result << "}";
       if (include_comment) result << " // namespace " << n;
@@ -297,6 +298,28 @@ std::string CppClassGenerator::getter_function_definitions(int indent_level)
 }
 
 
+std::string CppClassGenerator::getter_ref_function_declarations(int indent_level)
+{
+   std::stringstream result;
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+      if (attribute_property.has_getter_ref)
+      {
+         result << std::string(3*indent_level, ' ');
+         result << attribute_property.getter_ref_function_declaration() << "\n";
+      }
+   return result.str();
+}
+
+
+std::string CppClassGenerator::getter_ref_function_definitions(int indent_level)
+{
+   std::stringstream result;
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+      if (attribute_property.has_getter_ref) result << std::string(3*indent_level, ' ') << attribute_property.getter_ref_function_definition(cpp_class.get_class_name()) << "\n\n";
+   return result.str();
+}
+
+
 std::string CppClassGenerator::setter_function_declarations(int indent_level)
 {
    std::stringstream result;
@@ -380,6 +403,7 @@ DESTRUCTOR
 
 SETTER_FUNCTIONS
 GETTER_FUNCTIONS
+GETTER_REF_FUNCTIONS
 NAMESPACES_CLOSER
 
 )END";
@@ -395,6 +419,7 @@ NAMESPACES_CLOSER
    __replace(result, "DESTRUCTOR\n", destructor_definition(0));
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_definitions(0));
    __replace(result, "GETTER_FUNCTIONS\n", getter_function_definitions(0));
+   __replace(result, "GETTER_REF_FUNCTIONS\n", getter_ref_function_definitions(0));
 
    return result;
 }
@@ -419,6 +444,7 @@ DESTRUCTOR
 SETTER_FUNCTIONS
 
 GETTER_FUNCTIONS
+GETTER_REF_FUNCTIONS
 CLASS_DECLARATION_CLOSER
 NAMESPACES_CLOSER
 
@@ -438,6 +464,7 @@ NAMESPACES_CLOSER
    __replace(result, "PROPERTIES\n", class_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "GETTER_FUNCTIONS\n", getter_function_declarations(required_namespace_indentation_levels + 1));
+   __replace(result, "GETTER_REF_FUNCTIONS\n", getter_ref_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "CLASS_DECLARATION_OPENER\n", class_declaration_opener(required_namespace_indentation_levels));
    __replace(result, "CLASS_DECLARATION_CLOSER\n", class_declaration_closer(required_namespace_indentation_levels));
    __replace(result, "PRIVATE_SCOPE_SPECIFIER\n", private_scope_specifier(required_namespace_indentation_levels));

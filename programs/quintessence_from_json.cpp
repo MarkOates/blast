@@ -108,6 +108,7 @@ int main(int argc, char **argv)
             get_or_fallback((*it), "static", false),
             get_or_fallback((*it), "constructor_arg", false),
             get_or_fallback((*it), "getter", false),
+            get_or_fallback((*it), "getter_ref", false),
             get_or_fallback((*it), "setter", false)
          ));
 
