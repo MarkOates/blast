@@ -281,6 +281,11 @@ std::string CppClassGenerator::dependency_include_directives()
    std::set<std::string> present_symbols;
    for (auto &attribute_property : cpp_class.get_attribute_properties()) present_symbols.insert(attribute_property.datatype);
    for (auto &parent_class_properties : cpp_class.get_parent_classes_properties()) present_symbols.insert(parent_class_properties.get_class_name());
+   for (auto &function : cpp_class.get_functions())
+   {
+      present_symbols.insert(function.get_type());
+      for (auto &parameter : function.get_signature()) present_symbols.insert(parameter.get_type());
+   }
 
    for (auto &present_symbol : present_symbols)
    {
