@@ -1,6 +1,6 @@
 
 
-#include <Blast/CppGoogleTestSuiteGenerator.hpp>
+#include <Blast/Cpp/GoogleTestSuiteGenerator.hpp>
 
 #include <sstream>
 
@@ -9,7 +9,11 @@ namespace Blast
 {
 
 
-CppGoogleTestSuiteGenerator::CppGoogleTestSuiteGenerator(std::string class_name, std::vector<std::string> namespaces, std::vector<CppGoogleTestGenerator> tests)
+namespace Cpp
+{
+
+
+GoogleTestSuiteGenerator::GoogleTestSuiteGenerator(std::string class_name, std::vector<std::string> namespaces, std::vector<Blast::Cpp::GoogleTestGenerator> tests)
    : class_name(class_name)
    , namespaces(namespaces)
    , tests(tests)
@@ -18,18 +22,18 @@ CppGoogleTestSuiteGenerator::CppGoogleTestSuiteGenerator(std::string class_name,
 }
 
 
-CppGoogleTestSuiteGenerator::~CppGoogleTestSuiteGenerator()
+GoogleTestSuiteGenerator::~GoogleTestSuiteGenerator()
 {
 }
 
 
-std::string CppGoogleTestSuiteGenerator::test_filename()
+std::string GoogleTestSuiteGenerator::test_filename()
 {
    return class_name + "Test.cpp";
 }
 
 
-std::string CppGoogleTestSuiteGenerator::test_filepath()
+std::string GoogleTestSuiteGenerator::test_filepath()
 {
    std::stringstream result;
 
@@ -41,13 +45,13 @@ std::string CppGoogleTestSuiteGenerator::test_filepath()
 }
 
 
-std::string CppGoogleTestSuiteGenerator::class_header_filename()
+std::string GoogleTestSuiteGenerator::class_header_filename()
 {
    return class_name + ".hpp";
 }
 
 
-std::string CppGoogleTestSuiteGenerator::class_include_directive()
+std::string GoogleTestSuiteGenerator::class_include_directive()
 {
    std::stringstream result;
    result << "#include <";
@@ -58,7 +62,7 @@ std::string CppGoogleTestSuiteGenerator::class_include_directive()
 }
 
 
-std::vector<std::string> CppGoogleTestSuiteGenerator::generate_test_cases()
+std::vector<std::string> GoogleTestSuiteGenerator::generate_test_cases()
 {
    std::vector<std::string> result;
    for (auto &test : tests) result.push_back(test.render());
@@ -66,7 +70,7 @@ std::vector<std::string> CppGoogleTestSuiteGenerator::generate_test_cases()
 }
 
 
-std::string CppGoogleTestSuiteGenerator::render()
+std::string GoogleTestSuiteGenerator::render()
 {
    std::stringstream result;
    std::vector<std::string> pieces = {};
@@ -80,6 +84,9 @@ std::string CppGoogleTestSuiteGenerator::render()
 
    return result.str();
 }
+
+
+} // namespace Cpp
 
 
 } // namespace Blast

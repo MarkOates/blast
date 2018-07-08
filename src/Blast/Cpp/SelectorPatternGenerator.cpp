@@ -1,6 +1,6 @@
 
 
-#include <Blast/CppSelectorPatternGenerator.hpp>
+#include <Blast/Cpp/SelectorPatternGenerator.hpp>
 
 
 static void __replace(std::string &str, const std::string &find_str, const std::string &replace_str)
@@ -57,7 +57,11 @@ namespace Blast
 {
 
 
-CppSelectorPatternGenerator::CppSelectorPatternGenerator(std::string class_name, std::string function_name, std::string selector_condition, std::string casted_type)
+namespace Cpp
+{
+
+
+SelectorPatternGenerator::SelectorPatternGenerator(std::string class_name, std::string function_name, std::string selector_condition, std::string casted_type)
    : class_name(class_name)
    , function_name(function_name)
    , selector_condition(selector_condition)
@@ -66,12 +70,12 @@ CppSelectorPatternGenerator::CppSelectorPatternGenerator(std::string class_name,
 }
 
 
-CppSelectorPatternGenerator::~CppSelectorPatternGenerator()
+SelectorPatternGenerator::~SelectorPatternGenerator()
 {
 }
 
 
-std::string CppSelectorPatternGenerator::render_declaration()
+std::string SelectorPatternGenerator::render_declaration()
 {
    std::string result = "";
    if (casted_type.empty())
@@ -93,7 +97,7 @@ std::string CppSelectorPatternGenerator::render_declaration()
 }
 
 
-std::string CppSelectorPatternGenerator::render_definition()
+std::string SelectorPatternGenerator::render_definition()
 {
    std::string result = "";
    if (casted_type.empty())
@@ -113,6 +117,9 @@ std::string CppSelectorPatternGenerator::render_definition()
    }
    return result;
 }
+
+
+} // namespace Cpp
 
 
 } // namespace Blast

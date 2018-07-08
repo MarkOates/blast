@@ -1,6 +1,6 @@
 
 
-#include <Blast/CppGoogleTestGenerator.hpp>
+#include <Blast/Cpp/GoogleTestGenerator.hpp>
 
 #include <algorithm>
 #include <cstddef>
@@ -11,7 +11,11 @@ namespace Blast
 {
 
 
-CppGoogleTestGenerator::CppGoogleTestGenerator(std::string class_name, std::string function_name, std::string description_sentence, std::string body)
+namespace Cpp
+{
+
+
+GoogleTestGenerator::GoogleTestGenerator(std::string class_name, std::string function_name, std::string description_sentence, std::string body)
    : class_name(class_name)
    , function_name(function_name)
    , description_sentence(description_sentence)
@@ -20,12 +24,12 @@ CppGoogleTestGenerator::CppGoogleTestGenerator(std::string class_name, std::stri
 }
 
 
-CppGoogleTestGenerator::~CppGoogleTestGenerator()
+GoogleTestGenerator::~GoogleTestGenerator()
 {
 }
 
 
-std::string CppGoogleTestGenerator::get_description_line()
+std::string GoogleTestGenerator::get_description_line()
 {
    std::string result = description_sentence;
    static const std::string allowed_chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
@@ -37,7 +41,7 @@ std::string CppGoogleTestGenerator::get_description_line()
 }
 
 
-std::string CppGoogleTestGenerator::get_macro_opener_line()
+std::string GoogleTestGenerator::get_macro_opener_line()
 {
    std::stringstream result;
    result << "TEST(" << class_name << "Test, " << get_description_line() << ")";
@@ -45,18 +49,21 @@ std::string CppGoogleTestGenerator::get_macro_opener_line()
 }
 
 
-std::string CppGoogleTestGenerator::get_body()
+std::string GoogleTestGenerator::get_body()
 {
    return body;
 }
 
 
-std::string CppGoogleTestGenerator::render()
+std::string GoogleTestGenerator::render()
 {
    std::stringstream result;
    result << get_macro_opener_line() << "\n{\n   " << get_body() << "\n}\n";
    return result.str();
 }
+
+
+} // namespace Cpp
 
 
 } // namespace Blast

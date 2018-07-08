@@ -1,11 +1,15 @@
 
 
-#include <Blast/ClassAttributeProperties.hpp>
+#include <Blast/Cpp/ClassAttributeProperties.hpp>
 
 #include <sstream>
 
 
 namespace Blast
+{
+
+
+namespace Cpp
 {
 
 
@@ -166,6 +170,7 @@ std::string ClassAttributeProperties::setter_function_definition(std::string cla
 }
 
 
+} // namespace Cpp
+
+
 } // namespace Blast
-
-

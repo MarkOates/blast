@@ -1,11 +1,15 @@
 
 
-#include <Blast/SymbolDependencies.hpp>
+#include <Blast/Cpp/SymbolDependencies.hpp>
 
 #include <sstream>
 
 
 namespace Blast
+{
+
+
+namespace Cpp
 {
 
 
@@ -102,6 +106,9 @@ bool SymbolDependencies::requires_linked_libraries()
 {
    return !linked_library_names.empty();
 }
+
+
+} // namespace Cpp
 
 
 } // namespace Blast

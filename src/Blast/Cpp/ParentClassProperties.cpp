@@ -1,11 +1,15 @@
 
 
-#include <Blast/ParentClassProperties.hpp>
+#include <Blast/Cpp/ParentClassProperties.hpp>
 
 #include <sstream>
 
 
 namespace Blast
+{
+
+
+namespace Cpp
 {
 
 
@@ -92,6 +96,9 @@ std::string ParentClassProperties::as_argument_in_initialization_list()
    result << class_name << '(' << constructor_arguments << ')';
    return result.str();
 }
+
+
+} // namespace Cpp
 
 
 } // namespace Blast

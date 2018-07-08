@@ -1,13 +1,13 @@
 
 
-#include <Blast/CppClassGenerator.hpp>
+#include <Blast/Cpp/ClassGenerator.hpp>
 
 #include <iostream>
 
 
 int main(int argc, char **argv)
 {
-   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+   std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = {
       // some simple examples of dependencies (that do not need libraries to link against when compiled)
       { "int" },
       { "std::string", { "string" } },
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
       { "AnimalBase", { "Animal/AnimalBase.hpp" } }
    };
 
-   Blast::CppClass cpp_class(
+   Blast::Cpp::Class cpp_class(
       "Kitten",
       { "MyProject" },
       { { "AnimalBase", "\"Kitten\"" } },
@@ -37,7 +37,7 @@ int main(int argc, char **argv)
       symbol_dependencies
    );
 
-   Blast::CppClassGenerator class_generator(cpp_class);
+   Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
    std::cout << "////////// header file ///////////" << std::endl;
    std::cout << class_generator.generate_header_file_content();

@@ -1,8 +1,8 @@
 
 
-#include <Blast/CppFunctionFormatter.hpp>
+#include <Blast/Cpp/FunctionFormatter.hpp>
 
-#include <Blast/CppFunctionArgumentFormatter.hpp>
+#include <Blast/Cpp/FunctionArgumentFormatter.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <sstream>
 
@@ -11,18 +11,22 @@ namespace Blast
 {
 
 
-CppFunctionFormatter::CppFunctionFormatter(Blast::CppFunction function, std::string class_name)
+namespace Cpp
+{
+
+
+FunctionFormatter::FunctionFormatter(Blast::Cpp::Function function, std::string class_name)
     : function(function)
     , class_name(class_name)
 {}
 
 
-CppFunctionFormatter::~CppFunctionFormatter()
+FunctionFormatter::~FunctionFormatter()
 {
 }
 
 
-std::string CppFunctionFormatter::get_function_declaration()
+std::string FunctionFormatter::get_function_declaration()
 {
    std::stringstream result;
 
@@ -30,7 +34,7 @@ std::string CppFunctionFormatter::get_function_declaration()
    std::vector<std::string> function_arg_elements;
    for (auto &parameter : function.get_signature())
    {
-      Blast::CppFunctionArgumentFormatter formatter(parameter);
+      Blast::Cpp::FunctionArgumentFormatter formatter(parameter);
       function_arg_elements.push_back(formatter.get_as_function_declaration());
    }
 
@@ -47,7 +51,7 @@ std::string CppFunctionFormatter::get_function_declaration()
 }
 
 
-std::string CppFunctionFormatter::get_function_definition()
+std::string FunctionFormatter::get_function_definition()
 {
    std::stringstream result;
 
@@ -55,7 +59,7 @@ std::string CppFunctionFormatter::get_function_definition()
    std::vector<std::string> function_arg_elements;
    for (auto &parameter : function.get_signature())
    {
-      Blast::CppFunctionArgumentFormatter formatter(parameter);
+      Blast::Cpp::FunctionArgumentFormatter formatter(parameter);
       function_arg_elements.push_back(formatter.get_as_function_definition());
    }
 
@@ -72,6 +76,9 @@ std::string CppFunctionFormatter::get_function_definition()
 
    return result.str();
 }
+
+
+} // namespace Cpp
 
 
 } // namespace Blast
