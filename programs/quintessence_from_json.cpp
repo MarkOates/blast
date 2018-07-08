@@ -2,7 +2,7 @@
 #include <Blast/Cpp/ClassGenerator.hpp>
 #include <Blast/Cpp/Function.hpp>
 #include <Blast/Cpp/FunctionArgument.hpp>
-#include <Blast/libraries/json.hpp>
+#include <Blast/lib/json.hpp>
 using json = nlohmann::json;
 #include <fstream>
 #include <iostream>
