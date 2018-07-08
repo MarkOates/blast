@@ -34,6 +34,7 @@ int main(int argc, char **argv)
          { "std::vector<std::string>", "typeo", "{}", false, true, true, true, true },
          { "ALLEGRO_BITMAP*", "bmp", "nullptr", false, true, true, false, true },
       },
+      {},
       symbol_dependencies
    );
 

@@ -1,6 +1,6 @@
 
 
-#include <Blast/SymbolDependencies.hpp>
+#include <Blast/Cpp/SymbolDependencies.hpp>
 
 #include <iostream>
 #include <vector>
@@ -8,7 +8,7 @@
 
 int main(int, char**)
 {
-   std::vector<Blast::SymbolDependencies> symbol_dependencies = {
+   std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = {
       // some simple examples of dependencies (that do not need libraries to link against when compiled)
       { "std::string", { "string" } },
       { "std::vector<std::vector>", { "string", "vector" } },
