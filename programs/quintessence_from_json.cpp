@@ -1,7 +1,7 @@
 
-#include <Blast/CppClassGenerator.hpp>
-#include <Blast/CppFunction.hpp>
-#include <Blast/CppFunctionArgument.hpp>
+#include <Blast/Cpp/ClassGenerator.hpp>
+#include <Blast/Cpp/Function.hpp>
+#include <Blast/Cpp/FunctionArgument.hpp>
 #include <Blast/libraries/json.hpp>
 using json = nlohmann::json;
 #include <fstream>
@@ -27,13 +27,13 @@ std::ostream & operator<< (std::ostream &out, std::vector<std::string> const &ob
 }
 
 
-std::ostream & operator<< (std::ostream &out, std::vector<Blast::CppFunction> const &object)
+std::ostream & operator<< (std::ostream &out, std::vector<Blast::Cpp::Function> const &object)
 {
    out << "{ ";
-   out << "\"[Blast::CppFunction]\"";
+   out << "\"[Blast::Cpp::Function]\"";
    //for (auto &object_piece : object)
    //{
-      //out << "\"[Blast::CppFunction]\"";
+      //out << "\"[Blast::Cpp::Function]\"";
    //}
    out << " }";
 
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 
       // properties
 
-      std::vector<Blast::ClassAttributeProperties> properties;
+      std::vector<Blast::Cpp::ClassAttributeProperties> properties;
 
       if (quintessence_json["properties"].empty()) explode("properties is required");
 
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
       tabber.indent();
       for (json::iterator it = j.begin(); it != j.end(); ++it)
       {
-         properties.push_back(Blast::ClassAttributeProperties(
+         properties.push_back(Blast::Cpp::ClassAttributeProperties(
             get_or_fallback((*it), "type", std::string("")),
             get_or_explode((*it), "name"),
             get_or_fallback((*it), "init_with", std::string("")),
@@ -136,14 +136,14 @@ int main(int argc, char **argv)
 
       // dependencies
 
-      std::vector<Blast::SymbolDependencies> dependencies;
+      std::vector<Blast::Cpp::SymbolDependencies> dependencies;
 
       json &d = get_or_explode(quintessence_json, "dependencies");
 
       tabber.indent();
       for (json::iterator it = d.begin(); it != d.end(); ++it)
       {
-         dependencies.push_back(Blast::SymbolDependencies(
+         dependencies.push_back(Blast::Cpp::SymbolDependencies(
             get_or_explode((*it), "symbol"),
             get_or_explode((*it), "headers"),
             get_or_explode((*it), "include_directories"),
@@ -158,13 +158,13 @@ int main(int argc, char **argv)
       // parent classes
 
       //std::vector<std::string> fallback;
-      std::vector<Blast::ParentClassProperties> parent_classes;
+      std::vector<Blast::Cpp::ParentClassProperties> parent_classes;
       json &p = get_or_explode(quintessence_json, "parent_classes");
 
       tabber.indent();
       for (json::iterator it = p.begin(); it != p.end(); ++it)
       {
-         parent_classes.push_back(Blast::ParentClassProperties(
+         parent_classes.push_back(Blast::Cpp::ParentClassProperties(
             get_or_explode((*it), "class"),
             get_or_explode((*it), "init_with"),
             get_or_explode((*it), "scope")
@@ -176,25 +176,25 @@ int main(int argc, char **argv)
 
 
       // functions
-      std::vector<Blast::CppFunction> functions;
+      std::vector<Blast::Cpp::Function> functions;
       json &f = get_or_explode(quintessence_json, "functions");
 
       tabber.indent();
       for (json::iterator it = f.begin(); it != f.end(); ++it)
       {
-         std::vector<Blast::CppFunctionArgument> parameters;
+         std::vector<Blast::Cpp::FunctionArgument> parameters;
          json &ptrs = get_or_explode((*it), "parameters");
 
          for (json::iterator ptrs_it = ptrs.begin(); ptrs_it != ptrs.end(); ++ptrs_it)
          {
-            parameters.push_back(Blast::CppFunctionArgument(
+            parameters.push_back(Blast::Cpp::FunctionArgument(
                get_or_fallback((*ptrs_it), "type", std::string("std::string")),
                get_or_explode((*ptrs_it), "name"),
                get_or_fallback((*ptrs_it), "default_value", std::string("\"\""))
             ));
          }
 
-         functions.push_back(Blast::CppFunction(
+         functions.push_back(Blast::Cpp::Function(
             get_or_fallback((*it), "type", std::string("void")),
             get_or_explode((*it), "name"),
             parameters,
@@ -211,7 +211,7 @@ int main(int argc, char **argv)
 
 
       // function dependencies
-      std::vector<Blast::SymbolDependencies> function_body_symbol_dependencies;
+      std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies;
       json &fbsd = get_or_explode(quintessence_json, "function_body_symbol_dependencies");
 
       tabber.indent();
@@ -244,8 +244,8 @@ int main(int argc, char **argv)
       json &klass = get_or_explode(quintessence_json, "class");
       json &namespaces = get_or_explode(quintessence_json, "namespaces");
 
-      Blast::CppClass cpp_class(klass, namespaces, parent_classes, properties, functions, dependencies, function_body_symbol_dependencies);
-      Blast::CppClassGenerator cpp_class_generator(cpp_class);
+      Blast::Cpp::Class cpp_class(klass, namespaces, parent_classes, properties, functions, dependencies, function_body_symbol_dependencies);
+      Blast::Cpp::ClassGenerator cpp_class_generator(cpp_class);
 
       std::string header_filepath = cpp_class_generator.project_header_filepath();
 
