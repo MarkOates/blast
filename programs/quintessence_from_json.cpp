@@ -111,9 +111,7 @@ int main(int argc, char **argv)
 
       std::vector<Blast::Cpp::ClassAttributeProperties> properties;
 
-      if (quintessence_json["properties"].empty()) explode("properties is required");
-
-      json &j = quintessence_json["properties"];
+      json &j = get_or_explode(quintessence_json, "properties");
 
       tabber.indent();
       for (json::iterator it = j.begin(); it != j.end(); ++it)
