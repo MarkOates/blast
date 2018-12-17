@@ -58,9 +58,69 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator)
 
 
 
+std::vector<std::string> extract_namespaces(YAML::Node &source)
+{
+   std::vector<std::string> result;
+   return result;
+}
+
+
+
+std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties(YAML::Node &source)
+{
+   std::vector<Blast::Cpp::ParentClassProperties> result;
+   return result;
+}
+
+
+
+std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(YAML::Node &source)
+{
+   std::vector<Blast::Cpp::ClassAttributeProperties> result;
+   return result;
+}
+
+
+
+std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
+{
+   std::vector<Blast::Cpp::Function> result;
+   return result;
+}
+
+
+
+std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::Node &source)
+{
+   std::vector<Blast::Cpp::SymbolDependencies> result;
+   return result;
+}
+
+
+
+std::vector<Blast::Cpp::SymbolDependencies> extract_function_body_symbol_dependencies(YAML::Node &source)
+{
+   std::vector<Blast::Cpp::SymbolDependencies> result;
+   return result;
+}
+
+
+
 Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &source)
 {
-   Blast::Cpp::Class klass(class_name);
+   // declare variables
+
+   std::vector<std::string> namespaces = extract_namespaces(source);
+   std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
+   std::vector<Blast::Cpp::ClassAttributeProperties> attribute_properties = extract_attribute_properties(source);
+   std::vector<Blast::Cpp::Function> functions = extract_functions(source);
+   std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
+   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = extract_function_body_symbol_dependencies(source);
+
+
+   // build the actual class
+
+   Blast::Cpp::Class klass(class_name, namespaces, parent_classes_properties, attribute_properties, functions, symbol_dependencies, function_body_symbol_dependencies);
 
    return klass;
 }
