@@ -18,7 +18,10 @@
           "name" : "person_name"
         }
       ],
-      "body" : "return std::string(\"Hello, \") + person_name + \"!\";"
+      "body" : {
+        "content": "return std::string(\"Hello, \") + person_name + \"!\";",
+        "dependency_symbols": [ "std::string" ]
+      }
     }
   ],
   "properties" : [

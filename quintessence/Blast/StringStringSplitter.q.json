@@ -1,0 +1,55 @@
+{
+  "class": "StringSplitter",
+  "parent_classes": [],
+  "namespaces": [ "Blast" ],
+  "properties" : [
+    {
+      "type": "std::string",
+      "name": "string",
+      "init_with": "\"\"",
+      "constructor_arg" : true
+    },
+    {
+      "type": "char",
+      "name": "delimiter",
+      "init_with": "' '",
+      "constructor_arg" : true
+    }
+  ],
+  "functions" : [
+    {
+      "name" : "split",
+      "type" : "std::vector<std::string>",
+      "parameters" : [],
+      "body" : " std::vector<std::string> elems;\n auto result = std::back_inserter(elems);\n std::stringstream ss(string);\n std::string item;\n while (std::getline(ss, item, delimiter)) { *(result++) = item; }\n return elems;\n ",
+      "static" : false
+    }
+  ],
+  "function_body_symbol_dependencies" : [ "std::stringstream" , "std::vector<std::string>" ],
+  "dependencies" : [
+    {
+      "symbol" : "char",
+      "headers" : [],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "std::string",
+      "headers" : [ "string" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "std::vector<std::string>",
+      "headers" : [ "vector", "string" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    },
+    {
+      "symbol" : "std::stringstream",
+      "headers" : [ "sstream" ],
+      "include_directories" : [ "foodir" ],
+      "linked_libraries" : [ "foolib" ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "class": "MyEmptyClass",
+  "format": "verbose",
+  "parent_classes": [],
+  "namespaces": [ "Examples" ],
+  "functions" : [],
+  "function_body_symbol_dependencies" : [],
+  "properties" : [
+    {
+      "type": "std::string",
+      "name": "string",
+      "init_with": "\"my-default-value\"",
+      "constructor_arg" : true,
+      "static": false,
+      "getter": false,
+      "setter": false
+    }
+  ],
+  "dependencies" : [
+    {
+      "symbol" : "std::string",
+      "headers" : [ "string" ],
+      "include_directories" : [],
+      "linked_libraries" : []
+    }
+  ]
+}
