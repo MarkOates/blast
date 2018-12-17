@@ -58,6 +58,15 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator)
 
 
 
+Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &source)
+{
+   Blast::Cpp::Class klass(class_name);
+
+   return klass;
+}
+
+
+
 int main(int argc, char **argv)
 {
    if (argc <= 1)
@@ -71,10 +80,17 @@ int main(int argc, char **argv)
       std::string quintessence_filename = argv[i];
       YAML::Node source = YAML::LoadFile(quintessence_filename);
 
+
+      // infer the class name from the filename
+
       QuintessenceClassNameFromYAMLFilenameInferer class_name_inferer(argv[i]);
       std::string class_name = class_name_inferer.infer_class_name();
 
-      Blast::Cpp::Class klass(class_name);
+
+      // convert the yaml structure to the class
+
+      Blast::Cpp::Class klass = convert_yaml_to_class(class_name, source);
+
 
       //// generate and write the files
 
