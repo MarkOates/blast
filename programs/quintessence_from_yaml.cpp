@@ -224,10 +224,92 @@ std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(Y
 }
 
 
+std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node &source)
+{
+   std::string this_func_name = "convert_function_arguments";
+   //const std::string PARAMETERS = "parameters";
+   std::vector<Blast::Cpp::FunctionArgument> result;
+
+   //YAML::Node source_function_arguments = source[PARAMETERS];
+
+   validate(source.IsSequence(), this_func_name, "Expected \"parameters\" to be of a YAML Sequence type.");
+
+   for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
+   {
+      const std::string TYPE = "type";
+      const std::string NAME = "name";
+      const std::string DEFAULT_ARGUMENT = "default_argument";
+
+      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
+
+      YAML::Node type_node = it->operator[](TYPE);
+      YAML::Node name_node = it->operator[](NAME);
+      YAML::Node default_argument_node = it->operator[](DEFAULT_ARGUMENT);
+
+      validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
+      validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
+      validate(default_argument_node.IsScalar(), this_func_name, "Unexpected default_argument_node, expected to be of YAML type Scalar.");
+
+      Blast::Cpp::FunctionArgument function_argument(type_node.as<std::string>(), name_node.as<std::string>(), default_argument_node.as<std::string>());
+
+      result.push_back(function_argument);
+   }
+
+   return result;
+}
+
 
 std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
 {
+   std::string this_func_name = "extract_functions";
+   const std::string FUNCTIONS = "functions";
    std::vector<Blast::Cpp::Function> result;
+
+   YAML::Node source_functions = source[FUNCTIONS];
+
+   validate(source_functions.IsSequence(), this_func_name, "Expected \"functions\" to be of a YAML Sequence type.");
+
+   for (YAML::const_iterator it=source_functions.begin(); it!=source_functions.end(); ++it)
+   {
+      const std::string TYPE = "type";
+      const std::string NAME = "name";
+      const std::string PARAMETERS = "parameters";
+      const std::string BODY = "body";
+      const std::string STATIC = "static";
+      const std::string CONST = "const";
+      const std::string OVERRIDE = "override";
+
+      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
+
+      YAML::Node type_node = it->operator[](TYPE);
+      YAML::Node name_node = it->operator[](NAME);
+      YAML::Node parameters_node = it->operator[](PARAMETERS);
+      YAML::Node body_node = it->operator[](BODY);
+      YAML::Node static_node = it->operator[](STATIC);
+      YAML::Node const_node = it->operator[](CONST);
+      YAML::Node override_node = it->operator[](OVERRIDE);
+
+      validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
+      validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
+      validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Scalar.");
+      validate(body_node.IsScalar(), this_func_name, "Unexpected body_node, expected to be of YAML type Scalar.");
+      validate(static_node.IsScalar(), this_func_name, "Unexpected static_node, expected to be of YAML type Scalar.");
+      validate(const_node.IsScalar(), this_func_name, "Unexpected const_node, expected to be of YAML type Scalar.");
+      validate(override_node.IsScalar(), this_func_name, "Unexpected override_node, expected to be of YAML type Scalar.");
+
+      std::string type = type_node.as<std::string>();
+      std::string name = name_node.as<std::string>();
+      std::vector<Blast::Cpp::FunctionArgument> signature = convert_function_arguments(parameters_node);
+      std::string body = body_node.as<std::string>();
+      bool is_static = static_node.as<bool>();
+      bool is_const = const_node.as<bool>();
+      bool is_override = override_node.as<bool>();
+
+      Blast::Cpp::Function function(type, name, signature, body, is_static, is_const, is_override);
+
+      result.push_back(function);
+   }
+
    return result;
 }
 
