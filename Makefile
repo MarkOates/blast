@@ -2,6 +2,9 @@ LIBS_ROOT=/Users/markoates/Repos
 GOOGLE_TEST_DIR=$(LIBS_ROOT)/googletest
 GOOGLE_TEST_LIB_DIR=$(GOOGLE_TEST_DIR)/build/googlemock/gtest
 GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
+YAML_CPP_DIR=$(LIBS_ROOT)/yaml-cpp
+YAML_CPP_LIB_DIR=$(YAML_CPP_DIR)/build
+YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
 
 
 
@@ -11,6 +14,7 @@ PROJECT_BINARY_NAME=blast
 
 
 GOOGLE_TEST_LIBS=gtest
+YAML_CPP_LIBS=yaml-cpp
 
 
 
@@ -41,7 +45,7 @@ examples: $(EXAMPLES)
 bin/programs/%: programs/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "compiling program \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include
+	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
