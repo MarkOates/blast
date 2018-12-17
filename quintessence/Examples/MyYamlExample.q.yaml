@@ -1,0 +1,27 @@
+namespaces: [ 'Blast', 'Cpp' ]
+parent_classes: []
+properties:
+  - type: std::string
+    name: person_name
+    init_with: '"foo-default-value"'
+    constructor_arg: true
+    static: false
+    getter: true
+    setter: true
+dependencies:
+  - symbol: std::string
+    headers: [ 'string' ]
+    include_directories: []
+    linked_libraries: []
+functions:
+  - name: my_function
+    type: std::string
+    parameters:
+      - name: person_name
+        type: std::string
+        default_argument: '"Jhonny McNoName"'
+    static: false
+    const: false
+    override: false
+    body: |
+      return std::string("Hello, ") + person_name + "!";
