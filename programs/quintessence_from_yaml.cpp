@@ -102,6 +102,22 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
 
 
 
+std::vector<std::string> extract_sequence_as_string_array(YAML::Node &source)
+{
+   std::string this_func_name = "extract_sequence_as_string_array";
+   std::vector<std::string> result;
+
+   for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
+   {
+      validate(it->IsScalar(), this_func_name, "Unexpected sequence element, expected to be of a YAML Scalar.");
+      result.push_back(it->as<std::string>());
+   }
+
+   return result;
+}
+
+
+
 std::vector<std::string> extract_namespaces(YAML::Node &source)
 {
    std::string this_func_name = "extract_namespaces";
@@ -112,13 +128,7 @@ std::vector<std::string> extract_namespaces(YAML::Node &source)
 
    validate(source_namespaces.IsSequence(), this_func_name, "Expected \"namespaces\" to be of a YAML Sequence type.");
 
-   for (YAML::const_iterator it=source_namespaces.begin(); it!=source_namespaces.end(); ++it)
-   {
-      validate(it->IsScalar(), this_func_name, "Unexpected sequence element in \"namespaces\", expected to be of a YAML Scalar.");
-      result.push_back(it->as<std::string>());
-   }
-
-   return result;
+   return extract_sequence_as_string_array(source_namespaces);
 }
 
 
@@ -176,7 +186,42 @@ std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
 
 std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::Node &source)
 {
+   std::string this_func_name = "extract_symbol_dependencies";
+   const std::string DEPENDENCIES = "dependencies";
    std::vector<Blast::Cpp::SymbolDependencies> result;
+
+   YAML::Node source_symbol_dependencies = source[DEPENDENCIES];
+
+   validate(source_symbol_dependencies.IsSequence(), this_func_name, "Expected \"dependencies\" to be of a YAML Sequence type.");
+
+   for (YAML::const_iterator it=source_symbol_dependencies.begin(); it!=source_symbol_dependencies.end(); ++it)
+   {
+      const std::string SYMBOL = "symbol";
+      const std::string HEADERS = "headers";
+      const std::string INCLUDE_DIRECTORIES = "include_directories";
+      const std::string LINKED_LIBRARIES = "linked_libraries";
+
+      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.");
+      YAML::Node symbol_node = it->operator[](SYMBOL);
+      YAML::Node headers_node = it->operator[](HEADERS);
+      YAML::Node include_directories_node = it->operator[](INCLUDE_DIRECTORIES);
+      YAML::Node linked_libraries_node = it->operator[](LINKED_LIBRARIES);
+
+      validate(symbol_node.IsScalar(), this_func_name, "Unexpected symbol_node, expected to be of YAML type Scalar.");
+      validate(headers_node.IsSequence(), this_func_name, "Unexpected headers_node, expected to be of YAML type Sequence.");
+      validate(include_directories_node.IsSequence(), this_func_name, "Unexpected include_directories_node, expected to be of YAML type Sequence.");
+      validate(linked_libraries_node.IsSequence(), this_func_name, "Unexpected linked_libraries_node, expected to be of YAML type Sequence.");
+
+      std::string symbol = symbol_node.as<std::string>();
+      std::vector<std::string> headers = extract_sequence_as_string_array(headers_node);
+      std::vector<std::string> include_directories = extract_sequence_as_string_array(include_directories_node);
+      std::vector<std::string> linked_libraries = extract_sequence_as_string_array(linked_libraries_node);
+
+      Blast::Cpp::SymbolDependencies symbol_dependencies(symbol, headers, include_directories, linked_libraries);
+
+      result.push_back(symbol_dependencies);
+   }
+
    return result;
 }
 
