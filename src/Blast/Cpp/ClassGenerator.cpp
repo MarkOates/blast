@@ -3,6 +3,7 @@
 #include <Blast/Cpp/ClassGenerator.hpp>
 
 #include <Blast/Cpp/FunctionFormatter.hpp>
+#include <Blast/StringJoiner.hpp>
 #include <set>
 #include <sstream>
 #include <iostream>
@@ -263,13 +264,12 @@ std::string ClassGenerator::source_filename()
 std::string ClassGenerator::header_include_directive()
 {
    std::stringstream result;
-   result << "#include <";
-   for (unsigned i=0; i<cpp_class.get_namespaces().size(); i++)
-   {
-      result << cpp_class.get_namespaces()[i];
-      if (i != (cpp_class.get_namespaces().size()-1)) result << "/";
-   }
-   result << "/" << header_filename() << ">\n";
+   std::vector<std::string> tokens;
+
+   for (unsigned i=0; i<cpp_class.get_namespaces().size(); i++) tokens.push_back(cpp_class.get_namespaces()[i]);
+   tokens.push_back(header_filename());
+
+   result << "#include <" << Blast::StringJoiner(tokens, "/").join() << ">";
 
    return result.str();
 }

@@ -269,8 +269,18 @@ TEST_F(ClassGeneratorTest, source_filename__returns_the_filename_for_the_header_
 
 TEST_F(ClassGeneratorTest, header_include_directive__returns_the_include_line_to_include_the_class_header_file)
 {
-   std::string expected_header_directive = "#include <ProjectName/User.hpp>\n";
+   std::string expected_header_directive = "#include <ProjectName/User.hpp>";
    ASSERT_EQ(expected_header_directive, class_generator_fixture.header_include_directive());
+}
+
+
+TEST_F(ClassGeneratorTest, header_include_directive__on_a_class_with_no_namespaces_returns_the_expected_header_filename)
+{
+   Blast::Cpp::Class cpp_class("User");
+   Blast::Cpp::ClassGenerator cpp_class_generator(cpp_class);
+
+   std::string expected_header_directive = "#include <User.hpp>";
+   ASSERT_EQ(expected_header_directive, cpp_class_generator.header_include_directive());
 }
 
 
