@@ -170,7 +170,56 @@ std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties
 
 std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(YAML::Node &source)
 {
+   std::string this_func_name = "extract_attribute_properties";
+   const std::string PROPERTIES = "properties";
    std::vector<Blast::Cpp::ClassAttributeProperties> result;
+
+   YAML::Node source_attribute_properties = source[PROPERTIES];
+
+   validate(source_attribute_properties.IsSequence(), this_func_name, "Expected \"properties\" to be of a YAML Sequence type.");
+
+   for (YAML::const_iterator it=source_attribute_properties.begin(); it!=source_attribute_properties.end(); ++it)
+   {
+      const std::string TYPE = "type";
+      const std::string NAME = "name";
+      const std::string INIT_WITH = "init_with";
+      const std::string CONSTRUCTOR_ARG = "constructor_arg";
+      const std::string STATIC = "static";
+      const std::string GETTER = "getter";
+      const std::string SETTER = "setter";
+
+      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"properties\", expected to be of a YAML Map.");
+
+      YAML::Node type_node = it->operator[](TYPE);
+      YAML::Node name_node = it->operator[](NAME);
+      YAML::Node init_with_node = it->operator[](INIT_WITH);
+      YAML::Node constructor_arg_node = it->operator[](CONSTRUCTOR_ARG);
+      YAML::Node static_node = it->operator[](STATIC);
+      YAML::Node getter_node = it->operator[](GETTER);
+      YAML::Node setter_node = it->operator[](SETTER);
+
+      validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
+      validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
+      validate(init_with_node.IsScalar(), this_func_name, "Unexpected init_with_node, expected to be of YAML type Scalar.");
+      validate(constructor_arg_node.IsScalar(), this_func_name, "Unexpected constructor_arg_node, expected to be of YAML type Scalar.");
+      validate(static_node.IsScalar(), this_func_name, "Unexpected static_node, expected to be of YAML type Scalar.");
+      validate(getter_node.IsScalar(), this_func_name, "Unexpected getter_node, expected to be of YAML type Scalar.");
+      validate(setter_node.IsScalar(), this_func_name, "Unexpected setter_node, expected to be of YAML type Scalar.");
+
+      std::string datatype = type_node.as<std::string>();
+      std::string variable_name = name_node.as<std::string>();
+      std::string initialization_value = init_with_node.as<std::string>();
+      bool is_static = static_node.as<bool>();
+      bool is_constructor_parameter = constructor_arg_node.as<bool>();
+      bool has_getter = getter_node.as<bool>();
+      bool has_getter_ref = false;
+      bool has_setter = setter_node.as<bool>();
+
+      Blast::Cpp::ClassAttributeProperties class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_getter_ref, has_setter);
+
+      result.push_back(class_attribute_properties);
+   }
+
    return result;
 }
 
