@@ -11,6 +11,20 @@
 
 
 
+void explode(std::string location, std::string error_message)
+{
+   std::stringstream ss;
+   ss << "‼️ [" << location << "] " << error_message;
+   throw std::runtime_error(ss.str());
+}
+
+
+void validate(bool value, std::string location, std::string error_message)
+{
+   if (!value) explode(location, error_message);
+}
+
+
 class QuintessenceClassNameFromYAMLFilenameInferer
 {
 private:
@@ -33,24 +47,54 @@ public:
 };
 
 
+void create_folders_for_file(std::string filepath)
+{
+   std::stringstream error_message;
+   error_message << "Could not create folders for \"" << filepath << "\", this convenience feature is not yet implemented.";
+   explode("create_folders_for_file", error_message.str());
+}
 
-void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator)
+
+void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automatically_create_folders=true)
 {
    std::string header_filepath = cpp_class_generator.project_header_filepath();
+   std::string source_filepath = cpp_class_generator.project_source_filepath();
 
    std::ofstream header_file(header_filepath, std::ofstream::out);
    if (header_file.fail())
    {
-      std::stringstream error_message;
-      error_message << "Could not open header file \"" << header_filepath << "\" for writing.";
-      throw std::runtime_error(error_message.str());
+      if (!automatically_create_folders)
+      {
+         std::stringstream error_message;
+         error_message << "Could not open header file \"" << header_filepath << "\" for writing.  Most likely the directories need to be created.";
+         explode("write_to_files", error_message.str());
+      }
+      create_folders_for_file(header_filepath);
    }
-   header_file << cpp_class_generator.generate_header_file_content();
 
-   std::string source_filepath = cpp_class_generator.project_source_filepath();
    std::ofstream source_file(source_filepath, std::ofstream::out);
-   if (source_file.fail()) throw std::runtime_error("Could not open source file for writing.");
-   source_file << cpp_class_generator.generate_source_file_content();
+   if (source_file.fail())
+   {
+      if (!automatically_create_folders)
+      {
+         std::stringstream error_message;
+         error_message << "Could not open source file \"" << source_filepath << "\" for writing.  Most likely the directories need to be created.";
+         explode("write_to_files", error_message.str());
+      }
+      create_folders_for_file(source_filepath);
+   }
+
+
+   // obtain the output content
+
+   std::string header_file_content = cpp_class_generator.generate_header_file_content();
+   std::string source_file_content = cpp_class_generator.generate_source_file_content();
+
+
+   // output the actual content
+
+   header_file << header_file_content;
+   source_file << source_file_content;
 
    // output success
    std::cout << "done. Files generated \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
@@ -60,7 +104,20 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator)
 
 std::vector<std::string> extract_namespaces(YAML::Node &source)
 {
+   std::string this_func_name = "extract_namespaces";
+   const std::string NAMESPACES = "namespaces";
    std::vector<std::string> result;
+
+   YAML::Node source_namespaces = source[NAMESPACES];
+
+   validate(source_namespaces.IsSequence(), this_func_name, "Expected \"namespaces\" to be of a YAML Sequence type.");
+
+   for (YAML::const_iterator it=source_namespaces.begin(); it!=source_namespaces.end(); ++it)
+   {
+      validate(it->IsScalar(), this_func_name, "Unexpected sequence element in \"namespaces\", expected to be of a YAML Scalar.");
+      result.push_back(it->as<std::string>());
+   }
+
    return result;
 }
 
