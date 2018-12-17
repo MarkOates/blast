@@ -1,0 +1,27 @@
+namespaces: [ 'Blast', 'Cpp' ]
+parent_classes: []
+properties:
+  - type: std::string
+    name: content
+    init_with: '"return;"'
+    constructor_arg: true
+    static: false
+    getter: true
+    setter: true
+  - type: std::vector<std::string>
+    name: dependency_symbols
+    init_with: '{}'
+    constructor_arg: true
+    static: false
+    getter: true
+    setter: true
+dependencies:
+  - symbol: std::string
+    headers: [ 'string' ]
+    include_directories: []
+    linked_libraries: []
+  - symbol: std::vector<std::string>
+    headers: [ 'vector', 'string' ]
+    include_directories: []
+    linked_libraries: []
+functions: []
