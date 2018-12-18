@@ -57,6 +57,8 @@ std::string FunctionFormatter::get_function_definition()
 {
    std::stringstream result;
 
+   if (function.get_is_pure_virtual()) return "";
+
    // format the args
    std::vector<std::string> function_arg_elements;
    for (auto &parameter : function.get_signature())

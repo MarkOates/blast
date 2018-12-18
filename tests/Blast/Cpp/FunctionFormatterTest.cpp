@@ -96,3 +96,13 @@ TEST(FunctionFormatterTest, get_function_definition__with_a_class_name_returns_t
 }
 
 
+TEST(FunctionFormatterTest, get_function_definition__with_a_pure_virtual_function_returns_the_expected_empty_string)
+{
+   Blast::Cpp::Function function("void", "my_function_name", {}, "  return \"hello world!\";", false, false, false, false, true);
+   Blast::Cpp::FunctionFormatter function_formatter(function, "MyClassName");
+
+   std::string expected_returned_string = "";
+   ASSERT_EQ(expected_returned_string, function_formatter.get_function_definition());
+}
+
+
