@@ -278,6 +278,8 @@ std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
       const std::string STATIC = "static";
       const std::string CONST = "const";
       const std::string OVERRIDE = "override";
+      const std::string VIRTUAL = "virtual";
+      const std::string PURE_VIRTUAL = "pure_virtual";
 
       validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
 
@@ -288,14 +290,18 @@ std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
       YAML::Node static_node = it->operator[](STATIC);
       YAML::Node const_node = it->operator[](CONST);
       YAML::Node override_node = it->operator[](OVERRIDE);
+      YAML::Node virtual_node = it->operator[](VIRTUAL);
+      YAML::Node pure_virtual_node = it->operator[](PURE_VIRTUAL);
 
       validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
-      validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Scalar.");
+      validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Sequence.");
       validate(body_node.IsScalar(), this_func_name, "Unexpected body_node, expected to be of YAML type Scalar.");
       validate(static_node.IsScalar(), this_func_name, "Unexpected static_node, expected to be of YAML type Scalar.");
       validate(const_node.IsScalar(), this_func_name, "Unexpected const_node, expected to be of YAML type Scalar.");
       validate(override_node.IsScalar(), this_func_name, "Unexpected override_node, expected to be of YAML type Scalar.");
+      validate(virtual_node.IsScalar(), this_func_name, "Unexpected virtual_node, expected to be of YAML type Scalar.");
+      validate(pure_virtual_node.IsScalar(), this_func_name, "Unexpected pure_virtual_node, expected to be of YAML type Scalar.");
 
       std::string type = type_node.as<std::string>();
       std::string name = name_node.as<std::string>();
@@ -304,8 +310,10 @@ std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
       bool is_static = static_node.as<bool>();
       bool is_const = const_node.as<bool>();
       bool is_override = override_node.as<bool>();
+      bool is_virtual = virtual_node.as<bool>();
+      bool is_pure_virtual = pure_virtual_node.as<bool>();
 
-      Blast::Cpp::Function function(type, name, signature, body, is_static, is_const, is_override);
+      Blast::Cpp::Function function(type, name, signature, body, is_static, is_const, is_override, is_virtual, is_pure_virtual);
 
       result.push_back(function);
    }
