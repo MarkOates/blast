@@ -20,9 +20,11 @@ namespace Blast
          bool is_static;
          bool is_const;
          bool is_override;
+         bool is_virtual;
+         bool is_pure_virtual;
 
       public:
-         Function(std::string type="void", std::string name="unnamed_function", std::vector<Blast::Cpp::FunctionArgument> signature={}, std::string body="return;", bool is_static=false, bool is_const=false, bool is_override=false);
+         Function(std::string type="void", std::string name="unnamed_function", std::vector<Blast::Cpp::FunctionArgument> signature={}, std::string body="return;", bool is_static=false, bool is_const=false, bool is_override=false, bool is_virtual=false, bool is_pure_virtual=false);
          ~Function();
 
 
@@ -33,6 +35,8 @@ namespace Blast
          bool get_is_static();
          bool get_is_const();
          bool get_is_override();
+         bool get_is_virtual();
+         bool get_is_pure_virtual();
       };
    }
 }

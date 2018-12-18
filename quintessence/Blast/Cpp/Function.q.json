@@ -1,7 +1,7 @@
 {
-  "class": "CppFunction",
+  "class": "Function",
   "parent_classes": [],
-  "namespaces": [ "Blast" ],
+  "namespaces": [ "Blast", "Cpp" ],
   "properties" : [
     {
       "name": "type",
@@ -19,7 +19,7 @@
     },
     {
       "name": "signature",
-      "type": "std::vector<Blast::CppFunctionArgument>",
+      "type": "std::vector<Blast::Cpp::FunctionArgument>",
       "init_with": "{}",
       "constructor_arg" : true,
       "getter" : true
@@ -51,33 +51,48 @@
       "init_with": "false",
       "constructor_arg" : true,
       "getter" : true
+    },
+    {
+      "name": "is_virtual",
+      "type": "bool",
+      "init_with": "false",
+      "constructor_arg" : true,
+      "getter" : true
+    },
+    {
+      "name": "is_pure_virtual",
+      "type": "bool",
+      "init_with": "false",
+      "constructor_arg" : true,
+      "getter" : true
     }
   ],
   "functions" : [],
+  "function_body_symbol_dependencies" : [],
   "dependencies" : [
     {
       "symbol" : "std::string",
       "headers" : [ "string" ],
-      "include_directories" : [ "foodir" ],
-      "linked_libraries" : [ "foolib" ]
+      "include_directories" : [],
+      "linked_libraries" : []
     },
     {
       "symbol" : "void",
       "headers" : [],
-      "include_directories" : [ "foodir" ],
-      "linked_libraries" : [ "foolib" ]
+      "include_directories" : [],
+      "linked_libraries" : []
     },
     {
       "symbol" : "bool",
       "headers" : [],
-      "include_directories" : [ "foodir" ],
-      "linked_libraries" : [ "foolib" ]
+      "include_directories" : [],
+      "linked_libraries" : []
     },
     {
-      "symbol" : "std::vector<Blast::CppFunctionArgument>",
-      "headers" : [ "vector", "Blast/CppFunctionArgument.hpp" ],
-      "include_directories" : [ "foodir" ],
-      "linked_libraries" : [ "foolib" ]
+      "symbol" : "std::vector<Blast::Cpp::FunctionArgument>",
+      "headers" : [ "vector", "Blast/Cpp/FunctionArgument.hpp" ],
+      "include_directories" : [],
+      "linked_libraries" : []
     }
   ]
 }
