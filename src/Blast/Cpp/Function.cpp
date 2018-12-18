@@ -3,15 +3,14 @@
 #include <Blast/Cpp/Function.hpp>
 
 
+
 namespace Blast
 {
-
-
 namespace Cpp
 {
 
 
-Function::Function(std::string type, std::string name, std::vector<Blast::Cpp::FunctionArgument> signature, std::string body, bool is_static, bool is_const, bool is_override)
+Function::Function(std::string type, std::string name, std::vector<Blast::Cpp::FunctionArgument> signature, std::string body, bool is_static, bool is_const, bool is_override, bool is_virtual, bool is_pure_virtual)
    : type(type)
    , name(name)
    , signature(signature)
@@ -19,6 +18,8 @@ Function::Function(std::string type, std::string name, std::vector<Blast::Cpp::F
    , is_static(is_static)
    , is_const(is_const)
    , is_override(is_override)
+   , is_virtual(is_virtual)
+   , is_pure_virtual(is_pure_virtual)
 {
 }
 
@@ -70,9 +71,19 @@ bool Function::get_is_override()
 }
 
 
+bool Function::get_is_virtual()
+{
+   return is_virtual;
+}
+
+
+bool Function::get_is_pure_virtual()
+{
+   return is_pure_virtual;
+}
+
+
 } // namespace Cpp
-
-
 } // namespace Blast
 
 

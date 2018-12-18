@@ -28,6 +28,13 @@ Class::~Class()
 }
 
 
+bool Class::infer_has_virtual_functions()
+{
+   for (auto &function : get_functions()) if (function.get_is_virtual() || function.get_is_pure_virtual()) return true;
+   return false;
+}
+
+
 std::string Class::get_class_name()
 {
    return class_name;

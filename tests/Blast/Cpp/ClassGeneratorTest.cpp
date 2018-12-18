@@ -474,6 +474,20 @@ TEST_F(ClassGeneratorTest, destructor_declaration__returns_the_expected_string)
 }
 
 
+TEST_F(ClassGeneratorTest, destructor_declaration__when_virtual_or_pure_virtual_functions_are_present_on_the_class__returns_the_expected_virtual_destructor_string)
+{
+   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {
+      Blast::Cpp::Function("void", "unnamed_function",         {}, "return;", false, false, false, false, true),
+      Blast::Cpp::Function("void", "another_unnamed_function", {}, "return;", false, false, false, true, false),
+   });
+
+   Blast::Cpp::ClassGenerator class_generator(cpp_class);
+
+   std::string expected_destructor_declaration = "virtual ~User();\n";
+   ASSERT_EQ(expected_destructor_declaration, class_generator.destructor_declaration());
+}
+
+
 TEST_F(ClassGeneratorTest, destructor_definition_returns_the_expected_string)
 {
    std::string expected_destructor_definition = "User::~User()\n{\n}\n";
