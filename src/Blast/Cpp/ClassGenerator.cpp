@@ -470,7 +470,9 @@ std::string ClassGenerator::constructor_definition(int indent_level)
 std::string ClassGenerator::destructor_declaration(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << "~" << cpp_class.get_class_name() << "();\n";
+   result << std::string(3*indent_level, ' ');
+      if (cpp_class.infer_has_virtual_functions()) result << "virtual ";
+      result << "~" << cpp_class.get_class_name() << "();\n";
    return result.str();
 }
 
