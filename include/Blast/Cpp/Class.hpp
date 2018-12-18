@@ -28,6 +28,7 @@ namespace Blast
          Class(std::string class_name="UnnamedClass", std::vector<std::string> namespaces={}, std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties={}, std::vector<Blast::Cpp::ClassAttributeProperties> attribute_properties={}, std::vector<Blast::Cpp::Function> functions={}, std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies={}, std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies={});
          ~Class();
 
+         bool infer_has_virtual_functions();
 
          std::string get_class_name();
          std::vector<std::string> get_namespaces();
