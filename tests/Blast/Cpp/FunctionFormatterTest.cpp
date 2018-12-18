@@ -45,6 +45,16 @@ TEST(FunctionFormatterTest, get_function_declaration__with_a_class_name_returns_
 }
 
 
+TEST(FunctionFormatterTest, get_function_declaration__with_an_override_function_returns_the_expected_formatted_string)
+{
+   Blast::Cpp::Function function("void", "my_function_name", {}, "  return \"hello world!\";", false, false, true, true, false);
+   Blast::Cpp::FunctionFormatter function_formatter(function, "MyClassName");
+
+   std::string expected_returned_string = "virtual void MyClassName::my_function_name() override;\n";
+   ASSERT_EQ(expected_returned_string, function_formatter.get_function_declaration());
+}
+
+
 TEST(FunctionFormatterTest, get_function_declaration__with_a_virtual_function_returns_the_expected_formatted_string)
 {
    Blast::Cpp::Function function("void", "my_function_name", {}, "  return \"hello world!\";", false, false, false, true, false);

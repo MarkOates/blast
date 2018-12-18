@@ -72,7 +72,6 @@ std::string FunctionFormatter::get_function_definition()
    if (!class_name.empty()) result << class_name << "::";
    result << function.get_name() << "(" << Blast::StringJoiner(function_arg_elements, ", ").join() << ")";
    if (function.get_is_const()) result << " const";
-   if (function.get_is_override()) result << " override";
    result << std::endl;
    result << '{' << std::endl;
    result << function.get_body() << std::endl;
