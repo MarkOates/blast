@@ -40,9 +40,11 @@ std::string FunctionFormatter::get_function_declaration()
 
    // format the function
    if (function.get_is_static()) result << "static ";
+   if (function.get_is_virtual() || function.get_is_pure_virtual()) result << "virtual ";
    result << function.get_type() << " ";
    if (!class_name.empty()) result << class_name << "::";
    result << function.get_name() << "(" << Blast::StringJoiner(function_arg_elements, ", ").join() << ")";
+   if (function.get_is_pure_virtual()) result << " = 0";
    if (function.get_is_const()) result << " const";
    if (function.get_is_override()) result << " override";
    result << ';' << std::endl;
