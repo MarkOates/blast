@@ -168,6 +168,38 @@ std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties
 
 
 
+std::string get_type_string(YAML::Node &node)
+{
+   switch (node.Type())
+   {
+   case YAML::NodeType::Null: return "Null"; break;
+   case YAML::NodeType::Scalar: return "Scalar"; break;
+   case YAML::NodeType::Sequence: return "Sequence"; break;
+   case YAML::NodeType::Map: return "Map"; break;
+   case YAML::NodeType::Undefined: return "Undefined"; break;
+   }
+   return "[NO_TYPE_DEFINED_ERROR]";
+}
+
+
+
+bool fetch_bool(YAML::Node &node, std::string key, bool default_value)
+{
+   if (node[key])
+   {
+      if (node[key].IsScalar()) return node.as<bool>();
+      else
+      {
+         std::stringstream error_message;
+         error_message << "unexpected type expecting YAML::IsScalar() " << get_type_string(node) << " is present.";
+         throw std::runtime_error(error_message.str());
+      }
+   }
+   return default_value;
+}
+
+
+
 std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(YAML::Node &source)
 {
    std::string this_func_name = "extract_attribute_properties";
