@@ -1,0 +1,28 @@
+namespaces: [ 'Blast' ]
+parent_classes: []
+properties:
+  - name: directory_name
+    type: std::string
+    init_with: '""'
+    constructor_arg: true
+functions:
+  - name: exists
+    type: bool
+    parameters: []
+    body: |
+      struct stat info;
+      return stat(directory_name.c_str(), &info) == 0 && S_ISDIR(info.st_mode);
+function_body_symbol_dependencies: [ 'stat' ]
+dependencies:
+  - symbol: stat
+    headers: [ 'sys/stat.h' ]
+    include_directories: []
+    linked_libraries: []
+  - symbol: bool
+    headers: []
+    include_directories: []
+    linked_libraries: []
+  - symbol: std::string
+    headers: [ 'string' ]
+    include_directories: []
+    linked_libraries: []
