@@ -1,0 +1,37 @@
+namespaces: [ 'Blast' ]
+parent_classes: []
+properties:
+  - name: directory_name
+    type: std::string
+    init_with: '""'
+    constructor_arg: true
+functions:
+  - name: create
+    type: bool
+    parameters: []
+    body: |
+      if (Blast::DirectoryExistenceChecker(directory_name).exists()) return true;
+      int mkdir_result = mkdir(directory_name.c_str(), 0777);
+      return mkdir_result != -1;
+function_body_symbol_dependencies: [ 'mkdir', 'std::stringstream', 'Blast::DirectoryExistenceChecker' ]
+dependencies:
+  - symbol: bool
+    headers: []
+    include_directories: []
+    linked_libraries: []
+  - symbol: std::string
+    headers: [ 'string' ]
+    include_directories: []
+    linked_libraries: []
+  - symbol: mkdir
+    headers: [ 'sys/stat.h' ]
+    include_directories: []
+    linked_libraries: []
+  - symbol: std::stringstream
+    headers: [ 'sstream' ]
+    include_directories: []
+    linked_libraries: []
+  - symbol: Blast::DirectoryExistenceChecker
+    headers: [ 'Blast/DirectoryExistenceChecker.hpp' ]
+    include_directories: []
+    linked_libraries: []
