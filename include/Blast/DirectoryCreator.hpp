@@ -2,6 +2,7 @@
 
 
 #include <string>
+#include <vector>
 
 
 namespace Blast
@@ -9,10 +10,10 @@ namespace Blast
    class DirectoryCreator
    {
    private:
-      std::string directory_name;
+      std::vector<std::string> directory_names;
 
    public:
-      DirectoryCreator(std::string directory_name="");
+      DirectoryCreator(std::vector<std::string> directory_names={});
       ~DirectoryCreator();
 
 

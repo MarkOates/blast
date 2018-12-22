@@ -1,19 +1,28 @@
 namespaces: [ 'Blast' ]
 parent_classes: []
 properties:
-  - name: directory_name
-    type: std::string
-    init_with: '""'
+  - name: directory_names
+    type: std::vector<std::string>
+    init_with: '{}'
     constructor_arg: true
 functions:
   - name: create
     type: bool
     parameters: []
     body: |
-      if (Blast::DirectoryExistenceChecker(directory_name).exists()) return true;
-      int mkdir_result = mkdir(directory_name.c_str(), 0777);
-      return mkdir_result != -1;
-function_body_symbol_dependencies: [ 'mkdir', 'std::stringstream', 'Blast::DirectoryExistenceChecker' ]
+      std::stringstream result_directories;
+      const std::string SEPARATOR = "/";
+      for (auto &directory_name : directory_names)
+      {
+        result_directories << directory_name << SEPARATOR;
+        std::string directory_to_create = result_directories.str();
+
+        if (Blast::DirectoryExistenceChecker(directory_to_create).exists()) continue;
+        int mkdir_result = mkdir(directory_to_create.c_str(), 0777);
+        if (mkdir_result == -1) return false;
+      }
+      return true;
+function_body_symbol_dependencies: [ 'mkdir', 'std::stringstream', 'std::string', 'Blast::DirectoryExistenceChecker' ]
 dependencies:
   - symbol: bool
     headers: []
@@ -21,6 +30,10 @@ dependencies:
     linked_libraries: []
   - symbol: std::string
     headers: [ 'string' ]
+    include_directories: []
+    linked_libraries: []
+  - symbol: std::vector<std::string>
+    headers: [ 'vector', 'string' ]
     include_directories: []
     linked_libraries: []
   - symbol: mkdir
