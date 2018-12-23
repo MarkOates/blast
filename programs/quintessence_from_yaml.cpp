@@ -125,6 +125,25 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
 
 
 
+YAML::Node default_dependencies()
+{
+   std::string default_deps = R"END(
+- symbol: int
+- symbol: void
+- symbol: float
+- symbol: double
+- symbol: bool
+- symbol: std::string
+  headers: [ 'string' ]
+- symbol: std::vector<std::string>
+  headers: [ 'vector', 'string' ]
+   )END";
+
+   return YAML::Load(default_deps);
+}
+
+
+
 bool fetch_bool(YAML::Node &node, std::string key, bool default_value)
 {
    if (node[key])
@@ -242,7 +261,7 @@ std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(Y
    const std::string PROPERTIES = "properties";
    std::vector<Blast::Cpp::ClassAttributeProperties> result;
 
-   YAML::Node source_attribute_properties = source[PROPERTIES];
+   YAML::Node source_attribute_properties = fetch_node(source, PROPERTIES, YAML::NodeType::Sequence, YAML::Load("[]"));
 
    validate(source_attribute_properties.IsSequence(), this_func_name, "Expected \"properties\" to be of a YAML Sequence type.");
 
@@ -397,7 +416,14 @@ std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::No
    const std::string DEPENDENCIES = "dependencies";
    std::vector<Blast::Cpp::SymbolDependencies> result;
 
-   YAML::Node source_symbol_dependencies = source[DEPENDENCIES];
+   YAML::Node source_symbol_dependencies = fetch_node(source, DEPENDENCIES, YAML::NodeType::Sequence, YAML::Load("[]"));
+   YAML::Node default_deps = default_dependencies();
+
+   // postfix default deps
+   for (std::size_t i=0;i<default_deps.size();i++)
+   {
+      source_symbol_dependencies.push_back(default_deps[i]);
+   }
 
    validate(source_symbol_dependencies.IsSequence(), this_func_name, "Expected \"dependencies\" to be of a YAML Sequence type.");
 
