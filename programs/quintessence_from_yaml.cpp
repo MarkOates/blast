@@ -330,17 +330,20 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 
    validate(source.IsSequence(), this_func_name, "Expected \"parameters\" to be of a YAML Sequence type.");
 
-   for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
+   for (std::size_t i=0;i<source.size();i++)
+   //for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
    {
+      YAML::Node node = source[i];
+
       const std::string TYPE = "type";
       const std::string NAME = "name";
       const std::string DEFAULT_ARGUMENT = "default_argument";
 
-      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
+      validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
 
-      YAML::Node type_node = it->operator[](TYPE);
-      YAML::Node name_node = it->operator[](NAME);
-      YAML::Node default_argument_node = it->operator[](DEFAULT_ARGUMENT);
+      YAML::Node type_node = node.operator[](TYPE);
+      YAML::Node name_node = node.operator[](NAME);
+      YAML::Node default_argument_node = node.operator[](DEFAULT_ARGUMENT);
 
       validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
@@ -382,12 +385,12 @@ std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
 
       YAML::Node type_node = it.operator[](TYPE);
       YAML::Node name_node = it.operator[](NAME);
-      YAML::Node parameters_node = it.operator[](PARAMETERS);
+      YAML::Node parameters_node = fetch_node(it, PARAMETERS, YAML::NodeType::Sequence, YAML::Load("[]"));
       YAML::Node body_node = it.operator[](BODY);
 
       validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
-      validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Sequence.");
+      //validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Sequence.");
       validate(body_node.IsScalar(), this_func_name, "Unexpected body_node, expected to be of YAML type Scalar.");
 
       std::string type = type_node.as<std::string>();
