@@ -4,6 +4,7 @@
 #include <Blast/Cpp/ClassGenerator.hpp>
 #include <Blast/Cpp/Function.hpp>
 #include <Blast/Cpp/FunctionArgument.hpp>
+#include <Blast/DirectoryCreator.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
@@ -47,11 +48,33 @@ public:
 };
 
 
-void create_folders_for_file(std::string filepath)
+std::string get_type_string(YAML::Node &node)
 {
-   std::stringstream error_message;
-   error_message << "Could not create folders for \"" << filepath << "\", this convenience feature is not yet implemented.";
-   explode("create_folders_for_file", error_message.str());
+   switch (node.Type())
+   {
+   case YAML::NodeType::Null: return "Null"; break;
+   case YAML::NodeType::Scalar: return "Scalar"; break;
+   case YAML::NodeType::Sequence: return "Sequence"; break;
+   case YAML::NodeType::Map: return "Map"; break;
+   case YAML::NodeType::Undefined: return "Undefined"; break;
+   }
+   return "[NO_TYPE_DEFINED_ERROR]";
+}
+
+
+
+bool create_folders_for_file(std::string filepath)
+{
+   std::vector<std::string> directory_names = Blast::StringSplitter(filepath, '/').split();
+   directory_names.pop_back();
+   Blast::DirectoryCreator directory_creator(directory_names);
+   if (!directory_creator.create())
+   {
+      std::stringstream error_message;
+      error_message << "Could not create folders for \"" << filepath << "\".";
+      explode("create_folders_for_file", error_message.str());
+   }
+   return true;
 }
 
 
@@ -102,6 +125,57 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
 
 
 
+bool fetch_bool(YAML::Node &node, std::string key, bool default_value)
+{
+   if (node[key])
+   {
+      if (node[key].IsScalar()) return node[key].as<bool>();
+      else
+      {
+         std::stringstream error_message;
+         error_message << "unexpected type expecting YAML::IsScalar() " << get_type_string(node) << " is present.";
+         throw std::runtime_error(error_message.str());
+      }
+   }
+   return default_value;
+}
+
+
+
+std::string fetch_string(YAML::Node &node, std::string key, std::string default_value)
+{
+   if (node[key])
+   {
+      if (node[key].IsScalar()) return node[key].as<std::string>();
+      else
+      {
+         std::stringstream error_message;
+         error_message << "unexpected type expecting YAML::IsScalar() " << get_type_string(node) << " is present.";
+         throw std::runtime_error(error_message.str());
+      }
+   }
+   return default_value;
+}
+
+
+
+YAML::Node fetch_node(YAML::Node &node, std::string key, YAML::NodeType::value expected_type, YAML::Node default_value)
+{
+   if (node[key])
+   {
+      if (node[key].Type() == expected_type) return node[key];
+      else
+      {
+         std::stringstream error_message;
+         error_message << "unexpected type expecting YAML:: " << expected_type << ", is a " << get_type_string(node) << " is present.";
+         throw std::runtime_error(error_message.str());
+      }
+   }
+   return default_value;
+}
+
+
+
 std::vector<std::string> extract_sequence_as_string_array(YAML::Node &source)
 {
    std::string this_func_name = "extract_sequence_as_string_array";
@@ -120,15 +194,9 @@ std::vector<std::string> extract_sequence_as_string_array(YAML::Node &source)
 
 std::vector<std::string> extract_namespaces(YAML::Node &source)
 {
-   std::string this_func_name = "extract_namespaces";
    const std::string NAMESPACES = "namespaces";
-   std::vector<std::string> result;
-
-   YAML::Node source_namespaces = source[NAMESPACES];
-
-   validate(source_namespaces.IsSequence(), this_func_name, "Expected \"namespaces\" to be of a YAML Sequence type.");
-
-   return extract_sequence_as_string_array(source_namespaces);
+   YAML::Node result = fetch_node(source, NAMESPACES, YAML::NodeType::Sequence, YAML::Load("[]"));
+   return extract_sequence_as_string_array(result);
 }
 
 
@@ -139,7 +207,7 @@ std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties
    const std::string PARENT_CLASSES = "parent_classes";
    std::vector<Blast::Cpp::ParentClassProperties> result;
 
-   YAML::Node source_parent_classes = source[PARENT_CLASSES];
+   YAML::Node source_parent_classes = fetch_node(source, PARENT_CLASSES, YAML::NodeType::Sequence, YAML::Load("[]"));
 
    validate(source_parent_classes.IsSequence(), this_func_name, "Expected \"parent_classes\" to be of a YAML Sequence type.");
 
@@ -168,38 +236,6 @@ std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties
 
 
 
-std::string get_type_string(YAML::Node &node)
-{
-   switch (node.Type())
-   {
-   case YAML::NodeType::Null: return "Null"; break;
-   case YAML::NodeType::Scalar: return "Scalar"; break;
-   case YAML::NodeType::Sequence: return "Sequence"; break;
-   case YAML::NodeType::Map: return "Map"; break;
-   case YAML::NodeType::Undefined: return "Undefined"; break;
-   }
-   return "[NO_TYPE_DEFINED_ERROR]";
-}
-
-
-
-bool fetch_bool(YAML::Node &node, std::string key, bool default_value)
-{
-   if (node[key])
-   {
-      if (node[key].IsScalar()) return node.as<bool>();
-      else
-      {
-         std::stringstream error_message;
-         error_message << "unexpected type expecting YAML::IsScalar() " << get_type_string(node) << " is present.";
-         throw std::runtime_error(error_message.str());
-      }
-   }
-   return default_value;
-}
-
-
-
 std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(YAML::Node &source)
 {
    std::string this_func_name = "extract_attribute_properties";
@@ -210,42 +246,51 @@ std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(Y
 
    validate(source_attribute_properties.IsSequence(), this_func_name, "Expected \"properties\" to be of a YAML Sequence type.");
 
-   for (YAML::const_iterator it=source_attribute_properties.begin(); it!=source_attribute_properties.end(); ++it)
+   for (std::size_t i=0;i<source_attribute_properties.size();i++)
    {
+      YAML::Node it = source_attribute_properties[i];
+
       const std::string TYPE = "type";
       const std::string NAME = "name";
       const std::string INIT_WITH = "init_with";
       const std::string CONSTRUCTOR_ARG = "constructor_arg";
       const std::string STATIC = "static";
       const std::string GETTER = "getter";
+      const std::string GETTER_REF = "getter_ref";
       const std::string SETTER = "setter";
 
-      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"properties\", expected to be of a YAML Map.");
+      validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"properties\", expected to be of a YAML Map.");
 
-      YAML::Node type_node = it->operator[](TYPE);
-      YAML::Node name_node = it->operator[](NAME);
-      YAML::Node init_with_node = it->operator[](INIT_WITH);
-      YAML::Node constructor_arg_node = it->operator[](CONSTRUCTOR_ARG);
-      YAML::Node static_node = it->operator[](STATIC);
-      YAML::Node getter_node = it->operator[](GETTER);
-      YAML::Node setter_node = it->operator[](SETTER);
+      YAML::Node type_node = it.operator[](TYPE);
+      YAML::Node name_node = it.operator[](NAME);
+      YAML::Node init_with_node = it.operator[](INIT_WITH);
+      //YAML::Node constructor_arg_node = it.operator[](CONSTRUCTOR_ARG);
+      //YAML::Node static_node = it.operator[](STATIC);
+      //YAML::Node getter_node = it.operator[](GETTER);
+      //YAML::Node setter_node = it.operator[](SETTER);
 
       validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
       validate(init_with_node.IsScalar(), this_func_name, "Unexpected init_with_node, expected to be of YAML type Scalar.");
-      validate(constructor_arg_node.IsScalar(), this_func_name, "Unexpected constructor_arg_node, expected to be of YAML type Scalar.");
-      validate(static_node.IsScalar(), this_func_name, "Unexpected static_node, expected to be of YAML type Scalar.");
-      validate(getter_node.IsScalar(), this_func_name, "Unexpected getter_node, expected to be of YAML type Scalar.");
-      validate(setter_node.IsScalar(), this_func_name, "Unexpected setter_node, expected to be of YAML type Scalar.");
+      //validate(constructor_arg_node.IsScalar(), this_func_name, "Unexpected constructor_arg_node, expected to be of YAML type Scalar.");
+      //validate(static_node.IsScalar(), this_func_name, "Unexpected static_node, expected to be of YAML type Scalar.");
+      //validate(getter_node.IsScalar(), this_func_name, "Unexpected getter_node, expected to be of YAML type Scalar.");
+      //validate(setter_node.IsScalar(), this_func_name, "Unexpected setter_node, expected to be of YAML type Scalar.");
 
       std::string datatype = type_node.as<std::string>();
       std::string variable_name = name_node.as<std::string>();
-      std::string initialization_value = init_with_node.as<std::string>();
-      bool is_static = static_node.as<bool>();
-      bool is_constructor_parameter = constructor_arg_node.as<bool>();
-      bool has_getter = getter_node.as<bool>();
-      bool has_getter_ref = false;
-      bool has_setter = setter_node.as<bool>();
+      std::string initialization_value = init_with_node.as<std::string>(); // would be cool to make this smart
+      bool is_static = fetch_bool(it, STATIC, false);
+      bool is_constructor_parameter = fetch_bool(it, CONSTRUCTOR_ARG, false);
+      bool has_getter = fetch_bool(it, GETTER, false);
+      bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
+      bool has_setter = fetch_bool(it, SETTER, false);
+      //std::string initialization_value = init_with_node.as<std::string>();
+      //bool is_static = static_node.as<bool>();
+      //bool is_constructor_parameter = constructor_arg_node.as<bool>();
+      //bool has_getter = getter_node.as<bool>();
+      //bool has_getter_ref = false;
+      //bool has_setter = setter_node.as<bool>();
 
       Blast::Cpp::ClassAttributeProperties class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_getter_ref, has_setter);
 
@@ -297,12 +342,13 @@ std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
    const std::string FUNCTIONS = "functions";
    std::vector<Blast::Cpp::Function> result;
 
-   YAML::Node source_functions = source[FUNCTIONS];
+   YAML::Node source_functions = fetch_node(source, FUNCTIONS, YAML::NodeType::Sequence, YAML::Load("[]"));
 
-   validate(source_functions.IsSequence(), this_func_name, "Expected \"functions\" to be of a YAML Sequence type.");
-
-   for (YAML::const_iterator it=source_functions.begin(); it!=source_functions.end(); ++it)
+   for (std::size_t i=0; i<source_functions.size(); i++)
+   //for (YAML::const_iterator it=source_functions.begin(); it!=source_functions.end(); ++it)
    {
+      YAML::Node it = source_functions[i];
+
       const std::string TYPE = "type";
       const std::string NAME = "name";
       const std::string PARAMETERS = "parameters";
@@ -313,37 +359,27 @@ std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
       const std::string VIRTUAL = "virtual";
       const std::string PURE_VIRTUAL = "pure_virtual";
 
-      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
+      validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
 
-      YAML::Node type_node = it->operator[](TYPE);
-      YAML::Node name_node = it->operator[](NAME);
-      YAML::Node parameters_node = it->operator[](PARAMETERS);
-      YAML::Node body_node = it->operator[](BODY);
-      YAML::Node static_node = it->operator[](STATIC);
-      YAML::Node const_node = it->operator[](CONST);
-      YAML::Node override_node = it->operator[](OVERRIDE);
-      YAML::Node virtual_node = it->operator[](VIRTUAL);
-      YAML::Node pure_virtual_node = it->operator[](PURE_VIRTUAL);
+      YAML::Node type_node = it.operator[](TYPE);
+      YAML::Node name_node = it.operator[](NAME);
+      YAML::Node parameters_node = it.operator[](PARAMETERS);
+      YAML::Node body_node = it.operator[](BODY);
 
       validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
       validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Sequence.");
       validate(body_node.IsScalar(), this_func_name, "Unexpected body_node, expected to be of YAML type Scalar.");
-      validate(static_node.IsScalar(), this_func_name, "Unexpected static_node, expected to be of YAML type Scalar.");
-      validate(const_node.IsScalar(), this_func_name, "Unexpected const_node, expected to be of YAML type Scalar.");
-      validate(override_node.IsScalar(), this_func_name, "Unexpected override_node, expected to be of YAML type Scalar.");
-      validate(virtual_node.IsScalar(), this_func_name, "Unexpected virtual_node, expected to be of YAML type Scalar.");
-      validate(pure_virtual_node.IsScalar(), this_func_name, "Unexpected pure_virtual_node, expected to be of YAML type Scalar.");
 
       std::string type = type_node.as<std::string>();
       std::string name = name_node.as<std::string>();
       std::vector<Blast::Cpp::FunctionArgument> signature = convert_function_arguments(parameters_node);
       std::string body = body_node.as<std::string>();
-      bool is_static = static_node.as<bool>();
-      bool is_const = const_node.as<bool>();
-      bool is_override = override_node.as<bool>();
-      bool is_virtual = virtual_node.as<bool>();
-      bool is_pure_virtual = pure_virtual_node.as<bool>();
+      bool is_static = fetch_bool(it, STATIC, false);
+      bool is_const = fetch_bool(it, CONST, false);
+      bool is_override = fetch_bool(it, OVERRIDE, false);
+      bool is_virtual = fetch_bool(it, VIRTUAL, false);
+      bool is_pure_virtual = fetch_bool(it, PURE_VIRTUAL, false);
 
       Blast::Cpp::Function function(type, name, signature, body, is_static, is_const, is_override, is_virtual, is_pure_virtual);
 
@@ -365,23 +401,30 @@ std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::No
 
    validate(source_symbol_dependencies.IsSequence(), this_func_name, "Expected \"dependencies\" to be of a YAML Sequence type.");
 
-   for (YAML::const_iterator it=source_symbol_dependencies.begin(); it!=source_symbol_dependencies.end(); ++it)
+   for (std::size_t i=0;i<source_symbol_dependencies.size();i++)
+   //for (YAML::const_iterator it=source_symbol_dependencies.begin(); it!=source_symbol_dependencies.end(); ++it)
    {
+      YAML::Node node = source_symbol_dependencies[i];
+
       const std::string SYMBOL = "symbol";
       const std::string HEADERS = "headers";
       const std::string INCLUDE_DIRECTORIES = "include_directories";
       const std::string LINKED_LIBRARIES = "linked_libraries";
 
-      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.");
-      YAML::Node symbol_node = it->operator[](SYMBOL);
-      YAML::Node headers_node = it->operator[](HEADERS);
-      YAML::Node include_directories_node = it->operator[](INCLUDE_DIRECTORIES);
-      YAML::Node linked_libraries_node = it->operator[](LINKED_LIBRARIES);
+      validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.");
+      YAML::Node symbol_node = node[SYMBOL];//it->operator[](SYMBOL);
+      //YAML::Node headers_node = node[HEADERS];//it->operator[](HEADERS);
+      //YAML::Node include_directories_node = it->operator[](INCLUDE_DIRECTORIES);
+      //YAML::Node linked_libraries_node = it->operator[](LINKED_LIBRARIES);
 
       validate(symbol_node.IsScalar(), this_func_name, "Unexpected symbol_node, expected to be of YAML type Scalar.");
-      validate(headers_node.IsSequence(), this_func_name, "Unexpected headers_node, expected to be of YAML type Sequence.");
-      validate(include_directories_node.IsSequence(), this_func_name, "Unexpected include_directories_node, expected to be of YAML type Sequence.");
-      validate(linked_libraries_node.IsSequence(), this_func_name, "Unexpected linked_libraries_node, expected to be of YAML type Sequence.");
+      //validate(headers_node.IsSequence(), this_func_name, "Unexpected headers_node, expected to be of YAML type Sequence.");
+      //validate(include_directories_node.IsSequence(), this_func_name, "Unexpected include_directories_node, expected to be of YAML type Sequence.");
+
+      YAML::Node headers_node = fetch_node(node, HEADERS, YAML::NodeType::Sequence, YAML::Load("[]"));
+      YAML::Node include_directories_node = fetch_node(node, INCLUDE_DIRECTORIES, YAML::NodeType::Sequence, YAML::Load("[]"));
+      YAML::Node linked_libraries_node = fetch_node(node, LINKED_LIBRARIES, YAML::NodeType::Sequence, YAML::Load("[]"));
+      //validate(linked_libraries_node.IsSequence(), this_func_name, "Unexpected linked_libraries_node, expected to be of YAML type Sequence.");
 
       std::string symbol = symbol_node.as<std::string>();
       std::vector<std::string> headers = extract_sequence_as_string_array(headers_node);
@@ -398,9 +441,42 @@ std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::No
 
 
 
-std::vector<Blast::Cpp::SymbolDependencies> extract_function_body_symbol_dependencies(YAML::Node &source)
+std::vector<std::string> extract_function_body_symbol_dependency_symbols(YAML::Node &source)
+{
+   const std::string DEPENDENCIES = "function_body_symbol_dependencies";
+   std::vector<std::string> result;
+
+   YAML::Node function_body_symbol_dependencies = fetch_node(source, DEPENDENCIES, YAML::NodeType::Sequence, YAML::Load("[]"));
+
+   return extract_sequence_as_string_array(function_body_symbol_dependencies);
+}
+
+
+
+std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(std::vector<std::string> dependency_symbols, std::vector<Blast::Cpp::SymbolDependencies> &known_listed_dependencies)
 {
    std::vector<Blast::Cpp::SymbolDependencies> result;
+
+   for (auto &dependency_symbol : dependency_symbols)
+   {
+      bool found = false;
+      for (auto &known_listed_dependency : known_listed_dependencies)
+      {
+         if (known_listed_dependency.get_symbol() == dependency_symbol)
+         {
+            result.push_back(known_listed_dependency);
+            found = true;
+            break;
+         }
+      }
+      if (!found)
+      {
+         std::stringstream error_message;
+         error_message << "Could not find " << dependency_symbol << " dependency from dependency_symbols";
+         explode("consolidate_function_body_symbol_dependencies", error_message.str());
+      }
+   }
+
    return result;
 }
 
@@ -415,7 +491,11 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<Blast::Cpp::ClassAttributeProperties> attribute_properties = extract_attribute_properties(source);
    std::vector<Blast::Cpp::Function> functions = extract_functions(source);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
-   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = extract_function_body_symbol_dependencies(source);
+   std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
+   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(function_body_symbol_dependency_symbols, symbol_dependencies);
+
+   
+   // consolidate dependencies
 
 
    // build the actual class
