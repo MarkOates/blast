@@ -137,6 +137,12 @@ YAML::Node default_dependencies()
   headers: [ 'string' ]
 - symbol: std::vector<std::string>
   headers: [ 'vector', 'string' ]
+- symbol: std::cout
+  headers: [ 'iostream' ]
+- symbol: std::endl
+  headers: [ 'iostream' ]
+- symbol: std::stringstream
+  headers: [ 'sstream' ]
    )END";
 
    return YAML::Load(default_deps);
