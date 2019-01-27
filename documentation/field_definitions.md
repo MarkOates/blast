@@ -89,7 +89,7 @@ Parameters defining the elements of a function signature:
 | field | type | default | description |
 | --- | --- | --- | --- |
 | `name` | String | required | variable name of the function parameter |
-| `type` | String | required | datatype for the function parameter (default is `std::string`) |
+| `type` | String | required | datatype for the function parameter |
 | `default_argument` | String | required | a default argument be assigned to the value if none is present. |
 
 
