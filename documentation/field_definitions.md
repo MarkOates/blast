@@ -3,6 +3,7 @@
 ## `class`
 
 #### type: String
+#### default: (YAML: A default value will be inferred from the basename of the filename)
 
 Provide the base name of your class, without namespaces.  This should be in
 camel case and should match the basename of the quintessence file.
@@ -12,6 +13,7 @@ camel case and should match the basename of the quintessence file.
 ## `format`
 
 #### type: String
+#### default: none (YAML: this key/value is not used)
 
 For now, the value should always be "`verbose`".  This means that all fields should be present and
 there are no defaults for missing values.
@@ -21,6 +23,7 @@ there are no defaults for missing values.
 ## `parent_classes`
 
 #### type: Array of Hashes
+#### default: `[]`
 
 Defines the parent classes that this class inherits from.  Each parent class
 hash
@@ -36,6 +39,7 @@ hash
 ## `properties`
 
 #### type: Array of Hashes
+#### default: `[]`
 
 The properties field represents all attributes that exist on the class.  Two
 imporant things to know.  First, _all fields are not directly accessible in the
@@ -59,6 +63,7 @@ that each type will need to be defined in the dependencies.
 ## `functions`
 
 #### type: Array of Hashes
+#### default: `[]`
 
 Defines the independently-implemented functions on the class.
 
@@ -83,10 +88,19 @@ Parameters defining the elements of a function signature:
 
 
 
+## `function_body_symbol_dependencies`
+
+#### type: Array of Strings
+#### default: `[]`
+
+A list of symbol names used in the `body` of all the defined `function`s.  The symbol names listed will need to be included in the `dependencies` list (unless the `dependencies` have default definitions in that list.)
+
+
 
 ## `dependencies`
 
 #### type: Array of Hashes
+#### default: `[]`
 
 The definitions for each of the dependencies required by this quintessence.
 Dependencies can occour 
