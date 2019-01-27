@@ -56,7 +56,7 @@ Parameters defining the elements of a function signature:
 | --- | --- | --- |
 | `name` | String | variable name of the function parameter |
 | `type` | String | datatype for the function parameter (default is `std::string`) |
-| `default_value` | String | a default argument be assigned to the value if none is present. |
+| `default_argument` | String | a default argument be assigned to the value if none is present. |
 
 
 
