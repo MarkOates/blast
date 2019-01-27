@@ -33,6 +33,29 @@ hash
 
 
 
+## `properties`
+
+#### type: Array of Hashes
+
+The properties field represents all attributes that exist on the class.  Two
+imporant things to know.  First, _all fields are not directly accessible in the
+class and are scoped privately within the class_.  If you want to make the properties
+accessible then you will need to set getters and setters for them.  Also, note
+that each type will need to be defined in the dependencies.
+
+| field | type | description |
+| --- | --- | --- |
+| `name` | String | The variable name for the property. |
+| `type` | String | Datatype for the preopty (something like `std::string`, `void`, `int`, `MyCustomType*`, `std::vector<int>`, etc.).  Note that the datatype will need to be defined in `dependencies`. |
+| `init_with` | String | A hard-injected string that is placed as the default value for this property.  If the property is a constructor argument, then the value is assigned as a default argument in the constructor, otherwise the value is assigned in the initialization list. |
+| `constructor_arg` | Boolean | `true` if the property will appear as an argument in the constructor, otherwise `false` |
+| `static` | Boolean | A value of `true` will mark the property as a `static` property.  It's default value will be assigned in the `.cpp` source file. |
+| `getter` | Boolean | A value of `true` will create a `get_*()` function for this property. |
+| `setter` | Boolean | A value of `true` will create a `set_*()` function for this property. |
+
+
+
+
 ## `functions`
 
 #### type: Array of Hashes
@@ -57,29 +80,6 @@ Parameters defining the elements of a function signature:
 | `name` | String | variable name of the function parameter |
 | `type` | String | datatype for the function parameter (default is `std::string`) |
 | `default_argument` | String | a default argument be assigned to the value if none is present. |
-
-
-
-
-## `properties`
-
-#### type: Array of Hashes
-
-The properties field represents all attributes that exist on the class.  Two
-imporant things to know.  First, _all fields are not directly accessible in the
-class and are scoped privately within the class_.  If you want to make the properties
-accessible then you will need to set getters and setters for them.  Also, note
-that each type will need to be defined in the dependencies.
-
-| field | type | description |
-| --- | --- | --- |
-| `name` | String | The variable name for the property. |
-| `type` | String | Datatype for the preopty (something like `std::string`, `void`, `int`, `MyCustomType*`, `std::vector<int>`, etc.).  Note that the datatype will need to be defined in `dependencies`. |
-| `init_with` | String | A hard-injected string that is placed as the default value for this property.  If the property is a constructor argument, then the value is assigned as a default argument in the constructor, otherwise the value is assigned in the initialization list. |
-| `constructor_arg` | Boolean | `true` if the property will appear as an argument in the constructor, otherwise `false` |
-| `static` | Boolean | A value of `true` will mark the property as a `static` property.  It's default value will be assigned in the `.cpp` source file. |
-| `getter` | Boolean | A value of `true` will create a `get_*()` function for this property. |
-| `setter` | Boolean | A value of `true` will create a `set_*()` function for this property. |
 
 
 
