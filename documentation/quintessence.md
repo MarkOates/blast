@@ -4,7 +4,9 @@ Quintessence extrapolation is a technique to automatically generate code based o
 
 Quintessence files have the `.q` extension and contain the meta-definition notated as a JSON structure (JSON definition files contain the full `.q.json` extension. New formats apart from JSON could be added added in the future).
 
-## Generating
+**Note: This document outlines the JSON version of the quintessence extrapolation process.  Please now prefer usage of the YAML process, as it includes a much less verbose set of requirements and sensible defaults.**
+
+## Generating (JSON)
 
 To generate classes from a quintessence file, use the `quintessence_from_json`
 program located in the Blast repository's `programs/` folder.  Once you have
