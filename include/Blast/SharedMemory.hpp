@@ -1,3 +1,4 @@
+#ifdef BLAST_BUILD_WITH_BOOST
 #pragma once
 
 
@@ -36,4 +37,4 @@ namespace Blast
    };
 }
 
-
+#endif

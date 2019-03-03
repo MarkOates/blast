@@ -1,4 +1,4 @@
-
+#ifdef BLAST_BUILD_WITH_BOOST
 
 
 #include <Blast/SharedMemory.hpp>
@@ -152,4 +152,4 @@ bool SharedMemory::is_empty()
 } // namespace Blast
 
 
-
+#endif
