@@ -1,2 +1,3 @@
 #!/bin/bash
-find quintessence/*.json | xargs bin/programs/quintessence_from_json
+find quintessence/**/*.yml | xargs bin/programs/quintessence_from_yaml
+find quintessence/**/*.json | xargs bin/programs/quintessence_from_json
