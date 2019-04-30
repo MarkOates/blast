@@ -78,7 +78,7 @@ run_tests: tests
 obj/%.o: src/%.cpp
 	@mkdir -p $(@D)
 	@printf "compiling object for \e[1m\e[34m$<\033[0m...\n"
-	g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR)
+	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR)
 	@echo "done. object at \033[1m\033[32m$@\033[0m"
 
 
