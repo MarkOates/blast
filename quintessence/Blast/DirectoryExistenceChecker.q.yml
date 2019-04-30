@@ -12,6 +12,14 @@ functions:
     body: |
       struct stat info;
       return stat(directory_name.c_str(), &info) == 0 && S_ISDIR(info.st_mode);
+    body_bash: |
+      directory_name=$1
+      if [ -d "$1" ]
+      then
+        return 0
+      else
+        return 1
+      fi
 function_body_symbol_dependencies: [ 'stat' ]
 dependencies:
   - symbol: stat
