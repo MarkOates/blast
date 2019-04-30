@@ -1,7 +1,6 @@
 
 
 #include <Blast/StringSplitter.hpp>
-
 #include <sstream>
 #include <vector>
 #include <string>
