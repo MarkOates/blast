@@ -4,12 +4,12 @@
 
 #include <Blast/DirectoryCreator.hpp>
 
+#include <Blast/DirectoryExistenceChecker.hpp>
 
 #include <fstream>
 bool file_exists(const std::string& filename)
 {
-  std::ifstream ifile(filename.c_str());
-  return (bool)ifile;
+   return Blast::DirectoryExistenceChecker(filename).exists();
 }
 
 
