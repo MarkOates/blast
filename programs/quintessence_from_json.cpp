@@ -1,4 +1,4 @@
-#ifdef BLAST_BUILD_WITH_YAML
+//#ifdef BLAST_BUILD_WITH_YAML
 
 #include <Blast/Cpp/ClassGenerator.hpp>
 #include <Blast/Cpp/Function.hpp>
@@ -269,13 +269,13 @@ int main(int argc, char **argv)
    return 0;
 }
 
-#else // BLAST_BUILD_WITH_YAML
+//#else // BLAST_BUILD_WITH_YAML
 
-#include <iostream>
+//#include <iostream>
 
-int main()
-{
-   std::cout << "This executable built without " << std::endl;
-}
+//int main()
+//{
+   //std::cout << "This executable built without " << std::endl;
+//}
 
-#endif // BLAST_BUILD_WITH_YAML
+//#endif // BLAST_BUILD_WITH_YAML
