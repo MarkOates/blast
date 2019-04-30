@@ -20,6 +20,13 @@ functions:
       else
         return 1
       fi
+    body_vimscript: |
+      let l:filename = a:directory_name
+      if filereadable(expand(l:filename))
+        return 1
+      else
+        return 0
+      endif
 function_body_symbol_dependencies: [ 'stat' ]
 dependencies:
   - symbol: stat
