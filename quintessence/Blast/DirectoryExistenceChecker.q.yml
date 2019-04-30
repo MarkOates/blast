@@ -26,10 +26,6 @@ dependencies:
     headers: [ 'sys/stat.h' ]
     include_directories: []
     linked_libraries: []
-  - symbol: bool
-    headers: []
-    include_directories: []
-    linked_libraries: []
   - symbol: std::string
     headers: [ 'string' ]
     include_directories: []
