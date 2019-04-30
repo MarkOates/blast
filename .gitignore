@@ -19,3 +19,4 @@ out.tmp
 # used from the builder program
 foobar.txt
 
+tmp/*
