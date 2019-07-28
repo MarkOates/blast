@@ -31,6 +31,7 @@ PROGRAMS := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 EXAMPLES := $(EXAMPLE_SOURCES:examples/%.cpp=bin/examples/%)
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
+ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
 
@@ -114,6 +115,7 @@ clean:
 	-rm $(EXAMPLES)
 	-rm $(TEST_OBJECTS)
 	-rm $(INDIVIDUAL_TEST_EXECUTABLES)
+	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
 
 
 
