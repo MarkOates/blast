@@ -78,6 +78,15 @@ int main(int argc, char **argv)
 
 
 
+std::string const RERUN_CAT_FILE_SCRIPT_FILENAME = "rerun_cat_file";
+std::string const RERUN_CAT_FILE_SCRIPT_CONTENT = R"END(#!/bin/bash
+
+rerun -c "echo -en \"\033[93m\"; cat -n include/Staff.hpp; echo -en \"\033[0m\"" -p "include/Staff.hpp"
+)END";
+
+
+
+
 std::string PROGRAM_RUNNER_CLASS_NAME = "ProgramRunner";
 std::string main_file_content_template = R"END(
 #include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
@@ -359,6 +368,12 @@ int main(int argc, char **argv)
    outfile8 << RERUN_SCRIPT_CONTENT;
    outfile8.close();
    system((std::string("chmod +x ") + rerun_script_filename).c_str());
+
+   std::string rerun_cat_file_script_filename = generator.get_project_name() + "/" + RERUN_CAT_FILE_SCRIPT_FILENAME;
+   std::ofstream outfile9(rerun_cat_file_script_filename);
+   outfile9 << RERUN_CAT_FILE_SCRIPT_CONTENT;
+   outfile9.close();
+   system((std::string("chmod +x ") + rerun_cat_file_script_filename).c_str());
 
    system((std::string("chmod +x ") + build_file_filename).c_str());
 
