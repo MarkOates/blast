@@ -294,7 +294,7 @@ std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(Y
       //YAML::Node getter_node = it.operator[](GETTER);
       //YAML::Node setter_node = it.operator[](SETTER);
 
-      validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
+      //validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
       //validate(init_with_node.IsScalar(), this_func_name, "Unexpected init_with_node, expected to be of YAML type Scalar.");
       //validate(constructor_arg_node.IsScalar(), this_func_name, "Unexpected constructor_arg_node, expected to be of YAML type Scalar.");
@@ -302,7 +302,7 @@ std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(Y
       //validate(getter_node.IsScalar(), this_func_name, "Unexpected getter_node, expected to be of YAML type Scalar.");
       //validate(setter_node.IsScalar(), this_func_name, "Unexpected setter_node, expected to be of YAML type Scalar.");
 
-      std::string datatype = type_node.as<std::string>();
+      std::string datatype = fetch_string(it, TYPE, "std::string");
       std::string variable_name = name_node.as<std::string>();
       std::string initialization_value = fetch_string(it, INIT_WITH, "\"\"");
       bool is_static = fetch_bool(it, STATIC, false);
