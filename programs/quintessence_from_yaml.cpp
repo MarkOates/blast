@@ -553,6 +553,7 @@ int main(int argc, char **argv)
    for (int i=1; i<argc; i++)
    {
       std::string quintessence_filename = argv[i];
+      std::cout << "Initiating fetching, loading, and parsing of component file \"" << quintessence_filename << "\"" << std::endl;
       YAML::Node source = YAML::LoadFile(quintessence_filename);
 
 
