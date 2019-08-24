@@ -1,0 +1,22 @@
+function_body_symbol_dependencies:
+  - al_init()
+  - al_get_standard_path()
+  - al_change_directory()
+  - al_destroy_path()
+  - al_path_cstr()
+  - ALLEGRO_RESOURCES_PATH
+  - ALLEGRO_NATIVE_PATH_SEP
+dependencies:
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: al_get_standard_path()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: al_change_directory()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: al_destroy_path()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: al_path_cstr()
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: ALLEGRO_RESOURCES_PATH
+    headers: [ 'allegro5/allegro.h' ]
+  - symbol: ALLEGRO_NATIVE_PATH_SEP
+    headers: [ 'allegro5/allegro.h' ]
