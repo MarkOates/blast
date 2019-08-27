@@ -217,22 +217,22 @@ std::vector<std::string> extract_sequence_as_string_array(YAML::Node &source)
 
 
 
-//std::vector<std::string> extract_namespaces(YAML::Node &source)
+std::vector<std::string> extract_namespaces(YAML::Node &source)
+{
+   const std::string NAMESPACES = "namespaces";
+   YAML::Node result = fetch_node(source, NAMESPACES, YAML::NodeType::Sequence, YAML::Load("[]"));
+   return extract_sequence_as_string_array(result);
+}
+
+
+
+//std::vector<std::string> extract_namespaces(std::string file_path)
 //{
+   //return { "Hello", "Test", "Namespace" };
    //const std::string NAMESPACES = "namespaces";
    //YAML::Node result = fetch_node(source, NAMESPACES, YAML::NodeType::Sequence, YAML::Load("[]"));
    //return extract_sequence_as_string_array(result);
 //}
-
-
-
-std::vector<std::string> extract_namespaces(std::string file_path)
-{
-   return { "Hello", "Test", "Namespace" };
-   //const std::string NAMESPACES = "namespaces";
-   //YAML::Node result = fetch_node(source, NAMESPACES, YAML::NodeType::Sequence, YAML::Load("[]"));
-   //return extract_sequence_as_string_array(result);
-}
 
 
 
