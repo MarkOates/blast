@@ -48,6 +48,29 @@ public:
 };
 
 
+class QuintessenceNamespacesFromYAMLFilenameInferer
+{
+private:
+   std::string yaml_filename;
+
+public:
+   QuintessenceNamespacesFromYAMLFilenameInferer(std::string yaml_filename)
+      : yaml_filename(yaml_filename)
+   {}
+
+   std::vector<std::string> infer_namespaces()
+   {
+      return { "Hello", "Test", "Namespace" };
+      //std::vector<std::string> tokens = Blast::StringSplitter(yaml_filename, '/').split();
+      //if (tokens.empty()) throw std::runtime_error("Can't parse tokens as expected from the filename");
+      //std::string basename_and_extension = tokens[tokens.size()-1];
+      //std::vector<std::string> basename_and_extension_components = Blast::StringSplitter(basename_and_extension, '.').split();
+      //if (basename_and_extension_components.empty()) throw std::runtime_error("Can't parse basename and extensions");
+      //return basename_and_extension_components[0];
+   }
+};
+
+
 std::string get_type_string(YAML::Node &node)
 {
    switch (node.Type())
@@ -246,7 +269,8 @@ std::vector<std::string> extract_namespaces(YAML::Node &source)
 
 std::vector<std::string> extract_namespaces_from_quintessence_filename(std::string file_path)
 {
-   return { "Hello", "Test", "Namespace" };
+   QuintessenceNamespacesFromYAMLFilenameInferer inferer(file_path);
+   return inferer.infer_namespaces();
    //const std::string NAMESPACES = "namespaces";
    //YAML::Node result = fetch_node(source, NAMESPACES, YAML::NodeType::Sequence, YAML::Load("[]"));
    //return extract_sequence_as_string_array(result);
