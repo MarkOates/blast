@@ -60,13 +60,10 @@ public:
 
    std::vector<std::string> infer_namespaces()
    {
-      return { "Hello", "Test", "Namespace" };
-      //std::vector<std::string> tokens = Blast::StringSplitter(yaml_filename, '/').split();
-      //if (tokens.empty()) throw std::runtime_error("Can't parse tokens as expected from the filename");
-      //std::string basename_and_extension = tokens[tokens.size()-1];
-      //std::vector<std::string> basename_and_extension_components = Blast::StringSplitter(basename_and_extension, '.').split();
-      //if (basename_and_extension_components.empty()) throw std::runtime_error("Can't parse basename and extensions");
-      //return basename_and_extension_components[0];
+      std::vector<std::string> tokens = Blast::StringSplitter(yaml_filename, '/').split();
+      if (tokens.empty()) throw std::runtime_error("Can't parse tokens as expected from the filename");
+      tokens.pop_back();
+      return tokens;
    }
 };
 
