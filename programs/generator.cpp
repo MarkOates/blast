@@ -155,6 +155,10 @@ ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
 
+objects: $(OBJECTS)
+
+
+
 programs: $(PROGRAMS)
 
 
