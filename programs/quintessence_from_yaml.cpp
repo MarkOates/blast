@@ -226,13 +226,13 @@ std::vector<std::string> extract_namespaces(YAML::Node &source)
 
 
 
-//std::vector<std::string> extract_namespaces(std::string file_path)
-//{
-   //return { "Hello", "Test", "Namespace" };
+std::vector<std::string> extract_namespaces_from_quintessence_filename(std::string file_path)
+{
+   return { "Hello", "Test", "Namespace" };
    //const std::string NAMESPACES = "namespaces";
    //YAML::Node result = fetch_node(source, NAMESPACES, YAML::NodeType::Sequence, YAML::Load("[]"));
    //return extract_sequence_as_string_array(result);
-//}
+}
 
 
 
@@ -527,11 +527,11 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
 
 
 
-Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &source)
+Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &source, std::string quintessence_filename)
 {
    // declare variables
 
-   std::vector<std::string> namespaces = extract_namespaces(source);
+   std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributeProperties> attribute_properties = extract_attribute_properties(source);
    std::vector<Blast::Cpp::Function> functions = extract_functions(source);
@@ -575,7 +575,7 @@ int main(int argc, char **argv)
 
       // convert the yaml structure to the class
 
-      Blast::Cpp::Class klass = convert_yaml_to_class(class_name, source);
+      Blast::Cpp::Class klass = convert_yaml_to_class(class_name, source, quintessence_filename);
 
 
       //// generate and write the files
