@@ -126,10 +126,6 @@ GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 
 
 # this is the directory of the project (it's auto_generated)
-PROJECT_BINARY_NAME=[[PROJECT_NAME]]
-
-
-
 GOOGLE_TEST_LIBS=gtest
 ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_primitives allegro_image allegro
 ALLEGRO_LIBS_MAIN=$(ALLEGRO_LIBS) allegro_main
@@ -179,14 +175,6 @@ bin/examples/%: examples/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "compiling example program \e[1m\e[36m$<\033[0m..."
 	g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(ALLEGRO_INCLUDE_DIR) -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS)
-	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
-
-
-
-bin/$(PROJECT_BINARY_NAME): programs/$(PROJECT_BINARY_NAME).cpp $(OBJECTS)
-	@mkdir -p $(@D)
-	@printf "compiling root level program \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
@@ -325,7 +313,6 @@ int main(int argc, char **argv)
 
    std::ofstream outfile(generator.get_project_name() + "/Makefile");
    std::string makefile_content = makefile_template;
-   ___replace(makefile_content, "[[PROJECT_NAME]]", generator.get_project_name());
    ___replace(makefile_content, "[[TEST_RUNNER_CLASS_NAME]]", TEST_RUNNER_CLASS_NAME);
    outfile << makefile_content;
    outfile.close();
@@ -352,7 +339,6 @@ int main(int argc, char **argv)
 
    std::ofstream outfile5(generator.get_project_name() + "/programs/main.cpp");
    std::string main_file_content = main_file_content_template;
-   ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
    ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    outfile5 << main_file_content;
    outfile5.close();
