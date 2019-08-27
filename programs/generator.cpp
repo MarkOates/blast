@@ -38,8 +38,7 @@ obj/*
 
 
 std::string const RERUN_SCRIPT_FILENAME = "rr";
-std::string const RERUN_SCRIPT_CONTENT = R"END(
-#!/bin/bash
+std::string const RERUN_SCRIPT_CONTENT = R"END(#!/bin/bash
 
 yellow='\033[1;33m'
 reset_text='\033[0m'
