@@ -55,14 +55,14 @@ else
     "./build"
     "echo \"\n$yellow===== STAGE 1: Make all the components =====$reset_text\n\""
     "make objects"
-    "echo \"\n$yellow===== STAGE 2: Make all the programs =====$reset_text\n\""
-    "make programs"
-    "echo \"\n$yellow===== STAGE 3: Make all the example programs =====$reset_text\n\""
-    "make examples"
     "echo \"\n$yellow===== STAGE 4: Make the test for this component =====$reset_text\n\""
     "make ./bin/tests/$@Test"
     "echo \"\n$yellow===== STAGE 5: Run the test for this component =====$reset_text\n\""
     "./bin/tests/$@Test"
+    "echo \"\n$yellow===== STAGE 2: Make all the programs =====$reset_text\n\""
+    "make programs"
+    "echo \"\n$yellow===== STAGE 3: Make all the example programs =====$reset_text\n\""
+    "make examples"
     "echo \"\n$yellow===================== 🀫 Finished! 🀫 =====================$reset_text\n\"" \
   )
 
