@@ -83,7 +83,8 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
    std::string header_filepath = cpp_class_generator.project_header_filepath();
    std::string source_filepath = cpp_class_generator.project_source_filepath();
 
-   std::ofstream header_file(header_filepath, std::ofstream::out);
+   std::ofstream header_file;
+   header_file.open(header_filepath, std::ofstream::out);
    if (header_file.fail())
    {
       if (!automatically_create_folders)
@@ -93,9 +94,18 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
          explode("write_to_files", error_message.str());
       }
       create_folders_for_file(header_filepath);
+
+      header_file.open(header_filepath, std::ofstream::out);
+      if (header_file.fail())
+      {
+         std::stringstream error_message;
+         error_message << "Could not open header file \"" << header_filepath << "\" for writing on a second attempt after (possibly) creating the necessary folders.";
+         explode("write_to_files", error_message.str());
+      }
    }
 
-   std::ofstream source_file(source_filepath, std::ofstream::out);
+   std::ofstream source_file;
+   source_file.open(source_filepath, std::ofstream::out);
    if (source_file.fail())
    {
       if (!automatically_create_folders)
@@ -105,6 +115,14 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
          explode("write_to_files", error_message.str());
       }
       create_folders_for_file(source_filepath);
+
+      source_file.open(source_filepath, std::ofstream::out);
+      if (source_file.fail())
+      {
+         std::stringstream error_message;
+         error_message << "Could not open source file \"" << source_filepath << "\" for writing on a second attempt after (possibly) creating the necessary folders.";
+         explode("write_to_files", error_message.str());
+      }
    }
 
 
