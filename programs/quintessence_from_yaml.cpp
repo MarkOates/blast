@@ -61,9 +61,10 @@ public:
    std::vector<std::string> infer_namespaces()
    {
       std::vector<std::string> tokens = Blast::StringSplitter(yaml_filename, '/').split();
-      if (tokens.empty()) throw std::runtime_error("Can't parse tokens as expected from the filename");
-      tokens.pop_back();
-      return tokens;
+      if (tokens.size() <= 1) throw std::runtime_error("Can't parse tokens as expected from the filename.  Expecting a \"quintessence/**/Component.q.yml\" type filename.");
+      tokens.pop_back(); // remove the "Component.q.yml" element at the end
+      tokens.erase(tokens.begin()); // remove first "quintessence" folder name element at the begining
+      return tokens; // whatever is left is assumed to be valid TODO: consider validating the namespace naming convention
    }
 };
 
