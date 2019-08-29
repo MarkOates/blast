@@ -133,7 +133,6 @@ GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 
 
 
-# this is the directory of the project (it's auto_generated)
 GOOGLE_TEST_LIBS=gtest
 ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_primitives allegro_image allegro
 ALLEGRO_LIBS_MAIN=$(ALLEGRO_LIBS) allegro_main
