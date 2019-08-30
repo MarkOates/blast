@@ -8,11 +8,6 @@ YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
 
 
 
-# this is the directory of the project (it's auto_generated)
-PROJECT_BINARY_NAME=blast
-
-
-
 GOOGLE_TEST_LIBS=gtest
 YAML_CPP_LIBS=yaml-cpp
 
@@ -56,14 +51,6 @@ bin/programs/%: programs/%.cpp $(OBJECTS)
 
 
 bin/examples/%: examples/%.cpp $(OBJECTS)
-	@mkdir -p $(@D)
-	@printf "compiling program \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include
-	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
-
-
-
-bin/$(PROJECT_BINARY_NAME): programs/$(PROJECT_BINARY_NAME).cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "compiling program \e[1m\e[36m$<\033[0m..."
 	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include
