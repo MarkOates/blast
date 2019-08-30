@@ -48,4 +48,22 @@ int main(int argv, char **argc)
 }
 
 
+
+#else   // #ifdef BLAST_BUILD_WITH_BOOST
+
+
+#include <iostream>
+#include <sstream>
+
+
+int main(int argv, char **argc)
+{
+   std::stringstream error_message;
+   error_message << "This component requies linking with boost.  The flag BLAST_BUILD_WITH_BOOST was set to false during compilation, and the component and this example program have not been compiled.  Instead, this binary outputs this simple error message.";
+   std::cout << error_message.str() << std::endl;
+
+   return 1;
+}
+
+
 #endif   // #ifdef BLAST_BUILD_WITH_BOOST
