@@ -13,10 +13,6 @@ YAML_CPP_LIBS=yaml-cpp
 
 
 
-.PHONY: all clean main fresh
-
-
-
 SOURCES := $(shell find src -name '*.cpp')
 PROGRAM_SOURCES := $(shell find programs -name '*.cpp')
 EXAMPLE_SOURCES := $(shell find examples -name '*.cpp')
