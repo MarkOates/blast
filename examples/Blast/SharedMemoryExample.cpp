@@ -1,3 +1,4 @@
+#ifdef BLAST_BUILD_WITH_BOOST
 
 
 #include <Blast/SharedMemory.hpp>
@@ -47,3 +48,4 @@ int main(int argv, char **argc)
 }
 
 
+#endif   // #ifdef BLAST_BUILD_WITH_BOOST

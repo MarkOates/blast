@@ -152,4 +152,4 @@ bool SharedMemory::is_empty()
 } // namespace Blast
 
 
-#endif
+#endif   // #ifdef BLAST_BUILD_WITH_BOOST

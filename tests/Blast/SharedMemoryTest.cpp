@@ -1,3 +1,6 @@
+#ifdef BLAST_BUILD_WITH_BOOST
+
+
 #include <gtest/gtest.h>
 
 
@@ -78,3 +81,6 @@ TEST(DISABLED_SharedMemoryTest, can_set_and_get_across_shared_memory_processes)
 {
    // TODO
 }
+
+
+#endif   // #ifdef BLAST_BUILD_WITH_BOOST
