@@ -1,4 +1,6 @@
 LIBS_ROOT=/Users/markoates/Repos
+NCURSES_INCLUDE_DIR=/usr/local/opt/ncurses/include
+NCURSES_LIB_DIR=/usr/local/opt/ncurses/lib
 YAML_CPP_DIR=$(LIBS_ROOT)/yaml-cpp
 YAML_CPP_LIB_DIR=$(YAML_CPP_DIR)/build
 YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
@@ -9,6 +11,7 @@ GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 
 
 GOOGLE_TEST_LIBS=gtest
+NCURSES_LIB=ncurses
 YAML_CPP_LIBS=yaml-cpp
 
 
@@ -75,7 +78,7 @@ examples: $(EXAMPLES)
 bin/programs/%: programs/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "compiling program \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)
+	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)  -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
@@ -83,7 +86,7 @@ bin/programs/%: programs/%.cpp $(OBJECTS)
 bin/examples/%: examples/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "compiling example \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include
+	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include  -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
@@ -100,7 +103,7 @@ run_tests: tests
 obj/%.o: src/%.cpp
 	@mkdir -p $(@D)
 	@printf "compiling object for \e[1m\e[34m$<\033[0m...\n"
-	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR)
+	@g++ -c -std=gnu++11 -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR)  -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. object at \033[1m\033[32m$@\033[0m"
 
 
@@ -116,7 +119,7 @@ obj/tests/%.o: tests/%.cpp $(OBJECTS)
 bin/tests/%: obj/tests/%.o obj/tests/test_runner.o
 	@mkdir -p $(@D)
 	@printf "compiling standalone test \e[1m\e[36m$<\033[0m...\n"
-	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< obj/tests/test_runner.o -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR)
+	@g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< obj/tests/test_runner.o -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
@@ -124,7 +127,7 @@ bin/tests/%: obj/tests/%.o obj/tests/test_runner.o
 bin/tests/test_runner: $(TEST_OBJECTS) obj/tests/test_runner.o
 	@mkdir -p $(@D)
 	@printf "compiling test_runer \e[1m\e[36m$<\033[0m...\n"
-	g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) obj/tests/test_runner.o $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR)
+	g++ -std=gnu++11 -Wall -Wuninitialized -Weffc++ $(OBJECTS) obj/tests/test_runner.o $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
