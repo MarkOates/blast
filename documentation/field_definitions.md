@@ -115,8 +115,8 @@ Dependencies can occour
 | --- | --- | --- | --- |
 | `symbol` | String | required | The name of the symbol.  Might be something like `std::string` or `int` or `MyCustomClass*` |
 | `headers` | Array of Strings | `[]` | List of header files and their directories from the root of one of the provided include directories |
-| `include_directories` | Array of Strings | `[]` | The include directories needed to locate the header file at compile-time. Note that for the standard template library, you won't need to provide include directories. This you can leave empty (e.g. `[]`) |
-| `linked_libraries` | Array of Strings | `[]` | The names of the libraries as they would be linked to with `-l` at compile-time. Note that for the standard template library, you don't need any linked libraries. This you can leave empty (e.g. `[]`) |
+| `include_directories` | Array of Strings | `[]` | The include directories needed to locate the header file at compile-time. |
+| `linked_libraries` | Array of Strings | `[]` | The names of the libraries as they would be linked to with `-l` at compile-time. |
 
 
 
