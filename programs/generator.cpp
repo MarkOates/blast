@@ -129,7 +129,9 @@ TEST([[PROGRAM_RUNNER_CLASS_NAME]]Test, run__returns_the_expected_response)
 
 
 
-const std::string MAKEFILE_TEMPLATE = R"END(LIBS_ROOT=/Users/markoates/Repos
+const std::string MAKEFILE_TEMPLATE = R"END(PROJECT_NAME=mylibrary
+VERSION_NUMBER=0.0.1
+LIBS_ROOT=/Users/markoates/Repos
 ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
 ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
 GOOGLE_TEST_DIR=$(LIBS_ROOT)/googletest
@@ -160,6 +162,7 @@ OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
 PROGRAMS := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 EXAMPLES := $(EXAMPLE_SOURCES:examples/%.cpp=bin/examples/%)
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
+LIBRARY_NAME := lib/lib$(PROJECT_NAME)-$(VERSION_NUMBER).a
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
 ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
@@ -193,6 +196,8 @@ main:
 	@make run_tests
 	$(call output_terminal_message,"Make all the programs")
 	@make programs
+	$(call output_terminal_message,"Build the library")
+	@make library
 	$(call output_terminal_message,"Make all the example programs")
 	@make examples
 	$(call output_terminal_message,"🀫 🀫 🀫 🀫 🀫 🀫 🀫 FINISHED! 🀫 🀫 🀫 🀫 🀫 🀫 🀫")
@@ -216,6 +221,19 @@ examples: $(EXAMPLES)
 
 
 
+library: $(LIBRARY_NAME)
+
+
+
+tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/[[TEST_RUNNER_CLASS_NAME]]
+
+
+
+run_tests: tests
+	find bin/tests -type f -exec {} \;
+
+
+
 bin/programs/%: programs/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "compiling program \e[1m\e[36m$<\033[0m..."
@@ -232,12 +250,10 @@ bin/examples/%: examples/%.cpp $(OBJECTS)
 
 
 
-tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/[[TEST_RUNNER_CLASS_NAME]]
-
-
-
-run_tests: tests
-	find bin/tests -type f -exec {} \;
+$(LIBRARY_NAME): $(OBJECTS)
+	@printf "compiling library \e[1m\e[36m$@\033[0m..."
+	@ar rs $(LIBRARY_NAME) $^
+	@echo "done. Library file at \033[1m\033[32m$@\033[0m"
 
 
 
