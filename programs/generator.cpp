@@ -123,7 +123,7 @@ TEST([[PROGRAM_RUNNER_CLASS_NAME]]Test, run__returns_the_expected_response)
 
 
 
-std::string makefile_template = R"END(
+const std::string MAKEFILE_TEMPLATE = R"END(
 LIBS_ROOT=/Users/markoates/Repos
 ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
 ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
@@ -352,7 +352,7 @@ int main(int argc, char **argv)
    system(generator.mkprojdir("quintessence").c_str());
 
    std::ofstream outfile(generator.get_project_name() + "/Makefile");
-   std::string makefile_content = makefile_template;
+   std::string makefile_content = MAKEFILE_TEMPLATE;
    ___replace(makefile_content, "[[TEST_RUNNER_CLASS_NAME]]", TEST_RUNNER_CLASS_NAME);
    outfile << makefile_content;
    outfile.close();
