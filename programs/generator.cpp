@@ -255,6 +255,7 @@ bin/examples/%: examples/%.cpp $(OBJECTS)
 
 
 $(LIBRARY_NAME): $(OBJECTS)
+	@mkdir -p $(@D)
 	@printf "compiling library \e[1m\e[36m$@\033[0m..."
 	@ar rs $(LIBRARY_NAME) $^
 	@echo "done. Library file at \033[1m\033[32m$@\033[0m"
@@ -295,6 +296,7 @@ bin/tests/[[TEST_RUNNER_CLASS_NAME]]: $(TEST_OBJECTS) obj/tests/[[TEST_RUNNER_CL
 
 clean:
 	-rm -rdf obj/
+	-rm -rdf lib/
 	-rm $(OBJECTS)
 	-rm $(TEST_OBJECTS)
 	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
