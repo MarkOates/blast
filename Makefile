@@ -1,10 +1,10 @@
 LIBS_ROOT=/Users/markoates/Repos
-GOOGLE_TEST_DIR=$(LIBS_ROOT)/googletest
-GOOGLE_TEST_LIB_DIR=$(GOOGLE_TEST_DIR)/build/googlemock/gtest
-GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 YAML_CPP_DIR=$(LIBS_ROOT)/yaml-cpp
 YAML_CPP_LIB_DIR=$(YAML_CPP_DIR)/build
 YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
+GOOGLE_TEST_DIR=$(LIBS_ROOT)/googletest
+GOOGLE_TEST_LIB_DIR=$(GOOGLE_TEST_DIR)/build/googlemock/gtest
+GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 
 
 
