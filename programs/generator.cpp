@@ -124,6 +124,11 @@ TEST([[PROGRAM_RUNNER_CLASS_NAME]]Test, run__returns_the_expected_response)
 
 
 const std::string MAKEFILE_TEMPLATE = R"END(LIBS_ROOT=/Users/markoates/Repos
+NCURSES_INCLUDE_DIR=/usr/local/opt/ncurses/include
+NCURSES_LIB_DIR=/usr/local/opt/ncurses/lib
+YAML_CPP_DIR=$(LIBS_ROOT)/yaml-cpp
+YAML_CPP_LIB_DIR=$(YAML_CPP_DIR)/build
+YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
 ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
 ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
 GOOGLE_TEST_DIR=$(LIBS_ROOT)/googletest
@@ -132,6 +137,8 @@ GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 
 
 
+NCURSES_LIB=ncurses
+YAML_CPP_LIBS=yaml-cpp
 GOOGLE_TEST_LIBS=gtest
 ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_primitives allegro_image allegro
 ALLEGRO_LIBS_MAIN=$(ALLEGRO_LIBS) allegro_main
@@ -148,9 +155,12 @@ PROGRAMS := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 EXAMPLES := $(EXAMPLE_SOURCES:examples/%.cpp=bin/examples/%)
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
+ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
+
+
+
 ALLEGRO_LIBS_LINK_ARGS := $(ALLEGRO_LIBS:%=-l%)
 ALLEGRO_LIBS_LINK_MAIN_ARGS := $(ALLEGRO_LIBS_MAIN:%=-l%)
-ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
 
 
