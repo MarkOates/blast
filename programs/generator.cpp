@@ -195,7 +195,7 @@ main:
 	@make programs
 	$(call output_terminal_message,"Make all the example programs")
 	@make examples
-	$(call output_terminal_message,"================= FINISHED! ===================")
+	$(call output_terminal_message,"🀫 🀫 🀫 🀫 🀫 🀫 🀫 FINISHED! 🀫 🀫 🀫 🀫 🀫 🀫 🀫")
 
 
 
