@@ -272,15 +272,6 @@ clean:
 	-rm $(OBJECTS)
 	-rm $(TEST_OBJECTS)
 	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
-
-
-
-fresh:
-	make clean
-	make -j8
-	make examples -j8
-	make tests -j8
-	bin/tests/[[TEST_RUNNER_CLASS_NAME]]
 )END";
 
 
