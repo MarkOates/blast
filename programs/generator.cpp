@@ -198,11 +198,11 @@ quintessences: $(QINTESSENCE_SOURCES)
 
 
 
-objects: $(OBJECTS)
-
-
-
 programs: $(PROGRAMS)
+
+
+
+objects: $(OBJECTS)
 
 
 
