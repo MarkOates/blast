@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 std::string const RERUN_CAT_FILE_SCRIPT_FILENAME = "rerun_cat_file";
 std::string const RERUN_CAT_FILE_SCRIPT_CONTENT = R"END(#!/bin/bash
 
-rerun -c "echo -en \"\033[93m\"; cat -n include/Staff.hpp; echo -en \"\033[0m\"" -p "include/Staff.hpp"
+rerun -c "echo -en \"\033[93m\"; cat -n $1; echo -en \"\033[0m\"" -p "$1"
 )END";
 
 
