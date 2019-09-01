@@ -37,6 +37,14 @@ obj/*
 
 
 
+std::string const HASH_CHECK_FILENAME = "hash_check";
+std::string const HASH_CHECK_FILE_CONTENTS = R"END(#!/bin/bash
+find quintessence -name '*.q.yml'| xargs md5
+)END";
+
+
+
+
 std::string const RERUN_SCRIPT_FILENAME = "rr";
 std::string const RERUN_SCRIPT_CONTENT = R"END(#!/bin/bash
 
@@ -430,6 +438,12 @@ int main(int argc, char **argv)
    outfile9 << RERUN_CAT_FILE_SCRIPT_CONTENT;
    outfile9.close();
    system((std::string("chmod +x ") + rerun_cat_file_script_filename).c_str());
+
+   std::string hash_check_script_filename = generator.get_project_name() + "/" + HASH_CHECK_FILENAME;
+   std::ofstream outfile10(hash_check_script_filename);
+   outfile10 << HASH_CHECK_FILE_CONTENTS;
+   outfile10.close();
+   system((std::string("chmod +x ") + hash_check_script_filename).c_str());
 
    system((std::string("chmod +x ") + build_file_filename).c_str());
 
