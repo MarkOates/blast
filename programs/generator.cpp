@@ -185,6 +185,10 @@ endef
 
 
 
+.PHONY: main quintessence programs objects examples library tests test_runner
+
+
+
 main:
 	$(call output_terminal_message,"Compose componets from all quintessence files")
 	@make quintessences
