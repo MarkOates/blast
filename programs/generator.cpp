@@ -123,8 +123,7 @@ TEST([[PROGRAM_RUNNER_CLASS_NAME]]Test, run__returns_the_expected_response)
 
 
 
-const std::string MAKEFILE_TEMPLATE = R"END(
-LIBS_ROOT=/Users/markoates/Repos
+const std::string MAKEFILE_TEMPLATE = R"END(LIBS_ROOT=/Users/markoates/Repos
 ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
 ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
 GOOGLE_TEST_DIR=$(LIBS_ROOT)/googletest
@@ -136,10 +135,6 @@ GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
 GOOGLE_TEST_LIBS=gtest
 ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_primitives allegro_image allegro
 ALLEGRO_LIBS_MAIN=$(ALLEGRO_LIBS) allegro_main
-
-
-
-.PHONY: all clean main fresh
 
 
 
@@ -190,6 +185,8 @@ main:
 
 quintessences: $(QINTESSENCE_SOURCES)
 	@./build
+
+
 
 objects: $(OBJECTS)
 
