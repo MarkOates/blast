@@ -391,12 +391,6 @@ int main(int argc, char **argv)
    outfile << makefile_content;
    outfile.close();
 
-   std::string build_file_filename = generator.get_project_name() + "/build";
-   std::ofstream outfile2(build_file_filename);
-   std::string build_file_content = build_file_template;
-   outfile2 << build_file_content;
-   outfile.close();
-
    std::string gitignore_file_filename = generator.get_project_name() + "/.gitignore";
    std::ofstream outfile3(gitignore_file_filename);
    outfile3 << GITIGNORE_FILE_CONTENT;
@@ -427,6 +421,13 @@ int main(int argc, char **argv)
    //outfile7 << program_runner_test_file_content;
    //outfile7.close();
 
+   std::string build_file_filename = generator.get_project_name() + "/build";
+   std::ofstream outfile2(build_file_filename);
+   std::string build_file_content = build_file_template;
+   outfile2 << build_file_content;
+   outfile.close();
+   system((std::string("chmod +x ") + build_file_filename).c_str());
+
    std::string rerun_script_filename = generator.get_project_name() + "/rr";
    std::ofstream outfile8(rerun_script_filename);
    outfile8 << RERUN_SCRIPT_CONTENT;
@@ -444,8 +445,6 @@ int main(int argc, char **argv)
    outfile10 << HASH_CHECK_FILE_CONTENTS;
    outfile10.close();
    system((std::string("chmod +x ") + hash_check_script_filename).c_str());
-
-   system((std::string("chmod +x ") + build_file_filename).c_str());
 
    std::stringstream finish_message;
    finish_message << "✅ Project files under \"" << generator.get_project_name() << "/\" generated." << std::endl;
