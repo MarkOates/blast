@@ -1,7 +1,5 @@
 PROJECT_NAME=blast
-
-
-
+VERSION_NUMBER=0.0.1
 LIBS_ROOT=/Users/markoates/Repos
 ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
 ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
@@ -33,6 +31,7 @@ OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
 PROGRAMS := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 EXAMPLES := $(EXAMPLE_SOURCES:examples/%.cpp=bin/examples/%)
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
+LIBRARY_NAME := lib/lib$(PROJECT_NAME)-$(VERSION_NUMBER).a
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
 ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 
@@ -91,13 +90,13 @@ examples: $(EXAMPLES)
 
 
 
-library: lib/lib$(PROJECT_NAME).a
+library: $(LIBRARY_NAME)
 
 
 
-lib/lib$(PROJECT_NAME).a: $(OBJECTS)
+$(LIBRARY_NAME): $(OBJECTS)
 	@printf "compiling library \e[1m\e[36m$@\033[0m..."
-	@ar rs lib/lib$(PROJECT_NAME).a $^
+	@ar rs $(LIBRARY_NAME) $^
 	@echo "done. Library file at \033[1m\033[32m$@\033[0m"
 
 
