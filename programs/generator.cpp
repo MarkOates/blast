@@ -89,7 +89,13 @@ int main(int argc, char **argv)
 std::string const RERUN_CAT_FILE_SCRIPT_FILENAME = "rerun_cat_file";
 std::string const RERUN_CAT_FILE_SCRIPT_CONTENT = R"END(#!/bin/bash
 
-rerun -c "echo -en \"\033[93m\"; cat -n $1; echo -en \"\033[0m\"" -p "$1"
+if [ "$#" == "0" ]
+then
+  echo "Error: You must provide an argument, which is the name of a file."
+  echo "Example: \"./rerun_cat_file include/MyProject/MyComponent.hpp\""
+else
+  rerun -c "echo -en \"\033[93m\"; cat -n $1; echo -en \"\033[0m\"" -p "$1"
+fi
 )END";
 
 
