@@ -1,3 +1,7 @@
+PROJECT_NAME=blast
+
+
+
 LIBS_ROOT=/Users/markoates/Repos
 ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
 ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
@@ -60,6 +64,8 @@ main:
 	@make tests
 	$(call output_terminal_message,"Run the tests for all the components")
 	@make run_tests
+	$(call output_terminal_message,"Build the library")
+	@make library
 	$(call output_terminal_message,"Make all the programs")
 	@make programs
 	$(call output_terminal_message,"Make all the example programs")
@@ -82,6 +88,17 @@ objects: $(OBJECTS)
 
 
 examples: $(EXAMPLES)
+
+
+
+library: lib/lib$(PROJECT_NAME).a
+
+
+
+lib/lib$(PROJECT_NAME).a: $(OBJECTS)
+	@printf "compiling library \e[1m\e[36m$@\033[0m..."
+	@ar rs lib/lib$(PROJECT_NAME).a $^
+	@echo "done. Library file at \033[1m\033[32m$@\033[0m"
 
 
 
