@@ -54,6 +54,10 @@ endef
 
 
 
+.PHONY: main quintessence programs objects examples library tests test_runner
+
+
+
 main:
 	$(call output_terminal_message,"Compose componets from all quintessence files")
 	@make quintessences
@@ -94,6 +98,15 @@ library: $(LIBRARY_NAME)
 
 
 
+tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/test_runner
+
+
+
+run_tests: tests
+	find bin/tests -type f -exec {} \;
+
+
+
 $(LIBRARY_NAME): $(OBJECTS)
 	@printf "compiling library \e[1m\e[36m$@\033[0m..."
 	@ar rs $(LIBRARY_NAME) $^
@@ -114,15 +127,6 @@ bin/examples/%: examples/%.cpp $(OBJECTS)
 	@printf "compiling example program from \e[1m\e[36m$<\033[0m..."
 	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include  -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
-
-
-
-tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/test_runner
-
-
-
-run_tests: tests
-	find bin/tests -type f -exec {} \;
 
 
 
