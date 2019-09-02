@@ -31,6 +31,7 @@ std::string const GITIGNORE_FILE_CONTENT = R"END(
 bin/*
 !bin/data/*
 .DS_Store
+*.a
 obj/*
 .DS_Store
 )END";
