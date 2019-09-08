@@ -2,10 +2,21 @@ properties:
   - name: command
     type: std::string
     init_with: "\"echo hello!\""
+    constructor_arg: true
   - name: callback
     type: std::function<void(std::string)>
-    init_with: "{}"
+    init_with: "ShellCommandExecutorWithCallback::simple_cout_callback"
+    constructor_arg: true
 functions:
+  - name: simple_cout_callback
+    type: void
+    static: true
+    parameters:
+      - name: string_for_appending
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      std::cout << string_for_appending;
   - name: execute
     type: std::string
     body: |
@@ -26,6 +37,7 @@ functions:
 
       return result;
 function_body_symbol_dependencies:
+  - std::cout
   - FILE
   - std::string
   - std::array
@@ -59,5 +71,5 @@ dependencies:
     headers: [ 'cstdio' ]
   - symbol: fgets
     headers: [ 'cstdio' ]
-  - symbol: std::runtime_error  
+  - symbol: std::runtime_error
     headers: [ 'stdexcept' ]

@@ -1,6 +1,7 @@
 
 
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
+#include <iostream>
 #include <cstdio>
 #include <string>
 #include <array>
@@ -17,9 +18,9 @@ namespace Blast
 {
 
 
-ShellCommandExecutorWithCallback::ShellCommandExecutorWithCallback()
-   : command("echo hello!")
-   , callback({})
+ShellCommandExecutorWithCallback::ShellCommandExecutorWithCallback(std::string command, std::function<void(std::string)> callback)
+   : command(command)
+   , callback(callback)
 {
 }
 
@@ -28,6 +29,12 @@ ShellCommandExecutorWithCallback::~ShellCommandExecutorWithCallback()
 {
 }
 
+
+void ShellCommandExecutorWithCallback::simple_cout_callback(std::string string_for_appending)
+{
+std::cout << string_for_appending;
+
+}
 
 std::string ShellCommandExecutorWithCallback::execute()
 {
