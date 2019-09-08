@@ -20,6 +20,11 @@ public:
 
 
 
+std::string QUINTESSENCE_FOLDER_NAME = "quintessence";
+std::string TEST_FOLDER_NAME = "tests";
+
+
+
 std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
   - name: run
     type: std::string
@@ -76,13 +81,13 @@ public:
    std::string get_quintessence_filename()
    {
       std::stringstream ss;
-      ss << "quintessence/" << get_component_name() << ".q.yml";
+      ss << QUINTESSENCE_FOLDER_NAME << "/" << get_component_name() << ".q.yml";
       return ss.str();
    }
    std::string get_test_filename()
    {
       std::stringstream ss;
-      ss << "tests/" << get_component_name() << "Test.cpp";
+      ss << TEST_FOLDER_NAME << "/" << get_component_name() << "Test.cpp";
       return ss.str();
    }
    std::string get_command_for_make_dir()
@@ -91,10 +96,10 @@ public:
       command << "mkdir \"" << project_name << "\"";
       return command.str();
    }
-   std::string mkprojdir(std::string dir)
+   std::string make_folder(std::string dir)
    {
       std::stringstream command;
-      command << "mkdir \"" << project_name << "/" << dir << "\"";
+      command << "mkdir \"" << dir << "\"";
       return command.str();
    }
 };
@@ -115,8 +120,13 @@ int main(int argc, char **argv)
    //system(generator.mkprojdir("tests").c_str());
    //system(generator.mkprojdir("quintessence").c_str());
 
+   std::cout << "making sure necessary folders are present" << std::endl;
+   system(generator.make_folder(QUINTESSENCE_FOLDER_NAME).c_str());
+   system(generator.make_folder(TEST_FOLDER_NAME).c_str());
+
    std::ofstream outfile4(generator.get_quintessence_filename());
    std::ofstream outfile7(generator.get_test_filename());
+
 
    std::map<std::string, std::ofstream *> outfiles = {
       { generator.get_quintessence_filename(), &outfile4 },
