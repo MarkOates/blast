@@ -414,6 +414,18 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 }
 
 
+std::vector<std::string> extract_function_dependency_symbols(YAML::Node &source)
+{
+   const std::string DEPENDENCY_SYMBOLS = "dependency_symbols";
+   std::vector<std::string> result;
+
+   YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+
+   return extract_sequence_as_string_array(dependency_symbols);
+}
+
+
+
 std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_functions(YAML::Node &source)
 {
    std::string this_func_name = "extract_functions";
@@ -436,12 +448,14 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       const std::string OVERRIDE = "override";
       const std::string VIRTUAL = "virtual";
       const std::string PURE_VIRTUAL = "pure_virtual";
+      const std::string DEPENDENCY_SYMBOLS = "dependency_symbols";
 
       validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
 
       YAML::Node type_node = it.operator[](TYPE);
       YAML::Node name_node = it.operator[](NAME);
       YAML::Node parameters_node = fetch_node(it, PARAMETERS, YAML::NodeType::Sequence, YAML::Load("[]"));
+      YAML::Node dependency_symbols_node = fetch_node(it, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
       YAML::Node body_node = it.operator[](BODY);
 
       validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
@@ -461,7 +475,9 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
 
       Blast::Cpp::Function function(type, name, signature, body, is_static, is_const, is_override, is_virtual, is_pure_virtual);
 
-      result.push_back({function, {}});
+      std::vector<std::string> dependency_symbols = extract_function_dependency_symbols(dependency_symbols_node);
+
+      result.push_back({function, dependency_symbols});
    }
 
    return result;
