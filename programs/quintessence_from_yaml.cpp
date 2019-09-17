@@ -414,11 +414,11 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 }
 
 
-std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
+std::vector<std::pair<Blast::Cpp::Function, std::string>> extract_functions(YAML::Node &source)
 {
    std::string this_func_name = "extract_functions";
    const std::string FUNCTIONS = "functions";
-   std::vector<Blast::Cpp::Function> result;
+   std::vector<std::pair<Blast::Cpp::Function, std::string>> result;
 
    YAML::Node source_functions = fetch_node(source, FUNCTIONS, YAML::NodeType::Sequence, YAML::Load("[]"));
 
@@ -461,7 +461,7 @@ std::vector<Blast::Cpp::Function> extract_functions(YAML::Node &source)
 
       Blast::Cpp::Function function(type, name, signature, body, is_static, is_const, is_override, is_virtual, is_pure_virtual);
 
-      result.push_back(function);
+      result.push_back({function, {}});
    }
 
    return result;
@@ -574,13 +574,17 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributeProperties> attribute_properties = extract_attribute_properties(source);
-   std::vector<Blast::Cpp::Function> functions = extract_functions(source);
+   std::vector<std::pair<Blast::Cpp::Function, std::string>> functions_and_dependencies = extract_functions(source);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
    std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(function_body_symbol_dependency_symbols, symbol_dependencies);
 
    
    // consolidate dependencies
+
+   /// extract functions
+   std::vector<Blast::Cpp::Function> functions = {};
+   for (auto &function_and_dependency : functions_and_dependencies) { functions.push_back(function_and_dependency.first); }
 
 
    // build the actual class
