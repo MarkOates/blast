@@ -416,7 +416,7 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 
 std::vector<std::string> extract_function_dependency_symbols(YAML::Node &source)
 {
-   const std::string DEPENDENCY_SYMBOLS = "dependency_symbols";
+   const std::string DEPENDENCY_SYMBOLS = "body_dependency_symbols";
    std::vector<std::string> result;
 
    YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
