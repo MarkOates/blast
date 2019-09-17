@@ -421,7 +421,9 @@ std::vector<std::string> extract_function_dependency_symbols(YAML::Node &source)
 
    YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
 
-   return extract_sequence_as_string_array(dependency_symbols);
+   result = extract_sequence_as_string_array(dependency_symbols);
+
+   return result;
 }
 
 
@@ -448,20 +450,23 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       const std::string OVERRIDE = "override";
       const std::string VIRTUAL = "virtual";
       const std::string PURE_VIRTUAL = "pure_virtual";
-      const std::string DEPENDENCY_SYMBOLS = "dependency_symbols";
+      //const std::string DEPENDENCY_SYMBOLS = "dependency_symbols";
 
       validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
 
       YAML::Node type_node = it.operator[](TYPE);
       YAML::Node name_node = it.operator[](NAME);
       YAML::Node parameters_node = fetch_node(it, PARAMETERS, YAML::NodeType::Sequence, YAML::Load("[]"));
-      YAML::Node dependency_symbols_node = fetch_node(it, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+        // TODO it's happening here somewhere::
+      //YAML::Node dependency_symbols_node = fetch_node(it, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
       YAML::Node body_node = it.operator[](BODY);
+      //YAML::Node dependency_symbols_node = fetch_node(it, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
 
-      validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
-      validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
+      validate(type_node.IsScalar(), this_func_name, "Unexpected type for node \"type\", expected to be of YAML type Scalar.");
+      validate(name_node.IsScalar(), this_func_name, "Unexpected type for node \"name\", expected to be of YAML type Scalar.");
       //validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Sequence.");
-      validate(body_node.IsScalar(), this_func_name, "Unexpected body_node, expected to be of YAML type Scalar.");
+      validate(body_node.IsScalar(), this_func_name, "Unexpected type for node \"body\", expected to be of YAML type Scalar.");
+      //validate(body_node.IsScalar(), this_func_name, "Unexpected type for node \"dependency_symbols\", expected to be of YAML type Scalar.");
 
       std::string type = type_node.as<std::string>();
       std::string name = name_node.as<std::string>();
@@ -475,7 +480,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
 
       Blast::Cpp::Function function(type, name, signature, body, is_static, is_const, is_override, is_virtual, is_pure_virtual);
 
-      std::vector<std::string> dependency_symbols = extract_function_dependency_symbols(dependency_symbols_node);
+      std::vector<std::string> dependency_symbols = extract_function_dependency_symbols(it);
 
       result.push_back({function, dependency_symbols});
    }
@@ -611,7 +616,19 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
    // consolidate dependencies
 
-   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(function_body_symbol_dependency_symbols, symbol_dependencies);
+   std::vector<std::string> function_body_symbol_dependencies__and__per_function_dependency_symbols = {};
+   function_body_symbol_dependencies__and__per_function_dependency_symbols = function_body_symbol_dependency_symbols;
+   for (auto &per_function_dependency_symbol : per_function_dependency_symbols)
+   {
+      function_body_symbol_dependencies__and__per_function_dependency_symbols.push_back(per_function_dependency_symbol);
+   }
+
+
+
+   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(
+         function_body_symbol_dependencies__and__per_function_dependency_symbols,
+         symbol_dependencies
+      );
 
 
    // build the actual class
