@@ -414,11 +414,11 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 }
 
 
-std::vector<std::pair<Blast::Cpp::Function, std::string>> extract_functions(YAML::Node &source)
+std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_functions(YAML::Node &source)
 {
    std::string this_func_name = "extract_functions";
    const std::string FUNCTIONS = "functions";
-   std::vector<std::pair<Blast::Cpp::Function, std::string>> result;
+   std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> result;
 
    YAML::Node source_functions = fetch_node(source, FUNCTIONS, YAML::NodeType::Sequence, YAML::Load("[]"));
 
@@ -574,7 +574,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributeProperties> attribute_properties = extract_attribute_properties(source);
-   std::vector<std::pair<Blast::Cpp::Function, std::string>> functions_and_dependencies = extract_functions(source);
+   std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> functions_and_dependencies = extract_functions(source);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
    std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(function_body_symbol_dependency_symbols, symbol_dependencies);
