@@ -600,7 +600,15 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
    /// extract functions
    std::vector<Blast::Cpp::Function> functions = {};
-   for (auto &function_and_dependency : functions_and_dependencies) { functions.push_back(function_and_dependency.first); }
+   std::vector<std::string> dependency_symbols = {};
+   for (auto &function_and_dependency : functions_and_dependencies)
+   {
+      functions.push_back(function_and_dependency.first);
+      for (auto &dependency_symbol : function_and_dependency.second)
+      {
+         dependency_symbols.push_back(dependency_symbol);
+      }
+   }
 
 
    // build the actual class
