@@ -593,22 +593,25 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> functions_and_dependencies = extract_functions(source);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
-   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(function_body_symbol_dependency_symbols, symbol_dependencies);
 
    
-   // consolidate dependencies
+   // consolidate functions and their dependencies
 
-   /// extract functions
    std::vector<Blast::Cpp::Function> functions = {};
-   std::vector<std::string> dependency_symbols = {};
+   std::vector<std::string> per_function_dependency_symbols = {};
    for (auto &function_and_dependency : functions_and_dependencies)
    {
       functions.push_back(function_and_dependency.first);
       for (auto &dependency_symbol : function_and_dependency.second)
       {
-         dependency_symbols.push_back(dependency_symbol);
+         per_function_dependency_symbols.push_back(dependency_symbol);
       }
    }
+
+
+   // consolidate dependencies
+
+   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(function_body_symbol_dependency_symbols, symbol_dependencies);
 
 
    // build the actual class
