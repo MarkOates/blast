@@ -71,7 +71,7 @@ Defines the independently-implemented functions on the class.
 | field | type | default | description |
 | --- | --- | --- | --- |
 | `name` | String | required | The name of the function. |
-| `type` | String | required | the type of the function, (e.g. `std::string`, `void`, `int`, `MyCustomType`, `std::vector<int>`).  Any type declared must be included in the quintessence's `dependencies` field. |
+| `type` | String | `void` | the type of the function, (e.g. `std::string`, `void`, `int`, `MyCustomType`, `std::vector<int>`).  Any type declared must be included in the quintessence's `dependencies` field. |
 | `parameters` | Array of Hashes default | `[]` | Array containing definitions for each parameter in the function signature.  See below for more detail. |
 | `body` | String | required | the code body of the function.  No magic happens here, the text you write in this string is simply injected verbatum into the body of the function. |
 | `is_static` | Bool | `false` | If `true`, defines the function as a `static`. |

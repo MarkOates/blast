@@ -214,7 +214,7 @@ std::string fetch_string(YAML::Node &node, std::string key, std::string default_
       else
       {
          std::stringstream error_message;
-         error_message << "unexpected type expecting YAML::IsScalar() " << get_type_string(node) << " is present.";
+         error_message << "unexpected type for key \"" << key << "\", expecting YAML::IsScalar() " << get_type_string(node) << " is present.";
          throw std::runtime_error(error_message.str());
       }
    }
@@ -454,7 +454,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
 
       validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
 
-      YAML::Node type_node = it.operator[](TYPE);
+      //YAML::Node type_node = it.operator[](TYPE);
       YAML::Node name_node = it.operator[](NAME);
       YAML::Node parameters_node = fetch_node(it, PARAMETERS, YAML::NodeType::Sequence, YAML::Load("[]"));
         // TODO it's happening here somewhere::
@@ -462,13 +462,13 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       YAML::Node body_node = it.operator[](BODY);
       //YAML::Node dependency_symbols_node = fetch_node(it, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
 
-      validate(type_node.IsScalar(), this_func_name, "Unexpected type for node \"type\", expected to be of YAML type Scalar.");
+      //validate(type_node.IsScalar(), this_func_name, "Unexpected type for node \"type\", expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected type for node \"name\", expected to be of YAML type Scalar.");
       //validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Sequence.");
       validate(body_node.IsScalar(), this_func_name, "Unexpected type for node \"body\", expected to be of YAML type Scalar.");
       //validate(body_node.IsScalar(), this_func_name, "Unexpected type for node \"dependency_symbols\", expected to be of YAML type Scalar.");
 
-      std::string type = type_node.as<std::string>();
+      std::string type = fetch_string(it, TYPE, "void");
       std::string name = name_node.as<std::string>();
       std::vector<Blast::Cpp::FunctionArgument> signature = convert_function_arguments(parameters_node);
       std::string body = body_node.as<std::string>();
