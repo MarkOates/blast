@@ -28,7 +28,7 @@ std::string TEST_FOLDER_NAME = "tests";
 std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
   - name: run
     type: std::string
-    body: return "Hello Buddy!";
+    body: return "Hello World!";
 )END";
 
 
