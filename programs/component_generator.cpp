@@ -97,7 +97,7 @@ public:
       result = result + "Test";
       std::stringstream ss;
       ss << "google_test_description_prefix(): " << result << std::endl;
-      return ss.str();
+      return result;
    }
    std::string get_program_body_class_name()
    {
@@ -105,7 +105,7 @@ public:
       ___replace(result, "/", "::");
       std::stringstream ss;
       ss << "get_program_body_class_name(): " << result << std::endl;
-      return ss.str();
+      return result;
    }
    std::string get_command_for_make_dir()
    {
