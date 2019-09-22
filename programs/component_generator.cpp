@@ -67,16 +67,16 @@ std::vector<std::string> args;
 class Generator
 {
 private:
-   std::string project_name;
+   std::string component_name;
 
 public:
-   Generator(std::string project_name)
-      : project_name(project_name)
+   Generator(std::string component_name)
+      : component_name(component_name)
    {}
 
    std::string get_component_name()
    {
-      return project_name;
+      return component_name;
    }
    std::string get_quintessence_filename()
    {
@@ -93,7 +93,7 @@ public:
    std::string get_command_for_make_dir()
    {
       std::stringstream command;
-      command << "mkdir \"" << project_name << "\"";
+      command << "mkdir \"" << component_name << "\"";
       return command.str();
    }
    std::string make_folder(std::string dir)
