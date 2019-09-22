@@ -90,6 +90,23 @@ public:
       ss << TEST_FOLDER_NAME << "/" << get_component_name() << "Test.cpp";
       return ss.str();
    }
+   std::string get_google_test_description_prefix()
+   {
+      std::string result = get_component_name();
+      ___replace(result, "/", "_");
+      result = result + "Test";
+      std::stringstream ss;
+      ss << "google_test_description_prefix(): " << result << std::endl;
+      return ss.str();
+   }
+   std::string get_program_body_class_name()
+   {
+      std::string result = get_component_name();
+      ___replace(result, "/", "::");
+      std::stringstream ss;
+      ss << "get_program_body_class_name(): " << result << std::endl;
+      return ss.str();
+   }
    std::string get_command_for_make_dir()
    {
       std::stringstream command;
