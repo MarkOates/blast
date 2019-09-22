@@ -48,7 +48,7 @@ TEST([[PROGRAM_RUNNER_CLASS_NAME]]Test, run__returns_the_expected_response)
 
 
 
-void ___replace(std::string& str, std::string from, std::string to)
+static void ___replace(std::string& str, std::string from, std::string to)
 {
    //static const std::string from = "\t";
    //static const std::string to = std::string(3, ' ');
