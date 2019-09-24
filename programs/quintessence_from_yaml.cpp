@@ -288,7 +288,7 @@ public:
       : source(source)
       , this_component_name("ParentClassPropertiesExtractor")
       , schema({
-       //{ name,        type,                   required, default,        description },
+        //{ name,        type,                   required, default,        description },
           { "class",     YAML::NodeType::Scalar, true,     "UnnamedClass", "(description)"},
           { "scope",     YAML::NodeType::Scalar, false,    "public",       "(description)"},
           { "init_with", YAML::NodeType::Scalar, false,    "{}",           "(description)"},
