@@ -358,7 +358,7 @@ public:
       // extract required, optional, and known elements from schema:
       std::vector<std::string> required_elements = required_elements_from_schema();
       std::vector<std::string> optional_elements = optional_elements_from_schema();
-      std::vector<std::string> known_elements = all_elements_from_schema();
+      std::vector<std::string> all_elements = all_elements_from_schema();
 
 
 
