@@ -276,37 +276,59 @@ std::vector<std::string> extract_namespaces_from_quintessence_filename(std::stri
 
 
 
+class ParentClassPropertiesExtractor
+{
+private:
+   YAML::Node &source;
+   std::string this_component_name;
+
+public:
+   ParentClassPropertiesExtractor(YAML::Node &source)
+      : source(source)
+      , this_component_name("ParentClassPropertiesExtractor")
+   {}
+   ~ParentClassPropertiesExtractor() {}
+
+   std::vector<Blast::Cpp::ParentClassProperties> extract()
+   {
+      std::vector<Blast::Cpp::ParentClassProperties> result;
+      validate(source.IsSequence(), this_component_name, "Expected \"parent_classes\" to be of a YAML Sequence type.");
+
+      for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
+      {
+         const std::string CLASS = "class";
+         const std::string SCOPE = "scope";
+         const std::string INIT_WITH = "init_with";
+
+         validate(it->IsMap(), this_component_name, "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.");
+         YAML::Node class_node = it->operator[](CLASS);
+         YAML::Node scope_node = it->operator[](SCOPE);
+         YAML::Node init_with_node = it->operator[](INIT_WITH);
+
+         validate(class_node.IsScalar(), this_component_name, "Unexpected class_node, expected to be of YAML type Scalar.");
+         validate(scope_node.IsScalar(), this_component_name, "Unexpected scope_node, expected to be of YAML type Scalar.");
+         validate(init_with_node.IsScalar(), this_component_name, "Unexpected init_with_node, expected to be of YAML type Scalar.");
+
+         Blast::Cpp::ParentClassProperties parent_class_properties(class_node.as<std::string>(), init_with_node.as<std::string>(), scope_node.as<std::string>());
+
+         result.push_back(parent_class_properties);
+      }
+
+      return result;
+   }
+};
+
+
+
 std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties(YAML::Node &source)
 {
    std::string this_func_name = "extract_parent_classes_properties";
    const std::string PARENT_CLASSES = "parent_classes";
-   std::vector<Blast::Cpp::ParentClassProperties> result;
 
    YAML::Node source_parent_classes = fetch_node(source, PARENT_CLASSES, YAML::NodeType::Sequence, YAML::Load("[]"));
 
-   validate(source_parent_classes.IsSequence(), this_func_name, "Expected \"parent_classes\" to be of a YAML Sequence type.");
-
-   for (YAML::const_iterator it=source_parent_classes.begin(); it!=source_parent_classes.end(); ++it)
-   {
-      const std::string CLASS = "class";
-      const std::string SCOPE = "scope";
-      const std::string INIT_WITH = "init_with";
-
-      validate(it->IsMap(), this_func_name, "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.");
-      YAML::Node class_node = it->operator[](CLASS);
-      YAML::Node scope_node = it->operator[](SCOPE);
-      YAML::Node init_with_node = it->operator[](INIT_WITH);
-
-      validate(class_node.IsScalar(), this_func_name, "Unexpected class_node, expected to be of YAML type Scalar.");
-      validate(scope_node.IsScalar(), this_func_name, "Unexpected scope_node, expected to be of YAML type Scalar.");
-      validate(init_with_node.IsScalar(), this_func_name, "Unexpected init_with_node, expected to be of YAML type Scalar.");
-
-      Blast::Cpp::ParentClassProperties parent_class_properties(class_node.as<std::string>(), init_with_node.as<std::string>(), scope_node.as<std::string>());
-
-      result.push_back(parent_class_properties);
-   }
-
-   return result;
+   ParentClassPropertiesExtractor extractor(source_parent_classes);
+   return extractor.extract();
 }
 
 
