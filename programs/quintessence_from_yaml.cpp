@@ -296,6 +296,17 @@ public:
    {}
    ~ParentClassPropertiesExtractor() {}
 
+   std::vector<std::string> all_elements_from_schema()
+   {
+      std::vector<std::string> result = {};
+      for (auto &schema_element : schema)
+      {
+         std::string schema_element_name = std::get<0>(schema_element);
+         result.push_back(schema_element_name);
+      }
+      return result;
+   }
+
    std::vector<std::string> required_elements_from_schema()
    {
       std::vector<std::string> result = {};
@@ -304,6 +315,22 @@ public:
          bool schema_element_requirement = std::get<2>(schema_element);
 
          if (schema_element_requirement)
+         {
+            std::string schema_element_name = std::get<0>(schema_element);
+            result.push_back(schema_element_name);
+         }
+      }
+      return result;
+   }
+
+   std::vector<std::string> optional_elements_from_schema()
+   {
+      std::vector<std::string> result = {};
+      for (auto &schema_element : schema)
+      {
+         bool schema_element_requirement = std::get<2>(schema_element);
+
+         if (!schema_element_requirement)
          {
             std::string schema_element_name = std::get<0>(schema_element);
             result.push_back(schema_element_name);
@@ -324,32 +351,16 @@ public:
       const std::string SCOPE = "scope";
       const std::string INIT_WITH = "init_with";
 
-      //const std::vector<std::tuple<std::string, YAML::NodeType::value, bool, std::string, std::string>> schema = {
-       ////{ name,        type,                   required, default,        description },
-         //{ "class",     YAML::NodeType::Scalar, true,     "UnnamedClass", "(description)"},
-         //{ "scope",     YAML::NodeType::Scalar, false,    "public",       "(description)"},
-         //{ "init_with", YAML::NodeType::Scalar, false,    "{}",           "(description)"},
-      //};
-
 
 
       /// good:
 
-      // extract "required_elements" from schema:
-      std::vector<std::string> required_elements = {};
-      for (auto &schema_element : schema)
-      {
-         std::string schema_element_name = std::get<0>(schema_element);
-         bool schema_element_requirement = std::get<2>(schema_element);
-
-         if (schema_element_requirement) required_elements.push_back(schema_element_name);
-      }
+      // extract required, optional, and known elements from schema:
+      std::vector<std::string> required_elements = required_elements_from_schema();
+      std::vector<std::string> optional_elements = optional_elements_from_schema();
+      std::vector<std::string> known_elements = all_elements_from_schema();
 
 
-      required_elements = { CLASS };
-      std::vector<std::string> optional_elements = { SCOPE, INIT_WITH };
-      std::vector<std::string> known_elements = required_elements;
-         known_elements.insert(known_elements.end(), optional_elements.begin(), optional_elements.end());
 
       std::vector<std::string> present_elements = {};
 
