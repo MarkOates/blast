@@ -281,25 +281,99 @@ class ParentClassPropertiesExtractor
 private:
    YAML::Node &source;
    std::string this_component_name;
+   std::vector<std::tuple<std::string, YAML::NodeType::value, bool, std::string, std::string>> schema;
 
 public:
    ParentClassPropertiesExtractor(YAML::Node &source)
       : source(source)
       , this_component_name("ParentClassPropertiesExtractor")
+      , schema({
+       //{ name,        type,                   required, default,        description },
+          { "class",     YAML::NodeType::Scalar, true,     "UnnamedClass", "(description)"},
+          { "scope",     YAML::NodeType::Scalar, false,    "public",       "(description)"},
+          { "init_with", YAML::NodeType::Scalar, false,    "{}",           "(description)"},
+        })
    {}
    ~ParentClassPropertiesExtractor() {}
+
+   std::vector<std::string> required_elements_from_schema()
+   {
+      std::vector<std::string> result = {};
+      for (auto &schema_element : schema)
+      {
+         bool schema_element_requirement = std::get<2>(schema_element);
+
+         if (schema_element_requirement)
+         {
+            std::string schema_element_name = std::get<0>(schema_element);
+            result.push_back(schema_element_name);
+         }
+      }
+      return result;
+   }
 
    std::vector<Blast::Cpp::ParentClassProperties> extract()
    {
       std::vector<Blast::Cpp::ParentClassProperties> result;
       validate(source.IsSequence(), this_component_name, "Expected \"parent_classes\" to be of a YAML Sequence type.");
 
+
+      YAML::NodeType::value t = YAML::NodeType::Scalar;
+
+      const std::string CLASS = "class";
+      const std::string SCOPE = "scope";
+      const std::string INIT_WITH = "init_with";
+
+      //const std::vector<std::tuple<std::string, YAML::NodeType::value, bool, std::string, std::string>> schema = {
+       ////{ name,        type,                   required, default,        description },
+         //{ "class",     YAML::NodeType::Scalar, true,     "UnnamedClass", "(description)"},
+         //{ "scope",     YAML::NodeType::Scalar, false,    "public",       "(description)"},
+         //{ "init_with", YAML::NodeType::Scalar, false,    "{}",           "(description)"},
+      //};
+
+
+
+      /// good:
+
+      // extract "required_elements" from schema:
+      std::vector<std::string> required_elements = {};
+      for (auto &schema_element : schema)
+      {
+         std::string schema_element_name = std::get<0>(schema_element);
+         bool schema_element_requirement = std::get<2>(schema_element);
+
+         if (schema_element_requirement) required_elements.push_back(schema_element_name);
+      }
+
+
+      required_elements = { CLASS };
+      std::vector<std::string> optional_elements = { SCOPE, INIT_WITH };
+      std::vector<std::string> known_elements = required_elements;
+         known_elements.insert(known_elements.end(), optional_elements.begin(), optional_elements.end());
+
+      std::vector<std::string> present_elements = {};
+
+
+      // validate required elements are present
+      std::vector<std::string> missing_required_elements = required_elements;
+      for (auto &required_element : required_elements)
+      {
+
+      }
+
+
+      // not going to implement for now: notify missing optional elements
+
+
+      // raise unknown elements
+
+
+      // validate present elements are of valid type
+
+
+
       for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
       {
-         const std::string CLASS = "class";
-         const std::string SCOPE = "scope";
-         const std::string INIT_WITH = "init_with";
-
          validate(it->IsMap(), this_component_name, "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.");
          YAML::Node class_node = it->operator[](CLASS);
          YAML::Node scope_node = it->operator[](SCOPE);
@@ -323,6 +397,7 @@ public:
 std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties(YAML::Node &source)
 {
    std::string this_func_name = "extract_parent_classes_properties";
+
    const std::string PARENT_CLASSES = "parent_classes";
 
    YAML::Node source_parent_classes = fetch_node(source, PARENT_CLASSES, YAML::NodeType::Sequence, YAML::Load("[]"));
