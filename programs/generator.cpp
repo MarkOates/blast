@@ -261,8 +261,12 @@ obj/%.o: src/%.cpp
 
 $(LIBRARY_NAME): $(OBJECTS)
 	@printf "compiling library \e[1m\e[36m$@\033[0m..."
+ifeq ($(OBJECTS),)
+	@echo "\033[1m\033[32mnothing to be done, there are no objects to build into a library\033[0m."
+else
 	@ar rs $(LIBRARY_NAME) $^
 	@echo "done. Library file at \033[1m\033[32m$@\033[0m"
+endif
 
 
 
