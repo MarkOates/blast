@@ -222,6 +222,10 @@ library: $(LIBRARY_NAME)
 
 
 
+test_objects: $(TEST_OBJECTS)
+
+
+
 tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/run_all_tests
 
 
