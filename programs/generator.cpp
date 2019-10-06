@@ -231,7 +231,7 @@ tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/run_all_tests
 
 
 run_tests: tests
-	find bin/tests -type f -exec {} \;
+	bin/run_all_tests
 
 
 
