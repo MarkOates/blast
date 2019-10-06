@@ -187,16 +187,14 @@ main:
 	@make objects
 	$(call output_terminal_message,"Make all the test objects")
 	@make test_objects
-	$(call output_terminal_message,"Make the TestRunner binary")
-	@make test_runner_binary
 	$(call output_terminal_message,"Make all the test executables")
 	@make tests
-	$(call output_terminal_message,"Run all the tests")
+	$(call output_terminal_message,"Run the tests for all the components")
 	@make run_tests
-	$(call output_terminal_message,"Make all the programs")
-	@make programs
 	$(call output_terminal_message,"Build the library")
 	@make library
+	$(call output_terminal_message,"Make all the programs")
+	@make programs
 	$(call output_terminal_message,"Make all the example programs")
 	@make examples
 	$(call output_terminal_message,"🀫 🀫 🀫 🀫 🀫 🀫 🀫 FINISHED! 🀫 🀫 🀫 🀫 🀫 🀫 🀫")
@@ -224,15 +222,7 @@ library: $(LIBRARY_NAME)
 
 
 
-test_objects: $(TEST_OBJECTS)
-
-
-
-test_runner_binary: bin/tests/TestRunner
-
-
-
-tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/tests/[[TEST_RUNNER_CLASS_NAME]]
+tests: $(INDIVIDUAL_TEST_EXECUTABLES) bin/run_all_tests
 
 
 
@@ -243,40 +233,47 @@ run_tests: tests
 
 bin/programs/%: programs/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
-   @printf "compiling program \e[1m\e[36m$@\033[0m from file \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -D_XOPEN_SOURCE_EXTENDED
+	@printf "compiling program \e[1m\e[36m$<\033[0m..."
+	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) $(ALLEGRO_LIBS_LINK_MAIN_ARGS) -D_XOPEN_SOURCE_EXTENDED
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
 
 bin/examples/%: examples/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
-   @printf "compiling example program \e[1m\e[36m$@\033[0m from file \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(ALLEGRO_INCLUDE_DIR) -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -D_XOPEN_SOURCE_EXTENDED
+	@printf "compiling example \e[1m\e[36m$<\033[0m..."
+	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) $(ALLEGRO_LIBS_LINK_MAIN_ARGS) -D_XOPEN_SOURCE_EXTENDED
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
-
-
-
-$(LIBRARY_NAME): $(OBJECTS)
-	@mkdir -p $(@D)
-	@printf "compiling library \e[1m\e[36m$@\033[0m..."
-	@ar rs $(LIBRARY_NAME) $^
-	@echo "done. Library file at \033[1m\033[32m$@\033[0m"
 
 
 
 obj/%.o: src/%.cpp
 	@mkdir -p $(@D)
 	@printf "compiling object file \e[1m\e[34m$<\033[0m..."
-	@g++ -c -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(ALLEGRO_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -D_XOPEN_SOURCE_EXTENDED
+	@g++ -c -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -D_XOPEN_SOURCE_EXTENDED
 	@echo "done. object at \033[1m\033[32m$@\033[0m"
+
+
+
+$(LIBRARY_NAME): $(OBJECTS)
+	@printf "compiling library \e[1m\e[36m$@\033[0m..."
+	@ar rs $(LIBRARY_NAME) $^ $(ALLEGRO_LIBS_LINK_MAIN_ARGS)
+	@echo "done. Library file at \033[1m\033[32m$@\033[0m"
 
 
 
 obj/tests/%.o: tests/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "compiling test object file \e[1m\e[36m$<\033[0m..."
-	@g++ -c -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(NCURSES_INCLUDE_DIR) -D_XOPEN_SOURCE_EXTENDED
+	@g++ -c -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) -I$(ALLEGRO_FLARE_INCLUDE_DIR)
+	@echo "done. Object at \033[1m\033[32m$@\033[0m"
+
+
+
+obj/tests/[[TEST_RUNNER_CLASS_NAME]].o: tests/[[TEST_RUNNER_CLASS_NAME]].cpp
+	@mkdir -p $(@D)
+	@printf "compiling test object for [[TEST_RUNNER_CLASS_NAME]] \e[1m\e[36m$<\033[0m..."
+	@g++ -c -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I$(GOOGLE_TEST_INCLUDE_DIR)
 	@echo "done. Object at \033[1m\033[32m$@\033[0m"
 
 
@@ -284,25 +281,31 @@ obj/tests/%.o: tests/%.cpp $(OBJECTS)
 bin/tests/%: obj/tests/%.o obj/tests/[[TEST_RUNNER_CLASS_NAME]].o
 	@mkdir -p $(@D)
 	@printf "compiling standalone test \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< obj/tests/[[TEST_RUNNER_CLASS_NAME]].o -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -D_XOPEN_SOURCE_EXTENDED
+	@g++ -std=c++1z -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< obj/tests/[[TEST_RUNNER_CLASS_NAME]].o -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) -I$(ALLEGRO_FLARE_INCLUDE_DIR) -L$(ALLEGRO_FLARE_LIB_DIR) $(ALLEGRO_FLARE_LINK_ARGS) -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
 
-bin/tests/[[TEST_RUNNER_CLASS_NAME]]: $(TEST_OBJECTS) obj/tests/[[TEST_RUNNER_CLASS_NAME]].o
+bin/run_all_tests: tests/[[TEST_RUNNER_CLASS_NAME]].cpp $(TEST_OBJECTS)
+	echo $(TEST_OBJECTS)
 	@mkdir -p $(@D)
-	@printf "compiling all tests into test_runer \e[1m\e[36m$<\033[0m..."
-	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) obj/tests/[[TEST_RUNNER_CLASS_NAME]].o $< -o $@ -l$(GOOGLE_TEST_LIBS) -I./include -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -D_XOPEN_SOURCE_EXTENDED -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)
-	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
+	@printf "compiling test_runer \e[1m\e[36m$<\033[0m..."
+	@g++ -std=gnu++11 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $(TEST_OBJECTS) $< -o $@ -I./include -l$(GOOGLE_TEST_LIBS) -I$(GOOGLE_TEST_INCLUDE_DIR) -L$(GOOGLE_TEST_LIB_DIR) -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB) -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) $(ALLEGRO_LIBS_LINK_ARGS) -D_XOPEN_SOURCE_EXTENDED
 
 
 
 clean:
 	-rm -rdf obj/
-	-rm -rdf lib/
-	-rm $(OBJECTS)
-	-rm $(TEST_OBJECTS)
+	-rm $(PROGRAMS)
+	-rm $(EXAMPLES)
 	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
+
+
+
+fresh:
+	make clean
+	make -j8
+	make bin/run_all_tests
 )END";
 
 
