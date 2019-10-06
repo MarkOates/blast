@@ -95,6 +95,7 @@ fi
 std::string PROGRAM_RUNNER_CLASS_NAME = "ProgramRunner";
 std::string main_file_content_template = R"END(
 //#include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
+#include <allegro5/allegro.h>
 
 int main(int argc, char **argv)
 {
