@@ -94,11 +94,11 @@ fi
 
 std::string PROGRAM_RUNNER_CLASS_NAME = "ProgramRunner";
 std::string main_file_content_template = R"END(
-#include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
+//#include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
 
 int main(int argc, char **argv)
 {
-   [[PROGRAM_RUNNER_CLASS_NAME]]().run();
+   //[[PROGRAM_RUNNER_CLASS_NAME]]().run();
    return 0;
 }
 )END";
