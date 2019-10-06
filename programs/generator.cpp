@@ -112,9 +112,9 @@ std::string PROGRAM_RUNNER_TEST_FILE_CONTENT = R"END(
 
 TEST([[PROGRAM_RUNNER_CLASS_NAME]]Test, run__returns_the_expected_response)
 {
-   [[PROGRAM_RUNNER_CLASS_NAME]] program_runner;
+   [[PROGRAM_RUNNER_CLASS_NAME]] component;
    std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, program_runner.run());
+   EXPECT_EQ(expected_string, component.run());
 }
 )END";
 
