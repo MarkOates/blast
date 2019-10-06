@@ -378,6 +378,7 @@ int main(int argc, char **argv)
 
    system(generator.get_command_for_make_dir().c_str());
    system(generator.mkprojdir("bin").c_str());
+   system(generator.mkprojdir("lib").c_str());
    system(generator.mkprojdir("include").c_str());
    system(generator.mkprojdir("examples").c_str());
    system(generator.mkprojdir(std::string("include/") + generator.get_project_name()).c_str());
