@@ -1,5 +1,8 @@
 # Quintessence Extrapolation
 
+Note: There is [an open issue regarding the depreciation of this file](https://github.com/MarkOates/blast/issues/14).  Please
+view it before continuing.
+
 Quintessence extrapolation is a technique to automatically generate code based on a more fundamental definition of the code.  The definition, called the quintessence, can be used to generate header files and source files, or generate consequential files from a preestablished design pattern.
 
 Quintessence files have the `.q` extension and contain the meta-definition notated as a JSON structure (JSON definition files contain the full `.q.json` extension. New formats apart from JSON could be added added in the future).
