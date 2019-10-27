@@ -137,6 +137,10 @@ YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
 
 
 
+QUINTESSENCE_BUILDER_EXECUTABLE=~/Repos/blast/bin/programs/quintessence_from_yaml
+
+
+
 ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_primitives allegro_image allegro
 ALLEGRO_LIBS_MAIN=$(ALLEGRO_LIBS) allegro_main
 GOOGLE_TEST_LIBS=gtest
@@ -203,7 +207,8 @@ main:
 
 
 quintessences: $(QUINTESSENCE_SOURCES)
-	@./build
+	[ -f $(QUINTESSENCE_BUILDER_EXECUTABLE) ] || echo "The needed executable $(QUINTESSENCE_BUILDER_EXECUTABLE) was not found"
+	find quintessence -name '*.q.yml' | xargs $(QUINTESSENCE_BUILDER_EXECUTABLE)
 
 
 
@@ -319,14 +324,6 @@ fresh:
 
 
 
-std::string build_file_template = R"END(#!/bin/bash
-executable_filename=~/Repos/blast/bin/programs/quintessence_from_yaml
-[ -f $executable_filename ] || echo "The needed executable $executable_filename was not found"
-find quintessence -name '*.q.yml' | xargs $executable_filename
-)END";
-
-
-
 void ___replace(std::string& str, std::string from, std::string to)
 {
    //static const std::string from = "\t";
@@ -428,13 +425,6 @@ int main(int argc, char **argv)
    //___replace(program_runner_test_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    //outfile7 << program_runner_test_file_content;
    //outfile7.close();
-
-   std::string build_file_filename = generator.get_project_name() + "/build";
-   std::ofstream outfile2(build_file_filename);
-   std::string build_file_content = build_file_template;
-   outfile2 << build_file_content;
-   outfile.close();
-   system((std::string("chmod +x ") + build_file_filename).c_str());
 
    std::string rerun_script_filename = generator.get_project_name() + "/rr";
    std::ofstream outfile8(rerun_script_filename);
