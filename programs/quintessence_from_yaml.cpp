@@ -103,6 +103,9 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
 {
    std::string header_filepath = cpp_class_generator.project_header_filepath();
    std::string source_filepath = cpp_class_generator.project_source_filepath();
+   std::string header_file_content = cpp_class_generator.generate_header_file_content();
+   std::string source_file_content = cpp_class_generator.generate_source_file_content();
+
 
    std::ofstream header_file;
    header_file.open(header_filepath, std::ofstream::out);
@@ -145,12 +148,6 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
          explode("write_to_files", error_message.str());
       }
    }
-
-
-   // obtain the output content
-
-   std::string header_file_content = cpp_class_generator.generate_header_file_content();
-   std::string source_file_content = cpp_class_generator.generate_source_file_content();
 
 
    // output the actual content
