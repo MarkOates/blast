@@ -99,6 +99,10 @@ bool create_folders_for_file(std::string filepath)
 }
 
 
+
+#include <Blast/FileContentComparisonChecker.hpp>
+
+
 void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automatically_create_folders=true)
 {
    std::string header_filepath = cpp_class_generator.project_header_filepath();
@@ -106,54 +110,67 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
    std::string header_file_content = cpp_class_generator.generate_header_file_content();
    std::string source_file_content = cpp_class_generator.generate_source_file_content();
 
+   bool content_for_header_is_unchanged = false;
+   bool content_for_source_is_unchanged = false;
 
-   std::ofstream header_file;
-   header_file.open(header_filepath, std::ofstream::out);
-   if (header_file.fail())
+   if (Blast::FileContentComparisonChecker(header_filepath, header_file_content).is_equal()) content_for_header_is_unchanged = true;
+   if (Blast::FileContentComparisonChecker(source_filepath, source_file_content).is_equal()) content_for_source_is_unchanged = true;
+
+   if (content_for_header_is_unchanged) std::cout << "CONTENT IS UNCHNAGED FOR HEADER: \"" << header_filepath << "\"" << std::endl;
+   if (content_for_source_is_unchanged) std::cout << "CONTENT IS UNCHNAGED FOR SOURCE: \"" << source_filepath << "\"" << std::endl;
+
+
+   if (!content_for_header_is_unchanged)
    {
-      if (!automatically_create_folders)
-      {
-         std::stringstream error_message;
-         error_message << "Could not open header file \"" << header_filepath << "\" for writing.  Most likely the directories need to be created.";
-         explode("write_to_files", error_message.str());
-      }
-      create_folders_for_file(header_filepath);
-
+      std::ofstream header_file;
       header_file.open(header_filepath, std::ofstream::out);
       if (header_file.fail())
       {
-         std::stringstream error_message;
-         error_message << "Could not open header file \"" << header_filepath << "\" for writing on a second attempt after (possibly) creating the necessary folders.";
-         explode("write_to_files", error_message.str());
+         if (!automatically_create_folders)
+         {
+            std::stringstream error_message;
+            error_message << "Could not open header file \"" << header_filepath << "\" for writing.  Most likely the directories need to be created.";
+            explode("write_to_files", error_message.str());
+         }
+         create_folders_for_file(header_filepath);
+
+         header_file.open(header_filepath, std::ofstream::out);
+         if (header_file.fail())
+         {
+            std::stringstream error_message;
+            error_message << "Could not open header file \"" << header_filepath << "\" for writing on a second attempt after (possibly) creating the necessary folders.";
+            explode("write_to_files", error_message.str());
+         }
       }
+
+      header_file << header_file_content;
    }
 
-   std::ofstream source_file;
-   source_file.open(source_filepath, std::ofstream::out);
-   if (source_file.fail())
+   if (!content_for_source_is_unchanged)
    {
-      if (!automatically_create_folders)
-      {
-         std::stringstream error_message;
-         error_message << "Could not open source file \"" << source_filepath << "\" for writing.  Most likely the directories need to be created.";
-         explode("write_to_files", error_message.str());
-      }
-      create_folders_for_file(source_filepath);
-
+      std::ofstream source_file;
       source_file.open(source_filepath, std::ofstream::out);
       if (source_file.fail())
       {
-         std::stringstream error_message;
-         error_message << "Could not open source file \"" << source_filepath << "\" for writing on a second attempt after (possibly) creating the necessary folders.";
-         explode("write_to_files", error_message.str());
+         if (!automatically_create_folders)
+         {
+            std::stringstream error_message;
+            error_message << "Could not open source file \"" << source_filepath << "\" for writing.  Most likely the directories need to be created.";
+            explode("write_to_files", error_message.str());
+         }
+         create_folders_for_file(source_filepath);
+
+         source_file.open(source_filepath, std::ofstream::out);
+         if (source_file.fail())
+         {
+            std::stringstream error_message;
+            error_message << "Could not open source file \"" << source_filepath << "\" for writing on a second attempt after (possibly) creating the necessary folders.";
+            explode("write_to_files", error_message.str());
+         }
       }
+
+      source_file << source_file_content;
    }
-
-
-   // output the actual content
-
-   header_file << header_file_content;
-   source_file << source_file_content;
 
    // output success
    std::cout << "done. Files generated \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
