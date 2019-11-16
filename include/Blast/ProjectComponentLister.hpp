@@ -2,6 +2,7 @@
 
 
 #include <string>
+#include <vector>
 
 
 namespace Blast
@@ -9,13 +10,14 @@ namespace Blast
    class ProjectComponentLister
    {
    private:
+      std::string project_root_directory;
 
    public:
-      ProjectComponentLister();
+      ProjectComponentLister(std::string project_root_directory="");
       ~ProjectComponentLister();
 
 
-   std::string run();
+   std::vector<std::string> components();
    };
 }
 

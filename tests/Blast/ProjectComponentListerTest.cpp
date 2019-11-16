@@ -3,9 +3,7 @@
 
 #include <Blast/ProjectComponentLister.hpp>
 
-TEST(Blast_ProjectComponentListerTest, run__returns_the_expected_response)
+TEST(Blast_ProjectComponentListerTest, run__can_be_created_without_blowing_up)
 {
-   Blast::ProjectComponentLister program_runner;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, program_runner.run());
+   Blast::ProjectComponentLister lister;
 }
