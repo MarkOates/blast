@@ -82,7 +82,7 @@ std::string get_component_fragment_extension(component_fragment_t component_frag
       return "Example.cpp";
       break;
    case COMPONENT_FRAGMENT_TYPE_TEST:
-      return "Text.cpp";
+      return "Test.cpp";
       break;
    case COMPONENT_FRAGMENT_TYPE_QUINTESSENCE:
       return ".q.yml";
@@ -139,6 +139,8 @@ std::vector<std::string> ComponentLister::components()
    }
 
    std::sort(result.begin(), result.end());
+   std::vector<std::string>::iterator it = std::unique(result.begin(), result.end());
+   result.resize(std::distance(result.begin(), it));
 
    return result;
 
