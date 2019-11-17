@@ -8,14 +8,14 @@ namespace Blast
 {
    namespace Project
    {
-      class BasenameExtractor
+      class ComponentBasenameExtractor
       {
       private:
          std::string filename;
 
       public:
-         BasenameExtractor(std::string filename="");
-         ~BasenameExtractor();
+         ComponentBasenameExtractor(std::string filename="");
+         ~ComponentBasenameExtractor();
 
 
       std::string identify_file_type();
