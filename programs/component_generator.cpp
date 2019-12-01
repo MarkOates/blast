@@ -40,29 +40,7 @@ TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], run__returns_the_expected_response)
 
 
 
-static void ___replace(std::string& str, std::string from, std::string to)
-{
-   //static const std::string from = "\t";
-   //static const std::string to = std::string(3, ' ');
-
-   size_t start_pos = 0;
-   while((start_pos = str.find(from, start_pos)) != std::string::npos) {
-      str.replace(start_pos, from.length(), to);
-      start_pos += to.length();
-   }
-}
-
-
 std::vector<std::string> args;
-
-
-std::string generate_make_folder_command(std::string dir)
-{
-   std::stringstream command;
-   command << "mkdir \"" << dir << "\"";
-   return command.str();
-}
-
 
 
 #include <Blast/DirectoryCreator.hpp>
