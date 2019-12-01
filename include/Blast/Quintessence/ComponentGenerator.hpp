@@ -12,7 +12,7 @@ private:
    std::string component_name;
 
 public:
-   ComponentGenerator(std::string component_name);
+   ComponentGenerator(std::string component_name="Foo/Bar");
 
    std::string get_component_name();
    std::string get_quintessence_filename();
