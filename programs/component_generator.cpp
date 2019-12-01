@@ -68,6 +68,7 @@ std::string generate_make_folder_command(std::string dir)
 #include <Blast/DirectoryCreator.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/Quintessence/ComponentGenerator.hpp>
+#include <Blast/TemplatedFile.hpp>
 
 
 
@@ -126,17 +127,14 @@ int main(int argc, char **argv)
    outfile4 << QUINTESSENCE_FILE_CONTENT;
    outfile4.close();
 
-   std::string COMPONENT_HEADER_INCLUDE_FILE_PATH = generator.get_header_filename();
-   std::string COMPONENT_TEST_DESCRIPTION_NAME = generator.get_google_test_description_prefix();
-   std::string COMPONENT_CLASS_NAME = generator.get_program_body_class_name();
-   std::string COMPONENT_BASENAME_SNAKE_CASE = generator.get_component_tail_snakecase();
+   Blast::TemplatedFile templated_test_file(TEST_FILE_CONTENT, {
+      { "[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]", generator.get_header_filename() },
+      { "[[COMPONENT_TEST_DESCRIPTION_NAME]]", generator.get_google_test_description_prefix() },
+      { "[[COMPONENT_CLASS_NAME]]", generator.get_program_body_class_name() },
+      { "[[COMPONENT_BASENAME_SNAKE_CASE]]", generator.get_component_tail_snakecase() },
+   });
 
-   std::string test_file_content = TEST_FILE_CONTENT;
-   ___replace(test_file_content, "[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]", COMPONENT_HEADER_INCLUDE_FILE_PATH);
-   ___replace(test_file_content, "[[COMPONENT_TEST_DESCRIPTION_NAME]]", COMPONENT_TEST_DESCRIPTION_NAME);
-   ___replace(test_file_content, "[[COMPONENT_CLASS_NAME]]", COMPONENT_CLASS_NAME);
-   ___replace(test_file_content, "[[COMPONENT_BASENAME_SNAKE_CASE]]", COMPONENT_BASENAME_SNAKE_CASE);
-   outfile7 << test_file_content;
+   outfile7 << templated_test_file.generate_content();
    outfile7.close();
 
    std::stringstream finish_message;
