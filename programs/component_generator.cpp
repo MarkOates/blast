@@ -7,19 +7,6 @@
 
 
 
-class ConsoleOutputter
-{
-public:
-   ConsoleOutputter() {}
-   ~ConsoleOutputter() {}
-   void output_line(std::string message)
-   {
-      std::cout << message << std::endl;
-   }
-};
-
-
-
 std::string QUINTESSENCE_FOLDER_NAME = "quintessence";
 std::string TEST_FOLDER_NAME = "tests";
 
@@ -95,7 +82,6 @@ int main(int argc, char **argv)
    if (args.size() <= 1) throw std::runtime_error("You must pass a component name.  This component name should include its nested folders like \"Foobar/Bar/Bazz\" where \"Foobar/Bar\" are the folders and \"Bazz\" is the name of the component.");
 
    ComponentGenerator generator(argv[1]);
-   ConsoleOutputter console_output;
 
    // make the quintessence file
 
@@ -152,7 +138,7 @@ int main(int argc, char **argv)
                   << "* " << generator.get_test_filename() << std::endl
                   << "generated." << std::endl;
 
-   console_output.output_line(finish_message.str());
+   std::cout << finish_message.str() << std::endl;
 
    std::runtime_error("You must pass a project name");
 
