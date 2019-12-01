@@ -14,10 +14,11 @@ namespace Blast
       std::vector<std::pair<std::string, std::string>> insertion_variables;
 
    public:
-      TemplatedFile(std::string template_content="[[GREETING]], [[SUBJECT]]!", std::vector<std::pair<std::string, std::string>> insertion_variables={ { "GREETING", "Hello" }, { "SUBJECT", "World" } });
+      TemplatedFile(std::string template_content="[[GREETING]], [[SUBJECT]]!", std::vector<std::pair<std::string, std::string>> insertion_variables={ { "[[GREETING]]", "Hello" }, { "[[SUBJECT]]", "World" } });
       ~TemplatedFile();
 
 
+   std::string __replace(std::string str="source string", std::string from="source", std::string to="result");
    std::string generate_content();
    };
 }

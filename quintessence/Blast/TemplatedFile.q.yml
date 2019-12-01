@@ -5,13 +5,40 @@ properties:
     constructor_arg: true
   - name: insertion_variables
     type: std::vector<std::pair<std::string, std::string>>
-    init_with: "{ { \"GREETING\", \"Hello\" }, { \"SUBJECT\", \"World\" } }"
+    init_with: "{ { \"[[GREETING]]\", \"Hello\" }, { \"[[SUBJECT]]\", \"World\" } }"
     constructor_arg: true
 functions:
+  - name: __replace
+    type: std::string
+    private: true
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: "\"source string\""
+      - name: from
+        type: std::string
+        default_argument: "\"source\""
+      - name: to
+        type: std::string
+        default_argument: "\"result\""
+    body: |
+       size_t start_pos = 0;
+       while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+          str.replace(start_pos, from.length(), to);
+          start_pos += to.length();
+       }
+       return str;
   - name: generate_content
     type: std::string
     body: |
-      return "Hello, World!";
+      std::string result = template_content;
+
+      for (auto &insertion_variable : insertion_variables)
+      {
+        result = __replace(result, insertion_variable.first, insertion_variable.second);
+      }
+
+      return result;
 dependencies:
   - symbol: std::vector<std::pair<std::string, std::string>>
     headers: [ string, vector ]
