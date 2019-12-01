@@ -64,7 +64,7 @@ static void ___replace(std::string& str, std::string from, std::string to)
 std::vector<std::string> args;
 
 
-std::string make_folder(std::string dir)
+std::string generate_make_folder_command(std::string dir)
 {
    std::stringstream command;
    command << "mkdir \"" << dir << "\"";
@@ -72,62 +72,7 @@ std::string make_folder(std::string dir)
 }
 
 
-class Generator
-{
-private:
-   std::string component_name;
-
-public:
-   Generator(std::string component_name)
-      : component_name(component_name)
-   {}
-
-   std::string get_component_name()
-   {
-      return component_name;
-   }
-   std::string get_quintessence_filename()
-   {
-      std::stringstream ss;
-      ss << QUINTESSENCE_FOLDER_NAME << "/" << get_component_name() << ".q.yml";
-      return ss.str();
-   }
-   std::string get_test_filename()
-   {
-      std::stringstream ss;
-      ss << TEST_FOLDER_NAME << "/" << get_component_name() << "Test.cpp";
-      return ss.str();
-   }
-   std::string get_header_filename()
-   {
-      std::stringstream ss;
-      ss << get_component_name() << ".hpp";
-      return ss.str();
-   }
-   std::string get_google_test_description_prefix()
-   {
-      std::string result = get_component_name();
-      ___replace(result, "/", "_");
-      result = result + "Test";
-      std::stringstream ss;
-      ss << "google_test_description_prefix(): " << result << std::endl;
-      return result;
-   }
-   std::string get_program_body_class_name()
-   {
-      std::string result = get_component_name();
-      ___replace(result, "/", "::");
-      std::stringstream ss;
-      ss << "get_program_body_class_name(): " << result << std::endl;
-      return result;
-   }
-   std::string get_command_for_make_dir()
-   {
-      std::stringstream command;
-      command << "mkdir \"" << component_name << "\"";
-      return command.str();
-   }
-};
+#include <Blast/Quintessence/ComponentGenerator.hpp>
 
 
 int main(int argc, char **argv)
@@ -136,7 +81,7 @@ int main(int argc, char **argv)
 
    if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
 
-   Generator generator(argv[1]);
+   ComponentGenerator generator(argv[1]);
    ConsoleOutputter console_output;
 
    // make the quintessence file
