@@ -25,7 +25,7 @@ std::string TEST_FOLDER_NAME = "tests";
 
 
 
-std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
+std::string const QUINTESSENCE_FILE_CONTENT = R"END(functions:
   - name: run
     type: std::string
     body: return "Hello World!";
@@ -33,7 +33,7 @@ std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
 
 
 
-std::string PROGRAM_RUNNER_TEST_FILE_CONTENT = R"END(
+std::string TEST_FILE_CONTENT = R"END(
 #include <gtest/gtest.h>
 
 #include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
@@ -122,18 +122,18 @@ int main(int argc, char **argv)
       throw std::runtime_error(error_message.str());
    }
 
-   outfile4 << PROGRAM_RUNNER_FILE_CONTENT;
+   outfile4 << QUINTESSENCE_FILE_CONTENT;
    outfile4.close();
 
    std::string COMPONENT_HEADER_INCLUDE_FILE_PATH = generator.get_header_filename();
    std::string COMPONENT_TEST_DESCRIPTION_NAME = generator.get_google_test_description_prefix();
    std::string COMPONENT_CLASS_NAME = generator.get_program_body_class_name();
 
-   std::string program_runner_test_file_content = PROGRAM_RUNNER_TEST_FILE_CONTENT;
-   ___replace(program_runner_test_file_content, "[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]", COMPONENT_HEADER_INCLUDE_FILE_PATH);
-   ___replace(program_runner_test_file_content, "[[COMPONENT_TEST_DESCRIPTION_NAME]]", COMPONENT_TEST_DESCRIPTION_NAME);
-   ___replace(program_runner_test_file_content, "[[COMPONENT_CLASS_NAME]]", COMPONENT_CLASS_NAME);
-   outfile7 << program_runner_test_file_content;
+   std::string test_file_content = TEST_FILE_CONTENT;
+   ___replace(test_file_content, "[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]", COMPONENT_HEADER_INCLUDE_FILE_PATH);
+   ___replace(test_file_content, "[[COMPONENT_TEST_DESCRIPTION_NAME]]", COMPONENT_TEST_DESCRIPTION_NAME);
+   ___replace(test_file_content, "[[COMPONENT_CLASS_NAME]]", COMPONENT_CLASS_NAME);
+   outfile7 << test_file_content;
    outfile7.close();
 
    std::stringstream finish_message;
