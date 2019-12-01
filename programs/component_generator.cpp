@@ -64,6 +64,14 @@ static void ___replace(std::string& str, std::string from, std::string to)
 std::vector<std::string> args;
 
 
+std::string make_folder(std::string dir)
+{
+   std::stringstream command;
+   command << "mkdir \"" << dir << "\"";
+   return command.str();
+}
+
+
 class Generator
 {
 private:
@@ -119,12 +127,6 @@ public:
       command << "mkdir \"" << component_name << "\"";
       return command.str();
    }
-   std::string make_folder(std::string dir)
-   {
-      std::stringstream command;
-      command << "mkdir \"" << dir << "\"";
-      return command.str();
-   }
 };
 
 
@@ -144,8 +146,8 @@ int main(int argc, char **argv)
    //system(generator.mkprojdir("quintessence").c_str());
 
    std::cout << "making sure necessary folders are present" << std::endl;
-   system(generator.make_folder(QUINTESSENCE_FOLDER_NAME).c_str());
-   system(generator.make_folder(TEST_FOLDER_NAME).c_str());
+   system(make_folder(QUINTESSENCE_FOLDER_NAME).c_str());
+   system(make_folder(TEST_FOLDER_NAME).c_str());
 
    std::ofstream outfile4(generator.get_quintessence_filename());
    std::ofstream outfile7(generator.get_test_filename());
