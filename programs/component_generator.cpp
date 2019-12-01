@@ -25,11 +25,16 @@ std::string TEST_FILE_CONTENT = R"END(
 
 #include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
 
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+}
+
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], run__returns_the_expected_response)
 {
-   [[COMPONENT_CLASS_NAME]] program_runner;
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
    std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, program_runner.run());
+   EXPECT_EQ(expected_string, [[COMPONENT_BASENAME_SNAKE_CASE]].run());
 }
 )END";
 
@@ -124,11 +129,13 @@ int main(int argc, char **argv)
    std::string COMPONENT_HEADER_INCLUDE_FILE_PATH = generator.get_header_filename();
    std::string COMPONENT_TEST_DESCRIPTION_NAME = generator.get_google_test_description_prefix();
    std::string COMPONENT_CLASS_NAME = generator.get_program_body_class_name();
+   std::string COMPONENT_BASENAME_SNAKE_CASE = generator.get_component_tail_snakecase();
 
    std::string test_file_content = TEST_FILE_CONTENT;
    ___replace(test_file_content, "[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]", COMPONENT_HEADER_INCLUDE_FILE_PATH);
    ___replace(test_file_content, "[[COMPONENT_TEST_DESCRIPTION_NAME]]", COMPONENT_TEST_DESCRIPTION_NAME);
    ___replace(test_file_content, "[[COMPONENT_CLASS_NAME]]", COMPONENT_CLASS_NAME);
+   ___replace(test_file_content, "[[COMPONENT_BASENAME_SNAKE_CASE]]", COMPONENT_BASENAME_SNAKE_CASE);
    outfile7 << test_file_content;
    outfile7.close();
 
