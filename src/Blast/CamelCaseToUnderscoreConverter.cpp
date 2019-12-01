@@ -1,6 +1,6 @@
 
 
-#include <Blast/CamelCaseUnderscoreConverter.hpp>
+#include <Blast/CamelCaseToUnderscoreConverter.hpp>
 #include <algorithm>
 #include <cctype>
 #include <cctype>
@@ -10,18 +10,18 @@ namespace Blast
 {
 
 
-CamelCaseUnderscoreConverter::CamelCaseUnderscoreConverter(std::string str)
+CamelCaseToUnderscoreConverter::CamelCaseToUnderscoreConverter(std::string str)
    : str(str)
 {
 }
 
 
-CamelCaseUnderscoreConverter::~CamelCaseUnderscoreConverter()
+CamelCaseToUnderscoreConverter::~CamelCaseToUnderscoreConverter()
 {
 }
 
 
-std::string CamelCaseUnderscoreConverter::convert_to_underscores()
+std::string CamelCaseToUnderscoreConverter::convert_to_underscores()
 {
 std::string camelCase = str;
 // Convert lowerCamelCase and UpperCamelCase strings to lower_with_underscore.

@@ -6,14 +6,14 @@
 
 namespace Blast
 {
-   class CamelCaseUnderscoreConverter
+   class CamelCaseToUnderscoreConverter
    {
    private:
       std::string str;
 
    public:
-      CamelCaseUnderscoreConverter(std::string str="foobar");
-      ~CamelCaseUnderscoreConverter();
+      CamelCaseToUnderscoreConverter(std::string str="foobar");
+      ~CamelCaseToUnderscoreConverter();
 
 
    std::string convert_to_underscores();
