@@ -1,0 +1,37 @@
+properties:
+  - name: str
+    type: std::string
+    init_with: "\"foobar\""
+    constructor_arg: true
+functions:
+  - name: convert_to_underscores
+    type: std::string
+    body: |
+      std::string camelCase = str;
+      // Convert lowerCamelCase and UpperCamelCase strings to lower_with_underscore.
+      std::string str(1, tolower(camelCase[0]));
+
+      // First place underscores between contiguous lower and upper case letters.
+      // For example, `_LowerCamelCase` becomes `_Lower_Camel_Case`.
+      for (auto it = camelCase.begin() + 1; it != camelCase.end(); ++it) {
+        if (isupper(*it) && *(it-1) != '_' && islower(*(it-1))) {
+          str += "_";
+        }
+        str += *it;
+      }
+
+      // Then convert it to lower case.
+      std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+
+      return str;
+    body_dependency_symbols:
+      - std::transform
+      - isupper
+      - islower
+dependencies:
+  - symbol: std::transform
+    headers: [ algorithm ]
+  - symbol: isupper
+    headers: [ cctype ]
+  - symbol: islower
+    headers: [ cctype ]
