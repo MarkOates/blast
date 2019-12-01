@@ -17,3 +17,21 @@ TEST(Blast_Quintessence_ComponentGenerator, can_be_created_without_blowing_up)
 }
 
 
+TEST(Blast_Quintessence_ComponentGenerator, get_quintessence_foldername__returns_the_expected_folder_name)
+{
+   std::string expected_folder_name = "quintessence/Foo/Bar";
+   ComponentGenerator generator("Foo/Bar/Baz");
+
+   ASSERT_EQ(expected_folder_name, generator.get_quintessence_foldername());
+}
+
+
+TEST(Blast_Quintessence_ComponentGenerator, get_test_foldername__returns_the_expected_folder_name)
+{
+   std::string expected_folder_name = "tests/Baz/Bar";
+   ComponentGenerator generator("Baz/Bar/Foo");
+
+   ASSERT_EQ(expected_folder_name, generator.get_test_foldername());
+}
+
+
