@@ -15,6 +15,11 @@ int main(int argc, char **argv)
                                         "[[TARGET_PROJECT_FOLDER_NAME]]/quintessence/${COMPONENT}.q.yml; " \
                                         "unset COMPONENT; unset TARGET_PROJECT";
 
+   const std::string TEST_FILE_COMMAND_TEMPLATE = "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; " \
+                                                  "ln -s /Users/markoates/Repos/${TARGET_PROJECT}/tests/${COMPONENT}Test.cpp " \
+                                                  "[[TARGET_PROJECT_FOLDER_NAME]]/tests/${COMPONENT}Test.cpp; " \
+                                                  "unset COMPONENT; unset TARGET_PROJECT";
+
    std::string source_project_raw_folder_name = args[1]; //"blast";
    std::string component_name = args[2]; //"Blast/ShellCommandExecutorWithCallback";
    std::string target_project_raw_folder_name = ".";
@@ -25,10 +30,18 @@ int main(int argc, char **argv)
       { "[[TARGET_PROJECT_FOLDER_NAME]]", target_project_raw_folder_name },
    });
 
+   Blast::TemplatedFile templated_test_command(TEST_FILE_COMMAND_TEMPLATE, {
+      { "[[TARGET_PROJECT]]",             source_project_raw_folder_name },
+      { "[[COMPONENT]]",                  component_name },
+      { "[[TARGET_PROJECT_FOLDER_NAME]]", target_project_raw_folder_name },
+   });
+
    std::string result_command = templated_file.generate_content();
+   std::string result_test_file_command = templated_test_command.generate_content();
 
    std::cout << "Notice: This program does not actually perform the symlink command, but generates it (for now).  Here is that command:" << std::endl << std::endl;
    std::cout << result_command << std::endl;
+   std::cout << result_test_file_command << std::endl;
 }
 
 
