@@ -1,0 +1,17 @@
+properties:
+  - name: template_content
+    type: std::string
+    init_with: "\"[[GREETING]], [[SUBJECT]]!\""
+    constructor_arg: true
+  - name: insertion_variables
+    type: std::vector<std::pair<std::string, std::string>>
+    init_with: "{ { \"GREETING\", \"Hello\" }, { \"SUBJECT\", \"World\" } }"
+    constructor_arg: true
+functions:
+  - name: generate_content
+    type: std::string
+    body: |
+      return "Hello, World!";
+dependencies:
+  - symbol: std::vector<std::pair<std::string, std::string>>
+    headers: [ string, vector ]
