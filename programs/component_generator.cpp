@@ -72,31 +72,41 @@ std::string generate_make_folder_command(std::string dir)
 }
 
 
+
+#include <Blast/DirectoryCreator.hpp>
+#include <Blast/StringSplitter.hpp>
 #include <Blast/Quintessence/ComponentGenerator.hpp>
+
+
+
+bool create_directory(std::string dir)
+{
+   std::vector<std::string> directory_components = Blast::StringSplitter(dir, '/').split();
+   Blast::DirectoryCreator directory_creator(directory_components);
+   return directory_creator.create();
+}
+
 
 
 int main(int argc, char **argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
 
-   if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
+   if (args.size() <= 1) throw std::runtime_error("You must pass a component name.  This component name should include its nested folders like \"Foobar/Bar/Bazz\" where \"Foobar/Bar\" are the folders and \"Bazz\" is the name of the component.");
 
    ComponentGenerator generator(argv[1]);
    ConsoleOutputter console_output;
 
    // make the quintessence file
 
-   //system(generator.get_command_for_make_dir().c_str());
-   //system(generator.mkprojdir("tests").c_str());
-   //system(generator.mkprojdir("quintessence").c_str());
+   std::cout << "Making sure necessary folders are present...";
+   create_directory(generator.get_quintessence_foldername());
+   create_directory(generator.get_test_foldername());
+   std::cout << "...component folders created.";
 
-   std::cout << "making sure necessary folders are present" << std::endl;
-   system(make_folder(QUINTESSENCE_FOLDER_NAME).c_str());
-   system(make_folder(TEST_FOLDER_NAME).c_str());
-
+   std::cout << "Generating component files..." << std::endl;
    std::ofstream outfile4(generator.get_quintessence_filename());
    std::ofstream outfile7(generator.get_test_filename());
-
 
    std::map<std::string, std::ofstream *> outfiles = {
       { generator.get_quintessence_filename(), &outfile4 },
