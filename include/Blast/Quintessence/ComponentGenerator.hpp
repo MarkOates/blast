@@ -23,6 +23,8 @@ public:
    std::string get_google_test_description_prefix();
    std::string get_program_body_class_name();
    std::string get_command_for_make_dir();
+
+   bool generate();
 };
 
 

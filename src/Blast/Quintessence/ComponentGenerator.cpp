@@ -116,3 +116,10 @@ std::string ComponentGenerator::get_command_for_make_dir()
 
 
 
+bool ComponentGenerator::generate()
+{
+   return false;
+}
+
+
+
