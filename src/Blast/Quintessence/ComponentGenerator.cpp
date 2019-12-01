@@ -2,10 +2,13 @@
 
 
 #include <Blast/Quintessence/ComponentGenerator.hpp>
+#include <Blast/CamelCaseToUnderscoreConverter.hpp>
+#include <Blast/StringSplitter.hpp>
 
 
 #include <sstream>
 #include <filesystem>
+#include <vector>
 
 
 
@@ -112,6 +115,16 @@ std::string ComponentGenerator::get_command_for_make_dir()
    std::stringstream command;
    command << "mkdir \"" << component_name << "\"";
    return command.str();
+}
+
+
+
+std::string ComponentGenerator::get_component_tail_snakecase()
+{
+   std::vector<std::string> tokens = Blast::StringSplitter(get_component_name(), '/').split();
+   if (tokens.empty()) throw std::runtime_error("error extracting component_basemane_tail; extracted tokens appear to be empty");
+   std::string component_tail = tokens.back();
+   return Blast::CamelCaseToUnderscoreConverter(component_tail).convert_to_underscores();
 }
 
 

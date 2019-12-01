@@ -35,3 +35,12 @@ TEST(Blast_Quintessence_ComponentGenerator, get_test_foldername__returns_the_exp
 }
 
 
+TEST(Blast_Quintessence_ComponentGenerator, get_component_tail_snakecase__returns_the_expected_string)
+{
+   std::string expected_folder_name = "bar_basil_bonk";
+   ComponentGenerator generator("Baz/Bar/BarBasilBonk");
+
+   ASSERT_EQ(expected_folder_name, generator.get_component_tail_snakecase());
+}
+
+
