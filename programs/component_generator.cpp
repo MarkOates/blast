@@ -123,7 +123,5 @@ int main(int argc, char **argv)
 
    std::cout << finish_message.str() << std::endl;
 
-   std::runtime_error("You must pass a project name");
-
    return 0;
 }
