@@ -20,6 +20,18 @@ TemplatedFile::~TemplatedFile()
 }
 
 
+void TemplatedFile::set_insertion_variables(std::vector<std::pair<std::string, std::string>> insertion_variables)
+{
+   this->insertion_variables = insertion_variables;
+}
+
+
+std::vector<std::pair<std::string, std::string>> TemplatedFile::get_insertion_variables()
+{
+   return insertion_variables;
+}
+
+
 std::string TemplatedFile::__replace(std::string str, std::string from, std::string to)
 {
 size_t start_pos = 0;
