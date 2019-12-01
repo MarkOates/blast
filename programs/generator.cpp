@@ -106,21 +106,6 @@ int main(int argc, char **argv)
 
 
 
-std::string PROGRAM_RUNNER_TEST_FILE_CONTENT = R"END(
-#include <gtest/gtest.h>
-
-#include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
-
-TEST([[PROGRAM_RUNNER_CLASS_NAME]]Test, run__returns_the_expected_response)
-{
-   [[PROGRAM_RUNNER_CLASS_NAME]] component;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, component.run());
-}
-)END";
-
-
-
 const std::string MAKEFILE_TEMPLATE = R"END(PROJECT_NAME=mylibrary
 VERSION_NUMBER=0.0.1
 LIBS_ROOT=/Users/markoates/Repos
@@ -419,12 +404,6 @@ int main(int argc, char **argv)
    std::ofstream outfile6(generator.get_project_name() + "/tests/" + TEST_RUNNER_CLASS_NAME + ".cpp");
    outfile6 << TEST_RUNNER_FILE_CONTENT;
    outfile6.close();
-
-   //std::ofstream outfile7(generator.get_project_name() + "/tests/" + PROGRAM_RUNNER_CLASS_NAME + "Test.cpp");
-   //std::string program_runner_test_file_content = PROGRAM_RUNNER_TEST_FILE_CONTENT;
-   //___replace(program_runner_test_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
-   //outfile7 << program_runner_test_file_content;
-   //outfile7.close();
 
    std::string rerun_script_filename = generator.get_project_name() + "/rr";
    std::ofstream outfile8(rerun_script_filename);
