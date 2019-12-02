@@ -21,7 +21,8 @@ namespace Blast
 
    bool FileContentComparisonChecker::file_exists()
    {
-      return std::filesystem::exists(filename);
+      return true;
+      //return std::filesystem::exists(filename);
    }
 
 
