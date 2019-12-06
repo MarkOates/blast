@@ -7,7 +7,7 @@
 
 
 #include <sstream>
-//#include <filesystem>
+#include <filesystem>
 #include <vector>
 
 
@@ -64,18 +64,16 @@ std::string ComponentGenerator::get_test_filename()
 
 std::string ComponentGenerator::get_quintessence_foldername()
 {
-   return get_quintessence_filename();
-   //std::filesystem::path p = get_quintessence_filename();
-   //return p.parent_path();
+   std::filesystem::path p = get_quintessence_filename();
+   return p.parent_path();
 }
 
 
 
 std::string ComponentGenerator::get_test_foldername()
 {
-   return get_test_filename();
-   //std::filesystem::path p = get_test_filename();
-   //return p.parent_path();
+   std::filesystem::path p = get_test_filename();
+   return p.parent_path();
 }
 
 

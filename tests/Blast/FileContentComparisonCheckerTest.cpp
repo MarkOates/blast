@@ -10,7 +10,7 @@
 
 TEST(Blast__FileContentComparisonCheckerTest, expected_test_file_exists)
 {
-   //ASSERT_TRUE(std::filesystem::exists(FIXTURE_FILENAME));
+   ASSERT_TRUE(std::filesystem::exists(FIXTURE_FILENAME));
 }
 
 
