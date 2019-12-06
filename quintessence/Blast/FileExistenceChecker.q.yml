@@ -1,0 +1,16 @@
+properties:
+  - name: filename
+    type: std::string
+    init_with: "\"\""
+    constructor_arg: true
+    getter: true
+functions:
+  - name: exists
+    type: bool
+    body: |
+      return std::filesystem::exists(filename);
+    body_dependency_symbols:
+      - std::filesystem::exists
+dependencies:
+  - symbol: std::filesystem::exists
+    headers: [ filesystem ]
