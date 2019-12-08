@@ -1,4 +1,41 @@
-functions:
-  - name: run
+properties:
+  - name: name
     type: std::string
-    body: return "Hello World!";
+    init_with: "\"Unnamed/Component\""
+    constructor_arg: true
+    getter: true
+
+
+functions:
+  - name: check_file_existence
+    type: bool
+    private: true
+    parameters:
+      - name: type
+        type: Blast::ProjectComponentFileTypes::project_file_type_t
+        default_argument: Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE
+    body: |
+      std::string filename = Blast::ProjectComponentFilenameGenerator(name, type).generate_filename();
+      return Blast::FileExistenceChecker(filename).exists();
+    body_dependency_symbols:
+      - Blast::ProjectComponentFilenameGenerator
+      - Blast::ProjectComponentFileTypes
+      - Blast::FileExistenceChecker
+
+  - name: has_quintessence
+    type: bool
+    body: |
+      return check_file_existence(Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE);
+    body_dependency_symbols:
+      - Blast::ProjectComponentFileTypes
+
+
+dependencies:
+  - symbol: Blast::ProjectComponentFileTypes::project_file_type_t
+    headers: [ Blast/ProjectComponentFileTypes.hpp ]
+  - symbol: Blast::ProjectComponentFilenameGenerator
+    headers: [ Blast/ProjectComponentFilenameGenerator.hpp ]
+  - symbol: Blast::ProjectComponentFileTypes
+    headers: [ Blast/ProjectComponentFileTypes.hpp ]
+  - symbol: Blast::FileExistenceChecker
+    headers: [ Blast/FileExistenceChecker.hpp ]
