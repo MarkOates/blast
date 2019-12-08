@@ -4,6 +4,11 @@ properties:
     init_with: "\"Unnamed/Component\""
     constructor_arg: true
     getter: true
+  - name: project_root
+    type: std::string
+    init_with: "\"/Users/markoates/Repos/blast/\""
+    constructor_arg: true
+    getter: true
 
 
 functions:
@@ -16,7 +21,8 @@ functions:
         default_argument: Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE
     body: |
       std::string filename = Blast::ProjectComponentFilenameGenerator(name, type).generate_filename();
-      return Blast::FileExistenceChecker(filename).exists();
+      std::string full_filename = project_root + filename;
+      return Blast::FileExistenceChecker(full_filename).exists();
     body_dependency_symbols:
       - Blast::ProjectComponentFilenameGenerator
       - Blast::ProjectComponentFileTypes
