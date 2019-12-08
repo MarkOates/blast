@@ -116,10 +116,6 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
    if (Blast::FileContentComparisonChecker(header_filepath, header_file_content).is_equal()) content_for_header_is_unchanged = true;
    if (Blast::FileContentComparisonChecker(source_filepath, source_file_content).is_equal()) content_for_source_is_unchanged = true;
 
-   if (content_for_header_is_unchanged) std::cout << "CONTENT IS UNCHNAGED FOR HEADER: \"" << header_filepath << "\"" << std::endl;
-   if (content_for_source_is_unchanged) std::cout << "CONTENT IS UNCHNAGED FOR SOURCE: \"" << source_filepath << "\"" << std::endl;
-
-
    if (!content_for_header_is_unchanged)
    {
       std::ofstream header_file;
@@ -173,7 +169,14 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
    }
 
    // output success
-   std::cout << "done. Files generated \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
+   if (content_for_header_is_unchanged && content_for_source_is_unchanged)
+   {
+      std::cout << "🔹 content is unchanged for \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
+   }
+   else
+   {
+      std::cout << "✅ done. Files generated \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
+   }
 }
 
 
@@ -773,7 +776,7 @@ int main(int argc, char **argv)
    for (int i=1; i<argc; i++)
    {
       std::string quintessence_filename = argv[i];
-      std::cout << "Initiating fetching, loading, and parsing of component file \"" << quintessence_filename << "\"" << std::endl;
+      std::cout << "Assessing genesis for \"" << quintessence_filename << "\"" << std::endl;
       YAML::Node source = YAML::LoadFile(quintessence_filename);
 
 
