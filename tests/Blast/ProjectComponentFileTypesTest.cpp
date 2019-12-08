@@ -7,9 +7,10 @@
 #include <cmath>
 
 
-TEST(ProjectComponentBasenameExtractorTest, get_project_file_type_str__retuns_the_corresponding_name_for_the_file_type)
+TEST(Blast_ProjectComponentFileTypesTest, get_project_file_type_str__retuns_the_corresponding_name_for_the_file_type)
 {
    std::vector<std::pair<std::string, Blast::ProjectComponentFileTypes::project_file_type_t>> test_data = {
+      { "quintessence file", Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE },
       { "source file", Blast::ProjectComponentFileTypes::SOURCE_FILE },
       { "header file", Blast::ProjectComponentFileTypes::HEADER_FILE },
       { "test file", Blast::ProjectComponentFileTypes::TEST_FILE },

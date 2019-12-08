@@ -11,6 +11,7 @@ std::string ProjectComponentFileTypes::get_project_file_type_str(ProjectComponen
 {
    switch(project_file_type)
    {
+   case QUINTESSENCE_FILE: return "quintessence file"; break;
    case SOURCE_FILE: return "source file"; break;
    case HEADER_FILE: return "header file"; break;
    case TEST_FILE: return "test file"; break;

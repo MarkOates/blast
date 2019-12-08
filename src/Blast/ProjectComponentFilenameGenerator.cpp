@@ -61,6 +61,9 @@ std::string ProjectComponentFilenameGenerator::generate_filename()
 {
    switch (project_file_type)
    {
+   case ProjectComponentFileTypes::QUINTESSENCE_FILE:
+      return std::string("quintessence/") + basename + ".q.yml";
+      break;
    case ProjectComponentFileTypes::SOURCE_FILE:
       return std::string("src/") + basename + ".cpp";
       break;

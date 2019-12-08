@@ -12,6 +12,7 @@ namespace Blast
       enum project_file_type_t
       {
          NOT_IDENTIFIABLE,
+         QUINTESSENCE_FILE,
          SOURCE_FILE,
          HEADER_FILE,
          TEST_FILE,
