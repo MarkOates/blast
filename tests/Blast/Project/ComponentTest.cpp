@@ -34,7 +34,7 @@ TEST(Blast_Project_ComponentTest, has_quintessence__returns_true_when_a_quintess
    ASSERT_EQ(true, component.has_quintessence());
 }
 
-TEST(Blast_Project_ComponentTest, has_quintessence__returns_false_when_a_quintessence_file_is_present)
+TEST(Blast_Project_ComponentTest, has_quintessence__returns_false_when_a_quintessence_file_is_not_present)
 {
    Blast::Project::Component component("Blast/DiceRoller");
    ASSERT_EQ(false, component.has_quintessence());
