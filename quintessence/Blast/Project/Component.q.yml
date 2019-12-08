@@ -22,6 +22,29 @@ functions:
       - Blast::ProjectComponentFileTypes
       - Blast::FileExistenceChecker
 
+  - name: exists
+    type: bool
+    body: |
+      std::vector<Blast::ProjectComponentFileTypes::project_file_type_t> types_to_scan_for = {
+         Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE,
+         Blast::ProjectComponentFileTypes::SOURCE_FILE,
+         Blast::ProjectComponentFileTypes::HEADER_FILE,
+         Blast::ProjectComponentFileTypes::TEST_FILE,
+         Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+         //Blast::ProjectComponentFileTypes::OBJECT_FILE,
+         //Blast::ProjectComponentFileTypes::TEST_BINARY,
+         //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
+      };
+
+      for (auto &type_to_scan_for : types_to_scan_for)
+      {
+         if (check_file_existence(type_to_scan_for)) return true;
+      }
+      return false;
+    body_dependency_symbols:
+      - Blast::ProjectComponentFileTypes
+      - vector
+
   - name: has_quintessence
     type: bool
     body: |
@@ -29,8 +52,30 @@ functions:
     body_dependency_symbols:
       - Blast::ProjectComponentFileTypes
 
+  - name: has_only_source_and_header
+    type: bool
+    body: |
+      return (
+        !has_quintessence()
+        && check_file_existence(Blast::ProjectComponentFileTypes::SOURCE_FILE)
+        && check_file_existence(Blast::ProjectComponentFileTypes::HEADER_FILE)
+      );
+    body_dependency_symbols:
+      - Blast::ProjectComponentFileTypes
+
+  - name: has_test
+    type: bool
+    body: |
+      return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
+    body_dependency_symbols:
+      - Blast::ProjectComponentFileTypes
+
 
 dependencies:
+  - symbol: vector
+    headers: [ vector ]
+  - symbol: Blast::ProjectComponentFileTypes::project_file_type_t
+    headers: [ Blast/ProjectComponentFileTypes.hpp ]
   - symbol: Blast::ProjectComponentFileTypes::project_file_type_t
     headers: [ Blast/ProjectComponentFileTypes.hpp ]
   - symbol: Blast::ProjectComponentFilenameGenerator
