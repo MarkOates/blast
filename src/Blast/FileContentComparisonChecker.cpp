@@ -1,6 +1,7 @@
 
 
 #include <Blast/FileContentComparisonChecker.hpp>
+#include <Blast/FileExistenceChecker.hpp>
 
 #include <iostream>
 
@@ -21,8 +22,7 @@ namespace Blast
 
    bool FileContentComparisonChecker::file_exists()
    {
-      return true;
-      //return std::filesystem::exists(filename);
+      return Blast::FileExistenceChecker(filename).exists();
    }
 
 
