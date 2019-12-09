@@ -4,6 +4,7 @@
 #include <Blast/Quintessence/ComponentGenerator.hpp>
 #include <Blast/CamelCaseToUnderscoreConverter.hpp>
 #include <Blast/StringSplitter.hpp>
+#include <Blast/StringJoiner.hpp>
 
 
 #include <sstream>
@@ -64,16 +65,28 @@ std::string ComponentGenerator::get_test_filename()
 
 std::string ComponentGenerator::get_quintessence_foldername()
 {
-   std::filesystem::path p = get_quintessence_filename();
-   return p.parent_path();
+   std::vector<std::string> tokens = Blast::StringSplitter(get_quintessence_filename(), '/').split();
+   if (!tokens.empty()) tokens.pop_back();
+   std::string result = Blast::StringJoiner(tokens, "/").join();
+   return result;
+
+   //this impl is preferible, but does not work with systems that do not have <filesystem>:
+   //std::filesystem::path p = get_quintessence_filename();
+   //return p.parent_path();
 }
 
 
 
 std::string ComponentGenerator::get_test_foldername()
 {
-   std::filesystem::path p = get_test_filename();
-   return p.parent_path();
+   std::vector<std::string> tokens = Blast::StringSplitter(get_test_filename(), '/').split();
+   if (!tokens.empty()) tokens.pop_back();
+   std::string result = Blast::StringJoiner(tokens, "/").join();
+   return result;
+
+   //this impl is preferible, but does not work with systems that do not have <filesystem>:
+   //std::filesystem::path p = get_test_filename();
+   //return p.parent_path();
 }
 
 
