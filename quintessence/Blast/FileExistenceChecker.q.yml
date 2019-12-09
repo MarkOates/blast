@@ -8,10 +8,19 @@ functions:
   - name: exists
     type: bool
     body: |
-       return true;
-#      return std::filesystem::exists(filename);
-#    body_dependency_symbols:
-#      - std::filesystem::exists
-#dependencies:
-#  - symbol: std::filesystem::exists
-#    headers: [ filesystem ]
+      struct stat info;
+      return stat(filename.c_str(), &info) == 0 && (S_ISREG(info.st_mode) || S_ISLNK(info.st_mode));
+    body_dependency_symbols:
+      - std::filesystem::exists
+      - S_ISREG
+      - S_ISLINK
+      - stat
+dependencies:
+  - symbol: std::filesystem::exists
+    headers: [ experimental/filesystem ]
+  - symbol: S_ISREG
+    headers: [ sys/stat.h ]
+  - symbol: S_ISLINK
+    headers: [ sys/stat.h ]
+  - symbol: stat
+    headers: [ sys/stat.h ]
