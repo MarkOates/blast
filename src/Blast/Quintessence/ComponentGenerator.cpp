@@ -8,7 +8,6 @@
 
 
 #include <sstream>
-//#include <filesystem>
 #include <vector>
 
 
@@ -69,10 +68,6 @@ std::string ComponentGenerator::get_quintessence_foldername()
    if (!tokens.empty()) tokens.pop_back();
    std::string result = Blast::StringJoiner(tokens, "/").join();
    return result;
-
-   //this impl is preferible, but does not work with systems that do not have <filesystem>:
-   //std::filesystem::path p = get_quintessence_filename();
-   //return p.parent_path();
 }
 
 
@@ -83,10 +78,6 @@ std::string ComponentGenerator::get_test_foldername()
    if (!tokens.empty()) tokens.pop_back();
    std::string result = Blast::StringJoiner(tokens, "/").join();
    return result;
-
-   //this impl is preferible, but does not work with systems that do not have <filesystem>:
-   //std::filesystem::path p = get_test_filename();
-   //return p.parent_path();
 }
 
 
