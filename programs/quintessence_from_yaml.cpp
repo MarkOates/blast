@@ -362,7 +362,7 @@ public:
       validate(source.IsSequence(), this_component_name, "Expected \"parent_classes\" to be of a YAML Sequence type.");
 
 
-      YAML::NodeType::value t = YAML::NodeType::Scalar;
+      //YAML::NodeType::value t = YAML::NodeType::Scalar;
 
       const std::string CLASS = "class";
       const std::string SCOPE = "scope";
@@ -383,11 +383,11 @@ public:
 
 
       // validate required elements are present
-      std::vector<std::string> missing_required_elements = required_elements;
-      for (auto &required_element : required_elements)
-      {
+      //std::vector<std::string> missing_required_elements = required_elements;
+      //for (auto &required_element : required_elements)
+      //{
 
-      }
+      //}
 
 
       // not going to implement for now: notify missing optional elements
