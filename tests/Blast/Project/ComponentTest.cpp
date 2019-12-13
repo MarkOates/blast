@@ -20,7 +20,7 @@ TEST(Blast_Project_ComponentTest, generate_full_path_test_binary_filename__retur
    std::string component_name = "Hexagon/FoobarComponent";
    std::string project_root = "/Users/markoates/Repos/hexagon/";
    Blast::Project::Component component(component_name, project_root);
-   std::string expected_full_path_test_binary_filename = "/Users/markoates/Repos/hexagon/bin/tests/Hexagon/FoobarComponentTest"
+   std::string expected_full_path_test_binary_filename = "/Users/markoates/Repos/hexagon/bin/tests/Hexagon/FoobarComponentTest";
    ASSERT_EQ(expected_full_path_test_binary_filename, component.generate_full_path_test_binary_filename());
 }
 
