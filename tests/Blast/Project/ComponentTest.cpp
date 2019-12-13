@@ -15,6 +15,15 @@ TEST(Blast_Project_ComponentTest, run__has_the_expected_defaults)
    ASSERT_EQ(expected_component_name, component.get_name());
 }
 
+TEST(Blast_Project_ComponentTest, generate_full_path_test_binary_filename__returns_the_expected_string)
+{
+   std::string component_name = "Hexagon/FoobarComponent";
+   std::string project_root = "/Users/markoates/Repos/hexagon/";
+   Blast::Project::Component component(component_name, project_root);
+   std::string expected_full_path_test_binary_filename = "/Users/markoates/Repos/hexagon/bin/tests/Hexagon/FoobarComponentTest"
+   ASSERT_EQ(expected_full_path_test_binary_filename, component.generate_full_path_test_binary_filename());
+}
+
 TEST(Blast_Project_ComponentTest, exists__returns_true_if_any_component_files_are_present)
 {
    // this may require a more robust test

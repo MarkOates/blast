@@ -12,6 +12,15 @@ properties:
 
 
 functions:
+  - name: generate_full_path_test_binary_filename
+    type: std::string
+    body: |
+      std::string filename = Blast::ProjectComponentFilenameGenerator(name, Blast::ProjectComponentFileTypes::TEST_FILE).generate_filename();
+      return project_root + filename;
+    body_dependency_symbols:
+      - Blast::ProjectComponentFilenameGenerator
+      - Blast::ProjectComponentFileTypes
+       
   - name: check_file_existence
     type: bool
     private: true
