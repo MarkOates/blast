@@ -5,10 +5,9 @@ ALLEGRO_INCLUDE_DIR=$(LIBS_ROOT)/allegro5/build/include
 ALLEGRO_LIB_DIR=$(LIBS_ROOT)/allegro5/build/lib
 NCURSES_INCLUDE_DIR=/usr/local/opt/ncurses/include
 NCURSES_LIB_DIR=/usr/local/opt/ncurses/lib
-### note: yaml-cpp is expected to be installed on the system
-#YAML_CPP_DIR=$(LIBS_ROOT)/yaml-cpp
-#YAML_CPP_LIB_DIR=$(YAML_CPP_DIR)/build
-#YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
+YAML_CPP_DIR=$(LIBS_ROOT)/yaml-cpp
+YAML_CPP_LIB_DIR=$(YAML_CPP_DIR)/build
+YAML_CPP_INCLUDE_DIR=$(YAML_CPP_DIR)/include
 GOOGLE_TEST_DIR=$(LIBS_ROOT)/googletest
 GOOGLE_TEST_LIB_DIR=$(GOOGLE_TEST_DIR)/build/googlemock/gtest
 GOOGLE_TEST_INCLUDE_DIR=$(GOOGLE_TEST_DIR)/googletest/include
@@ -68,8 +67,8 @@ main:
 	#@make tests -j8
 	#$(call output_terminal_message,"Run the tests for all the components")
 	#@make run_tests
-	#$(call output_terminal_message,"Build the library")
-	#@make library
+	$(call output_terminal_message,"Build the library")
+	@make library
 	$(call output_terminal_message,"Make all the programs")
 	@make programs -j8
 	$(call output_terminal_message,"Make all the example programs")
@@ -119,7 +118,7 @@ $(LIBRARY_NAME): $(OBJECTS)
 bin/programs/%: programs/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "compiling program from \e[1m\e[36m$<\033[0m..."
-	@g++ -std=c++17 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -l$(YAML_CPP_LIBS)  -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
+	@g++ -std=c++17 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $(OBJECTS) $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS)  -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. Executable at \033[1m\033[32m$@\033[0m"
 
 
@@ -135,7 +134,7 @@ bin/examples/%: examples/%.cpp $(OBJECTS)
 obj/%.o: src/%.cpp
 	@mkdir -p $(@D)
 	@printf "compiling object file from \e[1m\e[34m$<\033[0m..."
-	@g++ -c -std=c++17 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
+	@g++ -c -std=c++17 -Qunused-arguments -Wall -Wuninitialized -Weffc++ $< -o $@ -I./include -I$(YAML_CPP_INCLUDE_DIR)  -I$(NCURSES_INCLUDE_DIR) -L$(NCURSES_LIB_DIR) -l$(NCURSES_LIB)
 	@echo "done. object at \033[1m\033[32m$@\033[0m"
 
 
