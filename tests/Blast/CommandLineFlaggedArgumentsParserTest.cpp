@@ -40,6 +40,24 @@ TEST_F(CommandLineFlaggedArgumentsParserTest, can_be_created)
 }
 
 
+TEST_F(CommandLineFlaggedArgumentsParserTest, with_constructor_1__can_be_created)
+{
+   Blast::CommandLineFlaggedArgumentsParser parser(args_fixture({}));
+}
+
+
+TEST_F(CommandLineFlaggedArgumentsParserTest, with_constructor_2__can_be_created)
+{
+   Blast::CommandLineFlaggedArgumentsParser parser(args_fixture(0, nullptr));
+}
+
+
+DISABLE_TEST_F(CommandLineFlaggedArgumentsParserTest, with_constructor_2__properly_parses_the_passed_arguments)
+{
+   // UNTESTED
+}
+
+
 TEST_F(CommandLineFlaggedArgumentsParserTest, get_flagged_args__with_a_given_flag_returns_the_expected_passed_arguments)
 {
    Blast::CommandLineFlaggedArgumentsParser parser(args_fixture);
