@@ -11,6 +11,9 @@
 #include <iostream>
 
 
+bool verbose_output = true;
+
+
 
 void explode(std::string location, std::string error_message)
 {

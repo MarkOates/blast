@@ -8,6 +8,17 @@
 namespace Blast
 {
 
+CommandLineFlaggedArgumentsParser::CommandLineFlaggedArgumentsParser(int argc, char **argv)
+   : command_line_args({})
+{
+   // NOTE! this constructor performs logic inside of it's body. The logic could potentially
+   // crash or cause side effects and guards have not been implemented.  Be sure to pass
+   // verbatum the arguments that come from the program's entry, or add the necessary features
+   // properly guard this function body.
+
+   for (int i=0; i<argc; i++) command_line_args.push_back(argv[i]);
+}
+
 
 CommandLineFlaggedArgumentsParser::CommandLineFlaggedArgumentsParser(std::vector<std::string> command_line_args)
    : command_line_args(command_line_args)
