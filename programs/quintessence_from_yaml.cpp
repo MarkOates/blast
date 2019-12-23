@@ -5,6 +5,7 @@
 #include <Blast/Cpp/Function.hpp>
 #include <Blast/Cpp/FunctionArgument.hpp>
 #include <Blast/DirectoryCreator.hpp>
+#include <Blast/CommandLineFlaggedArgumentsParser.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
@@ -174,7 +175,7 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
    // output success
    if (content_for_header_is_unchanged && content_for_source_is_unchanged)
    {
-      std::cout << "🔹 content is unchanged for \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
+      if (verbose_output) std::cout << "🔹 content is unchanged for \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
    }
    else
    {
@@ -770,22 +771,34 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
 int main(int argc, char **argv)
 {
-   if (argc <= 1)
+   Blast::CommandLineFlaggedArgumentsParser command_line_arguments(argc, argv);
+   if (command_line_arguments.has_flag("--less_verbose")) verbose_output = false;
+
+   std::vector<std::vector<std::string>> filename_arg_args = command_line_arguments.get_flagged_args("-f");
+
+   std::vector<std::string> filename_args = {};
+   for (auto &filename_arg_arg : filename_arg_args)
    {
-      std::cout << "You must pass a quintessence filename as an argument" << std::endl;
+      filename_args.insert(filename_args.end(), filename_arg_arg.begin(), filename_arg_arg.end());
+   }
+
+
+   if (filename_args.size() <= 1)
+   {
+      std::cout << "You must pass a quintessence filename or filenames as an argument (after the -f flag)" << std::endl;
       return 1;
    }
 
-   for (int i=1; i<argc; i++)
+   for (int i=0; i<filename_args.size(); i++)
    {
-      std::string quintessence_filename = argv[i];
-      std::cout << "Assessing genesis for \"" << quintessence_filename << "\"" << std::endl;
+      std::string quintessence_filename = filename_args[i];
+      if (verbose_output) std::cout << "Assessing genesis for \"" << quintessence_filename << "\"" << std::endl;
       YAML::Node source = YAML::LoadFile(quintessence_filename);
 
 
       // infer the class name from the filename
 
-      QuintessenceClassNameFromYAMLFilenameInferer class_name_inferer(argv[i]);
+      QuintessenceClassNameFromYAMLFilenameInferer class_name_inferer(filename_args[i]);
       std::string class_name = class_name_inferer.infer_class_name();
 
 
