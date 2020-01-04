@@ -12,7 +12,14 @@ functions:
   - name: get_source_file_listing
     type: std::vector<std::string>
     body: |
-      return {};
+      std::string response = Blast::ShellCommandExecutorWithCallback(
+         "find -f **/*",
+         ShellCommandExecutorWithCallback::simple_silent_callback
+      ).execute();
+
+      std::vector<std::string> response_lines = StringSplitter(response, '\n').split();
+
+      return response_lines;
   - name: run
     type: std::string
     body: |
@@ -41,9 +48,13 @@ functions:
        //- bitmaps
        //- fonts
     body_dependency_symbols:
+      - StringSplitter
+      - Blast::ShellCommandExecutorWithCallback
       - std::cout
       - std::endl
 dependencies:
+  - symbol: StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]
   - symbol: Blast::ShellCommandExecutorWithCallback
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
   - symbol: std::cout
