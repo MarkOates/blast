@@ -4,6 +4,21 @@ properties:
     init_with: "\"/Users/markoates/Desktop/Release\""
     constructor_arg: true
 functions:
+  - name: copy_file
+    parameters:
+      - name: source_filename
+        type: std::string
+        default_argument: "\"\""
+      - name: destination_filename
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      std::ifstream src(source_filename, std::ios::binary);
+      std::ofstream dst(destination_filename,   std::ios::binary);
+      dst << src.rdbuf();
+    body_dependency_symbols:
+      - std::ifstream
+      - std::ofstream
   - name: list_symlinks
     type: std::vector<std::pair<std::string, std::string>>
     body: |
@@ -31,7 +46,38 @@ functions:
       - Blast::Project::SymlinkChecker
       - Blast::ShellCommandExecutorWithCallback
       - StringSplitter
+  - name: replace_symlinks_with_copies_of_linked_files
+    body: |
+      std::vector<std::pair<std::string, std::string>> symlinks = list_symlinks();
+
+      for (auto &symlink : symlinks)
+      {
+         std::string file_to_remove = symlink.first;
+         std::string file_to_copy_source = symlink.second;
+         std::string file_to_copy_destination = symlink.first;
+
+         if (remove(file_to_remove.c_str()) != 0)
+         {
+            std::stringstream error_message;
+            error_message << "There was an error trying to delete the file \"" << file_to_remove << "\"" << std::endl;
+            throw std::runtime_error(error_message.str());
+         }
+
+         copy_file(file_to_copy_source, file_to_copy_destination);
+      }
+      return;
+    body_dependency_symbols:
+      - remove
+      - std::stringstream
 dependencies:
+  - symbol: std::ifstream
+    headers: [ fstream ]
+  - symbol: std::ofstream
+    headers: [ fstream ]
+  - symbol: std::stringstream
+    headers: [ sstream ]
+  - symbol: remove
+    headers: [ cstdio ]
   - symbol: std::vector<std::pair<std::string, std::string>>
     headers: [ vector, string ]
   - symbol: StringSplitter

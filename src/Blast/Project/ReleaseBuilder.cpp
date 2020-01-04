@@ -1,10 +1,14 @@
 
 
 #include <Blast/Project/ReleaseBuilder.hpp>
+#include <fstream>
+#include <fstream>
 #include <iostream>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/StringSplitter.hpp>
+#include <cstdio>
+#include <sstream>
 
 
 namespace Blast
@@ -23,6 +27,14 @@ ReleaseBuilder::~ReleaseBuilder()
 {
 }
 
+
+void ReleaseBuilder::copy_file(std::string source_filename, std::string destination_filename)
+{
+std::ifstream src(source_filename, std::ios::binary);
+std::ofstream dst(destination_filename,   std::ios::binary);
+dst << src.rdbuf();
+
+}
 
 std::vector<std::pair<std::string, std::string>> ReleaseBuilder::list_symlinks()
 {
@@ -45,6 +57,29 @@ for (auto &filename : filenames)
 }
 
 return result;
+
+}
+
+void ReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
+{
+std::vector<std::pair<std::string, std::string>> symlinks = list_symlinks();
+
+for (auto &symlink : symlinks)
+{
+   std::string file_to_remove = symlink.first;
+   std::string file_to_copy_source = symlink.second;
+   std::string file_to_copy_destination = symlink.first;
+
+   if (remove(file_to_remove.c_str()) != 0)
+   {
+      std::stringstream error_message;
+      error_message << "There was an error trying to delete the file \"" << file_to_remove << "\"" << std::endl;
+      throw std::runtime_error(error_message.str());
+   }
+
+   copy_file(file_to_copy_source, file_to_copy_destination);
+}
+return;
 
 }
 } // namespace Project
