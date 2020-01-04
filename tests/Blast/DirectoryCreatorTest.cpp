@@ -71,3 +71,19 @@ TEST(DirectoryCreatorTest, create__returns_true_when_attempting_to_create_multip
 }
 
 
+TEST(DirectoryCreatorTest, create__with_a_path_is_absolute_option__will_create_the_directories_relative_to_the_root_of_the_filesystem)
+{
+   std::vector<std::string> directories_that_will_exist = { "Users", "markoates", "Repos", "blast", "tmp", "absolutely_created_directory" };
+
+   std::string composite_directory = Blast::StringJoiner(directories_that_will_exist, "/").join();
+   composite_directory = "/" + composite_directory;
+
+   ASSERT_TRUE(ensure_nonexistent_testing_directory(composite_directory));
+
+   Blast::DirectoryCreator directory_creator(directories_that_will_exist, true);
+   ASSERT_TRUE(directory_creator.create());
+
+   EXPECT_TRUE(remove_directory(composite_directory)) << "Test cleanup failed.";
+}
+
+

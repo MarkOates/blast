@@ -5,6 +5,10 @@ properties:
     type: std::vector<std::string>
     init_with: '{}'
     constructor_arg: true
+  - name: path_is_absolute
+    type: bool
+    init_with: false
+    constructor_arg: true
 functions:
   - name: create
     type: bool
@@ -12,6 +16,7 @@ functions:
     body: |
       std::stringstream result_directories;
       const std::string SEPARATOR = "/";
+      if (path_is_absolute) result_directories << "/";
       for (auto &directory_name : directory_names)
       {
         result_directories << directory_name << SEPARATOR;
