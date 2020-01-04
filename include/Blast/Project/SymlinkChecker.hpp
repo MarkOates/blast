@@ -18,6 +18,7 @@ namespace Blast
          ~SymlinkChecker();
 
 
+      bool is_symlink();
       std::string read_symlink_target();
       };
    }

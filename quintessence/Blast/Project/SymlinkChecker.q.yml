@@ -4,6 +4,19 @@ properties:
     init_with: "\"\""
     constructor_arg: true
 functions:
+  - name: is_symlink
+    type: bool
+    body: |
+      struct stat p_statbuf;
+
+      if (lstat(filename.c_str(), &p_statbuf) < 0)
+      {
+         throw std::runtime_error("[Project/SymlinkChecker error:] An error occurred while attempting to is_symlink");
+      }
+
+      return (S_ISLNK(p_statbuf.st_mode) == 1);
+    body_dependency_symbols:
+      - stat
   - name: read_symlink_target
     type: std::string
     body: |
@@ -19,3 +32,5 @@ functions:
 dependencies:
   - symbol: readlink
     headers: [ unistd.h ]
+  - symbol: stat
+    headers: [ sys/stat.h ]
