@@ -3,6 +3,7 @@
 #include <Blast/Project/ReleaseBuilder.hpp>
 #include <fstream>
 #include <fstream>
+#include <fstream>
 #include <iostream>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
@@ -30,6 +31,25 @@ ReleaseBuilder::~ReleaseBuilder()
 {
 }
 
+
+void ReleaseBuilder::write_file_contents(std::string filename, std::string file_contents)
+{
+std::ofstream out(filename);
+out << file_contents;
+out.close();
+
+}
+
+std::string ReleaseBuilder::get_makefile_content()
+{
+std::string MAKEFILE_CONTENT = R"HEREDOC(SRC_FILES := $(shell find src -type f)
+ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro -lallegro_main
+main: $(SRC_FILES))HEREDOC";
+MAKEFILE_CONTENT += "\t";
+MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/LabyrinthOfLore.cpp -o LabyrinthOfLore -I./include $(ALLEGRO_LIBS)";
+return MAKEFILE_CONTENT;
+
+}
 
 void ReleaseBuilder::copy_file(std::string source_filename, std::string destination_filename)
 {
@@ -112,6 +132,11 @@ std::cout << "done." << std::endl;
 
 std::cout << "Copying data files into \"" << destination_directory << "\"... ";
 data_file_copy_executor.execute();
+std::cout << "done." << std::endl;
+
+std::cout << "Creating rudimentary Makefile...";
+std::string makefile_full_filename = destination_directory + "/Makefile";
+write_file_contents(makefile_full_filename, get_makefile_content());
 std::cout << "done." << std::endl;
 
 replace_symlinks_with_copies_of_linked_files();

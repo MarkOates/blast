@@ -4,6 +4,29 @@ properties:
     init_with: "\"/Users/markoates/Desktop/Release\""
     constructor_arg: true
 functions:
+  - name: write_file_contents
+    parameters:
+      - name: filename
+        type: std::string
+        default_argument: "\"\""
+      - name: file_contents
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      std::ofstream out(filename);
+      out << file_contents;
+      out.close();
+    body_dependency_symbols:
+      - std::ofstream
+  - name: get_makefile_content
+    type: std::string
+    body: |
+      std::string MAKEFILE_CONTENT = R"HEREDOC(SRC_FILES := $(shell find src -type f)
+      ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro -lallegro_main
+      main: $(SRC_FILES))HEREDOC";
+      MAKEFILE_CONTENT += "\t";
+      MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/LabyrinthOfLore.cpp -o LabyrinthOfLore -I./include $(ALLEGRO_LIBS)";
+      return MAKEFILE_CONTENT;
   - name: copy_file
     parameters:
       - name: source_filename
@@ -95,6 +118,11 @@ functions:
 
       std::cout << "Copying data files into \"" << destination_directory << "\"... ";
       data_file_copy_executor.execute();
+      std::cout << "done." << std::endl;
+
+      std::cout << "Creating rudimentary Makefile...";
+      std::string makefile_full_filename = destination_directory + "/Makefile";
+      write_file_contents(makefile_full_filename, get_makefile_content());
       std::cout << "done." << std::endl;
 
       replace_symlinks_with_copies_of_linked_files();
