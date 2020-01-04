@@ -18,16 +18,17 @@ TEST(Blast_Project_ReleaseBuilderTest, project_repo_base_path__returns_the_expec
    ASSERT_EQ(expected_default_project_repo_base_path, actual_default_project_repo_base_path);
 }
 
-TEST(Blast_Project_ReleaseBuilderTest, get_source_file_listing__returns_the_expected_response)
+TEST(Blast_Project_ReleaseBuilderTest, get_source_file_listings__returns_the_expected_response)
 {
    std::string fixture_base_path = "/Users/markoates/Repos/blast/bin/fixtures/";
    std::string fixture_project_name = "FixtureProject2";
    Blast::Project::ReleaseBuilder release_builder(fixture_project_name, fixture_base_path);
 
    std::vector<std::string> expected = {
-      { "quintessence/ComponentWithExternalSymlink.q.yml" },
+      "src/ComponentB.cpp",
+      "src/Nested/ComponentC.cpp",
    };
-   std::vector<std::string> actual = release_builder.get_source_file_listing();
+   std::vector<std::string> actual = release_builder.get_source_file_listings();
 
    ASSERT_EQ(expected, actual);
 }
@@ -90,5 +91,27 @@ TEST(Blast_Project_ReleaseBuilderTest, build_data_folder_directory_components__r
    std::vector<std::string> actual = release_builder.build_data_folder_directory_components();
 
    ASSERT_EQ(expected, actual);
+}
+
+TEST(Blast_Project_ReleaseBuilderTest, create_folders__creates_all_of_the_expected_folders)
+{
+   std::string fixture_base_path = "Users/markoates/Repos/blast/bin/fixtures/";
+   std::string fixture_project_name = "FixtureProject2";
+   Blast::Project::ReleaseBuilder release_builder(fixture_project_name, fixture_base_path);
+
+   release_builder.create_folders();
+
+   //ASSERT_EQ(expected, actual);
+}
+
+TEST(Blast_Project_ReleaseBuilderTest, duplicate_source_files__creates_folders_for_all_the_components)
+{
+   std::string fixture_base_path = "Users/markoates/Repos/blast/bin/fixtures/";
+   std::string fixture_project_name = "FixtureProject2";
+   Blast::Project::ReleaseBuilder release_builder(fixture_project_name, fixture_base_path);
+
+   release_builder.duplicate_source_files();
+
+   //ASSERT_EQ(expected, actual);
 }
 

@@ -2,6 +2,7 @@
 
 #include <Blast/Project/ReleaseBuilder.hpp>
 #include <sstream>
+#include <iostream>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/DirectoryCreator.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
@@ -33,11 +34,13 @@ std::string ReleaseBuilder::get_project_repo_base_path()
 }
 
 
-std::vector<std::string> ReleaseBuilder::get_source_file_listing()
+std::vector<std::string> ReleaseBuilder::get_source_file_listings()
 {
 std::stringstream command;
 
-command << "(cd " << project_repo_base_path << project_repo_name << " && " << "find -f **/*)";
+command << "(cd " << project_repo_base_path << project_repo_name << " && " << "find src/* -type f)";
+
+std::cout << command.str() << std::endl;
 
 std::string response = Blast::ShellCommandExecutorWithCallback(
    command.str(),
@@ -82,13 +85,27 @@ return result;
 
 }
 
+void ReleaseBuilder::duplicate_source_files()
+{
+std::vector<std::string> source_file_listings = get_source_file_listings();
+
+for (auto &source_file_listing : source_file_listings)
+{
+   std::vector<std::string> result = StringSplitter(project_repo_base_path, '/').split();
+   result.pop_back();
+   Blast::DirectoryCreator(result, true).create();
+}
+return;
+
+}
+
 void ReleaseBuilder::create_folders()
 {
 // make folder if not exists
 // releases/
-//bool result = Blast::DirectoryCreator({
-//},
-//true).create();
+Blast::DirectoryCreator(build_include_folder_directory_components(), true).create();
+Blast::DirectoryCreator(build_src_folder_directory_components(), true).create();
+Blast::DirectoryCreator(build_data_folder_directory_components(), true).create();
 
 //if (result != 0) { throw std::runtime_error("could not create directories"); }
 
