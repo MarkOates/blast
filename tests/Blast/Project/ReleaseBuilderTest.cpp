@@ -37,9 +37,9 @@ TEST(DISABLED_Blast_Project_ReleaseBuilderTest, replace_symlinks_with_copies_of_
    //release_builder.replace_symlinks_with_copies_of_linked_files();
 }
 
-TEST(Blast_Project_ReleaseBuilderTest, generate_source_release__creates_the_release)
+TEST(DISABLED_Blast_Project_ReleaseBuilderTest, generate_source_release__creates_the_release)
 {
    Blast::Project::ReleaseBuilder release_builder("/Users/markoates/Desktop/Release");
-   release_builder.generate_source_release();
+   //release_builder.generate_source_release();
 }
 
