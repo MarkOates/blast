@@ -12,14 +12,20 @@ functions:
   - name: get_source_file_listing
     type: std::vector<std::string>
     body: |
+      std::stringstream command;
+
+      command << "(cd " << project_repo_base_path << project_repo_name << " && " << "find -f **/*)";
+
       std::string response = Blast::ShellCommandExecutorWithCallback(
-         "find -f **/*",
+         command.str(),
          ShellCommandExecutorWithCallback::simple_silent_callback
       ).execute();
 
       std::vector<std::string> response_lines = StringSplitter(response, '\n').split();
 
       return response_lines;
+    body_dependency_symbols:
+      - std::stringstream
   - name: run
     type: std::string
     body: |
@@ -61,3 +67,5 @@ dependencies:
     headers: [ iostream ]
   - symbol: std::endl
     headers: [ iostream ]
+  - symbol: std::stringstream
+    headers: [ sstream ]

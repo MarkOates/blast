@@ -24,11 +24,10 @@ TEST(Blast_Project_ReleaseBuilderTest, get_source_file_listing__returns_the_expe
    Blast::Project::ReleaseBuilder release_builder(fixture_project_name, fixture_base_path);
 
    std::vector<std::string> expected = {
-      { "foobar" },
+      { "quintessence/ComponentWithExternalSymlink.q.yml" },
    };
    std::vector<std::string> actual = release_builder.get_source_file_listing();
 
    ASSERT_EQ(expected, actual);
-
 }
 

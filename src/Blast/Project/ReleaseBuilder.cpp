@@ -1,6 +1,7 @@
 
 
 #include <Blast/Project/ReleaseBuilder.hpp>
+#include <sstream>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <iostream>
@@ -33,8 +34,12 @@ std::string ReleaseBuilder::get_project_repo_base_path()
 
 std::vector<std::string> ReleaseBuilder::get_source_file_listing()
 {
+std::stringstream command;
+
+command << "(cd " << project_repo_base_path << project_repo_name << " && " << "find -f **/*)";
+
 std::string response = Blast::ShellCommandExecutorWithCallback(
-   "find -f **/*",
+   command.str(),
    ShellCommandExecutorWithCallback::simple_silent_callback
 ).execute();
 
