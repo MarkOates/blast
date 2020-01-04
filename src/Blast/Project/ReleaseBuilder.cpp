@@ -26,7 +26,7 @@ ReleaseBuilder::~ReleaseBuilder()
 std::vector<std::pair<std::string, std::string>> ReleaseBuilder::list_symlinks()
 {
 std::string command = "find ~/Desktop/Release";
-Blast::ShellCommandExecutorWithCallback executor(command);
+Blast::ShellCommandExecutorWithCallback executor(command, ShellCommandExecutorWithCallback::simple_silent_callback);
 std::string executor_result = executor.execute();
 StringSplitter splitter(executor_result, '\n');
 
