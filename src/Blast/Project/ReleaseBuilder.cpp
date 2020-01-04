@@ -1,6 +1,7 @@
 
 
 #include <Blast/Project/ReleaseBuilder.hpp>
+#include <iostream>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/StringSplitter.hpp>
@@ -25,13 +26,12 @@ ReleaseBuilder::~ReleaseBuilder()
 
 std::vector<std::pair<std::string, std::string>> ReleaseBuilder::list_symlinks()
 {
-std::string command = "find ~/Desktop/Release";
+std::string command = std::string("find ") + base_directory;
 Blast::ShellCommandExecutorWithCallback executor(command, ShellCommandExecutorWithCallback::simple_silent_callback);
 std::string executor_result = executor.execute();
 StringSplitter splitter(executor_result, '\n');
 
 std::vector<std::string> filenames = splitter.split();
-
 std::vector<std::pair<std::string, std::string>> result;
 
 for (auto &filename : filenames)
