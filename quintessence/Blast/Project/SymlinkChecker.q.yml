@@ -1,0 +1,21 @@
+properties:
+  - name: filename
+    type: std::string
+    init_with: "\"\""
+    constructor_arg: true
+functions:
+  - name: read_symlink_target
+    type: std::string
+    body: |
+      char linkname[256];
+      // from https://linux.die.net/man/2/readlink
+      //ssize_t readlink(const char *path, char *buf, size_t bufsiz);
+      ssize_t r;
+      r = readlink(filename.c_str(), linkname, 256);
+      return linkname;
+    body_dependency_symbols:
+      - readlink
+      - std::string
+dependencies:
+  - symbol: readlink
+    headers: [ unistd.h ]
