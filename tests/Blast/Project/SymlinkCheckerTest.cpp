@@ -23,6 +23,14 @@ TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_true_the_file_is_a_sy
    ASSERT_EQ(true, symlink_checker.is_symlink());
 }
 
+TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_false_the_file_is_a_symlink)
+{
+   std::string symlink_file = FIXTURE_PATH + "src/Nested/ComponentC.cpp";
+   Blast::Project::SymlinkChecker symlink_checker(symlink_file);
+
+   ASSERT_EQ(false, symlink_checker.is_symlink());
+}
+
 TEST(Blast_Project_SymlinkCheckerTest, read_symlink_target__returns_the_target_of_the_symlink)
 {
    std::string symlink_file = FIXTURE_PATH + "quintessence/ComponentWithExternalSymlink.q.yml";
