@@ -1,7 +1,7 @@
 namespaces: [ 'Blast' ]
 parent_classes: []
 properties:
-  - name: directory_names
+  - name: directory_components
     type: std::vector<std::string>
     init_with: '{}'
     constructor_arg: true
@@ -17,9 +17,9 @@ functions:
       std::stringstream result_directories;
       const std::string SEPARATOR = "/";
       if (path_is_absolute) result_directories << "/";
-      for (auto &directory_name : directory_names)
+      for (auto &directory_component : directory_components)
       {
-        result_directories << directory_name << SEPARATOR;
+        result_directories << directory_component << SEPARATOR;
         std::string directory_to_create = result_directories.str();
 
         if (Blast::DirectoryExistenceChecker(directory_to_create).exists()) continue;

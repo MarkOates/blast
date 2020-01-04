@@ -11,8 +11,8 @@ namespace Blast
 {
 
 
-DirectoryCreator::DirectoryCreator(std::vector<std::string> directory_names, bool path_is_absolute)
-   : directory_names(directory_names)
+DirectoryCreator::DirectoryCreator(std::vector<std::string> directory_components, bool path_is_absolute)
+   : directory_components(directory_components)
    , path_is_absolute(path_is_absolute)
 {
 }
@@ -28,9 +28,9 @@ bool DirectoryCreator::create()
 std::stringstream result_directories;
 const std::string SEPARATOR = "/";
 if (path_is_absolute) result_directories << "/";
-for (auto &directory_name : directory_names)
+for (auto &directory_component : directory_components)
 {
-  result_directories << directory_name << SEPARATOR;
+  result_directories << directory_component << SEPARATOR;
   std::string directory_to_create = result_directories.str();
 
   if (Blast::DirectoryExistenceChecker(directory_to_create).exists()) continue;

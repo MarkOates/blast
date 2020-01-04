@@ -10,11 +10,11 @@ namespace Blast
    class DirectoryCreator
    {
    private:
-      std::vector<std::string> directory_names;
+      std::vector<std::string> directory_components;
       bool path_is_absolute;
 
    public:
-      DirectoryCreator(std::vector<std::string> directory_names={}, bool path_is_absolute=false);
+      DirectoryCreator(std::vector<std::string> directory_components={}, bool path_is_absolute=false);
       ~DirectoryCreator();
 
 
