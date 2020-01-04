@@ -73,6 +73,15 @@ return result;
 
 }
 
+std::vector<std::string> ReleaseBuilder::build_data_folder_directory_components()
+{
+std::vector<std::string> result = StringSplitter(project_repo_base_path, '/').split();
+result.push_back("releases");
+result.push_back("data");
+return result;
+
+}
+
 void ReleaseBuilder::create_folders()
 {
 // make folder if not exists
