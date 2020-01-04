@@ -44,7 +44,8 @@ std::string ReleaseBuilder::get_makefile_content()
 {
 std::string MAKEFILE_CONTENT = R"HEREDOC(SRC_FILES := $(shell find src -type f)
 ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro -lallegro_main
-main: $(SRC_FILES))HEREDOC";
+main: $(SRC_FILES)
+)HEREDOC";
 MAKEFILE_CONTENT += "\t";
 MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/LabyrinthOfLore.cpp -o LabyrinthOfLore -I./include $(ALLEGRO_LIBS)";
 return MAKEFILE_CONTENT;
@@ -115,12 +116,15 @@ copy_include_files_command << "cp -R " << source_directory << "/include " << des
 std::stringstream copy_src_files_command;
 copy_src_files_command << "cp -R " << source_directory << "/src " << destination_directory << "/src";
 std::stringstream copy_data_files_command;
-copy_data_files_command << "cp -R " << source_directory << "/data " << destination_directory << "/data";
+copy_data_files_command << "cp -R " << source_directory << "/bin/data " << destination_directory << "/data";
+std::stringstream copy_program_files_command;
+copy_program_files_command << "cp -R " << source_directory << "/programs " << destination_directory << "/programs";
 
 // copy files
 Blast::ShellCommandExecutorWithCallback include_file_copy_executor(copy_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 Blast::ShellCommandExecutorWithCallback src_file_copy_executor(copy_src_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 Blast::ShellCommandExecutorWithCallback data_file_copy_executor(copy_data_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+Blast::ShellCommandExecutorWithCallback program_file_copy_executor(copy_program_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 
 std::cout << "Copying include files into \"" << destination_directory << "\"... ";
 include_file_copy_executor.execute();
@@ -128,6 +132,10 @@ std::cout << "done." << std::endl;
 
 std::cout << "Copying src files into \"" << destination_directory << "\"... ";
 src_file_copy_executor.execute();
+std::cout << "done." << std::endl;
+
+std::cout << "Copying program files into \"" << destination_directory << "\"... ";
+program_file_copy_executor.execute();
 std::cout << "done." << std::endl;
 
 std::cout << "Copying data files into \"" << destination_directory << "\"... ";
