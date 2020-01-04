@@ -62,3 +62,19 @@ TEST(Blast_Project_ReleaseBuilderTest, build_include_folder_directory_components
    ASSERT_EQ(expected, actual);
 }
 
+
+TEST(Blast_Project_ReleaseBuilderTest, build_src_folder_directory_components__returns_the_expected_path_components)
+{
+   std::string fixture_base_path = "Users/markoates/Repos/blast/bin/fixtures/";
+   std::string fixture_project_name = "FixtureProject2";
+   Blast::Project::ReleaseBuilder release_builder(fixture_project_name, fixture_base_path);
+
+   std::vector<std::string> expected = {
+      "Users", "markoates", "Repos", "blast", "bin", "fixtures", "releases", "src",
+   };
+
+   std::vector<std::string> actual = release_builder.build_src_folder_directory_components();
+
+   ASSERT_EQ(expected, actual);
+}
+
