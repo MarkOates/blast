@@ -1,0 +1,52 @@
+properties:
+  - name: project_repo_name
+    type: std::string
+    init_with: "\"\""
+    constructor_arg: true
+  - name: project_repo_base_path
+    type: std::string
+    init_with: "\"Users/markoates/Repos/\""
+    getter: true
+    constructor_arg: true
+functions:
+  - name: get_source_file_listing
+    type: std::vector<std::string>
+    body: |
+      return {};
+  - name: run
+    type: std::string
+    body: |
+       std::string project_path_name = "blast/";
+       std::string repos_base = std::string("/Users/markoates/Repos/") + project_path_name;
+
+       std::string project_source_path = "";
+       std::string project_destination_path = "";
+
+       // make folder if not exists
+       // releases/
+
+       // make folder if not exists
+       // releases/source/
+
+       // copy source files
+       // find src/**/*
+
+       // copy   releases/source/data/* files
+       // copy   releases/source/include/* files
+       // copy   releases/source/src/* files
+       // create releases/source/Makefile
+
+       //- al_load_bitmap
+       //- al_load_font
+       //- bitmaps
+       //- fonts
+    body_dependency_symbols:
+      - std::cout
+      - std::endl
+dependencies:
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: std::cout
+    headers: [ iostream ]
+  - symbol: std::endl
+    headers: [ iostream ]
