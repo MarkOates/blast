@@ -33,6 +33,20 @@ TEST(Blast_Project_ReleaseBuilderTest, get_source_file_listings__returns_the_exp
    ASSERT_EQ(expected, actual);
 }
 
+TEST(Blast_Project_ReleaseBuilderTest, get_include_file_listings__returns_the_expected_response)
+{
+   std::string fixture_base_path = "/Users/markoates/Repos/blast/bin/fixtures/";
+   std::string fixture_project_name = "FixtureProject2";
+   Blast::Project::ReleaseBuilder release_builder(fixture_project_name, fixture_base_path);
+
+   std::vector<std::string> expected = {
+      "include/ComponentA.hpp",
+   };
+   std::vector<std::string> actual = release_builder.get_include_file_listings();
+
+   ASSERT_EQ(expected, actual);
+}
+
 TEST(Blast_Project_ReleaseBuilderTest, build_repo_base_path_directory_components__returns_the_expected_path_components)
 {
    std::string fixture_base_path = "Users/markoates/Repos/blast/bin/fixtures/";

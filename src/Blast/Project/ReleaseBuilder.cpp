@@ -3,6 +3,8 @@
 #include <Blast/Project/ReleaseBuilder.hpp>
 #include <sstream>
 #include <iostream>
+#include <sstream>
+#include <iostream>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/DirectoryCreator.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
@@ -33,6 +35,25 @@ std::string ReleaseBuilder::get_project_repo_base_path()
    return project_repo_base_path;
 }
 
+
+std::vector<std::string> ReleaseBuilder::get_include_file_listings()
+{
+std::stringstream command;
+
+command << "(cd " << project_repo_base_path << project_repo_name << " && " << "find include/* -type f)";
+
+std::cout << command.str() << std::endl;
+
+std::string response = Blast::ShellCommandExecutorWithCallback(
+   command.str(),
+   ShellCommandExecutorWithCallback::simple_silent_callback
+).execute();
+
+std::vector<std::string> response_lines = StringSplitter(response, '\n').split();
+
+return response_lines;
+
+}
 
 std::vector<std::string> ReleaseBuilder::get_source_file_listings()
 {

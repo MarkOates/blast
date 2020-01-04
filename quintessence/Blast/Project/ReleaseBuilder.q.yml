@@ -9,6 +9,26 @@ properties:
     getter: true
     constructor_arg: true
 functions:
+  - name: get_include_file_listings
+    type: std::vector<std::string>
+    body: |
+      std::stringstream command;
+
+      command << "(cd " << project_repo_base_path << project_repo_name << " && " << "find include/* -type f)";
+
+      std::cout << command.str() << std::endl;
+
+      std::string response = Blast::ShellCommandExecutorWithCallback(
+         command.str(),
+         ShellCommandExecutorWithCallback::simple_silent_callback
+      ).execute();
+
+      std::vector<std::string> response_lines = StringSplitter(response, '\n').split();
+
+      return response_lines;
+    body_dependency_symbols:
+      - std::stringstream
+      - std::cout
   - name: get_source_file_listings
     type: std::vector<std::string>
     body: |
