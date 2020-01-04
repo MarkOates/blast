@@ -1,3 +1,8 @@
+FOCUSED_COMPONENT_NAME=Blast/Project/SymlinkChecker
+FOCUSED_TEST_FILTER=
+
+
+
 PROJECT_NAME=blast
 VERSION_NUMBER=0.0.1
 LIBS_ROOT=/Users/markoates/Repos
@@ -63,10 +68,10 @@ main:
 	@make quintessences
 	$(call output_terminal_message,"Make all the object files")
 	@make objects -j8
-	#$(call output_terminal_message,"Make all the test files")
-	#@make tests -j8
-	#$(call output_terminal_message,"Run the tests for all the components")
-	#@make run_tests
+	$(call output_terminal_message,"Make all the test files")
+	@make tests -j8
+	$(call output_terminal_message,"Run the tests for all the components")
+	@make run_tests
 	$(call output_terminal_message,"Build the library")
 	@make library
 	$(call output_terminal_message,"Make all the programs")
@@ -74,6 +79,27 @@ main:
 	$(call output_terminal_message,"Make all the example programs")
 	@make examples -j8
 	$(call output_terminal_message,"================= FINISHED! ===================")
+
+
+
+focus:
+	$(call output_terminal_message,"Announce built type")
+	@echo "Focusing build on \033[48;5;27m$(FOCUSED_COMPONENT_NAME)$(TERMINAL_COLOR_RESET)"
+	@echo "testing filter in $(FOCUSED_TEST_FILTER)"
+	$(call output_terminal_message,"Compose componets from all quintessence files")
+	@make quintessences
+	$(call output_terminal_message,"Make all the component object files")
+	@make objects
+	$(call output_terminal_message,"Make the focused component test")
+	@make obj/tests/$(FOCUSED_COMPONENT_NAME)Test.o
+	$(call output_terminal_message,"Make the focused component test")
+	@make bin/tests/$(FOCUSED_COMPONENT_NAME)Test
+	$(call output_terminal_message,"Run the focused component test")
+	@./bin/tests/$(FOCUSED_COMPONENT_NAME)Test --gtest_filter=*$(FOCUSED_TEST_NAME)*
+	$(call output_terminal_message,"Make all the programs")
+	@make programs
+	$(call output_terminal_message,"Celebrate passing focused component tests")
+	@make celebrate_built_component
 
 
 
