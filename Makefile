@@ -1,4 +1,4 @@
-FOCUSED_COMPONENT_NAME=Blast/Project/ReleaseBuilder
+FOCUSED_COMPONENT_NAME=Blast/Project/SymlinkChecker
 FOCUSED_TEST_FILTER=
 
 
