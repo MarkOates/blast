@@ -16,7 +16,7 @@ namespace Blast
          std::string project_repo_base_path;
 
       public:
-         ReleaseBuilder(std::string project_repo_name="", std::string project_repo_base_path="Users/markoates/Repos/");
+         ReleaseBuilder(std::string project_repo_name="", std::string project_repo_base_path="/Users/markoates/Repos/");
          ~ReleaseBuilder();
 
 

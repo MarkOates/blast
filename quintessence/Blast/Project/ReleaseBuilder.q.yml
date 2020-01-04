@@ -5,7 +5,7 @@ properties:
     constructor_arg: true
   - name: project_repo_base_path
     type: std::string
-    init_with: "\"Users/markoates/Repos/\""
+    init_with: "\"/Users/markoates/Repos/\""
     getter: true
     constructor_arg: true
 functions:
