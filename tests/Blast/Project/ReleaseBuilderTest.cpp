@@ -8,9 +8,11 @@ TEST(Blast_Project_ReleaseBuilderTest, can_be_created_without_blowing_up)
    Blast::Project::ReleaseBuilder release_builder;
 }
 
-TEST(Blast_Project_ReleaseBuilderTest, run__returns_the_expected_response)
+TEST(Blast_Project_ReleaseBuilderTest, swap_symlinks__returns_the_expected_response)
 {
    Blast::Project::ReleaseBuilder release_builder;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, release_builder.run());
+   std::pair<std::string, std::string> expected = {};
+   std::pair<std::string, std::string> actual = release_builder.list_symlinks();
+
+   EXPECT_EQ(expected, actual);
 }

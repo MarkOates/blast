@@ -1,4 +1,25 @@
-functions:
-  - name: run
+properties:
+  - name: base_directory
     type: std::string
-    body: return "Hello World!";
+    init_with: "\"\""
+    constructor_arg: true
+functions:
+  - name: list_symlinks
+    type: std::pair<std::string, std::string>
+    body: |
+      std::string command = "find ~/Desktop/Release";
+      Blast::ShellCommandExecutorWithCallback executor(command);
+      std::string result = executor.execute();
+      StringSplitter splitter(result, '\n');
+
+      return {};
+    body_dependency_symbols:
+      - Blast::ShellCommandExecutorWithCallback
+      - StringSplitter
+dependencies:
+  - symbol: std::pair<std::string, std::string>
+    headers: [ string ]
+  - symbol: StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]

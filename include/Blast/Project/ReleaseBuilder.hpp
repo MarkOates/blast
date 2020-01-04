@@ -11,13 +11,14 @@ namespace Blast
       class ReleaseBuilder
       {
       private:
+         std::string base_directory;
 
       public:
-         ReleaseBuilder();
+         ReleaseBuilder(std::string base_directory="");
          ~ReleaseBuilder();
 
 
-      std::string run();
+      std::pair<std::string, std::string> list_symlinks();
       };
    }
 }

@@ -1,7 +1,8 @@
 
 
 #include <Blast/Project/ReleaseBuilder.hpp>
-
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
+#include <Blast/StringSplitter.hpp>
 
 
 namespace Blast
@@ -10,7 +11,8 @@ namespace Project
 {
 
 
-ReleaseBuilder::ReleaseBuilder()
+ReleaseBuilder::ReleaseBuilder(std::string base_directory)
+   : base_directory(base_directory)
 {
 }
 
@@ -20,9 +22,15 @@ ReleaseBuilder::~ReleaseBuilder()
 }
 
 
-std::string ReleaseBuilder::run()
+std::pair<std::string, std::string> ReleaseBuilder::list_symlinks()
 {
-return "Hello World!";
+std::string command = "find ~/Desktop/Release";
+Blast::ShellCommandExecutorWithCallback executor(command);
+std::string result = executor.execute();
+StringSplitter splitter(result, '\n');
+
+return {};
+
 }
 } // namespace Project
 } // namespace Blast
