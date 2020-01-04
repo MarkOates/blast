@@ -1,5 +1,5 @@
 properties:
-  - name: base_directory
+  - name: destination_directory
     type: std::string
     init_with: "\"/Users/markoates/Desktop/Release\""
     constructor_arg: true
@@ -22,7 +22,7 @@ functions:
   - name: list_symlinks
     type: std::vector<std::pair<std::string, std::string>>
     body: |
-      std::string command = std::string("find ") + base_directory;
+      std::string command = std::string("find ") + destination_directory;
       Blast::ShellCommandExecutorWithCallback executor(command, ShellCommandExecutorWithCallback::simple_silent_callback);
       std::string executor_result = executor.execute();
       StringSplitter splitter(executor_result, '\n');
@@ -68,6 +68,34 @@ functions:
       return;
     body_dependency_symbols:
       - remove
+      - std::stringstream
+  - name: generate_source_release
+    body: |
+      std::string source_directory = "/Users/markoates/Repos/LabyrinthOfLore";
+
+      std::stringstream copy_include_files_command;
+      copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
+      std::stringstream copy_src_files_command;
+      copy_src_files_command << "cp -R " << source_directory << "/src " << destination_directory << "/src";
+
+      // copy files
+      Blast::ShellCommandExecutorWithCallback include_file_copy_executor(copy_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+      Blast::ShellCommandExecutorWithCallback src_file_copy_executor(copy_src_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+
+      std::cout << "Copying include files into \"" << destination_directory << "\"... ";
+      include_file_copy_executor.execute();
+      std::cout << "done." << std::endl;
+
+      std::cout << "Copying src files into \"" << destination_directory << "\"... ";
+      src_file_copy_executor.execute();
+      std::cout << "done." << std::endl;
+
+      replace_symlinks_with_copies_of_linked_files();
+
+      return;
+    body_dependency_symbols:
+      - remove
+      - Blast::ShellCommandExecutorWithCallback
       - std::stringstream
 dependencies:
   - symbol: std::ifstream

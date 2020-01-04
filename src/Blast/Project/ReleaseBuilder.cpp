@@ -9,6 +9,9 @@
 #include <Blast/StringSplitter.hpp>
 #include <cstdio>
 #include <sstream>
+#include <cstdio>
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
+#include <sstream>
 
 
 namespace Blast
@@ -17,8 +20,8 @@ namespace Project
 {
 
 
-ReleaseBuilder::ReleaseBuilder(std::string base_directory)
-   : base_directory(base_directory)
+ReleaseBuilder::ReleaseBuilder(std::string destination_directory)
+   : destination_directory(destination_directory)
 {
 }
 
@@ -38,7 +41,7 @@ dst << src.rdbuf();
 
 std::vector<std::pair<std::string, std::string>> ReleaseBuilder::list_symlinks()
 {
-std::string command = std::string("find ") + base_directory;
+std::string command = std::string("find ") + destination_directory;
 Blast::ShellCommandExecutorWithCallback executor(command, ShellCommandExecutorWithCallback::simple_silent_callback);
 std::string executor_result = executor.execute();
 StringSplitter splitter(executor_result, '\n');
@@ -79,6 +82,33 @@ for (auto &symlink : symlinks)
 
    copy_file(file_to_copy_source, file_to_copy_destination);
 }
+return;
+
+}
+
+void ReleaseBuilder::generate_source_release()
+{
+std::string source_directory = "/Users/markoates/Repos/LabyrinthOfLore";
+
+std::stringstream copy_include_files_command;
+copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
+std::stringstream copy_src_files_command;
+copy_src_files_command << "cp -R " << source_directory << "/src " << destination_directory << "/src";
+
+// copy files
+Blast::ShellCommandExecutorWithCallback include_file_copy_executor(copy_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+Blast::ShellCommandExecutorWithCallback src_file_copy_executor(copy_src_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+
+std::cout << "Copying include files into \"" << destination_directory << "\"... ";
+include_file_copy_executor.execute();
+std::cout << "done." << std::endl;
+
+std::cout << "Copying src files into \"" << destination_directory << "\"... ";
+src_file_copy_executor.execute();
+std::cout << "done." << std::endl;
+
+replace_symlinks_with_copies_of_linked_files();
+
 return;
 
 }
