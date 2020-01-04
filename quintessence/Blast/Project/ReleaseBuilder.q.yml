@@ -12,8 +12,16 @@ functions:
       std::string result = executor.execute();
       StringSplitter splitter(result, '\n');
 
+      std::vector<std::string> filenames = splitter.split();
+
+      for (auto &filename : filenames)
+      {
+         Blast::Project::SymlinkChecker symlink_checker;
+      }
+
       return {};
     body_dependency_symbols:
+      - Blast::Project::SymlinkChecker
       - Blast::ShellCommandExecutorWithCallback
       - StringSplitter
 dependencies:
@@ -21,5 +29,7 @@ dependencies:
     headers: [ string ]
   - symbol: StringSplitter
     headers: [ Blast/StringSplitter.hpp ]
+  - symbol: Blast::Project::SymlinkChecker
+    headers: [ Blast/Project/SymlinkChecker.hpp ]
   - symbol: Blast::ShellCommandExecutorWithCallback
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
