@@ -15,7 +15,7 @@ namespace Blast
          std::string base_directory;
 
       public:
-         ReleaseBuilder(std::string base_directory="");
+         ReleaseBuilder(std::string base_directory="/Users/markoates/Desktop/Release");
          ~ReleaseBuilder();
 
 

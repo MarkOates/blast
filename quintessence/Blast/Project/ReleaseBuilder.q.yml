@@ -1,7 +1,7 @@
 properties:
   - name: base_directory
     type: std::string
-    init_with: "\"\""
+    init_with: "\"/Users/markoates/Desktop/Release\""
     constructor_arg: true
 functions:
   - name: list_symlinks
