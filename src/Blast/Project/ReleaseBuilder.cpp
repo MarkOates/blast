@@ -3,6 +3,7 @@
 #include <Blast/Project/ReleaseBuilder.hpp>
 #include <sstream>
 #include <Blast/StringSplitter.hpp>
+#include <Blast/DirectoryCreator.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <iostream>
 #include <iostream>
@@ -49,16 +50,29 @@ return response_lines;
 
 }
 
-std::string ReleaseBuilder::run()
+std::vector<std::string> ReleaseBuilder::build_repo_base_path_directory_components()
 {
-std::string project_path_name = "blast/";
-std::string repos_base = std::string("/Users/markoates/Repos/") + project_path_name;
+return StringSplitter(project_repo_base_path, '/').split();
+}
 
-std::string project_source_path = "";
-std::string project_destination_path = "";
+std::vector<std::string> ReleaseBuilder::build_include_folder_directory_components()
+{
+std::vector<std::string> result = StringSplitter(project_repo_base_path, '/').split();
+result.push_back("releases");
+result.push_back("include");
+return result;
 
+}
+
+void ReleaseBuilder::create_folders()
+{
 // make folder if not exists
 // releases/
+//bool result = Blast::DirectoryCreator({
+//},
+//true).create();
+
+//if (result != 0) { throw std::runtime_error("could not create directories"); }
 
 // make folder if not exists
 // releases/source/
