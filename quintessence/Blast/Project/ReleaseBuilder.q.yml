@@ -77,10 +77,13 @@ functions:
       copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
       std::stringstream copy_src_files_command;
       copy_src_files_command << "cp -R " << source_directory << "/src " << destination_directory << "/src";
+      std::stringstream copy_data_files_command;
+      copy_data_files_command << "cp -R " << source_directory << "/data " << destination_directory << "/data";
 
       // copy files
       Blast::ShellCommandExecutorWithCallback include_file_copy_executor(copy_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
       Blast::ShellCommandExecutorWithCallback src_file_copy_executor(copy_src_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
+      Blast::ShellCommandExecutorWithCallback data_file_copy_executor(copy_data_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
 
       std::cout << "Copying include files into \"" << destination_directory << "\"... ";
       include_file_copy_executor.execute();
@@ -88,6 +91,10 @@ functions:
 
       std::cout << "Copying src files into \"" << destination_directory << "\"... ";
       src_file_copy_executor.execute();
+      std::cout << "done." << std::endl;
+
+      std::cout << "Copying data files into \"" << destination_directory << "\"... ";
+      data_file_copy_executor.execute();
       std::cout << "done." << std::endl;
 
       replace_symlinks_with_copies_of_linked_files();
