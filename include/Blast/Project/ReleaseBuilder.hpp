@@ -2,6 +2,7 @@
 
 
 #include <string>
+#include <vector>
 
 
 namespace Blast
@@ -18,7 +19,7 @@ namespace Blast
          ~ReleaseBuilder();
 
 
-      std::pair<std::string, std::string> list_symlinks();
+      std::vector<std::pair<std::string, std::string>> list_symlinks();
       };
    }
 }
