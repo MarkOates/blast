@@ -1,0 +1,23 @@
+functions:
+  - name: generate_output_banner
+    parameters:
+      - name: width
+        type: int
+        default_argument: 80
+    type: std::string
+    body: |
+      std::string value = "Hello World!";
+
+      std::stringstream stream;
+      stream << std::setfill('0') << std::setw(2) << value;
+      return stream.str();
+    body_dependency_symbols:
+      - std::stringstream
+      - std::string
+      - std::setfill
+      - std::setw
+dependencies:
+  - symbol: std::setfill
+    headers: [ iomanip ]
+  - symbol: std::setw
+    headers: [ iomanip ]
