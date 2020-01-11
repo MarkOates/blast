@@ -11,7 +11,6 @@ TEST(Blast_Build_CelebratorTest, can_be_created_without_blowing_up)
 TEST(Blast_Build_CelebratorTest, run__outputs_a_string_of_the_expected_length)
 {
    Blast::Build::Celebrator celebrator;
-   //std::string expected_string = "Hello World!";
    EXPECT_EQ(80, celebrator.generate_full_width_output_banner("Hello World!").size());
 }
 
