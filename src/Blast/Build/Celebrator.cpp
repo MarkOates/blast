@@ -23,12 +23,18 @@ Celebrator::~Celebrator()
 }
 
 
-std::string Celebrator::generate_output_banner(int width)
+std::string Celebrator::generate_full_width_output_banner(std::string message, int width)
 {
-std::string value = "Hello World!";
+char fill_char = '=';
+std::string decorated_message = "==== " + message + " ";
 
 std::stringstream stream;
-stream << std::setfill('0') << std::setw(2) << value;
+stream
+  << std::left
+  << std::setfill(fill_char)
+  << std::setw(width)
+  << decorated_message
+  ;
 return stream.str();
 
 }
