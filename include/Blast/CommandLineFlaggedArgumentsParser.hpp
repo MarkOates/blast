@@ -21,7 +21,7 @@ namespace Blast
       // verbatum the arguments that come from the program's entry, or add the necessary features
       // properly guard this function body.
       CommandLineFlaggedArgumentsParser(int argc, char **argv);
-      CommandLineFlaggedArgumentsParser(std::vector<std::string> command_line_args);
+      CommandLineFlaggedArgumentsParser(std::vector<std::string> command_line_args={});
       ~CommandLineFlaggedArgumentsParser();
 
       bool has_flag(std::string flag);
