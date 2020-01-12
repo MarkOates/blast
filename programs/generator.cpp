@@ -465,11 +465,11 @@ int main(int argc, char **argv)
    outfile6 << TEST_RUNNER_FILE_CONTENT;
    outfile6.close();
 
-   std::string rerun_script_filename = generator.get_project_name() + "/rr";
-   std::ofstream outfile8(rerun_script_filename);
-   outfile8 << RERUN_SCRIPT_CONTENT;
-   outfile8.close();
-   system((std::string("chmod +x ") + rerun_script_filename).c_str());
+   //std::string rerun_script_filename = generator.get_project_name() + "/rr";
+   //std::ofstream outfile8(rerun_script_filename);
+   //outfile8 << RERUN_SCRIPT_CONTENT;
+   //outfile8.close();
+   //system((std::string("chmod +x ") + rerun_script_filename).c_str());
 
    std::string rerun_cat_file_script_filename = generator.get_project_name() + "/" + RERUN_CAT_FILE_SCRIPT_FILENAME;
    std::ofstream outfile9(rerun_cat_file_script_filename);
@@ -477,11 +477,11 @@ int main(int argc, char **argv)
    outfile9.close();
    system((std::string("chmod +x ") + rerun_cat_file_script_filename).c_str());
 
-   std::string hash_check_script_filename = generator.get_project_name() + "/" + HASH_CHECK_FILENAME;
-   std::ofstream outfile10(hash_check_script_filename);
-   outfile10 << HASH_CHECK_FILE_CONTENTS;
-   outfile10.close();
-   system((std::string("chmod +x ") + hash_check_script_filename).c_str());
+   //std::string hash_check_script_filename = generator.get_project_name() + "/" + HASH_CHECK_FILENAME;
+   //std::ofstream outfile10(hash_check_script_filename);
+   //outfile10 << HASH_CHECK_FILE_CONTENTS;
+   //outfile10.close();
+   //system((std::string("chmod +x ") + hash_check_script_filename).c_str());
 
    std::stringstream finish_message;
    finish_message << "✅ Project files under \"" << generator.get_project_name() << "/\" generated." << std::endl;
