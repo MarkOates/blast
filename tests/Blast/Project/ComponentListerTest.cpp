@@ -12,6 +12,7 @@ TEST(Blast__Project__ComponentLister, will_return_the_components_in_a_project)
 {
    std::vector<std::string> expected_components = {
       "ComponentB",
+      "ComponentWithExternalSymlink",
       "Nested/ComponentC",
       "NotAppearingOutsideTest/ComponentX",
       "QuintessenceOnlyComponent",
