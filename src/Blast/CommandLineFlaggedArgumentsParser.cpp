@@ -38,7 +38,6 @@ bool CommandLineFlaggedArgumentsParser::has_flag(std::string flag)
       throw std::runtime_error(error_message.str());
    }
 
-   std::vector<std::vector<std::string>> results;
    for (auto &command_line_arg : command_line_args) { if (command_line_arg == flag) return true; }
    return false;
 }
