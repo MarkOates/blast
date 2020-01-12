@@ -58,7 +58,7 @@ public:
 int TestAction::num_active = 0;
 
 
-TEST(Action__BaseTest, get_action_name__returns_the_name_of_the_action)
+TEST(Blast__Action__QueueTest, get_action_name__returns_the_name_of_the_action)
 {
    Blast::Action::Queue action_queue("MyQueue");
 
@@ -66,7 +66,7 @@ TEST(Action__BaseTest, get_action_name__returns_the_name_of_the_action)
 }
 
 
-TEST(Action__BaseTest, get_actions__returns_the_actions_in_the_queue)
+TEST(Blast__Action__QueueTest, get_actions__returns_the_actions_in_the_queue)
 {
    std::vector<Blast::Action::Base *> actions = { new TestAction(), new TestAction(), new TestAction() };
    Blast::Action::Queue action_queue("MyQueue", actions);
@@ -75,7 +75,7 @@ TEST(Action__BaseTest, get_actions__returns_the_actions_in_the_queue)
 }
 
 
-TEST(Action__BaseTest, assigns_actions_when_they_are_passed_as_a_constructor_argument)
+TEST(Blast__Action__QueueTest, assigns_actions_when_they_are_passed_as_a_constructor_argument)
 {
    std::vector<Blast::Action::Base *> actions = { new TestAction(), new TestAction(), new TestAction() };
    Blast::Action::Queue action_queue("MyQueue", actions);
@@ -84,7 +84,7 @@ TEST(Action__BaseTest, assigns_actions_when_they_are_passed_as_a_constructor_arg
 }
 
 
-TEST(Action__BaseTest, add_action__appends_the_action_to_the_queue)
+TEST(Blast__Action__QueueTest, add_action__appends_the_action_to_the_queue)
 {
    std::vector<Blast::Action::Base *> actions = { new TestAction(), new TestAction() };
    Blast::Action::Queue action_queue("MyQueue", actions);
@@ -98,7 +98,7 @@ TEST(Action__BaseTest, add_action__appends_the_action_to_the_queue)
 }
 
 
-TEST(Action__BaseTest, execute__throws_an_exception_when_an_executed_queued_action_returns_false)
+TEST(Blast__Action__QueueTest, execute__throws_an_exception_when_an_executed_queued_action_returns_false)
 {
    Blast::Action::Queue action_queue("MyQueue", { new ReturnsFalseAction() });
 
@@ -107,7 +107,7 @@ TEST(Action__BaseTest, execute__throws_an_exception_when_an_executed_queued_acti
 }
 
 
-TEST(Action__BaseTest, execute__throws_an_exception_when_an_executed_queued_action_throws_an_exception)
+TEST(Blast__Action__QueueTest, execute__throws_an_exception_when_an_executed_queued_action_throws_an_exception)
 {
    Blast::Action::Queue action_queue("MyQueue", { new ThrowsExceptionAction() });
 
@@ -116,7 +116,7 @@ TEST(Action__BaseTest, execute__throws_an_exception_when_an_executed_queued_acti
 }
 
 
-TEST(Action__BaseTest, execute__executes_all_actions_in_the_queue)
+TEST(Blast__Action__QueueTest, execute__executes_all_actions_in_the_queue)
 {
    std::vector<Blast::Action::Base *> actions = { new TestAction(), new TestAction(), new TestAction() };
    Blast::Action::Queue action_queue("MyQueue", actions);
@@ -129,7 +129,7 @@ TEST(Action__BaseTest, execute__executes_all_actions_in_the_queue)
 }
 
 
-TEST(Action__BaseTest, clear__deletes_all_actions_in_the_queue_and_empties_the_queue)
+TEST(Blast__Action__QueueTest, clear__deletes_all_actions_in_the_queue_and_empties_the_queue)
 {
    ASSERT_EQ(0, TestAction::num_active);
 
@@ -144,7 +144,7 @@ TEST(Action__BaseTest, clear__deletes_all_actions_in_the_queue_and_empties_the_q
 }
 
 
-TEST(Action__BaseTest, on_destruction_deletes_all_actions_in_the_queue)
+TEST(Blast__Action__QueueTest, on_destruction_deletes_all_actions_in_the_queue)
 {
    ASSERT_EQ(0, TestAction::num_active);
 
