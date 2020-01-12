@@ -1,3 +1,6 @@
+#include <allegro5/allegro.h> // temporary fix for compatibility with union/Makefile
+
+
 #include <iostream>
 #include <Blast/TemplatedFile.hpp>
 
