@@ -1,5 +1,6 @@
 
 
+#include <allegro5/allegro.h> // needed to compile with union/Makefile
 
 #include <Blast/Cpp/ClassGenerator.hpp>
 #include <Blast/Cpp/Function.hpp>
