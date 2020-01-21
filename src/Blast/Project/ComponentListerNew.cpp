@@ -49,7 +49,27 @@ default:
 
 std::string ComponentListerNew::get_component_fragment_extension(Blast::Project::component_fragment_t component_fragment)
 {
-return "";
+switch (component_fragment)
+{
+case COMPONENT_FRAGMENT_TYPE_HEADER:
+   return ".hpp";
+   break;
+case COMPONENT_FRAGMENT_TYPE_SOURCE:
+   return ".cpp";
+   break;
+case COMPONENT_FRAGMENT_TYPE_EXAMPLE:
+   return "Example.cpp";
+   break;
+case COMPONENT_FRAGMENT_TYPE_TEST:
+   return "Test.cpp";
+   break;
+case COMPONENT_FRAGMENT_TYPE_QUINTESSENCE:
+   return ".q.yml";
+   break;
+default:
+   throw std::runtime_error("get_component_fragment_folder_name error: unaccounted for component_fragment_t");
+   break;
+}
 
 }
 
