@@ -15,9 +15,3 @@ TEST(Blast_Project_ComponentListerNewTest, components__returns_the_expected_valu
    EXPECT_EQ(expected, component_lister.components());
 }
 
-TEST(Blast_Project_ComponentListerNewTest, run__returns_the_expected_response)
-{
-   Blast::Project::ComponentListerNew component_lister;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, component_lister.run());
-}

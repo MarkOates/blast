@@ -20,7 +20,6 @@ namespace Blast
 
 
       std::vector<std::string> components();
-      std::string run();
       };
    }
 }

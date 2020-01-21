@@ -8,6 +8,3 @@ functions:
     type: std::vector<std::string>
     body: |
       return {};
-  - name: run
-    type: std::string
-    body: return "Hello World!";
