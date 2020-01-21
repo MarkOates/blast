@@ -13,6 +13,15 @@ functions:
         default_argument: COMPONENT_FRAGMENT_TYPE_UNDEFINED
     body: |
       return "";
+  - name: get_component_fragment_extension
+    private: true
+    type: std::string
+    parameters:
+      - name: component_fragment
+        type: Blast::Project::component_fragment_t
+        default_argument: COMPONENT_FRAGMENT_TYPE_UNDEFINED
+    body: |
+      return "";
   - name: components
     type: std::vector<std::string>
     body: |
