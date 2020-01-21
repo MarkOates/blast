@@ -33,6 +33,12 @@ return "";
 
 }
 
+std::vector<std::string> ComponentListerNew::get_components_of_fragment_type(std::string project_root_directory, Blast::Project::component_fragment_t component_fragment)
+{
+return {};
+
+}
+
 std::vector<std::string> ComponentListerNew::components()
 {
 return {};

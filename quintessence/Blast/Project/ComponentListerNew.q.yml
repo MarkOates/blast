@@ -22,6 +22,18 @@ functions:
         default_argument: COMPONENT_FRAGMENT_TYPE_UNDEFINED
     body: |
       return "";
+  - name: get_components_of_fragment_type
+    private: true
+    type: std::vector<std::string>
+    parameters:
+      - name: project_root_directory
+        type: std::string
+        default_argument: "\"\""
+      - name: component_fragment
+        type: Blast::Project::component_fragment_t
+        default_argument: COMPONENT_FRAGMENT_TYPE_UNDEFINED
+    body: |
+      return {};
   - name: components
     type: std::vector<std::string>
     body: |
