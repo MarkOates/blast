@@ -4,6 +4,7 @@
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <sstream>
 #include <Blast/StringSplitter.hpp>
+#include <Blast/Project/ComponentBasenameExtractor.hpp>
 
 
 namespace Blast
@@ -94,7 +95,36 @@ return component_names_with_fragment;
 
 std::vector<std::string> ComponentListerNew::components()
 {
-return {};
+std::vector<std::string> result = {};
+
+//std::cerr << "WARNING: This function does NOT vaildate the passed project_root_directory "
+   //<< "and injects it directly into a shell command.  This needs to be fixed."
+   //<< std::endl;
+
+std::vector<component_fragment_t> fragments_to_look_for = {
+   COMPONENT_FRAGMENT_TYPE_HEADER,
+   COMPONENT_FRAGMENT_TYPE_SOURCE,
+   COMPONENT_FRAGMENT_TYPE_EXAMPLE,
+   COMPONENT_FRAGMENT_TYPE_TEST,
+   COMPONENT_FRAGMENT_TYPE_QUINTESSENCE,
+};
+
+for (auto &fragment_to_look_for : fragments_to_look_for)
+{
+   std::vector<std::string> fragment_component_names= get_components_of_fragment_type(project_root_directory, fragment_to_look_for);
+
+   for (auto &item : fragment_component_names)
+   {
+      Blast::Project::ComponentBasenameExtractor extractor(item);
+      result.push_back(extractor.identify_component_basename());
+   }
+}
+
+std::sort(result.begin(), result.end());
+std::vector<std::string>::iterator it = std::unique(result.begin(), result.end());
+result.resize(std::distance(result.begin(), it));
+
+return result;
 
 }
 } // namespace Project
