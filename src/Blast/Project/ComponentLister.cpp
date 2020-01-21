@@ -9,6 +9,7 @@
 #include <iostream>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/Project/ComponentBasenameExtractor.hpp>
+#include <Blast/Project/ComponentFragmentTypeEnum.hpp>
 #include <Blast/StringSplitter.hpp>
 
 
@@ -29,17 +30,6 @@ ComponentLister::ComponentLister(std::string project_root_directory)
 ComponentLister::~ComponentLister()
 {
 }
-
-
-enum component_fragment_t
-{
-   COMPONENT_FRAGMENT_TYPE_UNDEFINED = 0,
-   COMPONENT_FRAGMENT_TYPE_HEADER,
-   COMPONENT_FRAGMENT_TYPE_SOURCE,
-   COMPONENT_FRAGMENT_TYPE_EXAMPLE,
-   COMPONENT_FRAGMENT_TYPE_TEST,
-   COMPONENT_FRAGMENT_TYPE_QUINTESSENCE,
-};
 
 
 std::string get_component_fragment_folder_name(component_fragment_t component_fragment)
