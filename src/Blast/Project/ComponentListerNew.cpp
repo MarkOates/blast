@@ -10,7 +10,8 @@ namespace Project
 {
 
 
-ComponentListerNew::ComponentListerNew()
+ComponentListerNew::ComponentListerNew(std::string project_root_directory)
+   : project_root_directory(project_root_directory)
 {
 }
 

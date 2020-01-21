@@ -11,9 +11,10 @@ namespace Blast
       class ComponentListerNew
       {
       private:
+         std::string project_root_directory;
 
       public:
-         ComponentListerNew();
+         ComponentListerNew(std::string project_root_directory="");
          ~ComponentListerNew();
 
 
