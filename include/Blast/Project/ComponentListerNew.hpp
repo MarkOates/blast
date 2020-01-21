@@ -2,6 +2,7 @@
 
 
 #include <string>
+#include <vector>
 
 
 namespace Blast
@@ -18,6 +19,7 @@ namespace Blast
          ~ComponentListerNew();
 
 
+      std::vector<std::string> components();
       std::string run();
       };
    }

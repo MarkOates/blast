@@ -21,6 +21,12 @@ ComponentListerNew::~ComponentListerNew()
 }
 
 
+std::vector<std::string> ComponentListerNew::components()
+{
+return {};
+
+}
+
 std::string ComponentListerNew::run()
 {
 return "Hello World!";

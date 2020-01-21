@@ -4,6 +4,10 @@ properties:
     init_with: "\"\""
     constructor_arg: true
 functions:
+  - name: components
+    type: std::vector<std::string>
+    body: |
+      return {};
   - name: run
     type: std::string
     body: return "Hello World!";
