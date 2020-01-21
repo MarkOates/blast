@@ -23,7 +23,27 @@ ComponentListerNew::~ComponentListerNew()
 
 std::string ComponentListerNew::get_component_fragment_folder_name(Blast::Project::component_fragment_t component_fragment)
 {
-return "";
+switch (component_fragment)
+{
+case COMPONENT_FRAGMENT_TYPE_HEADER:
+   return "include";
+   break;
+case COMPONENT_FRAGMENT_TYPE_SOURCE:
+   return "src";
+   break;
+case COMPONENT_FRAGMENT_TYPE_EXAMPLE:
+   return "examples";
+   break;
+case COMPONENT_FRAGMENT_TYPE_TEST:
+   return "tests";
+   break;
+case COMPONENT_FRAGMENT_TYPE_QUINTESSENCE:
+   return "quintessence";
+   break;
+default:
+   throw std::runtime_error("get_component_fragment_folder_name error: unaccounted for component_fragment_t");
+   break;
+}
 
 }
 

@@ -12,7 +12,27 @@ functions:
         type: Blast::Project::component_fragment_t
         default_argument: COMPONENT_FRAGMENT_TYPE_UNDEFINED
     body: |
-      return "";
+      switch (component_fragment)
+      {
+      case COMPONENT_FRAGMENT_TYPE_HEADER:
+         return "include";
+         break;
+      case COMPONENT_FRAGMENT_TYPE_SOURCE:
+         return "src";
+         break;
+      case COMPONENT_FRAGMENT_TYPE_EXAMPLE:
+         return "examples";
+         break;
+      case COMPONENT_FRAGMENT_TYPE_TEST:
+         return "tests";
+         break;
+      case COMPONENT_FRAGMENT_TYPE_QUINTESSENCE:
+         return "quintessence";
+         break;
+      default:
+         throw std::runtime_error("get_component_fragment_folder_name error: unaccounted for component_fragment_t");
+         break;
+      }
   - name: get_component_fragment_extension
     private: true
     type: std::string
