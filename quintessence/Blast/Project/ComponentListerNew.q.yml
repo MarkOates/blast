@@ -73,7 +73,22 @@ functions:
         type: Blast::Project::component_fragment_t
         default_argument: COMPONENT_FRAGMENT_TYPE_UNDEFINED
     body: |
-      return {};
+      //component_fragment
+
+      std::stringstream find_command;
+      std::string fragment_folder_name = get_component_fragment_folder_name(component_fragment);
+      std::string fragment_extension = get_component_fragment_extension(component_fragment);
+      find_command << "cd " << project_root_directory << " && find " << fragment_folder_name << " -type f -name \"*" << fragment_extension << "\"";
+      Blast::ShellCommandExecutorWithCallback executor(find_command.str(), Blast::ShellCommandExecutorWithCallback::simple_silent_callback);
+      std::string executor_response = executor.execute();
+      StringSplitter splitter(executor_response, '\n');
+      std::vector<std::string> component_names_with_fragment = splitter.split();
+
+      return component_names_with_fragment;
+    body_dependency_symbols:
+      - Blast::ShellCommandExecutorWithCallback
+      - std::stringstream
+      - StringSplitter
   - name: components
     type: std::vector<std::string>
     body: |
@@ -81,3 +96,7 @@ functions:
 dependencies:
   - symbol: Blast::Project::component_fragment_t
     headers: [ Blast/Project/ComponentFragmentTypeEnum.hpp ]
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]
