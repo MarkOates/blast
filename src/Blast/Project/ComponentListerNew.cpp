@@ -21,6 +21,12 @@ ComponentListerNew::~ComponentListerNew()
 }
 
 
+std::string ComponentListerNew::get_component_fragment_folder_name(Blast::Project::component_fragment_t component_fragment)
+{
+return "";
+
+}
+
 std::vector<std::string> ComponentListerNew::components()
 {
 return {};

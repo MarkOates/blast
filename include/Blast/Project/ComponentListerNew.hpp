@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <Blast/Project/ComponentFragmentTypeEnum.hpp>
 #include <string>
 #include <vector>
 
@@ -19,6 +20,7 @@ namespace Blast
          ~ComponentListerNew();
 
 
+      std::string get_component_fragment_folder_name(Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED);
       std::vector<std::string> components();
       };
    }
