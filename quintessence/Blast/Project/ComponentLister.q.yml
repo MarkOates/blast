@@ -124,6 +124,8 @@ functions:
       return result;
     body_dependency_symbols:
       - Blast::Project::ComponentBasenameExtractor
+      - std::sort
+      - std::unique
 dependencies:
   - symbol: Blast::Project::component_fragment_t
     headers: [ Blast/Project/ComponentFragmentTypeEnum.hpp ]
@@ -133,3 +135,7 @@ dependencies:
     headers: [ Blast/Project/ComponentBasenameExtractor.hpp ]
   - symbol: StringSplitter
     headers: [ Blast/StringSplitter.hpp ]
+  - symbol: std::unique
+    headers: [ algorithm ]
+  - symbol: std::sort
+    headers: [ algorithm ]
