@@ -790,7 +790,7 @@ int main(int argc, char **argv)
       return 1;
    }
 
-   for (int i=0; i<filename_args.size(); i++)
+   for (unsigned int i=0; i<filename_args.size(); i++)
    {
       std::string quintessence_filename = filename_args[i];
       if (verbose_output) std::cout << "Assessing genesis for \"" << quintessence_filename << "\"" << std::endl;
