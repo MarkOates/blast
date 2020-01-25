@@ -440,7 +440,7 @@ std::string ClassGenerator::function_definitions(int indent_level)
       std::vector<std::string> tokens = split(function_definition_element, '\n');
       for (auto &token : tokens)
       {
-         indented_result << std::string(3*indent_level, ' ') << token << std::endl;
+         indented_result << std::string(3*indent_level, ' ') << token << '\n';
       }
       indented_results.push_back(indented_result.str());
    }
