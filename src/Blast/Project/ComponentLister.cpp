@@ -3,9 +3,10 @@
 #include <Blast/Project/ComponentLister.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <sstream>
-#include <algorithm>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/Project/ComponentBasenameExtractor.hpp>
+#include <algorithm>
+#include <algorithm>
 
 
 namespace Blast

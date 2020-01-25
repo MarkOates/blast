@@ -46,7 +46,7 @@ std::string SymlinkChecker::read_symlink_target()
    //return std::string(buff);
 //}
 //throw std::runtime_error("an error occurred when trying to read_symlink_target in Blast/Project/SymlinkChecker");
-   return "";
+return "";
 
 }
 } // namespace Project
