@@ -127,7 +127,7 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
    if (!content_for_header_is_unchanged)
    {
       std::ofstream header_file;
-      header_file.open(header_filepath, std::ofstream::out);
+      header_file.open(header_filepath, std::ios::binary);
       if (header_file.fail())
       {
          if (!automatically_create_folders)
@@ -138,7 +138,7 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
          }
          create_folders_for_file(header_filepath);
 
-         header_file.open(header_filepath, std::ofstream::out);
+         header_file.open(header_filepath, std::ios::binary);
          if (header_file.fail())
          {
             std::stringstream error_message;
@@ -153,7 +153,7 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
    if (!content_for_source_is_unchanged)
    {
       std::ofstream source_file;
-      source_file.open(source_filepath, std::ofstream::out);
+      source_file.open(source_filepath, std::ios::binary);
       if (source_file.fail())
       {
          if (!automatically_create_folders)
@@ -164,7 +164,7 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
          }
          create_folders_for_file(source_filepath);
 
-         source_file.open(source_filepath, std::ofstream::out);
+         source_file.open(source_filepath, std::ios::binary);
          if (source_file.fail())
          {
             std::stringstream error_message;
