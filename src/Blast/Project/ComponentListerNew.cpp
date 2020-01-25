@@ -3,6 +3,7 @@
 #include <Blast/Project/ComponentListerNew.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <sstream>
+#include <algorithm>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/Project/ComponentBasenameExtractor.hpp>
 

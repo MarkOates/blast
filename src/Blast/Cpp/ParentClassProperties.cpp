@@ -3,6 +3,7 @@
 #include <Blast/Cpp/ParentClassProperties.hpp>
 
 #include <sstream>
+#include <algorithm>
 
 
 namespace Blast

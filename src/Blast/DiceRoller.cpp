@@ -2,6 +2,8 @@
 
 #include <Blast/DiceRoller.hpp>
 
+#include <stdexcept>
+
 
 namespace Blast
 {

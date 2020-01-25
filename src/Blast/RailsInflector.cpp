@@ -3,6 +3,7 @@
 #include <Blast/RailsInflector.hpp>
 
 #include <Blast/ShellCommandExecutor.hpp>
+#include <algorithm>
 #include <sstream>
 #include <vector>
 

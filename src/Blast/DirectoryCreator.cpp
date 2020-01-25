@@ -34,7 +34,8 @@ for (auto &directory_component : directory_components)
   std::string directory_to_create = result_directories.str();
 
   if (Blast::DirectoryExistenceChecker(directory_to_create).exists()) continue;
-  int mkdir_result = mkdir(directory_to_create.c_str(), 0777);
+  //int mkdir_result = mkdir(directory_to_create.c_str(), 0777); // mkdir with two arguments not working on windows at this time
+  int mkdir_result = -1;
   if (mkdir_result == -1) return false;
 }
 return true;
