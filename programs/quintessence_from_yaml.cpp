@@ -16,6 +16,9 @@
 bool verbose_output = true;
 
 
+#define ENDL ('\n')
+
+
 
 void explode(std::string location, std::string error_message)
 {
@@ -176,11 +179,11 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
    // output success
    if (content_for_header_is_unchanged && content_for_source_is_unchanged)
    {
-      if (verbose_output) std::cout << "🔹 content is unchanged for \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
+      if (verbose_output) std::cout << "🔹 content is unchanged for \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << ENDL;
    }
    else
    {
-      std::cout << "✅ done. Files generated \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << std::endl;
+      std::cout << "✅ done. Files generated \033[1m\033[32m" << header_filepath << " and " << source_filepath << "\033[0m" << ENDL;
    }
 }
 
@@ -786,14 +789,14 @@ int main(int argc, char **argv)
 
    if (filename_args.size() <= 1)
    {
-      std::cout << "You must pass a quintessence filename or filenames as an argument (after the -f flag)" << std::endl;
+      std::cout << "You must pass a quintessence filename or filenames as an argument (after the -f flag)" << ENDL;
       return 1;
    }
 
    for (unsigned int i=0; i<filename_args.size(); i++)
    {
       std::string quintessence_filename = filename_args[i];
-      if (verbose_output) std::cout << "Assessing genesis for \"" << quintessence_filename << "\"" << std::endl;
+      if (verbose_output) std::cout << "Assessing genesis for \"" << quintessence_filename << "\"" << ENDL;
       YAML::Node source = YAML::LoadFile(quintessence_filename);
 
 
