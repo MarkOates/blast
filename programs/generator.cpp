@@ -438,14 +438,16 @@ int main(int argc, char **argv)
    system(generator.mkprojdir("tests").c_str());
    system(generator.mkprojdir("quintessence").c_str());
 
-   std::ofstream outfile(generator.get_project_name() + "/Makefile");
+   std::ofstream outfile;
+   outfile.open(generator.get_project_name() + "/Makefile");
    std::string makefile_content = MAKEFILE_TEMPLATE;
    ___replace(makefile_content, "[[TEST_RUNNER_CLASS_NAME]]", TEST_RUNNER_CLASS_NAME);
    outfile << makefile_content;
    outfile.close();
 
    std::string gitignore_file_filename = generator.get_project_name() + "/.gitignore";
-   std::ofstream outfile3(gitignore_file_filename);
+   std::ofstream outfile3;
+   outfile3.open(gitignore_file_filename);
    outfile3 << GITIGNORE_FILE_CONTENT;
    outfile.close();
 
@@ -458,13 +460,15 @@ int main(int argc, char **argv)
    //outfile4 << program_runner_quintessence_file_content;
    //outfile4.close();
 
-   std::ofstream outfile5(generator.get_project_name() + "/programs/main.cpp");
+   std::ofstream outfile5;
+   outfile5.open(generator.get_project_name() + "/programs/main.cpp");
    std::string main_file_content = main_file_content_template;
    ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    outfile5 << main_file_content;
    outfile5.close();
 
-   std::ofstream outfile6(generator.get_project_name() + "/tests/" + TEST_RUNNER_CLASS_NAME + ".cpp");
+   std::ofstream outfile6;
+   outfile6.open(generator.get_project_name() + "/tests/" + TEST_RUNNER_CLASS_NAME + ".cpp");
    outfile6 << TEST_RUNNER_FILE_CONTENT;
    outfile6.close();
 
@@ -475,7 +479,8 @@ int main(int argc, char **argv)
    //system((std::string("chmod +x ") + rerun_script_filename).c_str());
 
    std::string rerun_cat_file_script_filename = generator.get_project_name() + "/" + RERUN_CAT_FILE_SCRIPT_FILENAME;
-   std::ofstream outfile9(rerun_cat_file_script_filename);
+   std::ofstream outfile9;
+   outfile9.open(rerun_cat_file_script_filename);
    outfile9 << RERUN_CAT_FILE_SCRIPT_CONTENT;
    outfile9.close();
    system((std::string("chmod +x ") + rerun_cat_file_script_filename).c_str());
