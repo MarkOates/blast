@@ -23,20 +23,12 @@ functions:
         std::string directory_to_create = result_directories.str();
 
         if (Blast::DirectoryExistenceChecker(directory_to_create).exists()) continue;
-        bool directory_created = std::__fs::filesystem::create_directories(directory_to_create.c_str());
-        if (!directory_created)
-        {
-           std::stringstream error_message;
-           error_message << "Could not create directory \"" << directory_to_create << "\"" << std::endl;
-           throw std::runtime_error(error_message.str());
-        }
+        int mkdir_result = mkdir(directory_to_create.c_str());
+        //int mkdir_result = mkdir(directory_to_create.c_str(), 0777);
+        if (mkdir_result == -1) return false;
       }
       return true;
-    body_dependency_symbols:
-      - std::__fs::filesystem::create_directory
-      - std::stringstream
-      - std::string
-      - Blast::DirectoryExistenceChecker
+function_body_symbol_dependencies: [ 'mkdir', 'std::stringstream', 'std::string', 'Blast::DirectoryExistenceChecker' ]
 dependencies:
   - symbol: bool
     headers: []
@@ -50,8 +42,8 @@ dependencies:
     headers: [ 'vector', 'string' ]
     include_directories: []
     linked_libraries: []
-  - symbol: std::__fs::filesystem::create_directory
-    headers: [ 'filesystem' ]
+  - symbol: mkdir
+    headers: [ 'sys/stat.h' ]
     include_directories: []
     linked_libraries: []
   - symbol: std::stringstream
