@@ -78,8 +78,10 @@ int main(int argc, char **argv)
    std::cout << "...component folders created.";
 
    std::cout << "Generating component files..." << std::endl;
-   std::ofstream outfile4(generator.get_quintessence_filename());
-   std::ofstream outfile7(generator.get_test_filename());
+   std::ofstream outfile4;
+   outfile4.open(generator.get_quintessence_filename(), std::ios::binary);
+   std::ofstream outfile7;
+   outfile7.open(generator.get_test_filename(), std::ios::binary);
 
    std::map<std::string, std::ofstream *> outfiles = {
       { generator.get_quintessence_filename(), &outfile4 },
