@@ -1,3 +1,6 @@
+#include <allegro5/allegro.h> // temporary fix for compatibility with union/Makefile
+
+
 #include <Blast/Build/Celebrator.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <Blast/CommandLineFlaggedArgumentsParser.hpp>
