@@ -784,7 +784,7 @@ int main(int argc, char **argv)
    }
 
 
-   if (filename_args.size() <= 1)
+   if (filename_args.size() <= 0)
    {
       std::cout << "You must pass a quintessence filename or filenames as an argument (after the -f flag)" << std::endl;
       return 1;
