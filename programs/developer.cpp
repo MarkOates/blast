@@ -1,5 +1,6 @@
 #include <allegro5/allegro.h> // for compatibility with union/Makefile
 
+#include <vector>
 #include <iostream>
 #include <sstream>
 
@@ -22,18 +23,25 @@ int main(int argc, char **argv)
    while(true)
    {
       std::cout << ">> ";
-      std::cin >> user_input;
+      getline(std::cin, user_input);
+      std::cout << std::endl;
 
       if (user_input == "exit") break;
 
+      std::vector<std::string> command_tokens;
+      command_tokens = {
+         "(",
+            "cd /Users/markoates/Repos/blast",
+            "&&",
+            user_input,
+         ")",
+      };
+
       std::stringstream command;
-      command
-         << "("
-            << "cd /Users/markoates/Repos/hexagon"
-            << "&&"
-            << user_input
-         << ")"
-      ;
+      for (auto &command_token : command_tokens)
+      {
+         command << command_token << " ";
+      }
 
       execute_command(command.str());
    }
