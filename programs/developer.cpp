@@ -2,15 +2,19 @@
 
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 
-int main(int argc, char **argv)
+void execute_command(std::string command)
 {
-   std::string command = "(cd /Users/markoates/Repos/hexagon && ls)";
    Blast::ShellCommandExecutorWithCallback shell_command_executor(
          command,
          Blast::ShellCommandExecutorWithCallback::simple_cout_callback
       );
 
    shell_command_executor.execute();
+}
+
+int main(int argc, char **argv)
+{
+   execute_command("(cd /Users/markoates/Repos/hexagon && ls)");
 
    return 0;
 }
