@@ -50,6 +50,12 @@ return project_root + filename;
 
 }
 
+std::time_t Component::last_write_time()
+{
+return 0;
+
+}
+
 bool Component::check_file_existence(Blast::ProjectComponentFileTypes::project_file_type_t type)
 {
 std::string filename = Blast::ProjectComponentFilenameGenerator(name, type).generate_filename();

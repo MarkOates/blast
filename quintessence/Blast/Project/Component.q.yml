@@ -20,7 +20,12 @@ functions:
     body_dependency_symbols:
       - Blast::ProjectComponentFilenameGenerator
       - Blast::ProjectComponentFileTypes
-       
+
+  - name: last_write_time
+    type: std::time_t
+    body: |
+      return 0;
+
   - name: check_file_existence
     type: bool
     private: true
@@ -99,3 +104,5 @@ dependencies:
     headers: [ Blast/ProjectComponentFileTypes.hpp ]
   - symbol: Blast::FileExistenceChecker
     headers: [ Blast/FileExistenceChecker.hpp ]
+  - symbol: std::time_t
+    headers: [ ctime ]
