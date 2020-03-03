@@ -12,15 +12,18 @@ TEST(DISABLED_Blast_FileLastWriteTimeTest, last_write_time__with_a_filename_that
 {
    std::string filename = "file_that_does_not_exist.txt";
    Blast::FileLastWriteTime file_last_write_time(filename);
-   file_last_write_time.last_write_time();
+   ASSERT_ANY_THROW(file_last_write_time.last_write_time()); // TODO specify the exception that is being caught
 }
 
 TEST(Blast_FileLastWriteTimeTest, last_write_time__returns_the_last_write_time_of_the_file)
 {
    std::string filename = "tests/fixtures/file_that_should_not_change_modified_time.txt";
    Blast::FileLastWriteTime file_last_write_time(filename);
-   std::time_t expected_write_time = 1583205122;
    std::time_t actual_write_time = file_last_write_time.last_write_time();
-   EXPECT_EQ(expected_write_time, actual_write_time);
+   ASSERT_LT(0, actual_write_time);
+
+   // sanity test
+   std::time_t a_sane_last_write_time = 1583205122;
+   ASSERT_LT(a_sane_last_write_time, actual_write_time);
 }
 
