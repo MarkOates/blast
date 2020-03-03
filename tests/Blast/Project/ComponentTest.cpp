@@ -76,8 +76,9 @@ TEST(Blast_Project_ComponentTest, has_test__returns_false_when_a_test_file_does_
 TEST(Blast_Project_ComponentTest, last_write_time__returns_the_most_recent_write_time_among_all_of_the_component_files)
 {
    Blast::Project::Component component("Blast/StringSplitter");
-   component.last_write_time();
-   ASSERT_EQ(false, component.has_test());
+   std::time_t expected_last_write_time = 1583020454;
+   std::time_t actual_last_write_time = component.last_write_time();
+   ASSERT_EQ(expected_last_write_time, actual_last_write_time);
 }
 
 TEST(Blast_Project_ComponentTest, last_write_time__returns_0_when_the_component_does_not_exist)
