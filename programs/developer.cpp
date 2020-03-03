@@ -34,7 +34,8 @@ int main(int argc, char **argv)
    std::string user_input;
    while(true)
    {
-      std::cout << ">> ";
+      std::cout << "Ruby/Rspec mode" << std::endl;
+      std::cout << "Type the name of the component: ";
       getline(std::cin, user_input);
       std::cout << std::endl;
 
