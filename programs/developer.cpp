@@ -28,7 +28,8 @@ std::string __replace(std::string str, std::string from, std::string to)
 
 int main(int argc, char **argv)
 {
-   std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=[[COMPONENT_NAME]]; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb\"; unset COMPONENT_NAME";
+   std::string RUBY_DEV_COMMAND_RERUN = "COMPONENT_NAME=[[COMPONENT_NAME]]; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb\"; unset COMPONENT_NAME";
+   std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=[[COMPONENT_NAME]]; bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb; unset COMPONENT_NAME";
 
    std::string user_input;
    while(true)
@@ -39,7 +40,7 @@ int main(int argc, char **argv)
 
       if (user_input == "exit") break;
 
-      std::string user_command = RUBY_DEV_COMMAND;
+      std::string user_command = RUBY_DEV_COMMAND_RERUN;
       user_command = __replace(user_command, "[[COMPONENT_NAME]]", user_input);
 
       std::vector<std::string> command_tokens;
