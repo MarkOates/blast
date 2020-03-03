@@ -77,11 +77,11 @@ TEST(Blast_Project_ComponentTest, last_write_time__returns_the_most_recent_write
 {
    Blast::Project::Component component("Blast/StringSplitter");
    std::time_t actual_last_write_time = component.last_write_time();
-   ASSERT_LT(0, actual_last_write_time);
+   ASSERT_GT(actual_last_write_time, 0);
 
    // sanity test
    std::time_t a_sane_last_write_time = 1583010454;
-   ASSERT_LT(a_sane_last_write_time, actual_last_write_time);
+   ASSERT_GT(actual_last_write_time, a_sane_last_write_time);
 }
 
 TEST(Blast_Project_ComponentTest, last_write_time__returns_0_when_the_component_does_not_exist)

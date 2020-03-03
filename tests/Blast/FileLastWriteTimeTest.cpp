@@ -20,10 +20,10 @@ TEST(Blast_FileLastWriteTimeTest, last_write_time__returns_the_last_write_time_o
    std::string filename = "tests/fixtures/file_that_should_not_change_modified_time.txt";
    Blast::FileLastWriteTime file_last_write_time(filename);
    std::time_t actual_write_time = file_last_write_time.last_write_time();
-   ASSERT_LT(0, actual_write_time);
+   ASSERT_GT(actual_write_time, 0);
 
    // sanity test
    std::time_t a_sane_last_write_time = 1583205122;
-   ASSERT_LT(a_sane_last_write_time, actual_write_time);
+   ASSERT_GT(actual_write_time, a_sane_last_write_time);
 }
 
