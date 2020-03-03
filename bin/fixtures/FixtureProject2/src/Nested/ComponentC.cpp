@@ -1,0 +1,6 @@
+namespace Nested
+{
+   class ComponentC
+   {
+   }
+}

@@ -23,7 +23,7 @@ TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_true_the_file_is_a_sy
    ASSERT_EQ(true, symlink_checker.is_symlink());
 }
 
-TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_false_the_file_is_a_symlink)
+TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_false_the_file_is_not_a_symlink)
 {
    std::string symlink_file = FIXTURE_PATH + "src/Nested/ComponentC.cpp";
    Blast::Project::SymlinkChecker symlink_checker(symlink_file);
