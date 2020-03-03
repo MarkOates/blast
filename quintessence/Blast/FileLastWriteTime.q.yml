@@ -1,0 +1,20 @@
+properties:
+  - name: filename
+    constructor_arg: true
+functions:
+  - name: last_write_time
+    type: std::time_t
+    body: |
+      auto ftime = std::__fs::filesystem::last_write_time(filename);
+      std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
+      return last_write_time;
+    body_dependency_symbols:
+      - std::__fs::filesystem::last_write_time
+      - decltype(T)::clock::to_time_t(T)
+dependencies:
+  - symbol: std::__fs::filesystem::last_write_time
+    headers: [ 'filesystem' ]
+  - symbol: decltype(T)::clock::to_time_t(T)
+    headers: [ 'ctime' ]
+  - symbol: std::time_t
+    headers: [ 'ctime' ]
