@@ -83,6 +83,7 @@ TEST(Blast_Project_ComponentTest, last_write_time__returns_the_most_recent_write
 TEST(Blast_Project_ComponentTest, last_write_time__returns_0_when_the_component_does_not_exist)
 {
    Blast::Project::Component component("Blast/Component/That/Does/Not/Exist");
+   ASSERT_FALSE(component.exists());
    std::time_t actual_write_time = component.last_write_time();
    ASSERT_EQ(0, actual_write_time);
 }
