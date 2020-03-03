@@ -18,6 +18,8 @@ void execute_command(std::string command)
 
 int main(int argc, char **argv)
 {
+   std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=models/review; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb\"; unset COMPONENT_NAME";
+
    std::string user_input;
 
    while(true)
@@ -31,9 +33,9 @@ int main(int argc, char **argv)
       std::vector<std::string> command_tokens;
       command_tokens = {
          "(",
-            "cd /Users/markoates/Repos/blast",
+            "cd /Users/markoates/dev_repos/partners",
             "&&",
-            user_input,
+            RUBY_DEV_COMMAND,
          ")",
       };
 
