@@ -16,12 +16,21 @@ void execute_command(std::string command)
    shell_command_executor.execute();
 }
 
+std::string __replace(std::string str, std::string from, std::string to)
+{
+   size_t start_pos = 0;
+   while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+      str.replace(start_pos, from.length(), to);
+      start_pos += to.length();
+   }
+   return str;
+}
+
 int main(int argc, char **argv)
 {
    std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=models/review; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb\"; unset COMPONENT_NAME";
 
    std::string user_input;
-
    while(true)
    {
       std::cout << ">> ";
