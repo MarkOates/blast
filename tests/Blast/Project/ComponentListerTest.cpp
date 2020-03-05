@@ -1,7 +1,12 @@
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
+using ::testing::UnorderedElementsAreArray;
 
 #include <Blast/Project/ComponentLister.hpp>
+
+#include <Blast/Project/Component.hpp>
 
 TEST(Blast__Project__ComponentLister, can_be_created_without_arguments)
 {
@@ -27,7 +32,7 @@ TEST(Blast__Project__ComponentLister, will_return_the_components_in_a_project)
 TEST(Blast__Project__ComponentLister,
   components_sorted_by_most_recent__will_return_the_components_sorted_by_most_recent)
 {
-   std::vector<std::string> expected_sorted_components = {
+   std::vector<std::string> expected_contained_elements = {
       "ComponentB",
       "Nested/ComponentC",
       "NotAppearingOutsideTest/ComponentX",
@@ -36,9 +41,19 @@ TEST(Blast__Project__ComponentLister,
    };
 
    Blast::Project::ComponentLister lister("bin/fixtures/test_project/");
-   std::vector<std::string> actual_sorted_components = lister.components_sorted_by_most_recent();
+   std::vector<std::string> actual_elements = lister.components_sorted_by_most_recent();
 
-   ASSERT_EQ(expected_sorted_components, actual_sorted_components);
+   ASSERT_THAT(actual_elements, UnorderedElementsAreArray(expected_contained_elements));
+
+   std::time_t last_time = 0;
+
+   for (auto &element : actual_elements)
+   {
+      Blast::Project::Component component = Blast::Project::Component(element, "bin/fixtures/test_project/");
+      std::time_t write_time = component.last_write_time();
+      EXPECT_GE(write_time, last_time);
+      last_time = write_time;
+   }
 }
 
 
