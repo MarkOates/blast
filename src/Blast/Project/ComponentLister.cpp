@@ -4,6 +4,10 @@
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <sstream>
 #include <Blast/StringSplitter.hpp>
+#include <iostream>
+#include <Blast/Project/Component.hpp>
+#include <ctime>
+#include <algorithm>
 #include <Blast/Project/ComponentBasenameExtractor.hpp>
 #include <algorithm>
 #include <algorithm>
@@ -92,6 +96,31 @@ StringSplitter splitter(executor_response, '\n');
 std::vector<std::string> component_names_with_fragment = splitter.split();
 
 return component_names_with_fragment;
+
+}
+
+std::vector<std::string> ComponentLister::components_sorted_by_most_recent()
+{
+std::vector<std::string> result = {};
+std::vector<std::string> unsorted_components = components();
+std::vector<std::pair<std::time_t, std::string>> intermediate_list_for_sorting = {};
+
+for (auto &component_name : unsorted_components)
+{
+   Blast::Project::Component component(component_name, project_root_directory);
+   std::time_t component_last_write_time = component.last_write_time();
+   intermediate_list_for_sorting.push_back({ component_last_write_time, component_name });
+}
+
+std::sort(intermediate_list_for_sorting.begin(), intermediate_list_for_sorting.end());
+
+for (auto &component : intermediate_list_for_sorting)
+{
+   std::cout << component.second << " << " << component.first << std::endl;
+   result.push_back(component.second);
+}
+
+return result;
 
 }
 

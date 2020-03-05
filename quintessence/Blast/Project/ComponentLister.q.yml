@@ -89,6 +89,34 @@ functions:
       - Blast::ShellCommandExecutorWithCallback
       - std::stringstream
       - StringSplitter
+  - name: components_sorted_by_most_recent
+    type: std::vector<std::string>
+    body: |
+      std::vector<std::string> result = {};
+      std::vector<std::string> unsorted_components = components();
+      std::vector<std::pair<std::time_t, std::string>> intermediate_list_for_sorting = {};
+
+      for (auto &component_name : unsorted_components)
+      {
+         Blast::Project::Component component(component_name, project_root_directory);
+         std::time_t component_last_write_time = component.last_write_time();
+         intermediate_list_for_sorting.push_back({ component_last_write_time, component_name });
+      }
+
+      std::sort(intermediate_list_for_sorting.begin(), intermediate_list_for_sorting.end());
+
+      for (auto &component : intermediate_list_for_sorting)
+      {
+         std::cout << component.second << " << " << component.first << std::endl;
+         result.push_back(component.second);
+      }
+
+      return result;
+    body_dependency_symbols:
+      - remove_this
+      - Blast::Project::Component
+      - std::time_t
+      - std::sort
   - name: components
     type: std::vector<std::string>
     body: |
@@ -127,6 +155,8 @@ functions:
       - std::sort
       - std::unique
 dependencies:
+  - symbol: Blast::Project::Component
+    headers: [ Blast/Project/Component.hpp ]
   - symbol: Blast::Project::component_fragment_t
     headers: [ Blast/Project/ComponentFragmentTypeEnum.hpp ]
   - symbol: Blast::ShellCommandExecutorWithCallback
@@ -135,7 +165,11 @@ dependencies:
     headers: [ Blast/Project/ComponentBasenameExtractor.hpp ]
   - symbol: StringSplitter
     headers: [ Blast/StringSplitter.hpp ]
+  - symbol: std::time_t
+    headers: [ ctime ]
   - symbol: std::unique
     headers: [ algorithm ]
+  - symbol: remove_this
+    headers: [ iostream ]
   - symbol: std::sort
     headers: [ algorithm ]
