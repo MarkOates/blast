@@ -104,6 +104,7 @@ functions:
       }
 
       std::sort(intermediate_list_for_sorting.begin(), intermediate_list_for_sorting.end());
+      std::reverse(intermediate_list_for_sorting.begin(), intermediate_list_for_sorting.end());
 
       for (auto &component : intermediate_list_for_sorting)
       {
@@ -115,6 +116,7 @@ functions:
       - Blast::Project::Component
       - std::time_t
       - std::sort
+      - std::reverse
   - name: components
     type: std::vector<std::string>
     body: |
@@ -166,6 +168,8 @@ dependencies:
   - symbol: std::time_t
     headers: [ ctime ]
   - symbol: std::unique
+    headers: [ algorithm ]
+  - symbol: std::reverse
     headers: [ algorithm ]
   - symbol: std::sort
     headers: [ algorithm ]

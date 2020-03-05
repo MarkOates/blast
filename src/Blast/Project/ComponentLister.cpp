@@ -7,6 +7,7 @@
 #include <Blast/Project/Component.hpp>
 #include <ctime>
 #include <algorithm>
+#include <algorithm>
 #include <Blast/Project/ComponentBasenameExtractor.hpp>
 #include <algorithm>
 #include <algorithm>
@@ -112,6 +113,7 @@ for (auto &component_name : unsorted_components)
 }
 
 std::sort(intermediate_list_for_sorting.begin(), intermediate_list_for_sorting.end());
+std::reverse(intermediate_list_for_sorting.begin(), intermediate_list_for_sorting.end());
 
 for (auto &component : intermediate_list_for_sorting)
 {

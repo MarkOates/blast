@@ -32,6 +32,7 @@ TEST(Blast__Project__ComponentLister, will_return_the_components_in_a_project)
 TEST(Blast__Project__ComponentLister,
   components_sorted_by_most_recent__will_return_the_components_sorted_by_most_recent)
 {
+   std::string project_directory = "bin/fixtures/test_project/";
    std::vector<std::string> expected_contained_elements = {
       "ComponentB",
       "Nested/ComponentC",
@@ -45,13 +46,14 @@ TEST(Blast__Project__ComponentLister,
 
    ASSERT_THAT(actual_elements, UnorderedElementsAreArray(expected_contained_elements));
 
-   std::time_t previous_element_write_time = 0;
+   Blast::Project::Component first_component = Blast::Project::Component(actual_elements[0], project_directory);
+   std::time_t previous_element_write_time = first_component.last_write_time();
 
    for (auto &element : actual_elements)
    {
-      Blast::Project::Component component = Blast::Project::Component(element, "bin/fixtures/test_project/");
+      Blast::Project::Component component = Blast::Project::Component(element, project_directory);
       std::time_t write_time = component.last_write_time();
-      EXPECT_GE(write_time, previous_element_write_time);
+      EXPECT_LE(write_time, previous_element_write_time);
       previous_element_write_time = write_time;
    }
 }
