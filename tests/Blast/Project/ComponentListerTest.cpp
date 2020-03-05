@@ -45,14 +45,14 @@ TEST(Blast__Project__ComponentLister,
 
    ASSERT_THAT(actual_elements, UnorderedElementsAreArray(expected_contained_elements));
 
-   std::time_t last_time = 0;
+   std::time_t previous_element_write_time = 0;
 
    for (auto &element : actual_elements)
    {
       Blast::Project::Component component = Blast::Project::Component(element, "bin/fixtures/test_project/");
       std::time_t write_time = component.last_write_time();
-      EXPECT_GE(write_time, last_time);
-      last_time = write_time;
+      EXPECT_GE(write_time, previous_element_write_time);
+      previous_element_write_time = write_time;
    }
 }
 
