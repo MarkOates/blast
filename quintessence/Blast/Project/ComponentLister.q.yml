@@ -107,13 +107,11 @@ functions:
 
       for (auto &component : intermediate_list_for_sorting)
       {
-         std::cout << component.second << " << " << component.first << std::endl;
          result.push_back(component.second);
       }
 
       return result;
     body_dependency_symbols:
-      - remove_this
       - Blast::Project::Component
       - std::time_t
       - std::sort
@@ -169,7 +167,5 @@ dependencies:
     headers: [ ctime ]
   - symbol: std::unique
     headers: [ algorithm ]
-  - symbol: remove_this
-    headers: [ iostream ]
   - symbol: std::sort
     headers: [ algorithm ]

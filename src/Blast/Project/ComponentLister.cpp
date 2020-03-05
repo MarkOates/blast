@@ -4,7 +4,6 @@
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <sstream>
 #include <Blast/StringSplitter.hpp>
-#include <iostream>
 #include <Blast/Project/Component.hpp>
 #include <ctime>
 #include <algorithm>
@@ -116,7 +115,6 @@ std::sort(intermediate_list_for_sorting.begin(), intermediate_list_for_sorting.e
 
 for (auto &component : intermediate_list_for_sorting)
 {
-   std::cout << component.second << " << " << component.first << std::endl;
    result.push_back(component.second);
 }
 
