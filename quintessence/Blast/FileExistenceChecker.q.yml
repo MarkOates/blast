@@ -8,18 +8,9 @@ functions:
   - name: exists
     type: bool
     body: |
-      struct stat info;
-      //disable for Windows compile
-      return stat(filename.c_str(), &info) == 0 && (S_ISREG(info.st_mode) || S_ISLNK(info.st_mode));
-      //return false;
+       return std::filesystem::exists(filename);
     body_dependency_symbols:
-      - S_ISREG
-      - S_ISLINK
-      - stat
+      - std::filesystem::exists
 dependencies:
-  - symbol: S_ISREG
-    headers: [ sys/stat.h ]
-  - symbol: S_ISLINK
-    headers: [ sys/stat.h ]
-  - symbol: stat
-    headers: [ sys/stat.h ]
+  - symbol: std::filesystem::exists
+    headers: [ filesystem ]
