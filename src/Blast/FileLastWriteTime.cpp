@@ -23,7 +23,7 @@ FileLastWriteTime::~FileLastWriteTime()
 std::time_t FileLastWriteTime::last_write_time()
 {
 auto ftime = std::filesystem::last_write_time(filename);
-#ifdef _WIN22
+#ifdef _WIN32
   return ftime; // will fail to compile
 #else
   std::time_t last_write_time = decltype(ftime)::clock::to_time_t(ftime);
