@@ -24,6 +24,6 @@ TEST(Blast_FileLastWriteTimeTest, last_write_time__returns_the_last_write_time_o
 
    // sanity test
    std::time_t a_sane_last_write_time = 1583205122;
-   ASSERT_GT(actual_write_time, a_sane_last_write_time);
+   ASSERT_GE(actual_write_time, a_sane_last_write_time);
 }
 
