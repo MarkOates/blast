@@ -22,8 +22,11 @@ functions:
         result_directories << directory_component << SEPARATOR;
         std::string directory_to_create = result_directories.str();
         if (Blast::DirectoryExistenceChecker(directory_to_create).exists()) continue;
-        //int mkdir_result = mkdir(directory_to_create.c_str());
-        int mkdir_result = mkdir(directory_to_create.c_str(), 0777);
+        #ifdef _WIN32
+          int mkdir_result = mkdir(directory_to_create.c_str());
+        #else
+          int mkdir_result = mkdir(directory_to_create.c_str(), 0777);
+        #endif
         if (mkdir_result == -1) return false;
       }
       return true;
