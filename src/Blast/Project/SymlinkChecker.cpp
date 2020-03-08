@@ -4,8 +4,8 @@
 #include <filesystem>
 #include <filesystem>
 #include <filesystem>
-#include <unistd.h>
-#include <string>
+#include <filesystem>
+#include <filesystem>
 
 
 namespace Blast
@@ -34,13 +34,13 @@ return std::filesystem::exists(path) && std::filesystem::is_symlink(path);
 
 std::string SymlinkChecker::read_symlink_target()
 {
-char buff[512];
-ssize_t len = ::readlink(filename.c_str(), buff, sizeof(buff)-1);
-if (len != -1) {
-   buff[len] = '\0';
-   return std::string(buff);
+if (!is_symlink())
+{
+   std::string error_message = "an error occurred when trying to read_symlink_target in Blast/Project/SymlinkChecker";
+   throw std::runtime_error(error_message);
 }
-throw std::runtime_error("an error occurred when trying to read_symlink_target in Blast/Project/SymlinkChecker");
+std::filesystem::path path(filename);
+return std::filesystem::read_symlink(path);
 
 }
 } // namespace Project
