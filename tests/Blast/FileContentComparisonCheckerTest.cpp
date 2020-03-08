@@ -8,7 +8,7 @@
 #define FIXTURE_FILENAME "bin/fixtures/test_file.txt"
 
 
-TEST(Blast__FileContentComparisonCheckerTest, expected_test_file_exists)
+TEST(DISABLED_Blast__FileContentComparisonCheckerTest, expected_test_file_exists)
 {
    //todo: handle this test without <filesystem>
    //ASSERT_TRUE(std::filesystem::exists(FIXTURE_FILENAME));
