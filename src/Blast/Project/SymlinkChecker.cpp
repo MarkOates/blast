@@ -1,7 +1,9 @@
 
 
 #include <Blast/Project/SymlinkChecker.hpp>
-#include <sys/stat.h>
+#include <filesystem>
+#include <filesystem>
+#include <filesystem>
 #include <unistd.h>
 #include <string>
 
@@ -25,14 +27,8 @@ SymlinkChecker::~SymlinkChecker()
 
 bool SymlinkChecker::is_symlink()
 {
-struct stat p_statbuf;
-
-if (lstat(filename.c_str(), &p_statbuf) < 0)
-{
-   throw std::runtime_error("[Project/SymlinkChecker error:] An error occurred while attempting to is_symlink");
-}
-
-return (S_ISLNK(p_statbuf.st_mode) == 1);
+std::filesystem::path path(filename);
+return std::filesystem::exists(path) && std::filesystem::is_symlink(path);
 
 }
 
