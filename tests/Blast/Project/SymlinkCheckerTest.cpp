@@ -10,7 +10,7 @@ TEST(Blast_Project_SymlinkCheckerTest, can_be_created_without_blowing_up)
    Blast::Project::SymlinkChecker symlink_checker;
 }
 
-TEST(Blast_Project_SymlinkCheckerTest, the_expected_fixture_files_are_in_place)
+TEST(DISABLED_Blast_Project_SymlinkCheckerTest, the_expected_fixture_files_are_in_place)
 {
    // todo
 }
@@ -29,6 +29,10 @@ TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_false_the_file_is_not
    Blast::Project::SymlinkChecker symlink_checker(symlink_file);
 
    ASSERT_EQ(false, symlink_checker.is_symlink());
+}
+
+TEST(DISABLED_Blast_Project_SymlinkCheckerTest, read_symlink_target__if_symlink_does_not_exist__throws_an_error)
+{
 }
 
 TEST(Blast_Project_SymlinkCheckerTest, read_symlink_target__returns_the_target_of_the_symlink)

@@ -22,7 +22,7 @@ functions:
          throw std::runtime_error(error_message);
       }
       std::filesystem::path path(filename);
-      return std::filesystem::read_symlink(path);
+      return std::filesystem::read_symlink(path).string();
     body_dependency_symbols:
       - std::filesystem::path
       - std::filesystem::read_symlink

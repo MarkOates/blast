@@ -40,7 +40,7 @@ if (!is_symlink())
    throw std::runtime_error(error_message);
 }
 std::filesystem::path path(filename);
-return std::filesystem::read_symlink(path);
+return std::filesystem::read_symlink(path).string();
 
 }
 } // namespace Project
