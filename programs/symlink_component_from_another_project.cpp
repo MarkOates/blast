@@ -60,6 +60,8 @@ int main(int argc, char **argv)
    std::cout << result_command << std::endl;
    std::cout << result_test_file_command << std::endl;
    std::cout << result_source_header_file_command << std::endl;
+
+   return 0;
 }
 
 
