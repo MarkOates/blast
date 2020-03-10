@@ -36,8 +36,10 @@ int main(int argc, char **argv)
    while(true)
    {
       std::cout << "Ruby/Rspec mode" << std::endl;
-      std::cout << "Type the name of the component: ";
-      getline(std::cin, user_input);
+      //std::cout << "Type the name of the component: ";
+      //getline(std::cin, user_input);
+      user_input = "graphql/graph_api/partners/mutations/external_job_review_create";
+      std::cout << "Skipping component input. Using \"" << user_input << "\"";
       std::cout << std::endl;
 
       if (user_input == "exit") break;
