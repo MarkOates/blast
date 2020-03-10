@@ -28,8 +28,9 @@ std::string __replace(std::string str, std::string from, std::string to)
 
 int main(int argc, char **argv)
 {
-   std::string RUBY_DEV_COMMAND_RERUN = "COMPONENT_NAME=[[COMPONENT_NAME]]; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb --tag focus\"; unset COMPONENT_NAME";
-   std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=[[COMPONENT_NAME]]; bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb --tag focus; unset COMPONENT_NAME";
+   //  "--tag focus"
+   std::string RUBY_DEV_COMMAND_RERUN = "COMPONENT_NAME=[[COMPONENT_NAME]]; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb\"; unset COMPONENT_NAME";
+   std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=[[COMPONENT_NAME]]; bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb; unset COMPONENT_NAME";
 
    std::string user_input;
    while(true)
