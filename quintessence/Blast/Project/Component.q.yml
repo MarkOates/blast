@@ -6,7 +6,7 @@ properties:
     getter: true
   - name: project_root
     type: std::string
-    init_with: "\"/Users/markoates/Repos/blast/\""
+    init_with: "\"\""
     constructor_arg: true
     getter: true
 
