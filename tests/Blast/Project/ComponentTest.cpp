@@ -85,7 +85,7 @@ TEST(Blast_Project_ComponentTest, last_write_time__returns_the_most_recent_write
    ASSERT_GT(actual_last_write_time, 0);
 
    // sanity test
-   std::time_t a_sane_last_write_time = 1583010454;
+   std::time_t a_sane_last_write_time = 1580169021;
    ASSERT_GT(actual_last_write_time, a_sane_last_write_time);
 }
 
