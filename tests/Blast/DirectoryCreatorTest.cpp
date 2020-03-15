@@ -13,10 +13,10 @@ bool file_exists(const std::string& filename)
    return Blast::DirectoryExistenceChecker(filename).exists();
 }
 
-#include <cstdio>
+#include <filesystem>
 bool remove_directory(const std::string& file_or_directory)
 {
-   return (remove(file_or_directory.c_str()) == 0);
+   return std::filesystem::remove(std::filesystem::path(file_or_directory));
 }
 
 bool ensure_nonexistent_testing_directory(const std::string &file_or_directory)
