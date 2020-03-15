@@ -72,12 +72,18 @@ TEST(RandomGeneratorTest, get_random_double__only_returns_doubles_within_the_bou
 }
 
 
-TEST(RandomGeneratorTest, get_random_int__returns_an_expected_sequence_of_random_numbers_given_a_seed)
+TEST(RandomGeneratorTest,
+   get_random_int__returns_an_expected_sequence_of_random_numbers_given_a_seed__but_will_be_inconsistent_between_platforms)
 {
    RandomGenerator number_generator = RandomGenerator(123456);
    const int min_random_num = 0;
    const int max_random_num = 10;
-   std::vector<int> expected_numbers = {1, 10, 2, 1, 8};
+   std::vector<int> expected_numbers = {};
+#ifdef _WIN32
+   expected_numbers = {1, 5, 10, 9, 2};
+#else
+   expected_numbers = {1, 10, 2, 1, 8};
+#endif
 
    for (int i=0; i<expected_numbers.size(); i++)
    {
