@@ -8,9 +8,12 @@ TEST(Blast_InflectorTest, can_be_created_without_blowing_up)
    Blast::Inflector inflector;
 }
 
-TEST(Blast_InflectorTest, run__returns_the_expected_response)
+TEST(Blast_InflectorTest, build_inflections_list__returns_the_expected_response)
 {
    Blast::Inflector inflector;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, inflector.run());
+
+   std::vector<std::pair<std::string, std::string>> some_expected_inflections = {
+   };
+
+   EXPECT_EQ(some_expected_inflections, inflector.build_inflections_list());
 }

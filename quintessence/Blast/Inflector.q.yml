@@ -1,4 +1,13 @@
 functions:
-  - name: run
-    type: std::string
-    body: return "Hello World!";
+  - name: build_inflections_list
+    type: std::vector<std::pair<std::string, std::string>>
+    body: |
+      std::vector<std::pair<std::string, std::string>> inflections{
+      };
+
+      return inflections;
+    body_dependency_symbols:
+      - std::vector<std::pair<std::string, std::string>>
+dependencies:
+  - symbol: std::vector<std::pair<std::string, std::string>>
+    headers: [ vector, string ]
