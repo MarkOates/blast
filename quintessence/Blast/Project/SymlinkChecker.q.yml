@@ -8,8 +8,17 @@ functions:
     type: bool
     body: |
       std::filesystem::path path(filename);
-      return std::filesystem::exists(path) && std::filesystem::is_symlink(path);
+      if (!std::filesystem::exists(path))
+      {
+         std::stringstream error_message;
+         error_message << "an error occurred when trying to read_symlink_target in "
+                       << "Blast/Project/SymlinkChecker: "
+                       << "The file \"" << filename << "\" does not exist.";
+         throw std::runtime_error(error_message.str());
+      }
+      return std::filesystem::is_symlink(path);
     body_dependency_symbols:
+      - std::stringstream
       - std::filesystem::path
       - std::filesystem::exists
       - std::filesystem::is_symlink
@@ -27,6 +36,8 @@ functions:
       - std::filesystem::path
       - std::filesystem::read_symlink
 dependencies:
+  - symbol: std::stringstream
+    headers: [ sstream ]
   - symbol: std::filesystem::path
     headers: [ filesystem ]
   - symbol: std::filesystem::exists

@@ -1,6 +1,7 @@
 
 
 #include <Blast/Project/SymlinkChecker.hpp>
+#include <sstream>
 #include <filesystem>
 #include <filesystem>
 #include <filesystem>
@@ -28,7 +29,15 @@ SymlinkChecker::~SymlinkChecker()
 bool SymlinkChecker::is_symlink()
 {
 std::filesystem::path path(filename);
-return std::filesystem::exists(path) && std::filesystem::is_symlink(path);
+if (!std::filesystem::exists(path))
+{
+   std::stringstream error_message;
+   error_message << "an error occurred when trying to read_symlink_target in "
+                 << "Blast/Project/SymlinkChecker: "
+                 << "The file \"" << filename << "\" does not exist.";
+   throw std::runtime_error(error_message.str());
+}
+return std::filesystem::is_symlink(path);
 
 }
 
