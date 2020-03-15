@@ -1,6 +1,15 @@
 
 #include <gtest/gtest.h>
 
+#define ASSERT_THROW_WITH_MESSAGE(stmt, etype, whatstring) ASSERT_THROW( \
+        try { \
+            stmt; \
+        } catch (const etype& ex) { \
+            ASSERT_EQ(std::string(ex.what()), whatstring); \
+            throw; \
+        } \
+    , etype)
+
 #include <Blast/Project/SymlinkChecker.hpp>
 
 static const std::string FIXTURE_PATH = "/Users/markoates/Repos/blast/bin/fixtures/FixtureProject2/";
@@ -23,16 +32,16 @@ TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_true_the_file_is_a_sy
    ASSERT_EQ(true, symlink_checker.is_symlink());
 }
 
-TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_false_the_file_is_not_a_symlink)
+TEST(Blast_Project_SymlinkCheckerTest, is_symlink__if_symlink_does_not_exist__throws_an_error)
 {
-   std::string symlink_file = FIXTURE_PATH + "src/Nested/ComponentC.cpp";
+   std::string symlink_file = FIXTURE_PATH + "quintessence/AComponentThatDoesNotExist.q.yml";
    Blast::Project::SymlinkChecker symlink_checker(symlink_file);
+   std::string expected_error_message = "an error occurred when trying to read_symlink_target in " \
+                                        "Blast/Project/SymlinkChecker: The file \"/Users/markoate" \
+                                        "s/Repos/blast/bin/fixtures/FixtureProject2/quintessence/" \
+                                        "AComponentThatDoesNotExist.q.yml\" does not exist.";
 
-   ASSERT_EQ(false, symlink_checker.is_symlink());
-}
-
-TEST(DISABLED_Blast_Project_SymlinkCheckerTest, read_symlink_target__if_symlink_does_not_exist__throws_an_error)
-{
+   ASSERT_THROW_WITH_MESSAGE(symlink_checker.is_symlink(), std::runtime_error, expected_error_message);
 }
 
 TEST(Blast_Project_SymlinkCheckerTest, read_symlink_target__returns_the_target_of_the_symlink)
