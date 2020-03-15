@@ -19,11 +19,11 @@ TEST(Blast_Project_ReleaseBuilderTest, swap_symlinks__returns_the_expected_respo
 
 TEST(Blast_Project_ReleaseBuilderTest, list_symlinks__returns_the_list_of_all_symlinks_in_the_base_directory)
 {
-   static const std::string FIXTURE_PATH = "/Users/markoates/Repos/blast/bin/fixtures/FixtureProject2";
+   static const std::string FIXTURE_PATH = "bin/fixtures/FixtureProject2";
    Blast::Project::ReleaseBuilder release_builder(FIXTURE_PATH);
 
    std::vector<std::pair<std::string, std::string>> expected = {
-      { "/Users/markoates/Repos/blast/bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml", "../../test_project/quintessence/ComponentWithExternalSymlink.q.yml" },
+      { "bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml", "../../test_project/quintessence/ComponentWithExternalSymlink.q.yml" },
    };
    std::vector<std::pair<std::string, std::string>> actual = release_builder.list_symlinks();
 
