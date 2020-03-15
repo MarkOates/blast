@@ -54,7 +54,7 @@ TEST(Blast_Project_SymlinkCheckerTest, read_symlink_target__returns_the_target_o
 {
    std::string symlink_file = FIXTURE_PATH() + "quintessence/ComponentWithExternalSymlink.q.yml";
    Blast::Project::SymlinkChecker symlink_checker(symlink_file);
-   std::string expected_symlink_target = "/Users/markoates/Repos/blast/bin/fixtures/test_project/quintessence/ComponentWithExternalSymlink.q.yml";
+   std::string expected_symlink_target = "../../test_project/quintessence/ComponentWithExternalSymlink.q.yml";
    std::string actual_symlink_target = symlink_checker.read_symlink_target();
 
    ASSERT_EQ(expected_symlink_target, actual_symlink_target);
