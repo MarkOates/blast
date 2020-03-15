@@ -16,7 +16,7 @@
 static const std::string RELATIVE_FIXTURE_PATH = "bin/fixtures/FixtureProject2/";
 static std::string FIXTURE_PATH()
 {
-   return std::filesystem::absolute(RELATIVE_FIXTURE_PATH);
+   return std::filesystem::absolute(RELATIVE_FIXTURE_PATH).string();
 }
 
 TEST(Blast_Project_SymlinkCheckerTest, can_be_created_without_blowing_up)
