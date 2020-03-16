@@ -1,6 +1,7 @@
 
 
 #include <Blast/Inflector.hpp>
+#include <Blast/RegexMatcher.hpp>
 #include <vector>
 #include <string>
 
@@ -9,7 +10,8 @@ namespace Blast
 {
 
 
-Inflector::Inflector()
+Inflector::Inflector(std::string word)
+   : word(word)
 {
 }
 
@@ -18,6 +20,12 @@ Inflector::~Inflector()
 {
 }
 
+
+std::string Inflector::pluralize()
+{
+return "quizes";
+
+}
 
 std::vector<std::pair<std::string, std::string>> Inflector::build_inflections_list()
 {
