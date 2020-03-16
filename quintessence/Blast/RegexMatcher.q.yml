@@ -1,0 +1,8 @@
+functions:
+  - name: get_match_info
+    type: std::vector<std::pair<int, int>>
+    body: |
+      return {};
+dependencies:
+  - symbol: std::vector<std::pair<int, int>>
+    headers: [ vector ]
