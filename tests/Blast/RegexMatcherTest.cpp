@@ -34,3 +34,8 @@ TEST(Blast_RegexMatcherTest, get_match_info__incorporates_options_passed_during_
 
    EXPECT_EQ(expected_matches, actual_matches);
 }
+
+TEST(DISABLED_Blast_RegexMatcherTest, get_match_info__only_supports_icase_option)
+{
+   // Test is a note of an incomplete implementation
+}
