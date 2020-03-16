@@ -28,8 +28,6 @@ std::string Inflector::pluralize()
 Blast::RegexMatcher regex_matcher(word, "(quiz)$", { std::regex::icase });
 std::vector<std::pair<int, int>> regex_match_results = regex_matcher.get_match_info();
 if (regex_match_results.empty()) return "regex_match_was_empty";
-
-
 return "quizes";
 
 }
@@ -60,7 +58,10 @@ std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_op
    //inflect.plural(/^(m|l)ice$/i, '\1ice')
    //inflect.plural(/^(ox)$/i, '\1en')
    //inflect.plural(/^(oxen)$/i, '\1')
-   //"(quiz)$", '\1zes')
+   //inflect.plural(/(quiz)$/i, '\1zes')
+
+   //inflect.plural(/(quiz)$/i, '\1zes')
+   //{ "(quiz)$", "#1zes", std::regex::icase },
 };
 
 return inflections;

@@ -40,7 +40,10 @@ functions:
          //inflect.plural(/^(m|l)ice$/i, '\1ice')
          //inflect.plural(/^(ox)$/i, '\1en')
          //inflect.plural(/^(oxen)$/i, '\1')
-         //"(quiz)$", '\1zes')
+         //inflect.plural(/(quiz)$/i, '\1zes')
+
+         //inflect.plural(/(quiz)$/i, '\1zes')
+         //{ "(quiz)$", "#1zes", std::regex::icase },
       };
 
       return inflections;
