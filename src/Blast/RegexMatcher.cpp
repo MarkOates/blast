@@ -51,8 +51,15 @@ std::string subject(source_string);
 try
 {
    //std::regex re("\\w+"); // find words
-   //std::regex re(regex_expression, std::regex::icase);
-   std::regex re(regex_expression);
+   std::regex re;
+   if (std::find(options.begin(), options.end(), std::regex::icase) != options.end())
+   {
+      re = std::regex(regex_expression, std::regex::icase);
+   }
+   else
+   {
+      re = std::regex(regex_expression);
+   }
 
    std::sregex_iterator next(subject.begin(), subject.end(), re);
    std::sregex_iterator end;
