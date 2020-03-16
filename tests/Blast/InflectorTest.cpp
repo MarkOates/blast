@@ -12,7 +12,7 @@ TEST(Blast_InflectorTest, build_inflections_list__returns_the_expected_response)
 {
    Blast::Inflector inflector;
 
-   std::vector<std::pair<std::string, std::string>> some_expected_inflections = {
+   std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>> some_expected_inflections = {
    };
 
    EXPECT_EQ(some_expected_inflections, inflector.build_inflections_list());

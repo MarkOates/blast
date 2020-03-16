@@ -3,7 +3,9 @@
 #include <Blast/Inflector.hpp>
 #include <Blast/RegexMatcher.hpp>
 #include <vector>
+#include <tuple>
 #include <string>
+#include <regex>
 
 
 namespace Blast
@@ -23,19 +25,21 @@ Inflector::~Inflector()
 
 std::string Inflector::pluralize()
 {
-Blast::RegexMatcher regex_matcher(word, "(quiz)$");
+Blast::RegexMatcher regex_matcher(word, "(quiz)$", { std::regex::icase });
 std::vector<std::pair<int, int>> regex_match_results = regex_matcher.get_match_info();
 if (regex_match_results.empty()) return "regex_match_was_empty";
+
+
 return "quizes";
 
 }
 
-std::vector<std::pair<std::string, std::string>> Inflector::build_inflections_list()
+std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>> Inflector::build_inflections_list()
 {
 // full list to emulate here:
 // https://github.com/rails/rails/blob/f33d52c95217212cbacc8d5e44b5a8e3cdc6f5b3/activesupport/lib/active_support/inflections.rb
 
-std::vector<std::pair<std::string, std::string>> inflections{
+std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>> inflections{
    //inflect.plural(/$/, "s")
    //inflect.plural(/s$/i, "s")
    //inflect.plural(/^(ax|test)is$/i, '\1es')
@@ -56,7 +60,7 @@ std::vector<std::pair<std::string, std::string>> inflections{
    //inflect.plural(/^(m|l)ice$/i, '\1ice')
    //inflect.plural(/^(ox)$/i, '\1en')
    //inflect.plural(/^(oxen)$/i, '\1')
-   //inflect.plural(/(quiz)$/i, '\1zes')
+   //"(quiz)$", '\1zes')
 };
 
 return inflections;

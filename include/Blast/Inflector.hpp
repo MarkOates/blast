@@ -1,7 +1,9 @@
 #pragma once
 
 
+#include <regex>
 #include <string>
+#include <tuple>
 #include <vector>
 
 
@@ -18,7 +20,7 @@ namespace Blast
 
 
    std::string pluralize();
-   std::vector<std::pair<std::string, std::string>> build_inflections_list();
+   std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>> build_inflections_list();
    };
 }
 
