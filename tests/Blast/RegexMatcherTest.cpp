@@ -10,8 +10,8 @@ TEST(Blast_RegexMatcherTest, can_be_created_without_blowing_up)
 
 TEST(Blast_RegexMatcherTest, get_match_info__returns_a_list_of_matches__test_1)
 {
-   Blast::RegexMatcher regex_matcher("Hello World!", "Hello");
-   std::vector<std::pair<int, int>> expected_matches = {};
+   Blast::RegexMatcher regex_matcher("Hello World!", "World");
+   std::vector<std::pair<int, int>> expected_matches = { { 6, 5 } };
    std::vector<std::pair<int, int>> actual_matches = regex_matcher.get_match_info();
 
    EXPECT_EQ(expected_matches, actual_matches);
