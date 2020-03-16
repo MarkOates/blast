@@ -25,6 +25,12 @@ DirectoryCreator::~DirectoryCreator()
 
 bool DirectoryCreator::create()
 {
+for (auto &directory_component : directory_components)
+{
+   // TODO: improve this to raise an exception
+   if (directory_component.find('/') != std::string::npos) return false;
+}
+
 std::stringstream result_directories;
 const std::string SEPARATOR = "/";
 if (path_is_absolute) result_directories << "/";

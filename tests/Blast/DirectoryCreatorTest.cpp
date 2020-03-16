@@ -46,12 +46,9 @@ TEST(DirectoryCreatorTest, create__returns_true_when_a_directory_is_present)
 
 TEST(DirectoryCreatorTest, create__returns_false_when_passing_a_string_that_contains_a_backslash_delimiter)
 {
-   std::vector<std::string> directories_that_should_exist = { "directory_that_does_not_exist/and_has_a_nested_directory/" };
+   std::vector<std::string> directory_components_that_contain_backslash = { "directory/with_slash/" };
 
-   for (auto &directory_that_should_exist : directories_that_should_exist)
-      ASSERT_FALSE(file_exists(directory_that_should_exist));
-
-   Blast::DirectoryCreator directory_creator(directories_that_should_exist);
+   Blast::DirectoryCreator directory_creator(directory_components_that_contain_backslash);
    ASSERT_FALSE(directory_creator.create());
 }
 
@@ -73,7 +70,12 @@ TEST(DirectoryCreatorTest, create__returns_true_when_attempting_to_create_multip
 
 TEST(DirectoryCreatorTest, create__with_a_path_is_absolute_option__will_create_the_directories_relative_to_the_root_of_the_filesystem)
 {
+   // TODO: improve this folder test to work on not-my-computers
+#ifdef _WIN32
+   std::vector<std::string> directories_that_will_exist = { "home", "Mark", "Repos", "blast", "tmp", "absolutely_created_directory" };
+#else
    std::vector<std::string> directories_that_will_exist = { "Users", "markoates", "Repos", "blast", "tmp", "absolutely_created_directory" };
+#endif
 
    std::string composite_directory = Blast::StringJoiner(directories_that_will_exist, "/").join();
    composite_directory = "/" + composite_directory;
