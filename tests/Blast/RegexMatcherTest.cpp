@@ -25,3 +25,12 @@ TEST(Blast_RegexMatcherTest, get_match_info__returns_a_list_of_matches__test_2)
 
    EXPECT_EQ(expected_matches, actual_matches);
 }
+
+TEST(DISABLED_Blast_RegexMatcherTest, get_match_info__incorporates_options_passed_during_construction)
+{
+   Blast::RegexMatcher regex_matcher("Hello World!", "world", { std::regex::icase });
+   std::vector<std::pair<int, int>> expected_matches = { { 6, 5 } };
+   std::vector<std::pair<int, int>> actual_matches = regex_matcher.get_match_info();
+
+   EXPECT_EQ(expected_matches, actual_matches);
+}

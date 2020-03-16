@@ -7,6 +7,9 @@ functions:
   - name: pluralize
     type: std::string
     body: |
+      Blast::RegexMatcher regex_matcher(word, "(quiz)$");
+      std::vector<std::pair<int, int>> regex_match_results = regex_matcher.get_match_info();
+      if (regex_match_results.empty()) return "regex_match_was_empty";
       return "quizes";
     body_dependency_symbols:
       - Blast::RegexMatcher

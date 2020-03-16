@@ -12,9 +12,10 @@ namespace Blast
 {
 
 
-RegexMatcher::RegexMatcher(std::string source_string, std::string regex_expression)
+RegexMatcher::RegexMatcher(std::string source_string, std::string regex_expression, std::vector<std::regex_constants::syntax_option_type> options)
    : source_string(source_string)
    , regex_expression(regex_expression)
+   , options(options)
 {
 }
 
@@ -36,6 +37,12 @@ std::string RegexMatcher::get_regex_expression()
 }
 
 
+std::vector<std::regex_constants::syntax_option_type> RegexMatcher::get_options()
+{
+   return options;
+}
+
+
 std::vector<std::pair<int, int>> RegexMatcher::get_match_info()
 {
 std::vector<std::pair<int, int>> results;
@@ -44,7 +51,9 @@ std::string subject(source_string);
 try
 {
    //std::regex re("\\w+"); // find words
+   //std::regex re(regex_expression, std::regex::icase);
    std::regex re(regex_expression);
+
    std::sregex_iterator next(subject.begin(), subject.end(), re);
    std::sregex_iterator end;
    while (next != end)

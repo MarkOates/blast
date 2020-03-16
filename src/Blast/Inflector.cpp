@@ -23,6 +23,9 @@ Inflector::~Inflector()
 
 std::string Inflector::pluralize()
 {
+Blast::RegexMatcher regex_matcher(word, "(quiz)$");
+std::vector<std::pair<int, int>> regex_match_results = regex_matcher.get_match_info();
+if (regex_match_results.empty()) return "regex_match_was_empty";
 return "quizes";
 
 }
