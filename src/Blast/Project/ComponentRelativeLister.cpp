@@ -32,6 +32,15 @@ if (!component)
    throw std::runtime_error(error_message.str());
 }
 
+if (!component->exists())
+{
+   std::stringstream error_message;
+   error_message << "[Blast::Project::ComponentRelativeLister error] "
+                 << "cannot list_component_relative_names; The component \""
+                 << component->get_name() << "\" does not exist";
+   throw std::runtime_error(error_message.str());
+}
+
 Blast::Project::ComponentLister component_lister(component->get_project_root());
 
 std::vector<std::string> entire_project_tree_component_names = component_lister.components();
