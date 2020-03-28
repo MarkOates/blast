@@ -1,4 +1,15 @@
+properties:
+  - name: component
+    type: Blast::Project::Component*
+    init_with: nullptr
+    constructor_arg: true
 functions:
-  - name: run
-    type: std::string
-    body: return "Hello World!";
+  - name: list_component_relative_names
+    type: std::vector<std::string>
+    body: |
+       return {};
+dependencies:
+  - symbol: Blast::Project::Component*
+    headers: [ Blast/Project/Component.hpp ]
+  - symbol: std::vector<std::string>
+    headers: [ vector, string ]

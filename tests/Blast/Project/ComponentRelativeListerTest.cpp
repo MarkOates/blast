@@ -8,9 +8,11 @@ TEST(Blast_Project_ComponentRelativeListerTest, can_be_created_without_blowing_u
    Blast::Project::ComponentRelativeLister component_relative_lister;
 }
 
-TEST(Blast_Project_ComponentRelativeListerTest, run__returns_the_expected_response)
+TEST(Blast_Project_ComponentRelativeListerTest, list_component_relatives__returns_the_expected_response)
 {
    Blast::Project::ComponentRelativeLister component_relative_lister;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, component_relative_lister.run());
+   std::vector<std::string> expected_component_relative_names;
+   std::vector<std::string> actual_component_relative_names =
+      component_relative_lister.list_component_relative_names();
+   ASSERT_EQ(expected_component_relative_names, actual_component_relative_names);
 }
