@@ -7,9 +7,20 @@ functions:
   - name: list_component_relative_names
     type: std::vector<std::string>
     body: |
+       if (!component)
+       {
+          std::stringstream error_message;
+          error_message << "[Blast::Project::ComponentRelativeLister error] "
+                        << "cannot list_component_relative_names with a nullptr component";
+          throw std::runtime_error(error_message.str());
+       }
        return {};
+    body_dependency_symbols:
+      - std::stringstream
 dependencies:
   - symbol: Blast::Project::Component*
     headers: [ Blast/Project/Component.hpp ]
   - symbol: std::vector<std::string>
     headers: [ vector, string ]
+  - symbol: std::stringstream
+    headers: [ sstream ]
