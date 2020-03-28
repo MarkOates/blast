@@ -8,6 +8,8 @@
    catch ( raised_exception_type const &err ) { EXPECT_EQ(err.what(), std::string( raised_exception_message )); } \
    catch (...) { FAIL() << "Expected " # raised_exception_type; }
 
+static std::string TEST_PROJECT_ROOT_DIRECTORY = "bin/fixtures/test_project/";
+
 TEST(Blast_Project_ComponentRelativeListerTest, can_be_created_without_blowing_up)
 {
    Blast::Project::ComponentRelativeLister component_relative_lister;
@@ -26,9 +28,14 @@ TEST(Blast_Project_ComponentRelativeListerTest,
 
 TEST(Blast_Project_ComponentRelativeListerTest, list_component_relatives__returns_the_expected_response)
 {
-   Blast::Project::Component component("Some/Component");
+   Blast::Project::Component component("Nested/ComponentC", TEST_PROJECT_ROOT_DIRECTORY);
    Blast::Project::ComponentRelativeLister component_relative_lister(&component);
-   std::vector<std::string> expected_component_relative_names;
+   std::vector<std::string> expected_component_relative_names = {
+         "Nested/ComponentC",
+         "Nested/ComponentC2",
+         "Nested/ComponentC3",
+         "Nested/ComponentC4",
+      };
    std::vector<std::string> actual_component_relative_names =
       component_relative_lister.list_component_relative_names();
    ASSERT_EQ(expected_component_relative_names, actual_component_relative_names);
