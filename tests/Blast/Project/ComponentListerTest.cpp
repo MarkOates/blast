@@ -15,12 +15,16 @@ TEST(Blast__Project__ComponentLister, can_be_created_without_arguments)
    Blast::Project::ComponentLister lister;
 }
 
-TEST(Blast__Project__ComponentLister, will_return_the_components_in_a_project)
+TEST(Blast__Project__ComponentLister, components__will_return_the_components_in_a_project)
 {
    std::vector<std::string> expected_components = {
       "ComponentB",
       "ComponentWithExternalSymlink",
       "Nested/ComponentC",
+      "Nested/ComponentC2",
+      "Nested/ComponentC3",
+      "Nested/ComponentC4",
+      "Nested/DoubleNested/ComponentD",
       "NotAppearingOutsideTest/ComponentX",
       "QuintessenceOnlyComponent",
    };
@@ -38,6 +42,10 @@ TEST(Blast__Project__ComponentLister,
    std::vector<std::string> expected_contained_elements = {
       "ComponentB",
       "Nested/ComponentC",
+      "Nested/ComponentC2",
+      "Nested/ComponentC3",
+      "Nested/ComponentC4",
+      "Nested/DoubleNested/ComponentD",
       "NotAppearingOutsideTest/ComponentX",
       "QuintessenceOnlyComponent",
       "ComponentWithExternalSymlink",
