@@ -39,7 +39,7 @@ TEST(Blast_Project_ComponentRelativeListerTest,
                              expected_error_message);
 }
 
-TEST(DISABLED_Blast_Project_ComponentRelativeListerTest, list_component_relatives__returns_the_expected_response)
+TEST(Blast_Project_ComponentRelativeListerTest, list_component_relatives__returns_the_expected_response)
 {
    Blast::Project::Component component("Nested/ComponentC", TEST_PROJECT_ROOT_DIRECTORY);
    Blast::Project::ComponentRelativeLister component_relative_lister(&component);
