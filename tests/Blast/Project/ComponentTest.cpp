@@ -74,7 +74,9 @@ TEST(Blast_Project_ComponentTest, has_test__returns_true_when_a_file_exists)
 
 TEST(Blast_Project_ComponentTest, has_test__returns_false_when_a_test_file_does_not_exist)
 {
-   Blast::Project::Component component("Blast/StringSplitter");
+   std::string fixture_project_path = ABSOLUTE_PATH(RELATIVE_FIXTURE_PATH);
+   Blast::Project::Component component("ComponentWithoutTestFile", fixture_project_path);
+   EXPECT_EQ(true, component.exists());
    ASSERT_EQ(false, component.has_test());
 }
 
