@@ -69,7 +69,13 @@ functions:
     body: |
       //while(true)
       {
-         std::string build_command = "rerun \"(cd /Users/markoates/Repos/blast/ && make focus)\"";
+         std::string build_command = "rerun" \
+           " " \
+           "-c" \
+           " " \
+           "-p \"**/*.{rb,js,tsx,coffee,css,scss,sass,erb,html,haml,ru,yml,slim,md,feature,c,h,cpp,hpp,txt,cfg}\"" \
+           " " \
+           "\"(cd /Users/markoates/Repos/blast/ && make focus)\"";
          std::string output = execute_command(build_command);
          //std::cout << output << std::endl;
          //run_with_block_after_command();
