@@ -1,5 +1,7 @@
 #include <allegro5/allegro.h> // for compatibility with union/Makefile
 
+#include <Blast/Daemus/ProgramRunner.hpp>
+
 #include <vector>
 #include <iostream>
 #include <sstream>
@@ -28,6 +30,9 @@ std::string __replace(std::string str, std::string from, std::string to)
 
 int main(int argc, char **argv)
 {
+   Blast::Daemus::ProgramRunner().run();
+   return 0;
+
    //  "--tag focus"
    //std::string RUBY_DEV_COMMAND_RERUN = "COMPONENT_NAME=[[COMPONENT_NAME]]; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb\"; unset COMPONENT_NAME";
    //std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=[[COMPONENT_NAME]]; bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb; unset COMPONENT_NAME";
