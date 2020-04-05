@@ -1,4 +1,23 @@
 functions:
+  - name: __replace
+    type: std::string
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: "\"\""
+      - name: from
+        type: std::string
+        default_argument: "\"\""
+      - name: to
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      size_t start_pos = 0;
+      while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+         str.replace(start_pos, from.length(), to);
+         start_pos += to.length();
+      }
+      return str;
   - name: execute_command
     type: void
     parameters:

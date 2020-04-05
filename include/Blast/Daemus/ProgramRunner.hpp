@@ -17,6 +17,7 @@ namespace Blast
          ~ProgramRunner();
 
 
+      std::string __replace(std::string str="", std::string from="", std::string to="");
       void execute_command(std::string command="");
       void run();
       };
