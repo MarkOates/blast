@@ -19,7 +19,7 @@ functions:
       }
       return str;
   - name: execute_command
-    type: void
+    type: std::string
     parameters:
       - name: command
         type: std::string
@@ -30,7 +30,7 @@ functions:
          Blast::ShellCommandExecutorWithCallback::simple_cout_callback
          //Blast::ShellCommandExecutorWithCallback::simple_silent_callback
       );
-      shell_command_executor.execute();
+      return shell_command_executor.execute();
     body_dependency_symbols:
       - Blast::ShellCommandExecutorWithCallback
   - name: block_execution_with_rerun_pause
@@ -67,9 +67,12 @@ functions:
   - name: run
     type: void
     body: |
-      while(true)
+      //while(true)
       {
-         run_with_block_after_command();
+         std::string build_command = "rerun \"(cd /Users/markoates/Repos/blast/ && make focus)\"";
+         std::string output = execute_command(build_command);
+         //std::cout << output << std::endl;
+         //run_with_block_after_command();
       }
       return;
   - name: run_with_block_after_command
@@ -78,16 +81,24 @@ functions:
       std::string rerun_command = "rerun --quiet -c -p \"**/*.{" \
          "rb,js,tsx,coffee,css,scss,sass,erb,html,haml,ru,yml,slim,md,feature,c,h,cpp,hpp,txt,cfg}" \
          "\"";
+
       std::string project_directory = "/Users/markoates/Repos/blast/";
+
+
+      //std::string COMMAND = "rerun --quiet -p \"**/*.{rb,js,tsx,coffee,css,scss,sass,erb,html,haml," \
+      //                      "ru,yml,slim,md,feature,c,h,cpp,hpp,txt,cfg}\" --restart";
+
+
       std::vector<std::string> command_tokens;
       command_tokens = {
         //"(cd ",
         //project_directory,
         //" && ",
         //rerun_command,
-        " \"(cd ",
-           project_directory,
-           " && make focus)\"",
+        //" \"(cd ",
+        //project_directory,
+        //" && make focus)\"",
+        //COMMAND,
       };
 
       std::stringstream command;
@@ -96,12 +107,18 @@ functions:
          command << command_token << " ";
       }
 
-      execute_command(command.str());
-      block_execution_with_rerun_pause();
+      std::cout << "executing command \"" << command.str() << "\"" << std::endl;
+
+      std::string command_result_output = execute_command(command.str());
+      std::cout << command_result_output << std::endl;
+
+      std::cout << "finished command execution of \"" << command.str() << "\"" << std::endl;
+      //block_execution_with_rerun_pause();
       return;
     body_dependency_symbols:
       - std::vector<std::string>
       - std::stringstream
+      - std::cout
 dependencies:
   - symbol: Blast::ShellCommandExecutorWithCallback
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]

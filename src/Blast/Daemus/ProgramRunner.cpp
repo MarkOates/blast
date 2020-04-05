@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <iostream>
 
 
 namespace Blast
@@ -34,14 +35,14 @@ return str;
 
 }
 
-void ProgramRunner::execute_command(std::string command)
+std::string ProgramRunner::execute_command(std::string command)
 {
 Blast::ShellCommandExecutorWithCallback shell_command_executor(
    command,
    Blast::ShellCommandExecutorWithCallback::simple_cout_callback
    //Blast::ShellCommandExecutorWithCallback::simple_silent_callback
 );
-shell_command_executor.execute();
+return shell_command_executor.execute();
 
 }
 
@@ -82,9 +83,12 @@ execute_command(full_rebuild_command);
 
 void ProgramRunner::run()
 {
-while(true)
+//while(true)
 {
-   run_with_block_after_command();
+   std::string build_command = "rerun \"(cd /Users/markoates/Repos/blast/ && make focus)\"";
+   std::string output = execute_command(build_command);
+   //std::cout << output << std::endl;
+   //run_with_block_after_command();
 }
 return;
 
@@ -95,16 +99,24 @@ void ProgramRunner::run_with_block_after_command()
 std::string rerun_command = "rerun --quiet -c -p \"**/*.{" \
    "rb,js,tsx,coffee,css,scss,sass,erb,html,haml,ru,yml,slim,md,feature,c,h,cpp,hpp,txt,cfg}" \
    "\"";
+
 std::string project_directory = "/Users/markoates/Repos/blast/";
+
+
+//std::string COMMAND = "rerun --quiet -p \"**/*.{rb,js,tsx,coffee,css,scss,sass,erb,html,haml," \
+//                      "ru,yml,slim,md,feature,c,h,cpp,hpp,txt,cfg}\" --restart";
+
+
 std::vector<std::string> command_tokens;
 command_tokens = {
   //"(cd ",
   //project_directory,
   //" && ",
   //rerun_command,
-  " \"(cd ",
-     project_directory,
-     " && make focus)\"",
+  //" \"(cd ",
+  //project_directory,
+  //" && make focus)\"",
+  //COMMAND,
 };
 
 std::stringstream command;
@@ -113,8 +125,13 @@ for (auto &command_token : command_tokens)
    command << command_token << " ";
 }
 
-execute_command(command.str());
-block_execution_with_rerun_pause();
+std::cout << "executing command \"" << command.str() << "\"" << std::endl;
+
+std::string command_result_output = execute_command(command.str());
+std::cout << command_result_output << std::endl;
+
+std::cout << "finished command execution of \"" << command.str() << "\"" << std::endl;
+//block_execution_with_rerun_pause();
 return;
 
 }
