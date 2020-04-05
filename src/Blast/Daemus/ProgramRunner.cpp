@@ -89,6 +89,8 @@ void ProgramRunner::run()
      " " \
      "-c" \
      " " \
+     "--background" \
+     " " \
      "-p \"**/*.{rb,js,tsx,coffee,css,scss,sass,erb,html,haml,ru,yml,slim,md,feature,c,h,cpp,hpp,txt,cfg}\"" \
      " " \
      "\"(cd /Users/markoates/Repos/blast/ && make focus)\"";
