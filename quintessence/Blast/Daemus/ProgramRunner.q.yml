@@ -33,7 +33,7 @@ functions:
       shell_command_executor.execute();
     body_dependency_symbols:
       - Blast::ShellCommandExecutorWithCallback
-  - name: run
+  - name: block_execution_with_rerun_pause
     type: void
     body: |
       std::string rerun_command = "rerun --quiet -c -p \"**/*.{" \
@@ -48,6 +48,45 @@ functions:
         rerun_command,
         " \"(cd ",
            project_directory,
+           " && exit)\"",
+      };
+
+      std::stringstream command;
+      for (auto &command_token : command_tokens)
+      {
+         command << command_token << " ";
+      }
+
+      execute_command(command.str());
+      return;
+  - name: run_full_rebuild
+    type: void
+    body: |
+      std::string full_rebuild_command = "make clean && make programs && make && make clean && make programs && make";
+      execute_command(full_rebuild_command);
+  - name: run
+    type: void
+    body: |
+      while(true)
+      {
+         run_with_block_after_command();
+      }
+      return;
+  - name: run_with_block_after_command
+    type: void
+    body: |
+      std::string rerun_command = "rerun --quiet -c -p \"**/*.{" \
+         "rb,js,tsx,coffee,css,scss,sass,erb,html,haml,ru,yml,slim,md,feature,c,h,cpp,hpp,txt,cfg}" \
+         "\"";
+      std::string project_directory = "/Users/markoates/Repos/blast/";
+      std::vector<std::string> command_tokens;
+      command_tokens = {
+        //"(cd ",
+        //project_directory,
+        //" && ",
+        //rerun_command,
+        " \"(cd ",
+           project_directory,
            " && make focus)\"",
       };
 
@@ -58,6 +97,7 @@ functions:
       }
 
       execute_command(command.str());
+      block_execution_with_rerun_pause();
       return;
     body_dependency_symbols:
       - std::vector<std::string>
