@@ -50,11 +50,16 @@ void ProgramRunner::run()
 std::string rerun_command = "rerun --quiet -c -p \"**/*.{" \
    "rb,js,tsx,coffee,css,scss,sass,erb,html,haml,ru,yml,slim,md,feature,c,h,cpp,hpp,txt,cfg}" \
    "\"";
+std::string project_directory = "/Users/markoates/Repos/blast/";
 std::vector<std::string> command_tokens;
 command_tokens = {
-  "(cd /Users/markoates/Repos/blast/ && ",
+  //"(cd ",
+  //project_directory,
+  //" && ",
   rerun_command,
-  " make focus)",
+  " \"(cd ",
+     project_directory,
+     " && make focus)\"",
 };
 
 std::stringstream command;
