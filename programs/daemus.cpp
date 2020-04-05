@@ -29,33 +29,26 @@ std::string __replace(std::string str, std::string from, std::string to)
 int main(int argc, char **argv)
 {
    //  "--tag focus"
-   std::string RUBY_DEV_COMMAND_RERUN = "COMPONENT_NAME=[[COMPONENT_NAME]]; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb\"; unset COMPONENT_NAME";
-   std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=[[COMPONENT_NAME]]; bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb; unset COMPONENT_NAME";
+   //std::string RUBY_DEV_COMMAND_RERUN = "COMPONENT_NAME=[[COMPONENT_NAME]]; rerun -c \"bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb\"; unset COMPONENT_NAME";
+   //std::string RUBY_DEV_COMMAND = "COMPONENT_NAME=[[COMPONENT_NAME]]; bin/rails db:environment:set RAILS_ENV=test; bundle exec rspec spec/${COMPONENT_NAME}_spec.rb; unset COMPONENT_NAME";
 
-   std::string user_input;
-   while(true)
-   {
-      std::cout << "Ruby/Rspec mode" << std::endl;
+     //std::string user_input;
+
+      //std::cout << "Ruby/Rspec mode" << std::endl;
       //std::cout << "Type the name of the component: ";
       //getline(std::cin, user_input);
-      user_input = "graphql/graph_api/partners/mutations/external_job_review_create";
-      std::cout << "Skipping component input. Using \"" << user_input << "\"";
-      std::cout << std::endl;
+      //user_input = "graphql/graph_api/partners/mutations/external_job_review_create";
+      //std::cout << "Skipping component input. Using \"" << user_input << "\"";
+      //std::cout << std::endl;
 
-      if (user_input == "exit") break;
+      //if (user_input == "exit") break;
 
-      std::string user_command = RUBY_DEV_COMMAND_RERUN;
-      user_command = __replace(user_command, "[[COMPONENT_NAME]]", user_input);
+      //std::string user_command = RUBY_DEV_COMMAND_RERUN;
+      //user_command = __replace(user_command, "[[COMPONENT_NAME]]", user_input);
 
       std::vector<std::string> command_tokens;
       command_tokens = {
-         "(",
-            "cd /Users/markoates/dev_repos/partners",
-            "&&",
-            "(",
-               user_command,
-            ")",
-         ")",
+         "echo Hello, Mark",
       };
 
       std::stringstream command;
@@ -65,7 +58,6 @@ int main(int argc, char **argv)
       }
 
       execute_command(command.str());
-   }
 
    return 0;
 }
