@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <string>
 
 
 namespace Blast
@@ -16,7 +17,8 @@ namespace Blast
          ~ProgramRunner();
 
 
-      void execute_command();
+      void execute_command(std::string command="");
+      void run();
       };
    }
 }
