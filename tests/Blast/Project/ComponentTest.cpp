@@ -29,7 +29,7 @@ TEST(Blast_Project_ComponentTest, generate_full_path_test_binary_filename__retur
    ASSERT_EQ(expected_full_path_test_binary_filename, component.generate_full_path_test_binary_filename());
 }
 
-TEST(Blast_Project_ComponentTest, list_component_files__returns_a_list_of_all_existing_component_files)
+TEST(Blast_Project_ComponentTest, list_existing_component_files__returns_a_list_of_all_existing_component_files)
 {
    Blast::Project::Component component("Blast/Project/Component");
    std::vector<std::string> expected_list = {
@@ -37,9 +37,21 @@ TEST(Blast_Project_ComponentTest, list_component_files__returns_a_list_of_all_ex
       "src/Blast/Project/Component.cpp",
       "include/Blast/Project/Component.hpp",
       "tests/Blast/Project/ComponentTest.cpp",
-      "examples/Blast/Project/ComponentExample.cpp",
    };
-   ASSERT_EQ(expected_list, component.list_component_files());
+   ASSERT_EQ(expected_list, component.list_existing_component_files());
+}
+
+TEST(Blast_Project_ComponentTest,
+   list_exiting_component_files__with_a_project_root_returns_a_list_of_all_existing_component_files)
+{
+   std::string project_root = "/Users/markoates/Repos/hexagon/";
+   Blast::Project::Component component("Blast/Project/Component", project_root);
+   std::vector<std::string> expected_list = {
+      "/Users/markoates/Repos/hexagon/quintessence/Blast/Project/Component.q.yml",
+      "/Users/markoates/Repos/hexagon/src/Blast/Project/Component.cpp",
+      "/Users/markoates/Repos/hexagon/include/Blast/Project/Component.hpp",
+   };
+   ASSERT_EQ(expected_list, component.list_existing_component_files());
 }
 
 TEST(Blast_Project_ComponentTest, exists__returns_true_if_any_component_files_are_present)

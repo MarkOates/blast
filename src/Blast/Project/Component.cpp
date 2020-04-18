@@ -53,7 +53,7 @@ return project_root + filename;
 
 }
 
-std::vector<std::string> Component::list_component_files()
+std::vector<std::string> Component::list_existing_component_files()
 {
 std::vector<std::string> result;
 
@@ -73,7 +73,9 @@ for (auto &type_to_scan_for : types_to_scan_for)
 {
    std::string filename = Blast::ProjectComponentFilenameGenerator(name, type_to_scan_for).generate_filename();
    std::string full_filename = project_root + filename;
-   result.push_back(full_filename);
+   bool exists = Blast::FileExistenceChecker(full_filename).exists();
+
+   if (exists) result.push_back(full_filename);
 }
 
 return result;
