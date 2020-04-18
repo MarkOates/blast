@@ -107,13 +107,13 @@ TEST(Blast_Project_ComponentTest, has_test__returns_false_when_a_test_file_does_
 
 TEST(Blast_Project_ComponentTest, read_symlinks__returns_a_list_of_component_files_that_are_symlinks_and_their_targets)
 {
-   std::string project_root = "/Users/markoates/Repos/hexagon/";
-   Blast::Project::Component component("Blast/Project/Component", project_root);
+   Blast::Project::Component component("ComponentWithExternalSymlink", RELATIVE_FIXTURE_PATH);
+   std::string expected_symlink_target = "../../test_project/quintessence/ComponentWithExternalSymlink.q.yml";
 
    std::vector<std::pair<std::string, std::string>> expected = {
       {
-         "/Users/markoates/Repos/hexagon/quintessence/Blast/Project/Component.q.yml",
-         "/Users/markoates/Repos/blast/quintessence/Blast/Project/Component.q.yml",
+         "bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml",
+         "../../test_project/quintessence/ComponentWithExternalSymlink.q.yml",
       }
    };
    std::vector<std::pair<std::string, std::string>> actual = component.read_symlinks();
