@@ -141,6 +141,13 @@ functions:
     body_dependency_symbols:
       - Blast::ProjectComponentFileTypes
 
+  - name: has_test
+    type: bool
+    body: |
+      return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
+    body_dependency_symbols:
+      - Blast::ProjectComponentFileTypes
+
   - name: read_symlinks
     type: std::vector<std::pair<std::string, std::string>>
     body: |
@@ -161,14 +168,6 @@ functions:
       return result;
     body_dependency_symbols:
       - Blast::Project::SymlinkChecker
-
-  - name: has_test
-    type: bool
-    body: |
-      return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
-    body_dependency_symbols:
-      - Blast::ProjectComponentFileTypes
-
 
 dependencies:
   - symbol: vector

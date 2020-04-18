@@ -32,8 +32,8 @@ namespace Blast
       bool exists();
       bool has_quintessence();
       bool has_only_source_and_header();
-      std::vector<std::pair<std::string, std::string>> read_symlinks();
       bool has_test();
+      std::vector<std::pair<std::string, std::string>> read_symlinks();
       };
    }
 }

@@ -12,8 +12,8 @@
 #include <vector>
 #include <Blast/ProjectComponentFileTypes.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
-#include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ProjectComponentFileTypes.hpp>
+#include <Blast/Project/SymlinkChecker.hpp>
 
 
 namespace Blast
@@ -160,6 +160,12 @@ return (
 
 }
 
+bool Component::has_test()
+{
+return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
+
+}
+
 std::vector<std::pair<std::string, std::string>> Component::read_symlinks()
 {
 std::vector<std::string> existing_filenames = list_existing_component_files();
@@ -177,12 +183,6 @@ for (auto &filename : existing_filenames)
 }
 
 return result;
-
-}
-
-bool Component::has_test()
-{
-return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
 
 }
 } // namespace Project
