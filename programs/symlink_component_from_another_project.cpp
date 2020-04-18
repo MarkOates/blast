@@ -14,19 +14,19 @@ int main(int argc, char **argv)
    if (args.size() != 3) throw std::runtime_error("You must pass a target project name, followed by a component name.");
 
    const std::string COMMAND_TEMPLATE = "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; " \
-                                        "ln -s /Users/markoates/Repos/${TARGET_PROJECT}/quintessence/${COMPONENT}.q.yml " \
+                                        "ln -s ../${TARGET_PROJECT}/quintessence/${COMPONENT}.q.yml " \
                                         "[[TARGET_PROJECT_FOLDER_NAME]]/quintessence/${COMPONENT}.q.yml; " \
                                         "unset COMPONENT; unset TARGET_PROJECT";
 
    const std::string TEST_FILE_COMMAND_TEMPLATE = "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; " \
-                                                  "ln -s /Users/markoates/Repos/${TARGET_PROJECT}/tests/${COMPONENT}Test.cpp " \
+                                                  "ln -s ../${TARGET_PROJECT}/tests/${COMPONENT}Test.cpp " \
                                                   "[[TARGET_PROJECT_FOLDER_NAME]]/tests/${COMPONENT}Test.cpp; " \
                                                   "unset COMPONENT; unset TARGET_PROJECT";
 
    const std::string SOURCE_HEADER_COMMAND_TEMPLATE = "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; " \
-                                                      "ln -s /Users/markoates/Repos/${TARGET_PROJECT}/src/${COMPONENT}.cpp " \
+                                                      "ln -s ../${TARGET_PROJECT}/src/${COMPONENT}.cpp " \
                                                       "[[TARGET_PROJECT_FOLDER_NAME]]/src/${COMPONENT}.cpp; " \
-                                                      "ln -s /Users/markoates/Repos/${TARGET_PROJECT}/include/${COMPONENT}.hpp " \
+                                                      "ln -s ../${TARGET_PROJECT}/include/${COMPONENT}.hpp " \
                                                       "[[TARGET_PROJECT_FOLDER_NAME]]/include/${COMPONENT}.hpp; " \
                                                       "unset COMPONENT; unset TARGET_PROJECT";
 
