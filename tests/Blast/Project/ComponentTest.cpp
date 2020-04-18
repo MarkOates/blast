@@ -44,12 +44,12 @@ TEST(Blast_Project_ComponentTest, list_existing_component_files__returns_a_list_
 TEST(Blast_Project_ComponentTest,
    list_exiting_component_files__with_a_project_root_returns_a_list_of_all_existing_component_files)
 {
-   std::string project_root = "/Users/markoates/Repos/hexagon/";
+   std::string project_root = "../hexagon/";
    Blast::Project::Component component("Blast/Project/Component", project_root);
    std::vector<std::string> expected_list = {
-      "/Users/markoates/Repos/hexagon/quintessence/Blast/Project/Component.q.yml",
-      "/Users/markoates/Repos/hexagon/src/Blast/Project/Component.cpp",
-      "/Users/markoates/Repos/hexagon/include/Blast/Project/Component.hpp",
+      "../hexagon/quintessence/Blast/Project/Component.q.yml",
+      "../hexagon/src/Blast/Project/Component.cpp",
+      "../hexagon/include/Blast/Project/Component.hpp",
    };
    ASSERT_EQ(expected_list, component.list_existing_component_files());
 }
