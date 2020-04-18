@@ -29,6 +29,19 @@ TEST(Blast_Project_ComponentTest, generate_full_path_test_binary_filename__retur
    ASSERT_EQ(expected_full_path_test_binary_filename, component.generate_full_path_test_binary_filename());
 }
 
+TEST(Blast_Project_ComponentTest, list_component_files__returns_a_list_of_all_existing_component_files)
+{
+   Blast::Project::Component component("Blast/Project/Component");
+   std::vector<std::string> expected_list = {
+      "quintessence/Blast/Project/Component.q.yml",
+      "src/Blast/Project/Component.cpp",
+      "include/Blast/Project/Component.hpp",
+      "tests/Blast/Project/ComponentTest.cpp",
+      "examples/Blast/Project/ComponentExample.cpp",
+   };
+   ASSERT_EQ(expected_list, component.list_component_files());
+}
+
 TEST(Blast_Project_ComponentTest, exists__returns_true_if_any_component_files_are_present)
 {
    // this may require a more robust test
@@ -78,6 +91,14 @@ TEST(Blast_Project_ComponentTest, has_test__returns_false_when_a_test_file_does_
    Blast::Project::Component component("ComponentWithoutTestFile", fixture_project_path);
    EXPECT_EQ(true, component.exists());
    ASSERT_EQ(false, component.has_test());
+}
+
+TEST(Blast_Project_ComponentTest, read_symlinks__returns_a_list_of_component_files_that_are_symlinks)
+{
+   //std::string fixture_project_path = ABSOLUTE_PATH(RELATIVE_FIXTURE_PATH);
+   //Blast::Project::Component component("ComponentWithoutTestFile", fixture_project_path);
+   //EXPECT_EQ(true, component.exists());
+   //ASSERT_EQ(false, component.has_test());
 }
 
 TEST(Blast_Project_ComponentTest, last_write_time__returns_the_most_recent_write_time_among_all_of_the_component_files)

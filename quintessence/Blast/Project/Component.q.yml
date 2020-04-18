@@ -21,6 +21,32 @@ functions:
       - Blast::ProjectComponentFilenameGenerator
       - Blast::ProjectComponentFileTypes
 
+  - name: list_component_files
+    type: std::vector<std::string>
+    body: |
+      std::vector<std::string> result;
+
+      std::time_t most_recent_file_write_time = 0;
+      std::vector<Blast::ProjectComponentFileTypes::project_file_type_t> types_to_scan_for = {
+         Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE,
+         Blast::ProjectComponentFileTypes::SOURCE_FILE,
+         Blast::ProjectComponentFileTypes::HEADER_FILE,
+         Blast::ProjectComponentFileTypes::TEST_FILE,
+         Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+         //Blast::ProjectComponentFileTypes::OBJECT_FILE,
+         //Blast::ProjectComponentFileTypes::TEST_BINARY,
+         //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
+      };
+
+      for (auto &type_to_scan_for : types_to_scan_for)
+      {
+         std::string filename = Blast::ProjectComponentFilenameGenerator(name, type_to_scan_for).generate_filename();
+         std::string full_filename = project_root + filename;
+         result.push_back(full_filename);
+      }
+
+      return result;
+
   - name: last_write_time
     type: std::time_t
     body: |
@@ -113,6 +139,14 @@ functions:
     body_dependency_symbols:
       - Blast::ProjectComponentFileTypes
 
+  - name: read_symlinks
+    type: std::vector<std::pair<std::string, std::string>>
+    body: |
+      //Blast::Project::SymlinkChecker symlink_checker(
+      return {};
+    body_dependency_symbols:
+      - Blast::Project::SymlinkChecker
+
   - name: has_test
     type: bool
     body: |
@@ -124,6 +158,8 @@ functions:
 dependencies:
   - symbol: vector
     headers: [ vector ]
+  - symbol: std::vector<std::pair<std::string, std::string>>
+    headers: [ vector, utility, string ]
   - symbol: Blast::ProjectComponentFileTypes::project_file_type_t
     headers: [ Blast/ProjectComponentFileTypes.hpp ]
   - symbol: Blast::ProjectComponentFileTypes::project_file_type_t
@@ -134,6 +170,8 @@ dependencies:
     headers: [ Blast/ProjectComponentFileTypes.hpp ]
   - symbol: Blast::FileExistenceChecker
     headers: [ Blast/FileExistenceChecker.hpp ]
+  - symbol: Blast::Project::SymlinkChecker
+    headers: [ Blast/Project/SymlinkChecker.hpp ]
   - symbol: Blast::FileLastWriteTime
     headers: [ Blast/FileLastWriteTime.hpp ]
   - symbol: std::time_t
