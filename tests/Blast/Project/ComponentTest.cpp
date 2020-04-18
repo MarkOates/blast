@@ -105,12 +105,20 @@ TEST(Blast_Project_ComponentTest, has_test__returns_false_when_a_test_file_does_
    ASSERT_EQ(false, component.has_test());
 }
 
-TEST(Blast_Project_ComponentTest, read_symlinks__returns_a_list_of_component_files_that_are_symlinks)
+TEST(Blast_Project_ComponentTest, read_symlinks__returns_a_list_of_component_files_that_are_symlinks_and_their_targets)
 {
-   //std::string fixture_project_path = ABSOLUTE_PATH(RELATIVE_FIXTURE_PATH);
-   //Blast::Project::Component component("ComponentWithoutTestFile", fixture_project_path);
-   //EXPECT_EQ(true, component.exists());
-   //ASSERT_EQ(false, component.has_test());
+   std::string project_root = "/Users/markoates/Repos/hexagon/";
+   Blast::Project::Component component("Blast/Project/Component", project_root);
+
+   std::vector<std::pair<std::string, std::string>> expected = {
+      {
+         "/Users/markoates/Repos/hexagon/quintessence/Blast/Project/Component.q.yml",
+         "/Users/markoates/Repos/blast/quintessence/Blast/Project/Component.q.yml",
+      }
+   };
+   std::vector<std::pair<std::string, std::string>> actual = component.read_symlinks();
+
+   ASSERT_EQ(expected, actual);
 }
 
 TEST(Blast_Project_ComponentTest, last_write_time__returns_the_most_recent_write_time_among_all_of_the_component_files)
