@@ -1,3 +1,9 @@
+properties:
+  - name: project_root
+    type: std::string
+    init_with: "\"\""
+    constructor_arg: true
+    getter: true
 functions:
   - name: run
     type: std::string

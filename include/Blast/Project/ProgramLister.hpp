@@ -11,12 +11,14 @@ namespace Blast
       class ProgramLister
       {
       private:
+         std::string project_root;
 
       public:
-         ProgramLister();
+         ProgramLister(std::string project_root="");
          ~ProgramLister();
 
 
+         std::string get_project_root();
       std::string run();
       };
    }
