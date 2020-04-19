@@ -5,6 +5,36 @@ properties:
     constructor_arg: true
     getter: true
 functions:
-  - name: run
+  - name: build_program_lister_shell_command
     type: std::string
-    body: return "Hello World!";
+    body: |
+      std::stringstream find_command;
+      std::string fragment_folder_name = "programs";
+      std::string fragment_extension = ".exe";
+      find_command << "cd " << project_root
+                   << " && find " << fragment_folder_name
+                   << " -type f -name \"*\"";
+      return find_command.str();
+    body_dependency_symbols:
+      - std::stringstream
+  - name: program_filenames
+    type: std::vector<std::string>
+    body: |
+      Blast::ShellCommandExecutorWithCallback executor(
+         build_program_lister_shell_command(),
+         Blast::ShellCommandExecutorWithCallback::simple_silent_callback);
+
+      std::string executor_response = executor.execute();
+      StringSplitter splitter(executor_response, '\n');
+
+      std::vector<std::string> result = splitter.split();
+
+      return result;
+    body_dependency_symbols:
+      - Blast::ShellCommandExecutorWithCallback
+      - StringSplitter
+dependencies:
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]

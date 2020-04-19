@@ -2,6 +2,7 @@
 
 
 #include <string>
+#include <vector>
 
 
 namespace Blast
@@ -19,7 +20,8 @@ namespace Blast
 
 
          std::string get_project_root();
-      std::string run();
+      std::string build_program_lister_shell_command();
+      std::vector<std::string> program_filenames();
       };
    }
 }
