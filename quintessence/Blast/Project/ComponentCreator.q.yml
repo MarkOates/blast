@@ -1,0 +1,14 @@
+functions:
+  - name: get_quintessence_file_default_content
+    type: std::string
+    body: |
+      std::string const QUINTESSENCE_FILE_CONTENT = R"END(functions:
+        - name: run
+          type: std::string
+          body: return "Hello World!";
+      )END";
+      return QUINTESSENCE_FILE_CONTENT;
+  - name: generate
+    type: std::string
+    body: |
+      return "Hello World!";
