@@ -19,13 +19,13 @@ TEST(Blast_Project_ProgramListerTest,
    EXPECT_EQ(expected_shell_command, actual_shell_command);
 }
 
-TEST(Blast_Project_ProgramListerTest, program_filenames__returns_the_list_of_program_filenames_in_the_project)
+TEST(Blast_Project_ProgramListerTest, program_filenames__returns_the_sorted_list_of_program_filenames_in_the_project)
 {
    Blast::Project::ProgramLister program_lister(TEST_PROJECT_ROOT_DIRECTORY);
    std::vector<std::string> expected_program_filenames = {
-         "programs/program2.cpp",
-         "programs/program1.cpp",
          "programs/nested/nested_program.cpp",
+         "programs/program1.cpp",
+         "programs/program2.cpp",
       };
    EXPECT_EQ(expected_program_filenames, program_lister.program_filenames());
 }

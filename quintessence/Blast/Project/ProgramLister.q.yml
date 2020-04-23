@@ -29,11 +29,16 @@ functions:
 
       std::vector<std::string> result = splitter.split();
 
+      std::sort(result.begin(), result.end());
+
       return result;
     body_dependency_symbols:
       - Blast::ShellCommandExecutorWithCallback
       - StringSplitter
+      - std::sort
 dependencies:
+  - symbol: std::sort
+    headers: [ algorithm ]
   - symbol: Blast::ShellCommandExecutorWithCallback
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
   - symbol: StringSplitter
