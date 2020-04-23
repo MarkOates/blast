@@ -34,9 +34,28 @@ int line_count(std::string filename) // this function is untested
    return line_count;
 }
 
+std::string read_file_firstline(std::string filename)
+{
+   std::ifstream infile(filename);
+
+   std::string sLine;
+   if (infile.good())
+   {
+      getline(infile, sLine);
+   }
+   else
+   {
+      throw std::runtime_error("Unexpected error in read_file_firstline");
+   }
+
+   infile.close();
+
+   return sLine;
+}
+
 bool likely_an_intended_symlink(std::string filename, std::string string_to_find)
 {
-   std::ifstream infile("test.txt");
+   std::ifstream infile(filename);
    bool starts_with_string = false;
 
    if (infile.good())
@@ -53,20 +72,35 @@ bool likely_an_intended_symlink(std::string filename, std::string string_to_find
    return starts_with_string;
 }
 
+std::string read_symlink(std::string filename)
+{
+   std::string symlink_target;
+   try
+   {
+      symlink_target = fs::read_symlink(std::filesystem::path(filename)).string();
+   }
+   catch (const std::exception& e)
+   {
+      symlink_target = read_file_firstline(filename);
+   }
+   return symlink_target;
+}
+
 int main(int argc, char **argv)
 {
    const std::string MAGIC_STRING = "/Users/markoates/Repos/";
    std::vector<std::string> filenames = {};
    for(auto& p: fs::recursive_directory_iterator("."))
    {
-      std::cout << p.path().string() << std::endl;
+      std::string filename = p.path().string();
+      std::replace(filename.begin(), filename.end(), '\\', '/');
+      std::cout << filename << std::endl;
 
-      if (fs::is_symlink(p) || likely_an_intended_symlink(p.path().string(), MAGIC_STRING))
+      if (fs::is_symlink(p) || likely_an_intended_symlink(filename, MAGIC_STRING))
       {
-         std::string filename = p.path().string();
-         std::replace(filename.begin(), filename.end(), '\\', '/');
+         std::cout << "   LIKELY" << std::endl;
          filenames.push_back(filename);
-         std::string symlink_target = fs::read_symlink(p).string();
+         std::string symlink_target = read_symlink(filename);
          std::string sanitized_target = symlink_target;
          if (starts_with(symlink_target, MAGIC_STRING))
          {
@@ -87,7 +121,7 @@ int main(int argc, char **argv)
             std::cout << "Attempting alternative link creation with shell command" << std::endl;
 
             std::stringstream command;
-            command << "ln -s " << sanitized_target << " " << filename;
+            command << "ln -sf " << sanitized_target << " " << filename;
             Blast::ShellCommandExecutorWithCallback executor(command.str());
             executor.execute();
             //create_symlink(sanitized_target, p.path());
