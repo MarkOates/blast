@@ -1,5 +1,6 @@
 #include <allegro5/allegro.h> // temporary fix for compatibility with union/Makefile
 
+#include <algorithm>
 #include <vector>
 #include <fstream>
 #include <iostream>
@@ -63,6 +64,7 @@ int main(int argc, char **argv)
       if (fs::is_symlink(p) || likely_an_intended_symlink(p.path().string(), MAGIC_STRING))
       {
          std::string filename = p.path().string();
+         std::replace(filename.begin(), filename.end(), '\\', '/');
          filenames.push_back(filename);
          std::string symlink_target = fs::read_symlink(p).string();
          std::string sanitized_target = symlink_target;
