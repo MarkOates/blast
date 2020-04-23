@@ -5,6 +5,9 @@
 #include <iostream>
 #include <filesystem>
 #include <iterator>
+#include <sstream>
+
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
 
 namespace fs = std::filesystem;
 
@@ -57,7 +60,8 @@ int main(int argc, char **argv)
    {
       if (fs::is_symlink(p) || likely_an_intended_symlink(p.path().string(), MAGIC_STRING))
       {
-         filenames.push_back(p.path().string());
+         std::string filename = p.path().string();
+         filenames.push_back(filename);
          std::string symlink_target = fs::read_symlink(p).string();
          std::string sanitized_target = symlink_target;
          if (starts_with(symlink_target, MAGIC_STRING))
@@ -69,7 +73,24 @@ int main(int argc, char **argv)
          }
 
          fs::remove(p.path());
-         fs::create_symlink(sanitized_target, p.path());
+         try
+         {
+            fs::create_symlink(sanitized_target, p.path());
+         }
+         catch (const std::exception& e)
+         {
+            std::cout << "Caught error when attempting to fs::create_symlink: " << e.what() << std::endl;
+            std::cout << "Attempting alternative link creation with shell command" << std::endl;
+
+            std::stringstream command;
+            command << "ln -s " << sanitized_target << " " << filename;
+            Blast::ShellCommandExecutorWithCallback executor(command.str());
+            executor.execute();
+            //create_symlink(sanitized_target, p.path());
+
+            //p.path().string() << " -> " << sanitized_target << '\n';
+            //error
+         }
          std::cout << p.path().string() << " -> " << sanitized_target << '\n';
       }
    }
