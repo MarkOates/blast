@@ -18,7 +18,7 @@ int main(int argc, char **argv)
    {
       if (fs::is_symlink(p))
       {
-         filenames.push_back(p.path());
+         filenames.push_back(p.path().string());
          std::string symlink_target = fs::read_symlink(p).string();
          std::string sanitized_target = symlink_target;
          if (starts_with(symlink_target, "/Users/markoates/Repos/"))
