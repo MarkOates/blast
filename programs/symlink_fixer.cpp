@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <iterator>
+
 namespace fs = std::filesystem;
 
 bool starts_with(std::string source, std::string string_to_find)
