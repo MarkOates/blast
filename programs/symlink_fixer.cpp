@@ -58,6 +58,8 @@ int main(int argc, char **argv)
    std::vector<std::string> filenames = {};
    for(auto& p: fs::recursive_directory_iterator("."))
    {
+      std::cout << p.path().string() << std::endl;
+
       if (fs::is_symlink(p) || likely_an_intended_symlink(p.path().string(), MAGIC_STRING))
       {
          std::string filename = p.path().string();
