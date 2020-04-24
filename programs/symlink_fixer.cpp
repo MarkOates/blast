@@ -88,7 +88,8 @@ std::string read_symlink(std::string filename)
 
 int main(int argc, char **argv)
 {
-   const std::string MAGIC_STRING = "/Users/markoates/Repos/";
+   //const std::string MAGIC_STRING = "/Users/markoates/Repos/";
+   const std::string MAGIC_STRING = "../../../";
    std::vector<std::string> filenames = {};
    for(auto& p: fs::recursive_directory_iterator("."))
    {
