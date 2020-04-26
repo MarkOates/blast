@@ -31,20 +31,24 @@ int main(int argc, char **argv)
 
    std::stringstream COMMAND_TEMPLATE;
    COMMAND_TEMPLATE << "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; "
+                    << "mkdir -p [[TARGET_PROJECT_FOLDER_NAME]]/quintessence/[[DIRECTORY_TO_COMPONENT]] && "
                     << "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/quintessence/${COMPONENT}.q.yml "
                     << "[[TARGET_PROJECT_FOLDER_NAME]]/quintessence/${COMPONENT}.q.yml; "
                     << "unset COMPONENT; unset TARGET_PROJECT";
 
    std::stringstream TEST_FILE_COMMAND_TEMPLATE;
    TEST_FILE_COMMAND_TEMPLATE << "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; "
+                              << "mkdir -p [[TARGET_PROJECT_FOLDER_NAME]]/tests/[[DIRECTORY_TO_COMPONENT]] && "
                               << "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/tests/${COMPONENT}Test.cpp "
                               << "[[TARGET_PROJECT_FOLDER_NAME]]/tests/${COMPONENT}Test.cpp; "
                               << "unset COMPONENT; unset TARGET_PROJECT";
 
    std::stringstream SOURCE_HEADER_COMMAND_TEMPLATE;
    SOURCE_HEADER_COMMAND_TEMPLATE << "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; "
+                                  << "mkdir -p [[TARGET_PROJECT_FOLDER_NAME]]/src/[[DIRECTORY_TO_COMPONENT]] && "
                                   << "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/src/${COMPONENT}.cpp "
                                   << "[[TARGET_PROJECT_FOLDER_NAME]]/src/${COMPONENT}.cpp; "
+                                  << "mkdir -p [[TARGET_PROJECT_FOLDER_NAME]]/include/[[DIRECTORY_TO_COMPONENT]] && "
                                   << "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/include/${COMPONENT}.hpp "
                                   << "[[TARGET_PROJECT_FOLDER_NAME]]/include/${COMPONENT}.hpp; "
                                   << "unset COMPONENT; unset TARGET_PROJECT";
@@ -60,6 +64,7 @@ int main(int argc, char **argv)
    Blast::TemplatedFile templated_file(COMMAND_TEMPLATE.str(), {
       { "[[TARGET_PROJECT]]",             source_project_raw_folder_name },
       { "[[COMPONENT]]",                  component_name },
+      { "[[DIRECTORY_TO_COMPONENT]]",     directory_to_component },
       { "[[TARGET_PROJECT_FOLDER_NAME]]", target_project_raw_folder_name },
       { "[[UP_DIRECTORY_PARENT_TOKENS]]", up_directory_parent_tokens },
    });
@@ -67,6 +72,7 @@ int main(int argc, char **argv)
    Blast::TemplatedFile templated_test_command(TEST_FILE_COMMAND_TEMPLATE.str(), {
       { "[[TARGET_PROJECT]]",             source_project_raw_folder_name },
       { "[[COMPONENT]]",                  component_name },
+      { "[[DIRECTORY_TO_COMPONENT]]",     directory_to_component },
       { "[[TARGET_PROJECT_FOLDER_NAME]]", target_project_raw_folder_name },
       { "[[UP_DIRECTORY_PARENT_TOKENS]]", up_directory_parent_tokens },
    });
@@ -74,6 +80,7 @@ int main(int argc, char **argv)
    Blast::TemplatedFile templated_source_header_command(SOURCE_HEADER_COMMAND_TEMPLATE.str(), {
       { "[[TARGET_PROJECT]]",             source_project_raw_folder_name },
       { "[[COMPONENT]]",                  component_name },
+      { "[[DIRECTORY_TO_COMPONENT]]",     directory_to_component },
       { "[[TARGET_PROJECT_FOLDER_NAME]]", target_project_raw_folder_name },
       { "[[UP_DIRECTORY_PARENT_TOKENS]]", up_directory_parent_tokens },
    });
