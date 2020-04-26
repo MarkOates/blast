@@ -2,6 +2,7 @@
 
 
 #include <iostream>
+#include <sstream>
 #include <algorithm> // for std::count
 #include <Blast/TemplatedFile.hpp>
 
@@ -21,22 +22,25 @@ int main(int argc, char **argv)
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
    if (args.size() != 3) throw std::runtime_error("You must pass a target project name, followed by a component name.");
 
-   const std::string COMMAND_TEMPLATE = "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; " \
-                                        "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/quintessence/${COMPONENT}.q.yml " \
-                                        "[[TARGET_PROJECT_FOLDER_NAME]]/quintessence/${COMPONENT}.q.yml; " \
-                                        "unset COMPONENT; unset TARGET_PROJECT";
+   std::stringstream COMMAND_TEMPLATE;
+   COMMAND_TEMPLATE << "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; "
+                    << "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/quintessence/${COMPONENT}.q.yml "
+                    << "[[TARGET_PROJECT_FOLDER_NAME]]/quintessence/${COMPONENT}.q.yml; "
+                    << "unset COMPONENT; unset TARGET_PROJECT";
 
-   const std::string TEST_FILE_COMMAND_TEMPLATE = "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; " \
-                                                  "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/tests/${COMPONENT}Test.cpp " \
-                                                  "[[TARGET_PROJECT_FOLDER_NAME]]/tests/${COMPONENT}Test.cpp; " \
-                                                  "unset COMPONENT; unset TARGET_PROJECT";
+   std::stringstream TEST_FILE_COMMAND_TEMPLATE;
+   TEST_FILE_COMMAND_TEMPLATE << "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; "
+                              << "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/tests/${COMPONENT}Test.cpp "
+                              << "[[TARGET_PROJECT_FOLDER_NAME]]/tests/${COMPONENT}Test.cpp; "
+                              << "unset COMPONENT; unset TARGET_PROJECT";
 
-   const std::string SOURCE_HEADER_COMMAND_TEMPLATE = "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; " \
-                                                      "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/src/${COMPONENT}.cpp " \
-                                                      "[[TARGET_PROJECT_FOLDER_NAME]]/src/${COMPONENT}.cpp; " \
-                                                      "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/include/${COMPONENT}.hpp " \
-                                                      "[[TARGET_PROJECT_FOLDER_NAME]]/include/${COMPONENT}.hpp; " \
-                                                      "unset COMPONENT; unset TARGET_PROJECT";
+   std::stringstream SOURCE_HEADER_COMMAND_TEMPLATE;
+   SOURCE_HEADER_COMMAND_TEMPLATE << "TARGET_PROJECT=[[TARGET_PROJECT]]; COMPONENT=[[COMPONENT]]; "
+                                  << "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/src/${COMPONENT}.cpp "
+                                  << "[[TARGET_PROJECT_FOLDER_NAME]]/src/${COMPONENT}.cpp; "
+                                  << "ln -s [[UP_DIRECTORY_PARENT_TOKENS]]${TARGET_PROJECT}/include/${COMPONENT}.hpp "
+                                  << "[[TARGET_PROJECT_FOLDER_NAME]]/include/${COMPONENT}.hpp; "
+                                  << "unset COMPONENT; unset TARGET_PROJECT";
 
    std::string source_project_raw_folder_name = args[1]; //"blast";
    std::string component_name = args[2]; //"Blast/ShellCommandExecutorWithCallback";
@@ -45,21 +49,21 @@ int main(int argc, char **argv)
    int component_directory_depth = (int)std::count(component_name.begin(), component_name.end(), '/') + 2;
    std::string up_directory_parent_tokens = repeat("../", component_directory_depth);
 
-   Blast::TemplatedFile templated_file(COMMAND_TEMPLATE, {
+   Blast::TemplatedFile templated_file(COMMAND_TEMPLATE.str(), {
       { "[[TARGET_PROJECT]]",             source_project_raw_folder_name },
       { "[[COMPONENT]]",                  component_name },
       { "[[TARGET_PROJECT_FOLDER_NAME]]", target_project_raw_folder_name },
       { "[[UP_DIRECTORY_PARENT_TOKENS]]", up_directory_parent_tokens },
    });
 
-   Blast::TemplatedFile templated_test_command(TEST_FILE_COMMAND_TEMPLATE, {
+   Blast::TemplatedFile templated_test_command(TEST_FILE_COMMAND_TEMPLATE.str(), {
       { "[[TARGET_PROJECT]]",             source_project_raw_folder_name },
       { "[[COMPONENT]]",                  component_name },
       { "[[TARGET_PROJECT_FOLDER_NAME]]", target_project_raw_folder_name },
       { "[[UP_DIRECTORY_PARENT_TOKENS]]", up_directory_parent_tokens },
    });
 
-   Blast::TemplatedFile templated_source_header_command(SOURCE_HEADER_COMMAND_TEMPLATE, {
+   Blast::TemplatedFile templated_source_header_command(SOURCE_HEADER_COMMAND_TEMPLATE.str(), {
       { "[[TARGET_PROJECT]]",             source_project_raw_folder_name },
       { "[[COMPONENT]]",                  component_name },
       { "[[TARGET_PROJECT_FOLDER_NAME]]", target_project_raw_folder_name },
