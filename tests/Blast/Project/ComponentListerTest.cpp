@@ -3,12 +3,14 @@
 #include <gmock/gmock.h>
 
 using ::testing::UnorderedElementsAreArray;
+using ::testing::Contains;
 
 #include <Blast/Project/ComponentLister.hpp>
 
 #include <Blast/Project/Component.hpp>
 
 static std::string TEST_PROJECT_ROOT_DIRECTORY = "bin/fixtures/test_project/";
+static std::string TEST_PROJECT_WITH_SYMLINK_ROOT_DIRECTORY = "bin/fixtures/FixtureProject2/";
 
 TEST(Blast__Project__ComponentLister, can_be_created_without_arguments)
 {
@@ -34,6 +36,16 @@ TEST(Blast__Project__ComponentLister, components__will_return_the_components_in_
   std::vector<std::string> actual_components = lister.components();
 
   ASSERT_EQ(expected_components, actual_components);
+}
+
+TEST(Blast__Project__ComponentLister, components__will_include_components_that_exist_purely_with_symlinked_fragments)
+{
+   std::string expected_purely_symlink_component = "ComponentWithExternalSymlinkThatIsOnlySymlink";
+
+  Blast::Project::ComponentLister lister(TEST_PROJECT_WITH_SYMLINK_ROOT_DIRECTORY);
+  std::vector<std::string> actual_components = lister.components();
+
+  ASSERT_THAT(actual_components, Contains(expected_purely_symlink_component));
 }
 
 TEST(Blast__Project__ComponentLister,

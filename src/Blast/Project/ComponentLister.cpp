@@ -89,7 +89,17 @@ std::vector<std::string> ComponentLister::get_components_of_fragment_type(std::s
 std::stringstream find_command;
 std::string fragment_folder_name = get_component_fragment_folder_name(component_fragment);
 std::string fragment_extension = get_component_fragment_extension(component_fragment);
-find_command << "cd " << project_root_directory << " && find " << fragment_folder_name << " -type f -name \"*" << fragment_extension << "\"";
+find_command << "cd "
+             << project_root_directory
+             << " && find "
+             << fragment_folder_name
+             << " -type f -name \"*"
+             << fragment_extension
+             << "\""
+             << " -o"
+             << " -type l -name \"*"
+             << fragment_extension
+             << "\"";
 Blast::ShellCommandExecutorWithCallback executor(find_command.str(), Blast::ShellCommandExecutorWithCallback::simple_silent_callback);
 std::string executor_response = executor.execute();
 StringSplitter splitter(executor_response, '\n');
