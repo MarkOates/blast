@@ -142,7 +142,8 @@ std::vector<component_fragment_t> fragments_to_look_for = {
 
 for (auto &fragment_to_look_for : fragments_to_look_for)
 {
-   std::vector<std::string> fragment_component_names= get_components_of_fragment_type(project_root_directory, fragment_to_look_for);
+   std::vector<std::string> fragment_component_names =
+      get_components_of_fragment_type(project_root_directory, fragment_to_look_for);
 
    for (auto &item : fragment_component_names)
    {
