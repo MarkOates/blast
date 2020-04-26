@@ -42,7 +42,7 @@ int main(int argc, char **argv)
    std::string component_name = args[2]; //"Blast/ShellCommandExecutorWithCallback";
    std::string target_project_raw_folder_name = ".";
 
-   int component_directory_depth = (int)std::count(component_name.begin(), component_name.end(), '/') + 1;
+   int component_directory_depth = (int)std::count(component_name.begin(), component_name.end(), '/') + 2;
    std::string up_directory_parent_tokens = repeat("../", component_directory_depth);
 
    Blast::TemplatedFile templated_file(COMMAND_TEMPLATE, {
