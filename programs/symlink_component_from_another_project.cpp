@@ -17,6 +17,13 @@ std::string repeat(std::string s, int n)
    return s;
 }
 
+std::string directory_to(std::string component_name)
+{
+   std::string::size_type pos = component_name.find_first_of('/');
+   if (pos == std::string::npos) return ".";
+   return component_name.substr(0, pos);
+}
+
 int main(int argc, char **argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
@@ -45,6 +52,7 @@ int main(int argc, char **argv)
    std::string source_project_raw_folder_name = args[1]; //"blast";
    std::string component_name = args[2]; //"Blast/ShellCommandExecutorWithCallback";
    std::string target_project_raw_folder_name = ".";
+   std::string directory_to_component = directory_to(component_name);
 
    int component_directory_depth = (int)std::count(component_name.begin(), component_name.end(), '/') + 2;
    std::string up_directory_parent_tokens = repeat("../", component_directory_depth);
