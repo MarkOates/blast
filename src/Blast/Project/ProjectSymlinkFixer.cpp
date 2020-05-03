@@ -83,14 +83,16 @@ return sLine;
 
 bool ProjectSymlinkFixer::likely_an_intended_symlink(std::string filename, std::string string_to_find)
 {
-if (!std::filesystem::exists(filename))
+std::filesystem::directory_entry p(filename);
+
+if (!std::filesystem::exists(p))
 {
    std::stringstream error_message;
    error_message << "File \"" << filename << "\" does not exist when running likely_an_intended_symlink.";
    throw std::runtime_error(error_message.str());
 }
 
-std::filesystem::directory_entry p(filename);
+//std::filesystem::directory_entry p(filename);
 if (std::filesystem::is_symlink(p)
     || Blast::Project::SymlinkChecker(filename).is_symlink()) return true; // this doesn't work for some reason
 
