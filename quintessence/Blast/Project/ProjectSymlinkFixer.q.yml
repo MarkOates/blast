@@ -42,29 +42,6 @@ functions:
 
       in.close();
       return sTotal == 1;
-
-
-
-  - name: line_count
-    type: int
-    parameters:
-      - name: filename
-        type: std::string
-        default_argument: "\"\""
-    body: |
-      std::ifstream myfile(filename);
-
-      // new lines will be skipped unless we stop it from happening:
-      myfile.unsetf(std::ios_base::skipws);
-
-      // count the newlines with an algorithm specialized for counting:
-      unsigned line_count = std::count(
-            std::istream_iterator<char>(myfile),
-            std::istream_iterator<char>(),
-            '\n');
-
-      //std::cout << "Lines: " << line_count << "\n";}
-      return line_count;
     body_dependency_symbols:
       - std::ifstream
       - std::istream_iterator

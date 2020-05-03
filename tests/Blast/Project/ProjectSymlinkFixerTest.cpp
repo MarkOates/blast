@@ -52,21 +52,12 @@ TEST(Blast_Project_ProjectSymlinkFixerTest,
 
 
 
-TEST(Blast_Project_ProjectSymlinkFixerTest, line_count__returns_the_number_of_lines_in_the_file)
-{
-   Blast::Project::ProjectSymlinkFixer project_symlink_fixer;
-   std::string filename = "/Users/markoates/Repos/blast/tests/fixtures/file_that_has_5_lines.txt";
-   ASSERT_EQ(5, project_symlink_fixer.line_count(filename));
-}
-
-
-
 TEST(Blast_Project_ProjectSymlinkFixerTest,
    likely_an_intended_symlink__returns_true_if_the_file_is_not_a_symlink_but_likely_intended_to_be_a_symlink__test1)
 {
    std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
 
-   std::string filename = "./" + std::string(TEMP_SANDBOX_FOLDER) + "/" + "almost_a_symlink";
+   std::string filename = "./" + std::string(TEMP_SANDBOX_FOLDER) + "/" + "almost_a_symlink__test1_file";
    std::string file_contents = "../something/Something";
    ::write_file(filename, file_contents);
    ASSERT_EQ(true, std::filesystem::exists(filename));
@@ -80,11 +71,11 @@ TEST(Blast_Project_ProjectSymlinkFixerTest,
 
 
 TEST(Blast_Project_ProjectSymlinkFixerTest,
-   likely_an_intended_symlink__returns_true_if_the_file_is_likely_intended_to_be_a_symlink__test2)
+   likely_an_intended_symlink__returns_true_if_the_file_is_not_a_symlink_but_likely_intended_to_be_a_symlink__test2)
 {
    std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
 
-   std::string filename = "./" + std::string(TEMP_SANDBOX_FOLDER) + "/" + "almost_a_symlink";
+   std::string filename = "./" + std::string(TEMP_SANDBOX_FOLDER) + "/" + "almost_a_symlink__test2_file";
    std::string file_contents = "/Users/markoates/Repos/foobar";
    ::write_file(filename, file_contents);
    ASSERT_EQ(true, std::filesystem::exists(filename));
