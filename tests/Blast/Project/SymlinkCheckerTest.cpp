@@ -50,6 +50,14 @@ TEST(Blast_Project_SymlinkCheckerTest, is_symlink__if_symlink_does_not_exist__th
    ASSERT_THROW_WITH_MESSAGE(symlink_checker.is_symlink(), std::runtime_error, expected_error_message.str());
 }
 
+TEST(Blast_Project_SymlinkCheckerTest, is_symlink__works_on_relative_fileanmes)
+{
+   std::string symlink_filename = "./bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml";
+   Blast::Project::SymlinkChecker symlink_checker(symlink_filename);
+
+   ASSERT_EQ(true, symlink_checker.is_symlink());
+}
+
 TEST(Blast_Project_SymlinkCheckerTest, read_symlink_target__returns_the_target_of_the_symlink)
 {
    std::string symlink_file = FIXTURE_PATH() + "quintessence/ComponentWithExternalSymlink.q.yml";
