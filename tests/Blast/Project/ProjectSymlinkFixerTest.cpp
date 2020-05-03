@@ -38,7 +38,7 @@ TEST(Blast_Project_ProjectSymlinkFixerTest, project_folder__has_getter_and_is_se
 
 
 
-TEST(DISABLED_Blast_Project_ProjectSymlinkFixerTest,
+TEST(Blast_Project_ProjectSymlinkFixerTest,
    likely_an_intended_symlink__returns_true_if_the_file_is_actually_a_symlink)
 {
    std::string filename_of_file_that_is_symlink =
