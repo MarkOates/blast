@@ -44,7 +44,8 @@ TEST(Blast_Project_ProjectSymlinkFixerTest,
    std::string filename_of_file_that_is_symlink =
       "./bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml";
    ASSERT_EQ(true, std::filesystem::exists(filename_of_file_that_is_symlink));
-   ASSERT_EQ(true, std::filesystem::is_symlink(filename_of_file_that_is_symlink));
+   Blast::Project::SymlinkChecker checker(filename_of_file_that_is_symlink);
+   ASSERT_EQ(true, checker.is_symlink());
 
    Blast::Project::ProjectSymlinkFixer project_symlink_fixer;
    ASSERT_EQ(true, project_symlink_fixer.likely_an_intended_symlink(filename_of_file_that_is_symlink));
