@@ -84,6 +84,22 @@ return starts_with_string;
 
 }
 
+std::string ProjectSymlinkFixer::read_symlink(std::string filename)
+{
+namespace fs = std::filesystem;
+std::string symlink_target;
+try
+{
+   symlink_target = fs::read_symlink(std::filesystem::path(filename)).string();
+}
+catch (const std::exception& e)
+{
+   symlink_target = read_file_firstline(filename);
+}
+return symlink_target;
+
+}
+
 std::string ProjectSymlinkFixer::run()
 {
 return "Hello World!";

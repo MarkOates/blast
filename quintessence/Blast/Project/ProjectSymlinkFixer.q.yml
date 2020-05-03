@@ -90,6 +90,27 @@ functions:
       return starts_with_string;
 
 
+  - name: read_symlink
+    type: std::string
+    parameters:
+      - name: filename
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      namespace fs = std::filesystem;
+      std::string symlink_target;
+      try
+      {
+         symlink_target = fs::read_symlink(std::filesystem::path(filename)).string();
+      }
+      catch (const std::exception& e)
+      {
+         symlink_target = read_file_firstline(filename);
+      }
+      return symlink_target;
+
+
+
   - name: run
     type: std::string
     body: return "Hello World!";
