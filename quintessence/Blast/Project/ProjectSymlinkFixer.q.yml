@@ -92,6 +92,8 @@ functions:
       std::filesystem::directory_entry p(filename);
       if (std::filesystem::is_symlink(p)) return true;
 
+      //if (Blast::Project::SymlinkChecker(filename).is_symlink()) return true; // this doesn't work for some reason
+
       std::ifstream infile(filename);
       bool starts_with_string = false;
 
@@ -120,6 +122,8 @@ functions:
       infile.close();
 
       return starts_with_string;
+    body_dependency_symbols:
+      - Blast::Project::SymlinkChecker
 
 
   - name: read_symlink
@@ -214,6 +218,8 @@ functions:
 
 
 dependencies:
+  - symbol: Blast::Project::SymlinkChecker
+    headers: [ Blast/Project/SymlinkChecker.hpp ]
   - symbol: std::filesystem
     headers: [ filesystem ]
   - symbol: std::istream_iterator

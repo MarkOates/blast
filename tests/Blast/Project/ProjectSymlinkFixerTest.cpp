@@ -52,7 +52,7 @@ TEST(Blast_Project_ProjectSymlinkFixerTest,
 
 
 
-TEST(Blast_Project_ProjectSymlinkFixerTest,
+TEST(DISABLED_Blast_Project_ProjectSymlinkFixerTest,
    likely_an_intended_symlink__returns_true_if_the_file_is_not_a_symlink_but_likely_intended_to_be_a_symlink__test1)
 {
    std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
@@ -70,7 +70,7 @@ TEST(Blast_Project_ProjectSymlinkFixerTest,
 
 
 
-TEST(Blast_Project_ProjectSymlinkFixerTest,
+TEST(DISABLED_Blast_Project_ProjectSymlinkFixerTest,
    likely_an_intended_symlink__returns_true_if_the_file_is_not_a_symlink_but_likely_intended_to_be_a_symlink__test2)
 {
    std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);

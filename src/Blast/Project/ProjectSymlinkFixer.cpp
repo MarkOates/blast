@@ -3,6 +3,7 @@
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <fstream>
 #include <iterator>
+#include <Blast/Project/SymlinkChecker.hpp>
 #include <filesystem>
 #include <vector>
 #include <string>
@@ -91,6 +92,8 @@ if (!std::filesystem::exists(filename))
 
 std::filesystem::directory_entry p(filename);
 if (std::filesystem::is_symlink(p)) return true;
+
+//if (Blast::Project::SymlinkChecker(filename).is_symlink()) return true; // this doesn't work for some reason
 
 std::ifstream infile(filename);
 bool starts_with_string = false;
