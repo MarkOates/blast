@@ -62,6 +62,34 @@ functions:
       return sLine;
 
 
+  - name: likely_an_intended_symlink
+    private: true
+    type: bool
+    parameters:
+      - name: filename
+        type: std::string
+        default_argument: "\"\""
+      - name: string_to_find
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      std::ifstream infile(filename);
+      bool starts_with_string = false;
+
+      if (infile.good())
+      {
+         std::string sLine;
+         getline(infile, sLine);
+         //std::cout << sLine << std::endl;
+         if (starts_with(sLine, string_to_find)) starts_with_string = true;
+         if (starts_with(sLine, "../") && line_count(filename) == 1) starts_with_string = true;
+      }
+
+      infile.close();
+
+      return starts_with_string;
+
+
   - name: run
     type: std::string
     body: return "Hello World!";

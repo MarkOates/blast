@@ -64,6 +64,26 @@ return sLine;
 
 }
 
+bool ProjectSymlinkFixer::likely_an_intended_symlink(std::string filename, std::string string_to_find)
+{
+std::ifstream infile(filename);
+bool starts_with_string = false;
+
+if (infile.good())
+{
+   std::string sLine;
+   getline(infile, sLine);
+   //std::cout << sLine << std::endl;
+   if (starts_with(sLine, string_to_find)) starts_with_string = true;
+   if (starts_with(sLine, "../") && line_count(filename) == 1) starts_with_string = true;
+}
+
+infile.close();
+
+return starts_with_string;
+
+}
+
 std::string ProjectSymlinkFixer::run()
 {
 return "Hello World!";
