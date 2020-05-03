@@ -82,6 +82,9 @@ return sLine;
 
 bool ProjectSymlinkFixer::likely_an_intended_symlink(std::string filename, std::string string_to_find)
 {
+std::filesystem::directory_entry p(filename);
+if (std::filesystem::is_symlink(p)) return true;
+
 std::ifstream infile(filename);
 bool starts_with_string = false;
 
@@ -89,9 +92,18 @@ if (infile.good())
 {
    std::string sLine;
    getline(infile, sLine);
-   //std::cout << sLine << std::endl;
-   if (starts_with(sLine, string_to_find)) starts_with_string = true;
-   if (starts_with(sLine, "../") && line_count(filename) == 1) starts_with_string = true;
+
+   if (line_count(filename) == 1)
+   {
+      //std::cout << sLine << std::endl;
+      if (starts_with(sLine, string_to_find)) starts_with_string = true;
+      if (starts_with(sLine, "../")) starts_with_string = true;
+      if (starts_with(sLine, "/Users/markoates/Repos/")) starts_with_string = true;
+   }
+   else
+   {
+      // not likely a symlink, file contains more than one line
+   }
 }
 
 infile.close();
@@ -124,7 +136,8 @@ namespace fs = std::filesystem;
 //const std::string MAGIC_STRING = "/Users/markoates/Repos/";
 const std::string MAGIC_STRING = "../../../";
 std::vector<std::string> filenames = {};
-for(auto& p: fs::recursive_directory_iterator("."))
+//fs::directory_entry;
+for(const fs::directory_entry &p : fs::recursive_directory_iterator(project_folder))
 {
    std::string filename = p.path().string();
    std::replace(filename.begin(), filename.end(), '\\', '/');
@@ -136,15 +149,21 @@ for(auto& p: fs::recursive_directory_iterator("."))
       filenames.push_back(filename);
       std::string symlink_target = read_symlink(filename);
       std::string sanitized_target = symlink_target;
+
+      std::string prefix = "";
+
+
       if (starts_with(symlink_target, MAGIC_STRING))
       {
+         prefix = MAGIC_STRING;
          // this means it's a hard-coded target path
          // TODO: make this ../../../ instead count the proper number of "../" elements to prefix
-         sanitized_target.replace(0, std::string(MAGIC_STRING).length(), "../../../");
+         sanitized_target.replace(0, std::string(prefix).length(), "../../../");
          std::cout << "!!!!!";
       }
 
       fs::remove(p.path());
+
       try
       {
          fs::create_symlink(sanitized_target, p.path());
