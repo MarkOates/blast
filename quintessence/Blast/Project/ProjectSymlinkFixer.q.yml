@@ -119,6 +119,8 @@ functions:
          symlink_target = read_file_firstline(filename);
       }
       return symlink_target;
+    body_dependency_symbols:
+      - std::filesystem
 
 
 
@@ -178,10 +180,13 @@ functions:
       - std::cout
       - std::endl
       - Blast::ShellCommandExecutorWithCallback
+      - std::filesystem
 
 
 
 dependencies:
+  - symbol: std::filesystem
+    headers: [ filesystem ]
   - symbol: std::istream_iterator
     headers: [ iterator ]
   - symbol: Blast::ShellCommandExecutorWithCallback

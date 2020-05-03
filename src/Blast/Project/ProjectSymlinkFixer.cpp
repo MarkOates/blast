@@ -3,12 +3,14 @@
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <fstream>
 #include <iterator>
+#include <filesystem>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <iostream>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
+#include <filesystem>
 
 
 namespace Blast
