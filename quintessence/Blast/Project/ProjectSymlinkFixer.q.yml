@@ -98,6 +98,7 @@ functions:
         default_argument: "\"\""
     body: |
       namespace fs = std::filesystem;
+
       std::string symlink_target;
       try
       {
