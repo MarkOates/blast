@@ -38,6 +38,29 @@ functions:
       - std::ifstream
 
 
+  - name: read_file_firstline
+    type: std::string
+    parameters:
+      - name: filename
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      std::ifstream infile(filename);
+
+      std::string sLine;
+      if (infile.good())
+      {
+         getline(infile, sLine);
+      }
+      else
+      {
+         throw std::runtime_error("Unexpected error in read_file_firstline");
+      }
+
+      infile.close();
+
+      return sLine;
+
 
   - name: run
     type: std::string

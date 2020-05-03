@@ -44,6 +44,26 @@ return line_count;
 
 }
 
+std::string ProjectSymlinkFixer::read_file_firstline(std::string filename)
+{
+std::ifstream infile(filename);
+
+std::string sLine;
+if (infile.good())
+{
+   getline(infile, sLine);
+}
+else
+{
+   throw std::runtime_error("Unexpected error in read_file_firstline");
+}
+
+infile.close();
+
+return sLine;
+
+}
+
 std::string ProjectSymlinkFixer::run()
 {
 return "Hello World!";
