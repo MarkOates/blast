@@ -18,6 +18,7 @@ namespace Blast
 
 
       bool starts_with(std::string source="", std::string string_to_find="");
+      int line_count(std::string filename="");
       std::string run();
       };
    }
