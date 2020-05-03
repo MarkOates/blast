@@ -1,4 +1,16 @@
 functions:
+  - name: starts_with
+    private: true
+    type: bool
+    parameters:
+      - name: source
+        type: std::string
+        default_argument: "\"\""
+      - name: string_to_find
+        type: std::string
+        default_argument: "\"\""
+    body: |
+      return source.rfind(string_to_find, 0) == 0;
   - name: run
     type: std::string
     body: return "Hello World!";
