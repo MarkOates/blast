@@ -2,6 +2,12 @@
 
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <fstream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <iostream>
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
 
 
 namespace Blast
@@ -100,9 +106,56 @@ return symlink_target;
 
 }
 
-std::string ProjectSymlinkFixer::run()
+void ProjectSymlinkFixer::run()
 {
-return "Hello World!";
+namespace fs = std::filesystem;
+
+//const std::string MAGIC_STRING = "/Users/markoates/Repos/";
+const std::string MAGIC_STRING = "../../../";
+std::vector<std::string> filenames = {};
+for(auto& p: fs::recursive_directory_iterator("."))
+{
+   std::string filename = p.path().string();
+   std::replace(filename.begin(), filename.end(), '\\', '/');
+   std::cout << filename << std::endl;
+
+   if (fs::is_symlink(p) || likely_an_intended_symlink(filename, MAGIC_STRING))
+   {
+      std::cout << "   LIKELY" << std::endl;
+      filenames.push_back(filename);
+      std::string symlink_target = read_symlink(filename);
+      std::string sanitized_target = symlink_target;
+      if (starts_with(symlink_target, MAGIC_STRING))
+      {
+         // this means it's a hard-coded target path
+         // TODO: make this ../../../ instead count the proper number of "../" elements to prefix
+         sanitized_target.replace(0, std::string(MAGIC_STRING).length(), "../../../");
+         std::cout << "!!!!!";
+      }
+
+      fs::remove(p.path());
+      try
+      {
+         fs::create_symlink(sanitized_target, p.path());
+      }
+      catch (const std::exception& e)
+      {
+         std::cout << "Caught error when attempting to fs::create_symlink: " << e.what() << std::endl;
+         std::cout << "Attempting alternative link creation with shell command" << std::endl;
+
+         std::stringstream command;
+         command << "ln -sf " << sanitized_target << " " << filename;
+         Blast::ShellCommandExecutorWithCallback executor(command.str());
+         executor.execute();
+         //create_symlink(sanitized_target, p.path());
+
+         //p.path().string() << " -> " << sanitized_target << '\n';
+         //error
+      }
+      std::cout << p.path().string() << " -> " << sanitized_target << '\n';
+   }
+}
+
 }
 } // namespace Project
 } // namespace Blast
