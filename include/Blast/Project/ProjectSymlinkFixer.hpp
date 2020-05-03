@@ -11,12 +11,14 @@ namespace Blast
       class ProjectSymlinkFixer
       {
       private:
+         std::string project_folder;
 
       public:
-         ProjectSymlinkFixer();
+         ProjectSymlinkFixer(std::string project_folder=".");
          ~ProjectSymlinkFixer();
 
 
+         std::string get_project_folder();
       bool starts_with(std::string source="", std::string string_to_find="");
       int line_count(std::string filename="");
       std::string read_file_firstline(std::string filename="");

@@ -16,13 +16,20 @@ namespace Project
 {
 
 
-ProjectSymlinkFixer::ProjectSymlinkFixer()
+ProjectSymlinkFixer::ProjectSymlinkFixer(std::string project_folder)
+   : project_folder(project_folder)
 {
 }
 
 
 ProjectSymlinkFixer::~ProjectSymlinkFixer()
 {
+}
+
+
+std::string ProjectSymlinkFixer::get_project_folder()
+{
+   return project_folder;
 }
 
 

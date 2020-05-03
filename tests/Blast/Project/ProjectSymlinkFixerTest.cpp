@@ -8,6 +8,13 @@ TEST(Blast_Project_ProjectSymlinkFixerTest, can_be_created_without_blowing_up)
    Blast::Project::ProjectSymlinkFixer project_symlink_fixer;
 }
 
+TEST(Blast_Project_ProjectSymlinkFixerTest, project_foler__has_getter_and_is_set_with_the_expected_default_value)
+{
+   Blast::Project::ProjectSymlinkFixer project_symlink_fixer;
+   std::string expected_default_directory = ".";
+   ASSERT_EQ(expected_default_directory, project_symlink_fixer.get_project_folder());
+}
+
 TEST(Blast_Project_ProjectSymlinkFixerTest, run__returns_the_expected_response)
 {
    Blast::Project::ProjectSymlinkFixer project_symlink_fixer;
