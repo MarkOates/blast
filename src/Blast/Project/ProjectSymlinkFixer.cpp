@@ -42,6 +42,24 @@ return source.rfind(string_to_find, 0) == 0;
 
 }
 
+int ProjectSymlinkFixer::has_one_line(std::string filename)
+{
+std::string s;
+int sTotal;
+
+std::ifstream in;
+in.open(filename);
+
+while(!in.eof()) {
+  getline(in, s);
+  sTotal ++;
+}
+
+in.close();
+return sTotal == 1;
+
+}
+
 int ProjectSymlinkFixer::line_count(std::string filename)
 {
 std::ifstream myfile(filename);
@@ -82,6 +100,13 @@ return sLine;
 
 bool ProjectSymlinkFixer::likely_an_intended_symlink(std::string filename, std::string string_to_find)
 {
+if (!std::filesystem::exists(filename))
+{
+   std::stringstream error_message;
+   error_message << "File \"" << filename << "\" does not exist when running likely_an_intended_symlink.";
+   throw std::runtime_error(error_message.str());
+}
+
 std::filesystem::directory_entry p(filename);
 if (std::filesystem::is_symlink(p)) return true;
 
@@ -90,13 +115,11 @@ bool starts_with_string = false;
 
 if (infile.good())
 {
-   std::string sLine;
-   getline(infile, sLine);
-
-   if (line_count(filename) == 1)
+   if (has_one_line(filename))
    {
-      //std::cout << sLine << std::endl;
-      if (starts_with(sLine, string_to_find)) starts_with_string = true;
+      std::string sLine;
+      getline(infile, sLine);
+
       if (starts_with(sLine, "../")) starts_with_string = true;
       if (starts_with(sLine, "/Users/markoates/Repos/")) starts_with_string = true;
    }
@@ -104,6 +127,12 @@ if (infile.good())
    {
       // not likely a symlink, file contains more than one line
    }
+}
+else
+{
+   std::stringstream error_message;
+   error_message << "Unable to read file \"" << filename << "\" when running likely_an_intended_symlink.";
+   throw std::runtime_error(error_message.str());
 }
 
 infile.close();
