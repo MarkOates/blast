@@ -92,8 +92,13 @@ functions:
       }
 
       //std::filesystem::directory_entry p(filename);
-      if (std::filesystem::is_symlink(p)
-          || Blast::Project::SymlinkChecker(filename).is_symlink()) return true; // this doesn't work for some reason
+      std::string absolute_filename = std::filesystem::absolute(p).string();
+
+      if (std::filesystem::is_symlink(p) || Blast::Project::SymlinkChecker(absolute_filename).is_symlink())
+      {
+         return true;
+         // this doesn't work for some reason
+      }
 
       //if (Blast::Project::SymlinkChecker(filename).is_symlink()) return true; // this doesn't work for some reason
 
