@@ -91,7 +91,8 @@ if (!std::filesystem::exists(filename))
 }
 
 std::filesystem::directory_entry p(filename);
-if (std::filesystem::is_symlink(p)) return true;
+if (std::filesystem::is_symlink(p)
+    || Blast::Project::SymlinkChecker(filename).is_symlink()) return true; // this doesn't work for some reason
 
 //if (Blast::Project::SymlinkChecker(filename).is_symlink()) return true; // this doesn't work for some reason
 
