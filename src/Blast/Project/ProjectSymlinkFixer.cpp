@@ -2,6 +2,7 @@
 
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <fstream>
+#include <iterator>
 #include <vector>
 #include <string>
 #include <sstream>

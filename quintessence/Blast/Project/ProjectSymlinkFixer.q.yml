@@ -45,6 +45,7 @@ functions:
       return line_count;
     body_dependency_symbols:
       - std::ifstream
+      - std::istream_iterator
 
 
   - name: read_file_firstline
@@ -181,6 +182,8 @@ functions:
 
 
 dependencies:
+  - symbol: std::istream_iterator
+    headers: [ iterator ]
   - symbol: Blast::ShellCommandExecutorWithCallback
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
   - symbol: std::cout
