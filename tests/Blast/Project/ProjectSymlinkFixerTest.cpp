@@ -62,7 +62,7 @@ TEST(Blast_Project_ProjectSymlinkFixerTest, line_count__returns_the_number_of_li
 
 
 TEST(Blast_Project_ProjectSymlinkFixerTest,
-   likely_an_intended_symlink__returns_true_if_the_file_is_likely_intended_to_be_a_symlink__test1)
+   likely_an_intended_symlink__returns_true_if_the_file_is_not_a_symlink_but_likely_intended_to_be_a_symlink__test1)
 {
    std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
 
@@ -72,7 +72,7 @@ TEST(Blast_Project_ProjectSymlinkFixerTest,
    ASSERT_EQ(true, std::filesystem::exists(filename));
 
    Blast::Project::ProjectSymlinkFixer project_symlink_fixer;
-   //EXPECT_EQ(true, project_symlink_fixer.likely_an_intended_symlink(filename));
+   EXPECT_EQ(true, project_symlink_fixer.likely_an_intended_symlink(filename));
 
    std::filesystem::remove_all(TEMP_SANDBOX_FOLDER);
 }
@@ -82,7 +82,17 @@ TEST(Blast_Project_ProjectSymlinkFixerTest,
 TEST(Blast_Project_ProjectSymlinkFixerTest,
    likely_an_intended_symlink__returns_true_if_the_file_is_likely_intended_to_be_a_symlink__test2)
 {
-   //std::string file_contents = "/Users/markoates/Repos/foobar";
+   std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
+
+   std::string filename = "./" + std::string(TEMP_SANDBOX_FOLDER) + "/" + "almost_a_symlink";
+   std::string file_contents = "/Users/markoates/Repos/foobar";
+   ::write_file(filename, file_contents);
+   ASSERT_EQ(true, std::filesystem::exists(filename));
+
+   Blast::Project::ProjectSymlinkFixer project_symlink_fixer;
+   EXPECT_EQ(true, project_symlink_fixer.likely_an_intended_symlink(filename));
+
+   std::filesystem::remove_all(TEMP_SANDBOX_FOLDER);
 }
 
 
@@ -90,7 +100,17 @@ TEST(Blast_Project_ProjectSymlinkFixerTest,
 TEST(Blast_Project_ProjectSymlinkFixerTest,
    likely_an_intended_symlink__returns_false_if_the_file_is_unlikely_to_be_a_symlink)
 {
-   //std::string file_contents = "#include <allegro5/allegro.h>\nint main(int argc, char **argv)\n{ return 0 }";
+   std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
+
+   std::string filename = "./" + std::string(TEMP_SANDBOX_FOLDER) + "/" + "almost_a_symlink";
+   std::string file_contents = "#include <allegro5/allegro.h>\nint main(int argc, char **argv)\n{ return 0 }";
+   ::write_file(filename, file_contents);
+   ASSERT_EQ(true, std::filesystem::exists(filename));
+
+   Blast::Project::ProjectSymlinkFixer project_symlink_fixer;
+   EXPECT_EQ(false, project_symlink_fixer.likely_an_intended_symlink(filename));
+
+   std::filesystem::remove_all(TEMP_SANDBOX_FOLDER);
 }
 
 
