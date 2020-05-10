@@ -31,6 +31,43 @@ void validate(bool value, std::string location, std::string error_message)
 }
 
 
+
+#include <Blast/TemplatedFile.hpp>
+std::string guard(std::string condition, std::string class_name, std::string function_name, std::string message)
+{
+   std::string template_content = R"END(if (!({{CONDITION}}))
+{
+   std::stringstream error_message;
+   error_message << "{{CLASS_NAME}}" << "::" << "{{FUNCTION_NAME}}" << ": error: " << "{{MESSAGE}}";
+   throw std::runtime_error(error_message.str());
+})END";
+
+   std::vector<std::pair<std::string, std::string>> insertion_variables = {
+      { "{{CONDITION}}", condition },
+      { "{{CLASS_NAME}}", class_name },
+      { "{{FUNCTION_NAME}}", function_name },
+      { "{{MESSAGE}}", message },
+   };
+
+   Blast::TemplatedFile templated_file(template_content, insertion_variables);
+
+   return templated_file.generate_content();
+}
+
+std::string generate_guards_code(std::vector<std::string> guard_conditionals)
+{
+   std::string result;
+
+   for (auto &guard_conditional : guard_conditionals)
+   {
+      result += guard(guard_conditional, "[undefined_class_name]", "[undefined_function_name]", "guard not met") + "\n";
+   }
+
+   return result;
+}
+
+
+
 class QuintessenceClassNameFromYAMLFilenameInferer
 {
 private:
@@ -580,6 +617,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       const std::string OVERRIDE = "override";
       const std::string VIRTUAL = "virtual";
       const std::string PURE_VIRTUAL = "pure_virtual";
+      const std::string GUARDS = "guards";
       //const std::string DEPENDENCY_SYMBOLS = "dependency_symbols";
 
       validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
@@ -587,6 +625,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       //YAML::Node type_node = it.operator[](TYPE);
       YAML::Node name_node = it.operator[](NAME);
       YAML::Node parameters_node = fetch_node(it, PARAMETERS, YAML::NodeType::Sequence, YAML::Load("[]"));
+      YAML::Node guards_node = fetch_node(it, GUARDS, YAML::NodeType::Sequence, YAML::Load("[]"));
         // TODO it's happening here somewhere::
       //YAML::Node dependency_symbols_node = fetch_node(it, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
       YAML::Node body_node = it.operator[](BODY);
@@ -608,7 +647,12 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       bool is_virtual = fetch_bool(it, VIRTUAL, false);
       bool is_pure_virtual = fetch_bool(it, PURE_VIRTUAL, false);
 
-      Blast::Cpp::Function function(type, name, signature, body, is_static, is_const, is_override, is_virtual, is_pure_virtual);
+      std::vector<std::string> guards_conditionals = extract_sequence_as_string_array(guards_node);
+      std::string guards_code = generate_guards_code(guards_conditionals);
+
+      std::string body_with_guard_code = guards_code + body;
+
+      Blast::Cpp::Function function(type, name, signature, body_with_guard_code, is_static, is_const, is_override, is_virtual, is_pure_virtual);
 
       std::vector<std::string> dependency_symbols = extract_function_dependency_symbols(it);
 
