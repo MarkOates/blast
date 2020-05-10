@@ -60,7 +60,7 @@ std::string generate_guards_code(std::vector<std::string> guard_conditionals, st
 
    for (auto &guard_conditional : guard_conditionals)
    {
-      std::string guard_message = std::string("guard \"") + guard_conditional + "\" not met";
+      std::string guard_message = std::string("guard \\\"") + guard_conditional + "\\\" not met";
       result += guard(guard_conditional, class_name, function_name, guard_message) + "\n";
    }
 
