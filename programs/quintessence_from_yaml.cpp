@@ -54,13 +54,14 @@ std::string guard(std::string condition, std::string class_name, std::string fun
    return templated_file.generate_content();
 }
 
-std::string generate_guards_code(std::vector<std::string> guard_conditionals)
+std::string generate_guards_code(std::vector<std::string> guard_conditionals, std::string class_name, std::string function_name)
 {
    std::string result;
 
    for (auto &guard_conditional : guard_conditionals)
    {
-      result += guard(guard_conditional, "[undefined_class_name]", "[undefined_function_name]", "guard not met") + "\n";
+      std::string guard_message = std::string("guard \"") + guard_conditional + "\" not met";
+      result += guard(guard_conditional, class_name, function_name, guard_message) + "\n";
    }
 
    return result;
@@ -595,7 +596,7 @@ std::vector<std::string> extract_function_dependency_symbols(YAML::Node &source)
 
 
 
-std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_functions(YAML::Node &source)
+std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_functions(YAML::Node &source, std::string this_class_name="UnknownClass")
 {
    std::string this_func_name = "extract_functions";
    const std::string FUNCTIONS = "functions";
@@ -648,7 +649,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       bool is_pure_virtual = fetch_bool(it, PURE_VIRTUAL, false);
 
       std::vector<std::string> guards_conditionals = extract_sequence_as_string_array(guards_node);
-      std::string guards_code = generate_guards_code(guards_conditionals);
+      std::string guards_code = generate_guards_code(guards_conditionals, this_class_name, name);
 
       std::string body_with_guard_code = guards_code + body;
 
@@ -769,7 +770,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributeProperties> attribute_properties = extract_attribute_properties(source);
-   std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> functions_and_dependencies = extract_functions(source);
+   std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> functions_and_dependencies = extract_functions(source, class_name);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
 
