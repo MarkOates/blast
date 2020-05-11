@@ -57,6 +57,11 @@ public:
       return templated_file.generate_content();
    }
 
+   static std::vector<std::string> good_enough_for_now_guards_dependency_symbols()
+   {
+      return { "std::runtime_error", "std::stringstream" };
+   }
+
    static std::string generate_guards_code(std::vector<std::string> guard_conditionals, std::string class_name, std::string function_name)
    {
       std::string result;
@@ -69,6 +74,8 @@ public:
 
       return result;
    }
+
+   
 };
 
 
@@ -244,6 +251,8 @@ YAML::Node default_dependencies()
   headers: [ 'iostream' ]
 - symbol: std::endl
   headers: [ 'iostream' ]
+- symbol: std::runtime_error
+  headers: [ 'stdexcept' ]
 - symbol: std::stringstream
   headers: [ 'sstream' ]
    )END";
@@ -660,6 +669,11 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       Blast::Cpp::Function function(type, name, signature, body_with_guard_code, is_static, is_const, is_override, is_virtual, is_pure_virtual);
 
       std::vector<std::string> dependency_symbols = extract_function_dependency_symbols(it);
+      if (!guards_conditionals.empty())
+      {
+         std::vector<std::string> guards_dependency_symbols = GuardCodeCreator::good_enough_for_now_guards_dependency_symbols();
+         dependency_symbols.insert(dependency_symbols.end(), guards_dependency_symbols.begin(), guards_dependency_symbols.end());
+      }
 
       result.push_back({function, dependency_symbols});
    }
