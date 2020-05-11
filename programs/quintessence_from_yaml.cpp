@@ -33,39 +33,43 @@ void validate(bool value, std::string location, std::string error_message)
 
 
 #include <Blast/TemplatedFile.hpp>
-std::string guard(std::string condition, std::string class_name, std::string function_name, std::string message)
+class GuardCodeCreator
 {
-   std::string template_content = R"END(if (!({{CONDITION}}))
-{
-   std::stringstream error_message;
-   error_message << "{{CLASS_NAME}}" << "::" << "{{FUNCTION_NAME}}" << ": error: " << "{{MESSAGE}}";
-   throw std::runtime_error(error_message.str());
-})END";
-
-   std::vector<std::pair<std::string, std::string>> insertion_variables = {
-      { "{{CONDITION}}", condition },
-      { "{{CLASS_NAME}}", class_name },
-      { "{{FUNCTION_NAME}}", function_name },
-      { "{{MESSAGE}}", message },
-   };
-
-   Blast::TemplatedFile templated_file(template_content, insertion_variables);
-
-   return templated_file.generate_content();
-}
-
-std::string generate_guards_code(std::vector<std::string> guard_conditionals, std::string class_name, std::string function_name)
-{
-   std::string result;
-
-   for (auto &guard_conditional : guard_conditionals)
+public:
+   static std::string guard(std::string condition, std::string class_name, std::string function_name, std::string message)
    {
-      std::string guard_message = std::string("guard \\\"") + guard_conditional + "\\\" not met";
-      result += guard(guard_conditional, class_name, function_name, guard_message) + "\n";
+      std::string template_content = R"END(if (!({{CONDITION}}))
+   {
+      std::stringstream error_message;
+      error_message << "{{CLASS_NAME}}" << "::" << "{{FUNCTION_NAME}}" << ": error: " << "{{MESSAGE}}";
+      throw std::runtime_error(error_message.str());
+   })END";
+
+      std::vector<std::pair<std::string, std::string>> insertion_variables = {
+         { "{{CONDITION}}", condition },
+         { "{{CLASS_NAME}}", class_name },
+         { "{{FUNCTION_NAME}}", function_name },
+         { "{{MESSAGE}}", message },
+      };
+
+      Blast::TemplatedFile templated_file(template_content, insertion_variables);
+
+      return templated_file.generate_content();
    }
 
-   return result;
-}
+   static std::string generate_guards_code(std::vector<std::string> guard_conditionals, std::string class_name, std::string function_name)
+   {
+      std::string result;
+
+      for (auto &guard_conditional : guard_conditionals)
+      {
+         std::string guard_message = std::string("guard \\\"") + guard_conditional + "\\\" not met";
+         result += guard(guard_conditional, class_name, function_name, guard_message) + "\n";
+      }
+
+      return result;
+   }
+};
 
 
 
@@ -649,7 +653,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       bool is_pure_virtual = fetch_bool(it, PURE_VIRTUAL, false);
 
       std::vector<std::string> guards_conditionals = extract_sequence_as_string_array(guards_node);
-      std::string guards_code = generate_guards_code(guards_conditionals, this_class_name, name);
+      std::string guards_code = GuardCodeCreator::generate_guards_code(guards_conditionals, this_class_name, name);
 
       std::string body_with_guard_code = guards_code + body;
 
