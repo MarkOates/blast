@@ -13,13 +13,15 @@ namespace Blast
       {
       private:
          std::string destination_directory;
+         std::string project_name;
          std::string source_project_directory;
 
       public:
-         ReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Flower.app");
+         ReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/");
          ~ReleaseBuilder();
 
 
+         std::string get_project_name();
          std::string get_source_project_directory();
       void write_file_contents(std::string filename="", std::string file_contents="");
       std::string get_makefile_content();
@@ -27,6 +29,9 @@ namespace Blast
       std::vector<std::pair<std::string, std::string>> list_symlinks();
       void replace_symlinks_with_copies_of_linked_files();
       void generate_macos_release();
+      std::string get_source_release_folder_name();
+      std::string get_macos_release_folder_name();
+      std::string get_win64_release_folder_name();
       void generate_source_release();
       };
    }

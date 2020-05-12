@@ -1,8 +1,12 @@
 properties:
   - name: destination_directory
     type: std::string
-    init_with: "\"/Users/markoates/Desktop/Flower.app\""
+    init_with: "\"/Users/markoates/Desktop/Release/\""
     constructor_arg: true
+  - name: project_name
+    type: std::string
+    init_with: '"Flowers"'
+    getter: true
   - name: source_project_directory
     type: std::string
     init_with: '"/Users/markoates/Repos/Flowers"'
@@ -101,9 +105,22 @@ functions:
     body: |
       // create folder "Flower.app/"
       return;
+  - name: get_source_release_folder_name
+    type: std::string
+    body: |
+      return get_source_project_directory() + "/" + get_project_name() + " - Source Release";
+  - name: get_macos_release_folder_name
+    type: std::string
+    body: |
+      return get_source_project_directory() + "/" + get_project_name() + " - MacOS Release";
+  - name: get_win64_release_folder_name
+    type: std::string
+    body: |
+      return get_source_project_directory() + "/" + get_project_name() + " - Win64 Release";
   - name: generate_source_release
     body: |
       std::string source_directory = get_source_project_directory();
+      std::string destination_directory = get_win64_release_folder_name(); // !! WARNING: local variable name shadows class instance variable name
 
       std::stringstream copy_include_files_command;
       copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
