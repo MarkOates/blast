@@ -121,13 +121,6 @@ return;
 
 }
 
-void ReleaseBuilder::generate_macos_release()
-{
-// create folder "Flower.app/"
-return;
-
-}
-
 std::string ReleaseBuilder::get_source_release_folder_name()
 {
 return get_source_project_directory() + "/" + get_project_name() + " - Source Release";
@@ -143,6 +136,13 @@ return get_source_project_directory() + "/" + get_project_name() + " - MacOS Rel
 std::string ReleaseBuilder::get_win64_release_folder_name()
 {
 return get_source_project_directory() + "/" + get_project_name() + " - Win64 Release";
+
+}
+
+void ReleaseBuilder::generate_macos_release()
+{
+// create folder "Flower.app/"
+return;
 
 }
 

@@ -101,10 +101,6 @@ functions:
     body_dependency_symbols:
       - remove
       - std::stringstream
-  - name: generate_macos_release
-    body: |
-      // create folder "Flower.app/"
-      return;
   - name: get_source_release_folder_name
     type: std::string
     body: |
@@ -117,6 +113,10 @@ functions:
     type: std::string
     body: |
       return get_source_project_directory() + "/" + get_project_name() + " - Win64 Release";
+  - name: generate_macos_release
+    body: |
+      // create folder "Flower.app/"
+      return;
   - name: generate_source_release
     body: |
       std::string source_directory = get_source_project_directory();
