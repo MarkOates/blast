@@ -23,12 +23,19 @@ namespace Project
 
 ReleaseBuilder::ReleaseBuilder(std::string destination_directory)
    : destination_directory(destination_directory)
+   , source_project_directory("/Users/markoates/Repos/Flowers")
 {
 }
 
 
 ReleaseBuilder::~ReleaseBuilder()
 {
+}
+
+
+std::string ReleaseBuilder::get_source_project_directory()
+{
+   return source_project_directory;
 }
 
 
@@ -107,9 +114,16 @@ return;
 
 }
 
+void ReleaseBuilder::generate_macos_release()
+{
+// create folder "Flower.app/"
+return;
+
+}
+
 void ReleaseBuilder::generate_source_release()
 {
-std::string source_directory = "/Users/markoates/Repos/Flowers";
+std::string source_directory = get_source_project_directory();
 
 std::stringstream copy_include_files_command;
 copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";

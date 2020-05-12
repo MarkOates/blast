@@ -1,8 +1,12 @@
 properties:
   - name: destination_directory
     type: std::string
-    init_with: "\"/Users/markoates/Desktop/Release\""
+    init_with: "\"/Users/markoates/Desktop/Flower.app\""
     constructor_arg: true
+  - name: source_project_directory
+    type: std::string
+    init_with: '"/Users/markoates/Repos/Flowers"'
+    getter: true
 functions:
   - name: write_file_contents
     parameters:
@@ -93,9 +97,13 @@ functions:
     body_dependency_symbols:
       - remove
       - std::stringstream
+  - name: generate_macos_release
+    body: |
+      // create folder "Flower.app/"
+      return;
   - name: generate_source_release
     body: |
-      std::string source_directory = "/Users/markoates/Repos/Flowers";
+      std::string source_directory = get_source_project_directory();
 
       std::stringstream copy_include_files_command;
       copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
