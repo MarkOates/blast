@@ -4,10 +4,15 @@
 #include <Blast/Project/ReleaseBuilder.hpp>
 #include <Blast/DirectoryExistenceChecker.hpp>
 
+//#define TEMP_SANDBOX_FOLDER ("tmp/test_sandbox")
+//std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
+
+
 TEST(Blast_Project_ReleaseBuilderTest, can_be_created_without_blowing_up)
 {
    Blast::Project::ReleaseBuilder release_builder;
 }
+
 
 TEST(Blast_Project_ReleaseBuilderTest, swap_symlinks__returns_the_expected_response)
 {
@@ -17,6 +22,7 @@ TEST(Blast_Project_ReleaseBuilderTest, swap_symlinks__returns_the_expected_respo
 
    EXPECT_EQ(expected, actual);
 }
+
 
 TEST(Blast_Project_ReleaseBuilderTest, list_symlinks__returns_the_list_of_all_symlinks_in_the_base_directory)
 {
@@ -38,6 +44,7 @@ TEST(Blast_Project_ReleaseBuilderTest, list_symlinks__returns_the_list_of_all_sy
    EXPECT_EQ(expected, actual);
 }
 
+
 // this test has been disabled because it is destructive
 TEST(DISABLED_Blast_Project_ReleaseBuilderTest,
    replace_symlinks_with_copies_of_linked_files__removes_the_symlinks_and_replaces_them_with_copies_of_the_symlink_targets)
@@ -45,6 +52,7 @@ TEST(DISABLED_Blast_Project_ReleaseBuilderTest,
    Blast::Project::ReleaseBuilder release_builder("/Users/markoates/Desktop/Release");
    release_builder.replace_symlinks_with_copies_of_linked_files();
 }
+
 
 TEST(DISABLED_Blast_Project_ReleaseBuilderTest, generate_source_release__creates_the_expected_folder)
 {
@@ -62,7 +70,9 @@ TEST(DISABLED_Blast_Project_ReleaseBuilderTest, generate_source_release__creates
    EXPECT_EQ(true, directory_existence_checker.exists());
 }
 
+
 TEST(Blast_Project_ReleaseBuilderTest, generate_macos_release__creates_the_expected_folder)
 {
 }
+
 
