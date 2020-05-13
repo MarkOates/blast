@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include <Blast/Project/ReleaseBuilder.hpp>
+#include <Blast/DirectoryExistenceChecker.hpp>
 
 TEST(Blast_Project_ReleaseBuilderTest, can_be_created_without_blowing_up)
 {
@@ -37,16 +38,27 @@ TEST(Blast_Project_ReleaseBuilderTest, list_symlinks__returns_the_list_of_all_sy
    EXPECT_EQ(expected, actual);
 }
 
-TEST(DISABLED_Blast_Project_ReleaseBuilderTest, replace_symlinks_with_copies_of_linked_files__removes_the_symlinks_and_replaces_them_with_copies_of_the_symlink_targets)
+// this test has been disabled because it is destructive
+TEST(DISABLED_Blast_Project_ReleaseBuilderTest,
+   replace_symlinks_with_copies_of_linked_files__removes_the_symlinks_and_replaces_them_with_copies_of_the_symlink_targets)
 {
    Blast::Project::ReleaseBuilder release_builder("/Users/markoates/Desktop/Release");
-   // this test has been disabled because it is destructive
-   //release_builder.replace_symlinks_with_copies_of_linked_files();
+   release_builder.replace_symlinks_with_copies_of_linked_files();
 }
 
-TEST(DISABLED_Blast_Project_ReleaseBuilderTest, generate_source_release__creates_the_release)
+TEST(Blast_Project_ReleaseBuilderTest, generate_source_release__creates_the_expected_folder)
 {
-   Blast::Project::ReleaseBuilder release_builder("/Users/markoates/Desktop/Release");
-   //release_builder.generate_source_release();
+   std::string folder = "/Users/markoates/Desktop/ReleaseTest";
+
+   {
+      Blast::DirectoryExistenceChecker directory_existence_checker(folder);
+      EXPECT_EQ(false, directory_existence_checker.exists());
+   }
+
+   Blast::Project::ReleaseBuilder release_builder(folder);
+   release_builder.generate_source_release();
+
+   Blast::DirectoryExistenceChecker directory_existence_checker(folder);
+   EXPECT_EQ(true, directory_existence_checker.exists());
 }
 
