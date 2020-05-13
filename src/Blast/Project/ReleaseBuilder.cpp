@@ -143,15 +143,6 @@ return get_project_name() + "Win64Release";
 void ReleaseBuilder::generate_macos_release()
 {
 // create folder "Flower.app/"
-std::string source_directory = get_source_project_directory();
-std::string destination_directory = source_directory + "/" + get_macos_release_folder_name();
-
-std::stringstream copy_data_files_command;
-copy_data_files_command << "cp -R " << source_directory << "/bin/programs/data " << destination_directory << "/data";
-Blast::ShellCommandExecutorWithCallback data_file_copy_executor(copy_data_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
-
-// copy program
-//copy_program_files_command << "cp -R " << source_directory << "/programs " << destination_directory << "/programs";
 return;
 
 }
@@ -161,8 +152,6 @@ void ReleaseBuilder::generate_source_release()
 std::string source_directory = get_source_project_directory();
 // !! WARNING: local variable name shadows class instance variable name:
 std::string xxx = destination_directory + "/" + get_source_release_folder_name();
-
-std::cout << "FOOOOOOOOBARRRR" << std::endl;
 
 // create the directory
 std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();
@@ -177,18 +166,11 @@ if (!created)
    throw std::runtime_error(error_message.str());
 }
 
-std::cout << xxx << std::endl;
-std::cout << "F92929292929292929292929292922929299r482948298408018501850118501805810" << std::endl;
-
-
 std::string destination_directory = xxx;
 
 
 std::stringstream copy_include_files_command;
 copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
-std::cout <<" =========================" << std::endl;
-std::cout << copy_include_files_command.str() << std::endl;
-std::cout <<" =========================" << std::endl;
 std::stringstream copy_src_files_command;
 copy_src_files_command << "cp -R " << source_directory << "/src " << destination_directory << "/src";
 std::stringstream copy_data_files_command;

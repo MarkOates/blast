@@ -46,7 +46,7 @@ TEST(DISABLED_Blast_Project_ReleaseBuilderTest,
    release_builder.replace_symlinks_with_copies_of_linked_files();
 }
 
-TEST(Blast_Project_ReleaseBuilderTest, generate_source_release__creates_the_expected_folder)
+TEST(DISABLED_Blast_Project_ReleaseBuilderTest, generate_source_release__creates_the_expected_folder)
 {
    std::string folder = "/Users/markoates/Desktop/ReleaseTest";
 
@@ -60,5 +60,9 @@ TEST(Blast_Project_ReleaseBuilderTest, generate_source_release__creates_the_expe
 
    Blast::DirectoryExistenceChecker directory_existence_checker(folder);
    EXPECT_EQ(true, directory_existence_checker.exists());
+}
+
+TEST(Blast_Project_ReleaseBuilderTest, generate_macos_release__creates_the_expected_folder)
+{
 }
 
