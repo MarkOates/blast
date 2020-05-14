@@ -1,6 +1,6 @@
 
 
-#include <Blast/Project/ReleaseBuilder.hpp>
+#include <Blast/Project/SourceReleaseBuilder.hpp>
 #include <fstream>
 #include <fstream>
 #include <fstream>
@@ -22,7 +22,7 @@ namespace Project
 {
 
 
-ReleaseBuilder::ReleaseBuilder(std::string destination_directory)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory)
    : destination_directory(destination_directory)
    , project_name("Flowers")
    , source_project_directory("/Users/markoates/Repos/Flowers")
@@ -30,24 +30,24 @@ ReleaseBuilder::ReleaseBuilder(std::string destination_directory)
 }
 
 
-ReleaseBuilder::~ReleaseBuilder()
+SourceReleaseBuilder::~SourceReleaseBuilder()
 {
 }
 
 
-std::string ReleaseBuilder::get_project_name()
+std::string SourceReleaseBuilder::get_project_name()
 {
    return project_name;
 }
 
 
-std::string ReleaseBuilder::get_source_project_directory()
+std::string SourceReleaseBuilder::get_source_project_directory()
 {
    return source_project_directory;
 }
 
 
-void ReleaseBuilder::write_file_contents(std::string filename, std::string file_contents)
+void SourceReleaseBuilder::write_file_contents(std::string filename, std::string file_contents)
 {
 std::ofstream out(filename);
 out << file_contents;
@@ -55,7 +55,7 @@ out.close();
 
 }
 
-std::string ReleaseBuilder::get_makefile_content()
+std::string SourceReleaseBuilder::get_makefile_content()
 {
 std::string MAKEFILE_CONTENT = R"HEREDOC(SRC_FILES := $(shell find src -type f)
 ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro -lallegro_main
@@ -67,7 +67,7 @@ return MAKEFILE_CONTENT;
 
 }
 
-std::string ReleaseBuilder::get_pinfo_content()
+std::string SourceReleaseBuilder::get_pinfo_content()
 {
 std::string PINFO_CONTENT = R"HEREDOC(
 <?xml version="1.0" encoding="UTF-8"?>
@@ -111,7 +111,7 @@ return PINFO_CONTENT;
 
 }
 
-void ReleaseBuilder::copy_file(std::string source_filename, std::string destination_filename)
+void SourceReleaseBuilder::copy_file(std::string source_filename, std::string destination_filename)
 {
 std::ifstream src(source_filename, std::ios::binary);
 std::ofstream dst(destination_filename,   std::ios::binary);
@@ -119,7 +119,7 @@ dst << src.rdbuf();
 
 }
 
-std::vector<std::pair<std::string, std::string>> ReleaseBuilder::list_symlinks()
+std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
 {
 std::string command = std::string("find ") + destination_directory;
 Blast::ShellCommandExecutorWithCallback executor(command, ShellCommandExecutorWithCallback::simple_silent_callback);
@@ -143,7 +143,7 @@ return result;
 
 }
 
-void ReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
+void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
 {
 std::vector<std::pair<std::string, std::string>> symlinks = list_symlinks();
 
@@ -166,32 +166,32 @@ return;
 
 }
 
-std::string ReleaseBuilder::get_source_release_folder_name()
+std::string SourceReleaseBuilder::get_source_release_folder_name()
 {
 return get_project_name() + "SourceRelease";
 
 }
 
-std::string ReleaseBuilder::get_macos_release_folder_name()
+std::string SourceReleaseBuilder::get_macos_release_folder_name()
 {
 return get_project_name() + "MacOSRelease";
 
 }
 
-std::string ReleaseBuilder::get_win64_release_folder_name()
+std::string SourceReleaseBuilder::get_win64_release_folder_name()
 {
 return get_project_name() + "Win64Release";
 
 }
 
-void ReleaseBuilder::generate_macos_release()
+void SourceReleaseBuilder::generate_macos_release()
 {
 // create folder "Flower.app/"
 return;
 
 }
 
-void ReleaseBuilder::generate_source_release()
+void SourceReleaseBuilder::generate_source_release()
 {
 std::string source_directory = get_source_project_directory();
 // !! WARNING: local variable name shadows class instance variable name:

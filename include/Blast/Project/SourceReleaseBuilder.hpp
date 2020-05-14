@@ -9,7 +9,7 @@ namespace Blast
 {
    namespace Project
    {
-      class ReleaseBuilder
+      class SourceReleaseBuilder
       {
       private:
          std::string destination_directory;
@@ -17,8 +17,8 @@ namespace Blast
          std::string source_project_directory;
 
       public:
-         ReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/");
-         ~ReleaseBuilder();
+         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/");
+         ~SourceReleaseBuilder();
 
 
          std::string get_project_name();
