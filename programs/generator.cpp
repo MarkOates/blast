@@ -494,37 +494,9 @@ int main(int argc, char **argv)
 
    create_gitignore(generator);
 
-   //std::stringstream program_runner_path_name;
-   //program_runner_path_name << generator.get_project_name();
-   //program_runner_path_name << "/quintessence/" << PROGRAM_RUNNER_CLASS_NAME << ".q.yml";
-
-   //std::ofstream outfile4(program_runner_path_name.str());
-   //std::string program_runner_quintessence_file_content = PROGRAM_RUNNER_FILE_CONTENT;
-   //outfile4 << program_runner_quintessence_file_content;
-   //outfile4.close();
-
    create_main_file(generator);
 
    create_test_runner(generator);
-
-   //std::string rerun_script_filename = generator.get_project_name() + "/rr";
-   //std::ofstream outfile8(rerun_script_filename);
-   //outfile8 << RERUN_SCRIPT_CONTENT;
-   //outfile8.close();
-   //system((std::string("chmod +x ") + rerun_script_filename).c_str());
-
-   //std::string rerun_cat_file_script_filename = generator.get_project_name() + "/bin/" + RERUN_CAT_FILE_SCRIPT_FILENAME;
-   //std::ofstream outfile9;
-   //outfile9.open(rerun_cat_file_script_filename, std::ios::binary);
-   //outfile9 << RERUN_CAT_FILE_SCRIPT_CONTENT;
-   //outfile9.close();
-   //system((std::string("chmod +x ") + rerun_cat_file_script_filename).c_str());
-
-   //std::string hash_check_script_filename = generator.get_project_name() + "/" + HASH_CHECK_FILENAME;
-   //std::ofstream outfile10(hash_check_script_filename);
-   //outfile10 << HASH_CHECK_FILE_CONTENTS;
-   //outfile10.close();
-   //system((std::string("chmod +x ") + hash_check_script_filename).c_str());
 
    std::stringstream finish_message;
    finish_message << "✅ Project files under \"" << generator.get_project_name() << "/\" generated." << std::endl;
