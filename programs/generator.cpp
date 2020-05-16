@@ -469,15 +469,8 @@ void create_gitignore(Generator &generator)
 }
 
 
-int main(int argc, char **argv)
+void create_directories(Generator &generator)
 {
-   for (int i=0; i<argc; i++) args.push_back(argv[i]);
-
-   if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
-
-   Generator generator(argv[1]);
-   ConsoleOutputter console_output;
-
    system(generator.get_command_for_make_dir().c_str());
    system(generator.mkprojdir("bin").c_str());
    system(generator.mkprojdir("lib").c_str());
@@ -489,13 +482,22 @@ int main(int argc, char **argv)
    system(generator.mkprojdir("src").c_str());
    system(generator.mkprojdir("tests").c_str());
    system(generator.mkprojdir("quintessence").c_str());
+}
 
+
+int main(int argc, char **argv)
+{
+   for (int i=0; i<argc; i++) args.push_back(argv[i]);
+
+   if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
+
+   Generator generator(argv[1]);
+   ConsoleOutputter console_output;
+
+   create_directories(generator);
    create_makefile(generator);
-
    create_gitignore(generator);
-
    create_main_file(generator);
-
    create_test_runner(generator);
 
    std::stringstream finish_message;
