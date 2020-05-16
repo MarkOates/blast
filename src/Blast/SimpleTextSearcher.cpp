@@ -23,7 +23,16 @@ SimpleTextSearcher::~SimpleTextSearcher()
 std::vector<std::string> SimpleTextSearcher::results()
 {
 if (search_text.empty()) return {};
-return {"Hello, ", "World!"};
+
+std::vector<std::string> results;
+
+for (auto &element : elements)
+{
+   std::size_t found = element.find(search_text);
+   if (found != std::string::npos) results.push_back(element);
+}
+
+return results;
 
 }
 } // namespace Blast

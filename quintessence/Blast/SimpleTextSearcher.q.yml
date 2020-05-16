@@ -12,4 +12,13 @@ functions:
     type: std::vector<std::string>
     body: |
       if (search_text.empty()) return {};
-      return {"Hello, ", "World!"};
+
+      std::vector<std::string> results;
+
+      for (auto &element : elements)
+      {
+         std::size_t found = element.find(search_text);
+         if (found != std::string::npos) results.push_back(element);
+      }
+
+      return results;
