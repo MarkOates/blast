@@ -500,21 +500,7 @@ int main(int argc, char **argv)
 
    std::stringstream finish_message;
    finish_message << "✅ Project files under \"" << generator.get_project_name() << "/\" generated." << std::endl;
-   finish_message << "⚠️ Important: You should now generate your first component by first cd-ing into your " << std::endl;
-   finish_message << "project directory (\"cd " << generator.get_project_name() << "\") and running the command:" << std::endl;
-   finish_message << std::endl;
-   finish_message << "  ~/Repos/blast/bin/programs/component_generator NameOfYourComponent" << std::endl;
-   finish_message << std::endl;
-   finish_message << "📝 Once in the \"" << generator.get_project_name() << "\" directory, use the rerun \"./rr\" "
-                  << "script in a separate terminal window to develop your component.  It will run the \"./build\" script "
-                  << "to generate and build the first source files from the "
-                  << "quintessence/ directory (\"quintessence/" << PROGRAM_RUNNER_CLASS_NAME << ".q.yml\"). "
-                  << "as well as build and run the test file \"tests/" << PROGRAM_RUNNER_CLASS_NAME << "Test.cpp\" for the "
-                  << "component." << std::endl;
-
    console_output.output_line(finish_message.str());
-
-   std::runtime_error("You must pass a project name");
 
    return 0;
 }
