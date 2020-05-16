@@ -448,6 +448,17 @@ void create_test_runner(Generator &generator)
 }
 
 
+void create_main_file(Generator &generator)
+{
+   std::ofstream outfile5;
+   outfile5.open(generator.get_project_name() + "/programs/main.cpp", std::ios::binary);
+   std::string main_file_content = main_file_content_template;
+   ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
+   outfile5 << main_file_content;
+   outfile5.close();
+}
+
+
 void create_gitignore(Generator &generator)
 {
    std::string gitignore_file_filename = generator.get_project_name() + "/.gitignore";
@@ -492,12 +503,7 @@ int main(int argc, char **argv)
    //outfile4 << program_runner_quintessence_file_content;
    //outfile4.close();
 
-   std::ofstream outfile5;
-   outfile5.open(generator.get_project_name() + "/programs/main.cpp", std::ios::binary);
-   std::string main_file_content = main_file_content_template;
-   ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
-   outfile5 << main_file_content;
-   outfile5.close();
+   create_main_file(generator);
 
    create_test_runner(generator);
 
