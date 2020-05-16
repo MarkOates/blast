@@ -417,6 +417,34 @@ public:
 };
 
 
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
+
+
+void create_makefile(Generator &generator)
+{
+   std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ../union/Makefile ./Makefile)";
+   Blast::ShellCommandExecutorWithCallback makefile_symlink_command_executor(command);
+   makefile_symlink_command_executor.execute();
+
+   //std::ofstream outfile;
+   //outfile.open(generator.get_project_name() + "/Makefile", std::ios::binary);
+   //std::string makefile_content = MAKEFILE_TEMPLATE;
+   //___replace(makefile_content, "[[TEST_RUNNER_CLASS_NAME]]", TEST_RUNNER_CLASS_NAME);
+   //outfile << makefile_content;
+   //outfile.close();
+}
+
+
+void create_gitignore(Generator &generator)
+{
+   std::string gitignore_file_filename = generator.get_project_name() + "/.gitignore";
+   std::ofstream outfile;
+   outfile.open(gitignore_file_filename, std::ios::binary);
+   outfile << GITIGNORE_FILE_CONTENT;
+   outfile.close();
+}
+
+
 int main(int argc, char **argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
@@ -438,18 +466,9 @@ int main(int argc, char **argv)
    system(generator.mkprojdir("tests").c_str());
    system(generator.mkprojdir("quintessence").c_str());
 
-   std::ofstream outfile;
-   outfile.open(generator.get_project_name() + "/Makefile", std::ios::binary);
-   std::string makefile_content = MAKEFILE_TEMPLATE;
-   ___replace(makefile_content, "[[TEST_RUNNER_CLASS_NAME]]", TEST_RUNNER_CLASS_NAME);
-   outfile << makefile_content;
-   outfile.close();
+   create_makefile(generator);
 
-   std::string gitignore_file_filename = generator.get_project_name() + "/.gitignore";
-   std::ofstream outfile3;
-   outfile3.open(gitignore_file_filename, std::ios::binary);
-   outfile3 << GITIGNORE_FILE_CONTENT;
-   outfile.close();
+   create_gitignore(generator);
 
    //std::stringstream program_runner_path_name;
    //program_runner_path_name << generator.get_project_name();
