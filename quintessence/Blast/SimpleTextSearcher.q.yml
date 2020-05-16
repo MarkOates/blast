@@ -1,0 +1,15 @@
+properties:
+  - name: search_text
+    type: std::string
+    init_with: '""'
+    constructor_arg: true
+  - name: elements
+    type: std::vector<std::string>
+    init_with: '{}'
+    constructor_arg: true
+functions:
+  - name: results
+    type: std::vector<std::string>
+    body: |
+      if (search_text.empty()) return {};
+      return {"Hello, ", "World!"};
