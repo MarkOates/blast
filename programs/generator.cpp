@@ -478,12 +478,12 @@ int main(int argc, char **argv)
    //outfile8.close();
    //system((std::string("chmod +x ") + rerun_script_filename).c_str());
 
-   std::string rerun_cat_file_script_filename = generator.get_project_name() + "/" + RERUN_CAT_FILE_SCRIPT_FILENAME;
-   std::ofstream outfile9;
-   outfile9.open(rerun_cat_file_script_filename, std::ios::binary);
-   outfile9 << RERUN_CAT_FILE_SCRIPT_CONTENT;
-   outfile9.close();
-   system((std::string("chmod +x ") + rerun_cat_file_script_filename).c_str());
+   //std::string rerun_cat_file_script_filename = generator.get_project_name() + "/bin/" + RERUN_CAT_FILE_SCRIPT_FILENAME;
+   //std::ofstream outfile9;
+   //outfile9.open(rerun_cat_file_script_filename, std::ios::binary);
+   //outfile9 << RERUN_CAT_FILE_SCRIPT_CONTENT;
+   //outfile9.close();
+   //system((std::string("chmod +x ") + rerun_cat_file_script_filename).c_str());
 
    //std::string hash_check_script_filename = generator.get_project_name() + "/" + HASH_CHECK_FILENAME;
    //std::ofstream outfile10(hash_check_script_filename);
