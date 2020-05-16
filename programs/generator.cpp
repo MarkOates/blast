@@ -435,6 +435,19 @@ void create_makefile(Generator &generator)
 }
 
 
+void create_test_runner(Generator &generator)
+{
+   std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ../../union/tests/TestRunner.cpp ./tests/TestRunner.cpp)";
+   Blast::ShellCommandExecutorWithCallback makefile_symlink_command_executor(command);
+   makefile_symlink_command_executor.execute();
+
+   //std::ofstream outfile6;
+   //outfile6.open(generator.get_project_name() + "/tests/" + TEST_RUNNER_CLASS_NAME + ".cpp", std::ios::binary);
+   //outfile6 << TEST_RUNNER_FILE_CONTENT;
+   //outfile6.close();
+}
+
+
 void create_gitignore(Generator &generator)
 {
    std::string gitignore_file_filename = generator.get_project_name() + "/.gitignore";
@@ -486,10 +499,7 @@ int main(int argc, char **argv)
    outfile5 << main_file_content;
    outfile5.close();
 
-   std::ofstream outfile6;
-   outfile6.open(generator.get_project_name() + "/tests/" + TEST_RUNNER_CLASS_NAME + ".cpp", std::ios::binary);
-   outfile6 << TEST_RUNNER_FILE_CONTENT;
-   outfile6.close();
+   create_test_runner(generator);
 
    //std::string rerun_script_filename = generator.get_project_name() + "/rr";
    //std::ofstream outfile8(rerun_script_filename);
