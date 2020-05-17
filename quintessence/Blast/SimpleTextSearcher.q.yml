@@ -8,6 +8,15 @@ properties:
     init_with: '{}'
     constructor_arg: true
 functions:
+  - name: would_be_included_in_results
+    type: bool
+    parameters:
+      - name: element
+        type: std::string
+        default_argument: '""'
+    body: |
+      std::size_t found = element.find(search_text);
+      return found != std::string::npos;
   - name: results
     type: std::vector<std::string>
     body: |
@@ -17,8 +26,7 @@ functions:
 
       for (auto &element : elements)
       {
-         std::size_t found = element.find(search_text);
-         if (found != std::string::npos) results.push_back(element);
+         if (would_be_included_in_results(element)) results.push_back(element);
       }
 
       return results;
