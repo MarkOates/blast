@@ -20,7 +20,7 @@ functions:
   - name: results
     type: std::vector<std::string>
     body: |
-      if (search_text.empty()) return {};
+      if (search_text.empty()) return elements;
 
       std::vector<std::string> results;
 
