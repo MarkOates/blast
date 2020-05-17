@@ -249,6 +249,8 @@ YAML::Node default_dependencies()
   headers: [ 'vector', 'string' ]
 - symbol: std::cout
   headers: [ 'iostream' ]
+- symbol: std::cerr
+  headers: [ 'iostream' ]
 - symbol: std::endl
   headers: [ 'iostream' ]
 - symbol: std::runtime_error
