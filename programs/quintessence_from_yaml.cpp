@@ -243,6 +243,7 @@ YAML::Node default_dependencies()
 - symbol: float
 - symbol: double
 - symbol: bool
+- symbol: char
 - symbol: std::string
   headers: [ 'string' ]
 - symbol: std::vector<std::string>
