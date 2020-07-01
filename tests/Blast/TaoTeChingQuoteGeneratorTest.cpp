@@ -34,7 +34,7 @@ TEST(Blast_TaoTeChingQuoteGeneratorTest, pick_quote__will_select_a_random_quote_
 {
    std::vector<std::string> list_of_test_quotes = {
       "Darkness within darkness. The gateway to all understanding.",
-      "It is hidden but always present. I don't know who gave birth to it. It is older than God.",
+      "Accomplish the great task by a series of small acts.",
       "The greatest art seems unsophisticated, the greatest love seems indifferent, the greatest wisdom seems childish.",
    };
    Blast::TaoTeChingQuoteGenerator tao_te_ching_quote_generator(list_of_test_quotes);
