@@ -1,22 +1,44 @@
 properties:
 
-
   - name: quotes
     type: std::vector<std::string>
-    init_with: 'TaoTeChingQuoteGenerator::generate_default_quotes_list()'
+    init_with: 'TaoTeChingQuoteGenerator::default_quotes_list()'
     constructor_arg: true
 
 functions:
 
 
-  - name: pluck_quote
+  - name: pick_quote
     type: std::string
     body: |
-      return "Hello World!";
+      if (quotes.empty()) return "";
+      std::vector<std::string> result;
+      std::sample(quotes.begin(), quotes.end(), std::back_inserter(result), 1, std::mt19937{std::random_device{}()});
+      return result[0];
+    body_dependency_symbols:
+      - std::sample
+      - std::back_inserter
+      - std::mt19937
+      - std::random_device
 
 
-  - name: generate_default_quotes_list
+
+  - name: default_quotes_list
     static: true
     type: std::vector<std::string>
     body: |
-      return {};
+      return {
+        "Hello World!",
+      };
+
+
+dependencies:
+  - symbol: std::sample
+    headers: [ algorithm ]
+  - symbol: std::back_inserter
+    headers: [ iterator ]
+  - symbol: std::mt19937
+    headers: [ random ]
+  - symbol: std::random_device
+    headers: [ random ]
+

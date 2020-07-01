@@ -1,7 +1,10 @@
 
 
 #include <Blast/TaoTeChingQuoteGenerator.hpp>
-
+#include <algorithm>
+#include <iterator>
+#include <random>
+#include <random>
 
 
 namespace Blast
@@ -19,15 +22,20 @@ TaoTeChingQuoteGenerator::~TaoTeChingQuoteGenerator()
 }
 
 
-std::string TaoTeChingQuoteGenerator::pluck_quote()
+std::string TaoTeChingQuoteGenerator::pick_quote()
 {
-return "Hello World!";
+if (quotes.empty()) return "";
+std::vector<std::string> result;
+std::sample(quotes.begin(), quotes.end(), std::back_inserter(result), 1, std::mt19937{std::random_device{}()});
+return result[0];
 
 }
 
-std::vector<std::string> TaoTeChingQuoteGenerator::generate_default_quotes_list()
+std::vector<std::string> TaoTeChingQuoteGenerator::default_quotes_list()
 {
-return {};
+return {
+  "Hello World!",
+};
 
 }
 } // namespace Blast
