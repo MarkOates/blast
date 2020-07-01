@@ -45,7 +45,8 @@ TEST(Blast_TaoTeChingQuoteGeneratorTest, pick_quote__will_select_a_random_quote_
    }
 }
 
-TEST(Blast_TaoTeChingQuoteGeneratorTest, pick_quote__will_exhaust_random_quotes_from_the_list_of_provided_quotes)
+TEST(DISABLED_Blast_TaoTeChingQuoteGeneratorTest,
+   pick_quote__will_exhaust_random_quotes_from_the_list_of_provided_quotes)
 {
    // tooo
 }
