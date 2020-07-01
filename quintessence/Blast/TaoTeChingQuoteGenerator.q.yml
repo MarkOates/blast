@@ -1,9 +1,11 @@
 properties:
 
+
   - name: quotes
     type: std::vector<std::string>
     init_with: 'TaoTeChingQuoteGenerator::default_quotes_list()'
     constructor_arg: true
+
 
 functions:
 
@@ -20,7 +22,6 @@ functions:
       - std::back_inserter
       - std::mt19937
       - std::random_device
-
 
 
   - name: default_quotes_list
