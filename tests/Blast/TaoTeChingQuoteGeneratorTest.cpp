@@ -44,3 +44,8 @@ TEST(Blast_TaoTeChingQuoteGeneratorTest, pick_quote__will_select_a_random_quote_
       EXPECT_THAT(returned_quote, AnyOfArray(list_of_test_quotes));
    }
 }
+
+TEST(Blast_TaoTeChingQuoteGeneratorTest, pick_quote__will_exhaust_random_quotes_from_the_list_of_provided_quotes)
+{
+   // tooo
+}
