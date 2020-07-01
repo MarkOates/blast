@@ -1,0 +1,22 @@
+properties:
+
+
+  - name: quotes
+    type: std::vector<std::string>
+    init_with: 'TaoTeChingQuoteGenerator::generate_default_quotes_list()'
+    constructor_arg: true
+
+functions:
+
+
+  - name: pluck_quote
+    type: std::string
+    body: |
+      return "Hello World!";
+
+
+  - name: generate_default_quotes_list
+    static: true
+    type: std::vector<std::string>
+    body: |
+      return {};
