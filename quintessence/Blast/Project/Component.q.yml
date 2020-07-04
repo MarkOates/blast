@@ -1,4 +1,6 @@
 properties:
+
+
   - name: name
     type: std::string
     init_with: "\"Unnamed/Component\""
@@ -12,6 +14,8 @@ properties:
 
 
 functions:
+
+
   - name: generate_full_path_test_binary_filename
     type: std::string
     body: |
@@ -20,6 +24,7 @@ functions:
     body_dependency_symbols:
       - Blast::ProjectComponentFilenameGenerator
       - Blast::ProjectComponentFileTypes
+
 
   - name: list_existing_component_files
     type: std::vector<std::string>
@@ -48,6 +53,7 @@ functions:
       }
 
       return result;
+
 
   - name: last_write_time
     type: std::time_t
@@ -84,6 +90,7 @@ functions:
       - Blast::FileLastWriteTime
       - Blast::ProjectComponentFilenameGenerator
 
+
   - name: check_file_existence
     type: bool
     private: true
@@ -99,6 +106,7 @@ functions:
       - Blast::ProjectComponentFilenameGenerator
       - Blast::ProjectComponentFileTypes
       - Blast::FileExistenceChecker
+
 
   - name: exists
     type: bool
@@ -123,6 +131,7 @@ functions:
       - Blast::ProjectComponentFileTypes
       - vector
 
+
   - name: has_quintessence
     type: bool
     body: |
@@ -141,12 +150,14 @@ functions:
     body_dependency_symbols:
       - Blast::ProjectComponentFileTypes
 
+
   - name: has_test
     type: bool
     body: |
       return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
     body_dependency_symbols:
       - Blast::ProjectComponentFileTypes
+
 
   - name: read_symlinks
     type: std::vector<std::pair<std::string, std::string>>
@@ -169,7 +180,10 @@ functions:
     body_dependency_symbols:
       - Blast::Project::SymlinkChecker
 
+
 dependencies:
+
+
   - symbol: vector
     headers: [ vector ]
   - symbol: std::vector<std::pair<std::string, std::string>>
