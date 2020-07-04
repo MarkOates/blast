@@ -1,0 +1,30 @@
+properties:
+
+
+  - name: original_text
+    type: std::string
+    init_with: '""'
+    constructor_arg: true
+
+
+functions:
+
+
+  - name: upcase
+    type: std::string
+    body: |
+      std::string result = original_text;
+      std::transform(result.begin(), result.end(), result.begin(), std::toupper);
+      return result;
+    body_dependency_symbols:
+      - std::transform
+      - std::toupper
+
+
+dependencies:
+
+
+  - symbol: std::transform
+    headers: [ algorithm ]
+  - symbol: std::toupper
+    headers: [ cctype ]
