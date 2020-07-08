@@ -1,4 +1,35 @@
-functions:
-  - name: run
+properties:
+
+
+  - name: parent_component
+    type: Blast::Project::Component
+    init_with: '{}'
+    constructor_arg: true
+  - name: action_name_snake_case
     type: std::string
-    body: return "Hello World!";
+    init_with: '"unnamed_action"'
+    constructor_arg: true
+
+
+functions:
+
+
+  - name: generate_action_name_camel_case
+    private: true
+    type: std::string
+    body: |
+      return "UnnamedAction";
+
+
+  - name: generate_action_name_identifier_constant
+    private: true
+    type: std::string
+    body: |
+      return "UnnamedAction";
+
+
+dependencies:
+
+
+- symbol: Blast::Project::Component
+  headers: [ Blast/Project/Component.hpp ]
