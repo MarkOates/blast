@@ -25,7 +25,8 @@ TEST(Blast_Project_ComponentTest, generate_full_path_test_binary_filename__retur
    std::string component_name = "Hexagon/FoobarComponent";
    std::string project_root = "/Users/markoates/Repos/hexagon/";
    Blast::Project::Component component(component_name, project_root);
-   std::string expected_full_path_test_binary_filename = "/Users/markoates/Repos/hexagon/bin/tests/Hexagon/FoobarComponentTest";
+   std::string expected_full_path_test_binary_filename =
+      "/Users/markoates/Repos/hexagon/bin/tests/Hexagon/FoobarComponentTest";
    ASSERT_EQ(expected_full_path_test_binary_filename, component.generate_full_path_test_binary_filename());
 }
 
@@ -79,7 +80,8 @@ TEST(Blast_Project_ComponentTest, has_quintessence__returns_false_when_a_quintes
    ASSERT_EQ(false, component.has_quintessence());
 }
 
-TEST(Blast_Project_ComponentTest, has_only_source_and_header__returns_true_when_the_source_and_header_files_are_present_and_a_quintessence_file_does_not_exist)
+TEST(Blast_Project_ComponentTest,
+   has_only_source_and_header__returns_true_when_the_source_and_header_files_are_present_and_a_quintessence_file_does_not_exist)
 {
    Blast::Project::Component component("Blast/DiceRoller");
    ASSERT_EQ(true, component.has_only_source_and_header());
