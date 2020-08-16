@@ -1,9 +1,15 @@
 properties:
+
+
   - name: project_root_directory
     type: std::string
     init_with: "\"\""
     constructor_arg: true
+
+
 functions:
+
+
   - name: get_component_fragment_folder_name
     private: true
     type: std::string
@@ -33,6 +39,8 @@ functions:
          throw std::runtime_error("get_component_fragment_folder_name error: unaccounted for component_fragment_t");
          break;
       }
+
+
   - name: get_component_fragment_extension
     private: true
     type: std::string
@@ -62,6 +70,8 @@ functions:
          throw std::runtime_error("get_component_fragment_folder_name error: unaccounted for component_fragment_t");
          break;
       }
+
+
   - name: get_components_of_fragment_type
     private: true
     type: std::vector<std::string>
@@ -102,6 +112,8 @@ functions:
       - Blast::ShellCommandExecutorWithCallback
       - std::stringstream
       - StringSplitter
+
+
   - name: components_sorted_by_most_recent
     type: std::vector<std::string>
     body: |
@@ -130,6 +142,8 @@ functions:
       - std::time_t
       - std::sort
       - std::reverse
+
+
   - name: components
     type: std::vector<std::string>
     body: |
@@ -168,7 +182,11 @@ functions:
       - Blast::Project::ComponentBasenameExtractor
       - std::sort
       - std::unique
+
+
 dependencies:
+
+
   - symbol: Blast::Project::Component
     headers: [ Blast/Project/Component.hpp ]
   - symbol: Blast::Project::component_fragment_t
@@ -187,3 +205,4 @@ dependencies:
     headers: [ algorithm ]
   - symbol: std::sort
     headers: [ algorithm ]
+
