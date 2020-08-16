@@ -100,7 +100,10 @@ find_command << "cd "
              << " -type l -name \"*"
              << fragment_extension
              << "\"";
-Blast::ShellCommandExecutorWithCallback executor(find_command.str(), Blast::ShellCommandExecutorWithCallback::simple_silent_callback);
+Blast::ShellCommandExecutorWithCallback executor(
+   find_command.str(),
+   Blast::ShellCommandExecutorWithCallback::simple_silent_callback
+);
 std::string executor_response = executor.execute();
 StringSplitter splitter(executor_response, '\n');
 std::vector<std::string> component_names_with_fragment = splitter.split();
