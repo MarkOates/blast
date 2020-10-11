@@ -14,9 +14,8 @@ TEST(Blast_TaoTeChingQuoteGeneratorTest, can_be_created_without_blowing_up)
    Blast::TaoTeChingQuoteGenerator tao_te_ching_quote_generator;
 }
 
-TEST(Blast_TaoTeChingQuoteGeneratorTest, DISABLED__pick_quote__returns_a_quote_from_the_list)
+TEST(Blast_TaoTeChingQuoteGeneratorTest, pick_quote__returns_a_quote_from_the_list)
 {
-   // DISABLED: flakey on full builds
    std::vector<std::string> test_quotes = { "Hello, Test quote." };
    Blast::TaoTeChingQuoteGenerator tao_te_ching_quote_generator(test_quotes);
    std::string expected_quote = "Hello, Test quote.";
