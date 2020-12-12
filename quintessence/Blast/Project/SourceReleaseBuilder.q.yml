@@ -6,10 +6,12 @@ properties:
   - name: project_name
     type: std::string
     init_with: '"Flowers"'
+    constructor_arg: true
     getter: true
   - name: source_project_directory
     type: std::string
     init_with: '"/Users/markoates/Repos/Flowers"'
+    constructor_arg: true
     getter: true
 
 
@@ -40,7 +42,8 @@ functions:
       main: $(SRC_FILES)
       )HEREDOC";
       MAKEFILE_CONTENT += "\t";
-      MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/Flowers.cpp -o Flowers -I./include $(ALLEGRO_LIBS)";
+      MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/" + project_name + ".cpp -o " + project_name
+                        + " -I./include $(ALLEGRO_LIBS)";
       return MAKEFILE_CONTENT;
 
 
