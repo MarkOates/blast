@@ -14,7 +14,7 @@ TEST(Blast_Project_SourceReleaseBuilderTest, can_be_created_without_blowing_up)
 }
 
 
-TEST(Blast_Project_SourceReleaseBuilderTest, swap_symlinks__returns_the_expected_response)
+TEST(Blast_Project_SourceReleaseBuilderTest, list_symlinks__returns_the_expected_response)
 {
    Blast::Project::SourceReleaseBuilder release_builder;
    std::vector<std::pair<std::string, std::string>> expected = {};
