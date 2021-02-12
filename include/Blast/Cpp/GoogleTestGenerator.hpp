@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <Blast/Cpp/ClassAttributeProperties.hpp>
+#include <Blast/Cpp/ClassAttributes.hpp>
 #include <Blast/Cpp/ParentClassProperties.hpp>
 #include <Blast/Cpp/SymbolDependencies.hpp>
 

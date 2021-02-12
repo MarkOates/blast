@@ -1,6 +1,6 @@
 
 
-#include <Blast/Cpp/ClassAttributeProperties.hpp>
+#include <Blast/Cpp/ClassAttributes.hpp>
 
 #include <sstream>
 
@@ -13,7 +13,7 @@ namespace Cpp
 {
 
 
-ClassAttributeProperties::ClassAttributeProperties(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_getter_ref, bool has_setter)
+ClassAttributes::ClassAttributes(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_getter_ref, bool has_setter)
    : datatype(datatype)
    , variable_name(variable_name)
    , initialization_value(initialization_value)
@@ -26,12 +26,12 @@ ClassAttributeProperties::ClassAttributeProperties(std::string datatype, std::st
 }
 
 
-ClassAttributeProperties::~ClassAttributeProperties()
+ClassAttributes::~ClassAttributes()
 {
 }
 
 
-std::string ClassAttributeProperties::as_constructor_argument_in_declaration()
+std::string ClassAttributes::as_constructor_argument_in_declaration()
 {
    if (!is_constructor_parameter) return "";
    if (is_static)
@@ -47,7 +47,7 @@ std::string ClassAttributeProperties::as_constructor_argument_in_declaration()
 }
 
 
-std::string ClassAttributeProperties::as_constructor_argument_in_definition()
+std::string ClassAttributes::as_constructor_argument_in_definition()
 {
    if (!is_constructor_parameter) return "";
    if (is_static)
@@ -63,7 +63,7 @@ std::string ClassAttributeProperties::as_constructor_argument_in_definition()
 }
 
 
-std::string ClassAttributeProperties::as_argument_in_initialization_list()
+std::string ClassAttributes::as_argument_in_initialization_list()
 
 {
    std::stringstream result;
@@ -75,7 +75,7 @@ std::string ClassAttributeProperties::as_argument_in_initialization_list()
 }
 
 
-std::string ClassAttributeProperties::as_class_property()
+std::string ClassAttributes::as_class_property()
 {
    std::stringstream result;
    if (is_static) result << "static ";
@@ -84,7 +84,7 @@ std::string ClassAttributeProperties::as_class_property()
 }
 
 
-std::string ClassAttributeProperties::as_static_definition(std::string class_name)
+std::string ClassAttributes::as_static_definition(std::string class_name)
 {
    std::stringstream result;
    result << datatype << " " << class_name << "::" << variable_name << " = " << initialization_value << ";";
@@ -92,7 +92,7 @@ std::string ClassAttributeProperties::as_static_definition(std::string class_nam
 }
 
 
-std::string ClassAttributeProperties::getter_function_symbol()
+std::string ClassAttributes::getter_function_symbol()
 {
    std::stringstream result;
    result << "get_" << variable_name;
@@ -100,7 +100,7 @@ std::string ClassAttributeProperties::getter_function_symbol()
 }
 
 
-std::string ClassAttributeProperties::getter_function_declaration()
+std::string ClassAttributes::getter_function_declaration()
 {
    std::stringstream result;
    if (is_static) result << "static ";
@@ -109,7 +109,7 @@ std::string ClassAttributeProperties::getter_function_declaration()
 }
 
 
-std::string ClassAttributeProperties::getter_function_definition(std::string class_name)
+std::string ClassAttributes::getter_function_definition(std::string class_name)
 {
    std::stringstream result;
    result << datatype << " " << class_name << "::get_" << variable_name << "()\n{\n   return " << variable_name << ";\n}\n";
@@ -117,7 +117,7 @@ std::string ClassAttributeProperties::getter_function_definition(std::string cla
 }
 
 
-std::string ClassAttributeProperties::getter_ref_function_symbol()
+std::string ClassAttributes::getter_ref_function_symbol()
 {
    std::stringstream result;
    result << "get_" << variable_name << "_ref";
@@ -125,7 +125,7 @@ std::string ClassAttributeProperties::getter_ref_function_symbol()
 }
 
 
-std::string ClassAttributeProperties::getter_ref_function_declaration()
+std::string ClassAttributes::getter_ref_function_declaration()
 {
    std::stringstream result;
    if (is_static) result << "static ";
@@ -134,7 +134,7 @@ std::string ClassAttributeProperties::getter_ref_function_declaration()
 }
 
 
-std::string ClassAttributeProperties::getter_ref_function_definition(std::string class_name)
+std::string ClassAttributes::getter_ref_function_definition(std::string class_name)
 {
    std::stringstream result;
    result << datatype << " &" << class_name << "::" << getter_ref_function_symbol() << "()\n{\n   return " << variable_name << ";\n}\n";
@@ -142,7 +142,7 @@ std::string ClassAttributeProperties::getter_ref_function_definition(std::string
 }
 
 
-std::string ClassAttributeProperties::setter_function_symbol()
+std::string ClassAttributes::setter_function_symbol()
 {
    std::stringstream result;
    result << "set_" << variable_name;
@@ -150,7 +150,7 @@ std::string ClassAttributeProperties::setter_function_symbol()
 }
 
 
-std::string ClassAttributeProperties::setter_function_declaration()
+std::string ClassAttributes::setter_function_declaration()
 {
    if (is_static) throw std::runtime_error("Setter declarations are not implemented for static properties");
 
@@ -160,7 +160,7 @@ std::string ClassAttributeProperties::setter_function_declaration()
 }
 
 
-std::string ClassAttributeProperties::setter_function_definition(std::string class_name)
+std::string ClassAttributes::setter_function_definition(std::string class_name)
 {
    if (is_static) throw std::runtime_error("Setter definitions are not implemented for static properties");
 

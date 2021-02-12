@@ -495,11 +495,11 @@ std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties
 
 
 
-std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(YAML::Node &source)
+std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node &source)
 {
    std::string this_func_name = "extract_attribute_properties";
    const std::string PROPERTIES = "properties";
-   std::vector<Blast::Cpp::ClassAttributeProperties> result;
+   std::vector<Blast::Cpp::ClassAttributes> result;
 
    YAML::Node source_attribute_properties = fetch_node(source, PROPERTIES, YAML::NodeType::Sequence, YAML::Load("[]"));
 
@@ -551,7 +551,7 @@ std::vector<Blast::Cpp::ClassAttributeProperties> extract_attribute_properties(Y
       //bool has_getter_ref = false;
       //bool has_setter = setter_node.as<bool>();
 
-      Blast::Cpp::ClassAttributeProperties class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_getter_ref, has_setter);
+      Blast::Cpp::ClassAttributes class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_getter_ref, has_setter);
 
       result.push_back(class_attribute_properties);
    }
@@ -790,7 +790,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
    std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
-   std::vector<Blast::Cpp::ClassAttributeProperties> attribute_properties = extract_attribute_properties(source);
+   std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source);
    std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> functions_and_dependencies = extract_functions(source, class_name);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);

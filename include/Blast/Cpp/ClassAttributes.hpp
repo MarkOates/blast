@@ -9,7 +9,7 @@ namespace Blast
 {
    namespace Cpp
    {
-      class ClassAttributeProperties
+      class ClassAttributes
       {
       public:
          std::string datatype;
@@ -21,8 +21,8 @@ namespace Blast
          bool has_getter_ref;
          bool has_setter;
 
-         ClassAttributeProperties(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_getter_ref, bool has_setter);
-         ~ClassAttributeProperties();
+         ClassAttributes(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_getter_ref, bool has_setter);
+         ~ClassAttributes();
 
          std::string as_constructor_argument_in_declaration();
          std::string as_constructor_argument_in_definition();
