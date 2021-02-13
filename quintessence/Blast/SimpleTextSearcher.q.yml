@@ -1,4 +1,6 @@
 properties:
+
+
   - name: search_text
     type: std::string
     init_with: '""'
@@ -7,7 +9,11 @@ properties:
     type: std::vector<std::string>
     init_with: '{}'
     constructor_arg: true
+
+
 functions:
+
+
   - name: would_be_included_in_results
     type: bool
     parameters:
@@ -17,6 +23,8 @@ functions:
     body: |
       std::size_t found = element.find(search_text);
       return found != std::string::npos;
+
+
   - name: results
     type: std::vector<std::string>
     body: |
