@@ -1,38 +1,40 @@
 properties:
+
+
   - name: type
-    init_with: "\"void\""
+    init_with: '"void"'
     constructor_arg: true
     getter: true
   - name: name
-    init_with: "\"unnamed_function\""
+    init_with: '"unnamed_function"'
     constructor_arg: true
     getter: true
   - name: signature
     type: std::vector<Blast::Cpp::FunctionArgument>
-    init_with: "{}"
+    init_with: '{}'
     constructor_arg: true
     getter: true
-  - name: "body"
-    type: "std::string"
-    init_with: "\"return;\""
+  - name: 'body'
+    type: 'std::string'
+    init_with: '"return;"'
     constructor_arg: true
     getter: true
-  - name: "is_static"
-    type: "bool"
-    init_with: "false"
+  - name: 'is_static'
+    type: 'bool'
+    init_with: 'false'
     constructor_arg: true
     getter: true
-  - name: "is_const"
-    type: "bool"
-    init_with: "false"
+  - name: 'is_const'
+    type: 'bool'
+    init_with: 'false'
     constructor_arg: true
     getter : true
-  - name: "is_override"
-    type: "bool"
-    init_with: "false"
+  - name: 'is_override'
+    type: 'bool'
+    init_with: 'false'
     constructor_arg: true
     getter: true
-  - name: "is_virtual"
+  - name: 'is_virtual'
     type: "bool"
     init_with: "false"
     constructor_arg: true
@@ -42,7 +44,11 @@ properties:
     init_with: "false"
     constructor_arg: true
     getter: true
+
+
 dependencies:
+
+
   - symbol: std::vector<Blast::Cpp::FunctionArgument>
-    headers: [ "vector", "Blast/Cpp/FunctionArgument.hpp" ]
+    headers: [ vector, Blast/Cpp/FunctionArgument.hpp ]
 
