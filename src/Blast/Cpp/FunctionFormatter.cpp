@@ -4,6 +4,7 @@
 
 #include <Blast/Cpp/FunctionArgumentFormatter.hpp>
 #include <Blast/StringJoiner.hpp>
+#include <Blast/StringSplitter.hpp>
 #include <sstream>
 
 
@@ -23,6 +24,23 @@ FunctionFormatter::FunctionFormatter(Blast::Cpp::Function function, std::string 
 
 FunctionFormatter::~FunctionFormatter()
 {
+}
+
+
+std::string FunctionFormatter::indent(std::string text, int indentation)
+{
+   std::stringstream result;
+
+   Blast::StringSplitter string_splitter(text, '\n');
+   std::vector<std::string> lines = string_splitter.split();
+   std::string pad_str = std::string(indentation, ' ');
+
+   for (auto &line : lines)
+   {
+      result << pad_str << line;
+   }
+
+   return result.str();
 }
 
 
@@ -74,7 +92,7 @@ std::string FunctionFormatter::get_function_definition()
    if (function.get_is_const()) result << " const";
    result << std::endl;
    result << '{' << std::endl;
-   result << function.get_body() << std::endl;
+   result << indent(function.get_body(), 3) << std::endl;
    result << '}' << std::endl;
 
    return result.str();

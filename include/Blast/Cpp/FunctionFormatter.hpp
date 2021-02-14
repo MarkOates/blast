@@ -15,6 +15,8 @@ namespace Blast
          Blast::Cpp::Function function;
          std::string class_name;
 
+         std::string indent(std::string text, int indentation);
+
       public:
          FunctionFormatter(Blast::Cpp::Function function={}, std::string class_name="");
          ~FunctionFormatter();
