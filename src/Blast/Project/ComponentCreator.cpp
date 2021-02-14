@@ -1,7 +1,7 @@
 
 
 #include <Blast/Project/ComponentCreator.hpp>
-
+#include <sstream>
 
 
 namespace Blast
@@ -22,12 +22,13 @@ ComponentCreator::~ComponentCreator()
 
 std::string ComponentCreator::get_quintessence_file_default_content()
 {
-   std::string const QUINTESSENCE_FILE_CONTENT = R"END(functions:
-     - name: run
-       type: std::string
-       body: return "Hello World!";
-   )END";
-   return QUINTESSENCE_FILE_CONTENT;
+   std::stringstream QUINTESSENCE_FILE_CONTENT;
+   QUINTESSENCE_FILE_CONTENT
+      << "functions:" << std::endl
+      << "  - name: run" << std::endl
+      << "    type: std::string" << std::endl
+      << "    body: return \"Hello World!\";" << std::endl;
+   return QUINTESSENCE_FILE_CONTENT.str();
 }
 
 std::string ComponentCreator::generate()
