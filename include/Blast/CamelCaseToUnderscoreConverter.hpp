@@ -15,8 +15,7 @@ namespace Blast
       CamelCaseToUnderscoreConverter(std::string str="foobar");
       ~CamelCaseToUnderscoreConverter();
 
-
-   std::string convert_to_underscores();
+      std::string convert_to_underscores();
    };
 }
 

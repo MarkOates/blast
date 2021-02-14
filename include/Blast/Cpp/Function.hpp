@@ -27,7 +27,6 @@ namespace Blast
          Function(std::string type="void", std::string name="unnamed_function", std::vector<Blast::Cpp::FunctionArgument> signature={}, std::string body="return;", bool is_static=false, bool is_const=false, bool is_override=false, bool is_virtual=false, bool is_pure_virtual=false);
          ~Function();
 
-
          std::string get_type();
          std::string get_name();
          std::vector<Blast::Cpp::FunctionArgument> get_signature();

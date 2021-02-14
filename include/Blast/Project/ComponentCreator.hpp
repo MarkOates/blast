@@ -16,9 +16,8 @@ namespace Blast
          ComponentCreator();
          ~ComponentCreator();
 
-
-      std::string get_quintessence_file_default_content();
-      std::string generate();
+         std::string get_quintessence_file_default_content();
+         std::string generate();
       };
    }
 }

@@ -548,7 +548,6 @@ CONSTRUCTOR
 DESTRUCTOR
 
 SETTER_FUNCTIONS
-
 GETTER_FUNCTIONS
 GETTER_REF_FUNCTIONS
 FUNCTION_DECLARATIONS
@@ -575,7 +574,7 @@ NAMESPACES_CLOSER
    __replace(result, "CLASS_DECLARATION_OPENER\n", class_declaration_opener(required_namespace_indentation_levels));
    __replace(result, "CLASS_DECLARATION_CLOSER\n", class_declaration_closer(required_namespace_indentation_levels));
    __replace(result, "PRIVATE_SCOPE_SPECIFIER\n", private_scope_specifier(required_namespace_indentation_levels));
-   __replace(result, "FUNCTION_DECLARATIONS\n", function_declarations(required_namespace_indentation_levels));
+   __replace(result, "FUNCTION_DECLARATIONS\n", function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "PUBLIC_SCOPE_SPECIFIER\n", public_scope_specifier(required_namespace_indentation_levels));
    
 

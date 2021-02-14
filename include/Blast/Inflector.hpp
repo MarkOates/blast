@@ -18,9 +18,8 @@ namespace Blast
       Inflector(std::string word="");
       ~Inflector();
 
-
-   std::string pluralize();
-   std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>> build_inflections_list();
+      std::string pluralize();
+      std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>> build_inflections_list();
    };
 }
 

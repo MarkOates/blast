@@ -12,8 +12,7 @@ public:
    DirectoryFileHasher();
    ~DirectoryFileHasher();
 
-
-std::string run();
+   std::string run();
 };
 
 

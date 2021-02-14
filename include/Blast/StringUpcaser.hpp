@@ -15,8 +15,7 @@ namespace Blast
       StringUpcaser(std::string original_text="");
       ~StringUpcaser();
 
-
-   std::string upcase();
+      std::string upcase();
    };
 }
 

@@ -14,8 +14,7 @@ namespace Blast
       BinaryObfusicator();
       ~BinaryObfusicator();
 
-
-   std::string run();
+      std::string run();
    };
 }
 

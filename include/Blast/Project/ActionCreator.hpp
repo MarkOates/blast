@@ -19,9 +19,8 @@ namespace Blast
          ActionCreator(Blast::Project::Component parent_component={}, std::string action_name_snake_case="unnamed_action");
          ~ActionCreator();
 
-
-      std::string generate_action_name_camel_case();
-      std::string generate_action_name_identifier_constant();
+         std::string generate_action_name_camel_case();
+         std::string generate_action_name_identifier_constant();
       };
    }
 }
