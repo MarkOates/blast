@@ -29,18 +29,16 @@ FunctionFormatter::~FunctionFormatter()
 
 std::string FunctionFormatter::indent(std::string text, int indentation)
 {
-   std::stringstream result;
-
    Blast::StringSplitter string_splitter(text, '\n');
    std::vector<std::string> lines = string_splitter.split();
    std::string pad_str = std::string(indentation, ' ');
 
    for (auto &line : lines)
    {
-      result << pad_str << line;
+      line = "   " + line;
    }
 
-   return result.str();
+   return Blast::StringJoiner(lines, "\n").join();
 }
 
 
