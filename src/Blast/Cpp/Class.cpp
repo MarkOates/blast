@@ -11,7 +11,15 @@ namespace Cpp
 {
 
 
-Class::Class(std::string class_name, std::vector<std::string> namespaces, std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties, std::vector<Blast::Cpp::ClassAttributes> attribute_properties, std::vector<Blast::Cpp::Function> functions, std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies, std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies)
+Class::Class(
+      std::string class_name,
+      std::vector<std::string> namespaces,
+      std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties,
+      std::vector<Blast::Cpp::ClassAttributes> attribute_properties,
+      std::vector<Blast::Cpp::Function> functions,
+      std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies,
+      std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies
+   )
    : class_name(class_name)
    , namespaces(namespaces)
    , parent_classes_properties(parent_classes_properties)

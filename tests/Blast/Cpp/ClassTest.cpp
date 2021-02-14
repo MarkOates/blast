@@ -39,7 +39,8 @@ TEST(ClassTest, infer_has_virtual_functions__returns_true_if_virtual_or_pure_vir
 }
 
 
-TEST(ClassTest, infer_has_virtual_functions__returns_false_if_virtual_or_pure_virtual_functions_do_not_exist_in_the_class)
+TEST(ClassTest,
+   infer_has_virtual_functions__returns_false_if_virtual_or_pure_virtual_functions_do_not_exist_in_the_class)
 {
    Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {});
 

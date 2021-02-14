@@ -147,7 +147,7 @@ class DocCreator
     result += "<h1>Components</h1>\n"
     yamls.each do |filename, yaml|
       result += "<ul>\n"
-      result += "  <div>\n"
+      result += "  <div class=\"component\">\n"
       result += "    <h3 id=\"#{filename}\">#{filename}</h3>\n"
       #result += "    <h4>Overview<h4>\n"
       result += "<ul>\n"
@@ -167,15 +167,29 @@ class DocCreator
         unless methods.nil?
           methods.each do |method|
             method_name = method['name']
+            num_method_parameters = method['parameters']&.count
             method_is_private = method['private']
 
             css_class = method_is_private ? 'private_method' : 'method'
-            result += "  <li class=\"#{css_class}\">#{method_name}()</li>\n"
+            result += "  <li class=\"#{css_class}\">#{method_name}(#{num_method_parameters})</li>\n"
           end
         end
 
+      # result += "</ul>\n"
+      # result += "<ul>\n"
+        dependencies = yaml['dependencies']
+        unless dependencies.nil?
+          dependencies.each do |dependency|
+            dependency_symbol = dependency['symbol']
+            ##dependency_is_private = dependency['private']
+
+            ##css_class = dependency_is_private ? 'private_dependency' : 'dependency'
+            result += "  <li class=\"dependency\">#{dependency}</li>\n"
+          end
+        end
+
+
       result += "</ul>\n"
-      result += "    <h4>Dependencies<h4>\n"
       result += "  </div>\n"
       result += "</ul>\n"
     end
@@ -208,6 +222,22 @@ class DocCreator
     result += "  color: pink;\n"
     result += "}\n"
     result += "\n"
+    result += ".dependency\n"
+    result += "{\n"
+    result += "  color: green;\n"
+    result += "}\n"
+    result += "\n"
+    result += ".component\n"
+    result += "{\n"
+    result += "  padding: 20 10 20 10;\n"
+    result += "  margin: 20 10 20 10;\n"
+    result += "  background-color: #dfdfdf;\n"
+    result += "}\n"
+    result += "\n"
+    result += ".component h3\n"
+    result += "{\n"
+    result += "  font-family: 'Arial';\n"
+    result += "}\n"
     result += "</style>\n"
     result
   end
