@@ -109,7 +109,7 @@ std::vector<std::string> ClassGenerator::class_declaration_opener_inheritence_el
 std::vector<std::string> ClassGenerator::function_body_dependency_include_directive_elements()
 {
    std::vector<std::string> elements;
-   
+
    for (auto &function_body_symbol_dependency : cpp_class.get_function_body_symbol_dependencies())
    {
       for (auto &include_header_file : function_body_symbol_dependency.get_include_directives())
