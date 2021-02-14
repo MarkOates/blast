@@ -85,6 +85,16 @@ TEST(FunctionFormatterTest, get_function_definition__returns_the_expected_format
 }
 
 
+TEST(FunctionFormatterTest, get_function_definition__with_multiple_lines__returns_the_expected_formatted_string)
+{
+   Blast::Cpp::Function function("void", "my_function_name", {}, "std::string str = \"hello world!\";\nreturn str;", false, false, false);
+   Blast::Cpp::FunctionFormatter function_formatter(function);
+
+   std::string expected_returned_string = "void my_function_name()\n{\n   std::string str = \"hello world!\";\n   return str;\n}\n";
+   ASSERT_EQ(expected_returned_string, function_formatter.get_function_definition());
+}
+
+
 TEST(FunctionFormatterTest, get_function_definition__with_a_function_with_parameter__returns_the_expected_formatted_string)
 {
    Blast::Cpp::FunctionArgument function_argument("std::vector<std::string>", "my_parameter", "{ \"one-default-element\" }");

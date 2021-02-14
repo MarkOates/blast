@@ -45,41 +45,40 @@ std::vector<std::regex_constants::syntax_option_type> RegexMatcher::get_options(
 
 std::vector<std::pair<int, int>> RegexMatcher::get_match_info()
 {
-std::vector<std::pair<int, int>> results;
+   std::vector<std::pair<int, int>> results;
 
-std::string subject(source_string);
-try
-{
-   //std::regex re("\\w+"); // find words
-   std::regex re;
-   if (std::find(options.begin(), options.end(), std::regex::icase) != options.end())
+   std::string subject(source_string);
+   try
    {
-      re = std::regex(regex_expression, std::regex::icase);
+      //std::regex re("\\w+"); // find words
+      std::regex re;
+      if (std::find(options.begin(), options.end(), std::regex::icase) != options.end())
+      {
+         re = std::regex(regex_expression, std::regex::icase);
+      }
+      else
+      {
+         re = std::regex(regex_expression);
+      }
+
+      std::sregex_iterator next(subject.begin(), subject.end(), re);
+      std::sregex_iterator end;
+      while (next != end)
+      {
+         std::smatch match = *next;
+         //std::cout << " - string: " << match.str() << std::endl;
+         //std::cout << "   position: " << match.position() << std::endl;
+         //std::cout << "   length: " << match.str().size() << std::endl;
+         results.push_back(std::pair<int, int>(match.position(), match.str().size()));
+         next++;
+      }
    }
-   else
+   catch (std::regex_error& e)
    {
-      re = std::regex(regex_expression);
+      throw std::runtime_error("There was a syntax error in the regular expression");
    }
 
-   std::sregex_iterator next(subject.begin(), subject.end(), re);
-   std::sregex_iterator end;
-   while (next != end)
-   {
-      std::smatch match = *next;
-      //std::cout << " - string: " << match.str() << std::endl;
-      //std::cout << "   position: " << match.position() << std::endl;
-      //std::cout << "   length: " << match.str().size() << std::endl;
-      results.push_back(std::pair<int, int>(match.position(), match.str().size()));
-      next++;
-   }
-}
-catch (std::regex_error& e)
-{
-   throw std::runtime_error("There was a syntax error in the regular expression");
-}
-
-return results;
-
+   return results;
 }
 } // namespace Blast
 

@@ -20,7 +20,7 @@ BinaryObfusicator::~BinaryObfusicator()
 
 std::string BinaryObfusicator::run()
 {
-return "Hello World!";
+   return "Hello World!";
 }
 } // namespace Blast
 

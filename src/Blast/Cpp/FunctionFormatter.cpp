@@ -35,7 +35,7 @@ std::string FunctionFormatter::indent(std::string text, int indentation)
 
    for (auto &line : lines)
    {
-      line = "   " + line;
+      if (!line.empty()) line = "   " + line;
    }
 
    return Blast::StringJoiner(lines, "\n").join();

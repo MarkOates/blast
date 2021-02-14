@@ -22,10 +22,9 @@ StringUpcaser::~StringUpcaser()
 
 std::string StringUpcaser::upcase()
 {
-std::string result = original_text;
-std::transform(result.begin(), result.end(), result.begin(), std::toupper);
-return result;
-
+   std::string result = original_text;
+   std::transform(result.begin(), result.end(), result.begin(), std::toupper);
+   return result;
 }
 } // namespace Blast
 

@@ -18,7 +18,7 @@ DirectoryFileHasher::~DirectoryFileHasher()
 
 std::string DirectoryFileHasher::run()
 {
-return "Hello World!";
+   return "Hello World!";
 }
 
 

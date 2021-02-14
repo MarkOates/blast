@@ -24,14 +24,12 @@ ActionCreator::~ActionCreator()
 
 std::string ActionCreator::generate_action_name_camel_case()
 {
-return "UnnamedAction";
-
+   return "UnnamedAction";
 }
 
 std::string ActionCreator::generate_action_name_identifier_constant()
 {
-return "UnnamedAction";
-
+   return "UnnamedAction";
 }
 } // namespace Project
 } // namespace Blast
