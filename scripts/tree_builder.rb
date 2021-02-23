@@ -246,7 +246,7 @@ end
 
 tree_builder = TreeBuilder.new
 doc_creator = DocCreator.new(yamls: tree_builder.yamls)
-IO.write("documentation/component_overview.html", doc_creator.generate_doc)
+IO.write("documentation/index.html", doc_creator.generate_doc)
 puts 'Written'
 #tree_builder.puts_yamls
 

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<head>
+<style>
+.property
+{
+  color: blue;
+}
+.private_property
+{
+  color: lightblue;
+}
+
+.method
+{
+  color: red;
+}
+
+.private_method
+{
+  color: pink;
+}
+
+.dependency
+{
+  color: green;
+}
+
+.component
+{
+  padding: 20 10 20 10;
+  margin: 20 10 20 10;
+  background-color: #dfdfdf;
+}
+
+.component h3
+{
+  font-family: 'Arial';
+}
+</style>
+</head>
+<body>
+<h1>TOC</h1>
+<ul>
+  <li><a href="#quintessence/Blast/BinaryObfusicator.q.yml">quintessence/Blast/BinaryObfusicator.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/DirectoryCreator.q.yml">quintessence/Blast/DirectoryCreator.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/DirectoryExistenceChecker.q.yml">quintessence/Blast/DirectoryExistenceChecker.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/FileExistenceChecker.q.yml">quintessence/Blast/FileExistenceChecker.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/FileLastWriteTime.q.yml">quintessence/Blast/FileLastWriteTime.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Inflector.q.yml">quintessence/Blast/Inflector.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/ActionCreator.q.yml">quintessence/Blast/Project/ActionCreator.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/Component.q.yml">quintessence/Blast/Project/Component.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/ComponentBasenameExtractor.q.yml">quintessence/Blast/Project/ComponentBasenameExtractor.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/ComponentCreator.q.yml">quintessence/Blast/Project/ComponentCreator.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/ComponentLister.q.yml">quintessence/Blast/Project/ComponentLister.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/ComponentRelativeLister.q.yml">quintessence/Blast/Project/ComponentRelativeLister.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/ProgramLister.q.yml">quintessence/Blast/Project/ProgramLister.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/ProjectSymlinkFixer.q.yml">quintessence/Blast/Project/ProjectSymlinkFixer.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/Project/SymlinkChecker.q.yml">quintessence/Blast/Project/SymlinkChecker.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/ShellCommandExecutorWithCallback.q.yml">quintessence/Blast/ShellCommandExecutorWithCallback.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/SimpleTextSearcher.q.yml">quintessence/Blast/SimpleTextSearcher.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/StringSplitter.q.yml">quintessence/Blast/StringSplitter.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/StringUpcaser.q.yml">quintessence/Blast/StringUpcaser.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/TaoTeChingQuoteGenerator.q.yml">quintessence/Blast/TaoTeChingQuoteGenerator.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/Blast/TemplatedFile.q.yml">quintessence/Blast/TemplatedFile.q.yml</a></li>
+</ul>
+<ul>
+  <li><a href="#quintessence/DirectoryFileHasher.q.yml">quintessence/DirectoryFileHasher.q.yml</a></li>
+</ul>
+<h1>Components</h1>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BinaryObfusicator.q.yml">quintessence/Blast/BinaryObfusicator.q.yml</h3>
+<ul>
+  <li class="method">run()</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</h3>
+<ul>
+  <li class="method">generate_full_width_output_banner(2)</li>
+  <li class="dependency">{"symbol"=>"std::setfill", "headers"=>["iomanip"]}</li>
+  <li class="dependency">{"symbol"=>"std::setw", "headers"=>["iomanip"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</h3>
+<ul>
+  <li class="property">str</li>
+  <li class="method">convert_to_underscores()</li>
+  <li class="dependency">{"symbol"=>"std::transform", "headers"=>["algorithm"]}</li>
+  <li class="dependency">{"symbol"=>"isupper", "headers"=>["cctype"]}</li>
+  <li class="dependency">{"symbol"=>"islower", "headers"=>["cctype"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</h3>
+<ul>
+  <li class="property">type</li>
+  <li class="property">name</li>
+  <li class="property">signature</li>
+  <li class="property">body</li>
+  <li class="property">is_static</li>
+  <li class="property">is_const</li>
+  <li class="property">is_override</li>
+  <li class="property">is_virtual</li>
+  <li class="property">is_pure_virtual</li>
+  <li class="dependency">{"symbol"=>"std::vector<Blast::Cpp::FunctionArgument>", "headers"=>["vector", "Blast/Cpp/FunctionArgument.hpp"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/DirectoryCreator.q.yml">quintessence/Blast/DirectoryCreator.q.yml</h3>
+<ul>
+  <li class="property">directory_components</li>
+  <li class="property">path_is_absolute</li>
+  <li class="method">create(0)</li>
+  <li class="dependency">{"symbol"=>"bool", "headers"=>[], "include_directories"=>[], "linked_libraries"=>[]}</li>
+  <li class="dependency">{"symbol"=>"std::string", "headers"=>["string"], "include_directories"=>[], "linked_libraries"=>[]}</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::string>", "headers"=>["vector", "string"], "include_directories"=>[], "linked_libraries"=>[]}</li>
+  <li class="dependency">{"symbol"=>"mkdir", "headers"=>["sys/stat.h"], "include_directories"=>[], "linked_libraries"=>[]}</li>
+  <li class="dependency">{"symbol"=>"std::stringstream", "headers"=>["sstream"], "include_directories"=>[], "linked_libraries"=>[]}</li>
+  <li class="dependency">{"symbol"=>"Blast::DirectoryExistenceChecker", "headers"=>["Blast/DirectoryExistenceChecker.hpp"], "include_directories"=>[], "linked_libraries"=>[]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/DirectoryExistenceChecker.q.yml">quintessence/Blast/DirectoryExistenceChecker.q.yml</h3>
+<ul>
+  <li class="property">directory_name</li>
+  <li class="method">exists(0)</li>
+  <li class="dependency">{"symbol"=>"stat", "headers"=>["sys/stat.h"], "include_directories"=>[], "linked_libraries"=>[]}</li>
+  <li class="dependency">{"symbol"=>"std::string", "headers"=>["string"], "include_directories"=>[], "linked_libraries"=>[]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/FileExistenceChecker.q.yml">quintessence/Blast/FileExistenceChecker.q.yml</h3>
+<ul>
+  <li class="property">filename</li>
+  <li class="method">exists()</li>
+  <li class="dependency">{"symbol"=>"std::filesystem::exists", "headers"=>["filesystem"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/FileLastWriteTime.q.yml">quintessence/Blast/FileLastWriteTime.q.yml</h3>
+<ul>
+  <li class="property">filename</li>
+  <li class="method">last_write_time()</li>
+  <li class="dependency">{"symbol"=>"std::filesystem::last_write_time", "headers"=>["filesystem"]}</li>
+  <li class="dependency">{"symbol"=>"decltype(T)::clock::to_time_t(T)", "headers"=>["ctime"]}</li>
+  <li class="dependency">{"symbol"=>"std::time_t", "headers"=>["ctime"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Inflector.q.yml">quintessence/Blast/Inflector.q.yml</h3>
+<ul>
+  <li class="property">word</li>
+  <li class="method">pluralize()</li>
+  <li class="method">build_inflections_list()</li>
+  <li class="dependency">{"symbol"=>"Blast::RegexMatcher", "headers"=>["Blast/RegexMatcher.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>>", "headers"=>["vector", "tuple", "string", "regex"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/ActionCreator.q.yml">quintessence/Blast/Project/ActionCreator.q.yml</h3>
+<ul>
+  <li class="property">parent_component</li>
+  <li class="property">action_name_snake_case</li>
+  <li class="private_method">generate_action_name_camel_case()</li>
+  <li class="private_method">generate_action_name_identifier_constant()</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::Component", "headers"=>["Blast/Project/Component.hpp"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/Component.q.yml">quintessence/Blast/Project/Component.q.yml</h3>
+<ul>
+  <li class="property">name</li>
+  <li class="property">project_root</li>
+  <li class="method">generate_full_path_test_binary_filename()</li>
+  <li class="method">list_existing_component_files()</li>
+  <li class="method">last_write_time()</li>
+  <li class="private_method">check_file_existence(1)</li>
+  <li class="method">exists()</li>
+  <li class="method">has_quintessence()</li>
+  <li class="method">has_only_source_and_header()</li>
+  <li class="method">has_test()</li>
+  <li class="method">read_symlinks()</li>
+  <li class="dependency">{"symbol"=>"vector", "headers"=>["vector"]}</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::pair<std::string, std::string>>", "headers"=>["vector", "utility", "string"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::ProjectComponentFileTypes::project_file_type_t", "headers"=>["Blast/ProjectComponentFileTypes.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::ProjectComponentFileTypes::project_file_type_t", "headers"=>["Blast/ProjectComponentFileTypes.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::ProjectComponentFilenameGenerator", "headers"=>["Blast/ProjectComponentFilenameGenerator.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::ProjectComponentFileTypes", "headers"=>["Blast/ProjectComponentFileTypes.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::FileExistenceChecker", "headers"=>["Blast/FileExistenceChecker.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::SymlinkChecker", "headers"=>["Blast/Project/SymlinkChecker.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::FileLastWriteTime", "headers"=>["Blast/FileLastWriteTime.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"std::time_t", "headers"=>["ctime"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/ComponentBasenameExtractor.q.yml">quintessence/Blast/Project/ComponentBasenameExtractor.q.yml</h3>
+<ul>
+  <li class="property">filename</li>
+  <li class="method">identify_file_type()</li>
+  <li class="method">identify_component_basename()</li>
+  <li class="method">extract_component()</li>
+  <li class="dependency">{"symbol"=>"std::pair<std::string, std::string>", "headers"=>["string"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/ComponentCreator.q.yml">quintessence/Blast/Project/ComponentCreator.q.yml</h3>
+<ul>
+  <li class="method">get_quintessence_file_default_content()</li>
+  <li class="method">generate()</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/ComponentLister.q.yml">quintessence/Blast/Project/ComponentLister.q.yml</h3>
+<ul>
+  <li class="property">project_root_directory</li>
+  <li class="private_method">get_component_fragment_folder_name(1)</li>
+  <li class="private_method">get_component_fragment_extension(1)</li>
+  <li class="private_method">get_components_of_fragment_type(2)</li>
+  <li class="method">components_sorted_by_most_recent()</li>
+  <li class="method">components()</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::Component", "headers"=>["Blast/Project/Component.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::component_fragment_t", "headers"=>["Blast/Project/ComponentFragmentTypeEnum.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::ShellCommandExecutorWithCallback", "headers"=>["Blast/ShellCommandExecutorWithCallback.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::ComponentBasenameExtractor", "headers"=>["Blast/Project/ComponentBasenameExtractor.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"StringSplitter", "headers"=>["Blast/StringSplitter.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"std::time_t", "headers"=>["ctime"]}</li>
+  <li class="dependency">{"symbol"=>"std::unique", "headers"=>["algorithm"]}</li>
+  <li class="dependency">{"symbol"=>"std::reverse", "headers"=>["algorithm"]}</li>
+  <li class="dependency">{"symbol"=>"std::sort", "headers"=>["algorithm"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/ComponentRelativeLister.q.yml">quintessence/Blast/Project/ComponentRelativeLister.q.yml</h3>
+<ul>
+  <li class="property">component</li>
+  <li class="method">list_component_relative_names()</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::ComponentLister", "headers"=>["Blast/Project/ComponentLister.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::Component*", "headers"=>["Blast/Project/Component.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::string>", "headers"=>["vector", "string"]}</li>
+  <li class="dependency">{"symbol"=>"std::count", "headers"=>["algorithm"]}</li>
+  <li class="dependency">{"symbol"=>"std::stringstream", "headers"=>["sstream"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/ProgramLister.q.yml">quintessence/Blast/Project/ProgramLister.q.yml</h3>
+<ul>
+  <li class="property">project_root</li>
+  <li class="method">build_program_lister_shell_command()</li>
+  <li class="method">program_filenames()</li>
+  <li class="dependency">{"symbol"=>"std::sort", "headers"=>["algorithm"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::ShellCommandExecutorWithCallback", "headers"=>["Blast/ShellCommandExecutorWithCallback.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"StringSplitter", "headers"=>["Blast/StringSplitter.hpp"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/ProjectSymlinkFixer.q.yml">quintessence/Blast/Project/ProjectSymlinkFixer.q.yml</h3>
+<ul>
+  <li class="property">project_folder</li>
+  <li class="private_method">starts_with(2)</li>
+  <li class="method">has_one_line(1)</li>
+  <li class="method">read_file_firstline(1)</li>
+  <li class="private_method">likely_an_intended_symlink(2)</li>
+  <li class="method">read_symlink(1)</li>
+  <li class="method">run()</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::SymlinkChecker", "headers"=>["Blast/Project/SymlinkChecker.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"std::filesystem", "headers"=>["filesystem"]}</li>
+  <li class="dependency">{"symbol"=>"std::istream_iterator", "headers"=>["iterator"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::ShellCommandExecutorWithCallback", "headers"=>["Blast/ShellCommandExecutorWithCallback.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"std::cout", "headers"=>["iostream"]}</li>
+  <li class="dependency">{"symbol"=>"std::endl", "headers"=>["iostream"]}</li>
+  <li class="dependency">{"symbol"=>"std::ifstream", "headers"=>["fstream"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</h3>
+<ul>
+  <li class="property">destination_directory</li>
+  <li class="property">project_name</li>
+  <li class="property">source_project_directory</li>
+  <li class="method">write_file_contents(2)</li>
+  <li class="method">get_makefile_content()</li>
+  <li class="method">get_pinfo_content()</li>
+  <li class="method">copy_file(2)</li>
+  <li class="method">list_symlinks()</li>
+  <li class="method">replace_symlinks_with_copies_of_linked_files()</li>
+  <li class="method">get_source_release_folder_name()</li>
+  <li class="method">get_macos_release_folder_name()</li>
+  <li class="method">get_win64_release_folder_name()</li>
+  <li class="method">generate_macos_release()</li>
+  <li class="method">generate_source_release()</li>
+  <li class="dependency">{"symbol"=>"std::ifstream", "headers"=>["fstream"]}</li>
+  <li class="dependency">{"symbol"=>"std::ofstream", "headers"=>["fstream"]}</li>
+  <li class="dependency">{"symbol"=>"std::stringstream", "headers"=>["sstream"]}</li>
+  <li class="dependency">{"symbol"=>"remove", "headers"=>["cstdio"]}</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::pair<std::string, std::string>>", "headers"=>["vector", "string"]}</li>
+  <li class="dependency">{"symbol"=>"StringSplitter", "headers"=>["Blast/StringSplitter.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::DirectoryCreator", "headers"=>["Blast/DirectoryCreator.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::Project::SymlinkChecker", "headers"=>["Blast/Project/SymlinkChecker.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"Blast::ShellCommandExecutorWithCallback", "headers"=>["Blast/ShellCommandExecutorWithCallback.hpp"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/SymlinkChecker.q.yml">quintessence/Blast/Project/SymlinkChecker.q.yml</h3>
+<ul>
+  <li class="property">filename</li>
+  <li class="method">is_symlink()</li>
+  <li class="method">is_symlink__shell_call_impl()</li>
+  <li class="method">read_symlink_target()</li>
+  <li class="method">read_symlink_target__shell_call_impl()</li>
+  <li class="dependency">{"symbol"=>"Blast::ShellCommandExecutorWithCallback", "headers"=>["Blast/ShellCommandExecutorWithCallback.hpp"]}</li>
+  <li class="dependency">{"symbol"=>"std::stringstream", "headers"=>["sstream"]}</li>
+  <li class="dependency">{"symbol"=>"std::filesystem::path", "headers"=>["filesystem"]}</li>
+  <li class="dependency">{"symbol"=>"std::filesystem::exists", "headers"=>["filesystem"]}</li>
+  <li class="dependency">{"symbol"=>"std::filesystem::is_symlink", "headers"=>["filesystem"]}</li>
+  <li class="dependency">{"symbol"=>"std::filesystem::read_symlink", "headers"=>["filesystem"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</h3>
+<ul>
+  <li class="property">source_string</li>
+  <li class="property">regex_expression</li>
+  <li class="property">options</li>
+  <li class="method">get_match_info()</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::regex_constants::syntax_option_type>", "headers"=>["vector", "regex"]}</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::pair<int, int>>", "headers"=>["vector"]}</li>
+  <li class="dependency">{"symbol"=>"std::regex", "headers"=>["regex"]}</li>
+  <li class="dependency">{"symbol"=>"std::regex_iterator", "headers"=>["regex"]}</li>
+  <li class="dependency">{"symbol"=>"std::smatch", "headers"=>["regex"]}</li>
+  <li class="dependency">{"symbol"=>"std::regex_error", "headers"=>["regex"]}</li>
+  <li class="dependency">{"symbol"=>"std::runtime_error", "headers"=>["regex"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/ShellCommandExecutorWithCallback.q.yml">quintessence/Blast/ShellCommandExecutorWithCallback.q.yml</h3>
+<ul>
+  <li class="property">command</li>
+  <li class="property">callback</li>
+  <li class="method">simple_silent_callback(1)</li>
+  <li class="method">simple_cout_callback(1)</li>
+  <li class="method">execute()</li>
+  <li class="dependency">{"symbol"=>"std::function<void(std::string)>", "headers"=>["functional", "string"]}</li>
+  <li class="dependency">{"symbol"=>"void*", "headers"=>["string"]}</li>
+  <li class="dependency">{"symbol"=>"FILE", "headers"=>["cstdio"]}</li>
+  <li class="dependency">{"symbol"=>"std::string", "headers"=>["string"]}</li>
+  <li class="dependency">{"symbol"=>"std::array", "headers"=>["array"]}</li>
+  <li class="dependency">{"symbol"=>"std::shared_ptr", "headers"=>["memory"]}</li>
+  <li class="dependency">{"symbol"=>"pipe", "headers"=>["cstdio"]}</li>
+  <li class="dependency">{"symbol"=>"popen", "headers"=>["cstdio"]}</li>
+  <li class="dependency">{"symbol"=>"pclose", "headers"=>["cstdio"]}</li>
+  <li class="dependency">{"symbol"=>"feof", "headers"=>["cstdio"]}</li>
+  <li class="dependency">{"symbol"=>"fgets", "headers"=>["cstdio"]}</li>
+  <li class="dependency">{"symbol"=>"std::runtime_error", "headers"=>["stdexcept"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/SimpleTextSearcher.q.yml">quintessence/Blast/SimpleTextSearcher.q.yml</h3>
+<ul>
+  <li class="property">search_text</li>
+  <li class="property">elements</li>
+  <li class="method">would_be_included_in_results(1)</li>
+  <li class="method">results()</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/StringSplitter.q.yml">quintessence/Blast/StringSplitter.q.yml</h3>
+<ul>
+  <li class="property">string</li>
+  <li class="property">delimiter</li>
+  <li class="method">split()</li>
+  <li class="dependency">{"symbol"=>"char", "headers"=>[]}</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::string>", "headers"=>["vector", "string"]}</li>
+  <li class="dependency">{"symbol"=>"std::stringstream", "headers"=>["sstream"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/StringUpcaser.q.yml">quintessence/Blast/StringUpcaser.q.yml</h3>
+<ul>
+  <li class="property">original_text</li>
+  <li class="method">upcase()</li>
+  <li class="dependency">{"symbol"=>"std::transform", "headers"=>["algorithm"]}</li>
+  <li class="dependency">{"symbol"=>"std::toupper", "headers"=>["cctype"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/TaoTeChingQuoteGenerator.q.yml">quintessence/Blast/TaoTeChingQuoteGenerator.q.yml</h3>
+<ul>
+  <li class="property">quotes</li>
+  <li class="method">pick_quote()</li>
+  <li class="method">default_quotes_list()</li>
+  <li class="dependency">{"symbol"=>"std::sample", "headers"=>["algorithm"]}</li>
+  <li class="dependency">{"symbol"=>"std::back_inserter", "headers"=>["iterator"]}</li>
+  <li class="dependency">{"symbol"=>"std::mt19937", "headers"=>["random"]}</li>
+  <li class="dependency">{"symbol"=>"std::random_device", "headers"=>["random"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/TemplatedFile.q.yml">quintessence/Blast/TemplatedFile.q.yml</h3>
+<ul>
+  <li class="property">template_content</li>
+  <li class="property">insertion_variables</li>
+  <li class="private_method">__replace(3)</li>
+  <li class="method">generate_content()</li>
+  <li class="dependency">{"symbol"=>"std::vector<std::pair<std::string, std::string>>", "headers"=>["string", "vector"]}</li>
+</ul>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/DirectoryFileHasher.q.yml">quintessence/DirectoryFileHasher.q.yml</h3>
+<ul>
+  <li class="method">run()</li>
+</ul>
+  </div>
+</ul>
+</body>
