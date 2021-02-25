@@ -1,0 +1,25 @@
+properties:
+
+
+  - name: filename
+    type: std::string
+    init_with: '"undefined_file.txt"'
+    constructor_arg: true
+  - name: initial_content
+    type: std::string
+    init_with: '""'
+    constructor_arg: true
+
+
+functions:
+
+
+  - name: create_if_not_exists
+    type: void
+    body: |
+      std::cout << "ERROR: Blast::FileCreator::create_if_not_exists(): not implemented" << std::endl;
+      return;
+    body_dependency_symbols:
+      - std::cout
+
+
