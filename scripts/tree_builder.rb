@@ -148,9 +148,10 @@ class DocCreator
             result += "<tr>\n"
             dependency_symbol = dependency['symbol']
             ##dependency_is_private = dependency['private']
+            full_dependency_json_string = escape_html_chars(dependency.to_s)
 
             ##css_class = dependency_is_private ? 'private_dependency' : 'dependency'
-            result += "  <td class=\"dependency\">#{dependency}</td>\n"
+            result += "  <td class=\"dependency\">#{full_dependency_json_string}</td>\n"
             result += "</tr>\n"
           end
         end
