@@ -1,53 +1,8 @@
 require 'json'
 require 'yaml'
+require 'cgi'
 
 class TreeBuilder
-  def html
-    #process_lines
-    entries = rollup
-    keys = entries.keys
-
-    result =  "<!DOCTYPE html>\n"
-    result += "<head>\n"
-    result += "</head>\n"
-    result += "<body>\n"
-
-
-    result += "<h1>TOC</h1>\n"
-    result += "<ul>\n"
-    keys.each do |key|
-      result += "  <li><a href=\"\##{key}\">#{key}</a></li>\n"
-    end
-    result += "</ul>\n"
-
-
-    result += "<h1>Components</h1>\n"
-    entries.each do |key, value|
-      result += "<h4 id=\"#{key}\">#{key}</h4>\n"
-
-      result += "<h5>Symbols</h4>\n"
-      result += "<ul>\n"
-      value.each do |symbol|
-        result += "  <li>#{symbol}</li>\n"
-      end
-      result += "</ul>\n"
-
-      #result += "<h5>Dependencies</h4>\n"
-      #result += "<ul>\n"
-      #value.each do |symbol|
-        #result += "  <li>#{symbol}</li>\n"
-      #end
-      #result += "</ul>\n"
-    end
-
-
-    result += "</body>"
-    #puts result
-    #puts JSON.pretty_generate(rollup)
-
-    result
-  end
-
   def puts_yamls
     puts yamls
   end
@@ -156,8 +111,8 @@ class DocCreator
         unless properties.nil?
           properties.each do |property|
             result += "<tr>\n"
-            property_name = property['name']
-            property_type = property['type']
+            property_name = escape_html_chars(property['name'])
+            property_type = escape_html_chars(property['type'])
             property_is_private = property['private']
 
             css_class = property_is_private ? 'private_property' : 'property'
@@ -173,7 +128,7 @@ class DocCreator
         unless methods.nil?
           methods.each do |method|
             result += "<tr>\n"
-            method_name = method['name']
+            method_name = escape_html_chars(method['name'])
             num_method_parameters = method['parameters']&.count
             method_is_private = method['private']
 
@@ -212,6 +167,10 @@ class DocCreator
   end
 
   private
+
+  def escape_html_chars(input)
+    CGI.escapeHTML(input.to_s)
+  end
 
   def generate_css
     result =  "<style>\n"
