@@ -150,46 +150,58 @@ class DocCreator
       result += "  <div class=\"component\">\n"
       result += "    <h3 id=\"#{filename}\">#{filename}</h3>\n"
       #result += "    <h4>Overview<h4>\n"
-      result += "<ul>\n"
 
+        result += "     <table>\n"
         properties = yaml['properties']
         unless properties.nil?
           properties.each do |property|
+            result += "<tr>\n"
             property_name = property['name']
+            property_type = property['type']
             property_is_private = property['private']
 
             css_class = property_is_private ? 'private_property' : 'property'
-            result += "  <li class=\"#{css_class}\">#{property_name}</li>\n"
+            result += "  <td class=\"#{css_class}\">#{property_name}</td>\n"
+            result += "  <td class=\"#{css_class}\">#{property_type}</td>\n"
+            result += "</tr>\n"
           end
         end
+        result += "    </table>\n"
 
+        result += "     <table>\n"
         methods = yaml['functions']
         unless methods.nil?
           methods.each do |method|
+            result += "<tr>\n"
             method_name = method['name']
             num_method_parameters = method['parameters']&.count
             method_is_private = method['private']
 
             css_class = method_is_private ? 'private_method' : 'method'
-            result += "  <li class=\"#{css_class}\">#{method_name}(#{num_method_parameters})</li>\n"
+            result += "  <td class=\"#{css_class}\">#{method_name}(#{num_method_parameters})</td>\n"
+            result += "</tr>\n"
           end
         end
+        result += "    </table>\n"
 
       # result += "</ul>\n"
       # result += "<ul>\n"
+        result += "     <table>\n"
         dependencies = yaml['dependencies']
         unless dependencies.nil?
           dependencies.each do |dependency|
+            result += "<tr>\n"
             dependency_symbol = dependency['symbol']
             ##dependency_is_private = dependency['private']
 
             ##css_class = dependency_is_private ? 'private_dependency' : 'dependency'
-            result += "  <li class=\"dependency\">#{dependency}</li>\n"
+            result += "  <td class=\"dependency\">#{dependency}</td>\n"
+            result += "</tr>\n"
           end
         end
+        result += "    </table>\n"
 
 
-      result += "</ul>\n"
       result += "  </div>\n"
       result += "</ul>\n"
     end
@@ -203,6 +215,10 @@ class DocCreator
 
   def generate_css
     result =  "<style>\n"
+    result += "table td\n"
+    result += "{\n"
+    result += "  padding: 3px 20px;\n"
+    result += "}\n"
     result += ".property\n"
     result += "{\n"
     result += "  color: blue;\n"
