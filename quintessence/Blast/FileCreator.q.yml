@@ -23,3 +23,22 @@ functions:
       - std::cout
 
 
+  - name: create_or_overwrite
+    type: void
+    body: |
+      std::ofstream outfile(filename);
+      outfile << initial_content;
+      outfile.close();
+      return;
+    body_dependency_symbols:
+      - std::cout
+      - std::ofstream
+
+
+dependencies:
+
+
+  - symbol: std::ofstream
+    headers: [ fstream ]
+
+

@@ -22,3 +22,13 @@ TEST(Blast_FileCreatorTest, create_if_not_exists__when_the_file_does_exist__does
    // check existed file contents are unchanged
 }
 
+TEST(Blast_FileCreatorTest, create_or_overwrite__when_the_file_does_not_exist__creates_the_file)
+{
+   // TODO
+}
+
+TEST(Blast_FileCreatorTest, create_or_overwrite__when_the_file_does_exist__discards_the_file_contents_and_overwrites_it)
+{
+   // TODO
+}
+
