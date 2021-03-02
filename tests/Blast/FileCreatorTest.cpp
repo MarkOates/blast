@@ -24,6 +24,11 @@ TEST(Blast_FileCreatorTest, create_if_not_exists__when_the_file_does_exist__does
 
 TEST(Blast_FileCreatorTest, create_or_overwrite__when_the_file_does_not_exist__creates_the_file)
 {
+   std::string filename = std::tmpnam(nullptr);
+   std::string file_contents = "foobar";
+
+   Blast::FileCreator file_creator(filename, file_contents);
+   file_creator.create_or_overwrite();
    // TODO
 }
 
