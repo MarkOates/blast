@@ -476,6 +476,7 @@ void create_directories(Generator &generator)
    system(generator.mkprojdir("lib").c_str());
    system(generator.mkprojdir("include").c_str());
    system(generator.mkprojdir("examples").c_str());
+   system(generator.mkprojdir("documentation").c_str());
    system(generator.mkprojdir(std::string("include/") + generator.get_project_name()).c_str());
    system(generator.mkprojdir("obj").c_str());
    system(generator.mkprojdir("programs").c_str());
