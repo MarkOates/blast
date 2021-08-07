@@ -90,9 +90,12 @@ int main(int argc, char **argv)
    std::string result_source_header_file_command = templated_source_header_command.generate_content();
 
    std::cout << "Notice: This program does not actually perform the symlink command, but generates it (for now).  Here is that command:" << std::endl << std::endl;
-   std::cout << result_command << std::endl;
-   std::cout << result_test_file_command << std::endl;
-   std::cout << result_source_header_file_command << std::endl;
+   std::cout << "==== QUINTESSENCE FILE ====" << std::endl;
+   std::cout << result_command << std::endl << std::endl;
+   std::cout << "==== TEST FILE ====" << std::endl;
+   std::cout << result_test_file_command << std::endl << std::endl;
+   std::cout << "==== SOURCE AND HEADER FILE ====" << std::endl;
+   std::cout << result_source_header_file_command << std::endl << std::endl;
 
    return 0;
 }
