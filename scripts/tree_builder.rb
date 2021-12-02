@@ -53,6 +53,7 @@ class TreeBuilder
         index = shell_yaml_find_command_result.index(": ")
         filename = shell_yaml_find_command_result[0...index]
         method = shell_yaml_find_command_result[(index + 11)..-1]
+        dependents = []
         dependencies = []
         result = {
           filename: filename,
@@ -77,10 +78,11 @@ end
 
 
 class DocCreator
-  attr_reader :yamls
+  attr_reader :yamls, :dependents
 
   def initialize(yamls:)
     @yamls = yamls
+    @dependents = {}
   end
 
   def generate_doc
@@ -90,14 +92,12 @@ class DocCreator
     result += "</head>\n"
     result += "<body>\n"
 
-
     result += "<h1>TOC</h1>\n"
+    result += "<ul>\n"
     yamls.each do |filename, yaml|
-      result += "<ul>\n"
       result += "  <li><a href=\"\##{filename}\">#{filename}</a></li>\n"
-      result += "</ul>\n"
     end
-
+    result += "</ul>\n"
 
     result += "<h1>Components</h1>\n"
     yamls.each do |filename, yaml|
@@ -147,6 +147,7 @@ class DocCreator
           dependencies.each do |dependency|
             result += "<tr>\n"
             dependency_symbol = dependency['symbol']
+            (dependents[dependency_symbol] ||= []) << filename
             ##dependency_is_private = dependency['private']
             full_dependency_json_string = escape_html_chars(dependency.to_s)
 
@@ -163,6 +164,13 @@ class DocCreator
     end
 
 
+
+    result += "<h1>Dependents</h1>\n"
+    result += "<pre>\n"
+    result += JSON.pretty_generate(dependents) + "\n"
+    result += "</pre>\n"
+
+
     result += "</body>"
     result
   end
@@ -175,6 +183,11 @@ class DocCreator
 
   def generate_css
     result =  "<style>\n"
+    result += "*\n"
+    result += "{\n"
+    result += "  font-family: 'Arial';\n"
+    result += "  padding: 3px 20px;\n"
+    result += "}\n"
     result += "table td\n"
     result += "{\n"
     result += "  padding: 3px 20px;\n"
@@ -212,7 +225,6 @@ class DocCreator
     result += "\n"
     result += ".component h3\n"
     result += "{\n"
-    result += "  font-family: 'Arial';\n"
     result += "}\n"
     result += "</style>\n"
     result
@@ -220,10 +232,19 @@ class DocCreator
 end
 
 
+
+def time_diff_milli(start, finish)
+   (finish - start) * 1000.0
+end
+
+
+
+t1 = Time.now
 tree_builder = TreeBuilder.new
 doc_creator = DocCreator.new(yamls: tree_builder.yamls)
 IO.write("documentation/index.html", doc_creator.generate_doc)
-puts 'Written'
+t2 = Time.now
+puts "Written in #{time_diff_milli(t1, t2)} msec."
 #tree_builder.puts_yamls
 
 
