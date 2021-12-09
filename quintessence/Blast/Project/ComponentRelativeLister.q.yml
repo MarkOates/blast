@@ -1,9 +1,15 @@
 properties:
+
+
   - name: component
     type: Blast::Project::Component*
     init_with: nullptr
     constructor_arg: true
+
+
 functions:
+
+
   - name: list_component_relative_names
     type: std::vector<std::string>
     body: |
@@ -53,7 +59,11 @@ functions:
       - Blast::Project::ComponentLister
       - std::stringstream
       - std::count
+
+
 dependencies:
+
+
   - symbol: Blast::Project::ComponentLister
     headers: [ Blast/Project/ComponentLister.hpp ]
   - symbol: Blast::Project::Component*
@@ -64,3 +74,5 @@ dependencies:
     headers: [ algorithm ]
   - symbol: std::stringstream
     headers: [ sstream ]
+
+

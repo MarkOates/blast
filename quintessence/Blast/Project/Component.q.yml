@@ -143,6 +143,7 @@ functions:
     body_dependency_symbols:
       - Blast::ProjectComponentFileTypes
 
+
   - name: has_only_source_and_header
     type: bool
     body: |
