@@ -68,7 +68,8 @@ class DocCreator
           dependencies.each do |dependency|
             result += "<tr>\n"
             dependency_symbol = dependency['symbol']
-            (dependents[dependency_symbol] ||= []) << (filename.gsub(".q.yml", ""))
+            sanitized_dependency_symbol = dependency_symbol.to_s.gsub("::", "/").gsub("*", "")
+            (dependents[sanitized_dependency_symbol] ||= []) << (filename.gsub("quintessence/", "").gsub(".q.yml", ""))
             ##dependency_is_private = dependency['private']
             full_dependency_json_string = escape_html_chars(dependency.to_s)
 
