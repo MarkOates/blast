@@ -17,6 +17,7 @@ t1 = Time.now
 tree_builder = TreeBuilder.new
 doc_creator = DocCreator.new(yamls: tree_builder.yamls)
 IO.write("documentation/index.html", doc_creator.generate_doc)
+IO.write("documentation/dependents.json", doc_creator.generate_dependents_json)
 t2 = Time.now
 puts "Written in #{time_diff_milli(t1, t2)} msec."
 #tree_builder.puts_yamls

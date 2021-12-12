@@ -1,5 +1,5 @@
 class DocCreator
-  attr_reader :yamls, :dependents
+  attr_reader :yamls, :dependents, :doc
 
   def initialize(yamls:)
     @yamls = yamls
@@ -94,6 +94,10 @@ class DocCreator
 
     result += "</body>"
     result
+  end
+
+  def generate_dependents_json
+    JSON.pretty_generate(dependents)
   end
 
   private
