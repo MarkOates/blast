@@ -1,0 +1,247 @@
+{
+  "std/setfill": [
+    "Blast/Build/Celebrator"
+  ],
+  "std/setw": [
+    "Blast/Build/Celebrator"
+  ],
+  "std/transform": [
+    "Blast/CamelCaseToUnderscoreConverter",
+    "Blast/StringUpcaser"
+  ],
+  "isupper": [
+    "Blast/CamelCaseToUnderscoreConverter"
+  ],
+  "islower": [
+    "Blast/CamelCaseToUnderscoreConverter"
+  ],
+  "std/vector<Blast/Cpp/FunctionArgument>": [
+    "Blast/Cpp/Function"
+  ],
+  "bool": [
+    "Blast/DirectoryCreator"
+  ],
+  "std/string": [
+    "Blast/DirectoryCreator",
+    "Blast/DirectoryExistenceChecker",
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "std/vector<std/string>": [
+    "Blast/DirectoryCreator",
+    "Blast/Project/ComponentRelativeLister",
+    "Blast/StringSplitter"
+  ],
+  "mkdir": [
+    "Blast/DirectoryCreator"
+  ],
+  "std/stringstream": [
+    "Blast/DirectoryCreator",
+    "Blast/Project/ComponentRelativeLister",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Project/SymlinkChecker",
+    "Blast/StringSplitter"
+  ],
+  "Blast/DirectoryExistenceChecker": [
+    "Blast/DirectoryCreator"
+  ],
+  "stat": [
+    "Blast/DirectoryExistenceChecker"
+  ],
+  "std/ofstream": [
+    "Blast/FileCreator",
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "std/filesystem/exists": [
+    "Blast/FileExistenceChecker",
+    "Blast/Project/SymlinkChecker"
+  ],
+  "std/filesystem/last_write_time": [
+    "Blast/FileLastWriteTime"
+  ],
+  "decltype(T)/clock/to_time_t(T)": [
+    "Blast/FileLastWriteTime"
+  ],
+  "std/time_t": [
+    "Blast/FileLastWriteTime",
+    "Blast/Project/Component",
+    "Blast/Project/ComponentLister"
+  ],
+  "Blast/RegexMatcher": [
+    "Blast/Inflector"
+  ],
+  "std/vector<std/tuple<std/string, std/string, std/regex_constants/syntax_option_type>>": [
+    "Blast/Inflector"
+  ],
+  "Blast/Project/Component": [
+    "Blast/Project/ActionCreator",
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ComponentRelativeLister"
+  ],
+  "vector": [
+    "Blast/Project/Component"
+  ],
+  "std/vector<std/pair<std/string, std/string>>": [
+    "Blast/Project/Component",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/TemplatedFile"
+  ],
+  "Blast/ProjectComponentFileTypes/project_file_type_t": [
+    "Blast/Project/Component",
+    "Blast/Project/Component"
+  ],
+  "Blast/ProjectComponentFilenameGenerator": [
+    "Blast/Project/Component"
+  ],
+  "Blast/ProjectComponentFileTypes": [
+    "Blast/Project/Component"
+  ],
+  "Blast/FileExistenceChecker": [
+    "Blast/Project/Component"
+  ],
+  "Blast/Project/SymlinkChecker": [
+    "Blast/Project/Component",
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/FileLastWriteTime": [
+    "Blast/Project/Component"
+  ],
+  "std/pair<std/string, std/string>": [
+    "Blast/Project/ComponentBasenameExtractor"
+  ],
+  "Blast/Project/component_fragment_t": [
+    "Blast/Project/ComponentLister"
+  ],
+  "Blast/ShellCommandExecutorWithCallback": [
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ProgramLister",
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Project/SymlinkChecker"
+  ],
+  "Blast/Project/ComponentBasenameExtractor": [
+    "Blast/Project/ComponentLister"
+  ],
+  "StringSplitter": [
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ProgramLister",
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "std/unique": [
+    "Blast/Project/ComponentLister"
+  ],
+  "std/reverse": [
+    "Blast/Project/ComponentLister"
+  ],
+  "std/sort": [
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ProgramLister"
+  ],
+  "Blast/Project/ComponentLister": [
+    "Blast/Project/ComponentRelativeLister"
+  ],
+  "std/count": [
+    "Blast/Project/ComponentRelativeLister"
+  ],
+  "std/filesystem": [
+    "Blast/Project/ProjectSymlinkFixer"
+  ],
+  "std/istream_iterator": [
+    "Blast/Project/ProjectSymlinkFixer"
+  ],
+  "std/cout": [
+    "Blast/Project/ProjectSymlinkFixer"
+  ],
+  "std/endl": [
+    "Blast/Project/ProjectSymlinkFixer"
+  ],
+  "std/ifstream": [
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "remove": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/DirectoryCreator": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "std/filesystem/path": [
+    "Blast/Project/SymlinkChecker"
+  ],
+  "std/filesystem/is_symlink": [
+    "Blast/Project/SymlinkChecker"
+  ],
+  "std/filesystem/read_symlink": [
+    "Blast/Project/SymlinkChecker"
+  ],
+  "std/vector<std/regex_constants/syntax_option_type>": [
+    "Blast/RegexMatcher"
+  ],
+  "std/vector<std/pair<int, int>>": [
+    "Blast/RegexMatcher"
+  ],
+  "std/regex": [
+    "Blast/RegexMatcher"
+  ],
+  "std/regex_iterator": [
+    "Blast/RegexMatcher"
+  ],
+  "std/smatch": [
+    "Blast/RegexMatcher"
+  ],
+  "std/regex_error": [
+    "Blast/RegexMatcher"
+  ],
+  "std/runtime_error": [
+    "Blast/RegexMatcher",
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "std/function<void(std/string)>": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "void": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "FILE": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "std/array": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "std/shared_ptr": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "pipe": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "popen": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "pclose": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "feof": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "fgets": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "char": [
+    "Blast/StringSplitter"
+  ],
+  "std/toupper": [
+    "Blast/StringUpcaser"
+  ],
+  "std/sample": [
+    "Blast/TaoTeChingQuoteGenerator"
+  ],
+  "std/back_inserter": [
+    "Blast/TaoTeChingQuoteGenerator"
+  ],
+  "std/mt19937": [
+    "Blast/TaoTeChingQuoteGenerator"
+  ],
+  "std/random_device": [
+    "Blast/TaoTeChingQuoteGenerator"
+  ]
+}

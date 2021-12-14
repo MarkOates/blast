@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <head>
 <style>
+*
+{
+  font-family: 'Arial';
+  padding: 3px 20px;
+}
 table td
 {
   padding: 3px 20px;
@@ -38,7 +43,6 @@ table td
 
 .component h3
 {
-  font-family: 'Arial';
 }
 </style>
 </head>
@@ -46,86 +50,32 @@ table td
 <h1>TOC</h1>
 <ul>
   <li><a href="#quintessence/Blast/BinaryObfusicator.q.yml">quintessence/Blast/BinaryObfusicator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/DirectoryCreator.q.yml">quintessence/Blast/DirectoryCreator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/DirectoryExistenceChecker.q.yml">quintessence/Blast/DirectoryExistenceChecker.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/FileCreator.q.yml">quintessence/Blast/FileCreator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/FileExistenceChecker.q.yml">quintessence/Blast/FileExistenceChecker.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/FileLastWriteTime.q.yml">quintessence/Blast/FileLastWriteTime.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Inflector.q.yml">quintessence/Blast/Inflector.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/ActionCreator.q.yml">quintessence/Blast/Project/ActionCreator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/Component.q.yml">quintessence/Blast/Project/Component.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/ComponentBasenameExtractor.q.yml">quintessence/Blast/Project/ComponentBasenameExtractor.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/ComponentCreator.q.yml">quintessence/Blast/Project/ComponentCreator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/ComponentLister.q.yml">quintessence/Blast/Project/ComponentLister.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/ComponentRelativeLister.q.yml">quintessence/Blast/Project/ComponentRelativeLister.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/ProgramLister.q.yml">quintessence/Blast/Project/ProgramLister.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/ProjectSymlinkFixer.q.yml">quintessence/Blast/Project/ProjectSymlinkFixer.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/Project/SymlinkChecker.q.yml">quintessence/Blast/Project/SymlinkChecker.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/ShellCommandExecutorWithCallback.q.yml">quintessence/Blast/ShellCommandExecutorWithCallback.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/SimpleTextSearcher.q.yml">quintessence/Blast/SimpleTextSearcher.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/StringSplitter.q.yml">quintessence/Blast/StringSplitter.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/StringUpcaser.q.yml">quintessence/Blast/StringUpcaser.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/TaoTeChingQuoteGenerator.q.yml">quintessence/Blast/TaoTeChingQuoteGenerator.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/Blast/TemplatedFile.q.yml">quintessence/Blast/TemplatedFile.q.yml</a></li>
-</ul>
-<ul>
   <li><a href="#quintessence/DirectoryFileHasher.q.yml">quintessence/DirectoryFileHasher.q.yml</a></li>
 </ul>
 <h1>Components</h1>
@@ -1123,4 +1073,254 @@ table td
     </table>
   </div>
 </ul>
+<h1>Dependents</h1>
+<pre>
+{
+  "std/setfill": [
+    "Blast/Build/Celebrator"
+  ],
+  "std/setw": [
+    "Blast/Build/Celebrator"
+  ],
+  "std/transform": [
+    "Blast/CamelCaseToUnderscoreConverter",
+    "Blast/StringUpcaser"
+  ],
+  "isupper": [
+    "Blast/CamelCaseToUnderscoreConverter"
+  ],
+  "islower": [
+    "Blast/CamelCaseToUnderscoreConverter"
+  ],
+  "std/vector<Blast/Cpp/FunctionArgument>": [
+    "Blast/Cpp/Function"
+  ],
+  "bool": [
+    "Blast/DirectoryCreator"
+  ],
+  "std/string": [
+    "Blast/DirectoryCreator",
+    "Blast/DirectoryExistenceChecker",
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "std/vector<std/string>": [
+    "Blast/DirectoryCreator",
+    "Blast/Project/ComponentRelativeLister",
+    "Blast/StringSplitter"
+  ],
+  "mkdir": [
+    "Blast/DirectoryCreator"
+  ],
+  "std/stringstream": [
+    "Blast/DirectoryCreator",
+    "Blast/Project/ComponentRelativeLister",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Project/SymlinkChecker",
+    "Blast/StringSplitter"
+  ],
+  "Blast/DirectoryExistenceChecker": [
+    "Blast/DirectoryCreator"
+  ],
+  "stat": [
+    "Blast/DirectoryExistenceChecker"
+  ],
+  "std/ofstream": [
+    "Blast/FileCreator",
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "std/filesystem/exists": [
+    "Blast/FileExistenceChecker",
+    "Blast/Project/SymlinkChecker"
+  ],
+  "std/filesystem/last_write_time": [
+    "Blast/FileLastWriteTime"
+  ],
+  "decltype(T)/clock/to_time_t(T)": [
+    "Blast/FileLastWriteTime"
+  ],
+  "std/time_t": [
+    "Blast/FileLastWriteTime",
+    "Blast/Project/Component",
+    "Blast/Project/ComponentLister"
+  ],
+  "Blast/RegexMatcher": [
+    "Blast/Inflector"
+  ],
+  "std/vector<std/tuple<std/string, std/string, std/regex_constants/syntax_option_type>>": [
+    "Blast/Inflector"
+  ],
+  "Blast/Project/Component": [
+    "Blast/Project/ActionCreator",
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ComponentRelativeLister"
+  ],
+  "vector": [
+    "Blast/Project/Component"
+  ],
+  "std/vector<std/pair<std/string, std/string>>": [
+    "Blast/Project/Component",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/TemplatedFile"
+  ],
+  "Blast/ProjectComponentFileTypes/project_file_type_t": [
+    "Blast/Project/Component",
+    "Blast/Project/Component"
+  ],
+  "Blast/ProjectComponentFilenameGenerator": [
+    "Blast/Project/Component"
+  ],
+  "Blast/ProjectComponentFileTypes": [
+    "Blast/Project/Component"
+  ],
+  "Blast/FileExistenceChecker": [
+    "Blast/Project/Component"
+  ],
+  "Blast/Project/SymlinkChecker": [
+    "Blast/Project/Component",
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/FileLastWriteTime": [
+    "Blast/Project/Component"
+  ],
+  "std/pair<std/string, std/string>": [
+    "Blast/Project/ComponentBasenameExtractor"
+  ],
+  "Blast/Project/component_fragment_t": [
+    "Blast/Project/ComponentLister"
+  ],
+  "Blast/ShellCommandExecutorWithCallback": [
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ProgramLister",
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Project/SymlinkChecker"
+  ],
+  "Blast/Project/ComponentBasenameExtractor": [
+    "Blast/Project/ComponentLister"
+  ],
+  "StringSplitter": [
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ProgramLister",
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "std/unique": [
+    "Blast/Project/ComponentLister"
+  ],
+  "std/reverse": [
+    "Blast/Project/ComponentLister"
+  ],
+  "std/sort": [
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ProgramLister"
+  ],
+  "Blast/Project/ComponentLister": [
+    "Blast/Project/ComponentRelativeLister"
+  ],
+  "std/count": [
+    "Blast/Project/ComponentRelativeLister"
+  ],
+  "std/filesystem": [
+    "Blast/Project/ProjectSymlinkFixer"
+  ],
+  "std/istream_iterator": [
+    "Blast/Project/ProjectSymlinkFixer"
+  ],
+  "std/cout": [
+    "Blast/Project/ProjectSymlinkFixer"
+  ],
+  "std/endl": [
+    "Blast/Project/ProjectSymlinkFixer"
+  ],
+  "std/ifstream": [
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "remove": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/DirectoryCreator": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "std/filesystem/path": [
+    "Blast/Project/SymlinkChecker"
+  ],
+  "std/filesystem/is_symlink": [
+    "Blast/Project/SymlinkChecker"
+  ],
+  "std/filesystem/read_symlink": [
+    "Blast/Project/SymlinkChecker"
+  ],
+  "std/vector<std/regex_constants/syntax_option_type>": [
+    "Blast/RegexMatcher"
+  ],
+  "std/vector<std/pair<int, int>>": [
+    "Blast/RegexMatcher"
+  ],
+  "std/regex": [
+    "Blast/RegexMatcher"
+  ],
+  "std/regex_iterator": [
+    "Blast/RegexMatcher"
+  ],
+  "std/smatch": [
+    "Blast/RegexMatcher"
+  ],
+  "std/regex_error": [
+    "Blast/RegexMatcher"
+  ],
+  "std/runtime_error": [
+    "Blast/RegexMatcher",
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "std/function<void(std/string)>": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "void": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "FILE": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "std/array": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "std/shared_ptr": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "pipe": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "popen": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "pclose": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "feof": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "fgets": [
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "char": [
+    "Blast/StringSplitter"
+  ],
+  "std/toupper": [
+    "Blast/StringUpcaser"
+  ],
+  "std/sample": [
+    "Blast/TaoTeChingQuoteGenerator"
+  ],
+  "std/back_inserter": [
+    "Blast/TaoTeChingQuoteGenerator"
+  ],
+  "std/mt19937": [
+    "Blast/TaoTeChingQuoteGenerator"
+  ],
+  "std/random_device": [
+    "Blast/TaoTeChingQuoteGenerator"
+  ]
+}
+</pre>
 </body>
