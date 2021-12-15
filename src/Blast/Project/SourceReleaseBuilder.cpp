@@ -139,6 +139,8 @@ std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_syml
       }
    }
 
+   std::sort(result.begin(), result.end());
+
    return result;
 }
 

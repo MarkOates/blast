@@ -31,12 +31,12 @@ TEST(Blast_Project_SourceReleaseBuilderTest, list_symlinks__returns_the_list_of_
 
    std::vector<std::pair<std::string, std::string>> expected = {
       {
-         "bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlinkThatIsOnlySymlink.q.yml",
-         "../../test_project/quintessence/ComponentWithExternalSymlinkThatIsOnlySymlink.q.yml",
-      },
-      {
          "bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml",
          "../../test_project/quintessence/ComponentWithExternalSymlink.q.yml",
+      },
+      {
+         "bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlinkThatIsOnlySymlink.q.yml",
+         "../../test_project/quintessence/ComponentWithExternalSymlinkThatIsOnlySymlink.q.yml",
       },
    };
    std::vector<std::pair<std::string, std::string>> actual = release_builder.list_symlinks();

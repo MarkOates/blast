@@ -132,6 +132,8 @@ functions:
          }
       }
 
+      std::sort(result.begin(), result.end());
+
       return result;
     body_dependency_symbols:
       - std::cout
