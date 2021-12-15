@@ -119,7 +119,10 @@ void SourceReleaseBuilder::copy_file(std::string source_filename, std::string de
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
 {
    std::string command = std::string("find ") + destination_directory;
-   Blast::ShellCommandExecutorWithCallback executor(command, ShellCommandExecutorWithCallback::simple_silent_callback);
+   Blast::ShellCommandExecutorWithCallback executor(
+      command,
+      ShellCommandExecutorWithCallback::simple_silent_callback
+   );
    std::string executor_result = executor.execute();
    StringSplitter splitter(executor_result, '\n');
 
