@@ -82,6 +82,8 @@ bool ProjectSymlinkFixer::likely_an_intended_symlink(std::string filename, std::
 {
    std::filesystem::directory_entry p(filename);
 
+   if (std::filesystem::is_directory(p)) return false;
+
    if (!std::filesystem::exists(p))
    {
       std::stringstream error_message;

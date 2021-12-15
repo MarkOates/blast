@@ -84,6 +84,8 @@ functions:
     body: |
       std::filesystem::directory_entry p(filename);
 
+      if (std::filesystem::is_directory(p)) return false;
+
       if (!std::filesystem::exists(p))
       {
          std::stringstream error_message;
