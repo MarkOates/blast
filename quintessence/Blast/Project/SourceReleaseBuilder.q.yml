@@ -144,6 +144,7 @@ functions:
 
   - name: replace_symlinks_with_copies_of_linked_files
     body: |
+      std::cout << "Reading symlinks... " << std::endl;
       std::vector<std::pair<std::string, std::string>> symlinks = list_symlinks();
 
       for (auto &symlink : symlinks)
@@ -161,6 +162,8 @@ functions:
 
          copy_file(file_to_copy_source, file_to_copy_destination);
       }
+
+      std::cout << "Finished reading symlinks (" << symlinks.size() << ")." << std::endl;
       return;
     body_dependency_symbols:
       - remove

@@ -146,6 +146,7 @@ std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_syml
 
 void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
 {
+   std::cout << "Reading symlinks... " << std::endl;
    std::vector<std::pair<std::string, std::string>> symlinks = list_symlinks();
 
    for (auto &symlink : symlinks)
@@ -163,6 +164,8 @@ void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
 
       copy_file(file_to_copy_source, file_to_copy_destination);
    }
+
+   std::cout << "Finished reading symlinks (" << symlinks.size() << ")." << std::endl;
    return;
 }
 
