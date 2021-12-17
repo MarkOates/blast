@@ -37,17 +37,11 @@ TEST(Blast_Project_SymlinkCheckerTest, is_symlink__returns_true_the_file_is_a_sy
    ASSERT_EQ(true, symlink_checker.is_symlink());
 }
 
-TEST(Blast_Project_SymlinkCheckerTest, is_symlink__if_symlink_does_not_exist__throws_an_error)
+TEST(Blast_Project_SymlinkCheckerTest, is_symlink__if_symlink_does_not_exist__returns_false)
 {
    std::string symlink_file = FIXTURE_PATH() + "quintessence/AComponentThatDoesNotExist.q.yml";
    Blast::Project::SymlinkChecker symlink_checker(symlink_file);
-   std::stringstream expected_error_message;
-   expected_error_message << "an error occurred when trying to read_symlink_target in " \
-                          << "Blast/Project/SymlinkChecker: The file \""
-                          << symlink_file
-                          << "\" does not exist.";
-
-   ASSERT_THROW_WITH_MESSAGE(symlink_checker.is_symlink(), std::runtime_error, expected_error_message.str());
+   ASSERT_EQ(false, symlink_checker.is_symlink());
 }
 
 TEST(Blast_Project_SymlinkCheckerTest, is_symlink__works_on_relative_fileanmes)
