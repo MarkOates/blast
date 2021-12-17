@@ -3,13 +3,11 @@
 
 #include <Blast/FileExistenceChecker.hpp>
 
-
 #ifdef _WIN32
-#define TEST_FIXTURES_DIRECTORY 'THIS/FILE/PATH/NOT/SET/FOR/WIN'
+#define TEST_FIXTURES_PATH "/msys64/home/Mark/Repos/blast/tests/fixtures/"
 #else
-#define TEST_FIXTURES_DIRECTORY "/Users/markoates/Repos/blast/bin/fixtures/";
+#define TEST_FIXTURES_PATH "/Users/markoates/Repos/blast/tests/fixtures/"
 #endif
-
 
 TEST(Blast_FileExistenceCheckerTest, can_be_created_without_blowing_up)
 {
@@ -18,8 +16,8 @@ TEST(Blast_FileExistenceCheckerTest, can_be_created_without_blowing_up)
 
 TEST(Blast_FileExistenceCheckerTest, exists__returns_true_for_regular_files)
 {
-   std::string test_fixtures_directory = TEST_FIXTURES_DIRECTORY;
-   std::string expected_file_to_exist = test_fixtures_directory + "file_that_exists.txt";
+   std::string test_fixtures_path = TEST_FIXTURES_PATH;
+   std::string expected_file_to_exist = test_fixtures_path + "file_that_exists.txt";
 
    Blast::FileExistenceChecker file_existence_checker(expected_file_to_exist);
    EXPECT_EQ(true, file_existence_checker.exists());
