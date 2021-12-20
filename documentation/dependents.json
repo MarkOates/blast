@@ -226,6 +226,9 @@
   "fgets": [
     "Blast/ShellCommandExecutorWithCallback"
   ],
+  "std/find_if": [
+    "Blast/String/Trimmer"
+  ],
   "char": [
     "Blast/StringSplitter"
   ],
