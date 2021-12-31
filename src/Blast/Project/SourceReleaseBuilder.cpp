@@ -56,14 +56,18 @@ void SourceReleaseBuilder::write_file_contents(std::string filename, std::string
 
 std::string SourceReleaseBuilder::get_makefile_content()
 {
-   std::string MAKEFILE_CONTENT = R"HEREDOC(SRC_FILES := $(shell find src -type f)
-   ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro -lallegro_main
-   main: $(SRC_FILES)
-   )HEREDOC";
-   MAKEFILE_CONTENT += "\t";
-   MAKEFILE_CONTENT += "g++ -std=c++17 $^ programs/" + project_name + ".cpp -o " + project_name
-                     + " -I./include $(ALLEGRO_LIBS)";
-   return MAKEFILE_CONTENT;
+   std::stringstream MAKEFILE_CONTENT;
+   MAKEFILE_CONTENT << "SRC_FILES := $(shell find src -type f)";
+   MAKEFILE_CONTENT << "ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog "
+                    << "-lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro "
+                    << "-lallegro_main" << std::endl
+                    << std::endl
+                    << "main: $(SRC_FILES)" << std::endl
+                    << "\t"
+                    << "g++ -std=c++17 $^ programs/" << project_name << ".cpp -o " << project_name
+                    << " -I./include $(ALLEGRO_LIBS)"
+                    ;
+   return MAKEFILE_CONTENT.str();
 }
 
 std::string SourceReleaseBuilder::get_pinfo_content()
