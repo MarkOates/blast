@@ -408,10 +408,17 @@ public:
       command << "mkdir \"" << project_name << "\"";
       return command.str();
    }
-   std::string mkprojdir(std::string dir)
+   std::string mkprojdir_and_keep_file(std::string dir)
    {
+      std::string full_dir_path = project_name + "/" + dir;
+
       std::stringstream command;
-      command << "mkdir \"" << project_name << "/" << dir << "\"";
+      command << "mkdir \"" << full_dir_path << "\""
+              << " && "
+              << "touch \"" << full_dir_path << "/.keep\""
+              << " && "
+              << "echo \"# keep\" " << full_dir_path << "/.keep";
+
       return command.str();
    }
 };
@@ -472,17 +479,17 @@ void create_gitignore(Generator &generator)
 void create_directories(Generator &generator)
 {
    system(generator.get_command_for_make_dir().c_str());
-   system(generator.mkprojdir("bin").c_str());
-   system(generator.mkprojdir("lib").c_str());
-   system(generator.mkprojdir("include").c_str());
-   system(generator.mkprojdir("examples").c_str());
-   system(generator.mkprojdir("documentation").c_str());
-   system(generator.mkprojdir(std::string("include/") + generator.get_project_name()).c_str());
-   system(generator.mkprojdir("obj").c_str());
-   system(generator.mkprojdir("programs").c_str());
-   system(generator.mkprojdir("src").c_str());
-   system(generator.mkprojdir("tests").c_str());
-   system(generator.mkprojdir("quintessence").c_str());
+   system(generator.mkprojdir_and_keep_file("bin").c_str());
+   system(generator.mkprojdir_and_keep_file("lib").c_str());
+   system(generator.mkprojdir_and_keep_file("include").c_str());
+   system(generator.mkprojdir_and_keep_file("examples").c_str());
+   system(generator.mkprojdir_and_keep_file("documentation").c_str());
+   system(generator.mkprojdir_and_keep_file(std::string("include/") + generator.get_project_name()).c_str());
+   system(generator.mkprojdir_and_keep_file("obj").c_str());
+   system(generator.mkprojdir_and_keep_file("programs").c_str());
+   system(generator.mkprojdir_and_keep_file("src").c_str());
+   system(generator.mkprojdir_and_keep_file("tests").c_str());
+   system(generator.mkprojdir_and_keep_file("quintessence").c_str());
 }
 
 
