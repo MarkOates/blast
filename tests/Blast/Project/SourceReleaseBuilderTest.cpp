@@ -46,15 +46,15 @@ TEST(Blast_Project_SourceReleaseBuilderTest, list_symlinks__returns_the_list_of_
 
 
 // this test has been disabled because it is destructive
-TEST(DISABLED_Blast_Project_SourceReleaseBuilderTest,
-   replace_symlinks_with_copies_of_linked_files__removes_the_symlinks_and_replaces_them_with_copies_of_the_symlink_targets)
+TEST(Blast_Project_SourceReleaseBuilderTest,
+   replace_symlinks_with_copies_of_linked_files__replaces_the_symlinks_with_copies_of_the_symlink_targets)
 {
-   Blast::Project::SourceReleaseBuilder release_builder("/Users/markoates/Desktop/SourceRelease");
+   Blast::Project::SourceReleaseBuilder release_builder;
    release_builder.replace_symlinks_with_copies_of_linked_files();
 }
 
 
-TEST(DISABLED_Blast_Project_SourceReleaseBuilderTest, generate_source_release__creates_the_expected_folder)
+TEST(DISABLED__Blast_Project_SourceReleaseBuilderTest, generate_source_release__creates_the_expected_folder)
 {
    std::string folder = "/Users/markoates/Desktop/SourceReleaseTest";
 

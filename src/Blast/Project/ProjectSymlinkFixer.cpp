@@ -45,7 +45,7 @@ bool ProjectSymlinkFixer::starts_with(std::string source, std::string string_to_
 int ProjectSymlinkFixer::has_one_line(std::string filename)
 {
    std::string s;
-   int sTotal;
+   int sTotal = 0;
 
    std::ifstream in;
    in.open(filename);
@@ -171,14 +171,44 @@ void ProjectSymlinkFixer::run()
 
          std::string prefix = "";
 
+         #ifdef _WIN32
+         bool do_symlink_fixing_for_win = true;
+         #else
+         bool do_symlink_fixing_for_win = false;
+         #endif
+
 
          if (starts_with(symlink_target, MAGIC_STRING))
          {
             prefix = MAGIC_STRING;
             // this means it's a hard-coded target path
             // TODO: make this ../../../ instead count the proper number of "../" elements to prefix
-            sanitized_target.replace(0, std::string(prefix).length(), "../../../");
-            std::cout << "!!!!!";
+
+            if (do_symlink_fixing_for_win)
+            {
+               // NOTE. This ProjectSymlinkFixer tool is used for two different purposes.  One is
+               // inside a Windows environment, to fix symlinks from project trees that enter the system
+               // from outside OS environments, for example, projects that are developed in a MacOS
+               // environment and then cloned into a Windows environment for development and testing.
+               // There tends to be an asymmetry in how symlinks are implemented across these platforms.
+               // So, for the time being, this tool will use this "prefix" patch in this if branch for
+               // that purpose...
+               sanitized_target.replace(0, std::string(prefix).length(), "../../../");
+            }
+            else
+            {
+               //... However, in the use case in *this* conditional branch, the ProjectSymlinkFixer is used
+               // by the SourceReleaseBuilder, which combs through the directory in the release folder and
+               // swaps out symlinks with their real sources.  In this case, the relative path name
+               // that already exists inside the symlink file will not accurately point to the target
+               // because the "releaser" process (the process for the SourceReleaseBuilder) copies the
+               // symlinks to a fresh destination folder to assemble the release.  In this case
+               // this "ProjectSymlinkFixer" nees to replace the symlink target path in the file
+               // with a full hard-coded pathname, and that's the use case for this branch
+               // Note that the releaser is used so infrequently and has very specific use cases that
+               // the process has not been coded to be flexible.
+               sanitized_target.replace(0, std::string(prefix).length(), "/Users/markoates/Repos/");
+            }
          }
 
          fs::remove(p.path());

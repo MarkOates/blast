@@ -714,6 +714,9 @@ table td
   <td class="method">list_symlinks()</td>
 </tr>
 <tr>
+  <td class="method">fix_symlink_targets_from_relative_to_absolute()</td>
+</tr>
+<tr>
   <td class="method">replace_symlinks_with_copies_of_linked_files()</td>
 </tr>
 <tr>
@@ -759,6 +762,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ShellCommandExecutorWithCallback&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ShellCommandExecutorWithCallback.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Project::ProjectSymlinkFixer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Project/ProjectSymlinkFixer.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -1268,6 +1274,9 @@ table td
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/DirectoryCreator": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/Project/ProjectSymlinkFixer": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [
