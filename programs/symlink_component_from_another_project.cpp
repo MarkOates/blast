@@ -5,6 +5,8 @@
 #include <sstream>
 #include <algorithm> // for std::count
 #include <Blast/TemplatedFile.hpp>
+#include <Blast/StringSplitter.hpp>
+#include <Blast/StringJoiner.hpp>
 
 
 std::vector<std::string> args;
@@ -19,9 +21,25 @@ std::string repeat(std::string s, int n)
 
 std::string directory_to(std::string component_name)
 {
-   std::string::size_type pos = component_name.find_first_of('/');
+   const char COMPONENT_FRAGMENT_DELIMITER = '/';
+   std::string directory_delimiter = "/";
+
+   std::string::size_type pos = component_name.find_first_of(COMPONENT_FRAGMENT_DELIMITER);
    if (pos == std::string::npos) return ".";
-   return component_name.substr(0, pos);
+
+   std::vector<std::string> component_name_fragments = Blast::StringSplitter(component_name, COMPONENT_FRAGMENT_DELIMITER).split();
+   if (component_name_fragments.empty())
+   {
+      std::string error_message = "Unexpected path to this error.  The Delimiter '/' has resulted in " \
+                                  "no tokens, though at least 2 are expected.";
+      throw std::runtime_error(error_message);
+   }
+
+   component_name_fragments.pop_back();
+
+   std::string result = Blast::StringJoiner(component_name_fragments, directory_delimiter).join();
+
+   return result;
 }
 
 int main(int argc, char **argv)
