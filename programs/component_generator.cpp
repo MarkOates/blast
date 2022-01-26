@@ -82,6 +82,13 @@ functions:
     virtual: true
     override: true
     body: |
+      placement3d &place = get_place();
+      place.start_transform();
+
+      //This::Component::Renderer renderer;
+      //renderer.render();
+
+      place.restore_transform();
       return;
     body_dependency_symbols: []
 
@@ -134,13 +141,6 @@ std::string STAGE_TEST_FILE_CONTENT = R"END(
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
 {
    [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-}
-
-TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], render__does_not_blow_up)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-   [[COMPONENT_BASENAME_SNAKE_CASE]].render();
-   SUCCEED();
 }
 
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], process_local_event__does_not_blow_up)
