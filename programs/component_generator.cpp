@@ -184,7 +184,6 @@ int main(int argc, char **argv)
    // create the component generator
    ComponentGenerator generator(argv[1]);
 
-
    // create the folders for the components
    std::cout << "Making sure necessary folders are present...";
    create_directory(generator.get_quintessence_foldername());
