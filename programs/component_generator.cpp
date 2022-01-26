@@ -317,6 +317,8 @@ int main(int argc, char **argv)
       { "renderer", QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
    };
 
+   std::string dictionary_identifier_to_use = "standard_component";
+
    // parse the args into args
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
 
@@ -324,11 +326,43 @@ int main(int argc, char **argv)
    if (args.size() <= 1)
    {
       std::stringstream error_message;
+      error_message << std::endl;
       error_message << "You must pass a component name.  This component name should include its nested folders "
                     << "like \"Foobar/Bar/Bazz\" where \"Foobar/Bar\" are the folders and \"Bazz\" is the name "
                     << "of the component.";
+      error_message << std::endl;
+      error_message << "Optionally, you can also pass as a second argument for a template set to use when generating your component.  The options are:"
+                    << std::endl;
+      for (auto &dictionary_listing : dictionary)
+      {
+         error_message << "   - \"" << dictionary_listing.first << "\"" << std::endl;
+      }
+      error_message << std::endl;
       throw std::runtime_error(error_message.str());
    }
+
+   // snag the second arg, and set it to the "dictionary_identifier_to_use"
+   if (args.size() >= 2)
+   {
+      dictionary_identifier_to_use = args[2];
+   }
+
+   // validate "dictionary_identifier_to_use" is in the dictionary
+   std::map<std::string, QuintessenceTestTemplatePair>::iterator it = dictionary.find(dictionary_identifier_to_use);
+   if (it == dictionary.end())
+   {
+      std::stringstream error_message;
+      error_message << "As your second argument, you passed in an invalid template name \"" << dictionary_identifier_to_use << "\""
+                    << std::endl;
+      error_message << "The valid options are:"
+                    << std::endl;
+      for (auto &dictionary_listing : dictionary)
+      {
+         error_message << "   - \"" << dictionary_listing.first << "\"" << std::endl;
+      }
+      throw std::runtime_error(error_message.str());
+   }
+
 
    // create the component generator
    ComponentGenerator generator(argv[1]);
@@ -353,8 +387,8 @@ int main(int argc, char **argv)
 
    // create a list of files to be generated
    // filename, template_text, outfile stream
-   std::string quintessence_template_content = dictionary["standard_component"].quintessence_template_content;
-   std::string test_template_content = dictionary["standard_component"].test_template_content;
+   std::string quintessence_template_content = dictionary[dictionary_identifier_to_use].quintessence_template_content;
+   std::string test_template_content = dictionary[dictionary_identifier_to_use].test_template_content;
 
    std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
       { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
