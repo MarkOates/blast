@@ -236,7 +236,8 @@ int main(int argc, char **argv)
    {
       std::string template_text = outfile.second.first;
       std::ofstream *outfile_stream = outfile.second.second;
-      Blast::TemplatedFile templated_quintessence_file(template_text, template_var_and_replacement_set);
+      Blast::TemplatedFile templated_file(template_text, template_var_and_replacement_set);
+      (*outfile_stream) << templated_file.generate_content();
       outfile_stream->close();
    }
 
