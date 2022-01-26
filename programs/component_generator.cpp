@@ -207,9 +207,9 @@ int main(int argc, char **argv)
    outfile2.open(generator.get_test_filename(), std::ios::binary);
 
    // create a list of files to be generated
-   std::map<std::string, std::ofstream *> outfiles = {
-      { generator.get_quintessence_filename(), &outfile1 },
-      { generator.get_test_filename(), &outfile2 },
+   std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
+      { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(QUINTESSENCE_FILE_CONTENT, &outfile1) },
+      { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(TEST_FILE_CONTENT, &outfile2) },
    };
 
    // validate that the created files have been opened and are ready for writing
@@ -217,7 +217,7 @@ int main(int argc, char **argv)
    std::stringstream outfiles_that_cannot_be_opened;
    for (auto &outfile : outfiles)
    {
-      if (!outfile.second->is_open())
+      if (!outfile.second.second->is_open())
       {
          outfiles_can_be_opened = false;
          outfiles_that_cannot_be_opened << outfile.first << ", ";
@@ -232,15 +232,24 @@ int main(int argc, char **argv)
       throw std::runtime_error(error_message.str());
    }
 
-   // write the quintessence file content to the file and close it (the file currently has not templated replacement strings)
-   Blast::TemplatedFile templated_quintessence_file(QUINTESSENCE_FILE_CONTENT, template_var_and_replacement_set);
-   outfile1 << templated_quintessence_file.generate_content();
-   outfile1.close();
+   for (auto &outfile : outfiles)
+   {
+      std::string template_text = outfile.second.first;
+      std::ofstream *outfile_stream = outfile.second.second;
+      Blast::TemplatedFile templated_quintessence_file(template_text, template_var_and_replacement_set);
+      outfile_stream->close();
+   }
 
-   // take a test file template, replace the replacement strings, write the contents to the file and close it
-   Blast::TemplatedFile templated_test_file(TEST_FILE_CONTENT, template_var_and_replacement_set);
-   outfile2 << templated_test_file.generate_content();
-   outfile2.close();
+
+   //// write the quintessence file content to the file and close it (the file currently has not templated replacement strings)
+   //Blast::TemplatedFile templated_quintessence_file(QUINTESSENCE_FILE_CONTENT, template_var_and_replacement_set);
+   //outfile1 << templated_quintessence_file.generate_content();
+   //outfile1.close();
+
+   //// take a test file template, replace the replacement strings, write the contents to the file and close it
+   //Blast::TemplatedFile templated_test_file(TEST_FILE_CONTENT, template_var_and_replacement_set);
+   //outfile2 << templated_test_file.generate_content();
+   //outfile2.close();
 
    // output success
    std::stringstream finish_message;
