@@ -212,8 +212,10 @@ int main(int argc, char **argv)
    // create the pointers to the ofstreams
    for (auto &outfile : outfiles)
    {
+      std::string filename = outfile.first;
       std::ofstream *outfile_stream = new std::ofstream();
       outfile.second.second = outfile_stream;
+      outfile.second.second->open(filename, std::ios::binary);
    }
 
    // validate that the created files have been opened and are ready for writing
@@ -242,16 +244,26 @@ int main(int argc, char **argv)
       std::ofstream *outfile_stream = outfile.second.second;
       Blast::TemplatedFile templated_file(template_text, template_var_and_replacement_set);
       (*outfile_stream) << templated_file.generate_content();
+   }
+
+   // delete the outfiles
+   for (auto &outfile : outfiles)
+   {
+      std::ofstream *outfile_stream = outfile.second.second;
       outfile_stream->close();
+      delete outfile_stream;
+      outfile.second.second = nullptr;
    }
 
    // output success
    std::stringstream finish_message;
    finish_message << "✅ Component files generated:" << std::endl;
-   finish_message << "* " << generator.get_quintessence_filename() << std::endl
-                  << "* " << generator.get_test_filename() << std::endl
-                  << "generated." << std::endl;
-
+   for (auto &outfile : outfiles)
+   {
+      std::string filename = outfile.first;
+      finish_message << "  - " << filename << std::endl;
+   }
+   finish_message << "generated." << std::endl;
    std::cout << finish_message.str() << std::endl;
 
    return 0;
