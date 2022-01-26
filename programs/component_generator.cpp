@@ -166,6 +166,22 @@ bool create_directory(std::string dir)
 
 
 
+class OutputSet
+{
+public:
+   ComponentGenerator generator;
+   std::string template_text;
+   std::ofstream *output_stream;
+
+   OutputSet(std::string component_name, std::string template_text)
+      : generator(component_name)
+      , template_text(template_text)
+      , output_stream(nullptr)
+   {}
+};
+
+
+
 int main(int argc, char **argv)
 {
    // parse the args into args
