@@ -168,41 +168,47 @@ bool create_directory(std::string dir)
 
 int main(int argc, char **argv)
 {
+   // parse the args into args
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
 
+   // validate invalid number of args
    if (args.size() <= 1) throw std::runtime_error("You must pass a component name.  This component name should include its nested folders like \"Foobar/Bar/Bazz\" where \"Foobar/Bar\" are the folders and \"Bazz\" is the name of the component.");
 
+   // create the component generator
    ComponentGenerator generator(argv[1]);
 
-   // make the quintessence file
 
+   // create the folders for the components
    std::cout << "Making sure necessary folders are present...";
    create_directory(generator.get_quintessence_foldername());
    create_directory(generator.get_test_foldername());
    std::cout << "...component folders created.";
 
+   // open the files for dumping
    std::cout << "Generating component files..." << std::endl;
    std::ofstream outfile4;
    outfile4.open(generator.get_quintessence_filename(), std::ios::binary);
    std::ofstream outfile7;
    outfile7.open(generator.get_test_filename(), std::ios::binary);
 
+   // create a list of files to be generated
    std::map<std::string, std::ofstream *> outfiles = {
       { generator.get_quintessence_filename(), &outfile4 },
       { generator.get_test_filename(), &outfile7 },
    };
 
+   // validate that the created files have been opened and are ready for writing
    bool outfiles_can_be_opened = true;
    std::stringstream outfiles_that_cannot_be_opened;
-
    for (auto &outfile : outfiles)
+   {
       if (!outfile.second->is_open())
       {
          outfiles_can_be_opened = false;
          outfiles_that_cannot_be_opened << outfile.first << ", ";
          break;
       }
-
+   }
    if (!outfiles_can_be_opened)
    {
       std::stringstream error_message;
@@ -211,9 +217,11 @@ int main(int argc, char **argv)
       throw std::runtime_error(error_message.str());
    }
 
+   // write the quintessence file content to the file and close it (the file currently has not templated replacement strings)
    outfile4 << QUINTESSENCE_FILE_CONTENT;
    outfile4.close();
 
+   // take a test file template, replace the replacement strings, write the contents to the file and close it
    Blast::TemplatedFile templated_test_file(TEST_FILE_CONTENT, {
       { "[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]", generator.get_header_filename() },
       { "[[COMPONENT_TEST_DESCRIPTION_NAME]]", generator.get_google_test_description_prefix() },
@@ -221,10 +229,10 @@ int main(int argc, char **argv)
       { "[[COMPONENT_BASENAME_SNAKE_CASE]]", generator.get_component_tail_snakecase() },
       { "[[COMPONENT_AS_ALL_CAPS_CONSTANT]]", generator.get_component_tail_all_caps_constant() },
    });
-
    outfile7 << templated_test_file.generate_content();
    outfile7.close();
 
+   // output success
    std::stringstream finish_message;
    finish_message << "✅ Component files generated:" << std::endl;
    finish_message << "* " << generator.get_quintessence_filename() << std::endl
