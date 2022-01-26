@@ -312,7 +312,7 @@ public:
 int main(int argc, char **argv)
 {
    std::map<std::string, QuintessenceTestTemplatePair> dictionary = {
-      { "component", QuintessenceTestTemplatePair(QUINTESSENCE_FILE_CONTENT, TEST_FILE_CONTENT) },
+      { "standard_component", QuintessenceTestTemplatePair(QUINTESSENCE_FILE_CONTENT, TEST_FILE_CONTENT) },
       { "stage", QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
       { "renderer", QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
    };
@@ -353,8 +353,8 @@ int main(int argc, char **argv)
 
    // create a list of files to be generated
    // filename, template_text, outfile stream
-   std::string quintessence_template_content = dictionary["component"].quintessence_template_content;
-   std::string test_template_content = dictionary["component"].test_template_content;
+   std::string quintessence_template_content = dictionary["standard_component"].quintessence_template_content;
+   std::string test_template_content = dictionary["standard_component"].test_template_content;
 
    std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
       { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
