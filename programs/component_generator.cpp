@@ -201,17 +201,20 @@ int main(int argc, char **argv)
 
    // open the files for dumping
    std::cout << "Generating component files..." << std::endl;
-   std::ofstream outfile1;
-   outfile1.open(generator.get_quintessence_filename(), std::ios::binary);
-   std::ofstream outfile2;
-   outfile2.open(generator.get_test_filename(), std::ios::binary);
 
    // create a list of files to be generated
    // filename, template_text, outfile stream
    std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
-      { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(QUINTESSENCE_FILE_CONTENT, &outfile1) },
-      { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(TEST_FILE_CONTENT, &outfile2) },
+      { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(QUINTESSENCE_FILE_CONTENT, nullptr) },
+      { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(TEST_FILE_CONTENT, nullptr) },
    };
+
+   // create the pointers to the ofstreams
+   for (auto &outfile : outfiles)
+   {
+      std::ofstream *outfile_stream = new std::ofstream();
+      outfile.second.second = outfile_stream;
+   }
 
    // validate that the created files have been opened and are ready for writing
    bool outfiles_can_be_opened = true;
