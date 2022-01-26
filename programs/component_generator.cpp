@@ -276,7 +276,7 @@ public:
    std::string quintessence_template_content;
    std::string test_template_content;
 
-   QuintessenceTestTemplatePair(std::string quintessence_template_content, std::string test_template_content)
+   QuintessenceTestTemplatePair(std::string quintessence_template_content="", std::string test_template_content="")
       : quintessence_template_content(quintessence_template_content)
       , test_template_content(test_template_content)
    {}
@@ -312,9 +312,9 @@ public:
 int main(int argc, char **argv)
 {
    std::map<std::string, QuintessenceTestTemplatePair> dictionary = {
-      { "component", { QUINTESSENCE_FILE_CONTENT, TEST_FILE_CONTENT } },
-      { "stage", { STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT } },
-      { "renderer", { RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT } },
+      { "component", QuintessenceTestTemplatePair(QUINTESSENCE_FILE_CONTENT, TEST_FILE_CONTENT) },
+      { "stage", QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
+      { "renderer", QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
    };
 
    // parse the args into args
@@ -353,9 +353,12 @@ int main(int argc, char **argv)
 
    // create a list of files to be generated
    // filename, template_text, outfile stream
+   std::string quintessence_template_content = dictionary["component"].quintessence_template_content;
+   std::string test_template_content = dictionary["component"].test_template_content;
+
    std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
-      { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(QUINTESSENCE_FILE_CONTENT, nullptr) },
-      { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(TEST_FILE_CONTENT, nullptr) },
+      { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
+      { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
    };
 
    // create the pointers to the ofstreams
