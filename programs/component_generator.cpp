@@ -221,35 +221,35 @@ std::string const RENDERER_TEST_FILE_CONTENT = R"END(
 
 #include <Testing/WithAllegroRenderingFixture.hpp>
 
-class Hexagon_Elements_QuoteRendererTestWithEmptyFixture : public ::testing::Test
+class [[COMPONENT_TEST_DESCRIPTION_NAME]] : public ::testing::Test
 {};
 
-class Hexagon_Elements_QuoteRendererTestWithAllegroRenderingFixture : public Testing::WithAllegroRenderingFixture
+class [[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture : public Testing::WithAllegroRenderingFixture
 {};
 
 
-#include <Hexagon/Elements/QuoteRenderer.hpp>
+#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
 
 
-TEST_F(Hexagon_Elements_QuoteRendererTestWithEmptyFixture, can_be_created_without_blowing_up)
+TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
 {
-   Hexagon::Elements::QuoteRenderer quote_renderer;
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
 }
 
 
-TEST_F(Hexagon_Elements_QuoteRendererTestWithEmptyFixture, render__without_allegro_initialized__raises_an_error)
+TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], render__without_allegro_initialized__raises_an_error)
 {
-   Hexagon::Elements::QuoteRenderer quote_renderer;
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
    std::string expected_error_message =
-      "QuoteRenderer::render: error: guard \"al_is_system_installed()\" not met";
-   ASSERT_THROW_WITH_MESSAGE(quote_renderer.render(), std::runtime_error, expected_error_message);
+      "XXXXXXX::render: error: guard \"al_is_system_installed()\" not met";
+   ASSERT_THROW_WITH_MESSAGE([[COMPONENT_BASENAME_SNAKE_CASE]].render(), std::runtime_error, expected_error_message);
 }
 
 
-TEST_F(Hexagon_Elements_QuoteRendererTestWithAllegroRenderingFixture, render__will_not_blow_up)
+TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture, render__will_not_blow_up)
 {
-   Hexagon::Elements::QuoteRenderer quote_renderer;
-   quote_renderer.render();
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+   [[COMPONENT_BASENAME_SNAKE_CASE]].render();
    SUCCEED();
 }
 
