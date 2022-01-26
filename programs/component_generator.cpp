@@ -192,15 +192,15 @@ int main(int argc, char **argv)
 
    // open the files for dumping
    std::cout << "Generating component files..." << std::endl;
-   std::ofstream outfile4;
-   outfile4.open(generator.get_quintessence_filename(), std::ios::binary);
-   std::ofstream outfile7;
-   outfile7.open(generator.get_test_filename(), std::ios::binary);
+   std::ofstream outfile1;
+   outfile1.open(generator.get_quintessence_filename(), std::ios::binary);
+   std::ofstream outfile2;
+   outfile2.open(generator.get_test_filename(), std::ios::binary);
 
    // create a list of files to be generated
    std::map<std::string, std::ofstream *> outfiles = {
-      { generator.get_quintessence_filename(), &outfile4 },
-      { generator.get_test_filename(), &outfile7 },
+      { generator.get_quintessence_filename(), &outfile1 },
+      { generator.get_test_filename(), &outfile2 },
    };
 
    // validate that the created files have been opened and are ready for writing
@@ -224,8 +224,8 @@ int main(int argc, char **argv)
    }
 
    // write the quintessence file content to the file and close it (the file currently has not templated replacement strings)
-   outfile4 << QUINTESSENCE_FILE_CONTENT;
-   outfile4.close();
+   outfile1 << QUINTESSENCE_FILE_CONTENT;
+   outfile1.close();
 
    // take a test file template, replace the replacement strings, write the contents to the file and close it
    Blast::TemplatedFile templated_test_file(TEST_FILE_CONTENT, {
@@ -235,8 +235,8 @@ int main(int argc, char **argv)
       { "[[COMPONENT_BASENAME_SNAKE_CASE]]", generator.get_component_tail_snakecase() },
       { "[[COMPONENT_AS_ALL_CAPS_CONSTANT]]", generator.get_component_tail_all_caps_constant() },
    });
-   outfile7 << templated_test_file.generate_content();
-   outfile7.close();
+   outfile2 << templated_test_file.generate_content();
+   outfile2.close();
 
    // output success
    std::stringstream finish_message;
