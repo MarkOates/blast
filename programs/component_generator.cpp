@@ -133,7 +133,7 @@ std::string STAGE_TEST_FILE_CONTENT = R"END(
 
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
 {
-   Hexagon::AdvancedCodeEditor::Stage stage;
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
 }
 
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], render__does_not_blow_up)
