@@ -207,6 +207,7 @@ int main(int argc, char **argv)
    outfile2.open(generator.get_test_filename(), std::ios::binary);
 
    // create a list of files to be generated
+   // filename, template_text, outfile stream
    std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
       { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(QUINTESSENCE_FILE_CONTENT, &outfile1) },
       { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(TEST_FILE_CONTENT, &outfile2) },
@@ -240,17 +241,6 @@ int main(int argc, char **argv)
       (*outfile_stream) << templated_file.generate_content();
       outfile_stream->close();
    }
-
-
-   //// write the quintessence file content to the file and close it (the file currently has not templated replacement strings)
-   //Blast::TemplatedFile templated_quintessence_file(QUINTESSENCE_FILE_CONTENT, template_var_and_replacement_set);
-   //outfile1 << templated_quintessence_file.generate_content();
-   //outfile1.close();
-
-   //// take a test file template, replace the replacement strings, write the contents to the file and close it
-   //Blast::TemplatedFile templated_test_file(TEST_FILE_CONTENT, template_var_and_replacement_set);
-   //outfile2 << templated_test_file.generate_content();
-   //outfile2.close();
 
    // output success
    std::stringstream finish_message;
