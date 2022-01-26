@@ -6,13 +6,16 @@
     "Blast/Build/Celebrator"
   ],
   "std/transform": [
+    "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter",
     "Blast/StringUpcaser"
   ],
   "isupper": [
+    "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter"
   ],
   "islower": [
+    "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter"
   ],
   "std/vector<Blast/Cpp/FunctionArgument>": [

@@ -24,6 +24,7 @@ public:
    std::string get_program_body_class_name();
    std::string get_command_for_make_dir();
    std::string get_component_tail_snakecase();
+   std::string get_component_tail_all_caps_constant();
 
    bool generate();
 };

@@ -3,6 +3,7 @@
 
 #include <Blast/Quintessence/ComponentGenerator.hpp>
 #include <Blast/CamelCaseToUnderscoreConverter.hpp>
+#include <Blast/CamelCaseToConstantConverter.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/StringJoiner.hpp>
 
@@ -129,6 +130,16 @@ std::string ComponentGenerator::get_component_tail_snakecase()
    if (tokens.empty()) throw std::runtime_error("error extracting component_basemane_tail; extracted tokens appear to be empty");
    std::string component_tail = tokens.back();
    return Blast::CamelCaseToUnderscoreConverter(component_tail).convert_to_underscores();
+}
+
+
+
+std::string ComponentGenerator::get_component_tail_all_caps_constant()
+{
+   std::vector<std::string> tokens = Blast::StringSplitter(get_component_name(), '/').split();
+   if (tokens.empty()) throw std::runtime_error("error extracting component_basemane_tail; extracted tokens appear to be empty");
+   std::string component_tail = tokens.back();
+   return Blast::CamelCaseToConstantConverter(component_tail).convert_to_constant();
 }
 
 

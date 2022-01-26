@@ -51,6 +51,7 @@ table td
 <ul>
   <li><a href="#quintessence/Blast/BinaryObfusicator.q.yml">quintessence/Blast/BinaryObfusicator.q.yml</a></li>
   <li><a href="#quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</a></li>
+  <li><a href="#quintessence/Blast/CamelCaseToConstantConverter.q.yml">quintessence/Blast/CamelCaseToConstantConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</a></li>
   <li><a href="#quintessence/Blast/DirectoryCreator.q.yml">quintessence/Blast/DirectoryCreator.q.yml</a></li>
@@ -110,6 +111,33 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::setw&quot;, &quot;headers&quot;=&gt;[&quot;iomanip&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/CamelCaseToConstantConverter.q.yml">quintessence/Blast/CamelCaseToConstantConverter.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">str</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">convert_to_constant()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::transform&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;isupper&quot;, &quot;headers&quot;=&gt;[&quot;cctype&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;islower&quot;, &quot;headers&quot;=&gt;[&quot;cctype&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -1117,13 +1145,16 @@ table td
     "Blast/Build/Celebrator"
   ],
   "std/transform": [
+    "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter",
     "Blast/StringUpcaser"
   ],
   "isupper": [
+    "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter"
   ],
   "islower": [
+    "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter"
   ],
   "std/vector<Blast/Cpp/FunctionArgument>": [

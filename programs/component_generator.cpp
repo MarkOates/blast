@@ -23,6 +23,110 @@ std::string const QUINTESSENCE_FILE_CONTENT = R"END(functions:
 
 
 
+std::string const STAGE_QUINTESSENCE_FILE_CONTENT = R"END(parent_classes:
+
+
+  - class: 'StageInterface'
+    scope: public
+    init_with: "StageInterface::[[COMPONENT_AS_ALL_CAPS_CONSTANT]]"
+
+
+properties:
+
+
+  - name: a_default_empty_event
+    static: true
+    type: ALLEGRO_EVENT
+    init_with: "{}"
+    getter_ref: true
+
+
+functions:
+
+
+  - name: render
+    virtual: true
+    override: true
+    body: |
+      return;
+    body_dependency_symbols: []
+
+
+  - name: process_local_event
+    virtual: true
+    override: true
+    parameters:
+      - name: event_name
+        type: std::string
+        default_argument: '""'
+      - name: action_data
+        type: ActionData
+        default_argument: "ActionData()"
+    body: |
+      return;
+
+
+  - name: process_event
+    virtual: true
+    override: true
+    parameters:
+      - name: event
+        type: ALLEGRO_EVENT&
+        default_argument: "get_a_default_empty_event_ref()"
+    body: |
+      return;
+
+
+dependencies:
+
+
+  - symbol: StageInterface
+    headers: [ Hexagon/StageInterface.hpp ]
+  - symbol: ALLEGRO_EVENT
+    headers: [ allegro5/allegro.h ]
+  - symbol: ALLEGRO_EVENT&
+    headers: [ allegro5/allegro.h ]
+  - symbol: ActionData
+    headers: [ Hexagon/ActionData.hpp ]
+
+)END";
+
+
+
+std::string STAGE_TEST_FILE_CONTENT = R"END(
+#include <gtest/gtest.h>
+
+#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
+{
+   Hexagon::AdvancedCodeEditor::Stage stage;
+}
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], render__does_not_blow_up)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+   [[COMPONENT_BASENAME_SNAKE_CASE]].render();
+   SUCCEED();
+}
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], process_local_event__does_not_blow_up)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+   [[COMPONENT_BASENAME_SNAKE_CASE]].process_local_event();
+   SUCCEED();
+}
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], process_event__does_not_blow_up)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+   [[COMPONENT_BASENAME_SNAKE_CASE]].process_event();
+   SUCCEED();
+}
+)END";
+
+
+
 std::string TEST_FILE_CONTENT = R"END(
 #include <gtest/gtest.h>
 
@@ -115,6 +219,7 @@ int main(int argc, char **argv)
       { "[[COMPONENT_TEST_DESCRIPTION_NAME]]", generator.get_google_test_description_prefix() },
       { "[[COMPONENT_CLASS_NAME]]", generator.get_program_body_class_name() },
       { "[[COMPONENT_BASENAME_SNAKE_CASE]]", generator.get_component_tail_snakecase() },
+      { "[[COMPONENT_AS_ALL_CAPS_CONSTANT]]", generator.get_component_tail_all_caps_constant() },
    });
 
    outfile7 << templated_test_file.generate_content();
