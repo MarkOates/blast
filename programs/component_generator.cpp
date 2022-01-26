@@ -223,18 +223,22 @@ int main(int argc, char **argv)
       throw std::runtime_error(error_message.str());
    }
 
-   // write the quintessence file content to the file and close it (the file currently has not templated replacement strings)
-   outfile1 << QUINTESSENCE_FILE_CONTENT;
-   outfile1.close();
-
-   // take a test file template, replace the replacement strings, write the contents to the file and close it
-   Blast::TemplatedFile templated_test_file(TEST_FILE_CONTENT, {
+   // create the template variable and eplacement set
+   std::vector<std::pair<std::string, std::string>> template_var_and_replacement_set = {
       { "[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]", generator.get_header_filename() },
       { "[[COMPONENT_TEST_DESCRIPTION_NAME]]", generator.get_google_test_description_prefix() },
       { "[[COMPONENT_CLASS_NAME]]", generator.get_program_body_class_name() },
       { "[[COMPONENT_BASENAME_SNAKE_CASE]]", generator.get_component_tail_snakecase() },
       { "[[COMPONENT_AS_ALL_CAPS_CONSTANT]]", generator.get_component_tail_all_caps_constant() },
-   });
+   };
+
+   // write the quintessence file content to the file and close it (the file currently has not templated replacement strings)
+   Blast::TemplatedFile templated_quintessence_file(QUINTESSENCE_FILE_CONTENT, template_var_and_replacement_set);
+   outfile1 << templated_quintessence_file.generate_content();
+   outfile1.close();
+
+   // take a test file template, replace the replacement strings, write the contents to the file and close it
+   Blast::TemplatedFile templated_test_file(TEST_FILE_CONTENT, template_var_and_replacement_set);
    outfile2 << templated_test_file.generate_content();
    outfile2.close();
 
