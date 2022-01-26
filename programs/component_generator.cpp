@@ -172,7 +172,14 @@ int main(int argc, char **argv)
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
 
    // validate invalid number of args
-   if (args.size() <= 1) throw std::runtime_error("You must pass a component name.  This component name should include its nested folders like \"Foobar/Bar/Bazz\" where \"Foobar/Bar\" are the folders and \"Bazz\" is the name of the component.");
+   if (args.size() <= 1)
+   {
+      std::stringstream error_message;
+      error_message << "You must pass a component name.  This component name should include its nested folders "
+                    << "like \"Foobar/Bar/Bazz\" where \"Foobar/Bar\" are the folders and \"Bazz\" is the name "
+                    << "of the component.";
+      throw std::runtime_error(error_message.str());
+   }
 
    // create the component generator
    ComponentGenerator generator(argv[1]);
