@@ -342,7 +342,7 @@ int main(int argc, char **argv)
    }
 
    // snag the second arg, and set it to the "dictionary_identifier_to_use"
-   if (args.size() >= 2)
+   if (args.size() >= 3)
    {
       dictionary_identifier_to_use = args[2];
    }
