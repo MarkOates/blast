@@ -4,6 +4,7 @@
 #include <Blast/Project/ComponentLister.hpp>
 #include <sstream>
 #include <algorithm>
+#include <iostream>
 #include <yaml-cpp/yaml.h>
 #include <stdexcept>
 #include <sstream>
@@ -54,7 +55,7 @@ std::vector<std::string> ComponentDependencyLister::list_component_dependency_na
       error_message << "[Blast::Project::ComponentDependencyLister error] "
                     << "cannot list_component_dependency_names; The component \""
                     << component->get_name() << "\" must have a quintessence (until further support is added).";
-      throw std::runtime_error(error_message.str());
+      std::cout << error_message.str() << std::endl; //throw std::runtime_error(error_message.str());
    }
 
    std::vector<std::string> results;
