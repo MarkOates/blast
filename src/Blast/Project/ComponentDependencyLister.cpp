@@ -39,6 +39,8 @@ std::vector<std::string> ComponentDependencyLister::list_component_dependency_na
          error_message << "ComponentDependencyLister" << "::" << "list_component_dependency_names" << ": error: " << "guard \"component\" not met";
          throw std::runtime_error(error_message.str());
       }
+   std::vector<std::string> results;
+
    // TODO: move this to guard
    if (!component->exists())
    {
@@ -56,9 +58,9 @@ std::vector<std::string> ComponentDependencyLister::list_component_dependency_na
                     << "cannot list_component_dependency_names; The component \""
                     << component->get_name() << "\" must have a quintessence (until further support is added).";
       std::cout << error_message.str() << std::endl; //throw std::runtime_error(error_message.str());
+      results.push_back("[dependencies-listing-only-supported-for-quintessence]");
+      return results;
    }
-
-   std::vector<std::string> results;
 
    std::string quintessence_full_filename = get_component_quintessence_full_filename();
    YAML::Node loaded_file = YAML::LoadFile(quintessence_full_filename);
