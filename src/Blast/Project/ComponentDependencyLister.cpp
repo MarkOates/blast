@@ -25,19 +25,19 @@ ComponentDependencyLister::~ComponentDependencyLister()
 }
 
 
-std::vector<std::string> ComponentDependencyLister::list_component_relative_names()
+std::vector<std::string> ComponentDependencyLister::list_component_dependency_names()
 {
    if (!(component))
       {
          std::stringstream error_message;
-         error_message << "ComponentDependencyLister" << "::" << "list_component_relative_names" << ": error: " << "guard \"component\" not met";
+         error_message << "ComponentDependencyLister" << "::" << "list_component_dependency_names" << ": error: " << "guard \"component\" not met";
          throw std::runtime_error(error_message.str());
       }
    if (!component->exists())
    {
       std::stringstream error_message;
       error_message << "[Blast::Project::ComponentDependencyLister error] "
-                    << "cannot list_component_relative_names; The component \""
+                    << "cannot list_component_dependency_names; The component \""
                     << component->get_name() << "\" does not exist";
       throw std::runtime_error(error_message.str());
    }

@@ -10,7 +10,7 @@ properties:
 functions:
 
 
-  - name: list_component_relative_names
+  - name: list_component_dependency_names
     type: std::vector<std::string>
     guards: [ component ]
     body: |
@@ -18,7 +18,7 @@ functions:
        {
           std::stringstream error_message;
           error_message << "[Blast::Project::ComponentDependencyLister error] "
-                        << "cannot list_component_relative_names; The component \""
+                        << "cannot list_component_dependency_names; The component \""
                         << component->get_name() << "\" does not exist";
           throw std::runtime_error(error_message.str());
        }
