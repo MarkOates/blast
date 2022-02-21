@@ -64,6 +64,7 @@ table td
   <li><a href="#quintessence/Blast/Project/Component.q.yml">quintessence/Blast/Project/Component.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ComponentBasenameExtractor.q.yml">quintessence/Blast/Project/ComponentBasenameExtractor.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ComponentCreator.q.yml">quintessence/Blast/Project/ComponentCreator.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Project/ComponentDependencyLister.q.yml">quintessence/Blast/Project/ComponentDependencyLister.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ComponentLister.q.yml">quintessence/Blast/Project/ComponentLister.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ComponentRelativeLister.q.yml">quintessence/Blast/Project/ComponentRelativeLister.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ProgramLister.q.yml">quintessence/Blast/Project/ProgramLister.q.yml</a></li>
@@ -531,6 +532,39 @@ table td
 </tr>
     </table>
      <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/ComponentDependencyLister.q.yml">quintessence/Blast/Project/ComponentDependencyLister.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">component</td>
+  <td class="property">Blast::Project::Component*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">list_component_relative_names()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Project::ComponentLister&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Project/ComponentLister.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Project::Component*&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Project/Component.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;std::string&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;string&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::count&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::stringstream&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;]}</td>
+</tr>
     </table>
   </div>
 </ul>
@@ -1170,6 +1204,7 @@ table td
   ],
   "std/vector<std/string>": [
     "Blast/DirectoryCreator",
+    "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentRelativeLister",
     "Blast/StringSplitter"
   ],
@@ -1178,6 +1213,7 @@ table td
   ],
   "std/stringstream": [
     "Blast/DirectoryCreator",
+    "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentRelativeLister",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/Project/SymlinkChecker",
@@ -1216,6 +1252,7 @@ table td
   ],
   "Blast/Project/Component": [
     "Blast/Project/ActionCreator",
+    "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentLister",
     "Blast/Project/ComponentRelativeLister"
   ],
@@ -1251,6 +1288,14 @@ table td
   "std/pair<std/string, std/string>": [
     "Blast/Project/ComponentBasenameExtractor"
   ],
+  "Blast/Project/ComponentLister": [
+    "Blast/Project/ComponentDependencyLister",
+    "Blast/Project/ComponentRelativeLister"
+  ],
+  "std/count": [
+    "Blast/Project/ComponentDependencyLister",
+    "Blast/Project/ComponentRelativeLister"
+  ],
   "Blast/Project/component_fragment_t": [
     "Blast/Project/ComponentLister"
   ],
@@ -1278,12 +1323,6 @@ table td
   "std/sort": [
     "Blast/Project/ComponentLister",
     "Blast/Project/ProgramLister"
-  ],
-  "Blast/Project/ComponentLister": [
-    "Blast/Project/ComponentRelativeLister"
-  ],
-  "std/count": [
-    "Blast/Project/ComponentRelativeLister"
   ],
   "std/filesystem": [
     "Blast/Project/ProjectSymlinkFixer"

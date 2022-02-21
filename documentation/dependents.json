@@ -31,6 +31,7 @@
   ],
   "std/vector<std/string>": [
     "Blast/DirectoryCreator",
+    "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentRelativeLister",
     "Blast/StringSplitter"
   ],
@@ -39,6 +40,7 @@
   ],
   "std/stringstream": [
     "Blast/DirectoryCreator",
+    "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentRelativeLister",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/Project/SymlinkChecker",
@@ -77,6 +79,7 @@
   ],
   "Blast/Project/Component": [
     "Blast/Project/ActionCreator",
+    "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentLister",
     "Blast/Project/ComponentRelativeLister"
   ],
@@ -112,6 +115,14 @@
   "std/pair<std/string, std/string>": [
     "Blast/Project/ComponentBasenameExtractor"
   ],
+  "Blast/Project/ComponentLister": [
+    "Blast/Project/ComponentDependencyLister",
+    "Blast/Project/ComponentRelativeLister"
+  ],
+  "std/count": [
+    "Blast/Project/ComponentDependencyLister",
+    "Blast/Project/ComponentRelativeLister"
+  ],
   "Blast/Project/component_fragment_t": [
     "Blast/Project/ComponentLister"
   ],
@@ -139,12 +150,6 @@
   "std/sort": [
     "Blast/Project/ComponentLister",
     "Blast/Project/ProgramLister"
-  ],
-  "Blast/Project/ComponentLister": [
-    "Blast/Project/ComponentRelativeLister"
-  ],
-  "std/count": [
-    "Blast/Project/ComponentRelativeLister"
   ],
   "std/filesystem": [
     "Blast/Project/ProjectSymlinkFixer"

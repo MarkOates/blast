@@ -1,7 +1,9 @@
 #pragma once
 
 
+#include <Blast/Project/Component.hpp>
 #include <string>
+#include <vector>
 
 
 namespace Blast
@@ -11,12 +13,13 @@ namespace Blast
       class ComponentDependencyLister
       {
       private:
+         Blast::Project::Component* component;
 
       public:
-         ComponentDependencyLister();
+         ComponentDependencyLister(Blast::Project::Component* component=nullptr);
          ~ComponentDependencyLister();
 
-         std::string run();
+         std::vector<std::string> list_component_relative_names();
       };
    }
 }
