@@ -57,9 +57,21 @@ std::vector<std::string> ComponentDependencyLister::list_component_dependency_na
       throw std::runtime_error(error_message.str());
    }
 
-   std::vector<std::string> result;
+   std::vector<std::string> results;
 
-   return result;
+   std::string quintessence_full_filename = get_component_quintessence_full_filename();
+   YAML::Node loaded_file = YAML::LoadFile(quintessence_full_filename);
+   YAML::Node dependencies = loaded_file["dependencies"];
+
+   for(unsigned i=0; i<dependencies.size(); i++)
+   {
+      std::string scalar;
+      const YAML::Node& node = dependencies[i]; //["symbol"] >> scalar;
+      scalar = node["symbol"].as<std::string>();
+      results.push_back(scalar);
+   }
+
+   return results;
 }
 
 std::string ComponentDependencyLister::get_component_quintessence_full_filename()
