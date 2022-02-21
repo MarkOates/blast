@@ -96,10 +96,12 @@
     "Blast/Project/Component"
   ],
   "Blast/ProjectComponentFilenameGenerator": [
-    "Blast/Project/Component"
+    "Blast/Project/Component",
+    "Blast/Project/ComponentDependencyLister"
   ],
   "Blast/ProjectComponentFileTypes": [
-    "Blast/Project/Component"
+    "Blast/Project/Component",
+    "Blast/Project/ComponentDependencyLister"
   ],
   "Blast/FileExistenceChecker": [
     "Blast/Project/Component"
@@ -122,6 +124,9 @@
   "std/count": [
     "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentRelativeLister"
+  ],
+  "yaml": [
+    "Blast/Project/ComponentDependencyLister"
   ],
   "Blast/Project/component_fragment_t": [
     "Blast/Project/ComponentLister"

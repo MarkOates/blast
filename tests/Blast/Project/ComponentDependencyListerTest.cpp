@@ -39,7 +39,7 @@ TEST(Blast_Project_ComponentDependencyListerTest,
                              expected_error_message);
 }
 
-TEST(Blast_Project_ComponentDependencyListerTest, list_component_dependency__returns_the_expected_response)
+TEST(Blast_Project_ComponentDependencyListerTest, DISABLED__list_component_dependency__returns_the_expected_response)
 {
    Blast::Project::Component component("Nested/ComponentC", TEST_PROJECT_ROOT_DIRECTORY);
    Blast::Project::ComponentDependencyLister component_dependency_lister(&component);
@@ -55,18 +55,3 @@ TEST(Blast_Project_ComponentDependencyListerTest, list_component_dependency__ret
 }
 
 
-/*
-#include <Blast/Project/ComponentDependencyLister.hpp>
-
-TEST(Blast_Project_ComponentDependencyListerTest, can_be_created_without_blowing_up)
-{
-   Blast::Project::ComponentDependencyLister component_dependency_lister;
-}
-
-TEST(Blast_Project_ComponentDependencyListerTest, run__returns_the_expected_response)
-{
-   Blast::Project::ComponentDependencyLister component_dependency_lister;
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, component_dependency_lister.run());
-}
-*/

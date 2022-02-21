@@ -20,6 +20,7 @@ namespace Blast
          ~ComponentDependencyLister();
 
          std::vector<std::string> list_component_dependency_names();
+         std::string get_component_quintessence_full_filename();
       };
    }
 }

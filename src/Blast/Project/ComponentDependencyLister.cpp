@@ -4,6 +4,11 @@
 #include <Blast/Project/ComponentLister.hpp>
 #include <sstream>
 #include <algorithm>
+#include <yaml-cpp/yaml.h>
+#include <stdexcept>
+#include <sstream>
+#include <Blast/ProjectComponentFilenameGenerator.hpp>
+#include <Blast/ProjectComponentFileTypes.hpp>
 #include <stdexcept>
 #include <sstream>
 
@@ -33,6 +38,7 @@ std::vector<std::string> ComponentDependencyLister::list_component_dependency_na
          error_message << "ComponentDependencyLister" << "::" << "list_component_dependency_names" << ": error: " << "guard \"component\" not met";
          throw std::runtime_error(error_message.str());
       }
+   // TODO: move this to guard
    if (!component->exists())
    {
       std::stringstream error_message;
@@ -42,31 +48,34 @@ std::vector<std::string> ComponentDependencyLister::list_component_dependency_na
       throw std::runtime_error(error_message.str());
    }
 
-   std::string component_name = component->get_name();
-
-   std::string::size_type pos_of_last_slash = component_name.find_last_of("/");
-   if (pos_of_last_slash == std::string::npos) { pos_of_last_slash = 0; }
-
-   std::string component_name_without_last_fragment = component_name.substr(0, pos_of_last_slash+1);
-
-   int num_of_component_slashes = std::count(component_name.begin(), component_name.end(), '/');
-
-   Blast::Project::ComponentLister component_lister(component->get_project_root());
-   std::vector<std::string> entire_project_tree_component_names = component_lister.components();
-
-   std::vector<std::string> result = {};
-   for (auto &component_name : entire_project_tree_component_names)
+   if (!component->has_quintessence())
    {
-      std::string this_component_name_without_last_fragment = component_name.substr(0, pos_of_last_slash+1);
-      if (component_name_without_last_fragment != this_component_name_without_last_fragment) continue;
-
-      int this_num_of_component_slashes = std::count(component_name.begin(), component_name.end(), '/');
-      if (num_of_component_slashes != this_num_of_component_slashes) continue;
-
-      result.push_back(component_name);
+      std::stringstream error_message;
+      error_message << "[Blast::Project::ComponentDependencyLister error] "
+                    << "cannot list_component_dependency_names; The component \""
+                    << component->get_name() << "\" must have a quintessence (until further support is added).";
+      throw std::runtime_error(error_message.str());
    }
 
+   std::vector<std::string> result;
+
    return result;
+}
+
+std::string ComponentDependencyLister::get_component_quintessence_full_filename()
+{
+   if (!(component))
+      {
+         std::stringstream error_message;
+         error_message << "ComponentDependencyLister" << "::" << "get_component_quintessence_full_filename" << ": error: " << "guard \"component\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   std::string project_root = component->get_project_root();
+   std::string component_name = component->get_name();
+   Blast::ProjectComponentFileTypes::project_file_type_t type = Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE;
+   std::string filename = Blast::ProjectComponentFilenameGenerator(component_name, type).generate_filename();
+   std::string full_filename = project_root + filename;
+   return full_filename;
 }
 } // namespace Project
 } // namespace Blast

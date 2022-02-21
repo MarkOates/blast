@@ -548,8 +548,17 @@ table td
 <tr>
   <td class="method">list_component_dependency_names()</td>
 </tr>
+<tr>
+  <td class="private_method">get_component_quintessence_full_filename()</td>
+</tr>
     </table>
      <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ProjectComponentFileTypes&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ProjectComponentFileTypes.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ProjectComponentFilenameGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ProjectComponentFilenameGenerator.hpp&quot;]}</td>
+</tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Project::ComponentLister&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Project/ComponentLister.hpp&quot;]}</td>
 </tr>
@@ -564,6 +573,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::stringstream&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;yaml&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -1269,10 +1281,12 @@ table td
     "Blast/Project/Component"
   ],
   "Blast/ProjectComponentFilenameGenerator": [
-    "Blast/Project/Component"
+    "Blast/Project/Component",
+    "Blast/Project/ComponentDependencyLister"
   ],
   "Blast/ProjectComponentFileTypes": [
-    "Blast/Project/Component"
+    "Blast/Project/Component",
+    "Blast/Project/ComponentDependencyLister"
   ],
   "Blast/FileExistenceChecker": [
     "Blast/Project/Component"
@@ -1295,6 +1309,9 @@ table td
   "std/count": [
     "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentRelativeLister"
+  ],
+  "yaml": [
+    "Blast/Project/ComponentDependencyLister"
   ],
   "Blast/Project/component_fragment_t": [
     "Blast/Project/ComponentLister"
