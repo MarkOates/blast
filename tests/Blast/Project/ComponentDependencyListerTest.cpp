@@ -39,6 +39,8 @@ TEST(Blast_Project_ComponentDependencyListerTest,
                              expected_error_message);
 }
 
+// TODO: more test coverage for edge cases: cout on missing quintessence, warning message as list item
+
 TEST(Blast_Project_ComponentDependencyListerTest, DISABLED__list_component_dependency__returns_the_expected_response)
 {
    Blast::Project::Component component("Nested/ComponentC", TEST_PROJECT_ROOT_DIRECTORY);
