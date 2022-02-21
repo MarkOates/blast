@@ -33,7 +33,7 @@ functions:
                         << "cannot list_component_dependency_names; The component \""
                         << component->get_name() << "\" must have a quintessence (until further support is added).";
           std::cout << error_message.str() << std::endl; //throw std::runtime_error(error_message.str());
-          results.push_back("[dependencies-listing-only-supported-for-quintessence]");
+          results.push_back("[only-supported-for-quintessence]");
           return results;
        }
 
