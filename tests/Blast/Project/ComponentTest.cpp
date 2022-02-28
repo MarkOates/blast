@@ -115,11 +115,10 @@ TEST(Blast_Project_ComponentTest, has_documentation__returns_true_when_a_documen
    ASSERT_EQ(true, component.has_documentation());
 }
 
-TEST(Blast_Project_ComponentTest, DISABLED__has_documentation__returns_false_when_a_test_file_does_not_exist)
+TEST(Blast_Project_ComponentTest, has_documentation__returns_false_when_a_documentation_file_does_not_exist)
 {
-   // TODO
    std::string fixture_project_path = ABSOLUTE_PATH(RELATIVE_FIXTURE_PATH);
-   Blast::Project::Component component("ComponentWithoutTestFile", fixture_project_path);
+   Blast::Project::Component component("ComponentWithoutDocumentationFile", fixture_project_path);
    EXPECT_EQ(true, component.exists());
    ASSERT_EQ(false, component.has_documentation());
 }
