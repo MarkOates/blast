@@ -19,6 +19,7 @@ namespace Blast
          EXAMPLE_FILE,
          OBJECT_FILE,
          TEST_BINARY,
+         DOCUMENTATION_FILE,
          EXAMPLE_BINARY
       };
 

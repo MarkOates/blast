@@ -18,6 +18,7 @@ TEST(Blast_ProjectComponentFileTypesTest, get_project_file_type_str__retuns_the_
       { "object file", Blast::ProjectComponentFileTypes::OBJECT_FILE },
       { "test binary", Blast::ProjectComponentFileTypes::TEST_BINARY },
       { "example binary", Blast::ProjectComponentFileTypes::EXAMPLE_BINARY },
+      { "documentation file", Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE },
       { "not identifiable", Blast::ProjectComponentFileTypes::NOT_IDENTIFIABLE },
    };
 

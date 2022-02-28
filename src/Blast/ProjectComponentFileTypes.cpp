@@ -19,6 +19,7 @@ std::string ProjectComponentFileTypes::get_project_file_type_str(ProjectComponen
    case OBJECT_FILE: return "object file"; break;
    case TEST_BINARY: return "test binary"; break;
    case EXAMPLE_BINARY: return "example binary"; break;
+   case DOCUMENTATION_FILE: return "documentation file"; break;
    case NOT_IDENTIFIABLE: return "not identifiable"; break;
    default: return "uknown file type definition"; break;
    }
