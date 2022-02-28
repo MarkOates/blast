@@ -42,6 +42,7 @@ functions:
          Blast::ProjectComponentFileTypes::HEADER_FILE,
          Blast::ProjectComponentFileTypes::TEST_FILE,
          Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+         Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
          //Blast::ProjectComponentFileTypes::OBJECT_FILE,
          //Blast::ProjectComponentFileTypes::TEST_BINARY,
          //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
@@ -70,6 +71,7 @@ functions:
          Blast::ProjectComponentFileTypes::HEADER_FILE,
          Blast::ProjectComponentFileTypes::TEST_FILE,
          Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+         Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
          //Blast::ProjectComponentFileTypes::OBJECT_FILE,
          //Blast::ProjectComponentFileTypes::TEST_BINARY,
          //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
@@ -105,8 +107,13 @@ functions:
     body: |
       std::string filename = Blast::ProjectComponentFilenameGenerator(name, type).generate_filename();
       std::string full_filename = project_root + filename;
+
+      std::cout << std::endl;
+      std::cout << "## " << full_filename << std::endl;
+
       return Blast::FileExistenceChecker(full_filename).exists();
     body_dependency_symbols:
+      - std::cout
       - Blast::ProjectComponentFilenameGenerator
       - Blast::ProjectComponentFileTypes
       - Blast::FileExistenceChecker
@@ -121,6 +128,7 @@ functions:
          Blast::ProjectComponentFileTypes::HEADER_FILE,
          Blast::ProjectComponentFileTypes::TEST_FILE,
          Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+         Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
          //Blast::ProjectComponentFileTypes::OBJECT_FILE,
          //Blast::ProjectComponentFileTypes::TEST_BINARY,
          //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
@@ -160,6 +168,14 @@ functions:
     type: bool
     body: |
       return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
+    body_dependency_symbols:
+      - Blast::ProjectComponentFileTypes
+
+
+  - name: has_documentation
+    type: bool
+    body: |
+      return check_file_existence(Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE);
     body_dependency_symbols:
       - Blast::ProjectComponentFileTypes
 

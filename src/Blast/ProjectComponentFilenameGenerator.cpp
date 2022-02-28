@@ -8,7 +8,11 @@ namespace Blast
 {
 
 
-ProjectComponentFilenameGenerator::ProjectComponentFilenameGenerator(std::string basename, ProjectComponentFileTypes::project_file_type_t project_file_type, bool use_underscores)
+ProjectComponentFilenameGenerator::ProjectComponentFilenameGenerator(
+      std::string basename,
+      ProjectComponentFileTypes::project_file_type_t project_file_type,
+      bool use_underscores
+   )
    : basename(basename)
    , project_file_type(project_file_type)
    , use_underscores(use_underscores)
@@ -33,7 +37,9 @@ void ProjectComponentFilenameGenerator::set_use_underscores(bool use_underscores
 }
 
 
-void ProjectComponentFilenameGenerator::set_project_file_type(ProjectComponentFileTypes::project_file_type_t project_file_type)
+void ProjectComponentFilenameGenerator::set_project_file_type(
+      ProjectComponentFileTypes::project_file_type_t project_file_type
+   )
 {
    this->project_file_type = project_file_type;
 }
@@ -84,6 +90,9 @@ std::string ProjectComponentFilenameGenerator::generate_filename()
       break;
    case ProjectComponentFileTypes::EXAMPLE_BINARY:
       return std::string("bin/examples/") + basename + (use_underscores ? "_example" : "Example");
+      break;
+   case ProjectComponentFileTypes::DOCUMENTATION_FILE: // TODO: consider moving this to documentation/
+      return std::string("docs/") + basename + ".md";
       break;
    default:
       return "";

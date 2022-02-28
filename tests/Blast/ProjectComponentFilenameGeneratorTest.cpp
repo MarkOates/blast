@@ -49,11 +49,16 @@ TEST(ProjectComponentFilenameGeneratorTest, can_get_and_set_the_project_file_typ
    project_component_filename_generator.set_project_file_type(Blast::ProjectComponentFileTypes::TEST_FILE);
    ASSERT_EQ(Blast::ProjectComponentFileTypes::TEST_FILE, project_component_filename_generator.get_project_file_type());
    project_component_filename_generator.set_project_file_type(Blast::ProjectComponentFileTypes::SOURCE_FILE);
-   ASSERT_EQ(Blast::ProjectComponentFileTypes::SOURCE_FILE, project_component_filename_generator.get_project_file_type());
+   Blast::ProjectComponentFileTypes::project_file_type_t expected_project_file_type =
+      Blast::ProjectComponentFileTypes::SOURCE_FILE;
+   Blast::ProjectComponentFileTypes::project_file_type_t actual_project_file_type =
+      project_component_filename_generator.get_project_file_type();
+   ASSERT_EQ(Blast::ProjectComponentFileTypes::SOURCE_FILE, actual_project_file_type);
 }
 
 
-TEST(ProjectComponentFilenameGeneratorTest, generate_filename__generates_the_expected_filename_in_the_correct_format_with_camelcase)
+TEST(ProjectComponentFilenameGeneratorTest,
+   generate_filename__generates_the_expected_filename_in_the_correct_format_with_camelcase)
 {
    std::string basename = "models/Foobar";
 
@@ -65,6 +70,7 @@ TEST(ProjectComponentFilenameGeneratorTest, generate_filename__generates_the_exp
       { Blast::ProjectComponentFileTypes::OBJECT_FILE, "obj/models/Foobar.o" },
       { Blast::ProjectComponentFileTypes::TEST_BINARY, "bin/tests/models/FoobarTest" },
       { Blast::ProjectComponentFileTypes::EXAMPLE_BINARY, "bin/examples/models/FoobarExample" },
+      { Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE, "docs/models/Foobar.md" },
       { Blast::ProjectComponentFileTypes::NOT_IDENTIFIABLE, "" },
    };
 
@@ -76,7 +82,8 @@ TEST(ProjectComponentFilenameGeneratorTest, generate_filename__generates_the_exp
 }
 
 
-TEST(ProjectComponentFilenameGeneratorTest, generate_filename__generates_the_expected_filename_in_the_correct_format_with_underscores)
+TEST(ProjectComponentFilenameGeneratorTest,
+   generate_filename__generates_the_expected_filename_in_the_correct_format_with_underscores)
 {
    std::string basename = "models/foobar";
 
@@ -88,6 +95,7 @@ TEST(ProjectComponentFilenameGeneratorTest, generate_filename__generates_the_exp
       { Blast::ProjectComponentFileTypes::OBJECT_FILE, "obj/models/foobar.o" },
       { Blast::ProjectComponentFileTypes::TEST_BINARY, "bin/tests/models/foobar_test" },
       { Blast::ProjectComponentFileTypes::EXAMPLE_BINARY, "bin/examples/models/foobar_example" },
+      { Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE, "docs/models/foobar.md" },
       { Blast::ProjectComponentFileTypes::NOT_IDENTIFIABLE, "" },
    };
 

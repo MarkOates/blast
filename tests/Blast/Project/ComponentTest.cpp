@@ -38,6 +38,7 @@ TEST(Blast_Project_ComponentTest, list_existing_component_files__returns_a_list_
       "src/Blast/Project/Component.cpp",
       "include/Blast/Project/Component.hpp",
       "tests/Blast/Project/ComponentTest.cpp",
+      "docs/Blast/Project/Component.md",
    };
    ASSERT_EQ(expected_list, component.list_existing_component_files());
 }
@@ -105,6 +106,22 @@ TEST(Blast_Project_ComponentTest, has_test__returns_false_when_a_test_file_does_
    Blast::Project::Component component("ComponentWithoutTestFile", fixture_project_path);
    EXPECT_EQ(true, component.exists());
    ASSERT_EQ(false, component.has_test());
+}
+
+TEST(Blast_Project_ComponentTest, has_documentation__returns_true_when_a_documentation_file_is_present)
+{
+   std::string fixture_project_path = ABSOLUTE_PATH(RELATIVE_FIXTURE_PATH);
+   Blast::Project::Component component("Foobar/ComponentWithDocumentationFile", fixture_project_path);
+   ASSERT_EQ(true, component.has_documentation());
+}
+
+TEST(Blast_Project_ComponentTest, DISABLED__has_documentation__returns_false_when_a_test_file_does_not_exist)
+{
+   // TODO
+   std::string fixture_project_path = ABSOLUTE_PATH(RELATIVE_FIXTURE_PATH);
+   Blast::Project::Component component("ComponentWithoutTestFile", fixture_project_path);
+   EXPECT_EQ(true, component.exists());
+   ASSERT_EQ(false, component.has_documentation());
 }
 
 TEST(Blast_Project_ComponentTest, read_symlinks__returns_a_list_of_component_files_that_are_symlinks_and_their_targets)
