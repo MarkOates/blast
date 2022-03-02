@@ -1,0 +1,76 @@
+parent_classes:
+
+
+  - class: AllegroFlare::Screen
+    scope: public
+    init_with: 'display'
+
+
+properties:
+
+
+  - name: framework
+    type: AllegroFlare::Framework*
+    init_with: nullptr
+    constructor_arg: true
+
+  - name: display
+    type: AllegroFlare::Display*
+    init_with: nullptr
+    constructor_arg: true
+
+
+functions:
+
+
+  - name: initialize
+    type: void
+    body: |
+      return;
+
+
+  - name: run
+    static: true
+    type: void
+    body: |
+      AllegroFlare::Screens screens;
+      AllegroFlare::Framework framework(screens);
+      framework.initialize();
+      AllegroFlare::Display *display =
+         framework.create_display(1920/3*4, 1080/3*4, ALLEGRO_OPENGL | ALLEGRO_PROGRAMMABLE_PIPELINE);
+      WickedDemos::TileDemo *program = new WickedDemos::TileDemo(&framework, display);
+      program->initialize();
+      screens.add(program);
+      framework.run_loop();
+      delete program;
+    body_dependency_symbols:
+      - AllegroFlare::Framework
+
+
+  - name: key_down_func
+    virtual: true
+    override: true
+    parameters:
+      - name: event
+        type: ALLEGRO_EVENT*
+        default_argument: nullptr
+    guards: [ event, framework ]
+    body: |
+      if (event->keyboard.keycode == ALLEGRO_KEY_ESCAPE) framework->shutdown_program = true;
+      return;
+
+
+dependencies:
+
+
+  - symbol: AllegroFlare::Screen
+    headers: [ AllegroFlare/Screen.hpp ]
+  - symbol: AllegroFlare::Display*
+    headers: [ AllegroFlare/Display.hpp ]
+  - symbol: AllegroFlare::Framework*
+    headers: [ AllegroFlare/Framework.hpp ]
+  - symbol: AllegroFlare::Framework
+    headers: [ AllegroFlare/Framework.hpp ]
+  - symbol: ALLEGRO_EVENT*
+    headers: [ allegro5/allegro.h ]
+
