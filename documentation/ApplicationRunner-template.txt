@@ -47,6 +47,15 @@ functions:
       - AllegroFlare::Framework
 
 
+  - name: primary_timer_func
+    virtual: true
+    override: true
+    body: |
+      al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 1.0});
+      // al_flip_display(); // this is done implicitly
+      return;
+
+
   - name: key_down_func
     virtual: true
     override: true
