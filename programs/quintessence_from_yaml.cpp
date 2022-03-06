@@ -860,7 +860,19 @@ int main(int argc, char **argv)
    {
       std::string quintessence_filename = filename_args[i];
       if (verbose_output) std::cout << "Assessing genesis for \"" << quintessence_filename << "\"" << std::endl;
-      YAML::Node source = YAML::LoadFile(quintessence_filename);
+      YAML::Node source; // = YAML::LoadFile(quintessence_filename);
+
+      try
+      {
+         source = YAML::LoadFile(quintessence_filename);
+      }
+      catch (const std::exception& e)
+      {
+         std::stringstream revised_error_message;
+         revised_error_message << "ERROR: YAML Parse Failure on file \"" << quintessence_filename << "\" with the following message: \""
+                               << e.what() << "\".";
+         throw std::runtime_error(revised_error_message.str());
+      }
 
 
       // infer the class name from the filename
