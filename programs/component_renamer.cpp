@@ -20,17 +20,9 @@ static void ___replace(std::string& str, std::string from, std::string to)
 }
 
 
-std::string build_help_error_message()
+std::string build_important_message()
 {
    return R"(
-ERROR: You must pass two arguments, 1) a component name, and 2) the new name for the component.
-
-Example Usage:
-==============
-
-$ rename_component Wicked/Zones/Base2D Wicked/Entities/Zones/Base2D
-
-
 Important:
 ==========
 
@@ -42,8 +34,22 @@ something goes wrong and you need to reset.  For help with the process, view Hex
 documentation "Proceedure for Renaming a Component":
 
 https://github.com/MarkOates/hexagon/blob/master/documentation/rename_component_proceedure.md
-
 )";
+}
+
+
+std::string build_help_error_message()
+{
+   return R"(
+ERROR: You must pass two arguments, 1) a component name, and 2) the new name for the component.
+
+Example Usage:
+==============
+
+$ rename_component Wicked/Zones/Base2D Wicked/Entities/Zones/Base2D
+
+
+)" + build_important_message();
 };
 
 
@@ -72,7 +78,9 @@ int main(int argc, char **argv)
    ComponentGenerator new_component_generator(new_component_name);
 
    std::cout << std::endl;
+   std::cout << std::endl;
    std::cout << "You are replacing \"" << current_component_name << "\" with \"" << new_component_name << "\"" << std::endl;
+   std::cout << std::endl;
    std::cout << std::endl;
 
    // rename the symbols
@@ -80,10 +88,12 @@ int main(int argc, char **argv)
    // std::cout << "git grep -lz 'Wicked::Zones::Base3D' | xargs -0 perl -i'' -pE \"s/Wicked::Zones::Base3D/Wicked::Entities::Zones::Base3D/g\"" << std::endl;
    std::string current_symbol_name = current_component_generator.get_program_body_class_name();
    std::string new_symbol_name = new_component_generator.get_program_body_class_name();
-   std::cout << "Replace the symbol:" << std::endl;
-   std::cout << "===================" << std::endl;
+   std::cout << "COMMAND: Replace the symbol:" << std::endl;
+   std::cout << "============================" << std::endl;
    std::cout << std::endl;
    std::cout << "$ git grep -lz '" << current_symbol_name << "' | xargs -0 perl -i'' -pE \"s/" << current_symbol_name << "/" << new_symbol_name << "/g\"" << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
 
    // rename the include directories
    // example:
@@ -92,10 +102,27 @@ int main(int argc, char **argv)
    std::string new_include_string = new_component_generator.get_component_name();
    ___replace(current_include_string, "/", "\\/");
    ___replace(new_include_string, "/", "\\/");
-   std::cout << "Replace the include directory paths:" << std::endl;
-   std::cout << "===================================" << std::endl;
+   std::cout << "COMMAND: Replace the include directory paths:" << std::endl;
+   std::cout << "============================================" << std::endl;
    std::cout << std::endl;
    std::cout << "$ git grep -lz '" << current_include_string << "' | xargs -0 perl -i'' -pE \"s/" << current_include_string << "/" << new_include_string << "/g\"" << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
+
+   // rename the test names and test fixture class names
+   // example:
+   // std::cout << "git grep -lz 'Wicked/Zones/Base3D' | xargs -0 perl -i'' -pE \"s/Wicked\/Zones\/Base3D/Wicked\/Entities\/Zones\/Base3D/g\"" << std::endl;
+   std::string current_test_name_string = current_component_generator.get_component_name();
+   std::string new_test_name_string = new_component_generator.get_component_name();
+   ___replace(current_test_name_string, "/", "_");
+   ___replace(new_test_name_string, "/", "_");
+   std::cout << "COMMAND: Replace the test names and test fixture class names:" << std::endl;
+   std::cout << "=============================================================" << std::endl;
+   std::cout << std::endl;
+   std::cout << "$ git grep -lz '" << current_test_name_string << "' | xargs -0 perl -i'' -pE \"s/" << current_test_name_string << "/" << new_test_name_string << "/g\"" << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
 
    return 0;
 }
