@@ -79,7 +79,17 @@ int main(int argc, char **argv)
 
    std::cout << std::endl;
    std::cout << std::endl;
+   std::cout << "============================" << std::endl;
+   std::cout << "====  COMPONENT RENAMER ====" << std::endl;
+   std::cout << "============================" << std::endl;
+   std::cout << std::endl;
+   std::cout << "NOTE:" << std::endl;
+   std::cout << "=====" << std::endl;
    std::cout << "You are replacing \"" << current_component_name << "\" with \"" << new_component_name << "\"" << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
+   std::cout << build_important_message();
+   std::cout << std::endl;
    std::cout << std::endl;
    std::cout << std::endl;
 
@@ -123,6 +133,8 @@ int main(int argc, char **argv)
    std::cout << std::endl;
    std::cout << std::endl;
    std::cout << std::endl;
+   std::cout << std::endl;
+
 
    return 0;
 }
