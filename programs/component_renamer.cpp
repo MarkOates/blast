@@ -7,6 +7,19 @@
 #include <Blast/Quintessence/ComponentGenerator.hpp>
 
 
+static void ___replace(std::string& str, std::string from, std::string to)
+{
+   //static const std::string from = "\t";
+   //static const std::string to = std::string(3, ' ');
+
+   size_t start_pos = 0;
+   while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+      str.replace(start_pos, from.length(), to);
+      start_pos += to.length();
+   }
+}
+
+
 std::string build_help_error_message()
 {
    return R"(
@@ -50,6 +63,8 @@ int main(int argc, char **argv)
       return 1;
    }
 
+   // TODO: assert there are only the expected characters in the input, e.g. [A-Za-z_0-9/]
+
    current_component_name = args[0];
    new_component_name = args[1];
 
@@ -61,13 +76,26 @@ int main(int argc, char **argv)
    std::cout << std::endl;
 
    // rename the symbols
+   // example:
+   // std::cout << "git grep -lz 'Wicked::Zones::Base3D' | xargs -0 perl -i'' -pE \"s/Wicked::Zones::Base3D/Wicked::Entities::Zones::Base3D/g\"" << std::endl;
    std::string current_symbol_name = current_component_generator.get_program_body_class_name();
    std::string new_symbol_name = new_component_generator.get_program_body_class_name();
-   std::cout << "Replace the symbol recursively in all git-tracked files:" << std::endl;
-   std::cout << "========================================================" << std::endl;
+   std::cout << "Replace the symbol:" << std::endl;
+   std::cout << "===================" << std::endl;
    std::cout << std::endl;
-   //std::cout << "git grep -lz 'Wicked::Zones::Base3D' | xargs -0 perl -i'' -pE \"s/Wicked::Zones::Base3D/Wicked::Entities::Zones::Base3D/g\"" << std::endl;
    std::cout << "$ git grep -lz '" << current_symbol_name << "' | xargs -0 perl -i'' -pE \"s/" << current_symbol_name << "/" << new_symbol_name << "/g\"" << std::endl;
+
+   // rename the include directories
+   // example:
+   // std::cout << "git grep -lz 'Wicked/Zones/Base3D' | xargs -0 perl -i'' -pE \"s/Wicked\/Zones\/Base3D/Wicked\/Entities\/Zones\/Base3D/g\"" << std::endl;
+   std::string current_include_string = current_component_generator.get_component_name();
+   std::string new_include_string = new_component_generator.get_component_name();
+   ___replace(current_include_string, "/", "\\/");
+   ___replace(new_include_string, "/", "\\/");
+   std::cout << "Replace the include directory paths:" << std::endl;
+   std::cout << "===================================" << std::endl;
+   std::cout << std::endl;
+   std::cout << "$ git grep -lz '" << current_include_string << "' | xargs -0 perl -i'' -pE \"s/" << current_include_string << "/" << new_include_string << "/g\"" << std::endl;
 
    return 0;
 }
