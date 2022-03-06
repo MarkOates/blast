@@ -871,6 +871,7 @@ int main(int argc, char **argv)
          std::stringstream revised_error_message;
          revised_error_message << "ERROR: YAML Parse Failure on file \"" << quintessence_filename << "\" with the following message: \""
                                << e.what() << "\".";
+         // TODO: output the error message to std::err or std::cout in red
          throw std::runtime_error(revised_error_message.str());
       }
 
