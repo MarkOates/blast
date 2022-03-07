@@ -239,6 +239,8 @@ YAML::Node default_dependencies()
 {
    std::string default_deps = R"END(
 - symbol: int
+- symbol: unsigned int
+- symbol: intptr_t
 - symbol: void
 - symbol: float
 - symbol: double
