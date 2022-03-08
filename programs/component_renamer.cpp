@@ -34,6 +34,7 @@ something goes wrong and you need to reset.  For help with the process, view Hex
 documentation "Proceedure for Renaming a Component":
 
 https://github.com/MarkOates/hexagon/blob/master/documentation/rename_component_proceedure.md
+
 )";
 }
 
@@ -105,6 +106,48 @@ int main(int argc, char **argv)
       << "   rm \"" << header_filename << "\"" << std::endl
       << "   rm \"" << source_filename << "\"" << std::endl
       << "fi" << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
+
+   // move the fragments to the new locations, (or rename them or whatever)
+   std::string current_quintessence_filename = current_component_generator.get_quintessence_path_and_filename();
+   std::string current_header_filename = current_component_generator.get_header_path_and_filename();
+   std::string current_source_filename = current_component_generator.get_source_path_and_filename();
+   std::string current_test_filename = current_component_generator.get_test_path_and_filename();
+   std::string current_documentation_filename = current_component_generator.get_documentation_path_and_filename();
+   std::string new_quintessence_filename = new_component_generator.get_quintessence_path_and_filename();
+   std::string new_header_filename = new_component_generator.get_header_path_and_filename();
+   std::string new_source_filename = new_component_generator.get_source_path_and_filename();
+   std::string new_test_filename = new_component_generator.get_test_path_and_filename();
+   std::string new_documentation_filename = new_component_generator.get_documentation_path_and_filename();
+   std::cout << "COMMAND: Move the files to the new locations:" << std::endl;
+   std::cout << "=============================================" << std::endl;
+   std::cout << std::endl;
+   std::cout
+      << "mv \"" << current_quintessence_filename << "\" \"" << new_quintessence_filename << "\"" << std::endl
+      << "mv \"" << current_test_filename << "\" \"" << new_test_filename << "\"" << std::endl
+      << "mv \"" << current_documentation_filename << "\" \"" << new_documentation_filename << "\"" << std::endl
+      << "mv \"" << current_header_filename << "\" \"" << new_header_filename << "\"" << std::endl
+      << "mv \"" << current_source_filename << "\" \"" << new_source_filename << "\"" << std::endl
+      ;
+   std::cout << std::endl;
+   std::cout << std::endl;
+
+   // rename the symbols
+   // example:
+   // std::cout << "git grep -lz 'Wicked::Zones::Base3D' | xargs -0 perl -i'' -pE \"s/Wicked::Zones::Base3D/Wicked::Entities::Zones::Base3D/g\"" << std::endl;
+   //std::string current_symbol_name = current_component_generator.get_program_body_class_name();
+   //std::string new_symbol_name = new_component_generator.get_program_body_class_name();
+   std::cout << "COMMAND: Add all the updated file locations to the git working tree (so \"git grep\" can work):" << std::endl;
+   std::cout << "===============================================================================================" << std::endl;
+   std::cout << std::endl;
+   std::cout
+      << "git add \"" << new_quintessence_filename << "\"" << std::endl
+      << "git add \"" << new_test_filename << "\"" << std::endl
+      << "git add \"" << new_documentation_filename << "\"" << std::endl
+      << "git add \"" << new_header_filename << "\"" << std::endl
+      << "git add \"" << new_source_filename << "\"" << std::endl
+      ;
    std::cout << std::endl;
    std::cout << std::endl;
 

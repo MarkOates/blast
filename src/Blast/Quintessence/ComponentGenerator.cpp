@@ -16,6 +16,7 @@
 
 static const std::string QUINTESSENCE_FOLDER_NAME = "quintessence";
 static const std::string TEST_FOLDER_NAME = "tests";
+static const std::string DOCUMENTATION_FOLDER_NAME = "docs";
 
 
 
@@ -65,8 +66,27 @@ std::string ComponentGenerator::get_quintessence_path_and_filename()
 
 
 
+std::string ComponentGenerator::get_documentation_path_and_filename()
+{
+   std::stringstream ss;
+   ss << DOCUMENTATION_FOLDER_NAME << "/" << get_component_name() << ".md";
+   return ss.str();
+}
+
+
+
 
 std::string ComponentGenerator::get_test_filename()
+{
+   // TODO fix instances of this to use get_quintessence_path_and_filename() instead
+   std::cout << "WARNING: ComponentGenerator::get_test_filename is depreciated, use ComponentGenerator::get_test_path_and_filename() instead (it's the same, but the prior function will change return value in the future.)" << std::endl;
+   std::stringstream ss;
+   ss << TEST_FOLDER_NAME << "/" << get_component_name() << "Test.cpp";
+   return ss.str();
+}
+
+
+std::string ComponentGenerator::get_test_path_and_filename()
 {
    std::stringstream ss;
    ss << TEST_FOLDER_NAME << "/" << get_component_name() << "Test.cpp";

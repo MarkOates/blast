@@ -17,7 +17,9 @@ public:
    std::string get_component_name();
    std::string get_quintessence_filename();
    std::string get_quintessence_path_and_filename();
+   std::string get_documentation_path_and_filename();
    std::string get_test_filename();
+   std::string get_test_path_and_filename();
    std::string get_quintessence_foldername();
    std::string get_test_foldername();
    std::string get_header_filename();
