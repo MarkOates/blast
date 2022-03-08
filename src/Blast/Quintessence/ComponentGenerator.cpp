@@ -10,6 +10,7 @@
 
 #include <sstream>
 #include <vector>
+#include <iostream>
 
 
 
@@ -47,10 +48,21 @@ std::string ComponentGenerator::get_component_name()
 
 std::string ComponentGenerator::get_quintessence_filename()
 {
+   // TODO fix instances of this to use get_quintessence_path_and_filename() instead
+   std::cout << "WARNING: ComponentGenerator::get_quintessence_filename is depreciated, use ComponentGenerator::get_quintessence_path_and_filename() instead (it's the same, but the prior function will change return value in the future.)" << std::endl;
    std::stringstream ss;
    ss << QUINTESSENCE_FOLDER_NAME << "/" << get_component_name() << ".q.yml";
    return ss.str();
 }
+
+
+std::string ComponentGenerator::get_quintessence_path_and_filename()
+{
+   std::stringstream ss;
+   ss << QUINTESSENCE_FOLDER_NAME << "/" << get_component_name() << ".q.yml";
+   return ss.str();
+}
+
 
 
 
@@ -89,6 +101,36 @@ std::string ComponentGenerator::get_header_filename()
    ss << get_component_name() << ".hpp";
    return ss.str();
 }
+
+
+
+std::string ComponentGenerator::get_header_path_and_filename()
+{
+   std::stringstream ss;
+   ss << "include/" << get_header_filename();
+   return ss.str();
+}
+
+
+
+
+std::string ComponentGenerator::get_source_filename()
+{
+   std::stringstream ss;
+   ss << get_component_name() << ".cpp";
+   return ss.str();
+}
+
+
+
+std::string ComponentGenerator::get_source_path_and_filename()
+{
+   std::stringstream ss;
+   ss << "src/" << get_source_filename();
+   return ss.str();
+}
+
+
 
 
 

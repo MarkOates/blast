@@ -93,6 +93,21 @@ int main(int argc, char **argv)
    std::cout << std::endl;
    std::cout << std::endl;
 
+   // remove the generated header and source files
+   std::string quintessence_filename = current_component_generator.get_quintessence_path_and_filename();
+   std::string header_filename = current_component_generator.get_header_path_and_filename();
+   std::string source_filename = current_component_generator.get_source_path_and_filename();
+   std::cout << "COMMAND: Remove the generated header and source files:" << std::endl;
+   std::cout << "======================================================" << std::endl;
+   std::cout << std::endl;
+   std::cout
+      << "if [[ -f \"" << quintessence_filename << "\" ]]; then" << std::endl
+      << "   rm \"" << header_filename << "\"" << std::endl
+      << "   rm \"" << source_filename << "\"" << std::endl
+      << "fi" << std::endl;
+   std::cout << std::endl;
+   std::cout << std::endl;
+
    // rename the symbols
    // example:
    // std::cout << "git grep -lz 'Wicked::Zones::Base3D' | xargs -0 perl -i'' -pE \"s/Wicked::Zones::Base3D/Wicked::Entities::Zones::Base3D/g\"" << std::endl;
@@ -101,7 +116,7 @@ int main(int argc, char **argv)
    std::cout << "COMMAND: Replace the symbol:" << std::endl;
    std::cout << "============================" << std::endl;
    std::cout << std::endl;
-   std::cout << "$ git grep -lz '" << current_symbol_name << "' | xargs -0 perl -i'' -pE \"s/" << current_symbol_name << "/" << new_symbol_name << "/g\"" << std::endl;
+   std::cout << "git grep -lz '" << current_symbol_name << "' | xargs -0 perl -i'' -pE \"s/" << current_symbol_name << "/" << new_symbol_name << "/g\"" << std::endl;
    std::cout << std::endl;
    std::cout << std::endl;
 
@@ -115,7 +130,7 @@ int main(int argc, char **argv)
    std::cout << "COMMAND: Replace the include directory paths:" << std::endl;
    std::cout << "============================================" << std::endl;
    std::cout << std::endl;
-   std::cout << "$ git grep -lz '" << current_include_string << "' | xargs -0 perl -i'' -pE \"s/" << current_include_string << "/" << new_include_string << "/g\"" << std::endl;
+   std::cout << "git grep -lz '" << current_include_string << "' | xargs -0 perl -i'' -pE \"s/" << current_include_string << "/" << new_include_string << "/g\"" << std::endl;
    std::cout << std::endl;
    std::cout << std::endl;
 
@@ -129,7 +144,7 @@ int main(int argc, char **argv)
    std::cout << "COMMAND: Replace the test names and test fixture class names:" << std::endl;
    std::cout << "=============================================================" << std::endl;
    std::cout << std::endl;
-   std::cout << "$ git grep -lz '" << current_test_name_string << "' | xargs -0 perl -i'' -pE \"s/" << current_test_name_string << "/" << new_test_name_string << "/g\"" << std::endl;
+   std::cout << "git grep -lz '" << current_test_name_string << "' | xargs -0 perl -i'' -pE \"s/" << current_test_name_string << "/" << new_test_name_string << "/g\"" << std::endl;
    std::cout << std::endl;
    std::cout << std::endl;
    std::cout << std::endl;
