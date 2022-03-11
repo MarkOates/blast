@@ -517,6 +517,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       const std::string CONSTRUCTOR_ARG = "constructor_arg";
       const std::string STATIC = "static";
       const std::string GETTER = "getter";
+      const std::string EXPLICIT_GETTER = "explicit_getter";
       const std::string GETTER_REF = "getter_ref";
       const std::string SETTER = "setter";
 
@@ -544,7 +545,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       bool is_static = fetch_bool(it, STATIC, false);
       bool is_constructor_parameter = fetch_bool(it, CONSTRUCTOR_ARG, false);
       bool has_getter = fetch_bool(it, GETTER, false);
-      bool has_explicit_getter = false;
+      bool has_explicit_getter = fetch_bool(it, EXPLICIT_GETTER, false);
       bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
       bool has_setter = fetch_bool(it, SETTER, false);
       //std::string initialization_value = init_with_node.as<std::string>();
@@ -797,6 +798,54 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> functions_and_dependencies = extract_functions(source, class_name);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
+
+
+
+   // validate that for any <ClassAttribtes> that have explicit_getters, there is a get_[attribute_name] function that has been declared
+   
+   std::vector<std::string> expected_explicit_getter_function_names;
+   for (auto &attribute_property : attribute_properties)
+   {
+      if (attribute_property.has_explicit_getter == true)
+      {
+         std::string expected_explicit_getter_function_name = "get_" + attribute_property.variable_name; // TODO: use a helper to generate the getter function name
+         expected_explicit_getter_function_names.push_back(expected_explicit_getter_function_name);
+      }
+   }
+
+   std::vector<std::string> explicit_getter_function_names_that_do_not_exist;
+   // TODO: validate the function names exist
+   for (auto &expected_explicit_getter_function_name : expected_explicit_getter_function_names)
+   {
+      bool function_has_been_explicitly_declared = false;
+      for (auto &function_and_dependency : functions_and_dependencies)
+      {
+         std::string this_function_name = std::get<0>(function_and_dependency).get_name();
+         if (this_function_name == expected_explicit_getter_function_name)
+         {
+            function_has_been_explicitly_declared = true;
+            break;
+         }
+      }
+
+      if (!function_has_been_explicitly_declared) explicit_getter_function_names_that_do_not_exist.push_back(expected_explicit_getter_function_name);
+   }
+
+   // throw error if explicit_getter functions are missing
+   if (!explicit_getter_function_names_that_do_not_exist.empty())
+   {
+      std::stringstream error_message;
+      error_message << "quintessence_from_yaml error: in \"" << quintessence_filename << "\", explicit getters have been "
+         "set on some properties, yet the expected function declarations for [";
+         for (auto &explicit_getter_function_name_that_does_not_exist : explicit_getter_function_names_that_do_not_exist)
+         {
+            error_message << "\"" << explicit_getter_function_name_that_does_not_exist << "\", ";
+         }
+         error_message << "] are not present.";
+
+      throw std::runtime_error(error_message.str());
+   }
+
 
    
    // consolidate functions and their dependencies
