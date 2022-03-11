@@ -18,6 +18,7 @@ namespace Blast
          bool is_static;
          bool is_constructor_parameter;
          bool has_getter;
+         bool has_explicit_getter;
          bool has_getter_ref;
          bool has_setter;
 
@@ -28,6 +29,7 @@ namespace Blast
             bool is_static,
             bool is_constructor_parameter,
             bool has_getter,
+            bool has_expicit_getter,
             bool has_getter_ref,
             bool has_setter
          );

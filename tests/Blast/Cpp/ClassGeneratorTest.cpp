@@ -22,10 +22,10 @@ protected:
    {
       Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
-         { "int", "last_id", "0", true, false, false, false, false },
-         { "int", "id", "last_id++", false, false, true, false, false },
-         { "std::string", "name", "\"[unnamed]\"", false, true, true, false, true },
-         { "type_t", "type", "MAGE", false, true, true, false, true },
+         { "int", "last_id", "0", true, false, false, false, false, false },
+         { "int", "id", "last_id++", false, false, true, false, false, false },
+         { "std::string", "name", "\"[unnamed]\"", false, true, true, false, false, true },
+         { "type_t", "type", "MAGE", false, true, true, false, false, true },
       });
 
       class_generator_fixture = Blast::Cpp::ClassGenerator(cpp_class);
@@ -185,10 +185,10 @@ TEST_F(ClassGeneratorTest, initialization_list_elements__when_properties_are_con
 {
    Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {
       //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
-      { "int", "last_id", "0", true, false, false, false, false },
-      { "int", "id", "last_id++", false, true, true, false, false },
-      { "std::string", "name", "\"[unnamed]\"", false, true, true, false, true },
-      { "type_t", "type", "MAGE", false, true, true, false, true },
+      { "int", "last_id", "0", true, false, false, false, false, false },
+      { "int", "id", "last_id++", false, true, true, false, false, false },
+      { "std::string", "name", "\"[unnamed]\"", false, true, true, false, false, true },
+      { "type_t", "type", "MAGE", false, true, true, false, false, true },
    });
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
@@ -201,10 +201,10 @@ TEST_F(ClassGeneratorTest, initialization_list_elements__when_properties_are_not
 {
    Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {
       //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
-      { "int", "last_id", "0", true, false, false, false, false },
-      { "int", "id", "last_id++", false, false, false, false, true, },
-      { "std::string", "name", "\"[unnamed]\"", false, false, true, false, true },
-      { "type_t", "type", "MAGE", false, false, true, false, true },
+      { "int", "last_id", "0", true, false, false, false, false, false },
+      { "int", "id", "last_id++", false, false, false, false, false, true, },
+      { "std::string", "name", "\"[unnamed]\"", false, false, true, false, false, true },
+      { "type_t", "type", "MAGE", false, false, true, false, false, true },
    });
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
@@ -238,9 +238,9 @@ TEST_F(ClassGeneratorTest, static_attribute_definition_elements__returns_the_exp
 
    Blast::Cpp::Class cpp_class("User", {}, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
-         { "int", "next_id", "0", true, false, false, false, false },
-         { "int", "id", "next_id++", false, false, true, false, false },
-         { "float", "time_velocity", "13.0f", true, false, false, false, false },
+         { "int", "next_id", "0", true, false, false, false, false, false },
+         { "int", "id", "next_id++", false, false, true, false, false, false },
+         { "float", "time_velocity", "13.0f", true, false, false, false, false, false },
       },
       {},
       symbol_dependencies
@@ -292,8 +292,8 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__returns_a_list_of_dire
    };
 
    Blast::Cpp::Class cpp_class("User", {}, {}, {
-         { "std::string", "name", "\"[unnamed]\"", false, true, true, false, true },
-         { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, false, true },
+         { "std::string", "name", "\"[unnamed]\"", false, true, true, false, false, true },
+         { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, false, false, true },
       },
       {},
       symbol_dependencies
@@ -329,8 +329,8 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__when_no_dependencies_a
 
    Blast::Cpp::Class cpp_class("User", {}, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
-         { "int", "num_sides", "0", false, false, true, false, false },
-         { "float", "radius", "6.0f", false, true, true, false, true },
+         { "int", "num_sides", "0", false, false, true, false, false, false },
+         { "float", "radius", "6.0f", false, true, true, false, false, true },
       },
       {},
       symbol_dependencies
@@ -344,7 +344,7 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__when_no_dependencies_a
 TEST_F(ClassGeneratorTest, dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
 {
    Blast::Cpp::Class cpp_class("User", {}, { { "SomeUndefinedParentClass" } }, {
-         { "some_undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false, false },
+         { "some_undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false, false, false },
       }
    );
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
@@ -370,9 +370,9 @@ TEST_F(ClassGeneratorTest, static_attribute_definitions__returns_a_string_format
 
    Blast::Cpp::Class cpp_class("User", {}, {}, {
          //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
-         { "int", "next_id", "0", true, false, false, false, false },
-         { "int", "id", "next_id++", false, false, true, false, false },
-         { "float", "time_velocity", "13.0f", true, false, false, false, false },
+         { "int", "next_id", "0", true, false, false, false, false, false },
+         { "int", "id", "next_id++", false, false, true, false, false, false },
+         { "float", "time_velocity", "13.0f", true, false, false, false, false, false },
       },
       {},
       symbol_dependencies
@@ -388,10 +388,10 @@ TEST_F(ClassGeneratorTest, getter_function_declarations__returns_the_expected_fo
 {
    Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {
       //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
-      { "int", "last_id", "0", true, false, true, false, false },
-      { "int", "id", "last_id++", false, false, true, false, false },
-      { "std::string", "name", "\"[unnamed]\"", false, true, false, false, true },
-      { "type_t", "type", "MAGE", false, true, true, false, true },
+      { "int", "last_id", "0", true, false, true, false, false, false },
+      { "int", "id", "last_id++", false, false, true, false, false, false },
+      { "std::string", "name", "\"[unnamed]\"", false, true, false, false, false, true },
+      { "type_t", "type", "MAGE", false, true, true, false, false, true },
    });
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
@@ -404,10 +404,10 @@ TEST_F(ClassGeneratorTest, getter_function_definitions__returns_the_expected_for
 {
    Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {
       //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
-      { "int", "last_id", "0", true, false, true, false, false },
-      { "int", "id", "last_id++", false, false, true, false, false },
-      { "std::string", "name", "\"[unnamed]\"", false, true, false, false, true },
-      { "type_t", "type", "MAGE", false, true, true, false, true },
+      { "int", "last_id", "0", true, false, true, false, false, false },
+      { "int", "id", "last_id++", false, false, true, false, false, false },
+      { "std::string", "name", "\"[unnamed]\"", false, true, false, false, false, true },
+      { "type_t", "type", "MAGE", false, true, true, false, false, true },
    });
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
@@ -420,10 +420,10 @@ TEST_F(ClassGeneratorTest, getter_ref_function_declarations__returns_the_expecte
 {
    Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {
       //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_getter_ref, bool has_setter)
-      { "int", "last_id", "0", true, false, true, true, false },
-      { "int", "id", "last_id++", false, false, true, true, false },
-      { "std::string", "name", "\"[unnamed]\"", false, true, false, false, true },
-      { "type_t", "type", "MAGE", false, true, true, true, true },
+      { "int", "last_id", "0", true, false, true, false, true, false },
+      { "int", "id", "last_id++", false, false, true, false, true, false },
+      { "std::string", "name", "\"[unnamed]\"", false, true, false, false, false, true },
+      { "type_t", "type", "MAGE", false, true, true, false, true, true },
    });
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 

@@ -544,6 +544,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       bool is_static = fetch_bool(it, STATIC, false);
       bool is_constructor_parameter = fetch_bool(it, CONSTRUCTOR_ARG, false);
       bool has_getter = fetch_bool(it, GETTER, false);
+      bool has_explicit_getter = false;
       bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
       bool has_setter = fetch_bool(it, SETTER, false);
       //std::string initialization_value = init_with_node.as<std::string>();
@@ -553,7 +554,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       //bool has_getter_ref = false;
       //bool has_setter = setter_node.as<bool>();
 
-      Blast::Cpp::ClassAttributes class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_getter_ref, has_setter);
+      Blast::Cpp::ClassAttributes class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_explicit_getter, has_getter_ref, has_setter);
 
       result.push_back(class_attribute_properties);
    }
