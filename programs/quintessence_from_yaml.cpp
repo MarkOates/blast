@@ -544,7 +544,9 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       std::string initialization_value = fetch_string(it, INIT_WITH, "\"\"");
       bool is_static = fetch_bool(it, STATIC, false);
       bool is_constructor_parameter = fetch_bool(it, CONSTRUCTOR_ARG, false);
-      bool has_getter = fetch_bool(it, GETTER, false);
+      std::string has_getter_AS_STR = fetch_string(it, GETTER, "false");
+      bool has_getter = (has_getter_AS_STR == "true") ? true : false;
+      //bool has_getter = fetch_bool(it, GETTER, false);
       bool has_explicit_getter = fetch_bool(it, EXPLICIT_GETTER, false);
       bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
       bool has_setter = fetch_bool(it, SETTER, false);
@@ -555,8 +557,11 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       //bool has_getter_ref = false;
       //bool has_setter = setter_node.as<bool>();
 
+      validate((has_getter_AS_STR=="true" || has_getter_AS_STR=="false" || has_getter_AS_STR=="explicit"), this_func_name, "Attribute property \"getter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
 
       validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
+
+      if (has_getter_AS_STR == "explicit") has_explicit_getter = true;
 
       Blast::Cpp::ClassAttributes class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_explicit_getter, has_getter_ref, has_setter);
 
