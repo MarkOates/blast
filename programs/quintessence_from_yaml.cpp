@@ -851,6 +851,8 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
          }
          error_message << "] are not present.";
 
+         // TODO: validate the return type of the function matches the return type of the property, and, possibly that there are no parameters on the function
+
       throw std::runtime_error(error_message.str());
    }
 
