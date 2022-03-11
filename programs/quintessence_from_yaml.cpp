@@ -555,6 +555,9 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       //bool has_getter_ref = false;
       //bool has_setter = setter_node.as<bool>();
 
+
+      validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
+
       Blast::Cpp::ClassAttributes class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_explicit_getter, has_getter_ref, has_setter);
 
       result.push_back(class_attribute_properties);
