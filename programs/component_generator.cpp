@@ -33,10 +33,12 @@ std::string TEST_FILE_CONTENT = R"END(
 
 #include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
 
+
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
 {
    [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
 }
+
 
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], run__returns_the_expected_response)
 {
@@ -44,6 +46,7 @@ TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], run__returns_the_expected_response)
    std::string expected_string = "Hello World!";
    EXPECT_EQ(expected_string, [[COMPONENT_BASENAME_SNAKE_CASE]].run());
 }
+
 )END";
 
 
