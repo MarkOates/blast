@@ -222,7 +222,8 @@ std::string const RENDERER_TEST_FILE_CONTENT = R"END(
    catch ( raised_exception_type const &err ) { ASSERT_EQ(std::string(expected_exception_message), err.what()); } \
    catch (...) { FAIL() << "Expected " # raised_exception_type; }
 
-#include <Testing/WithAllegroRenderingFixture.hpp>
+#include <AllegroFlare/Testing/WithAllegroRenderingFixture.hpp>
+
 
 class [[COMPONENT_TEST_DESCRIPTION_NAME]] : public ::testing::Test
 {};
@@ -244,7 +245,7 @@ TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], render__without_allegro_initialized_
 {
    [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
    std::string expected_error_message =
-      "XXXXXXX::render: error: guard \"al_is_system_installed()\" not met";
+      "[[COMPONENT_NAME_LAST_FRAGMENT]]]::render: error: guard \"al_is_system_installed()\" not met";
    ASSERT_THROW_WITH_MESSAGE([[COMPONENT_BASENAME_SNAKE_CASE]].render(), std::runtime_error, expected_error_message);
 }
 
@@ -377,6 +378,7 @@ int main(int argc, char **argv)
       { "[[COMPONENT_CLASS_NAME]]", generator.get_program_body_class_name() },
       { "[[COMPONENT_BASENAME_SNAKE_CASE]]", generator.get_component_tail_snakecase() },
       { "[[COMPONENT_AS_ALL_CAPS_CONSTANT]]", generator.get_component_tail_all_caps_constant() },
+      { "[[COMPONENT_NAME_LAST_FRAGMENT]]", generator.get_component_name_last_fragment() },
    };
 
    // create the folders for the components
