@@ -34,7 +34,7 @@ functions:
     type: void
     body: |
       AllegroFlare::Screens screens;
-      AllegroFlare::Framework framework(screens);
+      AllegroFlare::Framework framework(&screens);
       framework.initialize();
       AllegroFlare::Display *display =
          framework.create_display(1920/3*4, 1080/3*4, ALLEGRO_OPENGL | ALLEGRO_PROGRAMMABLE_PIPELINE);
