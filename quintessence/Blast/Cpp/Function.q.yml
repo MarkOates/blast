@@ -44,7 +44,7 @@ properties:
     init_with: "false"
     constructor_arg: true
     getter: true
-  - name: "is_final"
+  - name: "is_final_override"
     type: "bool"
     init_with: "false"
     constructor_arg: true
