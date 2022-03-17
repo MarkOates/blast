@@ -22,9 +22,10 @@ namespace Blast
          bool is_override;
          bool is_virtual;
          bool is_pure_virtual;
+         bool is_final;
 
       public:
-         Function(std::string type="void", std::string name="unnamed_function", std::vector<Blast::Cpp::FunctionArgument> signature={}, std::string body="return;", bool is_static=false, bool is_const=false, bool is_override=false, bool is_virtual=false, bool is_pure_virtual=false);
+         Function(std::string type="void", std::string name="unnamed_function", std::vector<Blast::Cpp::FunctionArgument> signature={}, std::string body="return;", bool is_static=false, bool is_const=false, bool is_override=false, bool is_virtual=false, bool is_pure_virtual=false, bool is_final=false);
          ~Function();
 
          std::string get_type();
@@ -36,6 +37,7 @@ namespace Blast
          bool get_is_override();
          bool get_is_virtual();
          bool get_is_pure_virtual();
+         bool get_is_final();
       };
    }
 }

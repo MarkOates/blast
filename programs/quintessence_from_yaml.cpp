@@ -645,6 +645,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       const std::string CONST = "const";
       const std::string OVERRIDE = "override";
       const std::string VIRTUAL = "virtual";
+      const std::string FINAL = "final";
       const std::string PURE_VIRTUAL = "pure_virtual";
       const std::string GUARDS = "guards";
       //const std::string DEPENDENCY_SYMBOLS = "dependency_symbols";
@@ -674,6 +675,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       bool is_const = fetch_bool(it, CONST, false);
       bool is_override = fetch_bool(it, OVERRIDE, false);
       bool is_virtual = fetch_bool(it, VIRTUAL, false);
+      bool is_final = fetch_bool(it, FINAL, false);
       bool is_pure_virtual = fetch_bool(it, PURE_VIRTUAL, false);
 
       std::vector<std::string> guards_conditionals = extract_sequence_as_string_array(guards_node);
@@ -681,7 +683,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
 
       std::string body_with_guard_code = guards_code + body;
 
-      Blast::Cpp::Function function(type, name, signature, body_with_guard_code, is_static, is_const, is_override, is_virtual, is_pure_virtual);
+      Blast::Cpp::Function function(type, name, signature, body_with_guard_code, is_static, is_const, is_override, is_virtual, is_pure_virtual, is_final);
 
       std::vector<std::string> dependency_symbols = extract_function_dependency_symbols(it);
       if (!guards_conditionals.empty())

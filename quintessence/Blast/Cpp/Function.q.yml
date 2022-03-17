@@ -44,6 +44,11 @@ properties:
     init_with: "false"
     constructor_arg: true
     getter: true
+  - name: "is_final"
+    type: "bool"
+    init_with: "false"
+    constructor_arg: true
+    getter: true
 
 
 dependencies:
