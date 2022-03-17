@@ -62,7 +62,8 @@ std::string FunctionFormatter::get_function_declaration()
    result << function.get_name() << "(" << Blast::StringJoiner(function_arg_elements, ", ").join() << ")";
    if (function.get_is_pure_virtual()) result << " = 0";
    if (function.get_is_const()) result << " const";
-   if (function.get_is_override()) result << " override";
+   if (function.get_is_final_override()) result << " final override";
+   else if (function.get_is_override()) result << " override";
    result << ';' << std::endl;
 
    return result.str();
