@@ -250,6 +250,8 @@ YAML::Node default_dependencies()
   headers: [ 'string' ]
 - symbol: std::vector<std::string>
   headers: [ 'vector', 'string' ]
+- symbol: std::vector<int>
+  headers: [ 'vector', ]
 - symbol: std::cout
   headers: [ 'iostream' ]
 - symbol: std::cerr
