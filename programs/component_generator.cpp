@@ -228,7 +228,8 @@ std::string const RENDERER_TEST_FILE_CONTENT = R"END(
 class [[COMPONENT_TEST_DESCRIPTION_NAME]] : public ::testing::Test
 {};
 
-class [[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture : public Testing::WithAllegroRenderingFixture
+class [[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture
+   : public AllegroFlare::Testing::WithAllegroRenderingFixture
 {};
 
 
@@ -245,7 +246,7 @@ TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], render__without_allegro_initialized_
 {
    [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
    std::string expected_error_message =
-      "[[COMPONENT_NAME_LAST_FRAGMENT]]]::render: error: guard \"al_is_system_installed()\" not met";
+      "[[COMPONENT_NAME_LAST_FRAGMENT]]::render: error: guard \"al_is_system_installed()\" not met";
    ASSERT_THROW_WITH_MESSAGE([[COMPONENT_BASENAME_SNAKE_CASE]].render(), std::runtime_error, expected_error_message);
 }
 
