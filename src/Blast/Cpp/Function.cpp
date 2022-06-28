@@ -10,7 +10,7 @@ namespace Cpp
 {
 
 
-Function::Function(std::string type, std::string name, std::vector<Blast::Cpp::FunctionArgument> signature, std::string body, bool is_static, bool is_const, bool is_override, bool is_virtual, bool is_pure_virtual, bool is_final_override)
+Function::Function(std::string type, std::string name, std::vector<Blast::Cpp::FunctionArgument> signature, std::string body, bool is_static, bool is_const, bool is_override, bool is_virtual, bool is_pure_virtual, bool is_final_override, bool is_private)
    : type(type)
    , name(name)
    , signature(signature)
@@ -21,6 +21,7 @@ Function::Function(std::string type, std::string name, std::vector<Blast::Cpp::F
    , is_virtual(is_virtual)
    , is_pure_virtual(is_pure_virtual)
    , is_final_override(is_final_override)
+   , is_private(is_private)
 {
 }
 
@@ -87,6 +88,12 @@ bool Function::get_is_pure_virtual()
 bool Function::get_is_final_override()
 {
    return is_final_override;
+}
+
+
+bool Function::get_is_private()
+{
+   return is_private;
 }
 
 

@@ -49,6 +49,11 @@ properties:
     init_with: "false"
     constructor_arg: true
     getter: true
+  - name: "is_private"
+    type: "bool"
+    init_with: "false"
+    constructor_arg: true
+    getter: true
 
 
 dependencies:
