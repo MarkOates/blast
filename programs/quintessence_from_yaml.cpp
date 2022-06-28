@@ -651,6 +651,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       const std::string PURE_VIRTUAL = "pure_virtual";
       const std::string GUARDS = "guards";
       const std::string PRIVATE = "private";
+      const std::string PROTECTED = "protected";
       //const std::string DEPENDENCY_SYMBOLS = "dependency_symbols";
 
       validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"functions\", expected to be of a YAML Map.");
@@ -680,14 +681,17 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
       bool is_virtual = fetch_bool(it, VIRTUAL, false);
       bool is_final_override = fetch_bool(it, FINAL_OVERRIDE, false);
       bool is_pure_virtual = fetch_bool(it, PURE_VIRTUAL, false);
-      bool is_private = fetch_bool(it, PRIVATE, false); // TODO
+      bool is_private = fetch_bool(it, PRIVATE, false);
+      bool is_protected = fetch_bool(it, PROTECTED, false);
+
+      validate(!(is_protected && is_protected), this_func_name, "Function properties \"private\" and \"protected\" cannot both be true.");
 
       std::vector<std::string> guards_conditionals = extract_sequence_as_string_array(guards_node);
       std::string guards_code = GuardCodeCreator::generate_guards_code(guards_conditionals, this_class_name, name);
 
       std::string body_with_guard_code = guards_code + body;
 
-      Blast::Cpp::Function function(type, name, signature, body_with_guard_code, is_static, is_const, is_override, is_virtual, is_pure_virtual, is_final_override, is_private);
+      Blast::Cpp::Function function(type, name, signature, body_with_guard_code, is_static, is_const, is_override, is_virtual, is_pure_virtual, is_final_override, is_private, is_protected);
 
       std::vector<std::string> dependency_symbols = extract_function_dependency_symbols(it);
       if (!guards_conditionals.empty())
