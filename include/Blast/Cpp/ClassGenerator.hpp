@@ -25,7 +25,9 @@ namespace Blast
          std::vector<std::string> class_declaration_opener_inheritence_elements();
          std::vector<std::string> function_body_dependency_include_directive_elements();
          std::vector<std::string> static_attribute_definition_elements();
-         std::vector<std::string> function_declaration_elements(int indent_level=0);
+         std::vector<std::string> private_function_declaration_elements(int indent_level=0);
+         std::vector<std::string> protected_function_declaration_elements(int indent_level=0);
+         std::vector<std::string> public_function_declaration_elements(int indent_level=0);
          std::vector<std::string> function_definition_elements(int indent_level=0);
 
          std::string get_class_name_with_namespaces();
@@ -54,7 +56,9 @@ namespace Blast
          std::string setter_function_definitions(int indent_level=0);
          std::string initialization_list(int indent_level=0);
 
-         std::string function_declarations(int indent_level=0);
+         std::string public_function_declarations(int indent_level=0);
+         std::string private_function_declarations(int indent_level=0);
+         std::string protected_function_declarations(int indent_level=0);
          std::string function_definitions(int indent_level=0);
 
          std::string constructor_declaration(int indent_level=0);
