@@ -65,6 +65,8 @@ int main(int argc, char **argv)
    bool link_with_opengl = true;
    bool copy_allegro_flare_source = true;
    bool copy_nlohmann_json_from_allegro_flare_source = true;
+   bool remove_AllegroFlare_Network_from_allegro_flare_copy = true;
+   bool remove_AllegroFlare_Testing_from_allegro_flare_copy = true;
 
    Blast::Project::SourceReleaseBuilder source_release_builder(
          destination_directory,
@@ -73,7 +75,9 @@ int main(int argc, char **argv)
          main_program_filename,
          link_with_opengl,
          copy_allegro_flare_source,
-         copy_nlohmann_json_from_allegro_flare_source
+         copy_nlohmann_json_from_allegro_flare_source,
+         remove_AllegroFlare_Network_from_allegro_flare_copy,
+         remove_AllegroFlare_Testing_from_allegro_flare_copy
       );
    source_release_builder.generate_source_release();
 
