@@ -56,6 +56,8 @@ functions:
     body: |
       std::stringstream MAKEFILE_CONTENT;
       //std::string main_program_name = "main";
+      // TODO throw error if project name contains invalid characters (spaces, etc)
+      // TODO throw error if main program filename does not exist, or contains invalid characters (spaces, etc)
       std::string binary_name = project_name; //"FadeToWhite"; // project_name
 
       bool include_opengl = get_link_with_opengl();
@@ -266,6 +268,7 @@ functions:
 
   - name: generate_source_release
     body: |
+      // options:
       bool copy_allegro_flare_source_and_header_files_from_source = true;
       bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
 
@@ -345,17 +348,39 @@ functions:
       bool manually_copy_allegro_flare_headers_and_source_files = copy_allegro_flare_source_and_header_files_from_source;
       if (manually_copy_allegro_flare_headers_and_source_files)
       {
+         /// Build commands
+
          // headers
          std::string allegro_flare_include_directory = "/Users/markoates/Repos/allegro_flare/include/AllegroFlare";
          std::string allegro_flare_include_destination_directory = destination_directory + "/include/AllegroFlare";
          std::stringstream copy_allegro_flare_include_files_command;
          copy_allegro_flare_include_files_command << "cp -R " << allegro_flare_include_directory << " " << allegro_flare_include_destination_directory;
+
+         // src
+         std::string allegro_flare_src_directory = "/Users/markoates/Repos/allegro_flare/src/AllegroFlare";
+         std::string allegro_flare_src_destination_directory = destination_directory + "/src/AllegroFlare";
+         std::stringstream copy_allegro_flare_src_files_command;
+         copy_allegro_flare_src_files_command << "cp -R " << allegro_flare_src_directory << " " << allegro_flare_src_destination_directory;
+
+
+         // Create command executors
+
          Blast::ShellCommandExecutorWithCallback allegro_flare_include_files_copy_executor(
                copy_allegro_flare_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
             );
+         Blast::ShellCommandExecutorWithCallback allegro_flare_src_files_copy_executor(
+               copy_allegro_flare_src_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
+            );
+
+
+         // Execute command executors
 
          std::cout << "Copying AllegroFlare include files into \"" << destination_directory << "\"... ";
          allegro_flare_include_files_copy_executor.execute();
+         std::cout << "done." << std::endl;
+
+         std::cout << "Copying AllegroFlare src files into \"" << destination_directory << "\"... ";
+         allegro_flare_src_files_copy_executor.execute();
          std::cout << "done." << std::endl;
 
          // src
