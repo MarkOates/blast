@@ -36,8 +36,22 @@ int main(int argc, char **argv)
       std::cout << "" << std::endl;
       std::cout << "> /Users/markoates/Repos/blast/create_source_release Solitare" << std::endl;
       std::cout << "" << std::endl;
-      std::cout << " ^ This will create a \"releases\" folder on the desktop and" << std::endl;
-      std::cout << "place the files in there." << std::endl;
+      std::cout << " ^ This will: " << std::endl;
+      std::cout << "   - CREATE a \"releases\" folder on the \"~/Desktop\" folder" << std::endl;
+      std::cout << "   - CREATE a \"releases/SolitareSourceRelease\" folder" << std::endl;
+      std::cout << "   - COPY the following source files into \"releases/SolitareSourceRelease\":" << std::endl;
+      std::cout << "      - source from \"/Users/markoates/Repos/Solitare/src\"" << std::endl;
+      std::cout << "      - includes from \"/Users/markoates/Repos/Solitare/include\"" << std::endl;
+      std::cout << "      - \"/Users/markoates/Repos/allegro_flare/include/*.*\"" << std::endl;
+      std::cout << "      - \"/Users/markoates/Repos/allegro_flare/src/*.*\"" << std::endl;
+      std::cout << "      - \"/Users/markoates/Repos/allegro_flare/include/lib/nlohmann/json.hpp\"" << std::endl;
+      std::cout << "   - COPY the data/ folder from \"/Users/markoates/Repos/Solitare\"" << std::endl;
+      std::cout << "   - REMOVE the following from \"SolitareSourceRelease\":" << std::endl;
+      std::cout << "      - \"/include/AllegroFlare/Network/\" (because it requires asio.hpp)" << std::endl;
+      std::cout << "      - \"/src/AllegroFlare/Network/\" (because it requires asio.hpp)" << std::endl;
+      std::cout << "      - \"/include/AllegroFlare/Testing/\" (because it requires Google Test)" << std::endl;
+      std::cout << "      - \"/src/AllegroFlare/Testing/\" (because it requires Google Test)" << std::endl;
+      std::cout << "   - CREATE a \"Makefile\" that can be used to `make` on cross-platform" << std::endl;
       std::cout << "" << std::endl;
       return 0;
    }
