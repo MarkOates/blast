@@ -31,6 +31,19 @@ properties:
     getter: true
     setter: true
 
+  - name: copy_allegro_flare_source
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
+  - name: copy_nlohmann_json_from_allegro_flare_source
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
 
 functions:
 
@@ -232,16 +245,6 @@ functions:
       - std::stringstream
 
 
-  - name: copy_allegro_flare_source_and_header_files_from_source
-    body: |
-      std::string xxx = destination_directory + "/" + get_source_release_folder_name();
-
-      std::string allegro_flare_include_directory = "/Users/markoates/Repos/allegro_flare/include/AllegroFlare";
-      std::string allegro_flare_include_destination_directory = xxx + "/include/AllegroFlare/";
-      std::stringstream copy_allegro_flare_include_files_command;
-      copy_allegro_flare_include_files_command << "cp -R " << allegro_flare_include_directory << " " << allegro_flare_include_destination_directory;
-
-
   - name: get_source_release_folder_name
     type: std::string
     body: |
@@ -345,7 +348,7 @@ functions:
       replace_symlinks_with_copies_of_linked_files();
 
 
-      bool manually_copy_allegro_flare_headers_and_source_files = copy_allegro_flare_source_and_header_files_from_source;
+      bool manually_copy_allegro_flare_headers_and_source_files = this->get_copy_allegro_flare_source();
       if (manually_copy_allegro_flare_headers_and_source_files)
       {
          /// Build commands
@@ -382,10 +385,49 @@ functions:
          std::cout << "Copying AllegroFlare src files into \"" << destination_directory << "\"... ";
          allegro_flare_src_files_copy_executor.execute();
          std::cout << "done." << std::endl;
-
-         // src
-         // TODO
       }
+
+
+      bool manually_copy_allegro_flare_include_lib_nlohmann_json_from_source =
+        this->get_copy_nlohmann_json_from_allegro_flare_source();
+      if (manually_copy_allegro_flare_include_lib_nlohmann_json_from_source)
+      {
+         // build the command
+         std::stringstream copy_nlohmann_json_file_command;
+         std::string nlohmann_json_file_source = "/Users/markoates/Repos/allegro_flare/include/lib/nlohmann/json.hpp";
+         std::string nlohmann_json_file_destination_directory = destination_directory + "/include/lib/nlohmann";
+         std::string nlohmann_json_file_destination = nlohmann_json_file_destination_directory + "/json.hpp";
+         // TODO: check for file existence
+         copy_nlohmann_json_file_command << "cp -R " << nlohmann_json_file_source << " " << nlohmann_json_file_destination;
+
+         // start the copy process
+         std::cout << "Copying lib/nlohmann/json.hpp file from AllegroFlare into \"" << destination_directory << "\"... "
+                   << std::endl;
+
+         // create the directory if it doesn't exist
+         std::cout << "  Ensuring directory exists...";
+         std::vector<std::string> directories_needed_for_nlohmann_json = StringSplitter(
+            nlohmann_json_file_destination_directory, '/').split();
+         Blast::DirectoryCreator directory_creator(directories_needed_for_nlohmann_json, true);
+         bool created = directory_creator.create();
+         if (!created)
+         {
+            std::stringstream error_message;
+            error_message << "Project/ReleaseBuilder error: could not create directory \""
+                         << nlohmann_json_file_destination_directory
+                         << "\"";
+            throw std::runtime_error(error_message.str());
+         }
+         std::cout << " directory exists.";
+
+         // execute the copy command
+         Blast::ShellCommandExecutorWithCallback nlohmann_json_file_copy_executor(
+               copy_nlohmann_json_file_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
+            );
+         nlohmann_json_file_copy_executor.execute();
+         std::cout << "done." << std::endl;
+      }
+
 
       return;
     body_dependency_symbols:

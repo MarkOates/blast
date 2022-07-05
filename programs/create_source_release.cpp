@@ -63,12 +63,17 @@ int main(int argc, char **argv)
    std::string destination_directory = "/Users/markoates/Desktop/releases";
    std::string main_program_filename = "programs/main.cpp";
    bool link_with_opengl = true;
+   bool copy_allegro_flare_source = true;
+   bool copy_nlohmann_json_from_allegro_flare_source = true;
+
    Blast::Project::SourceReleaseBuilder source_release_builder(
          destination_directory,
          project_name,
          source_project_directory,
          main_program_filename,
-         link_with_opengl
+         link_with_opengl,
+         copy_allegro_flare_source,
+         copy_nlohmann_json_from_allegro_flare_source
       );
    source_release_builder.generate_source_release();
 
