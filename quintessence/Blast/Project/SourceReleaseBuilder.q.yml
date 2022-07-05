@@ -45,6 +45,21 @@ properties:
     getter: true
     setter: true
 
+  - name: remove_AllegroFlare_Network_from_allegro_flare_copy
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
+  - name: remove_AllegroFlare_Testing_from_allegro_flare_copy
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
+
 functions:
 
 
@@ -269,6 +284,37 @@ functions:
       return;
 
 
+  - name: recursively_remove_folder_with_prompt
+    parameters:
+      - name: folder_to_remove
+        type: std::string
+        default_argument: "\"/Users/markoates/Desktop/releases\""
+    body: |
+      std::stringstream folder_removal_command;
+      folder_removal_command << "rm -rdf \"" << folder_to_remove << "\"";
+
+      std::cout << "Blast/Project/SourceReleaseBuilder will now attempt to delete the following folder:" << std::endl;
+      std::cout << "   \"" << folder_to_remove << "\"" << std::endl;
+      std::cout << "Using the command:" << std::endl;
+      std::cout << "   " << folder_removal_command.str() << "" << std::endl;
+      std::cout << "Do you wish to continue? (y/n) > ";
+      char input = 'n';
+      std::cin >> input;
+      if (input == 'y')
+      {
+         //std::stringstream folder_removal_command;
+         //folder_removal_command << "rm -rdf " << folder_to_remove;
+         Blast::ShellCommandExecutorWithCallback folder_removal_command_executor(
+               folder_removal_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
+            );
+
+         std::cout << "Removing folder...";
+         folder_removal_command_executor.execute();
+         std::cout << "done." << std::endl;
+      }
+      return;
+
+
   - name: generate_source_release
     body: |
       // options:
@@ -426,6 +472,24 @@ functions:
             );
          nlohmann_json_file_copy_executor.execute();
          std::cout << "done." << std::endl;
+      }
+
+
+      if (get_remove_AllegroFlare_Network_from_allegro_flare_copy())
+      {
+         std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Network";
+         recursively_remove_folder_with_prompt(include_folder_to_remove);
+         std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Network";
+         recursively_remove_folder_with_prompt(src_folder_to_remove);
+      }
+
+
+      if (get_remove_AllegroFlare_Testing_from_allegro_flare_copy())
+      {
+         std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Testing";
+         recursively_remove_folder_with_prompt(include_folder_to_remove);
+         std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Testing";
+         recursively_remove_folder_with_prompt(src_folder_to_remove);
       }
 
 
