@@ -352,15 +352,6 @@ void SourceReleaseBuilder::generate_source_release()
             copy_allegro_flare_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
          );
 
-      /*
-      std::cout << std::endl;
-      std::cout << copy_allegro_flare_include_files_command.str() << std::endl;
-      std::cout << copy_allegro_flare_include_files_command.str() << std::endl;
-      std::cout << copy_allegro_flare_include_files_command.str() << std::endl;
-      std::cout << copy_allegro_flare_include_files_command.str() << std::endl;
-      std::cout << std::endl;
-      */
-
       std::cout << "Copying AllegroFlare include files into \"" << destination_directory << "\"... ";
       allegro_flare_include_files_copy_executor.execute();
       std::cout << "done." << std::endl;
