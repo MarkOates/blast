@@ -62,11 +62,13 @@ int main(int argc, char **argv)
    std::string source_project_directory = complete_folder_path_to_project_folder;
    std::string destination_directory = "/Users/markoates/Desktop/releases";
    std::string main_program_filename = "programs/main.cpp";
+   bool link_with_opengl = true;
    Blast::Project::SourceReleaseBuilder source_release_builder(
          destination_directory,
          project_name,
          source_project_directory,
-         main_program_filename
+         main_program_filename,
+         link_with_opengl
       );
    source_release_builder.generate_source_release();
 

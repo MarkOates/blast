@@ -24,6 +24,13 @@ properties:
     constructor_arg: true
     getter: true
 
+  - name: link_with_opengl
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
 
 functions:
 
@@ -51,7 +58,7 @@ functions:
       //std::string main_program_name = "main";
       std::string binary_name = project_name; //"FadeToWhite"; // project_name
 
-      bool include_opengl = true;
+      bool include_opengl = get_link_with_opengl();
  
       MAKEFILE_CONTENT
                        //<< "SRC_FILES := $(shell find src -type f)"

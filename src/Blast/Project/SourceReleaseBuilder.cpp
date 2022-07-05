@@ -23,17 +23,24 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory, std::string main_program_filename)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl)
    : destination_directory(destination_directory)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
    , main_program_filename(main_program_filename)
+   , link_with_opengl(link_with_opengl)
 {
 }
 
 
 SourceReleaseBuilder::~SourceReleaseBuilder()
 {
+}
+
+
+void SourceReleaseBuilder::set_link_with_opengl(bool link_with_opengl)
+{
+   this->link_with_opengl = link_with_opengl;
 }
 
 
@@ -55,6 +62,12 @@ std::string SourceReleaseBuilder::get_main_program_filename()
 }
 
 
+bool SourceReleaseBuilder::get_link_with_opengl()
+{
+   return link_with_opengl;
+}
+
+
 void SourceReleaseBuilder::write_file_contents(std::string filename, std::string file_contents)
 {
    std::ofstream out(filename);
@@ -68,7 +81,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
    //std::string main_program_name = "main";
    std::string binary_name = project_name; //"FadeToWhite"; // project_name
 
-   bool include_opengl = true;
+   bool include_opengl = get_link_with_opengl();
 
    MAKEFILE_CONTENT
                     //<< "SRC_FILES := $(shell find src -type f)"

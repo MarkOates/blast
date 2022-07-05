@@ -16,14 +16,17 @@ namespace Blast
          std::string project_name;
          std::string source_project_directory;
          std::string main_program_filename;
+         bool link_with_opengl;
 
       public:
-         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp");
+         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp", bool link_with_opengl=true);
          ~SourceReleaseBuilder();
 
+         void set_link_with_opengl(bool link_with_opengl);
          std::string get_project_name();
          std::string get_source_project_directory();
          std::string get_main_program_filename();
+         bool get_link_with_opengl();
          void write_file_contents(std::string filename="", std::string file_contents="");
          std::string get_makefile_content();
          std::string get_pinfo_content();
