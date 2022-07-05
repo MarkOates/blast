@@ -67,17 +67,42 @@ std::string SourceReleaseBuilder::get_makefile_content()
    std::stringstream MAKEFILE_CONTENT;
    //std::string main_program_name = "main";
    std::string binary_name = project_name; //"FadeToWhite"; // project_name
-   MAKEFILE_CONTENT << "SRC_FILES := $(shell find src -type f)"
+
+   bool include_opengl = true;
+
+   MAKEFILE_CONTENT
+                    //<< "SRC_FILES := $(shell find src -type f)"
+                    << "SRC_FILES := $(shell find src -type f -not -path '*/.*')"
                     << std::endl
                     << "ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog "
                     << "-lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro "
                     << "-lallegro_main" << std::endl
-                    << std::endl
+                    << std::endl;
+
+   if (include_opengl)
+   {
+                 MAKEFILE_CONTENT
+                    << "ifeq ($(OS), Windows_NT)" << std::endl
+                    << "\tOPENGL_LIB=-lopengl32" << std::endl
+                    << "else" << std::endl
+                    << "\tUNAME_S := $(shell uname -s)" << std::endl
+                    << "\tifeq ($(UNAME_S),Linux)" << std::endl
+                    << "\t\tOPENGL_LIB=[ERROR:OPENGL_LIBS_NOT_DEFINED_FOR_LINUX]" << std::endl
+                    << "\tendif" << std::endl
+                    << "\tifeq ($(UNAME_S),Darwin)" << std::endl
+                    << "\t\tOPENGL_LIB=-framework OpenGL" << std::endl
+                    << "\tendif" << std::endl
+                    << "endif" << std::endl
+                    << "std::endl" << std::endl;
+   }
+
+   MAKEFILE_CONTENT
                     << "main: $(SRC_FILES)" << std::endl
                     << "\t"
                     << "g++ -std=c++17 $^ " << main_program_filename << " -o " << binary_name
-                    << " -I./include $(ALLEGRO_LIBS)"
-                    ;
+                    << " -I./include $(ALLEGRO_LIBS)";
+                    if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
+
    return MAKEFILE_CONTENT.str();
 }
 
