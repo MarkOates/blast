@@ -34,6 +34,7 @@ namespace Blast
          std::vector<std::pair<std::string, std::string>> list_symlinks();
          void fix_symlink_targets_from_relative_to_absolute();
          void replace_symlinks_with_copies_of_linked_files();
+         void copy_allegro_flare_source_and_header_files_from_source();
          std::string get_source_release_folder_name();
          std::string get_macos_release_folder_name();
          std::string get_win64_release_folder_name();

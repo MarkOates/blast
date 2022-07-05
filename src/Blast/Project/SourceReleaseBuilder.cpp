@@ -106,7 +106,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "\t\tOPENGL_LIB=-framework OpenGL" << std::endl
                     << "\tendif" << std::endl
                     << "endif" << std::endl
-                    << "std::endl" << std::endl;
+                    << std::endl;
    }
 
    MAKEFILE_CONTENT
@@ -231,6 +231,16 @@ void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
    return;
 }
 
+void SourceReleaseBuilder::copy_allegro_flare_source_and_header_files_from_source()
+{
+   std::string xxx = destination_directory + "/" + get_source_release_folder_name();
+
+   std::string allegro_flare_include_directory = "/Users/markoates/Repos/allegro_flare/include/AllegroFlare";
+   std::string allegro_flare_include_destination_directory = xxx + "/include/AllegroFlare/";
+   std::stringstream copy_allegro_flare_include_files_command;
+   copy_allegro_flare_include_files_command << "cp -R " << allegro_flare_include_directory << " " << allegro_flare_include_destination_directory;
+}
+
 std::string SourceReleaseBuilder::get_source_release_folder_name()
 {
    return get_project_name() + "SourceRelease";
@@ -254,7 +264,11 @@ void SourceReleaseBuilder::generate_macos_release()
 
 void SourceReleaseBuilder::generate_source_release()
 {
+   bool copy_allegro_flare_source_and_header_files_from_source = true;
+   bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
+
    std::string source_directory = get_source_project_directory();
+
    // !! WARNING: local variable name shadows class instance variable name:
    std::string xxx = destination_directory + "/" + get_source_release_folder_name();
 
@@ -284,6 +298,7 @@ void SourceReleaseBuilder::generate_source_release()
    copy_program_files_command << "cp -R " << source_directory << "/programs " << destination_directory << "/programs";
    std::stringstream copy_readme_file_command;
    copy_readme_file_command << "cp " << source_directory << "/README.md " << destination_directory << "/README.md";
+
 
    // copy files
    Blast::ShellCommandExecutorWithCallback include_file_copy_executor(copy_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback);
@@ -321,7 +336,38 @@ void SourceReleaseBuilder::generate_source_release()
    fix_symlink_targets_from_relative_to_absolute();
    std::cout << "done." << std::endl;
 
+
    replace_symlinks_with_copies_of_linked_files();
+
+
+   bool manually_copy_allegro_flare_headers_and_source_files = copy_allegro_flare_source_and_header_files_from_source;
+   if (manually_copy_allegro_flare_headers_and_source_files)
+   {
+      // headers
+      std::string allegro_flare_include_directory = "/Users/markoates/Repos/allegro_flare/include/AllegroFlare";
+      std::string allegro_flare_include_destination_directory = destination_directory + "/include/AllegroFlare";
+      std::stringstream copy_allegro_flare_include_files_command;
+      copy_allegro_flare_include_files_command << "cp -R " << allegro_flare_include_directory << " " << allegro_flare_include_destination_directory;
+      Blast::ShellCommandExecutorWithCallback allegro_flare_include_files_copy_executor(
+            copy_allegro_flare_include_files_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
+         );
+
+      /*
+      std::cout << std::endl;
+      std::cout << copy_allegro_flare_include_files_command.str() << std::endl;
+      std::cout << copy_allegro_flare_include_files_command.str() << std::endl;
+      std::cout << copy_allegro_flare_include_files_command.str() << std::endl;
+      std::cout << copy_allegro_flare_include_files_command.str() << std::endl;
+      std::cout << std::endl;
+      */
+
+      std::cout << "Copying AllegroFlare include files into \"" << destination_directory << "\"... ";
+      allegro_flare_include_files_copy_executor.execute();
+      std::cout << "done." << std::endl;
+
+      // src
+      // TODO
+   }
 
    return;
 }
