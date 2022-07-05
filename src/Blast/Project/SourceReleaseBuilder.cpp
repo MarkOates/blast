@@ -23,10 +23,11 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory, std::string main_program_filename)
    : destination_directory(destination_directory)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
+   , main_program_filename(main_program_filename)
 {
 }
 
@@ -48,6 +49,12 @@ std::string SourceReleaseBuilder::get_source_project_directory()
 }
 
 
+std::string SourceReleaseBuilder::get_main_program_filename()
+{
+   return main_program_filename;
+}
+
+
 void SourceReleaseBuilder::write_file_contents(std::string filename, std::string file_contents)
 {
    std::ofstream out(filename);
@@ -58,7 +65,8 @@ void SourceReleaseBuilder::write_file_contents(std::string filename, std::string
 std::string SourceReleaseBuilder::get_makefile_content()
 {
    std::stringstream MAKEFILE_CONTENT;
-   std::string binary_name = "FadeToWhite"; // project_name
+   //std::string main_program_name = "main";
+   std::string binary_name = project_name; //"FadeToWhite"; // project_name
    MAKEFILE_CONTENT << "SRC_FILES := $(shell find src -type f)"
                     << std::endl
                     << "ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog "
@@ -67,7 +75,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << std::endl
                     << "main: $(SRC_FILES)" << std::endl
                     << "\t"
-                    << "g++ -std=c++17 $^ programs/" << project_name << ".cpp -o " << binary_name
+                    << "g++ -std=c++17 $^ " << main_program_filename << " -o " << binary_name
                     << " -I./include $(ALLEGRO_LIBS)"
                     ;
    return MAKEFILE_CONTENT.str();
@@ -85,7 +93,7 @@ std::string SourceReleaseBuilder::get_pinfo_content()
       <key>CFBundleExecutable</key>
       <string>Hexagon</string>
       <key>CFBundleGetInfoString</key>
-      <string>0.8, Copyright 2019 Mark Oates</string>
+      <string>0.8, Copyright 2022 Mark Oates</string>
       <key>CFBundleIconFile</key>
       <string>Icon.icns</string>
       <key>CFBundleIdentifier</key>
@@ -109,7 +117,7 @@ std::string SourceReleaseBuilder::get_pinfo_content()
       <key>LSRequiresCarbon</key>
       <true/>
       <key>NSHumanReadableCopyright</key>
-      <string>Copyright 2019 Mark Oates</string>
+      <string>Copyright 2022 Mark Oates</string>
    </dict>
    </plist>
    )HEREDOC";

@@ -36,7 +36,7 @@ int main(int argc, char **argv)
       std::cout << "" << std::endl;
       std::cout << "> /Users/markoates/Repos/blast/create_source_release Solitare" << std::endl;
       std::cout << "" << std::endl;
-      std::cout << " ^ This will create a \"Release\" folder on the desktop and" << std::endl;
+      std::cout << " ^ This will create a \"releases\" folder on the desktop and" << std::endl;
       std::cout << "place the files in there." << std::endl;
       std::cout << "" << std::endl;
       return 0;
@@ -60,11 +60,13 @@ int main(int argc, char **argv)
    }
 
    std::string source_project_directory = complete_folder_path_to_project_folder;
-   std::string destination_directory="/Users/markoates/Desktop/Release";
+   std::string destination_directory = "/Users/markoates/Desktop/releases";
+   std::string main_program_filename = "programs/main.cpp";
    Blast::Project::SourceReleaseBuilder source_release_builder(
          destination_directory,
          project_name,
-         source_project_directory
+         source_project_directory,
+         main_program_filename
       );
    source_release_builder.generate_source_release();
 

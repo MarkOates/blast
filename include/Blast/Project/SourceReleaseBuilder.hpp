@@ -15,13 +15,15 @@ namespace Blast
          std::string destination_directory;
          std::string project_name;
          std::string source_project_directory;
+         std::string main_program_filename;
 
       public:
-         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers");
+         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Desktop/Release/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp");
          ~SourceReleaseBuilder();
 
          std::string get_project_name();
          std::string get_source_project_directory();
+         std::string get_main_program_filename();
          void write_file_contents(std::string filename="", std::string file_contents="");
          std::string get_makefile_content();
          std::string get_pinfo_content();
