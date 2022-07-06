@@ -15,6 +15,7 @@
 #include <Blast/DirectoryCreator.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <sstream>
+#include <Blast/TimeStamper.hpp>
 
 
 namespace Blast
@@ -287,17 +288,17 @@ void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
 
 std::string SourceReleaseBuilder::get_source_release_folder_name()
 {
-   return get_project_name() + "SourceRelease";
+   return get_project_name() + "-SourceRelease";
 }
 
 std::string SourceReleaseBuilder::get_macos_release_folder_name()
 {
-   return get_project_name() + "MacOSRelease";
+   return get_project_name() + "-MacOSRelease";
 }
 
 std::string SourceReleaseBuilder::get_win64_release_folder_name()
 {
-   return get_project_name() + "Win64Release";
+   return get_project_name() + "-Win64Release";
 }
 
 void SourceReleaseBuilder::generate_macos_release()
@@ -338,11 +339,15 @@ void SourceReleaseBuilder::generate_source_release()
    // options:
    bool copy_allegro_flare_source_and_header_files_from_source = true;
    bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
+   Blast::TimeStamper time_stamper;
 
    std::string source_directory = get_source_project_directory();
 
    // !! WARNING: local variable name shadows class instance variable name:
-   std::string xxx = destination_directory + "/" + get_source_release_folder_name();
+   std::string xxx = destination_directory
+                   + "/"
+                   + get_source_release_folder_name()
+                   + "-" + time_stamper.generate_now_timestamp_utc();
 
    // create the directory
    std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();

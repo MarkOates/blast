@@ -79,6 +79,7 @@ table td
   <li><a href="#quintessence/Blast/StringUpcaser.q.yml">quintessence/Blast/StringUpcaser.q.yml</a></li>
   <li><a href="#quintessence/Blast/TaoTeChingQuoteGenerator.q.yml">quintessence/Blast/TaoTeChingQuoteGenerator.q.yml</a></li>
   <li><a href="#quintessence/Blast/TemplatedFile.q.yml">quintessence/Blast/TemplatedFile.q.yml</a></li>
+  <li><a href="#quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</a></li>
   <li><a href="#quintessence/DirectoryFileHasher.q.yml">quintessence/DirectoryFileHasher.q.yml</a></li>
 </ul>
 <h1>Components</h1>
@@ -882,6 +883,9 @@ table td
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Project::ProjectSymlinkFixer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Project/ProjectSymlinkFixer.hpp&quot;]}</td>
 </tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::TimeStamper&quot;, &quot;headers&quot;=&gt;[&quot;Blast/TimeStamper.hpp&quot;]}</td>
+</tr>
     </table>
   </div>
 </ul>
@@ -1211,6 +1215,23 @@ table td
 </ul>
 <ul>
   <div class="component">
+    <h3 id="quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">generate_now_timestamp_utc()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::time_t&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;, &quot;ctime&quot;, &quot;iomanip&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
     <h3 id="quintessence/DirectoryFileHasher.q.yml">quintessence/DirectoryFileHasher.q.yml</h3>
      <table>
     </table>
@@ -1296,7 +1317,8 @@ table td
   "std/time_t": [
     "Blast/FileLastWriteTime",
     "Blast/Project/Component",
-    "Blast/Project/ComponentLister"
+    "Blast/Project/ComponentLister",
+    "Blast/TimeStamper"
   ],
   "Blast/RegexMatcher": [
     "Blast/Inflector"
@@ -1406,6 +1428,9 @@ table td
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/Project/ProjectSymlinkFixer": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/TimeStamper": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [

@@ -263,19 +263,19 @@ functions:
   - name: get_source_release_folder_name
     type: std::string
     body: |
-      return get_project_name() + "SourceRelease";
+      return get_project_name() + "-SourceRelease";
 
 
   - name: get_macos_release_folder_name
     type: std::string
     body: |
-      return get_project_name() + "MacOSRelease";
+      return get_project_name() + "-MacOSRelease";
 
 
   - name: get_win64_release_folder_name
     type: std::string
     body: |
-      return get_project_name() + "Win64Release";
+      return get_project_name() + "-Win64Release";
 
 
   - name: generate_macos_release
@@ -320,11 +320,15 @@ functions:
       // options:
       bool copy_allegro_flare_source_and_header_files_from_source = true;
       bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
+      Blast::TimeStamper time_stamper;
 
       std::string source_directory = get_source_project_directory();
 
       // !! WARNING: local variable name shadows class instance variable name:
-      std::string xxx = destination_directory + "/" + get_source_release_folder_name();
+      std::string xxx = destination_directory
+                      + "/"
+                      + get_source_release_folder_name()
+                      + "-" + time_stamper.generate_now_timestamp_utc();
 
       // create the directory
       std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();
@@ -499,6 +503,7 @@ functions:
       - Blast::DirectoryCreator
       - Blast::ShellCommandExecutorWithCallback
       - std::stringstream
+      - Blast::TimeStamper
 
 
 dependencies:
@@ -524,5 +529,7 @@ dependencies:
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
   - symbol: Blast::Project::ProjectSymlinkFixer
     headers: [ Blast/Project/ProjectSymlinkFixer.hpp ]
+  - symbol: Blast::TimeStamper
+    headers: [ Blast/TimeStamper.hpp ]
 
 

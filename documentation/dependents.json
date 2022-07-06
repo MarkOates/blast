@@ -69,7 +69,8 @@
   "std/time_t": [
     "Blast/FileLastWriteTime",
     "Blast/Project/Component",
-    "Blast/Project/ComponentLister"
+    "Blast/Project/ComponentLister",
+    "Blast/TimeStamper"
   ],
   "Blast/RegexMatcher": [
     "Blast/Inflector"
@@ -179,6 +180,9 @@
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/Project/ProjectSymlinkFixer": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/TimeStamper": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [
