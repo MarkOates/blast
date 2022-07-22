@@ -248,6 +248,10 @@ YAML::Node default_dependencies()
 - symbol: char
 - symbol: std::string
   headers: [ 'string' ]
+- symbol: int32_t
+  headers: [ 'cstdint' ]
+- symbol: uint32_t
+  headers: [ 'cstdint' ]
 - symbol: std::vector<std::string>
   headers: [ 'vector', 'string' ]
 - symbol: std::vector<int>
