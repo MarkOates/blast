@@ -262,6 +262,8 @@ YAML::Node default_dependencies()
   headers: [ 'map', 'string' ]
 - symbol: std::vector<int>
   headers: [ 'vector', ]
+- symbol: std::set<std::string>
+  headers: [ 'set', 'string', ]
 - symbol: std::cout
   headers: [ 'iostream' ]
 - symbol: std::cerr
