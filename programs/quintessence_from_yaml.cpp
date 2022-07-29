@@ -254,6 +254,12 @@ YAML::Node default_dependencies()
   headers: [ 'cstdint' ]
 - symbol: std::vector<std::string>
   headers: [ 'vector', 'string' ]
+- symbol: std::map<std::string, std::string>
+  headers: [ 'map', 'string' ]
+- symbol: std::map<int, std::string>
+  headers: [ 'map', 'string' ]
+- symbol: std::map<std::string, int>
+  headers: [ 'map', 'string' ]
 - symbol: std::vector<int>
   headers: [ 'vector', ]
 - symbol: std::cout
