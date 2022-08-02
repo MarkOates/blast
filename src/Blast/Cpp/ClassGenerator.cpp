@@ -317,6 +317,18 @@ std::string ClassGenerator::dependency_include_directives()
       error_message << "Undefined symbol for datatypes [ ";
       for (auto &undefined_symbol : undefined_symbols) error_message << "\"" << undefined_symbol << "\", ";
       error_message << " ]";
+
+      // append more readable error:
+      error_message << std::endl;
+      error_message << std::endl;
+
+      error_message << cpp_class.get_class_name() << " appears to be missing the following dependencies:" << std::endl;
+      error_message << std::endl;
+      for (auto &undefined_symbol : undefined_symbols) error_message << "  - " << undefined_symbol << std::endl;
+
+      error_message << std::endl;
+      error_message << std::endl;
+
       throw std::runtime_error(error_message.str());
    }
 
