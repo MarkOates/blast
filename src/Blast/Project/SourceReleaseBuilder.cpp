@@ -155,7 +155,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "else" << std::endl
                     << "\tUNAME_S := $(shell uname -s)" << std::endl
                     << "\tifeq ($(UNAME_S),Linux)" << std::endl
-                    << "\t\tOPENGL_LIB=[ERROR:OPENGL_LIBS_NOT_DEFINED_FOR_LINUX]" << std::endl
+                    << "\t\tOPENGL_LIB=OPENGL_LIB=-lGL" << std::endl
                     << "\tendif" << std::endl
                     << "\tifeq ($(UNAME_S),Darwin)" << std::endl
                     << "\t\tOPENGL_LIB=-framework OpenGL" << std::endl
