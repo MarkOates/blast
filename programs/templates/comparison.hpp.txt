@@ -5,7 +5,7 @@
 #include <ostream>
 
 
-namespace AllegroFlare
+namespace AllegroFlare::Namespaces::Namespaces
 {
    bool operator==(const Vec2D& object, const Vec2D& other_object);
    void PrintTo(const Vec2D& object, ::std::ostream* os);
