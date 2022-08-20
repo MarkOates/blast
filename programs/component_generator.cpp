@@ -379,7 +379,7 @@ int main(int argc, char **argv)
       { "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
       { "renderer", new QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
-      //{ "comparison", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "comparison.hpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison.cpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison_test.txt")) },
+      { "comparison", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "comparison.hpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison.cpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison_test.txt")) },
    };
 
    std::string dictionary_identifier_to_use = "standard_component";
@@ -500,8 +500,8 @@ int main(int argc, char **argv)
          std::string test_template_content = header_source_test_template_pair->test_template_content;
 
          outfiles = {
-            { generator.get_header_filename(), std::pair<std::string, std::ofstream *>(header_template_content, nullptr) },
-            { generator.get_source_filename(), std::pair<std::string, std::ofstream *>(source_template_content, nullptr) },
+            { generator.get_header_path_and_filename(), std::pair<std::string, std::ofstream *>(header_template_content, nullptr) },
+            { generator.get_source_path_and_filename(), std::pair<std::string, std::ofstream *>(source_template_content, nullptr) },
             { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
          };
       }
