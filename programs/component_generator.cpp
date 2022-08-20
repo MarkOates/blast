@@ -297,8 +297,10 @@ std::vector<std::string> args;
 class TemplateSetBase
 {
 public:
-   TemplateSetBase() {}
+   std::string type;
+   TemplateSetBase(std::string type="TemplateSetBase") : type(type) {}
    virtual ~TemplateSetBase() {}
+   bool is_type(std::string type) { return this->type == type; }
 };
 
 
@@ -310,7 +312,7 @@ public:
    std::string test_template_content;
 
    QuintessenceTestTemplatePair(std::string quintessence_template_content="", std::string test_template_content="")
-      : TemplateSetBase()
+      : TemplateSetBase("QuintessenceTestTemplatePair")
       , quintessence_template_content(quintessence_template_content)
       , test_template_content(test_template_content)
    {}
@@ -326,7 +328,7 @@ public:
    std::string test_template_content;
 
    HeaderSourceTestTemplatePair(std::string header_template_content="", std::string source_template_content="", std::string test_template_content="")
-      : TemplateSetBase()
+      : TemplateSetBase("HeaderSourceTestTemplatePair")
       , header_template_content(header_template_content)
       , source_template_content(source_template_content)
       , test_template_content(test_template_content)
@@ -435,9 +437,20 @@ int main(int argc, char **argv)
 
 
 
+
+   TemplateSetBase *template_set = dictionary[dictionary_identifier_to_use];
+   std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles;
+
+   if (!template_set)
+   {
+      // Throw weird error
+   }
+   else
+   {
+
          // create the folders for the components
          std::cout << "Making sure necessary folders are present...";
-         create_directory(generator.get_quintessence_foldername());
+         create_directory(generator.get_quintessence_foldername()),
          create_directory(generator.get_test_foldername());
          std::cout << "...component folders created.";
 
@@ -450,10 +463,12 @@ int main(int argc, char **argv)
          std::string quintessence_template_content = dictionary[dictionary_identifier_to_use]->quintessence_template_content;
          std::string test_template_content = dictionary[dictionary_identifier_to_use]->test_template_content;
 
-         std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
+         outfiles = {
             { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
             { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
          };
+   }
+
 
 
 
