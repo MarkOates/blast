@@ -308,6 +308,23 @@ public:
 
 
 
+class HeaderSourceTestTemplatePair
+{
+public:
+   std::string header_template_content;
+   std::string source_template_content;
+   std::string test_template_content;
+
+   HeaderSourceTestTemplatePair(std::string header_template_content="", std::string source_template_content="", std::string test_template_content="")
+      : header_template_content(header_template_content)
+      , source_template_content(source_template_content)
+      , test_template_content(test_template_content)
+   {}
+};
+
+
+
+
 bool create_directory(std::string dir)
 {
    std::vector<std::string> directory_components = Blast::StringSplitter(dir, '/').split();
