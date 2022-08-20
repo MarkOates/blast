@@ -1,10 +1,10 @@
 
 #include <gtest/gtest.h>
 
-#include <AllegroFlare/Testing/Comparison/AllegroFlare/Vec2D.hpp>
+#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
 
 
-TEST(AllegroFlare_Testing_Comparison_AllegroFlare_Vec2DTest,
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]],
    PrintTo__with_an_AllegroFlare_Vec2D__will_output_as_expected)
 {
    std::stringstream ss;
@@ -18,7 +18,7 @@ TEST(AllegroFlare_Testing_Comparison_AllegroFlare_Vec2DTest,
 }
 
 
-TEST(AllegroFlare_Testing_Comparison_AllegroFlare_Vec2DTest,
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]],
    equality_operator__works_with_google_test_EXPECT_statement)
 {
    AllegroFlare::Vec2D vec;

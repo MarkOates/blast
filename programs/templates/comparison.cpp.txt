@@ -1,22 +1,26 @@
 
 
-#include <AllegroFlare/Testing/Comparison/AllegroFlare/Vec2D.hpp>
+#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
 
 
-bool operator==(const AllegroFlare::Vec2D& vec, const AllegroFlare::Vec2D& other_vec)
+namespace AllegroFlare::Namespaces::Namespaces
 {
-   if (vec.x != other_vec.x) return false;
-   if (vec.y != other_vec.y) return false;
-   return true;
-}
 
 
-namespace AllegroFlare
-{
-   void PrintTo(const AllegroFlare::Vec2D& vec, ::std::ostream* os)
-   {
-      *os << "AllegroFlare::Vec2D(" << vec.x << ", " << vec.y << ")";
-   }
+  bool operator==(const Vec2D& object, const Vec2D& other_object)
+  {
+     //if (object.x != other_object.x) return false;
+     //if (object.y != other_object.y) return false;
+     return true;
+  }
+
+
+  void PrintTo(const Vec2D& object, ::std::ostream* os)
+  {
+     //*os << "Vec2D(" << object.x << ", " << object.y << ")";
+  }
+
+
 }
 
 
