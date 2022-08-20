@@ -10,6 +10,25 @@
 
 
 
+
+static std::string file_get_contents(std::string filename);
+
+std::string file_get_contents(std::string filename)
+{
+   std::ifstream file(filename.c_str());
+   std::string input = "";
+   if (!file) return "";
+   char ch;
+   while (file.get(ch)) input.append(1, ch);
+   if (!file.eof()) return ""; // strange error
+   file.close();
+   return input;
+}
+
+
+
+
+
 std::string QUINTESSENCE_FOLDER_NAME = "quintessence";
 std::string TEST_FOLDER_NAME = "tests";
 
@@ -316,10 +335,14 @@ public:
 
 int main(int argc, char **argv)
 {
+   // todo: ensure files exist
+   std::string TEMPLATES_PATH = "/Users/markoates/Repos/blast/programs/templates/";
+
    std::map<std::string, QuintessenceTestTemplatePair> dictionary = {
       { "standard_component", QuintessenceTestTemplatePair(QUINTESSENCE_FILE_CONTENT, TEST_FILE_CONTENT) },
       { "stage", QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
       { "renderer", QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
+      { "base", QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
    };
 
    std::string dictionary_identifier_to_use = "standard_component";

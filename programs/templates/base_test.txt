@@ -1,0 +1,35 @@
+
+#include <gtest/gtest.h>
+
+#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
+
+
+class BaseTestClass : public [[COMPONENT_CLASS_NAME]]
+{
+public:
+   BaseTestClass()
+      : [[COMPONENT_CLASS_NAME]]("BaseTestClass")
+   {}
+};
+
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+}
+
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], has_the_expected_type)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+   EXPECT_EQ("Base", [[COMPONENT_BASENAME_SNAKE_CASE]].get_type());
+}
+
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], derived_classes_will_have_the_expected_type)
+{
+   BaseTestClass test_class;
+   EXPECT_EQ("BaseTestClass", test_class.get_type());
+}
+
+
