@@ -479,6 +479,30 @@ int main(int argc, char **argv)
       }
       else if (template_set->is_type(HeaderSourceTestTemplatePair::TYPE))
       {
+         HeaderSourceTestTemplatePair* header_source_test_template_pair = dynamic_cast<HeaderSourceTestTemplatePair*>(template_set);
+
+         // create the folders for the components
+         std::cout << "Making sure necessary folders are present...";
+         create_directory(generator.get_header_foldername()),
+         create_directory(generator.get_source_foldername());
+         create_directory(generator.get_test_foldername());
+         std::cout << "...component folders created.";
+
+         // open the files for dumping
+         std::cout << "Generating component files..." << std::endl;
+
+
+         // create a list of files to be generated
+         // filename, template_text, outfile stream
+         std::string header_template_content = header_source_test_template_pair->header_template_content;
+         std::string source_template_content = header_source_test_template_pair->source_template_content;
+         std::string test_template_content = header_source_test_template_pair->test_template_content;
+
+         outfiles = {
+            { generator.get_header_filename(), std::pair<std::string, std::ofstream *>(header_template_content, nullptr) },
+            { generator.get_source_filename(), std::pair<std::string, std::ofstream *>(source_template_content, nullptr) },
+            { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
+         };
       }
    }
 
