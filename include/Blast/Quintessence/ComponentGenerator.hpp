@@ -23,6 +23,8 @@ public:
    std::string get_test_path_and_filename();
    std::string get_quintessence_foldername();
    std::string get_test_foldername();
+   std::string get_header_foldername();
+   std::string get_source_foldername();
    std::string get_header_filename();
    std::string get_header_path_and_filename();
    std::string get_source_filename();
