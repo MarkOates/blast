@@ -392,21 +392,21 @@ int main(int argc, char **argv)
       dictionary_identifier_to_use = args[2];
    }
 
-   // validate "dictionary_identifier_to_use" is in the dictionary
-   std::map<std::string, QuintessenceTestTemplatePair>::iterator it = dictionary.find(dictionary_identifier_to_use);
-   if (it == dictionary.end())
-   {
-      std::stringstream error_message;
-      error_message << "As your second argument, you passed in an invalid template name \"" << dictionary_identifier_to_use << "\""
-                    << std::endl;
-      error_message << "The valid options are:"
-                    << std::endl;
-      for (auto &dictionary_listing : dictionary)
-      {
-         error_message << "   - \"" << dictionary_listing.first << "\"" << std::endl;
-      }
-      throw std::runtime_error(error_message.str());
-   }
+         // validate "dictionary_identifier_to_use" is in the dictionary
+         std::map<std::string, QuintessenceTestTemplatePair>::iterator it = dictionary.find(dictionary_identifier_to_use);
+         if (it == dictionary.end())
+         {
+            std::stringstream error_message;
+            error_message << "As your second argument, you passed in an invalid template name \"" << dictionary_identifier_to_use << "\""
+                          << std::endl;
+            error_message << "The valid options are:"
+                          << std::endl;
+            for (auto &dictionary_listing : dictionary)
+            {
+               error_message << "   - \"" << dictionary_listing.first << "\"" << std::endl;
+            }
+            throw std::runtime_error(error_message.str());
+         }
 
 
    // create the component generator
@@ -422,70 +422,77 @@ int main(int argc, char **argv)
       { "[[COMPONENT_NAME_LAST_FRAGMENT]]", generator.get_component_name_last_fragment() },
    };
 
-   // create the folders for the components
-   std::cout << "Making sure necessary folders are present...";
-   create_directory(generator.get_quintessence_foldername());
-   create_directory(generator.get_test_foldername());
-   std::cout << "...component folders created.";
 
-   // open the files for dumping
-   std::cout << "Generating component files..." << std::endl;
 
-   // create a list of files to be generated
-   // filename, template_text, outfile stream
-   std::string quintessence_template_content = dictionary[dictionary_identifier_to_use].quintessence_template_content;
-   std::string test_template_content = dictionary[dictionary_identifier_to_use].test_template_content;
+         // create the folders for the components
+         std::cout << "Making sure necessary folders are present...";
+         create_directory(generator.get_quintessence_foldername());
+         create_directory(generator.get_test_foldername());
+         std::cout << "...component folders created.";
 
-   std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
-      { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
-      { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
-   };
+         // open the files for dumping
+         std::cout << "Generating component files..." << std::endl;
 
-   // create the pointers to the ofstreams
-   for (auto &outfile : outfiles)
-   {
-      std::string filename = outfile.first;
-      std::ofstream *outfile_stream = new std::ofstream();
-      outfile.second.second = outfile_stream;
-      outfile.second.second->open(filename, std::ios::binary);
-   }
 
-   // validate that the created files have been opened and are ready for writing
-   bool outfiles_can_be_opened = true;
-   std::stringstream outfiles_that_cannot_be_opened;
-   for (auto &outfile : outfiles)
-   {
-      if (!outfile.second.second->is_open())
+         // create a list of files to be generated
+         // filename, template_text, outfile stream
+         std::string quintessence_template_content = dictionary[dictionary_identifier_to_use].quintessence_template_content;
+         std::string test_template_content = dictionary[dictionary_identifier_to_use].test_template_content;
+
+         std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles = {
+            { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
+            { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
+         };
+
+
+
+      // create the pointers to the ofstreams
+      for (auto &outfile : outfiles)
       {
-         outfiles_can_be_opened = false;
-         outfiles_that_cannot_be_opened << outfile.first << ", ";
-         break;
+         std::string filename = outfile.first;
+         std::ofstream *outfile_stream = new std::ofstream();
+         outfile.second.second = outfile_stream;
+         outfile.second.second->open(filename, std::ios::binary);
       }
-   }
-   if (!outfiles_can_be_opened)
-   {
-      std::stringstream error_message;
-      error_message << "The following files could not be created: ";
-      error_message << outfiles_that_cannot_be_opened.str();
-      throw std::runtime_error(error_message.str());
-   }
 
-   for (auto &outfile : outfiles)
-   {
-      std::string template_text = outfile.second.first;
-      std::ofstream *outfile_stream = outfile.second.second;
-      Blast::TemplatedFile templated_file(template_text, template_var_and_replacement_set);
-      (*outfile_stream) << templated_file.generate_content();
-   }
+      // validate that the created files have been opened and are ready for writing
+      bool outfiles_can_be_opened = true;
+      std::stringstream outfiles_that_cannot_be_opened;
+      for (auto &outfile : outfiles)
+      {
+         if (!outfile.second.second->is_open())
+         {
+            outfiles_can_be_opened = false;
+            outfiles_that_cannot_be_opened << outfile.first << ", ";
+            break;
+         }
+      }
+      if (!outfiles_can_be_opened)
+      {
+         std::stringstream error_message;
+         error_message << "The following files could not be created: ";
+         error_message << outfiles_that_cannot_be_opened.str();
+         throw std::runtime_error(error_message.str());
+      }
 
-   // delete the outfiles
-   for (auto &outfile : outfiles)
-   {
-      std::ofstream *outfile_stream = outfile.second.second;
-      outfile_stream->close();
-      delete outfile_stream;
-      outfile.second.second = nullptr;
-   }
+      for (auto &outfile : outfiles)
+      {
+         std::string template_text = outfile.second.first;
+         std::ofstream *outfile_stream = outfile.second.second;
+         Blast::TemplatedFile templated_file(template_text, template_var_and_replacement_set);
+         (*outfile_stream) << templated_file.generate_content();
+      }
+
+      // delete the outfiles
+      for (auto &outfile : outfiles)
+      {
+         std::ofstream *outfile_stream = outfile.second.second;
+         outfile_stream->close();
+         delete outfile_stream;
+         outfile.second.second = nullptr;
+      }
+
+
 
    // output success
    std::stringstream finish_message;
