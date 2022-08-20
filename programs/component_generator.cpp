@@ -374,11 +374,12 @@ int main(int argc, char **argv)
    // todo: ensure files exist
    std::string TEMPLATES_PATH = "/Users/markoates/Repos/blast/programs/templates/";
 
-   std::map<std::string, QuintessenceTestTemplatePair*> dictionary = {
+   std::map<std::string, TemplateSetBase*> dictionary = {
       { "standard_component", new QuintessenceTestTemplatePair(QUINTESSENCE_FILE_CONTENT, TEST_FILE_CONTENT) },
       { "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
       { "renderer", new QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
+      //{ "comparison", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "comparison.hpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison.cpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison_test.txt")) },
    };
 
    std::string dictionary_identifier_to_use = "standard_component";
@@ -412,7 +413,7 @@ int main(int argc, char **argv)
    }
 
          // validate "dictionary_identifier_to_use" is in the dictionary
-         std::map<std::string, QuintessenceTestTemplatePair*>::iterator it = dictionary.find(dictionary_identifier_to_use);
+         std::map<std::string, TemplateSetBase*>::iterator it = dictionary.find(dictionary_identifier_to_use);
          if (it == dictionary.end())
          {
             std::stringstream error_message;
