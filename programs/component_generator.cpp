@@ -298,42 +298,48 @@ class TemplateSetBase
 {
 public:
    std::string type;
-   TemplateSetBase(std::string type="TemplateSetBase") : type(type) {}
+   static const std::string TYPE;
+   TemplateSetBase(std::string type=TYPE) : type(type) {}
    virtual ~TemplateSetBase() {}
    bool is_type(std::string type) { return this->type == type; }
 };
+const std::string TemplateSetBase::TYPE = "TemplateSetBase";
 
 
 
 class QuintessenceTestTemplatePair : public TemplateSetBase
 {
 public:
+   static const std::string TYPE;
    std::string quintessence_template_content;
    std::string test_template_content;
 
    QuintessenceTestTemplatePair(std::string quintessence_template_content="", std::string test_template_content="")
-      : TemplateSetBase("QuintessenceTestTemplatePair")
+      : TemplateSetBase(TYPE)
       , quintessence_template_content(quintessence_template_content)
       , test_template_content(test_template_content)
    {}
 };
+const std::string QuintessenceTestTemplatePair::TYPE = "QuintessenceTestTemplatePair";
 
 
 
 class HeaderSourceTestTemplatePair : public TemplateSetBase
 {
 public:
+   static const std::string TYPE;
    std::string header_template_content;
    std::string source_template_content;
    std::string test_template_content;
 
    HeaderSourceTestTemplatePair(std::string header_template_content="", std::string source_template_content="", std::string test_template_content="")
-      : TemplateSetBase("HeaderSourceTestTemplatePair")
+      : TemplateSetBase(TYPE)
       , header_template_content(header_template_content)
       , source_template_content(source_template_content)
       , test_template_content(test_template_content)
    {}
 };
+const std::string HeaderSourceTestTemplatePair::TYPE = "HeaderSourceTestTemplatePair";
 
 
 
@@ -447,6 +453,9 @@ int main(int argc, char **argv)
    }
    else
    {
+      if (template_set->is_type(QuintessenceTestTemplatePair::TYPE))
+      {
+         QuintessenceTestTemplatePair* quintessence_test_template_pair = dynamic_cast<QuintessenceTestTemplatePair*>(template_set);
 
          // create the folders for the components
          std::cout << "Making sure necessary folders are present...";
@@ -460,13 +469,17 @@ int main(int argc, char **argv)
 
          // create a list of files to be generated
          // filename, template_text, outfile stream
-         std::string quintessence_template_content = dictionary[dictionary_identifier_to_use]->quintessence_template_content;
-         std::string test_template_content = dictionary[dictionary_identifier_to_use]->test_template_content;
+         std::string quintessence_template_content = quintessence_test_template_pair->quintessence_template_content;
+         std::string test_template_content = quintessence_test_template_pair->test_template_content;
 
          outfiles = {
             { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
             { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
          };
+      }
+      else if (template_set->is_type(HeaderSourceTestTemplatePair::TYPE))
+      {
+      }
    }
 
 
