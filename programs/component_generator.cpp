@@ -516,5 +516,12 @@ int main(int argc, char **argv)
    finish_message << "generated." << std::endl;
    std::cout << finish_message.str() << std::endl;
 
+
+
+   // destroy the dictionary items
+   for (auto &dictionary_listing : dictionary) delete dictionary_listing.second;
+   dictionary.clear();
+
+
    return 0;
 }
