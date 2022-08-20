@@ -127,7 +127,7 @@ std::string ComponentGenerator::get_test_foldername()
 
 std::string ComponentGenerator::get_header_foldername()
 {
-   std::vector<std::string> tokens = Blast::StringSplitter(get_header_filename(), '/').split();
+   std::vector<std::string> tokens = Blast::StringSplitter(get_header_path_and_filename(), '/').split();
    if (!tokens.empty()) tokens.pop_back();
    std::string result = Blast::StringJoiner(tokens, "/").join();
    return result;
@@ -137,7 +137,7 @@ std::string ComponentGenerator::get_header_foldername()
 
 std::string ComponentGenerator::get_source_foldername()
 {
-   std::vector<std::string> tokens = Blast::StringSplitter(get_source_filename(), '/').split();
+   std::vector<std::string> tokens = Blast::StringSplitter(get_source_path_and_filename(), '/').split();
    if (!tokens.empty()) tokens.pop_back();
    std::string result = Blast::StringJoiner(tokens, "/").join();
    return result;

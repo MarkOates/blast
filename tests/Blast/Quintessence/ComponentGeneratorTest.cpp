@@ -44,6 +44,24 @@ TEST(Blast_Quintessence_ComponentGenerator, get_test_foldername__returns_the_exp
 }
 
 
+TEST(Blast_Quintessence_ComponentGenerator, get_header_foldername__returns_the_expected_folder_name)
+{
+   std::string expected_folder_name = "include/Baz/Bar";
+   ComponentGenerator generator("Baz/Bar/Foo");
+
+   ASSERT_EQ(expected_folder_name, generator.get_header_foldername());
+}
+
+
+TEST(Blast_Quintessence_ComponentGenerator, get_source_foldername__returns_the_expected_folder_name)
+{
+   std::string expected_folder_name = "src/Baz/Bar";
+   ComponentGenerator generator("Baz/Bar/Foo");
+
+   ASSERT_EQ(expected_folder_name, generator.get_source_foldername());
+}
+
+
 TEST(Blast_Quintessence_ComponentGenerator, get_component_tail_snakecase__returns_the_expected_string)
 {
    std::string expected_snakecase_tail = "bar_basil_bonk";
