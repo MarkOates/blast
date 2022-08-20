@@ -294,21 +294,31 @@ std::vector<std::string> args;
 
 
 
-class QuintessenceTestTemplatePair
+class TemplateSetBase
+{
+public:
+   TemplateSetBase() {}
+   virtual ~TemplateSetBase() {}
+};
+
+
+
+class QuintessenceTestTemplatePair : public TemplateSetBase
 {
 public:
    std::string quintessence_template_content;
    std::string test_template_content;
 
    QuintessenceTestTemplatePair(std::string quintessence_template_content="", std::string test_template_content="")
-      : quintessence_template_content(quintessence_template_content)
+      : TemplateSetBase()
+      , quintessence_template_content(quintessence_template_content)
       , test_template_content(test_template_content)
    {}
 };
 
 
 
-class HeaderSourceTestTemplatePair
+class HeaderSourceTestTemplatePair : public TemplateSetBase
 {
 public:
    std::string header_template_content;
@@ -316,7 +326,8 @@ public:
    std::string test_template_content;
 
    HeaderSourceTestTemplatePair(std::string header_template_content="", std::string source_template_content="", std::string test_template_content="")
-      : header_template_content(header_template_content)
+      : TemplateSetBase()
+      , header_template_content(header_template_content)
       , source_template_content(source_template_content)
       , test_template_content(test_template_content)
    {}
