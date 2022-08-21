@@ -9,6 +9,8 @@
 #include <filesystem>
 
 #define TEMP_SANDBOX_FOLDER ("tmp/test_sandbox")
+#define LIKELY_SYMLINK_TEST_FILE "/Users/markoates/Repos/blast/bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml";
+
 
 
 #include <fstream>
@@ -41,8 +43,7 @@ TEST(Blast_Project_ProjectSymlinkFixerTest, project_folder__has_getter_and_is_se
 TEST(Blast_Project_ProjectSymlinkFixerTest,
    likely_an_intended_symlink__returns_true_if_the_file_is_actually_a_symlink)
 {
-   std::string filename_of_file_that_is_symlink =
-      "./bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml";
+   std::string filename_of_file_that_is_symlink = LIKELY_SYMLINK_TEST_FILE;
    ASSERT_EQ(true, std::filesystem::exists(filename_of_file_that_is_symlink));
    Blast::Project::SymlinkChecker checker(filename_of_file_that_is_symlink);
    ASSERT_EQ(true, checker.is_symlink());
