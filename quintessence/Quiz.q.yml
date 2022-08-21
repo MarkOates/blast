@@ -1,0 +1,54 @@
+properties:
+
+
+  - name: questions
+    type: std::vector<Question>
+    constructor_arg: true
+    init_with: "{}"
+    getter: true
+    setter: true
+
+
+functions:
+
+
+  - name: append_questions
+    parameters:
+      - name: new_questions
+        type: std::vector<Question>
+        default_argument: ''
+    body:
+      questions.insert(
+        questions.end(),
+        new_questions.begin(),
+        new_questions.end()
+      );
+      return;
+
+
+  - name: shuffle_questions
+    type: void
+    body: |
+      std::random_device rd;
+      std::mt19937 g(rd());
+      std::shuffle(questions.begin(), questions.end(), g);
+      std::shuffle(questions.begin(), questions.end(), g);
+    body_dependency_symbols:
+      - std::random_device
+      - std::mt19937
+      - std::shuffle
+
+
+dependencies:
+
+
+  - symbol: std::vector<Question>
+    headers: [ 'vector', 'Question.hpp' ]
+  - symbol: std::random_device
+    headers: [ 'random' ]
+  - symbol: std::mt19937
+    headers: [ 'random' ]
+  - symbol: std::shuffle
+    headers: [ 'algorithm' ]
+
+

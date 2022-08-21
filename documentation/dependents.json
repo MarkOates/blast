@@ -1,4 +1,33 @@
 {
+  "std/map<char, std/vector<std/string>>": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/map": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/vector": [
+    "ASCIICharacterRenderer",
+    "OrigamiMommyFontLoader",
+    "SmallFontLoader"
+  ],
+  "std/string": [
+    "ASCIICharacterRenderer",
+    "Blast/DirectoryCreator",
+    "Blast/DirectoryExistenceChecker",
+    "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "char": [
+    "ASCIICharacterRenderer",
+    "Blast/StringSplitter",
+    "StringSplitter"
+  ],
+  "mvaddnstr": [
+    "ASCIICharacterRenderer"
+  ],
   "std/setfill": [
     "Blast/Build/Celebrator"
   ],
@@ -24,16 +53,13 @@
   "bool": [
     "Blast/DirectoryCreator"
   ],
-  "std/string": [
-    "Blast/DirectoryCreator",
-    "Blast/DirectoryExistenceChecker",
-    "Blast/ShellCommandExecutorWithCallback"
-  ],
   "std/vector<std/string>": [
     "Blast/DirectoryCreator",
     "Blast/Project/ComponentDependencyLister",
     "Blast/Project/ComponentRelativeLister",
-    "Blast/StringSplitter"
+    "Blast/StringSplitter",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "StringVectorIntersection"
   ],
   "mkdir": [
     "Blast/DirectoryCreator"
@@ -44,7 +70,8 @@
     "Blast/Project/ComponentRelativeLister",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/Project/SymlinkChecker",
-    "Blast/StringSplitter"
+    "Blast/StringSplitter",
+    "NcursesArt/GithubRepoStatusFetcher"
   ],
   "Blast/DirectoryExistenceChecker": [
     "Blast/DirectoryCreator"
@@ -54,7 +81,8 @@
   ],
   "std/ofstream": [
     "Blast/FileCreator",
-    "Blast/Project/SourceReleaseBuilder"
+    "Blast/Project/SourceReleaseBuilder",
+    "Quizes/MultiplexQuizRunner"
   ],
   "std/filesystem/exists": [
     "Blast/FileExistenceChecker",
@@ -105,7 +133,8 @@
     "Blast/Project/ComponentDependencyLister"
   ],
   "Blast/FileExistenceChecker": [
-    "Blast/Project/Component"
+    "Blast/Project/Component",
+    "Quizes/MultiplexSheetLoader"
   ],
   "Blast/Project/SymlinkChecker": [
     "Blast/Project/Component",
@@ -116,7 +145,8 @@
     "Blast/Project/Component"
   ],
   "std/pair<std/string, std/string>": [
-    "Blast/Project/ComponentBasenameExtractor"
+    "Blast/Project/ComponentBasenameExtractor",
+    "ProjectComponentBasenameExtractor"
   ],
   "Blast/Project/ComponentLister": [
     "Blast/Project/ComponentDependencyLister",
@@ -137,7 +167,9 @@
     "Blast/Project/ProgramLister",
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder",
-    "Blast/Project/SymlinkChecker"
+    "Blast/Project/SymlinkChecker",
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher"
   ],
   "Blast/Project/ComponentBasenameExtractor": [
     "Blast/Project/ComponentLister"
@@ -155,7 +187,9 @@
   ],
   "std/sort": [
     "Blast/Project/ComponentLister",
-    "Blast/Project/ProgramLister"
+    "Blast/Project/ProgramLister",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "StringVectorIntersection"
   ],
   "std/filesystem": [
     "Blast/Project/ProjectSymlinkFixer"
@@ -167,7 +201,8 @@
     "Blast/Project/ProjectSymlinkFixer"
   ],
   "std/endl": [
-    "Blast/Project/ProjectSymlinkFixer"
+    "Blast/Project/ProjectSymlinkFixer",
+    "NcursesArt/GithubRepoStatusFetcher"
   ],
   "std/ifstream": [
     "Blast/Project/ProjectSymlinkFixer",
@@ -249,9 +284,6 @@
   "std/find_if": [
     "Blast/String/Trimmer"
   ],
-  "char": [
-    "Blast/StringSplitter"
-  ],
   "std/toupper": [
     "Blast/StringUpcaser"
   ],
@@ -262,9 +294,67 @@
     "Blast/TaoTeChingQuoteGenerator"
   ],
   "std/mt19937": [
-    "Blast/TaoTeChingQuoteGenerator"
+    "Blast/TaoTeChingQuoteGenerator",
+    "Quiz"
   ],
   "std/random_device": [
-    "Blast/TaoTeChingQuoteGenerator"
+    "Blast/TaoTeChingQuoteGenerator",
+    "Quiz"
+  ],
+  "Blast/String/Trimmer": [
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "Blast/StringSplitter": [
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "std/cerr": [
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/filesystem/directory_iterator": [
+    "ProjectListBuilder"
+  ],
+  "std/vector<Question>": [
+    "Quiz"
+  ],
+  "std/shuffle": [
+    "Quiz"
+  ],
+  "Quiz": [
+    "QuizYAMLLoader"
+  ],
+  "YAML/Node": [
+    "QuizYAMLLoader"
+  ],
+  "std/vector<Quizes/MultiplexQuestion>": [
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "random_shuffling_deps": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "file_loading_deps": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Quizes/MultiplexSheetLoader": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Quizes/MultiplexQuestionCollectionHelper": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Blast/StringJoiner": [
+    "Quizes/MultiplexQuizRunner"
+  ],
+  "Quizes/MultiplexQuestion": [
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "std/set_intersection": [
+    "StringVectorIntersection"
   ]
 }

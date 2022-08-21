@@ -1,0 +1,49 @@
+properties:
+
+
+  - name: questions
+    type: std::vector<Quizes::MultiplexQuestion>
+    init_with: '{}'
+    constructor_arg: true
+
+
+functions:
+
+
+  - name: select_with_dates
+    type: std::vector<Quizes::MultiplexQuestion>
+    body: |
+      std::vector<Quizes::MultiplexQuestion> result;
+      for (auto &question : questions)
+      {
+         if (question.get_date().empty()) continue;
+         result.push_back(question);
+      }
+      return result;
+    body_dependency_symbols:
+      - Blast::String::Trimmer
+
+
+  - name: select_with_relevance
+    type: std::vector<Quizes::MultiplexQuestion>
+    body: |
+      std::vector<Quizes::MultiplexQuestion> result;
+      for (auto &question : questions)
+      {
+         if (question.get_relevance().empty()) continue;
+         result.push_back(question);
+      }
+      return result;
+    body_dependency_symbols:
+      - Blast::String::Trimmer
+
+
+dependencies:
+
+
+  - symbol: std::vector<Quizes::MultiplexQuestion>
+    headers: [ vector, Quizes/MultiplexQuestion.hpp ]
+  - symbol: Blast::String::Trimmer
+    headers: [ Blast/String/Trimmer.hpp ]
+
+

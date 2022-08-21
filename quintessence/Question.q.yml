@@ -1,0 +1,25 @@
+properties:
+  - name: question
+    type: std::string
+    constructor_arg: true
+    init_with: "\"\""
+    getter: true
+    setter: true
+  - name: image_filename
+    type: std::string
+    constructor_arg: true
+    init_with: "\"\""
+    getter: true
+    setter: true
+  - name: correct_answer
+    type: std::string
+    constructor_arg: true
+    init_with: "\"\""
+    getter: true
+    setter: true
+  - name: incorrect_answers
+    type: std::vector<std::string>
+    constructor_arg: true
+    init_with: "{}"
+    getter: true
+    setter: true
