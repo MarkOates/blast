@@ -1,0 +1,63 @@
+properties:
+  - name: quiz
+    type: Quiz*
+    init_with: nullptr
+    constructor_arg: true
+  - name: yaml_filename
+    type: std::string
+    init_with: "\"\""
+    constructor_arg: true
+    getter: true
+functions:
+  - name: load_and_append
+    type: bool
+    body: |
+      YAML::Node loaded_file = YAML::LoadFile(yaml_filename);
+      YAML::Node questions_within_yaml = loaded_file["questions"];
+
+      std::vector<Question> questions;
+
+      for(YAML::const_iterator it=questions_within_yaml.begin(); it!=questions_within_yaml.end(); ++it)
+      {
+        YAML::Node answers = it->second;
+        std::string first_answer_str = answers[0].as<std::string>();
+        std::vector<std::string> wrong_answers;
+        for (int i=1; i<answers.size(); i++)
+        {
+          wrong_answers.push_back(answers[i].as<std::string>());
+        }
+
+        questions.push_back({
+          it->first.as<std::string>(),
+          "",
+          first_answer_str,
+          wrong_answers,
+        });
+      }
+
+      //quiz->set_questions(questions);
+      quiz->append_questions(questions);
+      return true;
+  - name: get_type_string
+    type: std::string
+    parameters:
+      - name: node
+        type: YAML::Node
+        default_argument: "YAML::Node()"
+    body: |
+     switch (node.Type())
+     {
+       case YAML::NodeType::Null: return "Null"; break;
+       case YAML::NodeType::Scalar: return "Scalar"; break;
+       case YAML::NodeType::Sequence: return "Sequence"; break;
+       case YAML::NodeType::Map: return "Map"; break;
+       case YAML::NodeType::Undefined: return "Undefined"; break;
+     }
+     return "[NO_TYPE_DEFINED_ERROR]";
+dependencies:
+  - symbol: Quiz*
+    headers: [ 'Quiz.hpp' ]
+  - symbol: YAML::Node
+    headers: [ 'yaml-cpp/yaml.h' ]
+    include_directories: [ 'yaml-cpp/include' ]
+    linked_directories: [ 'yaml-cpp/build' ]

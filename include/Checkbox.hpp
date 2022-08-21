@@ -4,13 +4,13 @@
 #include <string>
 
 
-class DirectoryFileHasher
+class Checkbox
 {
 private:
 
 public:
-   DirectoryFileHasher();
-   ~DirectoryFileHasher();
+   Checkbox();
+   ~Checkbox();
 
    std::string run();
 };
