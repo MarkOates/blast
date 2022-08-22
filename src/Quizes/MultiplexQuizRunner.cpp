@@ -43,6 +43,7 @@ void MultiplexQuizRunner::run()
    // initialize
    std::string FOLDER = "/Users/markoates/Repos/me/quizes/discover_canada/csv/";
    std::string OUTPUT_FOLDER = "/Users/markoates/Repos/me/quizes/discover_canada/csv/generated/";
+
    std::vector<std::string> quiz_files = {
       "Canada Flash Cards - Capitals.tsv",
       "Canada Flash Cards - Formation.tsv",
