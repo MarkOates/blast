@@ -381,6 +381,7 @@ int main(int argc, char **argv)
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },
       { "comparison", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "comparison.hpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison.cpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison_test.txt")) },
+      { "json_loader", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "json_loader.hpp.txt"), file_get_contents(TEMPLATES_PATH + "json_loader.cpp.txt"), file_get_contents(TEMPLATES_PATH + "json_loader_test.txt")) },
    };
 
    std::string dictionary_identifier_to_use = "standard_component";
@@ -441,6 +442,7 @@ int main(int argc, char **argv)
       { "[[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]", generator.get_class_name_up_to_last_fragment() },
       { "[[COMPONENT_BASENAME_SNAKE_CASE]]", generator.get_component_tail_snakecase() },
       { "[[COMPONENT_AS_ALL_CAPS_CONSTANT]]", generator.get_component_tail_all_caps_constant() },
+      { "[[COMPONENT_NAME]]", generator.get_component_name() },
       { "[[COMPONENT_NAME_LAST_FRAGMENT]]", generator.get_component_name_last_fragment() },
       { "[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]", generator.get_component_name_up_to_last_fragment() },
    };
