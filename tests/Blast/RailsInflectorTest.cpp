@@ -9,6 +9,15 @@ TEST(RailsInflectorTest, can_be_created)
    Blast::RailsInflector rails_inflector("ducks", Blast::RailsInflector::SINGULARIZE);
 }
 
+https://github.com/rails/rails/blob/3872bc0e54d32e8bf3a6299b0bfe173d94b072fc/activesupport/lib/active_support/inflector/methods.rb#L20-L51
+
+https://github.com/rails/rails/blob/3872bc0e54d32e8bf3a6299b0bfe173d94b072fc/activesupport/lib/active_support/inflections.rb
+
+https://github.com/rails/rails/blob/main/activesupport/test/inflector_test.rb
+
+https://github.com/rails/rails/blob/main/activesupport/test/inflector_test_cases.rb
+
+
 
 // DISABLED because test is too slow
 TEST(DISABLED_RailsInflectorTest, returns_the_expected_rails_inflected_singularized_form_of_a_word)
