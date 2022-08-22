@@ -16,6 +16,7 @@ public:
 
    std::string get_component_name();
    std::string get_component_name_last_fragment();
+   std::string get_component_name_up_to_last_fragment();
    std::string get_quintessence_filename();
    std::string get_quintessence_path_and_filename();
    std::string get_documentation_path_and_filename();
