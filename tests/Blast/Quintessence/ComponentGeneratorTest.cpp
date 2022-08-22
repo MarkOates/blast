@@ -90,3 +90,22 @@ TEST(Blast_Quintessence_ComponentGenerator, get_component_tail_all_caps_constant
    ASSERT_EQ(expected_snakecase_tail, generator.get_component_tail_all_caps_constant());
 }
 
+
+TEST(Blast_Quintessence_ComponentGenerator, get_class_name__returns_the_expected_string)
+{
+   std::string expected_snakecase_tail = "Baz::Bar::BarBasilBonk";
+   ComponentGenerator generator("Baz/Bar/BarBasilBonk");
+
+   ASSERT_EQ(expected_snakecase_tail, generator.get_class_name());
+}
+
+
+TEST(Blast_Quintessence_ComponentGenerator, get_class_name_up_to_last_fragment__returns_the_expected_string)
+{
+   std::string expected_snakecase_tail = "Baz::Bar";
+   ComponentGenerator generator("Baz/Bar/BarBasilBonk");
+
+   ASSERT_EQ(expected_snakecase_tail, generator.get_class_name_up_to_last_fragment());
+}
+
+

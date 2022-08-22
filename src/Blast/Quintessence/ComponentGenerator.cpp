@@ -69,6 +69,28 @@ std::string ComponentGenerator::get_component_name_up_to_last_fragment()
 
 
 
+std::string ComponentGenerator::get_class_name()
+{
+   std::string result = get_component_name();
+   ___replace(result, "/", "::");
+   return result;
+}
+
+
+
+std::string ComponentGenerator::get_class_name_up_to_last_fragment()
+{
+   std::vector<std::string> tokens = Blast::StringSplitter(get_component_name(), '/').split();
+   if (tokens.empty()) return "";
+
+   tokens.pop_back(); // remove the last fragment
+   std::string result = Blast::StringJoiner(tokens, "::").join();
+
+   return result;
+}
+
+
+
 std::string ComponentGenerator::get_quintessence_filename()
 {
    // TODO fix instances of this to use get_quintessence_path_and_filename() instead
