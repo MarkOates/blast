@@ -24,9 +24,9 @@ std::unordered_map<char, std::string> command_mapping = {
    { 'q', EVENT_ABORT_PROGRAM },
    { 'y', YANK_SELECTED_TEXT },
    { 'p', COPY_GIT_ADD_PATCH_COMMAND },
-   { 't', COPY_RAILS_TEST_COMMAND },
-   { 's', COPY_RAILS_RERUN_RSPEC_COMMAND },
-   { 'r', COPY_RAILS_RUBOCOP_COMMAND },
+   //{ 't', COPY_RAILS_TEST_COMMAND },
+   //{ 's', COPY_RAILS_RERUN_RSPEC_COMMAND },
+   //{ 'r', COPY_RAILS_RUBOCOP_COMMAND },
    { 'v', COPY_VIM_EDIT_COMMAND },
    { 'd', DELETE_FILE_COMMAND },
 };
@@ -191,7 +191,7 @@ bool Projekt::process_event(std::string e)
       init_pair(5, COLOR_MAGENTA, 23);
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
-      create_text("command_list_text", 130, 20, 0.0, 1.0).set_styles(COLOR_PAIR(5));
+      create_text("command_list_text", 2, 40, 0.0, 1.0).set_styles(COLOR_PAIR(5));
 
       emit_event(BUILD_COMMAND_LIST);
       emit_event(COMMAND_REBUILD_MENU);
