@@ -26,7 +26,7 @@ TEST(ProjectListBuilderTest, get_directories__returns_a_list_of_folders_in_the_d
       "union",
       "allegro_flare",
       ".dotfiles",
-      "ncurses-art",
+      "blast",
    };
 
    std::vector<std::string> actual_directories = program_runner.get_directories();
