@@ -16,6 +16,8 @@
 #define COPY_RAILS_RUBOCOP_COMMAND "copy \"rubocop\" command to clipboard"
 #define COPY_VIM_EDIT_COMMAND "copy \"vim open\" command to clipboard"
 #define DELETE_FILE_COMMAND "delete the selected file from the system"
+#define CHECKOUT_FILE_BACK_TO_PREVIOUS_COMMIT "checkout the file, resture it back to previous commit"
+
 
 std::unordered_map<char, std::string> command_mapping = {
    { 'j', MOVE_CURSOR_DOWN },
@@ -29,6 +31,7 @@ std::unordered_map<char, std::string> command_mapping = {
    //{ 'r', COPY_RAILS_RUBOCOP_COMMAND },
    { 'v', COPY_VIM_EDIT_COMMAND },
    { 'd', DELETE_FILE_COMMAND },
+   { 'c', CHECKOUT_FILE_BACK_TO_PREVIOUS_COMMIT },
 };
 
 std::string compose_command_mapping_text(std::unordered_map<char, std::string> &command_mapping)
@@ -311,6 +314,20 @@ bool Projekt::process_event(std::string e)
 
       std::stringstream system_command;
       system_command << "rm " << git_status_line_deducer.parse_filename();
+      system_command << " > /dev/null";
+      system(system_command.str().c_str());
+      emit_event(COMMAND_REBUILD_MENU);
+   }
+   else if (e == CHECKOUT_FILE_BACK_TO_PREVIOUS_COMMIT)
+   {
+      Menu &menu = find_menu("main_menu");
+      std::string current_selection = menu.current_selection();
+      std::vector<std::string> line_tokens = split_string(current_selection, " ");
+
+      GitStatusLineDeducer git_status_line_deducer(menu);
+
+      std::stringstream system_command;
+      system_command << "git checkout -- " << git_status_line_deducer.parse_filename();
       system_command << " > /dev/null";
       system(system_command.str().c_str());
       emit_event(COMMAND_REBUILD_MENU);
