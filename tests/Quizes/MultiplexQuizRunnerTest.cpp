@@ -11,10 +11,11 @@ TEST(Quizes_MultiplexQuizRunnerTest, can_be_created_without_blowing_up)
 }
 
 
-TEST(Quizes_MultiplexQuizRunnerTest, run__runs_the_quiz_program)
+TEST(Quizes_MultiplexQuizRunnerTest, DISABLED__run__runs_the_quiz_program)
 {
    Quizes::MultiplexQuizRunner multiplex_quiz_runner;
-   //multiplex_quiz_runner.run();
+   // DISABLED because destructive
+   multiplex_quiz_runner.run();
    SUCCEED();
 }
 
