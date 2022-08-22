@@ -293,7 +293,7 @@ void initialize()
          //{ "crayola-client",   { false, ProjectStatus("crayola-client") } },
          //{ "disclife",         { false, ProjectStatus("disclife") } },
          //{ "dungeon",              { false, ProjectStatus("dungeon") } },
-         //{ "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
+         { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
          //{ "flare_network",    { false, ProjectStatus("flare_network") } },
          //{ "fullscore",        { false, ProjectStatus("fullscore") } },
          { "motris",               { false, ProjectStatus("motris") } },
