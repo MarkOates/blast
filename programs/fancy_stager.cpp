@@ -36,10 +36,17 @@ std::string compose_command_mapping_text(std::unordered_map<char, std::string> &
    std::stringstream result;
    for (auto &command_map : command_mapping)
    {
+      std::string command_message(5, ' ');
+      char key = command_map.first;
+      std::string command = command_map.second;
+
+      if (key == 10) command_message = "ENTER";
+      else command_message[4] = key;
+
       result
-         << command_map.first
+         << command_message
          << " - "
-         << command_map.second
+         << command
          << std::endl;
          ;
    }
