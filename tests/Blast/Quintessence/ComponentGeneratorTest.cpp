@@ -37,6 +37,16 @@ TEST(Blast_Quintessence_ComponentGenerator,
 }
 
 
+TEST(Blast_Quintessence_ComponentGenerator,
+   get_component_name_preceeding_fragment__returns_the_last_fragment_of_the_component_name)
+{
+   std::string expected_result = "Bar";
+   ComponentGenerator generator("Foo/Bar/Baz");
+
+   ASSERT_EQ(expected_result, generator.get_component_name_preceeding_fragment());
+}
+
+
 TEST(Blast_Quintessence_ComponentGenerator, get_quintessence_foldername__returns_the_expected_folder_name)
 {
    std::string expected_folder_name = "quintessence/Foo/Bar";

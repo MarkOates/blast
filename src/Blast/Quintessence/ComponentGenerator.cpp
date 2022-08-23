@@ -68,6 +68,14 @@ std::string ComponentGenerator::get_component_name_up_to_last_fragment()
 }
 
 
+std::string ComponentGenerator::get_component_name_preceeding_fragment()
+{
+   std::vector<std::string> tokens = Blast::StringSplitter(get_component_name(), '/').split();
+   if (tokens.size() < 2) throw std::runtime_error("error extracting get_component_name_preceeding_fragment; extracted tokens "
+                                                   "appear to have fewer than 2 token. At least 2 are needed.");
+   return tokens[tokens.size()-2];
+}
+
 
 std::string ComponentGenerator::get_class_name()
 {

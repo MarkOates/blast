@@ -445,6 +445,7 @@ int main(int argc, char **argv)
       { "[[COMPONENT_NAME]]", generator.get_component_name() },
       { "[[COMPONENT_NAME_LAST_FRAGMENT]]", generator.get_component_name_last_fragment() },
       { "[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]", generator.get_component_name_up_to_last_fragment() },
+      { "[[COMPONENT_NAME_PRECEEDING_FRAGMENT]]", generator.get_component_name_preceeding_fragment() },
    };
 
 

@@ -17,6 +17,7 @@ public:
    std::string get_component_name();
    std::string get_component_name_last_fragment();
    std::string get_component_name_up_to_last_fragment();
+   std::string get_component_name_preceeding_fragment();
 
    std::string get_class_name();
    std::string get_class_name_up_to_last_fragment();
