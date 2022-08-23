@@ -7,7 +7,7 @@ namespace AllegroFlare::Namespaces::Namespaces
 {
 
 
-  bool operator==(const Vec2D& object, const Vec2D& other_object)
+  bool operator==(const [[COMPONENT_NAME_LAST_FRAGMENT]]& object, const [[COMPONENT_NAME_LAST_FRAGMENT]]& other_object)
   {
      //if (object.x != other_object.x) return false;
      //if (object.y != other_object.y) return false;
@@ -15,9 +15,9 @@ namespace AllegroFlare::Namespaces::Namespaces
   }
 
 
-  void PrintTo(const Vec2D& object, ::std::ostream* os)
+  void PrintTo(const [[COMPONENT_NAME_LAST_FRAGMENT]]& object, ::std::ostream* os)
   {
-     //*os << "Vec2D(" << object.x << ", " << object.y << ")";
+     //*os << "[[COMPONENT_NAME_LAST_FRAGMENT]](" << object.x << ", " << object.y << ")";
   }
 
 

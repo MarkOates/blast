@@ -5,9 +5,9 @@
 #include <ostream>
 
 
-namespace AllegroFlare::Namespaces::Namespaces
+namespace [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]
 {
-   bool operator==(const Vec2D& object, const Vec2D& other_object);
+   bool operator==(const [[COMPONENT_NAME_LAST_FRAGMENT]]& object, const [[COMPONENT_NAME_LAST_FRAGMENT]]& other_object);
    void PrintTo(const Vec2D& object, ::std::ostream* os);
 }
 
