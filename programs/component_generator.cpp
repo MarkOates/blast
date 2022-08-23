@@ -398,7 +398,7 @@ int main(int argc, char **argv)
                     << "like \"Foobar/Bar/Bazz\" where \"Foobar/Bar\" are the folders and \"Bazz\" is the name "
                     << "of the component.";
       error_message << std::endl;
-      error_message << "Optionally, you can also pass as a second argument for a template set to use when generating your component.  The options are:"
+      error_message << "Optionally you can also pass a second argument, representing a template to use when generating your component.  The available templates arguments are:"
                     << std::endl;
       for (auto &dictionary_listing : dictionary)
       {
