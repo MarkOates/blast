@@ -3,7 +3,7 @@
 #include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
 
 
-namespace AllegroFlare::Namespaces::Namespaces
+namespace [[COMPONENT_NAME_FROM_THIRD_FRAGMENT_UP_TO_LAST_FRAGMENT]]
 {
 
 
@@ -17,7 +17,7 @@ namespace AllegroFlare::Namespaces::Namespaces
 
   void PrintTo(const [[COMPONENT_NAME_LAST_FRAGMENT]]& object, ::std::ostream* os)
   {
-     //*os << "[[COMPONENT_NAME_LAST_FRAGMENT]](" << object.x << ", " << object.y << ")";
+     //*os << "[[COMPONENT_NAME_LAST_TWO_FRAGMENTS]](" << object.x << ", " << object.y << ")";
   }
 
 

@@ -444,8 +444,10 @@ int main(int argc, char **argv)
       { "[[COMPONENT_AS_ALL_CAPS_CONSTANT]]", generator.get_component_tail_all_caps_constant() },
       { "[[COMPONENT_NAME]]", generator.get_component_name() },
       { "[[COMPONENT_NAME_LAST_FRAGMENT]]", generator.get_component_name_last_fragment() },
+      { "[[COMPONENT_NAME_LAST_TWO_FRAGMENTS]]", generator.get_component_name_last_fragment() }, // TODO: create a function that will return this value
       { "[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]", generator.get_component_name_up_to_last_fragment() },
       { "[[COMPONENT_NAME_PRECEEDING_FRAGMENT]]", generator.get_component_name_preceeding_fragment() },
+      { "[[COMPONENT_NAME_FROM_THIRD_FRAGMENT_UP_TO_LAST_FRAGMENT]]", generator.get_component_name_up_to_last_fragment() }, // TODO: create a function that will return this
    };
 
 

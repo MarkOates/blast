@@ -4,23 +4,23 @@
 
 
 
-namespace [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]
+namespace [[COMPONENT_NAME_FROM_THIRD_FRAGMENT_UP_TO_LAST_FRAGMENT]]
 {
 
 
-void to_json(nlohmann::json& j, const AllegroFlare::MotionComposer::Messages::SetPlayheadPosition& v)
+void to_json(nlohmann::json& j, const [[COMPONENT_CLASS_NAME]]& v)
 {
    j = nlohmann::json{
       { "position", v.get_position() },
    };
 }
 
-void from_json(const nlohmann::json& j, AllegroFlare::MotionComposer::Messages::SetPlayheadPosition& v)
+void from_json(const nlohmann::json& j, [[COMPONENT_CLASS_NAME]]& v)
 {
    j.at("position").get_to(v.get_position_ref());
 }
 
 
-} // namespace [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]
+} // namespace [[COMPONENT_NAME_FROM_THIRD_FRAGMENT_UP_TO_LAST_FRAGMENT]]
 
 
