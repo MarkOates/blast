@@ -3,7 +3,9 @@
 
 #include <unordered_map>
 
+#include <iostream>
 #include <ncurses.h>
+
 
 #define COMMAND_FLIP_STAGING "flip staging"
 #define COMMAND_REBUILD_MENU "rebuild menu"
@@ -17,6 +19,14 @@
 #define COPY_VIM_EDIT_COMMAND "copy \"vim open\" command to clipboard"
 #define DELETE_FILE_COMMAND "delete the selected file from the system"
 #define CHECKOUT_FILE_BACK_TO_PREVIOUS_COMMIT "checkout the file, resture it back to previous commit"
+
+
+#include <filesystem>
+bool is_file_too_large(std::string path)
+{
+  std::cout << "  " << path << "   filesize: " << std::filesystem::file_size(path) << "     " << std::endl;
+  return (std::filesystem::file_size(path) > 1000000); // 1000000 = 1 Megabyte
+}
 
 
 std::unordered_map<char, std::string> command_mapping = {
@@ -250,14 +260,16 @@ bool Projekt::process_event(std::string e)
    }
    else if (e == REFRESH_TEXT_DISPLAY)
    {
+      //return true;
       Menu &menu = find_menu("main_menu");
       GitStatusLineDeducer git_status_line_deducer(menu);
       std::stringstream system_command;
       Text &text = find_text("body_text");
+      std::string filename;
 
       if (git_status_line_deducer.is_file_line())
       {
-         std::string filename = git_status_line_deducer.parse_filename();
+         filename = git_status_line_deducer.parse_filename();
 
          if (git_status_line_deducer.line_is_untracked())
          {
@@ -278,13 +290,27 @@ bool Projekt::process_event(std::string e)
       else
       {
          text.set_styles(COLOR_PAIR(2));
-         system_command << "git diff --staged > \"" << TMP_OUTFILE << "\"";
+         system_command << "echo \"Not a file_line\" > \"" << TMP_OUTFILE << "\"";
+         //system_command << "git diff --staged > \"" << TMP_OUTFILE << "\"";
       }
 
-      system(system_command.str().c_str());
-
-      std::string command_output = get_file_contents();
-      text.set_text(command_output);
+      if (!filename.empty() && is_file_too_large(filename))
+      {
+         text.set_text("File is too large");
+      }
+      else
+      {
+         system(system_command.str().c_str());
+         std::string command_output = get_file_contents();
+         if (is_file_too_large(TMP_OUTFILE))
+         {
+            text.set_text("Diff is too large");
+         }
+         else
+         {
+            text.set_text(command_output);
+         }
+      }
    }
    else if (e == MOVE_CURSOR_DOWN)
    {
