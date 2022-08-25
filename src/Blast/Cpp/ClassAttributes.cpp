@@ -105,7 +105,7 @@ std::string ClassAttributes::getter_function_declaration()
 {
    std::stringstream result;
    if (is_static) result << "static ";
-   result << datatype << " " << getter_function_symbol() << "();";
+   result << datatype << " " << getter_function_symbol() << "() const;";
    return result.str();
 }
 
@@ -113,7 +113,7 @@ std::string ClassAttributes::getter_function_declaration()
 std::string ClassAttributes::getter_function_definition(std::string class_name)
 {
    std::stringstream result;
-   result << datatype << " " << class_name << "::get_" << variable_name << "()\n{\n   return " << variable_name << ";\n}\n";
+   result << datatype << " " << class_name << "::get_" << variable_name << "() const\n{\n   return " << variable_name << ";\n}\n";
    return result.str();
 }
 
