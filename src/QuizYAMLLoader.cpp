@@ -18,7 +18,7 @@ QuizYAMLLoader::~QuizYAMLLoader()
 }
 
 
-std::string QuizYAMLLoader::get_yaml_filename()
+std::string QuizYAMLLoader::get_yaml_filename() const
 {
    return yaml_filename;
 }

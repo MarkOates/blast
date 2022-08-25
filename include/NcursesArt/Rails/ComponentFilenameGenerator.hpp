@@ -17,7 +17,7 @@ namespace NcursesArt
          ComponentFilenameGenerator(std::string component_basename="unnamed/component");
          ~ComponentFilenameGenerator();
 
-         std::string get_component_basename();
+         std::string get_component_basename() const;
          std::string get_model_filename();
       };
    }

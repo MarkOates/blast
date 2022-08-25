@@ -25,19 +25,19 @@ RegexMatcher::~RegexMatcher()
 }
 
 
-std::string RegexMatcher::get_source_string()
+std::string RegexMatcher::get_source_string() const
 {
    return source_string;
 }
 
 
-std::string RegexMatcher::get_regex_expression()
+std::string RegexMatcher::get_regex_expression() const
 {
    return regex_expression;
 }
 
 
-std::vector<std::regex_constants::syntax_option_type> RegexMatcher::get_options()
+std::vector<std::regex_constants::syntax_option_type> RegexMatcher::get_options() const
 {
    return options;
 }

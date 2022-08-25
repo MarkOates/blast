@@ -24,11 +24,11 @@ namespace Quizes
       void set_subject_type(std::string subject_type);
       void set_relevance(std::string relevance);
       void set_reference_page(std::string reference_page);
-      std::string get_date();
-      std::string get_subject();
-      std::string get_subject_type();
-      std::string get_relevance();
-      std::string get_reference_page();
+      std::string get_date() const;
+      std::string get_subject() const;
+      std::string get_subject_type() const;
+      std::string get_relevance() const;
+      std::string get_reference_page() const;
    };
 }
 

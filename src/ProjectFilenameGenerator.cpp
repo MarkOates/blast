@@ -18,7 +18,7 @@ ProjectFilenameGenerator::~ProjectFilenameGenerator()
 }
 
 
-std::string ProjectFilenameGenerator::get_basename()
+std::string ProjectFilenameGenerator::get_basename() const
 {
    return basename;
 }

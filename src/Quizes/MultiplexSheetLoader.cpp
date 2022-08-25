@@ -28,13 +28,13 @@ MultiplexSheetLoader::~MultiplexSheetLoader()
 }
 
 
-std::string MultiplexSheetLoader::get_raw_csv()
+std::string MultiplexSheetLoader::get_raw_csv() const
 {
    return raw_csv;
 }
 
 
-bool MultiplexSheetLoader::get_loaded()
+bool MultiplexSheetLoader::get_loaded() const
 {
    return loaded;
 }

@@ -31,7 +31,7 @@ ProjectSymlinkFixer::~ProjectSymlinkFixer()
 }
 
 
-std::string ProjectSymlinkFixer::get_project_folder()
+std::string ProjectSymlinkFixer::get_project_folder() const
 {
    return project_folder;
 }

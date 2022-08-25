@@ -18,7 +18,7 @@ ProjectListBuilder::~ProjectListBuilder()
 }
 
 
-std::string ProjectListBuilder::get_repos_directory()
+std::string ProjectListBuilder::get_repos_directory() const
 {
    return repos_directory;
 }

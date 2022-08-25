@@ -73,49 +73,49 @@ void SourceReleaseBuilder::set_remove_AllegroFlare_Testing_from_allegro_flare_co
 }
 
 
-std::string SourceReleaseBuilder::get_project_name()
+std::string SourceReleaseBuilder::get_project_name() const
 {
    return project_name;
 }
 
 
-std::string SourceReleaseBuilder::get_source_project_directory()
+std::string SourceReleaseBuilder::get_source_project_directory() const
 {
    return source_project_directory;
 }
 
 
-std::string SourceReleaseBuilder::get_main_program_filename()
+std::string SourceReleaseBuilder::get_main_program_filename() const
 {
    return main_program_filename;
 }
 
 
-bool SourceReleaseBuilder::get_link_with_opengl()
+bool SourceReleaseBuilder::get_link_with_opengl() const
 {
    return link_with_opengl;
 }
 
 
-bool SourceReleaseBuilder::get_copy_allegro_flare_source()
+bool SourceReleaseBuilder::get_copy_allegro_flare_source() const
 {
    return copy_allegro_flare_source;
 }
 
 
-bool SourceReleaseBuilder::get_copy_nlohmann_json_from_allegro_flare_source()
+bool SourceReleaseBuilder::get_copy_nlohmann_json_from_allegro_flare_source() const
 {
    return copy_nlohmann_json_from_allegro_flare_source;
 }
 
 
-bool SourceReleaseBuilder::get_remove_AllegroFlare_Network_from_allegro_flare_copy()
+bool SourceReleaseBuilder::get_remove_AllegroFlare_Network_from_allegro_flare_copy() const
 {
    return remove_AllegroFlare_Network_from_allegro_flare_copy;
 }
 
 
-bool SourceReleaseBuilder::get_remove_AllegroFlare_Testing_from_allegro_flare_copy()
+bool SourceReleaseBuilder::get_remove_AllegroFlare_Testing_from_allegro_flare_copy() const
 {
    return remove_AllegroFlare_Testing_from_allegro_flare_copy;
 }

@@ -53,31 +53,31 @@ void MultiplexQuestion::set_reference_page(std::string reference_page)
 }
 
 
-std::string MultiplexQuestion::get_date()
+std::string MultiplexQuestion::get_date() const
 {
    return date;
 }
 
 
-std::string MultiplexQuestion::get_subject()
+std::string MultiplexQuestion::get_subject() const
 {
    return subject;
 }
 
 
-std::string MultiplexQuestion::get_subject_type()
+std::string MultiplexQuestion::get_subject_type() const
 {
    return subject_type;
 }
 
 
-std::string MultiplexQuestion::get_relevance()
+std::string MultiplexQuestion::get_relevance() const
 {
    return relevance;
 }
 
 
-std::string MultiplexQuestion::get_reference_page()
+std::string MultiplexQuestion::get_reference_page() const
 {
    return reference_page;
 }

@@ -34,13 +34,13 @@ void FunctionBody::set_dependency_symbols(std::vector<std::string> dependency_sy
 }
 
 
-std::string FunctionBody::get_content()
+std::string FunctionBody::get_content() const
 {
    return content;
 }
 
 
-std::vector<std::string> FunctionBody::get_dependency_symbols()
+std::vector<std::string> FunctionBody::get_dependency_symbols() const
 {
    return dependency_symbols;
 }

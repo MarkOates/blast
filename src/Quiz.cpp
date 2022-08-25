@@ -25,7 +25,7 @@ void Quiz::set_questions(std::vector<Question> questions)
 }
 
 
-std::vector<Question> Quiz::get_questions()
+std::vector<Question> Quiz::get_questions() const
 {
    return questions;
 }

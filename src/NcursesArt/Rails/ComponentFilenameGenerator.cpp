@@ -21,7 +21,7 @@ ComponentFilenameGenerator::~ComponentFilenameGenerator()
 }
 
 
-std::string ComponentFilenameGenerator::get_component_basename()
+std::string ComponentFilenameGenerator::get_component_basename() const
 {
    return component_basename;
 }

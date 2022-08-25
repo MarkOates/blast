@@ -19,8 +19,8 @@ namespace Quizes
       MultiplexSheetLoader(std::string raw_csv="");
       ~MultiplexSheetLoader();
 
-      std::string get_raw_csv();
-      bool get_loaded();
+      std::string get_raw_csv() const;
+      bool get_loaded() const;
       std::vector<Quizes::MultiplexQuestion> get_questions();
       bool load();
       std::string trim(std::string str="");

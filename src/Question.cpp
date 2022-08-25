@@ -44,25 +44,25 @@ void Question::set_incorrect_answers(std::vector<std::string> incorrect_answers)
 }
 
 
-std::string Question::get_question()
+std::string Question::get_question() const
 {
    return question;
 }
 
 
-std::string Question::get_image_filename()
+std::string Question::get_image_filename() const
 {
    return image_filename;
 }
 
 
-std::string Question::get_correct_answer()
+std::string Question::get_correct_answer() const
 {
    return correct_answer;
 }
 
 
-std::vector<std::string> Question::get_incorrect_answers()
+std::vector<std::string> Question::get_incorrect_answers() const
 {
    return incorrect_answers;
 }

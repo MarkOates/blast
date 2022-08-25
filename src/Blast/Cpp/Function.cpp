@@ -32,73 +32,73 @@ Function::~Function()
 }
 
 
-std::string Function::get_type()
+std::string Function::get_type() const
 {
    return type;
 }
 
 
-std::string Function::get_name()
+std::string Function::get_name() const
 {
    return name;
 }
 
 
-std::vector<Blast::Cpp::FunctionArgument> Function::get_signature()
+std::vector<Blast::Cpp::FunctionArgument> Function::get_signature() const
 {
    return signature;
 }
 
 
-std::string Function::get_body()
+std::string Function::get_body() const
 {
    return body;
 }
 
 
-bool Function::get_is_static()
+bool Function::get_is_static() const
 {
    return is_static;
 }
 
 
-bool Function::get_is_const()
+bool Function::get_is_const() const
 {
    return is_const;
 }
 
 
-bool Function::get_is_override()
+bool Function::get_is_override() const
 {
    return is_override;
 }
 
 
-bool Function::get_is_virtual()
+bool Function::get_is_virtual() const
 {
    return is_virtual;
 }
 
 
-bool Function::get_is_pure_virtual()
+bool Function::get_is_pure_virtual() const
 {
    return is_pure_virtual;
 }
 
 
-bool Function::get_is_final_override()
+bool Function::get_is_final_override() const
 {
    return is_final_override;
 }
 
 
-bool Function::get_is_private()
+bool Function::get_is_private() const
 {
    return is_private;
 }
 
 
-bool Function::get_is_protected()
+bool Function::get_is_protected() const
 {
    return is_protected;
 }
