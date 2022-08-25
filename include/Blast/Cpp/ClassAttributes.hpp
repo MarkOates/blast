@@ -35,6 +35,7 @@ namespace Blast
          );
          ~ClassAttributes();
 
+         bool infer_getter_with_const();
          std::string as_constructor_argument_in_declaration();
          std::string as_constructor_argument_in_definition();
          std::string as_argument_in_initialization_list();
