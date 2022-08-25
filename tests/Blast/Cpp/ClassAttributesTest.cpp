@@ -117,16 +117,18 @@ TEST(ClassAttributesTest, getter_function_symbol__returns_the_symbol_used_for_th
 }
 
 
-TEST(ClassAttributesTest, getter_function_declaration__formats_the_function_as_a_getter_function_listed_in_a_class_declaration)
+TEST(ClassAttributesTest,
+   getter_function_declaration__formats_the_function_as_a_getter_function_listed_in_a_class_declaration)
 {
    Blast::Cpp::ClassAttributes attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false, false, false, false);
 
-   std::string expected_string = "std::string get_my_variable();";
+   std::string expected_string = "std::string get_my_variable() const;";
    ASSERT_EQ(expected_string, attribute_properties.getter_function_declaration());
 }
 
 
-TEST(ClassAttributesTest, getter_function_declaration__formats_the_function_as_a_getter_function_listed_in_a_static_class_declaration)
+TEST(ClassAttributesTest,
+   getter_function_declaration__formats_the_function_as_a_static_function_listed_in_a_class__and_does_not_include_const)
 {
    Blast::Cpp::ClassAttributes attribute_properties("std::string", "my_variable", "\"Hello World!\"", true, false, false, false, false, false);
 
@@ -135,11 +137,12 @@ TEST(ClassAttributesTest, getter_function_declaration__formats_the_function_as_a
 }
 
 
-TEST(ClassAttributesTest, getter_function_definition__formats_the_function_as_a_getter_function_listed_in_a_class_definition)
+TEST(ClassAttributesTest,
+   getter_function_definition__formats_the_function_as_a_getter_function_listed_in_a_class_definition)
 {
    Blast::Cpp::ClassAttributes attribute_properties("std::string", "my_variable", "\"Hello World!\"", false, false, false, false, false, false);
 
-   std::string expected_string = "std::string FooClass::get_my_variable()\n{\n   return my_variable;\n}\n";
+   std::string expected_string = "std::string FooClass::get_my_variable() const\n{\n   return my_variable;\n}\n";
    ASSERT_EQ(expected_string, attribute_properties.getter_function_definition("FooClass"));
 }
 
