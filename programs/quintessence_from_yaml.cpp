@@ -565,7 +565,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       bool has_explicit_getter = fetch_bool(it, EXPLICIT_GETTER, false);
       bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
       bool has_setter = fetch_bool(it, SETTER, false);
-      bool is_constexpr = fetch_bool(it,CONSTEXPR, false);
+      bool is_constexpr = fetch_bool(it, CONSTEXPR, false);
       //std::string initialization_value = init_with_node.as<std::string>();
       //bool is_static = static_node.as<bool>();
       //bool is_constructor_parameter = constructor_arg_node.as<bool>();
