@@ -92,13 +92,16 @@ std::string ClassAttributes::as_class_property()
 {
    std::stringstream result;
    if (is_static) result << "static ";
+   if (is_constexpr) result << "constexpr ";
    result << datatype << " " << variable_name;
+   if (is_constexpr) result << " = " << initialization_value;
    return result.str();
 }
 
 
 std::string ClassAttributes::as_static_definition(std::string class_name)
 {
+   if (is_constexpr) return "";
    std::stringstream result;
    result << datatype << " " << class_name << "::" << variable_name << " = " << initialization_value << ";";
    return result.str();
