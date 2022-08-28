@@ -599,7 +599,7 @@ NAMESPACES_CLOSER
    
    if (cpp_class.infer_has_constexpr_properties())
    {
-      std::string replace_string = "PUBLIC_SCOPE_SPECIFIER\nCONSTEXPR_PROPERTIES\n";
+      std::string replace_string = "PUBLIC_SCOPE_SPECIFIER\nCONSTEXPR_PROPERTIES\n\n";
       __replace(result, "CONSTEXPR_SECTION\n", replace_string);
       //__replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
    }
