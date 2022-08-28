@@ -24,7 +24,13 @@
 #include <filesystem>
 bool is_file_too_large(std::string path)
 {
-  std::cout << "  " << path << "   filesize: " << std::filesystem::file_size(path) << "     " << std::endl;
+   //find_text("file_info_text").
+   std::stringstream ss;
+   ss << "  " << path << "\n  filesize: " << std::filesystem::file_size(path);
+
+   Text &text = find_text("file_info_text");
+   text.set_text(ss.str());
+
   return (std::filesystem::file_size(path) > 1000000); // 1000000 = 1 Megabyte
 }
 
@@ -204,7 +210,8 @@ bool Projekt::process_event(std::string e)
       init_pair(5, COLOR_MAGENTA, 23);
       create_menu("main_menu").set_styles(COLOR_PAIR(1));
       create_text("body_text", 80, 3).set_styles(COLOR_PAIR(2));
-      create_text("command_list_text", 2, 40, 0.0, 1.0).set_styles(COLOR_PAIR(5));
+      create_text("command_list_text", 2, 50, 0.0, 1.0).set_styles(COLOR_PAIR(5));
+      create_text("file_info_text", 2, 56).set_styles(COLOR_PAIR(3));
 
       emit_event(BUILD_COMMAND_LIST);
       emit_event(COMMAND_REBUILD_MENU);
