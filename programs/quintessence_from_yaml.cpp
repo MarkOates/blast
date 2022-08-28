@@ -534,6 +534,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       const std::string EXPLICIT_GETTER = "explicit_getter";
       const std::string GETTER_REF = "getter_ref";
       const std::string SETTER = "setter";
+      const std::string CONSTEXPR = "constexpr";
 
       validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"properties\", expected to be of a YAML Map.");
 
@@ -564,6 +565,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       bool has_explicit_getter = fetch_bool(it, EXPLICIT_GETTER, false);
       bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
       bool has_setter = fetch_bool(it, SETTER, false);
+      bool is_constexpr = fetch_bool(it,CONSTEXPR, false);
       //std::string initialization_value = init_with_node.as<std::string>();
       //bool is_static = static_node.as<bool>();
       //bool is_constructor_parameter = constructor_arg_node.as<bool>();
@@ -577,7 +579,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
 
       if (has_getter_AS_STR == "explicit") has_explicit_getter = true;
 
-      Blast::Cpp::ClassAttributes class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_explicit_getter, has_getter_ref, has_setter);
+      Blast::Cpp::ClassAttributes class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_explicit_getter, has_getter_ref, has_setter, is_constexpr);
 
       result.push_back(class_attribute_properties);
    }

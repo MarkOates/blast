@@ -13,7 +13,18 @@ namespace Cpp
 {
 
 
-ClassAttributes::ClassAttributes(std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_explicit_getter, bool has_getter_ref, bool has_setter)
+ClassAttributes::ClassAttributes(
+      std::string datatype,
+      std::string variable_name,
+      std::string initialization_value,
+      bool is_static,
+      bool is_constructor_parameter,
+      bool has_getter,
+      bool has_explicit_getter,
+      bool has_getter_ref,
+      bool has_setter,
+      bool is_constexpr
+   )
    : datatype(datatype)
    , variable_name(variable_name)
    , initialization_value(initialization_value)
@@ -23,6 +34,7 @@ ClassAttributes::ClassAttributes(std::string datatype, std::string variable_name
    , has_explicit_getter(has_explicit_getter)
    , has_getter_ref(has_getter_ref)
    , has_setter(has_setter)
+   , is_constexpr(is_constexpr)
 {
 }
 

@@ -21,6 +21,7 @@ namespace Blast
          bool has_explicit_getter;
          bool has_getter_ref;
          bool has_setter;
+         bool is_constexpr;
 
          ClassAttributes(
             std::string datatype,
@@ -31,7 +32,8 @@ namespace Blast
             bool has_getter,
             bool has_expicit_getter,
             bool has_getter_ref,
-            bool has_setter
+            bool has_setter,
+            bool is_constexpr
          );
          ~ClassAttributes();
 
