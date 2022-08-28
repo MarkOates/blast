@@ -575,6 +575,8 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       //bool has_getter_ref = false;
       //bool has_setter = setter_node.as<bool>();
 
+      validate((!(is_constexpr && has_setter)), this_func_name, "Attribute property \"constexpr\" can not also exist when \"setter\" is anything but false.");
+
       validate((has_getter_AS_STR=="true" || has_getter_AS_STR=="false" || has_getter_AS_STR=="explicit"), this_func_name, "Attribute property \"getter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
 
       validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
