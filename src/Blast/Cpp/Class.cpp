@@ -43,6 +43,16 @@ bool Class::infer_has_virtual_functions()
 }
 
 
+bool Class::infer_has_constexpr_properties()
+{
+   for (auto &attribute_property: get_attribute_properties())
+   {
+      if (attribute_property.is_constexpr) return true;
+   }
+   return false;
+}
+
+
 std::string Class::get_class_name()
 {
    return class_name;

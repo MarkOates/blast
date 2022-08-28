@@ -37,6 +37,7 @@ namespace Blast
          ~Class();
 
          bool infer_has_virtual_functions();
+         bool infer_has_constexpr_properties();
 
          std::string get_class_name();
          std::vector<std::string> get_namespaces();

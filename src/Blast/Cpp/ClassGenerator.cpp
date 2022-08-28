@@ -571,11 +571,8 @@ std::string ClassGenerator::generate_header_file_content()
 DEPENDENCY_INCLUDE_DIRECTIVES
 
 NAMESPACES_OPENER
-
 CLASS_DECLARATION_OPENER
-PUBLIC_SCOPE_SPECIFIER
-CONSTEXPR_PROPERTIES
-
+CONSTEXPR_SECTION
 PRIVATE_SCOPE_SPECIFIER
 PROPERTIES
 
@@ -597,6 +594,22 @@ NAMESPACES_CLOSER
 
    int required_namespace_indentation_levels = cpp_class.get_namespaces().size();
 
+
+   // replace/expand CONSTEXPR_SECTION if constexpr properties are present
+   
+   if (cpp_class.infer_has_constexpr_properties())
+   {
+      std::string replace_string = "PUBLIC_SCOPE_SPECIFIER\nCONSTEXPR_PROPERTIES\n";
+      __replace(result, "CONSTEXPR_SECTION\n", replace_string);
+      //__replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
+   }
+   else
+   {
+      __replace(result, "CONSTEXPR_SECTION\n", "");
+   }
+
+
+   // replace the variables (including ones that may have been added to the template in pre-processing)
    __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opener(true));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(true, false));
    __replace(result, "DEPENDENCY_INCLUDE_DIRECTIVES", dependency_include_directives());
