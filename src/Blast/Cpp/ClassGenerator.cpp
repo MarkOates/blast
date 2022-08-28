@@ -126,7 +126,12 @@ std::vector<std::string> ClassGenerator::static_attribute_definition_elements()
 {
    std::vector<std::string> elements;
    for (auto &attribute_property : cpp_class.get_attribute_properties())
-      if (attribute_property.is_static) elements.push_back(attribute_property.as_static_definition(cpp_class.get_class_name()));
+   {
+      if (attribute_property.is_static && !attribute_property.is_constexpr)
+      {
+         elements.push_back(attribute_property.as_static_definition(cpp_class.get_class_name()));
+      }
+   }
    return elements;
 }
 
