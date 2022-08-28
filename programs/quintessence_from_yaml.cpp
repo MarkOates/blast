@@ -575,9 +575,12 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       //bool has_getter_ref = false;
       //bool has_setter = setter_node.as<bool>();
 
+      // TODO: test these conditions
       validate((!(is_constexpr && has_setter)), this_func_name, "Attribute property \"constexpr\" can not also exist when \"setter\" is anything but false.");
-      //validate((!(is_constexpr && is_static)), this_func_name, "Warning: property \"constexpr\" along with \"static\" is redundant.");
+      validate((!(is_constexpr && !is_static)), this_func_name, "Attribute property \"constexpr\" must also be \"static\".");
       validate((!(is_constexpr && is_constructor_parameter)), this_func_name, "Attribute property \"constexpr\" can not be included with \"constructor_arg\".");
+      validate((!(is_constexpr && has_getter_ref)), this_func_name, "Attribute property \"constexpr\" can not be combined with \"getter_ref\". You must access the property directly.");
+      validate((!(is_constexpr && has_getter)), this_func_name, "Attribute property \"constexpr\" can not be combined with \"getter\". You must access the property directly.");
 
       validate((has_getter_AS_STR=="true" || has_getter_AS_STR=="false" || has_getter_AS_STR=="explicit"), this_func_name, "Attribute property \"getter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
 
