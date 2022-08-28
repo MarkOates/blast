@@ -602,6 +602,7 @@ NAMESPACES_CLOSER
    __replace(result, "CLASS_NAME", cpp_class.get_class_name());
    __replace(result, "CONSTRUCTOR\n", constructor_declaration(required_namespace_indentation_levels + 1));
    __replace(result, "DESTRUCTOR\n", destructor_declaration(required_namespace_indentation_levels + 1));
+   __replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "PROPERTIES\n", class_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "GETTER_FUNCTIONS\n", getter_function_declarations(required_namespace_indentation_levels + 1));
@@ -611,7 +612,6 @@ NAMESPACES_CLOSER
    __replace(result, "PRIVATE_SCOPE_SPECIFIER\n", private_scope_specifier(required_namespace_indentation_levels));
    __replace(result, "FUNCTION_DECLARATIONS\n", function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "PUBLIC_SCOPE_SPECIFIER\n", public_scope_specifier(required_namespace_indentation_levels));
-   __replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
    
 
 
