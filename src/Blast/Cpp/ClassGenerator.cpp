@@ -348,7 +348,22 @@ std::string ClassGenerator::class_property_list(int indent_level)
 {
    std::stringstream result;
    for (auto &attribute_property : cpp_class.get_attribute_properties())
+   {
+      if (attribute_property.is_constexpr) continue;
       result << std::string(3*indent_level, ' ') << attribute_property.as_class_property() << ";\n";
+   }
+   return result.str();
+}
+
+
+std::string ClassGenerator::constexpr_property_list(int indent_level)
+{
+   std::stringstream result;
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+   {
+      if (!attribute_property.is_constexpr) continue;
+      result << std::string(3*indent_level, ' ') << attribute_property.as_class_property() << ";\n";
+   };
    return result.str();
 }
 
@@ -556,6 +571,9 @@ std::string ClassGenerator::generate_header_file_content()
 DEPENDENCY_INCLUDE_DIRECTIVES
 
 NAMESPACES_OPENER
+PUBLIC_SCOPE_SPECIFIER
+CONSTEXPR_PROPERTIES
+
 CLASS_DECLARATION_OPENER
 PRIVATE_SCOPE_SPECIFIER
 PROPERTIES
@@ -593,6 +611,7 @@ NAMESPACES_CLOSER
    __replace(result, "PRIVATE_SCOPE_SPECIFIER\n", private_scope_specifier(required_namespace_indentation_levels));
    __replace(result, "FUNCTION_DECLARATIONS\n", function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "PUBLIC_SCOPE_SPECIFIER\n", public_scope_specifier(required_namespace_indentation_levels));
+   __replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
    
 
 
