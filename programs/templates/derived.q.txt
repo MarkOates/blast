@@ -3,11 +3,17 @@ parent_classes:
 
   - class: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::Base
     scope: public
-    init_with: '"[[COMPONENT_NAME_LAST_FRAGMENT]]"'
+    init_with: [[COMPONENT_CLASS_NAME]]::TYPE
 
 
 properties:
 
+
+  - name: TYPE
+    type: char*
+    init_with: '"[[COMPONENT_NAME_LAST_FRAGMENT]]"'
+    static: true
+    constexpr: true
 
   - name: property
     type: std::string
@@ -34,5 +40,7 @@ dependencies:
 
   - symbol: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::Base
     headers: [ [[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/Base.hpp ]
+  - symbol: char*
+    headers: [ ]
 
 
