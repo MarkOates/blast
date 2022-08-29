@@ -22,16 +22,24 @@
 
 
 #include <filesystem>
+#include <Blast/FileExistenceChecker.hpp>
 bool is_file_too_large(std::string path)
 {
-   //find_text("file_info_text").
-   std::stringstream ss;
-   ss << "  " << path << "\n  filesize: " << std::filesystem::file_size(path);
-
    Text &text = find_text("file_info_text");
-   text.set_text(ss.str());
-
-  return (std::filesystem::file_size(path) > 1000000); // 1000000 = 1 Megabyte
+   if (!Blast::FileExistenceChecker(path).exists())
+   {
+      std::stringstream ss;
+      ss << "  " << path << "\n  filesize: File does not exist.";
+      text.set_text(ss.str());
+      return false;
+   }
+   else
+   {
+      std::stringstream ss;
+      ss << "  " << path << "\n  filesize: " << std::filesystem::file_size(path);
+      text.set_text(ss.str());
+      return (std::filesystem::file_size(path) > 1000000); // 1000000 = 1 Megabyte
+   }
 }
 
 
