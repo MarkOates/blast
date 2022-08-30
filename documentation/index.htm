@@ -55,6 +55,7 @@ table td
   <li><a href="#quintessence/Blast/CamelCaseToConstantConverter.q.yml">quintessence/Blast/CamelCaseToConstantConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</a></li>
+  <li><a href="#quintessence/Blast/DependencySymbolAtomizer.q.yml">quintessence/Blast/DependencySymbolAtomizer.q.yml</a></li>
   <li><a href="#quintessence/Blast/DirectoryCreator.q.yml">quintessence/Blast/DirectoryCreator.q.yml</a></li>
   <li><a href="#quintessence/Blast/DirectoryExistenceChecker.q.yml">quintessence/Blast/DirectoryExistenceChecker.q.yml</a></li>
   <li><a href="#quintessence/Blast/FileCreator.q.yml">quintessence/Blast/FileCreator.q.yml</a></li>
@@ -280,6 +281,27 @@ table td
      <table>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;Blast::Cpp::FunctionArgument&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Blast/Cpp/FunctionArgument.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/DependencySymbolAtomizer.q.yml">quintessence/Blast/DependencySymbolAtomizer.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">dependency_symbol</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">atomize()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -2011,6 +2033,12 @@ table td
   "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
   ],
+  "Blast/StringSplitter": [
+    "Blast/DependencySymbolAtomizer",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
   "bool": [
     "Blast/DirectoryCreator"
   ],
@@ -2266,11 +2294,6 @@ table td
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuestionCollectionHelper",
-    "Quizes/MultiplexQuizRunner",
-    "Quizes/MultiplexSheetLoader"
-  ],
-  "Blast/StringSplitter": [
-    "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],

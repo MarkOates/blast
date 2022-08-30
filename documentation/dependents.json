@@ -50,6 +50,12 @@
   "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
   ],
+  "Blast/StringSplitter": [
+    "Blast/DependencySymbolAtomizer",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
   "bool": [
     "Blast/DirectoryCreator"
   ],
@@ -305,11 +311,6 @@
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuestionCollectionHelper",
-    "Quizes/MultiplexQuizRunner",
-    "Quizes/MultiplexSheetLoader"
-  ],
-  "Blast/StringSplitter": [
-    "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
