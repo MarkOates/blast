@@ -283,20 +283,34 @@ std::string ClassGenerator::header_include_directive()
 
 std::string ClassGenerator::dependency_include_directives()
 {
+   // result data
    std::stringstream result;
-
    std::set<std::string> symbol_dependency_header_directives;
    std::set<std::string> undefined_symbols;
 
+
+   // gather all the symbols into a single list
    std::set<std::string> present_symbols;
-   for (auto &attribute_property : cpp_class.get_attribute_properties()) present_symbols.insert(attribute_property.datatype);
-   for (auto &parent_class_properties : cpp_class.get_parent_classes_properties()) present_symbols.insert(parent_class_properties.get_class_name());
+
+   // gather symbols of the class's attributes
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+   {
+      present_symbols.insert(attribute_property.datatype);
+   }
+   // gather symbols of the parent classes
+   for (auto &parent_class_properties : cpp_class.get_parent_classes_properties())
+   {
+      present_symbols.insert(parent_class_properties.get_class_name());
+   }
+   // gather symbols from function signatures
    for (auto &function : cpp_class.get_functions())
    {
       present_symbols.insert(function.get_type());
       for (auto &parameter : function.get_signature()) present_symbols.insert(parameter.get_type());
    }
 
+
+   // look for undefined symbols
    for (auto &present_symbol : present_symbols)
    {
       bool found = false;
@@ -316,6 +330,7 @@ std::string ClassGenerator::dependency_include_directives()
 
       if (!found) undefined_symbols.insert(present_symbol);
    }
+
 
    if (!undefined_symbols.empty())
    {
