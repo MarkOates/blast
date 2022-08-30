@@ -268,6 +268,22 @@ std::string ClassGenerator::source_filename()
 }
 
 
+
+std::string ClassGenerator::get_class_name_with_namespaces()
+{
+   std::stringstream result;
+   std::vector<std::string> tokens;
+
+   for (unsigned i=0; i<cpp_class.get_namespaces().size(); i++) tokens.push_back(cpp_class.get_namespaces()[i]);
+   tokens.push_back(cpp_class.get_class_name());
+
+   result << Blast::StringJoiner(tokens, "::").join();
+
+   return result.str();
+}
+
+
+
 std::string ClassGenerator::header_include_directive()
 {
    std::stringstream result;
@@ -346,7 +362,9 @@ std::string ClassGenerator::dependency_include_directives()
    {
       std::stringstream error_message;
       error_message << "When consolidating dependencies for:" << std::endl
-                    << "  " << cpp_class.get_class_name() << std::endl
+                    << std::endl
+                    << "  " << get_class_name_with_namespaces() << std::endl
+                    << std::endl
                     << "There are undefined symbols for datatypes [ ";
       for (auto &undefined_symbol : undefined_symbols) error_message << "\"" << undefined_symbol << "\", ";
       error_message << " ]";

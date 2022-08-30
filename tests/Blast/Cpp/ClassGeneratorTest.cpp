@@ -300,6 +300,15 @@ TEST_F(ClassGeneratorTest, source_filename__returns_the_filename_for_the_header_
 }
 
 
+TEST_F(ClassGeneratorTest, get_class_name_with_namespaces__will_return_the_class_name_prefixed_with_its_namespaces)
+{
+   Blast::Cpp::Class cpp_class("Ascend", { "Fullscore", "Action", "Transform" });
+   Blast::Cpp::ClassGenerator cpp_class_generator(cpp_class);
+   ASSERT_EQ("Fullscore::Action::Transform::Ascend", cpp_class_generator.get_class_name_with_namespaces());
+}
+
+
+
 TEST_F(ClassGeneratorTest, header_include_directive__returns_the_include_line_to_include_the_class_header_file)
 {
    std::string expected_header_directive = "#include <ProjectName/User.hpp>";
@@ -388,7 +397,9 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__when_a_symbol_dependen
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
    std::string expected_error_message = "When consolidating dependencies for:\n"
+                                        "\n"
                                         "  User\n"
+                                        "\n"
                                         "There are undefined symbols for datatypes [ \"SomeUndefinedParentClass\", "
                                         "\"some_undefined_symbol\",  ]";
 
