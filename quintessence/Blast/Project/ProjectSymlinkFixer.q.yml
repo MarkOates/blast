@@ -268,6 +268,8 @@ dependencies:
     headers: [ iterator ]
   - symbol: Blast::ShellCommandExecutorWithCallback
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: std::vector<std::string>
+    headers: [ vector, string ]
   - symbol: std::cout
     headers: [ iostream ]
   - symbol: std::endl

@@ -55,6 +55,8 @@ functions:
      }
      return "[NO_TYPE_DEFINED_ERROR]";
 dependencies:
+  - symbol: Quiz
+    headers: [ Quiz.hpp ]
   - symbol: Quiz*
     headers: [ 'Quiz.hpp' ]
   - symbol: YAML::Node

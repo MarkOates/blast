@@ -3,6 +3,7 @@
 #include <Blast/Cpp/ClassGenerator.hpp>
 
 #include <Blast/Cpp/FunctionFormatter.hpp>
+#include <Blast/DependencySymbolAtomizer.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <set>
 #include <unordered_set>
@@ -267,6 +268,22 @@ std::string ClassGenerator::source_filename()
 }
 
 
+
+std::string ClassGenerator::get_class_name_with_namespaces()
+{
+   std::stringstream result;
+   std::vector<std::string> tokens;
+
+   for (unsigned i=0; i<cpp_class.get_namespaces().size(); i++) tokens.push_back(cpp_class.get_namespaces()[i]);
+   tokens.push_back(cpp_class.get_class_name());
+
+   result << Blast::StringJoiner(tokens, "::").join();
+
+   return result.str();
+}
+
+
+
 std::string ClassGenerator::header_include_directive()
 {
    std::stringstream result;
@@ -283,21 +300,44 @@ std::string ClassGenerator::header_include_directive()
 
 std::string ClassGenerator::dependency_include_directives()
 {
+   // result data
    std::stringstream result;
-
    std::set<std::string> symbol_dependency_header_directives;
    std::set<std::string> undefined_symbols;
 
+
+   // gather all the symbols into a single list
    std::set<std::string> present_symbols;
-   for (auto &attribute_property : cpp_class.get_attribute_properties()) present_symbols.insert(attribute_property.datatype);
-   for (auto &parent_class_properties : cpp_class.get_parent_classes_properties()) present_symbols.insert(parent_class_properties.get_class_name());
+
+   // gather symbols of the class's attributes
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+   {
+      present_symbols.insert(attribute_property.datatype);
+   }
+   // gather symbols of the parent classes
+   for (auto &parent_class_properties : cpp_class.get_parent_classes_properties())
+   {
+      present_symbols.insert(parent_class_properties.get_class_name());
+   }
+   // gather symbols from function signatures
    for (auto &function : cpp_class.get_functions())
    {
       present_symbols.insert(function.get_type());
       for (auto &parameter : function.get_signature()) present_symbols.insert(parameter.get_type());
    }
 
+
+   // atomize the dependencies
+   std::set<std::string> atomized_symbols;
    for (auto &present_symbol : present_symbols)
+   {
+      std::vector<std::string> symbol_atoms = Blast::DependencySymbolAtomizer(present_symbol).atomize();
+      for (auto &symbol_atom : symbol_atoms) atomized_symbols.insert(symbol_atom);
+   }
+
+
+   // look for undefined symbols
+   for (auto &present_symbol : atomized_symbols)
    {
       bool found = false;
       for (auto &individual_symbol_dependencies : cpp_class.get_symbol_dependencies())
@@ -317,11 +357,14 @@ std::string ClassGenerator::dependency_include_directives()
       if (!found) undefined_symbols.insert(present_symbol);
    }
 
+
    if (!undefined_symbols.empty())
    {
       std::stringstream error_message;
       error_message << "When consolidating dependencies for:" << std::endl
-                    << "  " << cpp_class.get_class_name() << std::endl
+                    << std::endl
+                    << "  " << get_class_name_with_namespaces() << std::endl
+                    << std::endl
                     << "There are undefined symbols for datatypes [ ";
       for (auto &undefined_symbol : undefined_symbols) error_message << "\"" << undefined_symbol << "\", ";
       error_message << " ]";
@@ -333,6 +376,22 @@ std::string ClassGenerator::dependency_include_directives()
       error_message << cpp_class.get_class_name() << " appears to be missing the following dependencies:" << std::endl;
       error_message << std::endl;
       for (auto &undefined_symbol : undefined_symbols) error_message << "  - " << undefined_symbol << std::endl;
+
+      error_message << std::endl;
+      for (auto &undefined_symbol : undefined_symbols)
+      {
+         std::string symbol = undefined_symbol;
+         std::string header = undefined_symbol;
+         __replace(header, "::", "/");
+         header += ".hpp";
+
+         if (symbol == "ALLEGRO_BITMAP") header = "allegro5/allegro.h";
+         if (symbol == "ALLEGRO_FONT") header = "allegro5/allegro_font.h";
+         if (symbol == "ALLEGRO_DISPLAY") header = "allegro5/allegro.h";
+
+         error_message << "  - symbol: " << undefined_symbol << std::endl;
+         error_message << "    headers: [ " << header << " ]" << std::endl;
+      }
 
       error_message << std::endl;
       error_message << std::endl;

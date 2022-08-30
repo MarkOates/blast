@@ -226,6 +226,8 @@ dependencies:
     headers: [ string, fstream, streambuf ]
   - symbol: std::vector<Quizes::MultiplexQuestion>
     headers: [ vector, Quizes/MultiplexQuestion.hpp ]
+  - symbol: Quizes::MultiplexQuestion
+    headers: [ Quizes/MultiplexQuestion.hpp ]
   - symbol: Blast::String::Trimmer
     headers: [ Blast/String/Trimmer.hpp ]
   - symbol: Quizes::MultiplexSheetLoader

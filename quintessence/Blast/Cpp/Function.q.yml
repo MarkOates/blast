@@ -66,4 +66,7 @@ dependencies:
 
   - symbol: std::vector<Blast::Cpp::FunctionArgument>
     headers: [ vector, Blast/Cpp/FunctionArgument.hpp ]
+  - symbol: Blast::Cpp::FunctionArgument
+    headers: [ Blast/Cpp/FunctionArgument.hpp ]
+
 

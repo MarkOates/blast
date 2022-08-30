@@ -237,33 +237,41 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
 
 YAML::Node default_dependencies()
 {
+// Consider Adding
+// - symbol: std::function
+//   headers: [ functional ]
+// - symbol: std::count
+//   headers: [ algorithm ]
+
+
+// issues:
+//- symbol: unsigned int
+
+
    std::string default_deps = R"END(
 - symbol: int
-- symbol: unsigned int
 - symbol: intptr_t
 - symbol: void
 - symbol: float
 - symbol: double
 - symbol: bool
 - symbol: char
+- symbol: std::pair
+  headers: [ 'utility' ]
+- symbol: std::tuple
+  headers: [ 'tuple' ]
+- symbol: std::vector
+  headers: [ 'vector' ]
+- symbol: std::map
+  headers: [ 'map' ]
+- symbol: std::set
+  headers: [ 'set' ]
 - symbol: std::string
   headers: [ 'string' ]
 - symbol: int32_t
   headers: [ 'cstdint' ]
 - symbol: uint32_t
   headers: [ 'cstdint' ]
-- symbol: std::vector<std::string>
-  headers: [ 'vector', 'string' ]
-- symbol: std::map<std::string, std::string>
-  headers: [ 'map', 'string' ]
-- symbol: std::map<int, std::string>
-  headers: [ 'map', 'string' ]
-- symbol: std::map<std::string, int>
-  headers: [ 'map', 'string' ]
-- symbol: std::vector<int>
-  headers: [ 'vector', ]
-- symbol: std::set<std::string>
-  headers: [ 'set', 'string', ]
 - symbol: std::cout
   headers: [ 'iostream' ]
 - symbol: std::cerr
@@ -275,6 +283,20 @@ YAML::Node default_dependencies()
 - symbol: std::stringstream
   headers: [ 'sstream' ]
    )END";
+
+// The following have been removed now that dependency atomization is in effect:
+//- symbol: std::vector<std::string>
+  //headers: [ 'vector', 'string' ]
+//- symbol: std::map<std::string, std::string>
+  //headers: [ 'map', 'string' ]
+//- symbol: std::map<int, std::string>
+  //headers: [ 'map', 'string' ]
+//- symbol: std::map<std::string, int>
+  //headers: [ 'map', 'string' ]
+//- symbol: std::vector<int>
+  //headers: [ 'vector', ]
+//- symbol: std::set<std::string>
+  //headers: [ 'set', 'string', ]
 
    return YAML::Load(default_deps);
 }
@@ -809,8 +831,6 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
    )
 {
    std::vector<Blast::Cpp::SymbolDependencies> result;
-
-   std::
 
    for (auto &dependency_symbol : dependency_symbols)
    {

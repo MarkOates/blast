@@ -28,6 +28,8 @@ namespace Blast
          std::vector<std::string> function_declaration_elements(int indent_level=0);
          std::vector<std::string> function_definition_elements(int indent_level=0);
 
+         std::string get_class_name_with_namespaces();
+
          std::string private_scope_specifier(int indent_level=0);
          std::string public_scope_specifier(int indent_level=0);
          std::string protected_scope_specifier(int indent_level=0);
