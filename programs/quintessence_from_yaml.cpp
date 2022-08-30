@@ -823,7 +823,7 @@ std::vector<std::string> extract_function_body_symbol_dependency_symbols(YAML::N
 }
 
 
-
+#include <Blast/DependencySymbolAtomizer.hpp>
 std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(
       std::vector<std::string> dependency_symbols,
       std::vector<Blast::Cpp::SymbolDependencies> &known_listed_dependencies,
@@ -832,7 +832,20 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
 {
    std::vector<Blast::Cpp::SymbolDependencies> result;
 
+   Blast::DependencySymbolAtomizer atomizer;
+   std::vector<std::string> atomic_dependency_symbols;
    for (auto &dependency_symbol : dependency_symbols)
+   {
+      std::vector<std::string> atomized_dependency_atoms = Blast::DependencySymbolAtomizer(dependency_symbol).atomize();
+      for (auto &atomized_dependency_atom : atomized_dependency_atoms)
+      {
+         atomic_dependency_symbols.push_back(atomized_dependency_atom);
+      }
+   }
+   
+
+   //for (auto &dependency_symbol : dependency_symbols)
+   for (auto &dependency_symbol : atomic_dependency_symbols)
    {
       bool found = false;
       for (auto &known_listed_dependency : known_listed_dependencies)
