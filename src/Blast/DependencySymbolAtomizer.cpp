@@ -33,18 +33,29 @@ std::string DependencySymbolAtomizer::get_dependency_symbol() const
 
 std::vector<std::string> DependencySymbolAtomizer::atomize()
 {
-   std::vector<std::string> result;
-
    std::string possibly_composite_dep = dependency_symbol;
    std::vector<char> chars_to_replace = { ',', '>', '<', '&', '*' };
+
+   // replace the chars
    for (auto &char_to_replace : chars_to_replace)
    {
       std::replace(possibly_composite_dep.begin(), possibly_composite_dep.end(), char_to_replace, ' ');
    }
-   std::vector<std::string> tokenized_deps = Blast::StringSplitter(possibly_composite_dep, ' ').split();
-   return tokenized_deps;
 
-   return result;
+   // split it into tokens
+   std::vector<std::string> tokenized_deps = Blast::StringSplitter(possibly_composite_dep, ' ').split();
+
+   // erase the empty tokens
+   for (int i=0; i<tokenized_deps.size(); i++)
+   {
+      if (tokenized_deps[i].empty())
+      {
+         tokenized_deps.erase(tokenized_deps.begin()+i);
+         i--;
+      }
+   }
+
+   return tokenized_deps;
 }
 } // namespace Blast
 

@@ -13,7 +13,15 @@ TEST(Blast_DependencySymbolAtomizerTest, can_be_created_without_blowing_up)
 TEST(Blast_DependencySymbolAtomizerTest, atomize__will_split_composite_dependency_into_discreet_dependencies)
 {
    std::vector<std::pair<std::string, std::vector<std::string>>> test_composite_dependencies_and_their_atoms = {
-     { "std::vector<std::string>", { "std::vector", "std::string" } },
+      { "std::vector<std::string>",
+         { "std::vector", "std::string" }
+      },
+      { "std::map<std::string, std::vector<Blast::SomeReference&>>",
+         { "std::map", "std::string", "std::vector", "Blast::SomeReference" }
+      },
+      { "char*",
+         { "char", }
+      },
    };
 
    for (auto &test_data : test_composite_dependencies_and_their_atoms)
