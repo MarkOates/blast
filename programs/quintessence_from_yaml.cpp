@@ -243,9 +243,13 @@ YAML::Node default_dependencies()
 // - symbol: std::count
 //   headers: [ algorithm ]
 
+
+// issues:
+//- symbol: unsigned int
+
+
    std::string default_deps = R"END(
 - symbol: int
-- symbol: unsigned int
 - symbol: intptr_t
 - symbol: void
 - symbol: float
