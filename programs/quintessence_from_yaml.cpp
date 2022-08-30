@@ -802,7 +802,7 @@ std::vector<std::string> extract_function_body_symbol_dependency_symbols(YAML::N
 
 
 
-std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(std::vector<std::string> dependency_symbols, std::vector<Blast::Cpp::SymbolDependencies> &known_listed_dependencies)
+std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(std::vector<std::string> dependency_symbols, std::vector<Blast::Cpp::SymbolDependencies> &known_listed_dependencies, std::string filename)
 {
    std::vector<Blast::Cpp::SymbolDependencies> result;
 
@@ -821,7 +821,7 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
       if (!found)
       {
          std::stringstream error_message;
-         error_message << "Could not find " << dependency_symbol << " dependency from dependency_symbols";
+         error_message << "In " << filename << ": error: Could not find " << dependency_symbol << " dependency from dependency_symbols";
          explode("consolidate_function_body_symbol_dependencies", error_message.str());
       }
    }
@@ -920,7 +920,8 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
    std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(
          function_body_symbol_dependencies__and__per_function_dependency_symbols,
-         symbol_dependencies
+         symbol_dependencies,
+         quintessence_filename
       );
 
 
