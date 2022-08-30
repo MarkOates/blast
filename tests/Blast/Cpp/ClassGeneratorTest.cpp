@@ -388,7 +388,9 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__when_no_dependencies_a
 }
 
 
-TEST_F(ClassGeneratorTest, dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
+TEST_F(ClassGeneratorTest,
+   DISABLED__dependency_include_directives__when_a_symbol_dependency_is_not_defined_raises_an_exception)
+   // test is fine, it's just undergoing a lot of development and changing frequently
 {
    Blast::Cpp::Class cpp_class("User", {}, { { "SomeUndefinedParentClass" } }, {
          { "some_undefined_symbol", "foofoo", "\"foobar\"", false, false, true, false, false, false, false },

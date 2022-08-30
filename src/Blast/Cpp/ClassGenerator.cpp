@@ -378,6 +378,15 @@ std::string ClassGenerator::dependency_include_directives()
       for (auto &undefined_symbol : undefined_symbols) error_message << "  - " << undefined_symbol << std::endl;
 
       error_message << std::endl;
+      for (auto &undefined_symbol : undefined_symbols)
+      {
+         error_message << "  - symbol: " << undefined_symbol << std::endl;
+         std::string sym = undefined_symbol;
+         __replace(sym, "::", "/");
+         error_message << "    headers: [ " << sym << ".hpp ]" << std::endl;
+      }
+
+      error_message << std::endl;
       error_message << std::endl;
 
       throw std::runtime_error(error_message.str());
