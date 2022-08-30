@@ -1,0 +1,24 @@
+properties:
+
+
+  - name: dependency_symbol
+    type: std::string
+    init_with: '""'
+    constructor_arg: true
+    getter: true
+    setter: true
+
+
+functions:
+
+
+  - name: atomize
+    type: std::vector<std::string>
+    body: |
+      std::vector<std::string> result;
+
+      return { "vector", "string" };
+
+      return result;
+
+
