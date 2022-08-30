@@ -382,7 +382,9 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__when_a_symbol_dependen
    );
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
-   std::string expected_error_message = "Undefined symbol for datatypes [ \"SomeUndefinedParentClass\", "
+   std::string expected_error_message = "When consolidating dependencies for:\n"
+                                        "  User\n"
+                                        "There are undefined symbols for datatypes [ \"SomeUndefinedParentClass\", "
                                         "\"some_undefined_symbol\",  ]";
 
    std::string expected_appended_error_message = "\n\nUser appears to be missing the following dependencies:\n"

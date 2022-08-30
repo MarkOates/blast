@@ -5,6 +5,7 @@
 #include <Blast/Cpp/FunctionFormatter.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <set>
+#include <unordered_set>
 #include <sstream>
 #include <iostream>
 
@@ -319,7 +320,9 @@ std::string ClassGenerator::dependency_include_directives()
    if (!undefined_symbols.empty())
    {
       std::stringstream error_message;
-      error_message << "Undefined symbol for datatypes [ ";
+      error_message << "When consolidating dependencies for:" << std::endl
+                    << "  " << cpp_class.get_class_name() << std::endl
+                    << "There are undefined symbols for datatypes [ ";
       for (auto &undefined_symbol : undefined_symbols) error_message << "\"" << undefined_symbol << "\", ";
       error_message << " ]";
 

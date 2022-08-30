@@ -802,9 +802,15 @@ std::vector<std::string> extract_function_body_symbol_dependency_symbols(YAML::N
 
 
 
-std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(std::vector<std::string> dependency_symbols, std::vector<Blast::Cpp::SymbolDependencies> &known_listed_dependencies, std::string filename)
+std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(
+      std::vector<std::string> dependency_symbols,
+      std::vector<Blast::Cpp::SymbolDependencies> &known_listed_dependencies,
+      std::string filename
+   )
 {
    std::vector<Blast::Cpp::SymbolDependencies> result;
+
+   std::
 
    for (auto &dependency_symbol : dependency_symbols)
    {
