@@ -731,7 +731,7 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
 
 
 
-std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::Node &source)
+std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::Node &source, std::string filename)
 {
    std::string this_func_name = "extract_symbol_dependencies";
    const std::string DEPENDENCIES = "dependencies";
@@ -746,7 +746,9 @@ std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::No
       source_symbol_dependencies.push_back(default_deps[i]);
    }
 
-   validate(source_symbol_dependencies.IsSequence(), this_func_name, "Expected \"dependencies\" to be of a YAML Sequence type.");
+   std::stringstream error_message;
+   error_message << "In " << filename << ": error: " << "Expected \"dependencies\" to be of a YAML Sequence type.";
+   validate(source_symbol_dependencies.IsSequence(), this_func_name, error_message.str());
 
    for (std::size_t i=0;i<source_symbol_dependencies.size();i++)
    //for (YAML::const_iterator it=source_symbol_dependencies.begin(); it!=source_symbol_dependencies.end(); ++it)
@@ -837,7 +839,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
    std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> functions_and_dependencies = extract_functions(source, class_name);
-   std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source);
+   std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
 
 
