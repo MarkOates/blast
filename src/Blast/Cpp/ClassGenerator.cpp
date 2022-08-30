@@ -3,6 +3,7 @@
 #include <Blast/Cpp/ClassGenerator.hpp>
 
 #include <Blast/Cpp/FunctionFormatter.hpp>
+#include <Blast/DependencySymbolAtomizer.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <set>
 #include <unordered_set>
@@ -307,6 +308,15 @@ std::string ClassGenerator::dependency_include_directives()
    {
       present_symbols.insert(function.get_type());
       for (auto &parameter : function.get_signature()) present_symbols.insert(parameter.get_type());
+   }
+
+
+   // atomize the dependencies
+   std::set<std::string> atomized_symbols;
+   for (auto &present_symbol : present_symbols)
+   {
+      std::vector<std::string> symbol_atoms = Blast::DependencySymbolAtomizer(present_symbol).atomize();
+      for (auto &symbol_atom : symbol_atoms) atomized_symbols.insert(symbol_atom);
    }
 
 
