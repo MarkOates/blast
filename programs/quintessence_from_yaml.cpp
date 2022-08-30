@@ -39,11 +39,11 @@ public:
    static std::string guard(std::string condition, std::string class_name, std::string function_name, std::string message)
    {
       std::string template_content = R"END(if (!({{CONDITION}}))
-   {
-      std::stringstream error_message;
-      error_message << "{{CLASS_NAME}}" << "::" << "{{FUNCTION_NAME}}" << ": error: " << "{{MESSAGE}}";
-      throw std::runtime_error(error_message.str());
-   })END";
+{
+   std::stringstream error_message;
+   error_message << "{{CLASS_NAME}}" << "::" << "{{FUNCTION_NAME}}" << ": error: " << "{{MESSAGE}}";
+   throw std::runtime_error(error_message.str());
+})END";
 
       std::vector<std::pair<std::string, std::string>> insertion_variables = {
          { "{{CONDITION}}", condition },
