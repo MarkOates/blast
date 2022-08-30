@@ -43,22 +43,22 @@ bool MultiplexSheetLoader::get_loaded() const
 std::vector<Quizes::MultiplexQuestion> MultiplexSheetLoader::get_questions()
 {
    if (!(loaded))
-      {
-         std::stringstream error_message;
-         error_message << "MultiplexSheetLoader" << "::" << "get_questions" << ": error: " << "guard \"loaded\" not met";
-         throw std::runtime_error(error_message.str());
-      }
+   {
+      std::stringstream error_message;
+      error_message << "MultiplexSheetLoader" << "::" << "get_questions" << ": error: " << "guard \"loaded\" not met";
+      throw std::runtime_error(error_message.str());
+   }
    return questions;
 }
 
 bool MultiplexSheetLoader::load()
 {
    if (!((!loaded)))
-      {
-         std::stringstream error_message;
-         error_message << "MultiplexSheetLoader" << "::" << "load" << ": error: " << "guard \"(!loaded)\" not met";
-         throw std::runtime_error(error_message.str());
-      }
+   {
+      std::stringstream error_message;
+      error_message << "MultiplexSheetLoader" << "::" << "load" << ": error: " << "guard \"(!loaded)\" not met";
+      throw std::runtime_error(error_message.str());
+   }
    const int EXPECTED_NUM_COLUMNS = 6;
    std::vector<std::string> lines = Blast::StringSplitter(raw_csv, '\n').split();
    bool discard_first_line = true;

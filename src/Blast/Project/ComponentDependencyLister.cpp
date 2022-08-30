@@ -34,11 +34,11 @@ ComponentDependencyLister::~ComponentDependencyLister()
 std::vector<std::string> ComponentDependencyLister::list_component_dependency_names()
 {
    if (!(component))
-      {
-         std::stringstream error_message;
-         error_message << "ComponentDependencyLister" << "::" << "list_component_dependency_names" << ": error: " << "guard \"component\" not met";
-         throw std::runtime_error(error_message.str());
-      }
+   {
+      std::stringstream error_message;
+      error_message << "ComponentDependencyLister" << "::" << "list_component_dependency_names" << ": error: " << "guard \"component\" not met";
+      throw std::runtime_error(error_message.str());
+   }
    std::vector<std::string> results;
 
    // TODO: move this to guard
@@ -80,11 +80,11 @@ std::vector<std::string> ComponentDependencyLister::list_component_dependency_na
 std::string ComponentDependencyLister::get_component_quintessence_full_filename()
 {
    if (!(component))
-      {
-         std::stringstream error_message;
-         error_message << "ComponentDependencyLister" << "::" << "get_component_quintessence_full_filename" << ": error: " << "guard \"component\" not met";
-         throw std::runtime_error(error_message.str());
-      }
+   {
+      std::stringstream error_message;
+      error_message << "ComponentDependencyLister" << "::" << "get_component_quintessence_full_filename" << ": error: " << "guard \"component\" not met";
+      throw std::runtime_error(error_message.str());
+   }
    std::string project_root = component->get_project_root();
    std::string component_name = component->get_name();
    Blast::ProjectComponentFileTypes::project_file_type_t type = Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE;
