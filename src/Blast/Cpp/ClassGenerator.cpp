@@ -380,10 +380,17 @@ std::string ClassGenerator::dependency_include_directives()
       error_message << std::endl;
       for (auto &undefined_symbol : undefined_symbols)
       {
+         std::string symbol = undefined_symbol;
+         std::string header = undefined_symbol;
+         __replace(header, "::", "/");
+         header += ".hpp";
+
+         if (symbol == "ALLEGRO_BITMAP") header = "allegro5/allegro.h";
+         if (symbol == "ALLEGRO_FONT") header = "allegro5/allegro_font.h";
+         if (symbol == "ALLEGRO_DISPLAY") header = "allegro5/allegro.h";
+
          error_message << "  - symbol: " << undefined_symbol << std::endl;
-         std::string sym = undefined_symbol;
-         __replace(sym, "::", "/");
-         error_message << "    headers: [ " << sym << ".hpp ]" << std::endl;
+         error_message << "    headers: [ " << header << " ]" << std::endl;
       }
 
       error_message << std::endl;
