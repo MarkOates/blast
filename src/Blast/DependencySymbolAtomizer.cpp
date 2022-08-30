@@ -34,7 +34,7 @@ std::string DependencySymbolAtomizer::get_dependency_symbol() const
 std::vector<std::string> DependencySymbolAtomizer::atomize()
 {
    std::string possibly_composite_dep = dependency_symbol;
-   std::vector<char> chars_to_replace = { ',', '>', '<', '&', '*' };
+   std::vector<char> chars_to_replace = { ',', '>', '<', '&', '*', '(', ')' };
 
    // replace the chars
    for (auto &char_to_replace : chars_to_replace)

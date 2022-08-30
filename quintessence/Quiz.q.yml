@@ -44,6 +44,8 @@ dependencies:
 
   - symbol: std::vector<Question>
     headers: [ 'vector', 'Question.hpp' ]
+  - symbol: Question
+    headers: [ Question.hpp ]
   - symbol: std::random_device
     headers: [ 'random' ]
   - symbol: std::mt19937

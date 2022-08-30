@@ -2,6 +2,7 @@
 
 
 #include <string>
+#include <utility>
 
 
 class ProjectComponentBasenameExtractor

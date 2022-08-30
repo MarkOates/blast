@@ -57,6 +57,8 @@ functions:
       - std::regex_error
       - std::runtime_error
 dependencies:
+  - symbol: std::regex_constants::syntax_option_type
+    headers: [ regex ]
   - symbol: std::vector<std::regex_constants::syntax_option_type>
     headers: [ vector, regex ]
   - symbol: std::vector<std::pair<int, int>>

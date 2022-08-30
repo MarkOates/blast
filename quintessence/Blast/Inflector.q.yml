@@ -54,3 +54,7 @@ dependencies:
     headers: [ Blast/RegexMatcher.hpp ]
   - symbol: std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>>
     headers: [ vector, tuple, string, regex ]
+  - symbol: std::regex_constants::syntax_option_type
+    headers: [ regex ]
+
+

@@ -58,6 +58,8 @@ function_body_symbol_dependencies:
   - fgets
   - std::runtime_error
 dependencies:
+  - symbol: std::function
+    headers: [ functional ]
   - symbol: std::function<void(std::string)>
     headers: [ 'functional', 'string' ]
   - symbol: void*
