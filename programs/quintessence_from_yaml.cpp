@@ -810,8 +810,6 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
 {
    std::vector<Blast::Cpp::SymbolDependencies> result;
 
-   std::
-
    for (auto &dependency_symbol : dependency_symbols)
    {
       bool found = false;

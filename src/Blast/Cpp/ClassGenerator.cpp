@@ -321,7 +321,7 @@ std::string ClassGenerator::dependency_include_directives()
 
 
    // look for undefined symbols
-   for (auto &present_symbol : present_symbols)
+   for (auto &present_symbol : atomized_symbols)
    {
       bool found = false;
       for (auto &individual_symbol_dependencies : cpp_class.get_symbol_dependencies())

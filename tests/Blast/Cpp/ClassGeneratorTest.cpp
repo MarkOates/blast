@@ -317,7 +317,8 @@ TEST_F(ClassGeneratorTest, header_include_directive__on_a_class_with_no_namespac
 }
 
 
-TEST_F(ClassGeneratorTest, dependency_include_directives__returns_a_list_of_directives_for_the_existing_dependencies_for_a_classes_properties)
+TEST_F(ClassGeneratorTest,
+   dependency_include_directives__returns_a_list_of_directives_for_the_existing_dependencies_for_a_classes_properties)
 {
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = {
       { "std::string", { "string" } },
@@ -343,12 +344,16 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__includes_the_list_of_d
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = {
       { "ActionBase", { "Fullscore/Action/ActionBase.hpp" } },
       { "Scriptable<Ascend>", { "Blast/Scriptable.hpp" } },
+      { "Scriptable", { "Blast/Scriptable.hpp" } },
+      { "Ascend", { "MyDomain/Ascend.hpp" } },
    };
 
    Blast::Cpp::Class cpp_class("Ascend", {}, { { "ActionBase" }, { "Scriptable<Ascend>" } }, {}, {}, symbol_dependencies);
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
-   std::string expected_dependency_directives = "#include <Blast/Scriptable.hpp>\n#include <Fullscore/Action/ActionBase.hpp>\n";
+   std::string expected_dependency_directives = "#include <Blast/Scriptable.hpp>\n"
+                                                "#include <Fullscore/Action/ActionBase.hpp>\n"
+                                                "#include <MyDomain/Ascend.hpp>\n";
    ASSERT_EQ(expected_dependency_directives, class_generator.dependency_include_directives());
 }
 
