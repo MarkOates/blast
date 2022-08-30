@@ -31,6 +31,17 @@ void validate(bool value, std::string location, std::string error_message)
 }
 
 
+std::string __replace(std::string str, std::string from, std::string to)
+{
+   size_t start_pos = 0;
+   while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+      str.replace(start_pos, from.length(), to);
+      start_pos += to.length();
+   }
+   return str;
+}
+
+
 
 #include <Blast/TemplatedFile.hpp>
 class GuardCodeCreator
@@ -824,6 +835,8 @@ std::vector<std::string> extract_function_body_symbol_dependency_symbols(YAML::N
 
 
 #include <Blast/DependencySymbolAtomizer.hpp>
+#include <Blast/StringJoiner.hpp>
+
 std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(
       std::vector<std::string> dependency_symbols,
       std::vector<Blast::Cpp::SymbolDependencies> &known_listed_dependencies,
@@ -845,6 +858,7 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
    
 
    //for (auto &dependency_symbol : dependency_symbols)
+   std::vector<std::string> not_found_dependencies;
    for (auto &dependency_symbol : atomic_dependency_symbols)
    {
       bool found = false;
@@ -859,11 +873,40 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
       }
       if (!found)
       {
-         std::stringstream error_message;
-         error_message << "In " << filename << ": error: Could not find " << dependency_symbol << " dependency from dependency_symbols";
-         explode("consolidate_function_body_symbol_dependencies", error_message.str());
+         not_found_dependencies.push_back(dependency_symbol);
       }
    }
+
+   if (not_found_dependencies.size() >= 1)
+   {
+      std::stringstream error_message;
+      error_message << std::endl
+                    << "In:\n"
+                    << "\n"
+                    << filename << "\n"
+                    << "\n"
+                    << "===============================\n\n"
+                    << " error: Could not find [ " << Blast::StringJoiner(not_found_dependencies, ", ").join() << "] dependency(s) from dependency_symbols.\n"
+                    << "===============================\n\n";
+       for (auto &not_found_dependency : not_found_dependencies)
+      {
+         std::string dependency = not_found_dependency;
+         std::string headers = __replace(not_found_dependency, "::", "/") + ".hpp";
+
+         if (dependency == "ALLEGRO_BITMAP") headers = "allegro5/allegro.h";
+         if (dependency == "ALLEGRO_FONT") headers = "allegro5/allegro_font.h";
+         if (dependency == "ALLEGRO_DISPLAY") headers = "allegro5/allegro_display.h";
+         if (dependency == "StageInterface") headers = "Hexagon/StageInterface.hpp";
+         if (dependency == "std::function") headers = "functional";
+
+         error_message
+            << "  - symbol: " << dependency << "\n"
+            << "    headers: [ " << headers << " ]\n";
+      }
+
+      explode("consolidate_function_body_symbol_dependencies", error_message.str());
+   }
+
 
    return result;
 }
