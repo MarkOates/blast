@@ -2,7 +2,6 @@
 
 #include <Quizes/MultiplexQuestionCollectionHelper.hpp>
 #include <Blast/String/Trimmer.hpp>
-#include <Blast/String/Trimmer.hpp>
 
 
 namespace Quizes

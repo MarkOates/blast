@@ -3,7 +3,6 @@
 #include <Blast/CamelCaseToUnderscoreConverter.hpp>
 #include <algorithm>
 #include <cctype>
-#include <cctype>
 
 
 namespace Blast

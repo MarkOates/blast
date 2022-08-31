@@ -2,10 +2,8 @@
 
 #include <Quizes/MultiplexQuizRunner.hpp>
 #include <Quizes/MultiplexSheetLoader.hpp>
-#include <Quizes/MultiplexSheetLoader.hpp>
 #include <Quizes/MultiplexQuestionCollectionHelper.hpp>
 #include <iostream>
-#include <sstream>
 #include <sstream>
 #include <fstream>
 #include <string>

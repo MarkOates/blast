@@ -7,9 +7,7 @@
 #include <Blast/Project/Component.hpp>
 #include <ctime>
 #include <algorithm>
-#include <algorithm>
 #include <Blast/Project/ComponentBasenameExtractor.hpp>
-#include <algorithm>
 #include <algorithm>
 
 

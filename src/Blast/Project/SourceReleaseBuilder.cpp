@@ -2,8 +2,6 @@
 
 #include <Blast/Project/SourceReleaseBuilder.hpp>
 #include <fstream>
-#include <fstream>
-#include <fstream>
 #include <iostream>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>

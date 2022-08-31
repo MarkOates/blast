@@ -3,7 +3,6 @@
 #include <Blast/CamelCaseToConstantConverter.hpp>
 #include <algorithm>
 #include <cctype>
-#include <cctype>
 
 
 namespace Blast

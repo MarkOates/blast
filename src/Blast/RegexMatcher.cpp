@@ -2,10 +2,6 @@
 
 #include <Blast/RegexMatcher.hpp>
 #include <regex>
-#include <regex>
-#include <regex>
-#include <regex>
-#include <regex>
 
 
 namespace Blast
