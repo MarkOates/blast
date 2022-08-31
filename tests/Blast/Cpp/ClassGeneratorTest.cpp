@@ -549,6 +549,54 @@ TEST_F(ClassGeneratorTest, destructor_declaration__returns_the_expected_string)
 }
 
 
+TEST_F(ClassGeneratorTest,
+   when_multiple_identical_dependencies_are_present__will_only_render_one_of_them)
+{
+   std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = {
+      { "std::string", { "string" } },
+      { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
+   };
+
+   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {
+      Blast::Cpp::Function("std::string", "unnamed_function",         {}, "return;", false, false, false, false, true),
+      Blast::Cpp::Function("std::string", "another_unnamed_function", {}, "return;", false, false, false, true, false),
+   }, symbol_dependencies);
+
+   Blast::Cpp::ClassGenerator cpp_class_generator(cpp_class);
+   std::string expected_dependency_directives = "#include <string>\n";
+   ASSERT_EQ(expected_dependency_directives, cpp_class_generator.dependency_include_directives());
+}
+
+
+TEST_F(ClassGeneratorTest,
+   function_body_dependency_include_directives__when_multiple_identical_dependencies_are_present__will_only_render_one_of_them)
+{
+   std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = {
+      { "std::string", { "string" } },
+      { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
+   };
+
+   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = {
+      { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
+      { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
+   };
+
+   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {
+      Blast::Cpp::Function("std::string", "unnamed_function",         {}, "return;", false, false, false, false, true),
+      Blast::Cpp::Function("std::string", "another_unnamed_function", {}, "return;", false, false, false, true, false),
+   }, symbol_dependencies, function_body_symbol_dependencies );
+
+   // will need to use (to copy set to vector)
+   //std::copy(input.begin(), input.end(), std::back_inserter(output));
+   
+   // HERE
+   Blast::Cpp::ClassGenerator cpp_class_generator(cpp_class);
+   std::string expected_dependency_directives = "#include <Blast/DiceRoller.hpp>";
+   ASSERT_EQ(expected_dependency_directives, cpp_class_generator.function_body_dependency_include_directives());
+}
+
+
+
 TEST_F(ClassGeneratorTest, destructor_declaration__when_virtual_or_pure_virtual_functions_are_present_on_the_class__returns_the_expected_virtual_destructor_string)
 {
    Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {

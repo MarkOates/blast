@@ -263,7 +263,12 @@ std::string ClassGenerator::class_declaration_opener(int indent_level)
 std::string ClassGenerator::function_body_dependency_include_directives(int indent_level)
 {
    std::stringstream result;
-   return __join(function_body_dependency_include_directive_elements(), "\n");
+   std::vector<std::string> elements = function_body_dependency_include_directive_elements();
+
+   auto last = std::unique(elements.begin(), elements.end());
+   elements.erase(last, elements.end());
+
+   return __join(elements, "\n");
    return "";
 }
 
