@@ -1,14 +1,14 @@
 
 
 #include <Blast/Project/ComponentLister.hpp>
-#include <Blast/ShellCommandExecutorWithCallback.hpp>
-#include <sstream>
-#include <Blast/StringSplitter.hpp>
+
 #include <Blast/Project/Component.hpp>
-#include <ctime>
-#include <algorithm>
 #include <Blast/Project/ComponentBasenameExtractor.hpp>
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
+#include <Blast/StringSplitter.hpp>
 #include <algorithm>
+#include <ctime>
+#include <sstream>
 
 
 namespace Blast
@@ -165,6 +165,8 @@ std::vector<std::string> ComponentLister::components()
 
    return result;
 }
+
+
 } // namespace Project
 } // namespace Blast
 

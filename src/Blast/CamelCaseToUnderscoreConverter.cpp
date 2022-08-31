@@ -1,6 +1,7 @@
 
 
 #include <Blast/CamelCaseToUnderscoreConverter.hpp>
+
 #include <algorithm>
 #include <cctype>
 
@@ -40,6 +41,8 @@ std::string CamelCaseToUnderscoreConverter::convert_to_underscores()
 
    return str;
 }
+
+
 } // namespace Blast
 
 

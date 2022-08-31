@@ -6,6 +6,7 @@
 
 
 
+
 ProjectFilenameGenerator::ProjectFilenameGenerator(std::string basename, bool underscores)
    : basename(basename)
    , underscores(underscores)
@@ -63,5 +64,7 @@ std::string ProjectFilenameGenerator::generate_example_binary()
 {
    return std::string("bin/examples/") + basename + (underscores ? "_example.cpp" : "Example.cpp");
 }
+
+
 
 

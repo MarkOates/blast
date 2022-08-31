@@ -6,6 +6,7 @@
 
 
 
+
 ProjectComponentBasenameExtractor::ProjectComponentBasenameExtractor(std::string filename)
    : filename(filename)
 {
@@ -109,5 +110,7 @@ std::pair<std::string, std::string> ProjectComponentBasenameExtractor::extract_c
       return std::make_pair("not identifiable", "");
    }
 }
+
+
 
 

@@ -1,10 +1,11 @@
 
 
 #include <Blast/DirectoryCreator.hpp>
-#include <sys/stat.h>
+
+#include <Blast/DirectoryExistenceChecker.hpp>
 #include <sstream>
 #include <string>
-#include <Blast/DirectoryExistenceChecker.hpp>
+#include <sys/stat.h>
 
 
 namespace Blast
@@ -48,6 +49,8 @@ bool DirectoryCreator::create()
    }
    return true;
 }
+
+
 } // namespace Blast
 
 

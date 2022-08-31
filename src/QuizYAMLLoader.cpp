@@ -6,6 +6,7 @@
 
 
 
+
 QuizYAMLLoader::QuizYAMLLoader(Quiz* quiz, std::string yaml_filename)
    : quiz(quiz)
    , yaml_filename(yaml_filename)
@@ -66,5 +67,7 @@ std::string QuizYAMLLoader::get_type_string(YAML::Node node)
    }
    return "[NO_TYPE_DEFINED_ERROR]";
 }
+
+
 
 

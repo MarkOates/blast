@@ -1,6 +1,7 @@
 
 
 #include <NcursesArt/Rails/ComponentFilenameGenerator.hpp>
+
 #include <sstream>
 
 
@@ -33,6 +34,8 @@ std::string ComponentFilenameGenerator::get_model_filename()
    result << "app/models/" << component_basename << ".rb"; 
    return result.str();
 }
+
+
 } // namespace Rails
 } // namespace NcursesArt
 

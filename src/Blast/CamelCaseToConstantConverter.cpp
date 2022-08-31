@@ -1,6 +1,7 @@
 
 
 #include <Blast/CamelCaseToConstantConverter.hpp>
+
 #include <algorithm>
 #include <cctype>
 
@@ -40,6 +41,8 @@ std::string CamelCaseToConstantConverter::convert_to_constant()
 
    return str;
 }
+
+
 } // namespace Blast
 
 

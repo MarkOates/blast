@@ -1,6 +1,7 @@
 
 
 #include <Blast/StringUpcaser.hpp>
+
 #include <algorithm>
 #include <cctype>
 
@@ -34,6 +35,8 @@ std::string StringUpcaser::upcase()
    );
    return result;
 }
+
+
 } // namespace Blast
 
 

@@ -4,6 +4,7 @@
 
 
 
+
 namespace Blast
 {
 
@@ -22,6 +23,8 @@ std::string BinaryObfusicator::run()
 {
    return "Hello World!";
 }
+
+
 } // namespace Blast
 
 

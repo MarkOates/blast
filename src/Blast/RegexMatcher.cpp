@@ -1,6 +1,7 @@
 
 
 #include <Blast/RegexMatcher.hpp>
+
 #include <regex>
 
 
@@ -76,6 +77,8 @@ std::vector<std::pair<int, int>> RegexMatcher::get_match_info()
 
    return results;
 }
+
+
 } // namespace Blast
 
 

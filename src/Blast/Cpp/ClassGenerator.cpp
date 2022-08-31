@@ -281,6 +281,7 @@ std::string ClassGenerator::function_body_dependency_include_directives(int inde
    std::stringstream result;
    std::vector<std::string> elements = function_body_dependency_include_directive_elements();
 
+   std::sort(elements.begin(), elements.end());
    auto last = std::unique(elements.begin(), elements.end());
    elements.erase(last, elements.end());
 
@@ -648,6 +649,7 @@ std::string ClassGenerator::generate_source_file_content()
 
 CLASS_HEADER_INCLUDE_DIRECTIVE
 
+
 FUNCTION_BODY_DEPENDENCY_INCLUDE_DIRECTIVES
 
 
@@ -665,6 +667,8 @@ SETTER_FUNCTIONS
 GETTER_FUNCTIONS
 GETTER_REF_FUNCTIONS
 FUNCTION_DEFINITIONS
+
+
 NAMESPACES_CLOSER
 
 )END";

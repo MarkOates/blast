@@ -4,6 +4,7 @@
 
 
 
+
 namespace Blast
 {
 namespace Cpp
@@ -102,6 +103,8 @@ bool Function::get_is_protected() const
 {
    return is_protected;
 }
+
+
 
 
 } // namespace Cpp

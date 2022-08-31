@@ -1,6 +1,7 @@
 
 
 #include <Blast/DependencySymbolAtomizer.hpp>
+
 #include <Blast/StringSplitter.hpp>
 
 
@@ -57,6 +58,8 @@ std::vector<std::string> DependencySymbolAtomizer::atomize()
 
    return tokenized_deps;
 }
+
+
 } // namespace Blast
 
 

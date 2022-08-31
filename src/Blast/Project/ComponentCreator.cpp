@@ -1,6 +1,7 @@
 
 
 #include <Blast/Project/ComponentCreator.hpp>
+
 #include <sstream>
 
 
@@ -35,6 +36,8 @@ std::string ComponentCreator::generate()
 {
    return "Hello World!";
 }
+
+
 } // namespace Project
 } // namespace Blast
 

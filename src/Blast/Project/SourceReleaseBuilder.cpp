@@ -1,19 +1,17 @@
 
 
 #include <Blast/Project/SourceReleaseBuilder.hpp>
-#include <fstream>
-#include <iostream>
+
+#include <Blast/DirectoryCreator.hpp>
+#include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/StringSplitter.hpp>
-#include <Blast/Project/ProjectSymlinkFixer.hpp>
-#include <cstdio>
-#include <sstream>
-#include <cstdio>
-#include <Blast/DirectoryCreator.hpp>
-#include <Blast/ShellCommandExecutorWithCallback.hpp>
-#include <sstream>
 #include <Blast/TimeStamper.hpp>
+#include <cstdio>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 
 namespace Blast
@@ -516,6 +514,8 @@ void SourceReleaseBuilder::generate_source_release()
 
    return;
 }
+
+
 } // namespace Project
 } // namespace Blast
 

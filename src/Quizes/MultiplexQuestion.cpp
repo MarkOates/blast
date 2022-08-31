@@ -4,6 +4,7 @@
 
 
 
+
 namespace Quizes
 {
 
@@ -81,6 +82,8 @@ std::string MultiplexQuestion::get_reference_page() const
 {
    return reference_page;
 }
+
+
 
 
 } // namespace Quizes

@@ -1,6 +1,7 @@
 
 
 #include <StringVectorIntersection.hpp>
+
 #include <algorithm>
 
 
@@ -33,5 +34,7 @@ std::vector<std::string> StringVectorIntersection::intersection()
 
    return result;
 }
+
+
 
 

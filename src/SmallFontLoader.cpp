@@ -1,9 +1,10 @@
 
 
 #include <SmallFontLoader.hpp>
+
 #include <map>
-#include <vector>
 #include <string>
+#include <vector>
 
 
 
@@ -196,5 +197,7 @@ std::map<char, std::vector<std::string>> SmallFontLoader::load()
 
    return letters;
 }
+
+
 
 

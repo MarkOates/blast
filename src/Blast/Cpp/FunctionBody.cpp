@@ -4,6 +4,7 @@
 
 
 
+
 namespace Blast
 {
 namespace Cpp
@@ -44,6 +45,8 @@ std::vector<std::string> FunctionBody::get_dependency_symbols() const
 {
    return dependency_symbols;
 }
+
+
 
 
 } // namespace Cpp

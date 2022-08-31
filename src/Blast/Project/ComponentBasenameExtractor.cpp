@@ -4,6 +4,7 @@
 
 
 
+
 namespace Blast
 {
 namespace Project
@@ -113,6 +114,8 @@ std::pair<std::string, std::string> ComponentBasenameExtractor::extract_componen
       return std::make_pair("not identifiable", "");
    }
 }
+
+
 } // namespace Project
 } // namespace Blast
 

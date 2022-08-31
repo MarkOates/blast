@@ -1,6 +1,7 @@
 
 
 #include <Quizes/MultiplexQuestionCollectionHelper.hpp>
+
 #include <Blast/String/Trimmer.hpp>
 
 
@@ -40,6 +41,8 @@ std::vector<Quizes::MultiplexQuestion> MultiplexQuestionCollectionHelper::select
    }
    return result;
 }
+
+
 } // namespace Quizes
 
 

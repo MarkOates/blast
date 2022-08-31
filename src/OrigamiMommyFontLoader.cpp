@@ -1,9 +1,10 @@
 
 
 #include <OrigamiMommyFontLoader.hpp>
+
 #include <map>
-#include <vector>
 #include <string>
+#include <vector>
 
 
 
@@ -448,5 +449,7 @@ std::map<char, std::vector<std::string>> OrigamiMommyFontLoader::load()
 
    return letters;
 }
+
+
 
 

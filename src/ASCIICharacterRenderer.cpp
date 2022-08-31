@@ -1,10 +1,11 @@
 
 
 #include <ASCIICharacterRenderer.hpp>
-#include <ncurses.h>
+
 #include <map>
-#include <vector>
+#include <ncurses.h>
 #include <string>
+#include <vector>
 
 
 
@@ -48,5 +49,7 @@ int ASCIICharacterRenderer::draw_character(std::map<char, std::vector<std::strin
 
    return letter_width/3;               // I have *no* idea why, but the letters have a width 3x as long.
 }
+
+
 
 

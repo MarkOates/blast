@@ -1,8 +1,9 @@
 
 
 #include <Quiz.hpp>
-#include <random>
+
 #include <algorithm>
+#include <random>
 
 
 
@@ -42,5 +43,7 @@ void Quiz::shuffle_questions()
    std::shuffle(questions.begin(), questions.end(), g);
    std::shuffle(questions.begin(), questions.end(), g);
 }
+
+
 
 

@@ -1,11 +1,12 @@
 
 
 #include <Blast/Inflector.hpp>
+
 #include <Blast/RegexMatcher.hpp>
-#include <vector>
-#include <tuple>
-#include <string>
 #include <regex>
+#include <string>
+#include <tuple>
+#include <vector>
 
 
 namespace Blast
@@ -65,6 +66,8 @@ std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_op
 
    return inflections;
 }
+
+
 } // namespace Blast
 
 

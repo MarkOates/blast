@@ -1,9 +1,10 @@
 
 
 #include <Blast/Build/Celebrator.hpp>
+
+#include <iomanip>
 #include <sstream>
 #include <string>
-#include <iomanip>
 
 
 namespace Blast
@@ -36,6 +37,8 @@ std::string Celebrator::generate_full_width_output_banner(std::string message, i
      ;
    return stream.str();
 }
+
+
 } // namespace Build
 } // namespace Blast
 

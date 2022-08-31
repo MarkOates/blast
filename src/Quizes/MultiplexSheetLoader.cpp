@@ -1,14 +1,12 @@
 
 
 #include <Quizes/MultiplexSheetLoader.hpp>
-#include <stdexcept>
-#include <sstream>
+
 #include <Blast/String/Trimmer.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <Quizes/MultiplexQuestion.hpp>
-#include <stdexcept>
 #include <sstream>
-#include <Blast/String/Trimmer.hpp>
+#include <stdexcept>
 
 
 namespace Quizes
@@ -147,6 +145,8 @@ std::string MultiplexSheetLoader::extract_subject_type(std::string event_or_docu
    throw std::runtime_error("unexpected extraction of extract_subject_type not valid for some reason.");
    return "[error-path]";
 }
+
+
 } // namespace Quizes
 
 

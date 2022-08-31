@@ -4,6 +4,7 @@
 
 
 
+
 namespace Blast
 {
 namespace Project
@@ -31,6 +32,8 @@ std::string ActionCreator::generate_action_name_identifier_constant()
 {
    return "UnnamedAction";
 }
+
+
 } // namespace Project
 } // namespace Blast
 

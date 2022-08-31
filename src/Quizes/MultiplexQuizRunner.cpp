@@ -1,19 +1,19 @@
 
 
 #include <Quizes/MultiplexQuizRunner.hpp>
-#include <Quizes/MultiplexSheetLoader.hpp>
-#include <Quizes/MultiplexQuestionCollectionHelper.hpp>
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
-#include <fstream>
-#include <streambuf>
-#include <ctime>
-#include <random>
-#include <Blast/StringSplitter.hpp>
-#include <Blast/StringJoiner.hpp>
+
 #include <Blast/String/Trimmer.hpp>
+#include <Blast/StringJoiner.hpp>
+#include <Blast/StringSplitter.hpp>
+#include <Quizes/MultiplexQuestionCollectionHelper.hpp>
+#include <Quizes/MultiplexSheetLoader.hpp>
+#include <ctime>
+#include <fstream>
+#include <iostream>
+#include <random>
+#include <sstream>
+#include <streambuf>
+#include <string>
 
 
 namespace Quizes
@@ -181,6 +181,8 @@ std::string MultiplexQuizRunner::trim(std::string str)
 {
    return Blast::String::Trimmer(str).trim();
 }
+
+
 } // namespace Quizes
 
 

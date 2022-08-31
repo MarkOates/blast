@@ -6,6 +6,7 @@
 
 
 
+
 Question::Question(std::string question, std::string image_filename, std::string correct_answer, std::vector<std::string> incorrect_answers)
    : question(question)
    , image_filename(image_filename)
@@ -66,6 +67,8 @@ std::vector<std::string> Question::get_incorrect_answers() const
 {
    return incorrect_answers;
 }
+
+
 
 
 

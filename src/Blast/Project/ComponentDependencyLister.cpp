@@ -1,17 +1,15 @@
 
 
 #include <Blast/Project/ComponentDependencyLister.hpp>
+
 #include <Blast/Project/ComponentLister.hpp>
-#include <sstream>
+#include <Blast/ProjectComponentFileTypes.hpp>
+#include <Blast/ProjectComponentFilenameGenerator.hpp>
 #include <algorithm>
 #include <iostream>
+#include <sstream>
+#include <stdexcept>
 #include <yaml-cpp/yaml.h>
-#include <stdexcept>
-#include <sstream>
-#include <Blast/ProjectComponentFilenameGenerator.hpp>
-#include <Blast/ProjectComponentFileTypes.hpp>
-#include <stdexcept>
-#include <sstream>
 
 
 namespace Blast
@@ -92,6 +90,8 @@ std::string ComponentDependencyLister::get_component_quintessence_full_filename(
    std::string full_filename = project_root + filename;
    return full_filename;
 }
+
+
 } // namespace Project
 } // namespace Blast
 
