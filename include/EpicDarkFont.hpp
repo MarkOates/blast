@@ -8,6 +8,9 @@ class EpicDarkFont
 {
 private:
 
+protected:
+
+
 public:
    EpicDarkFont();
    ~EpicDarkFont();

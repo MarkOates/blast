@@ -15,6 +15,9 @@ namespace Quizes
       std::string relevance;
       std::string reference_page;
 
+   protected:
+
+
    public:
       MultiplexQuestion(std::string date="[undefined-date]", std::string subject="[undefined-subject]", std::string subject_type="[undefined-subject-type]", std::string relevance="[undefined-subject]", std::string reference_page="[page-not-set]");
       ~MultiplexQuestion();

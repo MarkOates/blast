@@ -13,6 +13,9 @@ namespace Quizes
    private:
       std::vector<Quizes::MultiplexQuestion> question_pool;
 
+   protected:
+
+
    public:
       MultiplexQuizRunner();
       ~MultiplexQuizRunner();

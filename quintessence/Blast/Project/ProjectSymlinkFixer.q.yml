@@ -74,7 +74,7 @@ functions:
 
 
   - name: likely_an_intended_symlink
-    private: true
+    xprivate: true
     type: bool
     parameters:
       - name: filename

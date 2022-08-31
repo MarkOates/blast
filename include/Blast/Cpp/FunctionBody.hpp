@@ -15,6 +15,9 @@ namespace Blast
          std::string content;
          std::vector<std::string> dependency_symbols;
 
+      protected:
+
+
       public:
          FunctionBody(std::string content="return;", std::vector<std::string> dependency_symbols={});
          ~FunctionBody();

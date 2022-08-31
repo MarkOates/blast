@@ -8,6 +8,9 @@ class Checkbox
 {
 private:
 
+protected:
+
+
 public:
    Checkbox();
    ~Checkbox();

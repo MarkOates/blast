@@ -12,6 +12,9 @@ private:
    Quiz* quiz;
    std::string yaml_filename;
 
+protected:
+
+
 public:
    QuizYAMLLoader(Quiz* quiz=nullptr, std::string yaml_filename="");
    ~QuizYAMLLoader();

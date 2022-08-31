@@ -10,6 +10,9 @@ class ASCIICharacterRenderer
 {
 private:
 
+protected:
+
+
 public:
    ASCIICharacterRenderer();
    ~ASCIICharacterRenderer();

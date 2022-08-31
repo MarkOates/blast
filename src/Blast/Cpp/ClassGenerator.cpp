@@ -138,12 +138,36 @@ std::vector<std::string> ClassGenerator::static_attribute_definition_elements()
 }
 
 
-std::vector<std::string> ClassGenerator::function_declaration_elements(int indent_level)
+std::vector<std::string> ClassGenerator::protected_function_declaration_elements(int indent_level)
 {
-   std::vector<std::string> result;
+   std::vector<std::string> protected_functions;
    for (auto &function : cpp_class.get_functions())
-      result.push_back(FunctionFormatter(function).get_function_declaration());
-   return result;
+   {
+      if (function.get_is_protected()) protected_functions.push_back(FunctionFormatter(function).get_function_declaration());
+   }
+   return protected_functions;
+}
+
+
+std::vector<std::string> ClassGenerator::private_function_declaration_elements(int indent_level)
+{
+   std::vector<std::string> private_functions;
+   for (auto &function : cpp_class.get_functions())
+   {
+      if (function.get_is_private()) private_functions.push_back(FunctionFormatter(function).get_function_declaration());
+   }
+   return private_functions;
+}
+
+
+std::vector<std::string> ClassGenerator::public_function_declaration_elements(int indent_level)
+{
+   std::vector<std::string> public_functions;
+   for (auto &function : cpp_class.get_functions())
+   {
+      if (!function.get_is_private() && !function.get_is_protected()) public_functions.push_back(FunctionFormatter(function).get_function_declaration());
+   }
+   return public_functions;
 }
 
 
@@ -514,11 +538,29 @@ std::string ClassGenerator::initialization_list(int indent_level)
 }
 
 
-std::string ClassGenerator::function_declarations(int indent_level)
+std::string ClassGenerator::private_function_declarations(int indent_level)
 {
    std::stringstream result;
-   for (auto &function_declaration_element : function_declaration_elements())
-      result << std::string(3*indent_level, ' ') << function_declaration_element;
+   for (auto &private_function_declaration_element : private_function_declaration_elements())
+      result << std::string(3*indent_level, ' ') << private_function_declaration_element;
+   return result.str();
+}
+
+
+std::string ClassGenerator::protected_function_declarations(int indent_level)
+{
+   std::stringstream result;
+   for (auto &protected_function_declaration_element : protected_function_declaration_elements())
+      result << std::string(3*indent_level, ' ') << protected_function_declaration_element;
+   return result.str();
+}
+
+
+std::string ClassGenerator::public_function_declarations(int indent_level)
+{
+   std::stringstream result;
+   for (auto &public_function_declaration_element : public_function_declaration_elements())
+      result << std::string(3*indent_level, ' ') << public_function_declaration_element;
    return result.str();
 }
 
@@ -637,6 +679,9 @@ CLASS_DECLARATION_OPENER
 CONSTEXPR_SECTION
 PRIVATE_SCOPE_SPECIFIER
 PROPERTIES
+PRIVATE_FUNCTION_DECLARATIONS
+
+PROTECTED_SECTION
 
 PUBLIC_SCOPE_SPECIFIER
 CONSTRUCTOR
@@ -645,7 +690,7 @@ DESTRUCTOR
 SETTER_FUNCTIONS
 GETTER_FUNCTIONS
 GETTER_REF_FUNCTIONS
-FUNCTION_DECLARATIONS
+PUBLIC_FUNCTION_DECLARATIONS
 CLASS_DECLARATION_CLOSER
 NAMESPACES_CLOSER
 
@@ -671,6 +716,19 @@ NAMESPACES_CLOSER
    }
 
 
+   // TODO
+    bool has_elements_in_a_protected_section = true; //cpp_class.WHATEVER();
+   if (has_elements_in_a_protected_section)
+   {
+      std::string replace_string = "PROTECTED_SCOPE_SPECIFIER\nPROTECTED_FUNCTION_DECLARATIONS\n\n";
+      __replace(result, "PROTECTED_SECTION\n", replace_string);
+      //__replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
+   }
+   else
+   {
+      __replace(result, "PROTECTED_SECTION\n", "");
+   }
+
    // replace the variables (including ones that may have been added to the template in pre-processing)
    __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opener(true));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(true, false));
@@ -685,9 +743,14 @@ NAMESPACES_CLOSER
    __replace(result, "GETTER_REF_FUNCTIONS\n", getter_ref_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "CLASS_DECLARATION_OPENER\n", class_declaration_opener(required_namespace_indentation_levels));
    __replace(result, "CLASS_DECLARATION_CLOSER\n", class_declaration_closer(required_namespace_indentation_levels));
+
    __replace(result, "PRIVATE_SCOPE_SPECIFIER\n", private_scope_specifier(required_namespace_indentation_levels));
-   __replace(result, "FUNCTION_DECLARATIONS\n", function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "PUBLIC_SCOPE_SPECIFIER\n", public_scope_specifier(required_namespace_indentation_levels));
+   __replace(result, "PROTECTED_SCOPE_SPECIFIER\n", protected_scope_specifier(required_namespace_indentation_levels));
+
+   __replace(result, "PUBLIC_FUNCTION_DECLARATIONS\n", public_function_declarations(required_namespace_indentation_levels + 1));
+   __replace(result, "PRIVATE_FUNCTION_DECLARATIONS\n", private_function_declarations(required_namespace_indentation_levels + 1));
+   __replace(result, "PROTECTED_FUNCTION_DECLARATIONS\n", protected_function_declarations(required_namespace_indentation_levels + 1));
    
 
 

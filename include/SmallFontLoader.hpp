@@ -10,6 +10,9 @@ class SmallFontLoader
 {
 private:
 
+protected:
+
+
 public:
    SmallFontLoader();
    ~SmallFontLoader();

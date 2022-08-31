@@ -11,6 +11,9 @@ namespace Blast
    private:
       std::string original_text;
 
+   protected:
+
+
    public:
       StringUpcaser(std::string original_text="");
       ~StringUpcaser();

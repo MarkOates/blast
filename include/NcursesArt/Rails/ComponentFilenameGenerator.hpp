@@ -13,6 +13,9 @@ namespace NcursesArt
       private:
          std::string component_basename;
 
+      protected:
+
+
       public:
          ComponentFilenameGenerator(std::string component_basename="unnamed/component");
          ~ComponentFilenameGenerator();

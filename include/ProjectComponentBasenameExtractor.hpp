@@ -10,6 +10,9 @@ class ProjectComponentBasenameExtractor
 private:
    std::string filename;
 
+protected:
+
+
 public:
    ProjectComponentBasenameExtractor(std::string filename="");
    ~ProjectComponentBasenameExtractor();

@@ -10,6 +10,9 @@ class OrigamiMommyFontLoader
 {
 private:
 
+protected:
+
+
 public:
    OrigamiMommyFontLoader();
    ~OrigamiMommyFontLoader();

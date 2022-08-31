@@ -14,6 +14,9 @@ namespace Blast
    private:
       std::string word;
 
+   protected:
+
+
    public:
       Inflector(std::string word="");
       ~Inflector();
