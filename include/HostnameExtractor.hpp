@@ -8,6 +8,9 @@ class HostnameExtractor
 {
 private:
 
+protected:
+
+
 public:
    HostnameExtractor();
    ~HostnameExtractor();

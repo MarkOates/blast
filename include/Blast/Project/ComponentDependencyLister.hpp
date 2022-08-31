@@ -14,13 +14,16 @@ namespace Blast
       {
       private:
          Blast::Project::Component* component;
+         std::string get_component_quintessence_full_filename();
+
+      protected:
+
 
       public:
          ComponentDependencyLister(Blast::Project::Component* component=nullptr);
          ~ComponentDependencyLister();
 
          std::vector<std::string> list_component_dependency_names();
-         std::string get_component_quintessence_full_filename();
       };
    }
 }

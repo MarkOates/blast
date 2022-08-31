@@ -16,6 +16,9 @@ namespace Blast
       std::string regex_expression;
       std::vector<std::regex_constants::syntax_option_type> options;
 
+   protected:
+
+
    public:
       RegexMatcher(std::string source_string="", std::string regex_expression="", std::vector<std::regex_constants::syntax_option_type> options={});
       ~RegexMatcher();

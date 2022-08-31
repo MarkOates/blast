@@ -11,6 +11,9 @@ private:
    std::vector<std::string> v1;
    std::vector<std::string> v2;
 
+protected:
+
+
 public:
    StringVectorIntersection(std::vector<std::string> v1={}, std::vector<std::string> v2={});
    ~StringVectorIntersection();

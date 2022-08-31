@@ -11,6 +11,9 @@ namespace Blast
    private:
       std::string str;
 
+   protected:
+
+
    public:
       CamelCaseToConstantConverter(std::string str="foobar");
       ~CamelCaseToConstantConverter();

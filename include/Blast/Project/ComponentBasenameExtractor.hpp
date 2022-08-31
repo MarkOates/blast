@@ -14,6 +14,9 @@ namespace Blast
       private:
          std::string filename;
 
+      protected:
+
+
       public:
          ComponentBasenameExtractor(std::string filename="");
          ~ComponentBasenameExtractor();

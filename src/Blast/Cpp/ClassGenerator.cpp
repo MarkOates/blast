@@ -681,8 +681,7 @@ PRIVATE_SCOPE_SPECIFIER
 PROPERTIES
 PRIVATE_FUNCTION_DECLARATIONS
 
-PROTECTED_SCOPE_SPECIFIER
-PROTECTED_FUNCTION_DECLARATIONS
+PROTECTED_SECTION
 
 PUBLIC_SCOPE_SPECIFIER
 CONSTRUCTOR
@@ -717,6 +716,19 @@ NAMESPACES_CLOSER
    }
 
 
+   // TODO
+    bool has_elements_in_a_protected_section = true; //cpp_class.WHATEVER();
+   if (has_elements_in_a_protected_section)
+   {
+      std::string replace_string = "PROTECTED_SCOPE_SPECIFIER\nPROTECTED_FUNCTION_DECLARATIONS\n\n";
+      __replace(result, "PROTECTED_SECTION\n", replace_string);
+      //__replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
+   }
+   else
+   {
+      __replace(result, "PROTECTED_SECTION\n", "");
+   }
+
    // replace the variables (including ones that may have been added to the template in pre-processing)
    __replace(result, "NAMESPACES_OPENER\n", namespaces_scope_opener(true));
    __replace(result, "NAMESPACES_CLOSER", namespaces_scope_closer(true, false));
@@ -731,6 +743,7 @@ NAMESPACES_CLOSER
    __replace(result, "GETTER_REF_FUNCTIONS\n", getter_ref_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "CLASS_DECLARATION_OPENER\n", class_declaration_opener(required_namespace_indentation_levels));
    __replace(result, "CLASS_DECLARATION_CLOSER\n", class_declaration_closer(required_namespace_indentation_levels));
+
    __replace(result, "PRIVATE_SCOPE_SPECIFIER\n", private_scope_specifier(required_namespace_indentation_levels));
    __replace(result, "PUBLIC_SCOPE_SPECIFIER\n", public_scope_specifier(required_namespace_indentation_levels));
    __replace(result, "PROTECTED_SCOPE_SPECIFIER\n", protected_scope_specifier(required_namespace_indentation_levels));

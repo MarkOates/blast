@@ -15,6 +15,9 @@ namespace Quizes
       std::vector<Quizes::MultiplexQuestion> questions;
       bool loaded;
 
+   protected:
+
+
    public:
       MultiplexSheetLoader(std::string raw_csv="");
       ~MultiplexSheetLoader();

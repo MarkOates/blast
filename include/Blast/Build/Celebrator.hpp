@@ -12,6 +12,9 @@ namespace Blast
       {
       private:
 
+      protected:
+
+
       public:
          Celebrator();
          ~Celebrator();

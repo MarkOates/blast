@@ -10,6 +10,9 @@ class ProjectListBuilder
 private:
    std::string repos_directory;
 
+protected:
+
+
 public:
    ProjectListBuilder(std::string repos_directory="/Users/markoates/Repos/");
    ~ProjectListBuilder();

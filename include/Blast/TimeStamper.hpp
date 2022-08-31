@@ -10,6 +10,9 @@ namespace Blast
    {
    private:
 
+   protected:
+
+
    public:
       TimeStamper();
       ~TimeStamper();

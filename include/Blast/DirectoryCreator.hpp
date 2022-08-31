@@ -13,6 +13,9 @@ namespace Blast
       std::vector<std::string> directory_components;
       bool path_is_absolute;
 
+   protected:
+
+
    public:
       DirectoryCreator(std::vector<std::string> directory_components={}, bool path_is_absolute=false);
       ~DirectoryCreator();

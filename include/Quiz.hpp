@@ -10,6 +10,9 @@ class Quiz
 private:
    std::vector<Question> questions;
 
+protected:
+
+
 public:
    Quiz(std::vector<Question> questions={});
    ~Quiz();

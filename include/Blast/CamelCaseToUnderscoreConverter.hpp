@@ -11,6 +11,9 @@ namespace Blast
    private:
       std::string str;
 
+   protected:
+
+
    public:
       CamelCaseToUnderscoreConverter(std::string str="foobar");
       ~CamelCaseToUnderscoreConverter();

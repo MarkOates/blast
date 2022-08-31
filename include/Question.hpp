@@ -13,6 +13,9 @@ private:
    std::string correct_answer;
    std::vector<std::string> incorrect_answers;
 
+protected:
+
+
 public:
    Question(std::string question="", std::string image_filename="", std::string correct_answer="", std::vector<std::string> incorrect_answers={});
    ~Question();

@@ -12,6 +12,9 @@ namespace Quizes
    private:
       std::vector<Quizes::MultiplexQuestion> questions;
 
+   protected:
+
+
    public:
       MultiplexQuestionCollectionHelper(std::vector<Quizes::MultiplexQuestion> questions={});
       ~MultiplexQuestionCollectionHelper();

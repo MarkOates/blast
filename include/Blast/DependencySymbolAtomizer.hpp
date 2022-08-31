@@ -12,6 +12,9 @@ namespace Blast
    private:
       std::string dependency_symbol;
 
+   protected:
+
+
    public:
       DependencySymbolAtomizer(std::string dependency_symbol="");
       ~DependencySymbolAtomizer();
