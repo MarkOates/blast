@@ -74,7 +74,8 @@ std::vector<std::string> ClassGenerator::constructor_declaration_elements()
 {
    std::vector<std::string> elements;
    for (auto &attribute_property : cpp_class.get_attribute_properties())
-      if (attribute_property.is_constructor_parameter) elements.push_back(attribute_property.as_constructor_argument_in_declaration());
+      if (attribute_property.is_constructor_parameter)
+         elements.push_back(attribute_property.as_constructor_argument_in_declaration());
    return elements;
 }
 
@@ -83,7 +84,8 @@ std::vector<std::string> ClassGenerator::constructor_definition_elements()
 {
    std::vector<std::string> elements;
    for (auto &attribute_property : cpp_class.get_attribute_properties())
-      if (attribute_property.is_constructor_parameter) elements.push_back(attribute_property.as_constructor_argument_in_definition());
+      if (attribute_property.is_constructor_parameter)
+         elements.push_back(attribute_property.as_constructor_argument_in_definition());
    return elements;
 }
 
@@ -91,10 +93,14 @@ std::vector<std::string> ClassGenerator::constructor_definition_elements()
 std::vector<std::string> ClassGenerator::initialization_list_elements()
 {
    std::vector<std::string> elements;
+
    for (auto &parent_class_properties : cpp_class.get_parent_classes_properties())
       elements.push_back(parent_class_properties.as_argument_in_initialization_list());
+
    for (auto &attribute_property : cpp_class.get_attribute_properties())
-      if (!attribute_property.is_static) elements.push_back(attribute_property.as_argument_in_initialization_list());
+      if (!attribute_property.is_static)
+         elements.push_back(attribute_property.as_argument_in_initialization_list());
+
    return elements;
 }
 
@@ -102,8 +108,10 @@ std::vector<std::string> ClassGenerator::initialization_list_elements()
 std::vector<std::string> ClassGenerator::class_declaration_opener_inheritence_elements()
 {
    std::vector<std::string> elements;
+
    for (auto &parent_class_properties : cpp_class.get_parent_classes_properties())
       elements.push_back(parent_class_properties.as_class_inheritence_declaration());
+
    return elements;
 }
 
