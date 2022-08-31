@@ -257,7 +257,8 @@ YAML::Node default_dependencies()
 
 // issues:
 //- symbol: unsigned int
-
+// std::min: algorithm
+// std::max: algorithm
 
    std::string default_deps = R"END(
 - symbol: int
@@ -898,6 +899,23 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
          if (dependency == "ALLEGRO_DISPLAY") headers = "allegro5/allegro_display.h";
          if (dependency == "StageInterface") headers = "Hexagon/StageInterface.hpp";
          if (dependency == "std::function") headers = "functional";
+         if (dependency == "std::min") headers = "algorithm";
+         if (dependency == "std::max") headers = "algorithm";
+         if (dependency == "AllegroFlare::interpolator::")
+         {
+            dependency = "'AllegroFlare::interpolator::'";
+            headers = "AllegroFlare/Interpolators.hpp";
+         }
+         if (dependency == "AllegroFlare::Color::")
+         {
+            dependency = "'AllegroFlare::Color::'";
+            headers = "AllegroFlare/Color.hpp";
+         }
+         if (dependency == "AllegroFlare::Interpolators::")
+         {
+            dependency = "'AllegroFlare::Interpolators::'";
+            headers = "AllegroFlare/Interpolators.hpp";
+         }
 
          error_message
             << "  - symbol: " << dependency << "\n"
