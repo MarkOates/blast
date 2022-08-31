@@ -151,7 +151,8 @@ std::vector<std::string> ClassGenerator::protected_function_declaration_elements
    std::vector<std::string> protected_functions;
    for (auto &function : cpp_class.get_functions())
    {
-      if (function.get_is_protected()) protected_functions.push_back(FunctionFormatter(function).get_function_declaration());
+      if (function.get_is_protected())
+         protected_functions.push_back(FunctionFormatter(function).get_function_declaration());
    }
    return protected_functions;
 }
@@ -162,7 +163,8 @@ std::vector<std::string> ClassGenerator::private_function_declaration_elements(i
    std::vector<std::string> private_functions;
    for (auto &function : cpp_class.get_functions())
    {
-      if (function.get_is_private()) private_functions.push_back(FunctionFormatter(function).get_function_declaration());
+      if (function.get_is_private())
+         private_functions.push_back(FunctionFormatter(function).get_function_declaration());
    }
    return private_functions;
 }
@@ -173,7 +175,8 @@ std::vector<std::string> ClassGenerator::public_function_declaration_elements(in
    std::vector<std::string> public_functions;
    for (auto &function : cpp_class.get_functions())
    {
-      if (!function.get_is_private() && !function.get_is_protected()) public_functions.push_back(FunctionFormatter(function).get_function_declaration());
+      if (!function.get_is_private() && !function.get_is_protected())
+         public_functions.push_back(FunctionFormatter(function).get_function_declaration());
    }
    return public_functions;
 }
@@ -263,7 +266,12 @@ std::string ClassGenerator::class_declaration_inheritence_list()
 std::string ClassGenerator::class_declaration_opener(int indent_level)
 {
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << "class " << cpp_class.get_class_name() << class_declaration_inheritence_list() << "\n" << std::string(3*indent_level, ' ') << "{\n";
+   result << std::string(3*indent_level, ' ')
+          << "class "
+          << cpp_class.get_class_name()
+          << class_declaration_inheritence_list()
+          << "\n" << std::string(3*indent_level, ' ')
+          << "{\n";
    return result.str();
 }
 
