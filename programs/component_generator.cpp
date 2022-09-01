@@ -36,119 +36,6 @@ std::string TEST_FOLDER_NAME = "tests";
 
 
 
-
-//////////////////////////////
-////   STAGE
-//////////////////////////////
-
-
-std::string const STAGE_QUINTESSENCE_FILE_CONTENT = R"END(parent_classes:
-
-
-  - class: 'StageInterface'
-    scope: public
-    init_with: "StageInterface::[[COMPONENT_AS_ALL_CAPS_CONSTANT]]"
-
-
-properties:
-
-
-  - name: a_default_empty_event
-    static: true
-    type: ALLEGRO_EVENT
-    init_with: "{}"
-    getter_ref: true
-
-
-functions:
-
-
-  - name: render
-    virtual: true
-    override: true
-    body: |
-      placement3d &place = get_place();
-      place.start_transform();
-
-      //This::Component::Renderer renderer;
-      //renderer.render();
-
-      place.restore_transform();
-      return;
-    body_dependency_symbols: []
-
-
-  - name: process_local_event
-    virtual: true
-    override: true
-    parameters:
-      - name: event_name
-        type: std::string
-        default_argument: '""'
-      - name: action_data
-        type: ActionData
-        default_argument: "ActionData()"
-    body: |
-      return;
-
-
-  - name: process_event
-    virtual: true
-    override: true
-    parameters:
-      - name: event
-        type: ALLEGRO_EVENT&
-        default_argument: "get_a_default_empty_event_ref()"
-    body: |
-      return;
-
-
-dependencies:
-
-
-  - symbol: StageInterface
-    headers: [ Hexagon/StageInterface.hpp ]
-  - symbol: ALLEGRO_EVENT
-    headers: [ allegro5/allegro.h ]
-  - symbol: ALLEGRO_EVENT&
-    headers: [ allegro5/allegro.h ]
-  - symbol: ActionData
-    headers: [ Hexagon/ActionData.hpp ]
-
-)END";
-
-
-std::string STAGE_TEST_FILE_CONTENT = R"END(
-#include <gtest/gtest.h>
-
-#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
-
-TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-}
-
-TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], process_local_event__does_not_blow_up)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-   [[COMPONENT_BASENAME_SNAKE_CASE]].process_local_event();
-   SUCCEED();
-}
-
-TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], process_event__does_not_blow_up)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-   [[COMPONENT_BASENAME_SNAKE_CASE]].process_event();
-   SUCCEED();
-}
-)END";
-
-
-
-
-
-
-
 std::vector<std::string> args;
 
 
@@ -241,7 +128,9 @@ int main(int argc, char **argv)
 
    std::map<std::string, TemplateSetBase*> dictionary = {
       { "standard_component", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "standard.q.txt"), file_get_contents(TEMPLATES_PATH + "standard_test.txt")) },
-      { "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
+      //{ "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
+      //{ "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
+      { "hexagon_stage", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "Hexagon/stage.q.txt"), file_get_contents(TEMPLATES_PATH + "Hexagon/stage_text.txt")) },
       { "renderer", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "renderer.q.txt"), file_get_contents(TEMPLATES_PATH + "renderer_test.txt")) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },
