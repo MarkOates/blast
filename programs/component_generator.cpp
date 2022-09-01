@@ -130,7 +130,7 @@ int main(int argc, char **argv)
       { "standard_component", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "standard.q.txt"), file_get_contents(TEMPLATES_PATH + "standard_test.txt")) },
       //{ "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
       //{ "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
-      { "hexagon_stage", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "Hexagon/stage.q.txt"), file_get_contents(TEMPLATES_PATH + "Hexagon/stage_text.txt")) },
+      { "hexagon_stage", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "Hexagon/stage.q.txt"), file_get_contents(TEMPLATES_PATH + "Hexagon/stage_test.txt")) },
       { "renderer", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "renderer.q.txt"), file_get_contents(TEMPLATES_PATH + "renderer_test.txt")) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },
