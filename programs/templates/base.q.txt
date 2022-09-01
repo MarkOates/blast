@@ -3,9 +3,15 @@ properties:
 
   - name: type
     type: std::string
-    init_with: '"Base"'
+    init_with: [[COMPONENT_CLASS_NAME]]::TYPE
     constructor_arg: true
     getter: true
+
+  - name: TYPE
+    type: char*
+    init_with: '"[[COMPONENT_NAME_PRECEEDING_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]]"'
+    static: true
+    constexpr: true
 
 
 functions:
@@ -19,12 +25,5 @@ functions:
         default_argument: '""'
     body: |
       return (possible_type == get_type());
-
-
-dependencies:
-
-
-  - symbol: std::vector<std::vector<std::string>>
-    headers: [ vector, string ]
 
 

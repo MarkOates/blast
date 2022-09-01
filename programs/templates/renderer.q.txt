@@ -8,7 +8,8 @@ properties:
 
   - name: quote
     type: std::string
-    init_with: '{}'
+    init_with: '"Hello!"'
+    constructor_arg: true
 
 
 functions:
@@ -18,22 +19,24 @@ functions:
     type: void
     guards: [ al_is_system_installed(), al_is_font_addon_initialized() ]
     body: |
+      al_draw_text(obtain_font(), ALLEGRO_COLOR{1, 1, 1, 1}, 1920/2, 1080/3, ALLEGRO_ALIGN_CENTER, quote);
       return;
+
 
   - name: obtain_font
     private: true
     type: ALLEGRO_FONT*
     guards: [ font_bin ]
     body: |
-      return font_bin->auto_get("Purista Medium.otf -32");
+      return font_bin->auto_get("Inter-Medium.ttf -52");
 
 
 dependencies:
 
 
-  - symbol: AllegroFlare::FontBin*
+  - symbol: AllegroFlare::FontBin
     headers: [ AllegroFlare/FontBin.hpp ]
-  - symbol: ALLEGRO_FONT*
+  - symbol: ALLEGRO_FONT
     headers: [ allegro5/allegro_font.h ]
 
 
