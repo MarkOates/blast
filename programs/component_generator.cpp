@@ -35,43 +35,6 @@ std::string TEST_FOLDER_NAME = "tests";
 
 
 
-//////////////////////////////
-////   TYPICAL COMPONENT
-//////////////////////////////
-
-
-std::string const QUINTESSENCE_FILE_CONTENT = R"END(functions:
-  - name: run
-    type: std::string
-    body: return "Hello World!";
-)END";
-
-
-std::string TEST_FILE_CONTENT = R"END(
-#include <gtest/gtest.h>
-
-#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
-
-
-TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-}
-
-
-TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], run__returns_the_expected_response)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-   std::string expected_string = "Hello World!";
-   EXPECT_EQ(expected_string, [[COMPONENT_BASENAME_SNAKE_CASE]].run());
-}
-
-)END";
-
-
-
-
-
 
 
 //////////////////////////////
@@ -277,9 +240,8 @@ int main(int argc, char **argv)
    std::string TEMPLATES_PATH = "/Users/markoates/Repos/blast/programs/templates/";
 
    std::map<std::string, TemplateSetBase*> dictionary = {
-      { "standard_component", new QuintessenceTestTemplatePair(QUINTESSENCE_FILE_CONTENT, TEST_FILE_CONTENT) },
+      { "standard_component", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "standard.q.txt"), file_get_contents(TEMPLATES_PATH + "standard_test.txt")) },
       { "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
-      //{ "renderer", new QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
       { "renderer", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "renderer.q.txt"), file_get_contents(TEMPLATES_PATH + "renderer_test.txt")) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },
