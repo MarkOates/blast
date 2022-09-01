@@ -186,104 +186,6 @@ TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], process_event__does_not_blow_up)
 
 
 
-
-//////////////////////////////
-////   RENDERER
-//////////////////////////////
-
-
-std::string const RENDERER_QUINTESSENCE_FILE_CONTENT = R"END(properties:
-
-
-  - name: font_bin
-    type: AllegroFlare::FontBin*
-    init_with: nullptr
-    constructor_arg: true
-
-  - name: quote
-    type: std::string
-    init_with: '{}'
-
-
-functions:
-
-
-  - name: render
-    type: void
-    guards: [ al_is_system_installed(), al_is_font_addon_initialized() ]
-    body: |
-      return;
-
-  - name: obtain_font
-    private: true
-    type: ALLEGRO_FONT*
-    guards: [ font_bin ]
-    body: |
-      return font_bin->auto_get("Purista Medium.otf -32");
-
-
-dependencies:
-
-
-  - symbol: AllegroFlare::FontBin*
-    headers: [ AllegroFlare/FontBin.hpp ]
-  - symbol: ALLEGRO_FONT*
-    headers: [ allegro5/allegro_font.h ]
-
-)END";
-
-
-std::string const RENDERER_TEST_FILE_CONTENT = R"END(
-#include <gtest/gtest.h>
-
-#define ASSERT_THROW_WITH_MESSAGE(code, raised_exception_type, expected_exception_message) \
-   try { code; FAIL() << "Expected " # raised_exception_type; } \
-   catch ( raised_exception_type const &err ) { ASSERT_EQ(std::string(expected_exception_message), err.what()); } \
-   catch (...) { FAIL() << "Expected " # raised_exception_type; }
-
-#include <AllegroFlare/Testing/WithAllegroRenderingFixture.hpp>
-
-
-class [[COMPONENT_TEST_DESCRIPTION_NAME]] : public ::testing::Test
-{};
-
-class [[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture
-   : public AllegroFlare::Testing::WithAllegroRenderingFixture
-{};
-
-
-#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
-
-
-TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-}
-
-
-TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], render__without_allegro_initialized__raises_an_error)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-   std::string expected_error_message =
-      "[[COMPONENT_NAME_LAST_FRAGMENT]]::render: error: guard \"al_is_system_installed()\" not met";
-   ASSERT_THROW_WITH_MESSAGE([[COMPONENT_BASENAME_SNAKE_CASE]].render(), std::runtime_error, expected_error_message);
-}
-
-
-TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture, render__will_not_blow_up)
-{
-   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
-   [[COMPONENT_BASENAME_SNAKE_CASE]].render();
-   SUCCEED();
-}
-
-)END";
-
-
-
-
-
-
 std::vector<std::string> args;
 
 
@@ -377,7 +279,8 @@ int main(int argc, char **argv)
    std::map<std::string, TemplateSetBase*> dictionary = {
       { "standard_component", new QuintessenceTestTemplatePair(QUINTESSENCE_FILE_CONTENT, TEST_FILE_CONTENT) },
       { "stage", new QuintessenceTestTemplatePair(STAGE_QUINTESSENCE_FILE_CONTENT, STAGE_TEST_FILE_CONTENT) },
-      { "renderer", new QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
+      //{ "renderer", new QuintessenceTestTemplatePair(RENDERER_QUINTESSENCE_FILE_CONTENT, RENDERER_TEST_FILE_CONTENT) },
+      { "renderer", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "renderer.q.txt"), file_get_contents(TEMPLATES_PATH + "renderer_test.txt")) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },
       { "comparison", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "comparison.hpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison.cpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison_test.txt")) },
