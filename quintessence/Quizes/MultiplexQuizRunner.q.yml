@@ -221,7 +221,7 @@ dependencies:
 
 
   - symbol: random_shuffling_deps
-    headers: [ ctime, random ]
+    headers: [ ctime, random, algorithm ]
   - symbol: file_loading_deps
     headers: [ string, fstream, streambuf ]
   - symbol: std::vector<Quizes::MultiplexQuestion>

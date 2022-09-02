@@ -7,6 +7,7 @@
 #include <Blast/StringSplitter.hpp>
 #include <Quizes/MultiplexQuestionCollectionHelper.hpp>
 #include <Quizes/MultiplexSheetLoader.hpp>
+#include <algorithm>
 #include <ctime>
 #include <fstream>
 #include <iostream>
