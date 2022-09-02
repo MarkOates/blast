@@ -3,6 +3,7 @@
 #include <Blast/DependencySymbolAtomizer.hpp>
 
 #include <Blast/StringSplitter.hpp>
+#include <algorithm>
 
 
 namespace Blast

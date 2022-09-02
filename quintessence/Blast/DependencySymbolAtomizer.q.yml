@@ -40,6 +40,7 @@ functions:
       return tokenized_deps;
     body_dependency_symbols:
       - Blast::StringSplitter
+      - std::replace
 
 
 dependencies:
@@ -47,5 +48,7 @@ dependencies:
 
   - symbol: Blast::StringSplitter
     headers: [ Blast/StringSplitter.hpp ]
+  - symbol: std::replace
+    headers: [ algorithm ]
 
 

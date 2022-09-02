@@ -59,6 +59,9 @@
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
+  "std/replace": [
+    "Blast/DependencySymbolAtomizer"
+  ],
   "bool": [
     "Blast/DirectoryCreator"
   ],
