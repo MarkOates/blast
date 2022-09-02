@@ -15,7 +15,7 @@ functions:
 
 
   - name: generate_action_name_camel_case
-    private: true
+    xprivate: true
     type: std::string
     body: |
       return "UnnamedAction";
