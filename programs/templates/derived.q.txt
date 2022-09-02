@@ -9,17 +9,17 @@ parent_classes:
 properties:
 
 
-  - name: TYPE
-    type: char*
-    init_with: '"[[COMPONENT_NAME_LAST_FRAGMENT]]"'
-    static: true
-    constexpr: true
-
   - name: property
     type: std::string
     init_with: '"[unset-property]"'
     constructor_arg: true
     getter: true
+
+  - name: TYPE
+    type: char*
+    init_with: '"[[COMPONENT_NAME_PRECEEDING_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]]"'
+    static: true
+    constexpr: true
 
 
 functions:
@@ -40,7 +40,5 @@ dependencies:
 
   - symbol: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::Base
     headers: [ [[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/Base.hpp ]
-  - symbol: char*
-    headers: [ ]
 
 
