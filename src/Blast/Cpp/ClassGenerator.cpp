@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <sstream>
 #include <iostream>
+#include <algorithm> // for std::sort
 
 
 template<typename Out>
