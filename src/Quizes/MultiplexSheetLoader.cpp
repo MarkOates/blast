@@ -5,6 +5,7 @@
 #include <Blast/String/Trimmer.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <Quizes/MultiplexQuestion.hpp>
+#include <cassert>
 #include <sstream>
 #include <stdexcept>
 

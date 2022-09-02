@@ -374,6 +374,9 @@
   "Blast/StringJoiner": [
     "Quizes/MultiplexQuizRunner"
   ],
+  "assert": [
+    "Quizes/MultiplexSheetLoader"
+  ],
   "std/set_intersection": [
     "StringVectorIntersection"
   ]
