@@ -37,8 +37,8 @@ int main(int argc, char **argv)
       std::cout << "> /Users/markoates/Repos/blast/create_source_release Solitare" << std::endl;
       std::cout << "" << std::endl;
       std::cout << " ^ This will: " << std::endl;
-      std::cout << "   - CREATE a \"releases\" folder on the \"~/Desktop\" folder" << std::endl;
-      std::cout << "   - CREATE a \"releases/SolitareSourceRelease\" folder" << std::endl;
+      std::cout << "   - CREATE a \"Releases\" folder in the home directory (\"~/\" folder)" << std::endl;
+      std::cout << "   - CREATE a \"Releases/SolitareSourceRelease\" folder" << std::endl;
       std::cout << "   - COPY the following source files into \"releases/SolitareSourceRelease\":" << std::endl;
       std::cout << "      - source from \"/Users/markoates/Repos/Solitare/src\"" << std::endl;
       std::cout << "      - includes from \"/Users/markoates/Repos/Solitare/include\"" << std::endl;
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
    }
 
    std::string source_project_directory = complete_folder_path_to_project_folder;
-   std::string destination_directory = "/Users/markoates/Desktop/releases";
+   std::string destination_directory = "/Users/markoates/Releases";
    std::string main_program_filename = "programs/main.cpp";
    bool link_with_opengl = true;
    bool copy_allegro_flare_source = true;

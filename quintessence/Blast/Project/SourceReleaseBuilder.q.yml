@@ -3,7 +3,7 @@ properties:
 
   - name: destination_directory
     type: std::string
-    init_with: "\"/Users/markoates/Desktop/Release/\""
+    init_with: "\"/Users/markoates/Releases/\""
     constructor_arg: true
 
   - name: project_name
