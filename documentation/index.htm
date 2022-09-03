@@ -101,6 +101,8 @@ table td
   <li><a href="#quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</a></li>
   <li><a href="#quintessence/StringSplitter.q.yml">quintessence/StringSplitter.q.yml</a></li>
   <li><a href="#quintessence/StringVectorIntersection.q.yml">quintessence/StringVectorIntersection.q.yml</a></li>
+  <li><a href="#quintessence/ncurses_art/Backends/Base.q.yml">quintessence/ncurses_art/Backends/Base.q.yml</a></li>
+  <li><a href="#quintessence/ncurses_art/Backends/Ncurses.q.yml">quintessence/ncurses_art/Backends/Ncurses.q.yml</a></li>
 </ul>
 <h1>Components</h1>
 <ul>
@@ -2015,6 +2017,53 @@ table td
     </table>
   </div>
 </ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/ncurses_art/Backends/Base.q.yml">quintessence/ncurses_art/Backends/Base.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">type</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">is_type(1)</td>
+</tr>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/ncurses_art/Backends/Ncurses.q.yml">quintessence/ncurses_art/Backends/Ncurses.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">property</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">property_is(1)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ncurses_art::Backends::Base&quot;, &quot;headers&quot;=&gt;[&quot;ncurses_art/Backends/Base.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
 <h1>Dependents</h1>
 <pre>
 {
@@ -2398,6 +2447,9 @@ table td
   ],
   "std/set_intersection": [
     "StringVectorIntersection"
+  ],
+  "ncurses_art/Backends/Base": [
+    "ncurses_art/Backends/Ncurses"
   ]
 }
 </pre>

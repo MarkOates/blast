@@ -379,5 +379,8 @@
   ],
   "std/set_intersection": [
     "StringVectorIntersection"
+  ],
+  "ncurses_art/Backends/Base": [
+    "ncurses_art/Backends/Ncurses"
   ]
 }
