@@ -52,6 +52,20 @@ properties:
     getter: true
     setter: true
 
+  - name: remove_AllegroFlare_Network2_from_allegro_flare_copy
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
+  - name: remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
   - name: remove_AllegroFlare_Testing_from_allegro_flare_copy
     type: bool
     init_with: true
@@ -484,6 +498,24 @@ functions:
          std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Network";
          recursively_remove_folder_with_prompt(include_folder_to_remove);
          std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Network";
+         recursively_remove_folder_with_prompt(src_folder_to_remove);
+      }
+
+
+      if (get_remove_AllegroFlare_Network2_from_allegro_flare_copy())
+      {
+         std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Network2";
+         recursively_remove_folder_with_prompt(include_folder_to_remove);
+         std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Network2";
+         recursively_remove_folder_with_prompt(src_folder_to_remove);
+      }
+
+
+      if (get_remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy())
+      {
+         std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Integrations/Network.hpp";
+         recursively_remove_folder_with_prompt(include_folder_to_remove);
+         std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Integrations/Network.cpp";
          recursively_remove_folder_with_prompt(src_folder_to_remove);
       }
 

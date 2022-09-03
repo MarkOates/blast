@@ -20,7 +20,7 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy)
    : destination_directory(destination_directory)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
@@ -29,6 +29,8 @@ SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, st
    , copy_allegro_flare_source(copy_allegro_flare_source)
    , copy_nlohmann_json_from_allegro_flare_source(copy_nlohmann_json_from_allegro_flare_source)
    , remove_AllegroFlare_Network_from_allegro_flare_copy(remove_AllegroFlare_Network_from_allegro_flare_copy)
+   , remove_AllegroFlare_Network2_from_allegro_flare_copy(remove_AllegroFlare_Network2_from_allegro_flare_copy)
+   , remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy(remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy)
    , remove_AllegroFlare_Testing_from_allegro_flare_copy(remove_AllegroFlare_Testing_from_allegro_flare_copy)
 {
 }
@@ -60,6 +62,18 @@ void SourceReleaseBuilder::set_copy_nlohmann_json_from_allegro_flare_source(bool
 void SourceReleaseBuilder::set_remove_AllegroFlare_Network_from_allegro_flare_copy(bool remove_AllegroFlare_Network_from_allegro_flare_copy)
 {
    this->remove_AllegroFlare_Network_from_allegro_flare_copy = remove_AllegroFlare_Network_from_allegro_flare_copy;
+}
+
+
+void SourceReleaseBuilder::set_remove_AllegroFlare_Network2_from_allegro_flare_copy(bool remove_AllegroFlare_Network2_from_allegro_flare_copy)
+{
+   this->remove_AllegroFlare_Network2_from_allegro_flare_copy = remove_AllegroFlare_Network2_from_allegro_flare_copy;
+}
+
+
+void SourceReleaseBuilder::set_remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy(bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy)
+{
+   this->remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy = remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy;
 }
 
 
@@ -108,6 +122,18 @@ bool SourceReleaseBuilder::get_copy_nlohmann_json_from_allegro_flare_source() co
 bool SourceReleaseBuilder::get_remove_AllegroFlare_Network_from_allegro_flare_copy() const
 {
    return remove_AllegroFlare_Network_from_allegro_flare_copy;
+}
+
+
+bool SourceReleaseBuilder::get_remove_AllegroFlare_Network2_from_allegro_flare_copy() const
+{
+   return remove_AllegroFlare_Network2_from_allegro_flare_copy;
+}
+
+
+bool SourceReleaseBuilder::get_remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy() const
+{
+   return remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy;
 }
 
 
@@ -499,6 +525,24 @@ void SourceReleaseBuilder::generate_source_release()
       std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Network";
       recursively_remove_folder_with_prompt(include_folder_to_remove);
       std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Network";
+      recursively_remove_folder_with_prompt(src_folder_to_remove);
+   }
+
+
+   if (get_remove_AllegroFlare_Network2_from_allegro_flare_copy())
+   {
+      std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Network2";
+      recursively_remove_folder_with_prompt(include_folder_to_remove);
+      std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Network2";
+      recursively_remove_folder_with_prompt(src_folder_to_remove);
+   }
+
+
+   if (get_remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy())
+   {
+      std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Integrations/Network.hpp";
+      recursively_remove_folder_with_prompt(include_folder_to_remove);
+      std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Integrations/Network.cpp";
       recursively_remove_folder_with_prompt(src_folder_to_remove);
    }
 
