@@ -28,7 +28,8 @@ TEST(Quizes_MultiplexSheetLoaderTest, can_be_created_without_blowing_up)
 }
 
 
-TEST(Quizes_MultiplexSheetLoaderTest, load__loads_the_sheet)
+TEST(Quizes_MultiplexSheetLoaderTest, DISABLED__load__loads_the_sheet)
+   // test is destructive, requires a local fixture QUIZ_FILE
 {
    ASSERT_EQ(true, Blast::FileExistenceChecker(QUIZ_FILE).exists());
 
