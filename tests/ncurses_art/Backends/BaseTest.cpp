@@ -21,6 +21,7 @@ TEST(ncurses_art_Backends_BaseTest, can_be_created_without_blowing_up)
 
 TEST(ncurses_art_Backends_BaseTest, TYPE__has_the_expected_value)
 {
+   ncurses_art::Backends::Base base;
    EXPECT_EQ("Backends/Base", base.get_type());
 }
 
