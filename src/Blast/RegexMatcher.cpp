@@ -24,6 +24,12 @@ RegexMatcher::~RegexMatcher()
 }
 
 
+void RegexMatcher::set_source_string(std::string source_string)
+{
+   this->source_string = source_string;
+}
+
+
 std::string RegexMatcher::get_source_string() const
 {
    return source_string;
@@ -49,6 +55,13 @@ void RegexMatcher::set_regex_expression(std::string regex_expression)
    return;
 }
 
+void RegexMatcher::set_options(std::vector<std::regex_constants::syntax_option_type> options)
+{
+   this->options = options;
+   compiled = false;
+   return;
+}
+
 void RegexMatcher::compile()
 {
    if (std::find(options.begin(), options.end(), std::regex::icase) != options.end())
@@ -69,7 +82,7 @@ std::vector<std::pair<int, int>> RegexMatcher::get_match_info()
 
    std::vector<std::pair<int, int>> results;
 
-   std::string subject(source_string);
+   //std::string subject(source_string);
    try
    {
       //std::regex re("\\w+"); // find words
@@ -83,7 +96,7 @@ std::vector<std::pair<int, int>> RegexMatcher::get_match_info()
          //re = std::regex(regex_expression);
       //}
 
-      std::sregex_iterator next(subject.begin(), subject.end(), re);
+      std::sregex_iterator next(source_string.begin(), source_string.end(), re);
       std::sregex_iterator end;
       while (next != end)
       {

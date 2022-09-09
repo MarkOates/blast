@@ -5,6 +5,7 @@ properties:
     init_with: "\"\""
     constructor_arg: true
     getter: true
+    setter: true
 
   - name: regex_expression
     init_with: "\"\""
@@ -17,6 +18,7 @@ properties:
     init_with: "{}"
     constructor_arg: true
     getter: true
+    setter: false
 
   - name: re
     type: std::regex
@@ -37,6 +39,17 @@ functions:
         default_argument: '""'
     body: |
       this->regex_expression = regex_expression;
+      compiled = false;
+      return;
+
+
+  - name: set_options
+    parameters:
+      - name: options
+        type: std::vector<std::regex_constants::syntax_option_type>
+        default_argument: '{}'
+    body: |
+      this->options = options;
       compiled = false;
       return;
 
@@ -62,7 +75,7 @@ functions:
 
       std::vector<std::pair<int, int>> results;
 
-      std::string subject(source_string);
+      //std::string subject(source_string);
       try
       {
          //std::regex re("\\w+"); // find words
@@ -76,7 +89,7 @@ functions:
             //re = std::regex(regex_expression);
          //}
 
-         std::sregex_iterator next(subject.begin(), subject.end(), re);
+         std::sregex_iterator next(source_string.begin(), source_string.end(), re);
          std::sregex_iterator end;
          while (next != end)
          {
