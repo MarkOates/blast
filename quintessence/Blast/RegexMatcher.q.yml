@@ -1,18 +1,26 @@
 properties:
+
+
   - name: source_string
     init_with: "\"\""
     constructor_arg: true
     getter: true
+
   - name: regex_expression
     init_with: "\"\""
     constructor_arg: true
     getter: true
+
   - name: options
     type: std::vector<std::regex_constants::syntax_option_type>
     init_with: "{}"
     constructor_arg: true
     getter: true
+
+
 functions:
+
+
   - name: get_match_info
     type: std::vector<std::pair<int, int>>
     body: |
@@ -56,7 +64,11 @@ functions:
       - std::smatch
       - std::regex_error
       - std::runtime_error
+
+
 dependencies:
+
+
   - symbol: std::regex_constants::syntax_option_type
     headers: [ regex ]
   - symbol: std::vector<std::regex_constants::syntax_option_type>
@@ -73,4 +85,5 @@ dependencies:
     headers: [ regex ]
   - symbol: std::runtime_error
     headers: [ regex ]
+
 

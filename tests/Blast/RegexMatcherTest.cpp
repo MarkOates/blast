@@ -8,6 +8,7 @@ TEST(Blast_RegexMatcherTest, can_be_created_without_blowing_up)
    Blast::RegexMatcher regex_matcher;
 }
 
+
 TEST(Blast_RegexMatcherTest, get_match_info__returns_a_list_of_matches__test_1)
 {
    Blast::RegexMatcher regex_matcher("Hello World!", "World");
@@ -16,6 +17,7 @@ TEST(Blast_RegexMatcherTest, get_match_info__returns_a_list_of_matches__test_1)
 
    EXPECT_EQ(expected_matches, actual_matches);
 }
+
 
 TEST(Blast_RegexMatcherTest, get_match_info__returns_a_list_of_matches__test_2)
 {
@@ -26,6 +28,7 @@ TEST(Blast_RegexMatcherTest, get_match_info__returns_a_list_of_matches__test_2)
    EXPECT_EQ(expected_matches, actual_matches);
 }
 
+
 TEST(Blast_RegexMatcherTest, get_match_info__incorporates_options_passed_during_construction)
 {
    Blast::RegexMatcher regex_matcher("Hello World!", "world", { std::regex::icase });
@@ -35,7 +38,10 @@ TEST(Blast_RegexMatcherTest, get_match_info__incorporates_options_passed_during_
    EXPECT_EQ(expected_matches, actual_matches);
 }
 
+
 TEST(DISABLED_Blast_RegexMatcherTest, get_match_info__only_supports_icase_option)
 {
-   // Test is a note of an incomplete implementation
+   // This feature has incomplete implementation
 }
+
+
