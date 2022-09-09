@@ -13,6 +13,8 @@ RegexMatcher::RegexMatcher(std::string source_string, std::string regex_expressi
    : source_string(source_string)
    , regex_expression(regex_expression)
    , options(options)
+   , re({})
+   , compiled(false)
 {
 }
 
@@ -40,23 +42,46 @@ std::vector<std::regex_constants::syntax_option_type> RegexMatcher::get_options(
 }
 
 
+void RegexMatcher::set_regex_expression(std::string regex_expression)
+{
+   this->regex_expression = regex_expression;
+   compiled = false;
+   return;
+}
+
+void RegexMatcher::compile()
+{
+   if (std::find(options.begin(), options.end(), std::regex::icase) != options.end())
+   {
+      re = std::regex(regex_expression, std::regex::icase);
+   }
+   else
+   {
+      re = std::regex(regex_expression);
+   }
+   compiled = true;
+   return;
+}
+
 std::vector<std::pair<int, int>> RegexMatcher::get_match_info()
 {
+   if (!compiled) compile();
+
    std::vector<std::pair<int, int>> results;
 
    std::string subject(source_string);
    try
    {
       //std::regex re("\\w+"); // find words
-      std::regex re;
-      if (std::find(options.begin(), options.end(), std::regex::icase) != options.end())
-      {
-         re = std::regex(regex_expression, std::regex::icase);
-      }
-      else
-      {
-         re = std::regex(regex_expression);
-      }
+      //std::regex re;
+      //if (std::find(options.begin(), options.end(), std::regex::icase) != options.end())
+      //{
+         //re = std::regex(regex_expression, std::regex::icase);
+      //}
+      //else
+      //{
+         //re = std::regex(regex_expression);
+      //}
 
       std::sregex_iterator next(subject.begin(), subject.end(), re);
       std::sregex_iterator end;

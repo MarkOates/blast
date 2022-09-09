@@ -15,6 +15,8 @@ namespace Blast
       std::string source_string;
       std::string regex_expression;
       std::vector<std::regex_constants::syntax_option_type> options;
+      std::regex re;
+      bool compiled;
 
    protected:
 
@@ -26,6 +28,8 @@ namespace Blast
       std::string get_source_string() const;
       std::string get_regex_expression() const;
       std::vector<std::regex_constants::syntax_option_type> get_options() const;
+      void set_regex_expression(std::string regex_expression="");
+      void compile();
       std::vector<std::pair<int, int>> get_match_info();
    };
 }
