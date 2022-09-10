@@ -1,9 +1,15 @@
 properties:
+
+
   - name: word
     type: std::string
     init_with: "\"\""
     constructor_arg: true
+
+
 functions:
+
+
   - name: pluralize
     type: std::string
     body: |
@@ -13,6 +19,8 @@ functions:
       return "quizes";
     body_dependency_symbols:
       - Blast::RegexMatcher
+
+
   - name: build_inflections_list
     type: std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>>
     body: |
@@ -49,7 +57,11 @@ functions:
       return inflections;
     body_dependency_symbols:
       - std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>>
+
+
 dependencies:
+
+
   - symbol: Blast::RegexMatcher
     headers: [ Blast/RegexMatcher.hpp ]
   - symbol: std::vector<std::tuple<std::string, std::string, std::regex_constants::syntax_option_type>>
