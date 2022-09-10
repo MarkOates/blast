@@ -10,7 +10,7 @@ allegro.log
 *.o
 *.o-*
 *.obj
-deps/**
+.deps/**
 *.exe
 
 .DS_Store
