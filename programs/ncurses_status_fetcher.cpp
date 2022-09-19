@@ -313,7 +313,7 @@ void initialize()
          { "oatescodes",       { false, ProjectStatus("oatescodes") } },
          { "tileo",                { false, ProjectStatus("tileo") } },
          { "union",            { false, ProjectStatus("union") } },
-         { "Wicked",            { false, ProjectStatus("Wicked") } },
+         //{ "Wicked",            { false, ProjectStatus("Wicked") } },
          //{ "/Library/Application Support/Adobe/CEP/extensions", { false, ProjectStatus("unset") } },
       };
 
