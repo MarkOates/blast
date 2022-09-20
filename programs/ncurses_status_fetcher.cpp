@@ -311,7 +311,7 @@ void initialize()
          { "me",               { false, ProjectStatus("me") } },
          //{ "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
          { "oatescodes",       { false, ProjectStatus("oatescodes") } },
-         { "tileo",                { false, ProjectStatus("tileo") } },
+         //{ "tileo",                { false, ProjectStatus("tileo") } },
          { "union",            { false, ProjectStatus("union") } },
          //{ "Wicked",            { false, ProjectStatus("Wicked") } },
          //{ "/Library/Application Support/Adobe/CEP/extensions", { false, ProjectStatus("unset") } },
