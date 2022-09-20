@@ -472,6 +472,22 @@ std::string get_brew_yaml_info_string()
 
 
 
+std::string get_brew_ffmpeg_info_string() // actually not brew
+{
+   std::string command = "brew info ffmpeg";
+
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   std::vector<std::string> tokens = StringSplitter(trimmed_output, '\n').split();
+   std::string first_line = tokens.empty() ? "" : tokens[0];
+
+   return first_line;
+}
+
+
+
 std::string get_brew_ripgrep_info_string()
 {
    std::string command = "brew info ripgrep";
@@ -611,8 +627,17 @@ bool run_ruby_version_test()
 
 bool run_yaml_cpp_presence_test()
 {
-   std::string match_expression = "^yaml-cpp: ";
+   std::string match_expression = "==> yaml-cpp: ";
    std::string actual_string = get_brew_yaml_info_string();
+   last_test_result = new TestResultMatcher(match_expression, actual_string);
+   return last_test_result->assessment();
+}
+
+
+bool run_ffmpeg_presence_test()
+{
+   std::string match_expression = "==> ffmpeg: "; // TODO
+   std::string actual_string = get_brew_ffmpeg_info_string();
    last_test_result = new TestResultMatcher(match_expression, actual_string);
    return last_test_result->assessment();
 }
@@ -727,7 +752,7 @@ bool check_clang_version_is_expected_version()
 
 bool check_ninja_version_is_expected_version()
 {
-   last_test_result = new TestResultMatcher("^1\.10\.1$", get_ninja_version());
+   last_test_result = new TestResultMatcher("^1\\.10\\.1$", get_ninja_version());
    return last_test_result->assessment();
 }
 
@@ -796,6 +821,7 @@ void initialize()
 
       tests = {
          { "yaml-cpp is installed through homebrew", run_yaml_cpp_presence_test },
+         { "ffmpeg is installed through homebrew (used to convert wav files to ogg)", run_ffmpeg_presence_test },
          { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", run_ruby_version_test },
          { "a targeted set of executables are up-to-date to their source files", check_select_executables_are_up_to_date_to_their_source },
          { "ripgrep is installed through homebrew", run_ripgrep_presence_test },
