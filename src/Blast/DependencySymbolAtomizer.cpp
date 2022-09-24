@@ -47,13 +47,25 @@ std::vector<std::string> DependencySymbolAtomizer::atomize()
    // split it into tokens
    std::vector<std::string> tokenized_deps = Blast::StringSplitter(possibly_composite_dep, ' ').split();
 
-   // erase the empty tokens
+   // create list of aomized tokens that should be discarded
+   std::vector<std::string> items_to_discard = { "const" };
+
+   // erase the empty tokens, and/or discard unwanted tokens
    for (int i=0; i<tokenized_deps.size(); i++)
    {
       if (tokenized_deps[i].empty())
       {
          tokenized_deps.erase(tokenized_deps.begin()+i);
          i--;
+      }
+
+      for (auto &item_to_discard : items_to_discard)
+      {
+         if (tokenized_deps[i] == item_to_discard)
+         {
+            tokenized_deps.erase(tokenized_deps.begin()+i);
+            i--;
+         }
       }
    }
 
