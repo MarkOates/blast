@@ -276,6 +276,8 @@ YAML::Node default_dependencies()
   headers: [ 'vector' ]
 - symbol: std::map
   headers: [ 'map' ]
+- symbol: std::unordered_map
+  headers: [ 'unordered_map' ]
 - symbol: std::set
   headers: [ 'set' ]
 - symbol: std::string
