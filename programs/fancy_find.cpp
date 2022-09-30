@@ -34,7 +34,10 @@ public:
    std::string get_command()
    {
       std::stringstream ss;
-      ss << "git grep -n --untracked --heading --break \"" << search_text << "\" \":(exclude)./documentation/*\"";
+      ss << "git grep -n --untracked --heading --break "
+         << "\"" << search_text << "\" "
+         << "\":(exclude)./documentation/*\" "
+         << "\":(exclude)./include/lib/*\"";
       return ss.str();
    }
 };
