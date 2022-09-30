@@ -40,13 +40,15 @@ private:
 public:
    DebugBreakpointCommandBuilder() {}
 
-   std::string build()
+   std::vector<std::string> build()
    {
-      std::stringstream result;
-      std::map<std::string, std::set<int>> parsed_lines;
+      std::vector<std::string> result;
+      std::map<std::string, std::set<int>> debug_points;
 
       capture_from_git_command();
       std::string current_file = "";
+
+      // parse the lines from the shell command
 
       for (auto &shell_command_result_line : shell_command_result_lines)
       {
@@ -67,13 +69,28 @@ public:
             std::string line_num_as_str = shell_command_result_line.substr(0, pos);
 
             int line_num = atoi(line_num_as_str.c_str());
-            parsed_lines[current_file].insert(line_num);
+            debug_points[current_file].insert(line_num);
             std::cout << "LINE: " << line_num << std::endl;
             continue;
          }
       }
 
-      return result.str();
+      // build the lines for the breakpoint commands
+
+      for (auto &debug_point : debug_points)
+      {
+         std::string filename = debug_point.first;
+         std::set<int> debug_line_nums = debug_point.second;
+
+         for (auto &debug_line_num : debug_line_nums)
+         {
+            std::stringstream command_builder;
+            command_builder << "breakpoint set --file \"" << filename << "\" --line " << debug_line_num << "";
+            result.push_back(command_builder.str());
+         }
+      }
+
+      return result;
    }
 };
 
@@ -81,7 +98,17 @@ public:
 int main(int argc, char** argv)
 {
    DebugBreakpointCommandBuilder breakpoint_command_builder;
-   breakpoint_command_builder.build();
+   std::vector<std::string> breakpoint_commands = breakpoint_command_builder.build();
+
+   std::cout << "=== " << breakpoint_commands.size() << " DEBUG points found ====================" << std::endl;
+   std::cout << std::endl;
+   for (auto &breakpoint_command : breakpoint_commands)
+   {
+      std::cout << breakpoint_command << std::endl;
+   }
+   std::cout << std::endl;
+   std::cout << "============================================" << std::endl;
+
 
    return 0;
 }
