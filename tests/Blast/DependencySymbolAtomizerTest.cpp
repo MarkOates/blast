@@ -25,6 +25,9 @@ TEST(Blast_DependencySymbolAtomizerTest, atomize__will_split_composite_dependenc
       { "const char*",
          { "char", }
       },
+      { "unsigned int",
+         { "int", }
+      },
    };
 
    for (auto &test_data : test_composite_dependencies_and_their_atoms)
