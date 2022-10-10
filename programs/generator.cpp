@@ -36,6 +36,7 @@ bin/*
 .DS_Store
 *.a
 obj/*
+.deps/*
 .DS_Store
 )END";
 
