@@ -36,6 +36,7 @@ bin/*
 .DS_Store
 *.a
 obj/*
+tmp/*
 .deps/*
 .DS_Store
 )END";
@@ -482,6 +483,7 @@ void create_directories(Generator &generator)
    system(generator.get_command_for_make_dir().c_str());
    system(generator.mkprojdir_and_keep_file("bin").c_str());
    system(generator.mkprojdir_and_keep_file("lib").c_str());
+   system(generator.mkprojdir_and_keep_file("tmp").c_str());
    system(generator.mkprojdir_and_keep_file("docs").c_str());
    system(generator.mkprojdir_and_keep_file("include").c_str());
    system(generator.mkprojdir_and_keep_file("examples").c_str());
