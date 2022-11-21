@@ -712,21 +712,21 @@ bool check_select_executables_are_up_to_date_to_their_source()
 
       // ncurses-art files
 
-      { false, "/Users/markoates/Repos/ncurses-art/programs/builder.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/builder2.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder2" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/project_filename_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/project_filename_generator" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/system_test.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/system_test" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/component_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/component_generator" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/builder.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/builder2.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder2" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/project_filename_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/project_filename_generator" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/system_test.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/system_test" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/component_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/component_generator" },
       { false, "/Users/markoates/Repos/blast/programs/create_source_release.cpp", "/Users/markoates/Repos/blast/bin/programs/create_source_release" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_branch.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_branch" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component_lister.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component_lister" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_find.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_find" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_list.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_list" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_log.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_log" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/fancy_stager.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_stager" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/quiz.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/quiz" },
-      { false, "/Users/markoates/Repos/ncurses-art/programs/ncurses_status_fetcher.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/ncurses_status_fetcher" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_branch.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_branch" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component_lister.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component_lister" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_find.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_find" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_list.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_list" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_log.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_log" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_stager.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_stager" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/quiz.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/quiz" },
+      //{ false, "/Users/markoates/Repos/ncurses-art/programs/ncurses_status_fetcher.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/ncurses_status_fetcher" },
    };
 
    for (auto &source_executable_pair : source_executable_pairs)
