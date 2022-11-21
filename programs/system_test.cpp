@@ -710,7 +710,7 @@ bool check_select_executables_are_up_to_date_to_their_source()
       { false, "/Users/markoates/Repos/blast/programs/symlink_component_from_another_project.cpp", "/Users/markoates/Repos/blast/bin/programs/symlink_component_from_another_project" },
       { false, "/Users/markoates/Repos/blast/programs/build_celebrator.cpp", "/Users/markoates/Repos/blast/bin/programs/build_celebrator" },
 
-      // ncurses-art files
+      // TODO: Update these ncurses-art/bin/programs files to blast/programs files
 
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/builder.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/builder2.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder2" },
