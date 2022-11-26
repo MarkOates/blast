@@ -249,16 +249,11 @@ void write_to_files(Blast::Cpp::ClassGenerator &cpp_class_generator, bool automa
 YAML::Node default_dependencies()
 {
 // Consider Adding
-// - symbol: std::function
-//   headers: [ functional ]
 // - symbol: std::count
 //   headers: [ algorithm ]
-
-
-// issues:
-//- symbol: unsigned int
 // std::min: algorithm
 // std::max: algorithm
+
 
    std::string default_deps = R"END(
 - symbol: int
@@ -296,6 +291,8 @@ YAML::Node default_dependencies()
   headers: [ 'stdexcept' ]
 - symbol: std::stringstream
   headers: [ 'sstream' ]
+- symbol: std::function
+  headers: [ functional ]
    )END";
 
 // The following have been removed now that dependency atomization is in effect:
