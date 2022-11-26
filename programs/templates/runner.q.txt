@@ -97,7 +97,7 @@ functions:
          framework.get_model_bin_ref().set_full_path(PROJECT_DATA_FOLDER + "/models");
       }
 
-      // instanciate our actual game runner
+      // instantiate our actual game runner
       Runner runner(
          mode,
          &framework.get_event_emitter_ref(),
