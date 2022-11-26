@@ -1,0 +1,26 @@
+
+#include <gtest/gtest.h>
+
+#include <CubeShooter/Screen.hpp>
+
+
+TEST(CubeShooter_ScreenTest, can_be_created_without_blowing_up)
+{
+   CubeShooter::Screen screen;
+}
+
+
+TEST(CubeShooter_ScreenTest, TYPE__has_the_expected_value)
+{
+   CubeShooter::Screen screen;
+   EXPECT_EQ("CubeShooter/Screen", screen.get_type());
+}
+
+
+TEST(CubeShooter_ScreenTest, type__has_the_expected_value_matching_TYPE)
+{
+   CubeShooter::Screen screen;
+   EXPECT_EQ(CubeShooter::Screen::TYPE, screen.get_type());
+}
+
+

@@ -131,6 +131,7 @@ int main(int argc, char **argv)
       { "hexagon_stage", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "Hexagon/stage.q.txt"), file_get_contents(TEMPLATES_PATH + "Hexagon/stage_test.txt")) },
       { "runner", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "runner.q.txt"), file_get_contents(TEMPLATES_PATH + "runner_test.txt")) },
       { "renderer", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "renderer.q.txt"), file_get_contents(TEMPLATES_PATH + "renderer_test.txt")) },
+      { "screen", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "screen.q.txt"), file_get_contents(TEMPLATES_PATH + "screen_test.txt")) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },
       { "comparison", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "comparison.hpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison.cpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison_test.txt")) },
