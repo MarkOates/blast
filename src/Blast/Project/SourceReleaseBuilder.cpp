@@ -205,7 +205,8 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "\t"
                     << "g++ -std=c++17 $^ " << main_program_filename << " -o " << binary_name
                     << " -I./include $(ALLEGRO_LIBS)";
-                    if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
+                    if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)" << std::endl;
+                    MAKEFILE_CONTENT << std::endl;
 
    // the "list_objects:" target
    MAKEFILE_CONTENT
@@ -217,8 +218,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "\t@echo \"number of objects: $(NUM_OF_OBJECTS)\"" << std::endl
                     << "\t@for item in $(OBJECTS) ; do \\" << std::endl
                     << "\techo $$item ; \\" << std::endl
-                    << "done" << std::endl
-                    << std::endl;
+                    << "done" << std::endl;
 
 
    return MAKEFILE_CONTENT.str();
