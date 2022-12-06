@@ -507,14 +507,19 @@ functions:
       {
          // build the command
          std::stringstream copy_ordered_map_file_command;
-         std::string ordered_map_file_source = "/Users/markoates/Repos/allegro_flare/include/lib/ordered_map.h";
-         std::string ordered_map_file_destination_directory = destination_directory + "/include/lib";
+         std::stringstream copy_ordered_hash_file_command;
+         std::string ordered_map_file_source = "/Users/markoates/Repos/allegro_flare/include/lib/tsl/ordered_map.h";
+         std::string ordered_hash_file_source = "/Users/markoates/Repos/allegro_flare/include/lib/tsl/ordered_hash.h";
+         std::string ordered_map_file_destination_directory = destination_directory + "/include/lib/tsl";
          std::string ordered_map_file_destination = ordered_map_file_destination_directory + "/ordered_map.h";
+         std::string ordered_hash_file_destination = ordered_map_file_destination_directory + "/ordered_hash.h";
          // TODO: check for file existence
          copy_ordered_map_file_command << "cp -R " << ordered_map_file_source << " " << ordered_map_file_destination;
+         copy_ordered_hash_file_command << "cp -R " << ordered_hash_file_source << " " << ordered_hash_file_destination;
 
          // start the copy process
-         std::cout << "Copying lib/ordered_map.h file from AllegroFlare into \"" << destination_directory << "\"... "
+         std::cout << "Copying lib/tsl/ordered_map.h file from AllegroFlare into "
+                   << "\"" << destination_directory << "\"... "
                    << std::endl;
 
          // create the directory if it doesn't exist
@@ -526,18 +531,25 @@ functions:
          if (!created)
          {
             std::stringstream error_message;
-            error_message << "Project/ReleaseBuilder error: could not create directory \""
+            error_message << "[Project/ReleaseBuilder] error: could not create directory \""
                          << ordered_map_file_destination_directory
                          << "\"";
             throw std::runtime_error(error_message.str());
          }
          std::cout << " directory exists.";
 
-         // execute the copy command
+         // execute the copy command for "ordered_map"
          Blast::ShellCommandExecutorWithCallback ordered_map_file_copy_executor(
                copy_ordered_map_file_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
             );
          ordered_map_file_copy_executor.execute();
+
+         // execute the copy command for "ordered_hash"
+         Blast::ShellCommandExecutorWithCallback ordered_hash_file_copy_executor(
+               copy_ordered_hash_file_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
+            );
+         ordered_hash_file_copy_executor.execute();
+
          std::cout << "done." << std::endl;
       }
 
