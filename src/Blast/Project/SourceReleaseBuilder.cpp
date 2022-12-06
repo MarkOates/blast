@@ -199,6 +199,15 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << std::endl;
    }
 
+   // the "main:" target
+   MAKEFILE_CONTENT
+                    << "main: $(SRC_FILES)" << std::endl
+                    << "\t"
+                    << "g++ -std=c++17 $^ " << main_program_filename << " -o " << binary_name
+                    << " -I./include $(ALLEGRO_LIBS)";
+                    if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
+
+   // the "list_objects:" target
    MAKEFILE_CONTENT
                     << "SOURCES := $(shell find src -name '*.cpp')" << std::endl
                     << "OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)" << std::endl
@@ -211,13 +220,6 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "done" << std::endl
                     << std::endl;
 
-
-   MAKEFILE_CONTENT
-                    << "main: $(SRC_FILES)" << std::endl
-                    << "\t"
-                    << "g++ -std=c++17 $^ " << main_program_filename << " -o " << binary_name
-                    << " -I./include $(ALLEGRO_LIBS)";
-                    if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
 
    return MAKEFILE_CONTENT.str();
 }
