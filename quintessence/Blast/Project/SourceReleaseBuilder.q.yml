@@ -45,6 +45,13 @@ properties:
     getter: true
     setter: true
 
+  - name: copy_ordered_map_from_allegro_flare_source
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
   - name: remove_AllegroFlare_Network_from_allegro_flare_copy
     type: bool
     init_with: true
@@ -334,6 +341,7 @@ functions:
       // options:
       bool copy_allegro_flare_source_and_header_files_from_source = true;
       bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
+      bool copy_allegro_flare_include_lib_ordered_map_from_source = true;
       Blast::TimeStamper time_stamper;
 
       std::string source_directory = get_source_project_directory();
@@ -489,6 +497,47 @@ functions:
                copy_nlohmann_json_file_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
             );
          nlohmann_json_file_copy_executor.execute();
+         std::cout << "done." << std::endl;
+      }
+
+
+      bool manually_copy_allegro_flare_include_lib_ordered_map_from_source =
+        this->get_copy_ordered_map_from_allegro_flare_source();
+      if (manually_copy_allegro_flare_include_lib_ordered_map_from_source)
+      {
+         // build the command
+         std::stringstream copy_ordered_map_file_command;
+         std::string ordered_map_file_source = "/Users/markoates/Repos/allegro_flare/include/lib/ordered_map.h";
+         std::string ordered_map_file_destination_directory = destination_directory + "/include/lib";
+         std::string ordered_map_file_destination = ordered_map_file_destination_directory + "/ordered_map.h";
+         // TODO: check for file existence
+         copy_ordered_map_file_command << "cp -R " << ordered_map_file_source << " " << ordered_map_file_destination;
+
+         // start the copy process
+         std::cout << "Copying lib/ordered_map.h file from AllegroFlare into \"" << destination_directory << "\"... "
+                   << std::endl;
+
+         // create the directory if it doesn't exist
+         std::cout << "  Ensuring directory exists...";
+         std::vector<std::string> directories_needed_for_ordered_map = StringSplitter(
+            ordered_map_file_destination_directory, '/').split();
+         Blast::DirectoryCreator directory_creator(directories_needed_for_ordered_map, true);
+         bool created = directory_creator.create();
+         if (!created)
+         {
+            std::stringstream error_message;
+            error_message << "Project/ReleaseBuilder error: could not create directory \""
+                         << ordered_map_file_destination_directory
+                         << "\"";
+            throw std::runtime_error(error_message.str());
+         }
+         std::cout << " directory exists.";
+
+         // execute the copy command
+         Blast::ShellCommandExecutorWithCallback ordered_map_file_copy_executor(
+               copy_ordered_map_file_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
+            );
+         ordered_map_file_copy_executor.execute();
          std::cout << "done." << std::endl;
       }
 

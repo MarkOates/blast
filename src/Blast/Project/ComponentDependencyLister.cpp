@@ -34,8 +34,9 @@ std::vector<std::string> ComponentDependencyLister::list_component_dependency_na
    if (!(component))
    {
       std::stringstream error_message;
-      error_message << "ComponentDependencyLister" << "::" << "list_component_dependency_names" << ": error: " << "guard \"component\" not met";
-      throw std::runtime_error(error_message.str());
+      error_message << "[ComponentDependencyLister::list_component_dependency_names]: error: guard \"component\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("ComponentDependencyLister::list_component_dependency_names: error: guard \"component\" not met");
    }
    std::vector<std::string> results;
 
@@ -80,8 +81,9 @@ std::string ComponentDependencyLister::get_component_quintessence_full_filename(
    if (!(component))
    {
       std::stringstream error_message;
-      error_message << "ComponentDependencyLister" << "::" << "get_component_quintessence_full_filename" << ": error: " << "guard \"component\" not met";
-      throw std::runtime_error(error_message.str());
+      error_message << "[ComponentDependencyLister::get_component_quintessence_full_filename]: error: guard \"component\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("ComponentDependencyLister::get_component_quintessence_full_filename: error: guard \"component\" not met");
    }
    std::string project_root = component->get_project_root();
    std::string component_name = component->get_name();

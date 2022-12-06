@@ -20,6 +20,7 @@ namespace Blast
          bool link_with_opengl;
          bool copy_allegro_flare_source;
          bool copy_nlohmann_json_from_allegro_flare_source;
+         bool copy_ordered_map_from_allegro_flare_source;
          bool remove_AllegroFlare_Network_from_allegro_flare_copy;
          bool remove_AllegroFlare_Network2_from_allegro_flare_copy;
          bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy;
@@ -29,12 +30,13 @@ namespace Blast
 
 
       public:
-         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Releases/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp", bool link_with_opengl=true, bool copy_allegro_flare_source=true, bool copy_nlohmann_json_from_allegro_flare_source=true, bool remove_AllegroFlare_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Network2_from_allegro_flare_copy=true, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Testing_from_allegro_flare_copy=true);
+         SourceReleaseBuilder(std::string destination_directory="/Users/markoates/Releases/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp", bool link_with_opengl=true, bool copy_allegro_flare_source=true, bool copy_nlohmann_json_from_allegro_flare_source=true, bool copy_ordered_map_from_allegro_flare_source=true, bool remove_AllegroFlare_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Network2_from_allegro_flare_copy=true, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Testing_from_allegro_flare_copy=true);
          ~SourceReleaseBuilder();
 
          void set_link_with_opengl(bool link_with_opengl);
          void set_copy_allegro_flare_source(bool copy_allegro_flare_source);
          void set_copy_nlohmann_json_from_allegro_flare_source(bool copy_nlohmann_json_from_allegro_flare_source);
+         void set_copy_ordered_map_from_allegro_flare_source(bool copy_ordered_map_from_allegro_flare_source);
          void set_remove_AllegroFlare_Network_from_allegro_flare_copy(bool remove_AllegroFlare_Network_from_allegro_flare_copy);
          void set_remove_AllegroFlare_Network2_from_allegro_flare_copy(bool remove_AllegroFlare_Network2_from_allegro_flare_copy);
          void set_remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy(bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy);
@@ -45,6 +47,7 @@ namespace Blast
          bool get_link_with_opengl() const;
          bool get_copy_allegro_flare_source() const;
          bool get_copy_nlohmann_json_from_allegro_flare_source() const;
+         bool get_copy_ordered_map_from_allegro_flare_source() const;
          bool get_remove_AllegroFlare_Network_from_allegro_flare_copy() const;
          bool get_remove_AllegroFlare_Network2_from_allegro_flare_copy() const;
          bool get_remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy() const;
