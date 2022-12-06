@@ -19,8 +19,9 @@ namespace Project
 {
 
 
-ProjectSymlinkFixer::ProjectSymlinkFixer(std::string project_folder)
+ProjectSymlinkFixer::ProjectSymlinkFixer(std::string project_folder, bool debug_output)
    : project_folder(project_folder)
+   , debug_output(debug_output)
 {
 }
 
@@ -30,9 +31,21 @@ ProjectSymlinkFixer::~ProjectSymlinkFixer()
 }
 
 
+void ProjectSymlinkFixer::set_debug_output(bool debug_output)
+{
+   this->debug_output = debug_output;
+}
+
+
 std::string ProjectSymlinkFixer::get_project_folder() const
 {
    return project_folder;
+}
+
+
+bool ProjectSymlinkFixer::get_debug_output() const
+{
+   return debug_output;
 }
 
 
@@ -159,11 +172,11 @@ void ProjectSymlinkFixer::run()
    {
       std::string filename = p.path().string();
       std::replace(filename.begin(), filename.end(), '\\', '/');
-      std::cout << filename << std::endl;
+      if (debug_output) std::cout << filename << std::endl;
 
       if (fs::is_symlink(p) || likely_an_intended_symlink(filename, MAGIC_STRING))
       {
-         std::cout << "   LIKELY" << std::endl;
+         if (debug_output) std::cout << "   LIKELY" << std::endl;
          filenames.push_back(filename);
          std::string symlink_target = read_symlink(filename);
          std::string sanitized_target = symlink_target;
@@ -218,13 +231,19 @@ void ProjectSymlinkFixer::run()
          }
          catch (const std::exception& e)
          {
-            std::cout << "Caught error when attempting to fs::create_symlink: " << e.what() << std::endl;
-            std::cout << "Attempting alternative link creation with shell command" << std::endl;
+            std::cout << "[Blast::Project::ProjectSymlinkFixer::run]: info: Caught error when attempting to "
+                      << "fs::create_symlink: \"" << e.what() << "\". "
+                      << "Attempting alternative link creation with shell command."
+                      << std::endl;
 
             std::stringstream command;
             command << "ln -sf " << sanitized_target << " " << filename;
             Blast::ShellCommandExecutorWithCallback executor(command.str());
             executor.execute();
+
+            std::cout << "[Blast::Project::ProjectSymlinkFixer::run]: info: Shell command "
+                      << "\" " << command.str() << "\" executed."
+                      << std::endl;
             //create_symlink(sanitized_target, p.path());
 
             //p.path().string() << " -> " << sanitized_target << '\n';
