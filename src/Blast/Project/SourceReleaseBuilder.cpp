@@ -298,7 +298,7 @@ void SourceReleaseBuilder::fix_symlink_targets_from_relative_to_absolute()
 
 void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
 {
-   std::cout << "Reading symlinks... " << std::endl;
+   //std::cout << "Reading symlinks... " << std::endl;
    std::vector<std::pair<std::string, std::string>> symlinks = list_symlinks();
 
    for (auto &symlink : symlinks)
@@ -317,7 +317,7 @@ void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
       copy_file(file_to_copy_source, file_to_copy_destination);
    }
 
-   std::cout << "Finished reading symlinks (" << symlinks.size() << ")." << std::endl;
+   std::cout << "Finished reading symlinks (" << symlinks.size() << " symlinked file(s) replaced)." << std::endl;
    return;
 }
 
@@ -449,8 +449,9 @@ void SourceReleaseBuilder::generate_source_release()
    fix_symlink_targets_from_relative_to_absolute();
    std::cout << "done." << std::endl;
 
-
+   std::cout << "Replacing sylminked files with original copies.";
    replace_symlinks_with_copies_of_linked_files();
+   std::cout << "done." << std::endl;
 
 
    bool manually_copy_allegro_flare_headers_and_source_files = this->get_copy_allegro_flare_source();
