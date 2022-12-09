@@ -80,6 +80,13 @@ properties:
     getter: true
     setter: true
 
+  - name: prompt_before_deleting_unneeded_folders
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
 
 functions:
 
@@ -335,7 +342,9 @@ functions:
       std::cout << "   " << folder_removal_command.str() << "" << std::endl;
       std::cout << "Do you wish to continue? (y/n) > ";
       char input = 'n';
-      std::cin >> input;
+      if (prompt_before_deleting_unneeded_folders) std::cin >> input;
+      else input = 'y';
+
       if (input == 'y')
       {
          //std::stringstream folder_removal_command;

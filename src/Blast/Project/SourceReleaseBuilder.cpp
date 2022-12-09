@@ -23,7 +23,7 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool prompt_before_deleting_unneeded_folders)
    : destination_directory(destination_directory)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
@@ -36,6 +36,7 @@ SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, st
    , remove_AllegroFlare_Network2_from_allegro_flare_copy(remove_AllegroFlare_Network2_from_allegro_flare_copy)
    , remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy(remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy)
    , remove_AllegroFlare_Testing_from_allegro_flare_copy(remove_AllegroFlare_Testing_from_allegro_flare_copy)
+   , prompt_before_deleting_unneeded_folders(prompt_before_deleting_unneeded_folders)
 {
 }
 
@@ -90,6 +91,12 @@ void SourceReleaseBuilder::set_remove_AllegroFlare_Integrations_Network_from_all
 void SourceReleaseBuilder::set_remove_AllegroFlare_Testing_from_allegro_flare_copy(bool remove_AllegroFlare_Testing_from_allegro_flare_copy)
 {
    this->remove_AllegroFlare_Testing_from_allegro_flare_copy = remove_AllegroFlare_Testing_from_allegro_flare_copy;
+}
+
+
+void SourceReleaseBuilder::set_prompt_before_deleting_unneeded_folders(bool prompt_before_deleting_unneeded_folders)
+{
+   this->prompt_before_deleting_unneeded_folders = prompt_before_deleting_unneeded_folders;
 }
 
 
@@ -156,6 +163,12 @@ bool SourceReleaseBuilder::get_remove_AllegroFlare_Integrations_Network_from_all
 bool SourceReleaseBuilder::get_remove_AllegroFlare_Testing_from_allegro_flare_copy() const
 {
    return remove_AllegroFlare_Testing_from_allegro_flare_copy;
+}
+
+
+bool SourceReleaseBuilder::get_prompt_before_deleting_unneeded_folders() const
+{
+   return prompt_before_deleting_unneeded_folders;
 }
 
 
@@ -371,7 +384,9 @@ void SourceReleaseBuilder::recursively_remove_folder_with_prompt(std::string fol
    std::cout << "   " << folder_removal_command.str() << "" << std::endl;
    std::cout << "Do you wish to continue? (y/n) > ";
    char input = 'n';
-   std::cin >> input;
+   if (prompt_before_deleting_unneeded_folders) std::cin >> input;
+   else input = 'y';
+
    if (input == 'y')
    {
       //std::stringstream folder_removal_command;
