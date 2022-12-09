@@ -152,6 +152,7 @@
   ],
   "Blast/FileExistenceChecker": [
     "Blast/Project/Component",
+    "Blast/Project/SourceReleaseBuilder",
     "Quizes/MultiplexSheetLoader"
   ],
   "Blast/Project/SymlinkChecker": [

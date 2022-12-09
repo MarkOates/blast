@@ -5,6 +5,7 @@
 #include <Blast/DirectoryCreator.hpp>
 #include <Blast/DirectoryExistenceChecker.hpp>
 #include <Blast/Errors.hpp>
+#include <Blast/FileExistenceChecker.hpp>
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
@@ -433,9 +434,22 @@ void SourceReleaseBuilder::generate_source_release()
          );
       }
    }
+
+
    if (validate_readme_exists_in_source_folder)
    {
-      // TODO: here
+      // TODO: test this condition
+      std::string expected_readme_location = source_directory + "/README.md";
+      Blast::FileExistenceChecker checker(expected_readme_location);
+      if (!checker.exists())
+      {
+         std::string message = "The expected README.md file does not exist. Expected at "
+                               "\"" + expected_readme_location + "\"";
+         Blast::Errors::throw_error(
+            "Blast::Project::SourceReleaseBuilder::generate_source_release()",
+            message
+         );
+      }
    }
 
 
