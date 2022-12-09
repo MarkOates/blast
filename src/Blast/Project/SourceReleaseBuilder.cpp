@@ -3,6 +3,8 @@
 #include <Blast/Project/SourceReleaseBuilder.hpp>
 
 #include <Blast/DirectoryCreator.hpp>
+#include <Blast/DirectoryExistenceChecker.hpp>
+#include <Blast/Errors.hpp>
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
@@ -387,6 +389,8 @@ void SourceReleaseBuilder::recursively_remove_folder_with_prompt(std::string fol
 void SourceReleaseBuilder::generate_source_release()
 {
    // options:
+   bool validate_bin_programs_data_folder_from_source_exists = true;
+   bool validate_readme_exists_in_source_folder = true;
    bool copy_allegro_flare_source_and_header_files_from_source = true;
    bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
    bool copy_allegro_flare_include_lib_ordered_map_from_source = true;
@@ -412,6 +416,30 @@ void SourceReleaseBuilder::generate_source_release()
                    << "\"";
       throw std::runtime_error(error_message.str());
    }
+
+
+   if (validate_bin_programs_data_folder_from_source_exists)
+   {
+      // TODO: test this condition
+      std::string expected_data_folder_location = source_directory + "/bin/programs/data";
+      Blast::DirectoryExistenceChecker checker(expected_data_folder_location);
+      if (!checker.exists())
+      {
+         std::string message = "The expected bin/programs/data folder does not exist. Expected at "
+                               "\"" + expected_data_folder_location + "\"";
+         throw std::runtime_error(Blast::Errors::build_error_message(
+               "Blast::Project::SourceReleaseBuilder::generate_source_release()",
+               message
+            )
+         );
+      }
+   }
+   if (validate_readme_exists_in_source_folder)
+   {
+      // TODO: here
+   }
+
+
 
    std::string destination_directory = xxx;
 

@@ -992,6 +992,12 @@ table td
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::TimeStamper&quot;, &quot;headers&quot;=&gt;[&quot;Blast/TimeStamper.hpp&quot;]}</td>
 </tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::DirectoryExistenceChecker&quot;, &quot;headers&quot;=&gt;[&quot;Blast/DirectoryExistenceChecker.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
+</tr>
     </table>
   </div>
 </ul>
@@ -2189,7 +2195,8 @@ table td
     "NcursesArt/GithubRepoStatusFetcher"
   ],
   "Blast/DirectoryExistenceChecker": [
-    "Blast/DirectoryCreator"
+    "Blast/DirectoryCreator",
+    "Blast/Project/SourceReleaseBuilder"
   ],
   "stat": [
     "Blast/DirectoryExistenceChecker"
@@ -2336,6 +2343,9 @@ table td
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/TimeStamper": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/Errors": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [
