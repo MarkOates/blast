@@ -427,10 +427,9 @@ void SourceReleaseBuilder::generate_source_release()
       {
          std::string message = "The expected bin/programs/data folder does not exist. Expected at "
                                "\"" + expected_data_folder_location + "\"";
-         throw std::runtime_error(Blast::Errors::build_error_message(
-               "Blast::Project::SourceReleaseBuilder::generate_source_release()",
-               message
-            )
+         Blast::Errors::throw_error(
+            "Blast::Project::SourceReleaseBuilder::generate_source_release()",
+            message
          );
       }
    }
