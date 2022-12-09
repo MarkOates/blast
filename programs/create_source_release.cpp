@@ -93,6 +93,7 @@ int main(int argc, char **argv)
          remove_AllegroFlare_Network_from_allegro_flare_copy,
          remove_AllegroFlare_Testing_from_allegro_flare_copy
       );
+   source_release_builder.set_prompt_before_deleting_unneeded_folders(false);
    source_release_builder.generate_source_release();
 
    return 0;
