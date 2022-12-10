@@ -203,6 +203,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                  MAKEFILE_CONTENT
                     << "ifeq ($(OS), Windows_NT)" << std::endl
                     << "\tOPENGL_LIB=-lopengl32" << std::endl
+                    << "\tWINDOWS_SUBSYSTEM_FLAGS=-Wl,--subsystem,windows" << std::endl
                     << "else" << std::endl
                     << "\tUNAME_S := $(shell uname -s)" << std::endl
                     << "\tifeq ($(UNAME_S),Linux)" << std::endl
@@ -219,7 +220,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
    MAKEFILE_CONTENT
                     << "main: $(SRC_FILES)" << std::endl
                     << "\t"
-                    << "g++ -std=c++17 $^ " << main_program_filename << " -o " << binary_name
+                    << "g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $^ " << main_program_filename << " -o " << binary_name
                     << " -I./include $(ALLEGRO_LIBS)";
                     if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)" << std::endl;
                     MAKEFILE_CONTENT << std::endl;
