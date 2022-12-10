@@ -203,6 +203,8 @@ std::string SourceReleaseBuilder::get_makefile_content()
                  MAKEFILE_CONTENT
                     << "ifeq ($(OS), Windows_NT)" << std::endl
                     << "\tOPENGL_LIB=-lopengl32" << std::endl
+        // NOTE: information regarding these subsystem flags:
+        // https://www.allegro.cc/forums/thread/604546
                     << "\tWINDOWS_SUBSYSTEM_FLAGS=-Wl,--subsystem,windows" << std::endl
                     << "else" << std::endl
                     << "\tUNAME_S := $(shell uname -s)" << std::endl
