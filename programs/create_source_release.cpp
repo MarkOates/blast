@@ -114,12 +114,21 @@ int main(int argc, char **argv)
    }
    else
    {
+      std::string generated_release_folder_name = source_release_builder.get_generated_release_folder_name();
       std::stringstream success_message;
 
-      success_message << " === Source Release Generated Successfully ! ===" << std::endl;
-      success_message << "     Releases base folder: \"" << complete_folder_path_to_project_folder << "\"" << std::endl;
-      success_message << "      Release folder name: \"" << source_release_builder.get_generated_release_folder_name() << "\"" << std::endl;
-
+      success_message << std::endl;
+      success_message << "===============================================" << std::endl;
+      success_message << "==    Source Release Created Successfully!   ==" << std::endl;
+      success_message << "===============================================" << std::endl;
+      success_message << std::endl;
+      success_message << "      Releases base folder: \"" << destination_directory << "\"" << std::endl;
+      success_message << "       Release folder name: \"" << source_release_builder.get_generated_release_folder_name() << "\"" << std::endl;
+      success_message << std::endl;
+      success_message << "Use the following command to zip it up:" << std::endl;
+      success_message << std::endl;
+      success_message << "zip -r " << generated_release_folder_name << ".zip " << generated_release_folder_name << std::endl;
+      success_message << std::endl;
       std::cout << CONSOLE_COLOR_CYAN << success_message.str() << CONSOLE_COLOR_DEFAULT << std::endl;
    }
 
