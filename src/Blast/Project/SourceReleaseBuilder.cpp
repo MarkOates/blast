@@ -29,6 +29,8 @@ SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, st
    , source_project_directory(source_project_directory)
    , main_program_filename(main_program_filename)
    , link_with_opengl(link_with_opengl)
+   , build_process_completed_successfully(false)
+   , generated_release_folder_name("")
    , copy_allegro_flare_source(copy_allegro_flare_source)
    , copy_nlohmann_json_from_allegro_flare_source(copy_nlohmann_json_from_allegro_flare_source)
    , copy_ordered_map_from_allegro_flare_source(copy_ordered_map_from_allegro_flare_source)
@@ -121,6 +123,18 @@ std::string SourceReleaseBuilder::get_main_program_filename() const
 bool SourceReleaseBuilder::get_link_with_opengl() const
 {
    return link_with_opengl;
+}
+
+
+bool SourceReleaseBuilder::get_build_process_completed_successfully() const
+{
+   return build_process_completed_successfully;
+}
+
+
+std::string SourceReleaseBuilder::get_generated_release_folder_name() const
+{
+   return generated_release_folder_name;
 }
 
 
@@ -405,8 +419,14 @@ void SourceReleaseBuilder::recursively_remove_folder_with_prompt(std::string fol
    return;
 }
 
-void SourceReleaseBuilder::generate_source_release()
+bool SourceReleaseBuilder::generate_source_release()
 {
+   // global info
+   build_process_completed_successfully = false;
+   generated_release_folder_name = "";
+
+
+
    // options:
    bool validate_bin_programs_data_folder_from_source_exists = true;
    bool validate_readme_exists_in_source_folder = true;
@@ -418,10 +438,13 @@ void SourceReleaseBuilder::generate_source_release()
    std::string source_directory = get_source_project_directory();
 
    // !! WARNING: local variable name shadows class instance variable name:
-   std::string xxx = destination_directory
-                   + "/"
-                   + get_source_release_folder_name()
-                   + "-" + time_stamper.generate_now_timestamp_utc();
+   // !! WARNING: local variable name shadows class instance variable name:
+   // !! WARNING: local variable name shadows class instance variable name:
+   std::string generated_folder_name = get_source_release_folder_name()
+                                     + "-"
+                                     + time_stamper.generate_now_timestamp_utc();
+
+   std::string xxx = destination_directory + "/" + generated_folder_name;
 
    // create the directory
    std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();
@@ -698,7 +721,12 @@ void SourceReleaseBuilder::generate_source_release()
    }
 
 
-   return;
+
+   build_process_completed_successfully = true;
+   generated_release_folder_name = generated_folder_name;
+
+
+   return build_process_completed_successfully;
 }
 
 

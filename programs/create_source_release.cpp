@@ -6,6 +6,15 @@
 #include <vector>
 #include <iostream>
 
+
+#define CONSOLE_COLOR_RED "\033[1;31m"
+#define CONSOLE_COLOR_YELLOW "\033[1;33m"
+#define CONSOLE_COLOR_GREEN "\033[1;32m"
+#define CONSOLE_COLOR_DEFAULT "\033[0m"
+#define CONSOLE_COLOR_CYAN "\033[1;36m"
+
+
+
 std::string surround_with_box(std::string message)
 {
    return message;
@@ -95,6 +104,24 @@ int main(int argc, char **argv)
       );
    source_release_builder.set_prompt_before_deleting_unneeded_folders(false);
    source_release_builder.generate_source_release();
+
+   if (!source_release_builder.get_build_process_completed_successfully())
+   {
+      std::stringstream error_message;
+      error_message << "create_source_release: error: directory does not exist named \"" << complete_folder_path_to_project_folder << "\"";
+      throw std::runtime_error(error_message.str().c_str());
+      exit(1);
+   }
+   else
+   {
+      std::stringstream success_message;
+
+      success_message << " === Source Release Generated Successfully ! ===" << std::endl;
+      success_message << "     Releases base folder: \"" << complete_folder_path_to_project_folder << "\"" << std::endl;
+      success_message << "      Release folder name: \"" << source_release_builder.get_generated_release_folder_name() << "\"" << std::endl;
+
+      std::cout << CONSOLE_COLOR_CYAN << success_message.str() << CONSOLE_COLOR_DEFAULT << std::endl;
+   }
 
    return 0;
 }

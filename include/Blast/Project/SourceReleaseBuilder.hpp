@@ -18,6 +18,8 @@ namespace Blast
          std::string source_project_directory;
          std::string main_program_filename;
          bool link_with_opengl;
+         bool build_process_completed_successfully;
+         std::string generated_release_folder_name;
          bool copy_allegro_flare_source;
          bool copy_nlohmann_json_from_allegro_flare_source;
          bool copy_ordered_map_from_allegro_flare_source;
@@ -47,6 +49,8 @@ namespace Blast
          std::string get_source_project_directory() const;
          std::string get_main_program_filename() const;
          bool get_link_with_opengl() const;
+         bool get_build_process_completed_successfully() const;
+         std::string get_generated_release_folder_name() const;
          bool get_copy_allegro_flare_source() const;
          bool get_copy_nlohmann_json_from_allegro_flare_source() const;
          bool get_copy_ordered_map_from_allegro_flare_source() const;
@@ -67,7 +71,7 @@ namespace Blast
          std::string get_win64_release_folder_name();
          void generate_macos_release();
          void recursively_remove_folder_with_prompt(std::string folder_to_remove="/Users/markoates/Desktop/releases");
-         void generate_source_release();
+         bool generate_source_release();
       };
    }
 }

@@ -31,6 +31,18 @@ properties:
     getter: true
     setter: true
 
+  - name: build_process_completed_successfully
+    type: bool
+    init_with: false
+    getter: true
+
+  - name: generated_release_folder_name
+    type: std::string
+    init_with: '""'
+    getter: true
+    getter_ref: false
+    setter: false
+
   - name: copy_allegro_flare_source
     type: bool
     init_with: true
@@ -364,7 +376,14 @@ functions:
 
 
   - name: generate_source_release
+    type: bool
     body: |
+      // global info
+      build_process_completed_successfully = false;
+      generated_release_folder_name = "";
+
+
+
       // options:
       bool validate_bin_programs_data_folder_from_source_exists = true;
       bool validate_readme_exists_in_source_folder = true;
@@ -376,10 +395,13 @@ functions:
       std::string source_directory = get_source_project_directory();
 
       // !! WARNING: local variable name shadows class instance variable name:
-      std::string xxx = destination_directory
-                      + "/"
-                      + get_source_release_folder_name()
-                      + "-" + time_stamper.generate_now_timestamp_utc();
+      // !! WARNING: local variable name shadows class instance variable name:
+      // !! WARNING: local variable name shadows class instance variable name:
+      std::string generated_folder_name = get_source_release_folder_name()
+                                        + "-"
+                                        + time_stamper.generate_now_timestamp_utc();
+
+      std::string xxx = destination_directory + "/" + generated_folder_name;
 
       // create the directory
       std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();
@@ -656,7 +678,12 @@ functions:
       }
 
 
-      return;
+
+      build_process_completed_successfully = true;
+      generated_release_folder_name = generated_folder_name;
+
+
+      return build_process_completed_successfully;
     body_dependency_symbols:
       - remove
       - Blast::DirectoryCreator
