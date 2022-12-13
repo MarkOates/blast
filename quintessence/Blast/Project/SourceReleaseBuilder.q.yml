@@ -132,7 +132,12 @@ functions:
  
       MAKEFILE_CONTENT
                        //<< "SRC_FILES := $(shell find src -type f)"
-                       << "SRC_FILES := $(shell find src -type f -not -path '*/.*')"
+                       // NOTE: this line includes a '-not -name "*~"' clause that is intended to prevent emacs
+                       // temp files from being included in the source. Note that this release Makefile is designed
+                       // to be static (not for development context), so this may be removed in the future.
+                       << "SRC_FILES := $(shell find src -type f -not -path '*/.*' -not -name \"*~\")"
+                       // NOTE: the previous version without the clause is here:
+                       //<< "SRC_FILES := $(shell find src -type f -not -path '*/.*')"
                        << std::endl
                        << "ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog "
                        << "-lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro "
