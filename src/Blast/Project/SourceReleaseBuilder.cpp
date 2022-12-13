@@ -23,8 +23,8 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string destination_directory, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool prompt_before_deleting_unneeded_folders)
-   : destination_directory(destination_directory)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool prompt_before_deleting_unneeded_folders)
+   : releases_base_folder(releases_base_folder)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
    , main_program_filename(main_program_filename)
@@ -309,7 +309,7 @@ void SourceReleaseBuilder::copy_file(std::string source_filename, std::string de
 
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
 {
-   std::string command = std::string("find ") + destination_directory;
+   std::string command = std::string("find ") + releases_base_folder;
    Blast::ShellCommandExecutorWithCallback executor(
       command,
       ShellCommandExecutorWithCallback::simple_silent_callback
@@ -339,7 +339,7 @@ std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_syml
 
 void SourceReleaseBuilder::fix_symlink_targets_from_relative_to_absolute()
 {
-   Blast::Project::ProjectSymlinkFixer symlink_fixer(destination_directory);
+   Blast::Project::ProjectSymlinkFixer symlink_fixer(releases_base_folder);
    symlink_fixer.run();
    return;
 }
@@ -430,6 +430,7 @@ bool SourceReleaseBuilder::generate_source_release()
    // options:
    bool validate_bin_programs_data_folder_from_source_exists = true;
    bool validate_readme_exists_in_source_folder = true;
+   bool validate_zip_command_exists = true;
    bool copy_allegro_flare_source_and_header_files_from_source = true;
    bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
    bool copy_allegro_flare_include_lib_ordered_map_from_source = true;
@@ -444,7 +445,7 @@ bool SourceReleaseBuilder::generate_source_release()
                                      + "-"
                                      + time_stamper.generate_now_timestamp_utc();
 
-   std::string xxx = destination_directory + "/" + generated_folder_name;
+   std::string xxx = releases_base_folder + "/" + generated_folder_name;
 
    // create the directory
    std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();
@@ -491,6 +492,12 @@ bool SourceReleaseBuilder::generate_source_release()
             message
          );
       }
+   }
+
+
+   if (validate_zip_command_exists)
+   {
+      // TODO: validate "zip" shell command exists
    }
 
 
@@ -719,6 +726,39 @@ bool SourceReleaseBuilder::generate_source_release()
       std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Testing";
       recursively_remove_folder_with_prompt(src_folder_to_remove);
    }
+
+
+
+   // Zip up folder contents
+
+   std::stringstream zip_release_folder_command;
+   zip_release_folder_command << "(cd "
+                              << releases_base_folder
+                              << " && zip -r "
+                              << generated_folder_name
+                              << ".zip "
+                              << generated_folder_name
+                              << ")";
+   std::cout << "Running zip command:" << std::endl;
+   std::cout << "   " << zip_release_folder_command.str() << std::endl;
+   Blast::ShellCommandExecutorWithCallback ordered_map_file_copy_executor(
+         zip_release_folder_command.str(), ShellCommandExecutorWithCallback::simple_silent_callback
+      );
+   ordered_map_file_copy_executor.execute();
+
+
+
+   // TODO: Upload the file to a google bucket
+
+   // https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-code-sample
+
+
+
+
+   // TODO: Write the info about the build to the "outgoing_build_file.txt"
+
+   // /Users/markoates/Releases/outgoing_build_info.txt
+
 
 
 
