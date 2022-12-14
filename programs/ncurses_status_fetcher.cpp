@@ -306,6 +306,7 @@ void initialize()
          { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
          { "beebot",           { false, ProjectStatus("beebot") } },
          { "blast",            { false, ProjectStatus("blast") } },
+         { "dungeon",            { false, ProjectStatus("dungeon") } },
          { "hexagon",          { false, ProjectStatus("hexagon") } },
          { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
          { "me",               { false, ProjectStatus("me") } },
