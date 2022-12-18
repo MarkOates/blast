@@ -1,3 +1,35 @@
+class String
+  # colorization
+  def colorize(color_code)
+    "\e[#{color_code}m#{self}\e[0m"
+  end
+
+  def red
+    colorize(31)
+  end
+
+  def green
+    colorize(32)
+  end
+
+  def yellow
+    colorize(33)
+  end
+
+  def blue
+    colorize(34)
+  end
+
+  def pink
+    colorize(35)
+  end
+
+  def light_blue
+    colorize(36)
+  end
+end
+
+
 class TreeBuilder
   def puts_yamls
     puts yamls
@@ -16,7 +48,13 @@ class TreeBuilder
     processed_lines.map do |processed_line|
       #processed_line[:symbol]
       filename = processed_line[:filename]
+      begin
       yaml = YAML.load(file_contents(filename: filename))
+      rescue Exception => e
+        puts "[blast/build_documentation/tree_builder.rb] error: An error occurred when attempting to parse content from the file \"#{filename}\".".red
+        puts "#{e.class} - #{e.message}"
+        raise StandardError.new("build error.")
+      end
       result[filename] = yaml
       #(result[processed_line[:filename]] ||= []) << processed_line[:symbol]
       #processed_line[:symbol]
