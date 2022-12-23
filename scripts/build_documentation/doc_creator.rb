@@ -6,6 +6,18 @@ class DocCreator
     @dependents = {}
   end
 
+  def build_parameters_string(parameters:)
+    return "" if parameters.nil?
+    results = [];
+    parameters.each do |parameter|
+      type = CGI::escapeHTML(parameter['type'])
+      default_argument = CGI::escapeHTML(parameter['default_argument'].to_s)
+
+      results << (type + " " + parameter['name'] + "=" + default_argument)
+    end
+    results.join(", ")
+  end
+
   def generate_doc
     result =  "<!DOCTYPE html>\n"
     result += "<head>\n"
@@ -50,11 +62,12 @@ class DocCreator
           methods.each do |method|
             result += "<tr>\n"
             method_name = escape_html_chars(method['name'])
-            num_method_parameters = method['parameters']&.count
+            #num_method_parameters = method['parameters']&.count
+            method_parameters = build_parameters_string(parameters: method['parameters'])
             method_is_private = method['private']
 
             css_class = method_is_private ? 'private_method' : 'method'
-            result += "  <td class=\"#{css_class}\">#{method_name}(#{num_method_parameters})</td>\n"
+            result += "  <td class=\"#{css_class}\">#{method_name}(#{method_parameters})</td>\n"
             result += "</tr>\n"
           end
         end
