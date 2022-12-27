@@ -301,6 +301,8 @@ void initialize()
          { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21") } },
          { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
          { "DragonWrath",      { false, ProjectStatus("DragonWrath") } },
+         { "ChatGPT",      { false, ProjectStatus("ChatGPT") } },
+         { "KrampusReturns",      { false, ProjectStatus("KrampusReturns") } },
          { "Releaser",      { false, ProjectStatus("Releaser") } },
          { "Slug3D",               { false, ProjectStatus("slug_3d") } },
          { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
