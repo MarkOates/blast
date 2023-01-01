@@ -294,6 +294,8 @@ YAML::Node default_dependencies()
   headers: [ 'sstream' ]
 - symbol: std::function
   headers: [ functional ]
+- symbol: std::size_t
+  headers: [ cstddef ]
    )END";
 
 // The following have been removed now that dependency atomization is in effect:

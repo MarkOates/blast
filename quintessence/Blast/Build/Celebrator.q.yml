@@ -2,6 +2,7 @@ functions:
 
 
   - name: generate_full_width_output_banner
+    type: std::string
     parameters:
       - name: message
         type: std::string
@@ -9,10 +10,14 @@ functions:
       - name: width
         type: int
         default_argument: 80
-    type: std::string
+      - name: fill_char
+        type: char
+        default_argument: "'='"
+      - name: num_leading_fill_characters
+        type: std::size_t
+        default_argument: 4
     body: |
-      char fill_char = '=';
-      std::string decorated_message = "==== " + message + " ";
+      std::string decorated_message = std::string(num_leading_fill_characters, fill_char) + " " + message + " ";
 
       std::stringstream stream;
       stream
@@ -30,11 +35,11 @@ functions:
 
 
   - name: generate_pass_banner
+    type: std::string
     parameters:
       - name: width
         type: int
         default_argument: 80
-    type: std::string
     body: |
       char fill_char = ' ';
 
