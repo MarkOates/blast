@@ -102,6 +102,7 @@ table td
   <li><a href="#quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</a></li>
   <li><a href="#quintessence/StringSplitter.q.yml">quintessence/StringSplitter.q.yml</a></li>
   <li><a href="#quintessence/StringVectorIntersection.q.yml">quintessence/StringVectorIntersection.q.yml</a></li>
+  <li><a href="#quintessence/VortexFontLoader.q.yml">quintessence/VortexFontLoader.q.yml</a></li>
   <li><a href="#quintessence/ncurses_art/Backends/Base.q.yml">quintessence/ncurses_art/Backends/Base.q.yml</a></li>
   <li><a href="#quintessence/ncurses_art/Backends/Ncurses.q.yml">quintessence/ncurses_art/Backends/Ncurses.q.yml</a></li>
 </ul>
@@ -113,7 +114,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">draw_character(4)</td>
+  <td class="method">draw_character(std::map&lt;char, std::vector&lt;std::string&gt;&gt; letters=&#39;a&#39;, char c=&#39;a&#39;, int x=0, int y=0)</td>
 </tr>
     </table>
      <table>
@@ -159,7 +160,10 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">generate_full_width_output_banner(2)</td>
+  <td class="method">generate_full_width_output_banner(std::string message=&quot;&quot;, int width=80)</td>
+</tr>
+<tr>
+  <td class="method">generate_pass_banner(int width=80)</td>
 </tr>
     </table>
      <table>
@@ -330,7 +334,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">create(0)</td>
+  <td class="method">create()</td>
 </tr>
     </table>
      <table>
@@ -366,7 +370,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">exists(0)</td>
+  <td class="method">exists()</td>
 </tr>
     </table>
      <table>
@@ -386,10 +390,10 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">build_error_message(2)</td>
+  <td class="method">build_error_message(std::string from=&quot;[unset-from]&quot;, std::string message=&quot;[unset-message]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">throw_error(2)</td>
+  <td class="method">throw_error(std::string from=&quot;[unset-from]&quot;, std::string message=&quot;[unset-message]&quot;)</td>
 </tr>
     </table>
      <table>
@@ -551,7 +555,7 @@ table td
   <td class="method">last_write_time()</td>
 </tr>
 <tr>
-  <td class="private_method">check_file_existence(1)</td>
+  <td class="private_method">check_file_existence(Blast::ProjectComponentFileTypes::project_file_type_t type=Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE)</td>
 </tr>
 <tr>
   <td class="method">exists()</td>
@@ -709,13 +713,13 @@ table td
     </table>
      <table>
 <tr>
-  <td class="private_method">get_component_fragment_folder_name(1)</td>
+  <td class="private_method">get_component_fragment_folder_name(Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
 </tr>
 <tr>
-  <td class="private_method">get_component_fragment_extension(1)</td>
+  <td class="private_method">get_component_fragment_extension(Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
 </tr>
 <tr>
-  <td class="private_method">get_components_of_fragment_type(2)</td>
+  <td class="private_method">get_components_of_fragment_type(std::string project_root_directory=&quot;&quot;, Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
 </tr>
 <tr>
   <td class="method">components_sorted_by_most_recent()</td>
@@ -836,19 +840,19 @@ table td
     </table>
      <table>
 <tr>
-  <td class="private_method">starts_with(2)</td>
+  <td class="private_method">starts_with(std::string source=&quot;&quot;, std::string string_to_find=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">has_one_line(1)</td>
+  <td class="method">has_one_line(std::string filename=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">read_file_firstline(1)</td>
+  <td class="method">read_file_firstline(std::string filename=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">likely_an_intended_symlink(2)</td>
+  <td class="method">likely_an_intended_symlink(std::string filename=&quot;&quot;, std::string string_to_find=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">read_symlink(1)</td>
+  <td class="method">read_symlink(std::string filename=&quot;&quot;)</td>
 </tr>
 <tr>
   <td class="method">run()</td>
@@ -949,7 +953,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">write_file_contents(2)</td>
+  <td class="method">write_file_contents(std::string filename=&quot;&quot;, std::string file_contents=&quot;&quot;)</td>
 </tr>
 <tr>
   <td class="method">get_makefile_content()</td>
@@ -958,7 +962,7 @@ table td
   <td class="method">get_pinfo_content()</td>
 </tr>
 <tr>
-  <td class="method">copy_file(2)</td>
+  <td class="method">copy_file(std::string source_filename=&quot;&quot;, std::string destination_filename=&quot;&quot;)</td>
 </tr>
 <tr>
   <td class="method">list_symlinks()</td>
@@ -982,7 +986,7 @@ table td
   <td class="method">generate_macos_release()</td>
 </tr>
 <tr>
-  <td class="method">recursively_remove_folder_with_prompt(1)</td>
+  <td class="method">recursively_remove_folder_with_prompt(std::string folder_to_remove=&quot;/Users/markoates/Desktop/releases&quot;)</td>
 </tr>
 <tr>
   <td class="method">generate_source_release()</td>
@@ -1106,10 +1110,10 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">set_regex_expression(1)</td>
+  <td class="method">set_regex_expression(std::string regex_expression=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">set_options(1)</td>
+  <td class="method">set_options(std::vector&lt;std::regex_constants::syntax_option_type&gt; options={})</td>
 </tr>
 <tr>
   <td class="method">compile()</td>
@@ -1161,10 +1165,10 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">simple_silent_callback(1)</td>
+  <td class="method">simple_silent_callback(std::string string_for_appending=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">simple_cout_callback(1)</td>
+  <td class="method">simple_cout_callback(std::string string_for_appending=&quot;&quot;)</td>
 </tr>
 <tr>
   <td class="method">execute()</td>
@@ -1228,7 +1232,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">would_be_included_in_results(1)</td>
+  <td class="method">would_be_included_in_results(std::string element=&quot;&quot;)</td>
 </tr>
 <tr>
   <td class="method">results()</td>
@@ -1252,10 +1256,10 @@ table td
   <td class="method">trim()</td>
 </tr>
 <tr>
-  <td class="private_method">ltrim(1)</td>
+  <td class="private_method">ltrim(std::string s=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="private_method">rtrim(1)</td>
+  <td class="private_method">rtrim(std::string s=&quot;&quot;)</td>
 </tr>
     </table>
      <table>
@@ -1368,7 +1372,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="private_method">__replace(3)</td>
+  <td class="private_method">__replace(std::string str=&quot;source string&quot;, std::string from=&quot;source&quot;, std::string to=&quot;result&quot;)</td>
 </tr>
 <tr>
   <td class="method">generate_content()</td>
@@ -1552,13 +1556,13 @@ table td
   <td class="method">have_the_local_and_remote_repos_diverged()</td>
 </tr>
 <tr>
-  <td class="method">last_captured_output_from_status_request_contains_string(1)</td>
+  <td class="method">last_captured_output_from_status_request_contains_string(std::string string_to_find=)</td>
 </tr>
 <tr>
   <td class="method">poll_status()</td>
 </tr>
 <tr>
-  <td class="method">execute_command(1)</td>
+  <td class="method">execute_command(std::string command=)</td>
 </tr>
     </table>
      <table>
@@ -1759,7 +1763,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">append_questions(1)</td>
+  <td class="method">append_questions(std::vector&lt;Question&gt; new_questions=)</td>
 </tr>
 <tr>
   <td class="method">shuffle_questions()</td>
@@ -1802,7 +1806,7 @@ table td
   <td class="method">load_and_append()</td>
 </tr>
 <tr>
-  <td class="method">get_type_string(1)</td>
+  <td class="method">get_type_string(YAML::Node node=YAML::Node())</td>
 </tr>
     </table>
      <table>
@@ -1893,25 +1897,25 @@ table td
   <td class="method">run()</td>
 </tr>
 <tr>
-  <td class="method">format_for_quiz_yaml_date(1)</td>
+  <td class="method">format_for_quiz_yaml_date(std::vector&lt;Quizes::MultiplexQuestion&gt; questions={})</td>
 </tr>
 <tr>
-  <td class="method">format_for_quiz_yaml_relevance(1)</td>
+  <td class="method">format_for_quiz_yaml_relevance(std::vector&lt;Quizes::MultiplexQuestion&gt; questions={})</td>
 </tr>
 <tr>
-  <td class="method">write_file_contents(2)</td>
+  <td class="method">write_file_contents(std::string filename=&quot;&quot;, std::string file_contents=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">get_file_contents(1)</td>
+  <td class="method">get_file_contents(std::string filename=&quot;no-file.txt&quot;)</td>
 </tr>
 <tr>
-  <td class="method">sanitize_quotes(1)</td>
+  <td class="method">sanitize_quotes(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">split_trim_and_shuffle_by_semicolon(1)</td>
+  <td class="method">split_trim_and_shuffle_by_semicolon(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">trim(1)</td>
+  <td class="method">trim(std::string str=&quot;&quot;)</td>
 </tr>
     </table>
      <table>
@@ -1973,13 +1977,13 @@ table td
   <td class="method">load()</td>
 </tr>
 <tr>
-  <td class="method">trim(1)</td>
+  <td class="method">trim(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">extract_subject(4)</td>
+  <td class="method">extract_subject(std::string event_or_document=&quot;[not-set]&quot;, std::string person_name_or_symbol=&quot;[not-set]&quot;, std::string subject_group=&quot;[not-set]&quot;, int line_number=0)</td>
 </tr>
 <tr>
-  <td class="method">extract_subject_type(3)</td>
+  <td class="method">extract_subject_type(std::string event_or_document=&quot;[not-set]&quot;, std::string person_name_or_symbol=&quot;[not-set]&quot;, std::string subject_group=&quot;[not-set]&quot;)</td>
 </tr>
     </table>
      <table>
@@ -2011,7 +2015,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">sanitize_string(1)</td>
+  <td class="method">sanitize_string(std::string unfiltered_phrase=&quot;&quot;)</td>
 </tr>
 <tr>
   <td class="method">load()</td>
@@ -2091,6 +2095,23 @@ table td
 </ul>
 <ul>
   <div class="component">
+    <h3 id="quintessence/VortexFontLoader.q.yml">quintessence/VortexFontLoader.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">sanitize_string(std::string unfiltered_phrase=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">load()</td>
+</tr>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
     <h3 id="quintessence/ncurses_art/Backends/Base.q.yml">quintessence/ncurses_art/Backends/Base.q.yml</h3>
      <table>
 <tr>
@@ -2104,7 +2125,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">is_type(1)</td>
+  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
 </tr>
     </table>
      <table>
@@ -2126,7 +2147,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">property_is(1)</td>
+  <td class="method">property_is(std::string possible_type=&quot;&quot;)</td>
 </tr>
     </table>
      <table>
