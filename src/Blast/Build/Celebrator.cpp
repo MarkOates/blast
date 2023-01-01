@@ -51,20 +51,17 @@ std::string Celebrator::generate_pass_banner(int width)
      "▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒",
    };
 
-   std::string CONSOLE_COLOR_GREEN = "\033[31m";
+   std::string CONSOLE_COLOR_GREEN = "\033[32m";
    std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
    std::stringstream stream;
-   stream
-     << std::left
-     << std::setfill(fill_char)
-     << std::setw(width)
-     ;
-
    stream << CONSOLE_COLOR_GREEN;
    for (auto &line : lines)
    {
      stream
+       << std::left
+       << std::setfill(fill_char)
+       << std::setw(width)
        << line
        << std::endl
        ;

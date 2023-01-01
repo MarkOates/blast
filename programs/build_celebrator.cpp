@@ -24,19 +24,12 @@ int main(int argc, char **argv)
 {
    std::vector<std::string> raw_args;
    for (int i=0; i<argc; i++) raw_args.push_back(argv[i]);
-
    CommandLineFlaggedArgumentsParser args(raw_args);
 
-   std::string message = "";
-   if (!args.has_flag("-m"))
-   {
-      throw std::runtime_error("you must pass a message behind a \"-m\" flag.");
-   }
-   else
-   {
-      auto first_set = args.get_flagged_args("-m")[0];
-      message = Blast::StringJoiner(first_set, " ").join();
-   }
+
+   // extract shared params
+
+   // "length"
 
    int length = 80;
    if (args.has_flag("-l"))
@@ -44,6 +37,9 @@ int main(int argc, char **argv)
       std::vector<std::vector<std::string>> number = args.get_flagged_args("-l");
       length = atoi(number[0][0].c_str());
    }
+
+
+   // "color"
 
    std::string color_string = "";
    std::string closing_color_string = "";
@@ -58,11 +54,35 @@ int main(int argc, char **argv)
       }
    }
 
-   Blast::Build::Celebrator celebrator;
-   std::cout
-      << color_string
-      << celebrator.generate_full_width_output_banner(message, length)
-      << closing_color_string
-      << std::endl;
+
+   if (args.has_flag("-m"))
+   {
+      std::string message = "";
+      auto first_set = args.get_flagged_args("-m")[0];
+      message = Blast::StringJoiner(first_set, " ").join();
+      Blast::Build::Celebrator celebrator;
+      std::cout
+         << color_string
+         << celebrator.generate_full_width_output_banner(message, length)
+         << closing_color_string
+         << std::endl;
+   }
+   else if (args.has_flag("-P"))
+   {
+      //std::string message = "";
+      //auto first_set = args.get_flagged_args("-m")[0];
+      //message = Blast::StringJoiner(first_set, " ").join();
+      Blast::Build::Celebrator celebrator;
+      std::cout
+         << color_string
+         << celebrator.generate_pass_banner(length)
+         << closing_color_string
+         << std::endl;
+   }
+   else
+   {
+      throw std::runtime_error("you must pass a message behind a \"-m\" flag.");
+   }
+
    return 0;
 }
