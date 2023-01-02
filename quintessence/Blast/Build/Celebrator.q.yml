@@ -41,8 +41,6 @@ functions:
         type: int
         default_argument: 80
     body: |
-      char fill_char = ' ';
-
       std::vector<std::string> lines = {
         "|---------- ruler ----------------------------------------------------------------------------------------------|",
         "▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒",
@@ -137,14 +135,16 @@ functions:
         type: int
         default_argument: 80
     body: |
-      char fill_char = ' ';
+      std::string CONSOLE_COLOR_GREEN = "\033[1;32m";
+      std::string CONSOLE_COLOR_BLUE = "\033[1;34m";
+      std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
       std::vector<std::string> lines = {
         "|---------- ruler --------------------------------------------------------------------------------------|",
         build_patterned_line(105),
         //"▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓",
         "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒                                     ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
-        "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒           COMPONENT BUILT           ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
+        "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒           \033[1;34mCOMPONENT BUILT\033[1;32m           ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
         "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒                                     ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
         build_patterned_line(105),
         //"▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓",
@@ -168,9 +168,6 @@ functions:
         lines.erase(lines.begin());
       }
 
-      std::string CONSOLE_COLOR_GREEN = "\033[1;32m";
-      std::string CONSOLE_COLOR_BLUE = "\033[1;34m";
-      std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
       // DEBUG
       // TODO: Add a "debug_output" option, and add a --debug flag to the programs/build_celebrator

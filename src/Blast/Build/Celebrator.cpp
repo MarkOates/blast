@@ -42,8 +42,6 @@ std::string Celebrator::generate_full_width_output_banner(std::string message, i
 
 std::string Celebrator::generate_pass_banner(int width)
 {
-   char fill_char = ' ';
-
    std::vector<std::string> lines = {
      "|---------- ruler ----------------------------------------------------------------------------------------------|",
      "▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒",
@@ -127,14 +125,16 @@ std::string Celebrator::build_patterned_line(int length)
 
 std::string Celebrator::generate_component_built_banner(int width)
 {
-   char fill_char = ' ';
+   std::string CONSOLE_COLOR_GREEN = "\033[1;32m";
+   std::string CONSOLE_COLOR_BLUE = "\033[1;34m";
+   std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
    std::vector<std::string> lines = {
      "|---------- ruler --------------------------------------------------------------------------------------|",
      build_patterned_line(105),
      //"▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓",
      "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒                                     ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
-     "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒           COMPONENT BUILT           ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
+     "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒           \033[1;34mCOMPONENT BUILT\033[1;32m           ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
      "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒                                     ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
      build_patterned_line(105),
      //"▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓",
@@ -158,9 +158,6 @@ std::string Celebrator::generate_component_built_banner(int width)
      lines.erase(lines.begin());
    }
 
-   std::string CONSOLE_COLOR_GREEN = "\033[1;32m";
-   std::string CONSOLE_COLOR_BLUE = "\033[1;34m";
-   std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
    // DEBUG
    // TODO: Add a "debug_output" option, and add a --debug flag to the programs/build_celebrator
