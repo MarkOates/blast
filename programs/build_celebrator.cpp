@@ -4,6 +4,8 @@
 #include <Blast/Build/Celebrator.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <Blast/CommandLineFlaggedArgumentsParser.hpp>
+#include <iomanip>
+#include <sstream>
 #include <iostream>
 #include <stdlib.h> // for atoi
 
@@ -22,6 +24,36 @@ namespace AllegroFlare
 // TODO: change the -P flag to --pass
 
 
+
+std::string build_help_output_message()
+{
+   int left_padding = 5;
+   int longest_flag = 21;
+   std::stringstream result;
+   std::vector<std::pair<std::string, std::string>> flag_infos = {
+      { "-m",                "Message to be used to output. Only used in standard banners." },
+      { "-c",                "A color to use in the output message. Options include `yellow`, `green`." },
+      { "--pass",            "Output the PASS banner." },
+      { "--component_built", "Output the \"component built\" banner." },
+   };
+
+   for (auto &flag_info : flag_infos)
+   {
+      std::string flag = flag_info.first;
+      std::string flag_description = flag_info.second;
+      result << std::left
+             << std::string(left_padding, ' ')
+             << std::setw(longest_flag) << flag
+             << std::left
+             << std::setw(10) << flag_description
+             << std::endl;
+   }
+
+   return result.str();
+}
+
+
+
 const std::string HELP_OUTPUT_MESSAGE = R"END(
 == Build Celebrator ==
 == program: blast/programs/build_celebrator ==
@@ -29,14 +61,12 @@ const std::string HELP_OUTPUT_MESSAGE = R"END(
 
 You must use one of the following flags:
 
-   -m       output the message
-   -c       choose a color. Valid values are currently "yellow", "green"
-   --pass   output the PASS banner
+)END" + build_help_output_message();
 
-)END";
 
 
 using Blast::CommandLineFlaggedArgumentsParser;
+
 
 
 int main(int argc, char **argv)
@@ -98,8 +128,13 @@ int main(int argc, char **argv)
    }
    else
    {
-      throw std::runtime_error("you must pass a message behind a \"-m\" flag.");
+      std::cout << "Usage:" << std::endl;
+      std::cout << HELP_OUTPUT_MESSAGE << std::endl;
+      return 1;
    }
 
    return 0;
 }
+
+
+
