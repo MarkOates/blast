@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -97,17 +98,46 @@ std::string Celebrator::generate_pass_banner(int width)
    return stream.str();
 }
 
+std::string Celebrator::build_patterned_line(int length)
+{
+   if (!((length > 0)))
+   {
+      std::stringstream error_message;
+      error_message << "[Celebrator::build_patterned_line]: error: guard \"(length > 0)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("Celebrator::build_patterned_line: error: guard \"(length > 0)\" not met");
+   }
+   // NOTE: this function is WIP
+   std::stringstream result;
+   std::string CONSOLE_COLOR_GREEN = "\033[1;32m";
+   std::string CONSOLE_COLOR_BLUE = "\033[1;34m";
+
+   int length_so_far = 0;
+
+   // TODO:
+   while (length_so_far < (length-1))
+   {
+      result << CONSOLE_COLOR_GREEN << "▓" << CONSOLE_COLOR_BLUE << "▒";
+      length_so_far += 2;
+   }
+   result << CONSOLE_COLOR_GREEN << "▓";
+
+   return result.str();
+}
+
 std::string Celebrator::generate_component_built_banner(int width)
 {
    char fill_char = ' ';
 
    std::vector<std::string> lines = {
      "|---------- ruler --------------------------------------------------------------------------------------|",
-     "▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓",
+     build_patterned_line(105),
+     //"▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓",
      "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒                                     ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
      "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒           COMPONENT BUILT           ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
      "▓▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒                                     ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒▓",
-     "▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓",
+     build_patterned_line(105),
+     //"▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓▒▓",
    };
 
    int banner_width = 0;
@@ -128,7 +158,8 @@ std::string Celebrator::generate_component_built_banner(int width)
      lines.erase(lines.begin());
    }
 
-   std::string CONSOLE_COLOR_GREEN = "\033[32m";
+   std::string CONSOLE_COLOR_GREEN = "\033[1;32m";
+   std::string CONSOLE_COLOR_BLUE = "\033[1;34m";
    std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
    // DEBUG
@@ -142,7 +173,7 @@ std::string Celebrator::generate_component_built_banner(int width)
    //std::cout << "left_padding: #" << left_padding_str << "#" << std::endl;
 
    std::stringstream stream;
-   stream << CONSOLE_COLOR_GREEN;
+   //stream << CONSOLE_COLOR_GREEN;
    for (auto &line : lines)
    {
      stream

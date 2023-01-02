@@ -16,6 +16,7 @@ namespace AllegroFlare
 #define CONSOLE_COLOR_YELLOW "\033[1;33m"
 #define CONSOLE_COLOR_GREEN "\033[1;32m"
 #define CONSOLE_COLOR_DEFAULT "\033[0m"
+#define TERMINAL_COLOR_BLUE "\033[1;34m"
 }
 
 
@@ -34,7 +35,7 @@ std::string build_help_output_message()
       { "-m",                "Message to be used to output. Only used in standard banners." },
       { "-c",                "A color to use in the output message. Options include `yellow`, `green`." },
       { "--pass",            "Output the PASS banner." },
-      { "--component_built", "Output the \"component built\" banner." },
+      { "--component_built", "Output the COMPONENT BUILT banner." },
    };
 
    for (auto &flag_info : flag_infos)
