@@ -74,9 +74,7 @@ int main(int argc, char **argv)
       //message = Blast::StringJoiner(first_set, " ").join();
       Blast::Build::Celebrator celebrator;
       std::cout
-         << color_string
          << celebrator.generate_pass_banner(length)
-         << closing_color_string
          << std::endl;
    }
    else

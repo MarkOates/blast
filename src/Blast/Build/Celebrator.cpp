@@ -3,6 +3,7 @@
 #include <Blast/Build/Celebrator.hpp>
 
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -50,17 +51,34 @@ std::string Celebrator::generate_pass_banner(int width)
      "▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒",
    };
 
+   int banner_width = 0;
+
+   // HACK
+   // OK, the lengths of the strings are not being reported properly, probably because they might be wchars or the string
+   // is using extended chars.  For now... as a hack... I'm going to manually set the length to 113.  See this stack
+   // overflow for more info: https://stackoverflow.com/questions/4063146/getting-the-actual-length-of-a-utf-8-encoded-stdstring
+
+   //if (!lines.empty()) banner_width = lines[0].length();
+   banner_width = 113;
+
    std::string CONSOLE_COLOR_GREEN = "\033[32m";
    std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
+
+   // DEBUG
+
+   int left_padding_width = std::max(0, (width - banner_width) / 2);
+   std::string left_padding_str(left_padding_width, ' ');
+   //std::cout << "banner_width: " << banner_width << std::endl;
+   //std::cout << "width: " << width << std::endl;
+   //std::cout << "left_padding_width: " << left_padding_width << std::endl;
+   //std::cout << "left_padding: #" << left_padding << "#" << std::endl;
 
    std::stringstream stream;
    stream << CONSOLE_COLOR_GREEN;
    for (auto &line : lines)
    {
      stream
-       << std::left
-       << std::setfill(fill_char)
-       << std::setw(width)
+       << left_padding_str
        << line
        << std::endl
        ;
