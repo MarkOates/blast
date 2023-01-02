@@ -118,12 +118,16 @@ int main(int argc, char **argv)
    }
    else if (args.has_flag("--pass"))
    {
-      //std::string message = "";
-      //auto first_set = args.get_flagged_args("-m")[0];
-      //message = Blast::StringJoiner(first_set, " ").join();
       Blast::Build::Celebrator celebrator;
       std::cout
          << celebrator.generate_pass_banner(length)
+         << std::endl;
+   }
+   else if (args.has_flag("--component_built"))
+   {
+      Blast::Build::Celebrator celebrator;
+      std::cout
+         << celebrator.generate_component_built_banner(length)
          << std::endl;
    }
    else
