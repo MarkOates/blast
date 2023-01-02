@@ -29,9 +29,9 @@ const std::string HELP_OUTPUT_MESSAGE = R"END(
 
 You must use one of the following flags:
 
-   -m      output the message
-   -c      choose a color. Valid values are currently "yellow", "green"
-   -P      output the PASS banner
+   -m       output the message
+   -c       choose a color. Valid values are currently "yellow", "green"
+   --pass   output the PASS banner
 
 )END";
 
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
          << closing_color_string
          << std::endl;
    }
-   else if (args.has_flag("-P"))
+   else if (args.has_flag("--pass"))
    {
       //std::string message = "";
       //auto first_set = args.get_flagged_args("-m")[0];
