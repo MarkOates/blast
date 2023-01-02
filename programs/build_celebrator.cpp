@@ -17,6 +17,25 @@ namespace AllegroFlare
 }
 
 
+
+// TODO: integrate this error message
+// TODO: change the -P flag to --pass
+
+
+const std::string HELP_OUTPUT_MESSAGE = R"END(
+== Build Celebrator ==
+== program: blast/programs/build_celebrator ==
+
+
+You must use one of the following flags:
+
+   -m      output the message
+   -c      choose a color. Valid values are currently "yellow", "green"
+   -P      output the PASS banner
+
+)END";
+
+
 using Blast::CommandLineFlaggedArgumentsParser;
 
 
