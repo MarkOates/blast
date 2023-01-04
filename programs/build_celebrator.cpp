@@ -36,6 +36,7 @@ std::string build_help_output_message()
       { "-c",                "A color to use in the output message. Options include `yellow`, `green`." },
       { "--pass",            "Output the PASS banner." },
       { "--component_built", "Output the COMPONENT BUILT banner." },
+      { "--built",           "Output the BUILT banner." },
    };
 
    for (auto &flag_info : flag_infos)
@@ -129,6 +130,13 @@ int main(int argc, char **argv)
       Blast::Build::Celebrator celebrator;
       std::cout
          << celebrator.generate_component_built_banner(length)
+         << std::endl;
+   }
+   else if (args.has_flag("--built"))
+   {
+      Blast::Build::Celebrator celebrator;
+      std::cout
+         << celebrator.generate_built_banner(length)
          << std::endl;
    }
    else

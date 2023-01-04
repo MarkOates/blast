@@ -24,6 +24,7 @@ namespace Blast
          std::string generate_pass_banner(int width=80);
          std::string build_patterned_line(int length=127);
          std::string generate_component_built_banner(int width=80);
+         std::string generate_built_banner(int width=80);
       };
    }
 }
