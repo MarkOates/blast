@@ -34,6 +34,9 @@
   "std/setw": [
     "Blast/Build/Celebrator"
   ],
+  "std/size_t": [
+    "Blast/Build/Celebrator"
+  ],
   "std/transform": [
     "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter",

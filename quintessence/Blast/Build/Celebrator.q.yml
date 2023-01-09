@@ -355,3 +355,7 @@ dependencies:
     headers: [ iomanip ]
   - symbol: std::setw
     headers: [ iomanip ]
+  - symbol: std::size_t
+    headers: [ cstddef ]
+
+
