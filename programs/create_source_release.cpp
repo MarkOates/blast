@@ -123,9 +123,10 @@ int main(int argc, char **argv)
       success_message << "==    Source Release Created Successfully!   ==" << std::endl;
       success_message << "===============================================" << std::endl;
       success_message << std::endl;
-      success_message << "      Releases base folder: \"" << destination_directory << "\"" << std::endl;
-      success_message << "       Release folder name: \"" << generated_release_folder_name << "\"" << std::endl;
-      success_message << "          Release zip file: \"" << generated_source_release_zip_filename << "\"" << std::endl;
+      success_message << "                   ~Releases base folder: \"" << destination_directory << "\"" << std::endl;
+      success_message << "   Command to go to the ~Releases folder: \"cd " << destination_directory << "\"" << std::endl;
+      success_message << "                     Release folder name: \"" << generated_release_folder_name << "\"" << std::endl;
+      success_message << "                        Release zip file: \"" << generated_source_release_zip_filename << "\"" << std::endl;
       success_message << std::endl;
       success_message << "Note that a zip file was automatically crated.  The following command can be used to zip it up if you wish to modify the folder and re-zip it:" << std::endl;
       success_message << std::endl;
