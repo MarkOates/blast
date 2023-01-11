@@ -116,8 +116,11 @@ int main(int argc, char **argv)
    {
       std::string generated_release_folder_name = source_release_builder.get_generated_release_folder_name();
       std::string generated_source_release_zip_filename = source_release_builder.get_generated_source_release_zip_filename();
+      std::string google_drive_file_id = "1wyNG-tHiSisNoTaReAlId_btw-7yQAcN"; // TODO: upload source to google bucket
       std::stringstream command_to_make_macos_release;
          command_to_make_macos_release << "make macos_release RELEASE_PROJECT_NAME=" << project_name << " RELEASE_FOLDER_NAME=" << generated_release_folder_name;
+      std::stringstream command_to_make_win64_release;
+         command_to_make_win64_release << "make win64_release GOOGLE_DRIVE_FILE_ID=" << google_drive_file_id << " EXPECTED_RELEASE_FOLDER_NAME=" << generated_release_folder_name;
       //std::string project_testing_src_folder_name << 
       //std::string project_testing_include_folder_name << 
       std::stringstream success_message;
@@ -145,6 +148,7 @@ int main(int argc, char **argv)
       success_message << "===============================================" << std::endl;
       success_message << std::endl;
       success_message << "   Command to make MacOS release: \"" << command_to_make_macos_release.str() << "\"" << std::endl;
+      success_message << "   Command to make Win64 release: \"" << command_to_make_win64_release.str() << "\"" << std::endl;
       success_message << std::endl;
       std::cout << CONSOLE_COLOR_CYAN << success_message.str() << CONSOLE_COLOR_DEFAULT << std::endl;
    }
