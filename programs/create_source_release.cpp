@@ -116,6 +116,8 @@ int main(int argc, char **argv)
    {
       std::string generated_release_folder_name = source_release_builder.get_generated_release_folder_name();
       std::string generated_source_release_zip_filename = source_release_builder.get_generated_source_release_zip_filename();
+      std::stringstream command_to_make_macos_release;
+         command_to_make_macos_release << "make macos_release RELEASE_PROJECT_NAME=" << project_name << " RELEASE_FOLDER_NAME=" << generated_release_folder_name;
       std::stringstream success_message;
 
       success_message << std::endl;
@@ -130,7 +132,12 @@ int main(int argc, char **argv)
       success_message << std::endl;
       success_message << "Note that a zip file was automatically crated.  The following command can be used to zip it up if you wish to modify the folder and re-zip it:" << std::endl;
       success_message << std::endl;
-      success_message << "zip -r " << generated_source_release_zip_filename << " " << generated_release_folder_name << std::endl;
+      success_message << std::endl;
+      success_message << "===============================================" << std::endl;
+      success_message << "==          Create a Binary Releases          ==" << std::endl;
+      success_message << "===============================================" << std::endl;
+      success_message << std::endl;
+      success_message << "   Command to make MacOS release: \"" << command_to_make_macos_release.str() << "\"" << std::endl;
       success_message << std::endl;
       std::cout << CONSOLE_COLOR_CYAN << success_message.str() << CONSOLE_COLOR_DEFAULT << std::endl;
    }
