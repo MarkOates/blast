@@ -132,6 +132,8 @@ int main(int argc, char **argv)
       success_message << std::endl;
       success_message << "Note that a zip file was automatically crated.  The following command can be used to zip it up if you wish to modify the folder and re-zip it:" << std::endl;
       success_message << std::endl;
+      success_message << "zip -r " << generated_source_release_zip_filename << " " << generated_release_folder_name << std::endl;
+      success_message << std::endl;
       success_message << std::endl;
       success_message << "===============================================" << std::endl;
       success_message << "==          Create a Binary Releases          ==" << std::endl;
