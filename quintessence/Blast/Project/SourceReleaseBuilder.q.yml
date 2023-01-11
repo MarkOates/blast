@@ -341,6 +341,13 @@ functions:
       return get_project_name() + "-Win64Release";
 
 
+  - name: get_generated_source_release_zip_filename
+    type: std::string
+    guards: [ build_process_completed_successfully ]
+    body: |
+      return generated_release_folder_name + ".zip";
+
+
   - name: generate_macos_release
     body: |
       // create folder "Flower.app/"

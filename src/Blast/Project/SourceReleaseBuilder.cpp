@@ -15,6 +15,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 
 
 namespace Blast
@@ -387,6 +388,18 @@ std::string SourceReleaseBuilder::get_macos_release_folder_name()
 std::string SourceReleaseBuilder::get_win64_release_folder_name()
 {
    return get_project_name() + "-Win64Release";
+}
+
+std::string SourceReleaseBuilder::get_generated_source_release_zip_filename()
+{
+   if (!(build_process_completed_successfully))
+   {
+      std::stringstream error_message;
+      error_message << "[SourceReleaseBuilder::get_generated_source_release_zip_filename]: error: guard \"build_process_completed_successfully\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("SourceReleaseBuilder::get_generated_source_release_zip_filename: error: guard \"build_process_completed_successfully\" not met");
+   }
+   return generated_release_folder_name + ".zip";
 }
 
 void SourceReleaseBuilder::generate_macos_release()

@@ -69,6 +69,7 @@ namespace Blast
          std::string get_source_release_folder_name();
          std::string get_macos_release_folder_name();
          std::string get_win64_release_folder_name();
+         std::string get_generated_source_release_zip_filename();
          void generate_macos_release();
          void recursively_remove_folder_with_prompt(std::string folder_to_remove="/Users/markoates/Desktop/releases");
          bool generate_source_release();
