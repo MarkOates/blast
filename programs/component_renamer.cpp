@@ -133,6 +133,21 @@ int main(int argc, char **argv)
    std::cout << std::endl;
    std::cout << std::endl;
 
+   // force moving the fragments in git if the name is identical but with different case
+   std::cout << "COMMAND: Force git to move the files just in case the changes were only to upper/lowercase letters:" << std::endl;
+   std::cout << "===================================================================================================" << std::endl;
+   std::cout << std::endl;
+   std::cout
+      << "git mv -f \"" << new_quintessence_filename << "\" \"" << new_quintessence_filename << "\"" << std::endl
+      << "git mv -f \"" << new_test_filename << "\" \"" << new_test_filename << "\"" << std::endl
+      << "git mv -f \"" << new_documentation_filename << "\" \"" << new_documentation_filename << "\"" << std::endl
+      << "git mv -f \"" << new_header_filename << "\" \"" << new_header_filename << "\"" << std::endl
+      << "git mv -f \"" << new_source_filename << "\" \"" << new_source_filename << "\"" << std::endl
+      ;
+   std::cout << std::endl;
+   std::cout << std::endl;
+
+
    // rename the symbols
    // example:
    // std::cout << "git grep -lz 'Wicked::Zones::Base3D' | xargs -0 perl -i'' -pE \"s/Wicked::Zones::Base3D/Wicked::Entities::Zones::Base3D/g\"" << std::endl;
