@@ -296,6 +296,10 @@ YAML::Node default_dependencies()
   headers: [ functional ]
 - symbol: std::size_t
   headers: [ cstddef ]
+- symbol: std::max
+  headers: [ algorithm ]
+- symbol: std::min
+  headers: [ algorithm ]
    )END";
 
 // The following have been removed now that dependency atomization is in effect:
