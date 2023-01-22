@@ -133,6 +133,7 @@ int main(int argc, char **argv)
       { "renderer", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "renderer.q.txt"), file_get_contents(TEMPLATES_PATH + "renderer_test.txt")) },
       { "screen", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "screen.q.txt"), file_get_contents(TEMPLATES_PATH + "screen_test.txt")) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
+      { "allegro_flare_shader", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "allegro_flare_shader.q.txt"), file_get_contents(TEMPLATES_PATH + "allegro_flare_shader_test.txt")) },
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },
       { "comparison", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "comparison.hpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison.cpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison_test.txt")) },
       { "json_loader", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "json_loader.hpp.txt"), file_get_contents(TEMPLATES_PATH + "json_loader.cpp.txt"), file_get_contents(TEMPLATES_PATH + "json_loader_test.txt")) },
