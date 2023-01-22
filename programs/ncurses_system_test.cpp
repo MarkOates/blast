@@ -1,7 +1,4 @@
-//#include "Projekt2.h"
-
-#include <allegro5/allegro.h> // only needed in this ase so tests wil compile
-#include <gtest/gtest.h>
+#include "Projekt2.h"
 
 #include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
@@ -14,17 +11,13 @@
 #include <ctime> // for std::time_t
 
 
-//#define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
-//#define MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"
-//#define MOVE_CURSOR_LEFT "MOVE_CURSOR_LEFT"
-//#define MOVE_CURSOR_RIGHT "MOVE_CURSOR_RIGHT"
+#define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
+#define MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"
+#define MOVE_CURSOR_LEFT "MOVE_CURSOR_LEFT"
+#define MOVE_CURSOR_RIGHT "MOVE_CURSOR_RIGHT"
 #define INITIALIZE_SCENE "INITIALIZE_SCENE"
 #define REFRESH_STATUSES "REFRESH_STATUSES"
 
-
-std::map<std::string, void(*)()> events = {
-   //{ EVENT_PROGRAM_INITIALIZED, initialize },
-};
 
 
 #include <fstream> // for std::ifstream
@@ -61,8 +54,7 @@ enum test_status
 
 #define PROPERTY_DELIMITER ": "
 
-//std::map<std::string, bool (*)()> tests = {};
-std::map<std::string, std::string> tests = {};
+std::map<std::string, bool (*)()> tests = {};
 
 
 auto command_callback = Blast::ShellCommandExecutorWithCallback::simple_silent_callback;
@@ -824,271 +816,53 @@ std::string check_it(std::string label, bool check)
 
 
 
-#include <iostream>
-#include <string>
-#include <cctype>
-
-// courtesy ChatGPT:
-std::string remove_non_alphanumeric(std::string input) {
-    std::string output = "";
-    for (int i = 0; i < input.size(); i++) {
-        if (isalnum(input[i]) || isspace(input[i])) {
-            output += input[i];
-        }
-    }
-    return output;
-}
-
-// courtesy ChatGPT:
-std::string replace_multiple_spaces(std::string input) {
-    std::string output = "";
-    for (int i = 0; i < input.size(); i++) {
-        if (input[i] == ' ') {
-            output += '_';
-            while (input[i] == ' ' && i < input.size()) {
-                i++;
-            }
-            i--;
-        } else {
-            output += input[i];
-        }
-    }
-    return output;
-}
-
-#include <iostream>
-#include <string>
-
-// courtesy ChatGPT:
-std::string escape_quotes(std::string input) {
-    std::string output = "";
-    for (int i = 0; i < input.size(); i++) {
-        if (input[i] == '\"') {
-            output += "\\\"";
-        } else if (input[i] == '\'') {
-            output += "\\\'";
-        } else {
-            output += input[i];
-        }
-    }
-    return output;
-}
-
-std::string sanitize_test_name(std::string source_test_name)
-{
-   return replace_multiple_spaces(remove_non_alphanumeric(source_test_name));
-}
-
-
-
-void initialize();
-//emit_event(INITIALIZE_SCENE);
-
-
-//TEST(SystemTest, will_format_tests)
-//{
-   //initialize();
-   //events[INITIALIZE_SCENE](); //(INITIALIZE_SCENE);
-
-   //int i=0; 
-   //for (auto &test : tests)
-   //{
-      //i++;
-      //std::string sanitized_test_name = sanitize_test_name(test.first);
-      //std::cout << "TEST(SystemTest, " << sanitized_test_name << ")" << std::endl;
-      //std::cout << "{" << std::endl;
-      //std::cout << "   EXPECT_EQ(true, " << test.second << "()) << \"Test: " << escape_quotes(test.first) << "\";" << std::endl;
-      //std::cout << "}" << std::endl;
-      //std::cout << std::endl;
-      //std::cout << std::endl;
-   //}
-//}
-
-
-
-
-TEST(SystemTest, ImageMagick_is_present_in_the_command_line_run_brew_update_brew_install_imagemagick)
-{
-   EXPECT_EQ(true, run_imagemagick_version_test()) << "Test: ImageMagick is present in the command line (run \"brew update && brew install imagemagick\")";
-}
-
-
-TEST(SystemTest, Rails_is_present_and_installed_otherwise_sudo_gem_install_rails_after_instaling_ruby_Needed_by_inflector_components_in_blast)
-{
-   EXPECT_EQ(true, run_rails_version_test()) << "Test: Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)";
-}
-
-
-TEST(SystemTest, Ruby_version_is_the_expected_version_otherwise_sudo_rubyinstall_ruby_265_then_sudo_rubyinstall_system_ruby_265)
-{
-   EXPECT_EQ(true, run_ruby_version_test()) << "Test: Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")";
-}
-
-
-TEST(SystemTest, a_targeted_set_of_executables_are_uptodate_to_their_source_files)
-{
-   EXPECT_EQ(true, check_select_executables_are_up_to_date_to_their_source()) << "Test: a targeted set of executables are up-to-date to their source files";
-}
-
-
-TEST(SystemTest, asio_standalone_is_present)
-{
-   EXPECT_EQ(true, asio_standalone_is_present()) << "Test: asio standalone is present";
-}
-
-
-TEST(SystemTest, bundler_is_present_and_installed_otherwise_sudo_gem_install_bundler201_after_instaling_ruby)
-{
-   EXPECT_EQ(true, run_bundler_version_test()) << "Test: bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)";
-}
-
-
-TEST(SystemTest, celebrate_executable_is_present)
-{
-   EXPECT_EQ(true, build_celebrator_executable_presence_check()) << "Test: celebrate executable is present";
-}
-
-
-TEST(SystemTest, celebrate_executable_is_uptodate_executable_been_created_at_a_time_later_than_the_last_change_to_its_source_file)
-{
-   EXPECT_EQ(true, build_celebrator_is_up_to_date()) << "Test: celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)";
-}
-
-
-TEST(SystemTest, chruby_is_present)
-{
-   EXPECT_EQ(true, run_chruby_test()) << "Test: chruby is present";
-}
-
-
-TEST(SystemTest, clang_version_is_the_expected_version_consider_running_brew_install_llvm_to_update_to_a_more_recent_version)
-{
-   EXPECT_EQ(true, check_clang_version_is_expected_version()) << "Test: clang version is the expected version (consider running \"brew install llvm\" to update to a more recent version)";
-}
-
-
-TEST(SystemTest, ffmpeg_is_installed_through_homebrew_used_to_convert_wav_files_to_ogg)
-{
-   EXPECT_EQ(true, run_ffmpeg_presence_test()) << "Test: ffmpeg is installed through homebrew (used to convert wav files to ogg)";
-}
-
-
-TEST(SystemTest, ghostscript_is_installed_through_homebrew_needed_for_imagemagicks_convert_filepdf_filepng)
-{
-   EXPECT_EQ(true, run_ghostscript_presence_test()) << "Test: ghostscript is installed through homebrew (needed for imagemagick\'s `convert file.pdf file.png`";
-}
-
-
-TEST(SystemTest, googletest_and_googlemock_library_are_installed)
-{
-   EXPECT_EQ(true, check_google_test_and_google_mock_installed()) << "Test: googletest and googlemock library are installed";
-}
-
-
-TEST(SystemTest, rerun_is_present_and_installed_otherwise_sudo_gem_install_rerun_after_instaling_ruby)
-{
-   EXPECT_EQ(true, run_rerun_version_test()) << "Test: rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)";
-}
-
-
-TEST(SystemTest, ripgrep_is_installed_through_homebrew)
-{
-   EXPECT_EQ(true, run_ripgrep_presence_test()) << "Test: ripgrep is installed through homebrew";
-}
-
-
-TEST(SystemTest, the_ApplicationsHexagonapp_symlink_points_to_the_expected_hexagon_app_package_create_with_ln_s_UsersmarkoatesReposhexagonbinHexagonapp_ApplicationsHexagonapp)
-{
-   EXPECT_EQ(true, check_hexagon_app_package_symlink_destination()) << "Test: the /Applications/Hexagon.app symlink points to the expected hexagon app package (create with \"ln -s /Users/markoates/Repos/hexagon/bin/Hexagon.app /Applications/Hexagon.app\")";
-}
-
-
-TEST(SystemTest, the_hexagon_app_package_is_present_in_the_hexagon_repo)
-{
-   EXPECT_EQ(true, run_hexagon_app_package_test()) << "Test: the hexagon app package is present in the hexagon repo";
-}
-
-
-TEST(SystemTest, the_systems_Applications_folder_contains_a_symlink_to_the_hexagon_repos_app_package)
-{
-   EXPECT_EQ(true, check_hexagon_app_package_alias_test()) << "Test: the system\'s /Applications folder contains a symlink to the hexagon repo\'s app package";
-}
-
-
-TEST(SystemTest, vims_firstvimplugin_is_in_sync_to_the_latest_version_run_PluginUpdate_in_vim)
-{
-   EXPECT_EQ(true, check_vim_plugins_are_in_sync_with_local_repos()) << "Test: vim\'s first_vim_plugin is in sync to the latest version (run \":PluginUpdate\" in vim)";
-}
-
-
-TEST(SystemTest, yamlcpp_is_installed_through_homebrew)
-{
-   EXPECT_EQ(true, run_yaml_cpp_presence_test()) << "Test: yaml-cpp is installed through homebrew";
-}
-
-
-TEST(SystemTest, vimbackup_folder_exists_run_mkdir_vimbackup_to_create)
-{
-   EXPECT_EQ(true, check_vimbackup_folder_exists()) << "Test: ~/.vimbackup folder exists (run \"mkdir .vimbackup\" to create)";
-}
-
-
-//EST(SystemTest, yaml_cpp_is_installed_through_homebrew)
-//{
-   //EXPECT_EQ(true, run_yaml_cpp_presence_test);
-//}
-
-
-
-
-
 void initialize()
 {
    events[INITIALIZE_SCENE] = []{
-      //create_text("output");
+      create_text("output");
 
       tests = {
-         { "yaml-cpp is installed through homebrew", "run_yaml_cpp_presence_test" },
-         { "ffmpeg is installed through homebrew (used to convert wav files to ogg)", "run_ffmpeg_presence_test" },
-         { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", "run_ruby_version_test" },
-         { "a targeted set of executables are up-to-date to their source files", "check_select_executables_are_up_to_date_to_their_source" },
-         { "ripgrep is installed through homebrew", "run_ripgrep_presence_test" },
-         { "asio standalone is present", "asio_standalone_is_present" },
-         { "chruby is present", "run_chruby_test" },
-         { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", "run_rerun_version_test" },
-         { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", "run_bundler_version_test" },
-         { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", "run_rails_version_test" },
-         { "googletest and googlemock library are installed", "check_google_test_and_google_mock_installed" },
-         { "celebrate executable is present", "build_celebrator_executable_presence_check" },
-         { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", "build_celebrator_is_up_to_date" },
-         { "the hexagon app package is present in the hexagon repo", "run_hexagon_app_package_test" },
-         { "the /Applications/Hexagon.app symlink points to the expected hexagon app package (create with \"ln -s /Users/markoates/Repos/hexagon/bin/Hexagon.app /Applications/Hexagon.app\")", "check_hexagon_app_package_symlink_destination" },
-         { "vim's first_vim_plugin is in sync to the latest version (run \":PluginUpdate\" in vim)", "check_vim_plugins_are_in_sync_with_local_repos" },
-         { "~/.vimbackup folder exists (run \"mkdir .vimbackup\" to create)", "check_vimbackup_folder_exists" },
-         { "ImageMagick is present in the command line (run \"brew update && brew install imagemagick\")", "run_imagemagick_version_test" },
-         //{ "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", "run_ruby_version_test" },
-         { "ghostscript is installed through homebrew (needed for imagemagick's `convert file.pdf file.png`", "run_ghostscript_presence_test" },
-         //{ "beebot is responsive", "check_beebot_response_ping" },
-         { "clang version is the expected version (consider running \"brew install llvm\" to update to a more recent version)", "check_clang_version_is_expected_version" },
-         //{ "ninja version is the expected version (consider running \"brew install ninja\" to update to a more recent version)", "check_ninja_version_is_expected_version" },
-         { "the system's /Applications folder contains a symlink to the hexagon repo's app package", "check_hexagon_app_package_alias_test" },
+         { "yaml-cpp is installed through homebrew", run_yaml_cpp_presence_test },
+         { "ffmpeg is installed through homebrew (used to convert wav files to ogg)", run_ffmpeg_presence_test },
+         { "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", run_ruby_version_test },
+         { "a targeted set of executables are up-to-date to their source files", check_select_executables_are_up_to_date_to_their_source },
+         { "ripgrep is installed through homebrew", run_ripgrep_presence_test },
+         { "asio standalone is present", asio_standalone_is_present },
+         { "chruby is present", run_chruby_test },
+         { "rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)", run_rerun_version_test },
+         { "bundler is present and installed (otherwise \"sudo gem install bundler:2.0.1\", after instaling ruby)", run_bundler_version_test },
+         { "Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)", run_rails_version_test },
+         { "googletest and googlemock library are installed", check_google_test_and_google_mock_installed },
+         { "celebrate executable is present", build_celebrator_executable_presence_check },
+         { "celebrate executable is up-to-date (executable been created at a time later than the last change to its source file)", build_celebrator_is_up_to_date },
+         { "the hexagon app package is present in the hexagon repo", run_hexagon_app_package_test },
+         { "the /Applications/Hexagon.app symlink points to the expected hexagon app package (create with \"ln -s /Users/markoates/Repos/hexagon/bin/Hexagon.app /Applications/Hexagon.app\")", check_hexagon_app_package_symlink_destination },
+         { "vim's first_vim_plugin is in sync to the latest version (run \":PluginUpdate\" in vim)", check_vim_plugins_are_in_sync_with_local_repos },
+         { "~/.vimbackup folder exists (run \"mkdir .vimbackup\" to create)", check_vimbackup_folder_exists },
+         { "ImageMagick is present in the command line (run \"brew update && brew install imagemagick\")", run_imagemagick_version_test },
+         //{ "Ruby version is the expected version (otherwise \"sudo ruby-install ruby 2.6.5\", then \"sudo ruby-install --system ruby 2.6.5\")", run_ruby_version_test },
+         { "ghostscript is installed through homebrew (needed for imagemagick's `convert file.pdf file.png`", run_ghostscript_presence_test },
+         //{ "beebot is responsive", check_beebot_response_ping },
+         { "clang version is the expected version (consider running \"brew install llvm\" to update to a more recent version)", check_clang_version_is_expected_version },
+         //{ "ninja version is the expected version (consider running \"brew install ninja\" to update to a more recent version)", check_ninja_version_is_expected_version },
+         { "the system's /Applications folder contains a symlink to the hexagon repo's app package", check_hexagon_app_package_alias_test },
 
 
-         //{ "on MacOS, Hexagon has an override keyboard shortcut for hiding the window (https://stackoverflow.com/q/45601543/6072362, https://superuser.com/a/1328252)", "just_a_failing_test" },
-         //{ "terminal sessions are still open despite ./dotfile changes", "just_a_failing_test" },
-         //{ "project binaries are up-to-date despite project file changes", "just_a_failing_test" },
-         //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", "just_a_failing_test" },
-         //{ "generating a blast project adds ./.keep files for the necessary created directories", "just_a_failing_test" },
+         //{ "on MacOS, Hexagon has an override keyboard shortcut for hiding the window (https://stackoverflow.com/q/45601543/6072362, https://superuser.com/a/1328252)", just_a_failing_test },
+         //{ "terminal sessions are still open despite ./dotfile changes", just_a_failing_test },
+         //{ "project binaries are up-to-date despite project file changes", just_a_failing_test },
+         //{ "terminal session has installed new ruby verions and chruby has been refreshed (with a terminal refresh)", just_a_failing_test },
+         //{ "generating a blast project adds ./.keep files for the necessary created directories", just_a_failing_test },
       };
 
 #ifdef _WIN32
       std::map<std::string, bool (*)()> windows_specific_tests = {
-         { "bashrc exists", "just_a_failing_test" },
-         { "bashrc exports a TERM system variable with the expected value", "just_a_failing_test" },
-         { "bashrc exports a TERMINFO system variable with the expected value", "just_a_failing_test" },
-         { "pacman has the mingw-w64-x86_64-yaml-cpp package installed", "just_a_failing_test" },
-         { "pacman has the ncurses-devel package installed", "just_a_failing_test" },
-         { "~/.vimbackup folder exists", "check_vimbackup_folder_exists" },
+         { "bashrc exists", just_a_failing_test },
+         { "bashrc exports a TERM system variable with the expected value", just_a_failing_test },
+         { "bashrc exports a TERMINFO system variable with the expected value", just_a_failing_test },
+         { "pacman has the mingw-w64-x86_64-yaml-cpp package installed", just_a_failing_test },
+         { "pacman has the ncurses-devel package installed", just_a_failing_test },
+         { "~/.vimbackup folder exists", check_vimbackup_folder_exists },
       };
 
       tests.insert(windows_specific_tests.begin(), windows_specific_tests.end());
@@ -1096,42 +870,32 @@ void initialize()
 
    };
    events[REFRESH_STATUSES] = []{
-      //Text &text = find_text("output");
+      Text &text = find_text("output");
 
-      //std::stringstream result_text;
+      std::stringstream result_text;
 
-      //for (auto &test : tests)
-      //{
-         //last_test_result = new TestResultEq();
-         //result_text << "running \"" << test.first << "\"";
+      for (auto &test : tests)
+      {
+         last_test_result = new TestResultEq();
+         result_text << "running \"" << test.first << "\"";
 
-         //bool test_result = (*test.second)();
-         //if (test_result == true)
-         //{
-            //result_text << " --- " << check_it("status", test_result);
-         //}
-         //else if (test_result == false)
-         //{
-            //result_text << std::endl;
-            //result_text << " --- " << check_it("status", test_result) << std::endl;
-         //}
-         //result_text << std::endl;
-      //}
+         bool test_result = (*test.second)();
+         if (test_result == true)
+         {
+            result_text << " --- " << check_it("status", test_result);
+         }
+         else if (test_result == false)
+         {
+            result_text << std::endl;
+            result_text << " --- " << check_it("status", test_result) << std::endl;
+         }
+         result_text << std::endl;
+      }
       
-      //text.set_text(result_text.str());
+      text.set_text(result_text.str());
    };
 
-   //emit_event(INITIALIZE_SCENE);
-   //emit_event(REFRESH_STATUSES);
+   emit_event(INITIALIZE_SCENE);
+   emit_event(REFRESH_STATUSES);
 }
-
-
-
-
-int main(int argc, char **argv)
-{
-   ::testing::InitGoogleTest(&argc, argv);
-   return RUN_ALL_TESTS();
-}
-
 
