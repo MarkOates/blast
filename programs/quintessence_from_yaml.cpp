@@ -1020,8 +1020,8 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::string> per_function_dependency_symbols = {};
    for (auto &function_and_dependency : functions_and_dependencies)
    {
-      functions.push_back(function_and_dependency.first);
-      for (auto &dependency_symbol : function_and_dependency.second)
+      functions.push_back(std::get<0>(function_and_dependency));
+      for (auto &dependency_symbol : std::get<1>(function_and_dependency))
       {
          per_function_dependency_symbols.push_back(dependency_symbol);
       }
