@@ -675,7 +675,7 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 }
 
 
-std::vector<std::string> extract_function_dependency_symbols(YAML::Node &source)
+std::vector<std::string> extract_function_body_dependency_symbols(YAML::Node &source)
 {
    const std::string DEPENDENCY_SYMBOLS = "body_dependency_symbols";
    std::vector<std::string> result;
@@ -686,6 +686,21 @@ std::vector<std::string> extract_function_dependency_symbols(YAML::Node &source)
 
    return result;
 }
+
+
+
+std::vector<std::string> extract_function_caller_dependency_symbols(YAML::Node &source)
+{
+   const std::string DEPENDENCY_SYMBOLS = "caller_dependency_symbols";
+   std::vector<std::string> result;
+
+   YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+
+   result = extract_sequence_as_string_array(dependency_symbols);
+
+   return result;
+}
+
 
 
 
@@ -756,14 +771,14 @@ std::vector<std::pair<Blast::Cpp::Function, std::vector<std::string>>> extract_f
 
       Blast::Cpp::Function function(type, name, signature, body_with_guard_code, is_static, is_const, is_override, is_virtual, is_pure_virtual, is_final_override, is_private, is_protected);
 
-      std::vector<std::string> dependency_symbols = extract_function_dependency_symbols(it);
+      std::vector<std::string> body_dependency_symbols = extract_function_body_dependency_symbols(it);
       if (!guards_conditionals.empty())
       {
          std::vector<std::string> guards_dependency_symbols = GuardCodeCreator::good_enough_for_now_guards_dependency_symbols();
-         dependency_symbols.insert(dependency_symbols.end(), guards_dependency_symbols.begin(), guards_dependency_symbols.end());
+         body_dependency_symbols.insert(body_dependency_symbols.end(), guards_dependency_symbols.begin(), guards_dependency_symbols.end());
       }
 
-      result.push_back({function, dependency_symbols});
+      result.push_back({function, body_dependency_symbols});
    }
 
    return result;
