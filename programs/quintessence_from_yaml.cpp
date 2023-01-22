@@ -689,9 +689,9 @@ std::vector<std::string> extract_function_body_dependency_symbols(YAML::Node &so
 
 
 
-std::vector<std::string> extract_function_caller_dependency_symbols(YAML::Node &source)
+std::vector<std::string> extract_default_argument_dependency_symbols(YAML::Node &source)
 {
-   const std::string DEPENDENCY_SYMBOLS = "caller_dependency_symbols";
+   const std::string DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
    std::vector<std::string> result;
 
    YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
@@ -704,11 +704,13 @@ std::vector<std::string> extract_function_caller_dependency_symbols(YAML::Node &
 
 
 
-std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>>> extract_functions_and_dependency_info(YAML::Node &source, std::string this_class_name="UnknownClass")
+                      // function            // internal deps          // default arg deps
+std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>>> extract_functions_and_dependency_info(YAML::Node &source, std::string this_class_name="UnknownClass")
 {
    std::string this_func_name = "extract_functions_and_dependency_info";
    const std::string FUNCTIONS = "functions";
-   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>>> result;
+                         // function            // internal deps          // default arg deps
+   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>>> result;
 
    YAML::Node source_functions = fetch_node(source, FUNCTIONS, YAML::NodeType::Sequence, YAML::Load("[]"));
 
@@ -771,6 +773,7 @@ std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>>> extract_
 
       Blast::Cpp::Function function(type, name, signature, body_with_guard_code, is_static, is_const, is_override, is_virtual, is_pure_virtual, is_final_override, is_private, is_protected);
 
+      // get the body dependency symbols
       std::vector<std::string> body_dependency_symbols = extract_function_body_dependency_symbols(it);
       if (!guards_conditionals.empty())
       {
@@ -778,7 +781,10 @@ std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>>> extract_
          body_dependency_symbols.insert(body_dependency_symbols.end(), guards_dependency_symbols.begin(), guards_dependency_symbols.end());
       }
 
-      result.push_back({function, body_dependency_symbols});
+      // get the dependency symbols that are the result of default arguments (and need to be public)
+      std::vector<std::string> default_argument_dependency_symbols = extract_default_argument_dependency_symbols(it);
+
+      result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols });
    }
 
    return result;
@@ -959,7 +965,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
-   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>>> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name);
+   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>>> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
 
