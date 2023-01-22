@@ -745,7 +745,7 @@ bool check_select_executables_are_up_to_date_to_their_source()
 
 bool check_clang_version_is_expected_version()
 {
-   last_test_result = new TestResultMatcher("^Apple clang version 12\\.[0-9]\\.[0-9]+ \\(clang-12[0-9][0-9]\\.[0-9]+\\.[0-9]+\\.[0-9]+\\)$", get_clang_version());
+   last_test_result = new TestResultMatcher("^Apple clang version 14\\.[0-9]\\.[0-9]+ \\(clang-14[0-9][0-9]\\.[0-9]+\\.[0-9]+\\.[0-9]+\\)$", get_clang_version());
    return last_test_result->assessment();
 }
 
@@ -813,6 +813,8 @@ std::string check_it(std::string label, bool check)
    }
    return result.str();
 }
+
+
 
 void initialize()
 {
