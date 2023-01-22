@@ -128,6 +128,16 @@ functions:
       - std::set
 
 
+  - name: is_state
+    type: bool
+    parameters:
+      - name: possible_state
+        type: uint32_t
+        default_argument: STATE_UNDEF
+    body: |
+     return (state == possible_state);
+
+
   - name: infer_current_state_age
     type: float
     parameters:
