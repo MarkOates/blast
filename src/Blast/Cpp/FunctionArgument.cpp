@@ -11,10 +11,11 @@ namespace Cpp
 {
 
 
-FunctionArgument::FunctionArgument(std::string type, std::string name, std::string default_value)
+FunctionArgument::FunctionArgument(std::string type, std::string name, std::string default_value, std::vector<std::string> default_value_dependency_symbols)
    : type(type)
    , name(name)
    , default_value(default_value)
+   , default_value_dependency_symbols(default_value_dependency_symbols)
 {
 }
 
@@ -40,6 +41,13 @@ std::string FunctionArgument::get_default_value()
 {
    return default_value;
 }
+
+
+std::vector<std::string> FunctionArgument::get_default_value_dependency_symbols()
+{
+   return default_value_dependency_symbols;
+}
+
 
 
 } // namespace Cpp
