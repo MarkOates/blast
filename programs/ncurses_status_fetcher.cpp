@@ -380,8 +380,13 @@ void initialize()
          bool project_has_been_processed = project.second.first;
          final_status_t final_status = get_final_status(num_local_branches, project_has_been_processed, exists_locally, in_sync, has_no_changed_files, has_no_untracked_files, has_no_staged_files);
 
+         int longest_project_name_length = 24;
+         int project_name_right_padding = 3;
+         //std::setw(longest_project_name_length + project_name_right_padding) << std::setfill('-');
          std::string status_icon_and_text = get_status_icon_and_text(final_status, num_local_branches);
-         result_text << project_identifier << PROPERTY_DELIMITER << status_icon_and_text;
+         result_text
+            << std::left << std::setw(longest_project_name_length + project_name_right_padding) << std::setfill('-') << (project_identifier + " ")
+            << status_icon_and_text;
          if (project_has_been_processed == true && !(final_status == CLEAN || final_status == EXTRA_LOCAL_BRANCHES))
          {
             result_text << "  " << show_it("repo name", repo_name) << std::endl;
