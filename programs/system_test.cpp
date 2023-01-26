@@ -1044,7 +1044,7 @@ TEST(SystemTest, ngrok_is_present_on_the_system)
    std::string symlink_check_command = "ngrok -v";
    Blast::ShellCommandExecutorWithCallback executor("ngrok -v", command_callback);
 
-   std::string expected_output = "ngrok version 3.1.0";
+   std::string expected_output = "ngrok version 3.1.1";
    std::string actual_output = trim(executor.execute());
 
    EXPECT_EQ(expected_output, actual_output);
