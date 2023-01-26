@@ -1033,6 +1033,19 @@ TEST(SystemTest, vimbackup_folder_exists_run_mkdir_vimbackup_to_create)
 }
 
 
+TEST(SystemTest, ngrok_is_present_on_the_system)
+{
+   std::string symlink_check_command = "ngrok -v";
+   Blast::ShellCommandExecutorWithCallback executor("ngrok -v", command_callback);
+
+   std::string expected_output = "ngrok version 3.1.0";
+   std::string actual_output = trim(executor.execute());
+
+   EXPECT_EQ(expected_output, actual_output);
+}
+
+
+
 //EST(SystemTest, yaml_cpp_is_installed_through_homebrew)
 //{
    //EXPECT_EQ(true, run_yaml_cpp_presence_test);
