@@ -21,7 +21,7 @@ functions:
     body: |
       std::string filename = Blast::ProjectComponentFilenameGenerator(
             name,
-            Blast::ProjectComponentFileTypes::TEST_BINARY
+            Blast::ProjectComponentFileTypes::TEST_EXECUTABLE_FILE
          ).generate_filename();
 
       return project_root + filename;
@@ -40,8 +40,8 @@ functions:
          Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE,
          Blast::ProjectComponentFileTypes::SOURCE_FILE,
          Blast::ProjectComponentFileTypes::HEADER_FILE,
-         Blast::ProjectComponentFileTypes::TEST_FILE,
-         Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+         Blast::ProjectComponentFileTypes::TEST_SOURCE_FILE,
+         Blast::ProjectComponentFileTypes::EXAMPLE_SOURCE_FILE,
          Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
          //Blast::ProjectComponentFileTypes::OBJECT_FILE,
          //Blast::ProjectComponentFileTypes::TEST_OBJECT_FILE,
@@ -71,8 +71,8 @@ functions:
          Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE,
          Blast::ProjectComponentFileTypes::SOURCE_FILE,
          Blast::ProjectComponentFileTypes::HEADER_FILE,
-         Blast::ProjectComponentFileTypes::TEST_FILE,
-         Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+         Blast::ProjectComponentFileTypes::TEST_SOURCE_FILE,
+         Blast::ProjectComponentFileTypes::EXAMPLE_SOURCE_FILE,
          Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
          //Blast::ProjectComponentFileTypes::OBJECT_FILE,
          //Blast::ProjectComponentFileTypes::TEST_BINARY,
@@ -162,8 +162,8 @@ functions:
          Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE,
          Blast::ProjectComponentFileTypes::SOURCE_FILE,
          Blast::ProjectComponentFileTypes::HEADER_FILE,
-         Blast::ProjectComponentFileTypes::TEST_FILE,
-         Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
+         Blast::ProjectComponentFileTypes::TEST_SOURCE_FILE,
+         Blast::ProjectComponentFileTypes::EXAMPLE_SOURCE_FILE,
          Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
          //Blast::ProjectComponentFileTypes::OBJECT_FILE,
          //Blast::ProjectComponentFileTypes::TEST_BINARY,
@@ -203,7 +203,7 @@ functions:
   - name: has_test
     type: bool
     body: |
-      return check_file_existence(Blast::ProjectComponentFileTypes::TEST_FILE);
+      return check_file_existence(Blast::ProjectComponentFileTypes::TEST_SOURCE_FILE);
     body_dependency_symbols:
       - Blast::ProjectComponentFileTypes
 

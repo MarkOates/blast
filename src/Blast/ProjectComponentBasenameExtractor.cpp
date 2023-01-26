@@ -55,7 +55,7 @@ std::pair<ProjectComponentFileTypes::project_file_type_t, std::string> ProjectCo
       extracted = extracted.substr(0, found);
       found = extracted.rfind("_test");
       extracted = extracted.substr(0, found);
-      return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::TEST_FILE, extracted);
+      return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::TEST_SOURCE_FILE, extracted);
    }
    else if (filename.compare(0, 9, "examples/") == 0)
    {
@@ -66,7 +66,7 @@ std::pair<ProjectComponentFileTypes::project_file_type_t, std::string> ProjectCo
       extracted = extracted.substr(0, found);
       found = extracted.rfind("_example");
       extracted = extracted.substr(0, found);
-      return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::EXAMPLE_FILE, extracted);
+      return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::EXAMPLE_SOURCE_FILE, extracted);
    }
    else if (filename.compare(0, 4, "obj/") == 0)
    {
@@ -84,7 +84,7 @@ std::pair<ProjectComponentFileTypes::project_file_type_t, std::string> ProjectCo
       extracted = extracted.substr(0, found);
       found = extracted.rfind("_test");
       extracted = extracted.substr(0, found);
-      return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::TEST_BINARY, extracted);
+      return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::TEST_EXECUTABLE_FILE, extracted);
    }
    else if (filename.compare(0, 13, "bin/examples/") == 0)
    {
@@ -95,8 +95,9 @@ std::pair<ProjectComponentFileTypes::project_file_type_t, std::string> ProjectCo
       extracted = extracted.substr(0, found);
       found = extracted.rfind("_example");
       extracted = extracted.substr(0, found);
-      return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::EXAMPLE_BINARY, extracted);
+      return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::EXAMPLE_EXECUTABLE_FILE, extracted);
    }
+   // TODO: account for more remaining types
    else
    {
       return std::pair<ProjectComponentFileTypes::project_file_type_t, std::string>(ProjectComponentFileTypes::NOT_IDENTIFIABLE, "");

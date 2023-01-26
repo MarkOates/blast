@@ -76,26 +76,28 @@ std::string ProjectComponentFilenameGenerator::generate_filename()
    case ProjectComponentFileTypes::HEADER_FILE:
       return std::string("include/") + basename + ".hpp";
       break;
-   case ProjectComponentFileTypes::TEST_FILE:
+   case ProjectComponentFileTypes::TEST_SOURCE_FILE:
       return std::string("tests/") + basename + (use_underscores ? "_test.cpp" : "Test.cpp");
       break;
-   case ProjectComponentFileTypes::EXAMPLE_FILE:
+   case ProjectComponentFileTypes::EXAMPLE_SOURCE_FILE:
       return std::string("examples/") + basename + (use_underscores ? "_example.cpp" : "Example.cpp");
       break;
    case ProjectComponentFileTypes::OBJECT_FILE:
       return std::string("obj/") + basename + ".o";
       break;
-   case ProjectComponentFileTypes::TEST_BINARY:
+   case ProjectComponentFileTypes::TEST_EXECUTABLE_FILE:
       return std::string("bin/tests/") + basename + (use_underscores ? "_test" : "Test");
       break;
-   case ProjectComponentFileTypes::EXAMPLE_BINARY:
+   case ProjectComponentFileTypes::EXAMPLE_EXECUTABLE_FILE:
       return std::string("bin/examples/") + basename + (use_underscores ? "_example" : "Example");
       break;
    case ProjectComponentFileTypes::DOCUMENTATION_FILE: // TODO: consider moving this to documentation/
       return std::string("docs/") + basename + ".md";
       break;
+   // TODO: Add additional cases
    default:
-      return "";
+      throw std::runtime_error("[Blast/ProjectComponentFilenameGenerator]: error: unrecognized type");
+      //return "";
       break;
    };
 }

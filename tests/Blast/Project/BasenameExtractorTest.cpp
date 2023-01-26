@@ -33,11 +33,11 @@ TEST(ProjectComponentBasenameExtractorTest, get_project_file_type__identifies_th
    std::vector<std::pair<Blast::ProjectComponentFileTypes::project_file_type_t, std::string>> test_data = {
       { Blast::ProjectComponentFileTypes::SOURCE_FILE, "src/models/Foobar.cpp" },
       { Blast::ProjectComponentFileTypes::HEADER_FILE, "include/models/Foobar.hpp" },
-      { Blast::ProjectComponentFileTypes::TEST_FILE, "tests/models/FoobarTest.cpp" },
-      { Blast::ProjectComponentFileTypes::EXAMPLE_FILE, "examples/models/FoobarExample.cpp" },
+      { Blast::ProjectComponentFileTypes::TEST_SOURCE_FILE, "tests/models/FoobarTest.cpp" },
+      { Blast::ProjectComponentFileTypes::EXAMPLE_SOURCE_FILE, "examples/models/FoobarExample.cpp" },
       { Blast::ProjectComponentFileTypes::OBJECT_FILE, "obj/models/Foobar.o" },
-      { Blast::ProjectComponentFileTypes::TEST_BINARY, "bin/tests/models/FoobarTest" },
-      { Blast::ProjectComponentFileTypes::EXAMPLE_BINARY, "bin/examples/models/FoobarExample" },
+      { Blast::ProjectComponentFileTypes::TEST_EXECUTABLE_FILE, "bin/tests/models/FoobarTest" },
+      { Blast::ProjectComponentFileTypes::EXAMPLE_EXECUTABLE_FILE, "bin/examples/models/FoobarExample" },
       { Blast::ProjectComponentFileTypes::NOT_IDENTIFIABLE, "not_project_file.txt" },
    };
 
