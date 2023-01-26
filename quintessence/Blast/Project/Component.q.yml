@@ -44,8 +44,10 @@ functions:
          Blast::ProjectComponentFileTypes::EXAMPLE_FILE,
          Blast::ProjectComponentFileTypes::DOCUMENTATION_FILE,
          //Blast::ProjectComponentFileTypes::OBJECT_FILE,
-         //Blast::ProjectComponentFileTypes::TEST_BINARY,
-         //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY,
+         //Blast::ProjectComponentFileTypes::TEST_OBJECT_FILE,
+         //Blast::ProjectComponentFileTypes::TEST_BINARY, // should this be TEST_EXECUTABLE
+         //Blast::ProjectComponentFileTypes::EXAMPLE_OBJECT_FILE,
+         //Blast::ProjectComponentFileTypes::EXAMPLE_BINARY, // should this be TEST_EXECUTABLE
       };
 
       for (auto &type_to_scan_for : types_to_scan_for)
