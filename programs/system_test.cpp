@@ -626,7 +626,7 @@ bool run_imagemagick_version_test()
 bool run_ruby_version_test()
 {
    //std::string match_expression = "ruby 2\\.6\\.5p114 \\(2019-10-01 revision 67812\\).+";
-   std::string match_expression = "ruby 2.6.3p62";
+   std::string match_expression = "ruby 2.6.10p210";
    std::string actual_string = get_ruby_version();
    last_test_result = new TestResultMatcher(match_expression, actual_string);
    return last_test_result->assessment();
@@ -644,7 +644,7 @@ bool run_yaml_cpp_presence_test()
 
 bool run_ffmpeg_presence_test()
 {
-   std::string match_expression = "==> ffmpeg: "; // TODO
+   std::string match_expression = "==> ffmpeg: "; // TODO use "brew info ffmpeg --json"
    std::string actual_string = get_brew_ffmpeg_info_string();
    last_test_result = new TestResultMatcher(match_expression, actual_string);
    return last_test_result->assessment();
@@ -653,7 +653,7 @@ bool run_ffmpeg_presence_test()
 
 bool run_ripgrep_presence_test()
 {
-   std::string match_expression = "^ripgrep: ";
+   std::string match_expression = "==> ripgrep: "; // TODO: consider using "brew info ripgrep --json"
    std::string actual_string = get_brew_ripgrep_info_string();
    last_test_result = new TestResultMatcher(match_expression, actual_string);
    return last_test_result->assessment();
@@ -671,7 +671,7 @@ bool asio_standalone_is_present()
 
 bool run_ghostscript_presence_test()
 {
-   std::string match_expression = "^ghostscript: ";
+   std::string match_expression = "==> ghostscript: "; // TODO: consider using "brew info ghostscript --json" and parsing the json, with version info
    std::string actual_string = get_brew_ghostscript_info_string();
    last_test_result = new TestResultMatcher(match_expression, actual_string);
    return last_test_result->assessment();
@@ -717,6 +717,11 @@ bool check_select_executables_are_up_to_date_to_their_source()
       { false, "/Users/markoates/Repos/blast/programs/quintessence_from_yaml.cpp", "/Users/markoates/Repos/blast/bin/programs/quintessence_from_yaml" },
       { false, "/Users/markoates/Repos/blast/programs/symlink_component_from_another_project.cpp", "/Users/markoates/Repos/blast/bin/programs/symlink_component_from_another_project" },
       { false, "/Users/markoates/Repos/blast/programs/build_celebrator.cpp", "/Users/markoates/Repos/blast/bin/programs/build_celebrator" },
+      { false, "/Users/markoates/Repos/blast/programs/create_source_release.cpp", "/Users/markoates/Repos/blast/bin/programs/create_source_release" },
+      { false, "/Users/markoates/Repos/blast/programs/fancy_find.cpp", "/Users/markoates/Repos/blast/bin/programs/fancy_find" },
+      { false, "/Users/markoates/Repos/blast/programs/fancy_stager.cpp", "/Users/markoates/Repos/blast/bin/programs/fancy_stager" },
+      { false, "/Users/markoates/Repos/blast/programs/ncurses_status_fetcher.cpp", "/Users/markoates/Repos/blast/bin/programs/ncurses_status_fetcher" },
+      { false, "/Users/markoates/Repos/blast/programs/system_test.cpp", "/Users/markoates/Repos/blast/bin/programs/system_test" },
 
       // TODO: Update these ncurses-art/bin/programs files to blast/programs files
 
@@ -724,17 +729,12 @@ bool check_select_executables_are_up_to_date_to_their_source()
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/builder2.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder2" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/project_filename_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/project_filename_generator" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/system_test.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/system_test" },
-      //{ false, "/Users/markoates/Repos/ncurses-art/programs/component_generator.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/component_generator" },
-      { false, "/Users/markoates/Repos/blast/programs/create_source_release.cpp", "/Users/markoates/Repos/blast/bin/programs/create_source_release" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_branch.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_branch" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_component_lister.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_component_lister" },
-      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_find.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_find" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_list.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_list" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_log.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_log" },
-      //{ false, "/Users/markoates/Repos/ncurses-art/programs/fancy_stager.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/fancy_stager" },
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/quiz.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/quiz" },
-      //{ false, "/Users/markoates/Repos/ncurses-art/programs/ncurses_status_fetcher.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/ncurses_status_fetcher" },
    };
 
    for (auto &source_executable_pair : source_executable_pairs)
