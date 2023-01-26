@@ -723,6 +723,12 @@ bool check_select_executables_are_up_to_date_to_their_source()
       { false, "/Users/markoates/Repos/blast/programs/ncurses_status_fetcher.cpp", "/Users/markoates/Repos/blast/bin/programs/ncurses_status_fetcher" },
       { false, "/Users/markoates/Repos/blast/programs/system_test.cpp", "/Users/markoates/Repos/blast/bin/programs/system_test" },
 
+      // hexagon files
+
+      { false, "/Users/markoates/Repos/hexagon/programs/hexagon.cpp", "/Users/markoates/Repos/hexagon/bin/programs/hexagon" },
+      { false, "/Users/markoates/Repos/hexagon/programs/daemus.cpp", "/Users/markoates/Repos/hexagon/bin/programs/daemus" },
+      { false, "/Users/markoates/Repos/hexagon/programs/macos_release_builder.cpp", "/Users/markoates/Repos/hexagon/bin/programs/macos_release_builder" },
+
       // TODO: Update these ncurses-art/bin/programs files to blast/programs files
 
       //{ false, "/Users/markoates/Repos/ncurses-art/programs/builder.cpp", "/Users/markoates/Repos/ncurses-art/bin/programs/builder" },
