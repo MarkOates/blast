@@ -11,7 +11,7 @@ namespace ncurses_art
       class Base
       {
       public:
-         static constexpr char* TYPE = "Backends/Base";
+         static constexpr char* TYPE = (char*)"Backends/Base";
 
       private:
          std::string type;

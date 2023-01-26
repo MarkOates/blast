@@ -9,7 +9,7 @@ properties:
 
   - name: TYPE
     type: char*
-    init_with: '"Backends/Base"'
+    init_with: '(char*)"Backends/Base"'
     static: true
     constexpr: true
 

@@ -12,7 +12,7 @@ namespace ncurses_art
       class Ncurses : public ncurses_art::Backends::Base
       {
       public:
-         static constexpr char* TYPE = "Backends/Ncurses";
+         static constexpr char* TYPE = (char*)"Backends/Ncurses";
 
       private:
          std::string property;

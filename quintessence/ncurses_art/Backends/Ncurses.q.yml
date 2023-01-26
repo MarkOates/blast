@@ -17,7 +17,7 @@ properties:
 
   - name: TYPE
     type: char*
-    init_with: '"Backends/Ncurses"'
+    init_with: '(char*)"Backends/Ncurses"'
     static: true
     constexpr: true
 
