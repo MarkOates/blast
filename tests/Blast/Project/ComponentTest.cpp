@@ -3,10 +3,11 @@
 
 #include <Blast/Project/Component.hpp>
 
+
 #include <filesystem>
 static std::string ABSOLUTE_PATH(std::string relative_path) { return std::filesystem::absolute(relative_path).string(); }
-
 static const std::string RELATIVE_FIXTURE_PATH = "bin/fixtures/FixtureProject2/";
+
 
 TEST(Blast_Project_ComponentTest, can_be_created_without_blowing_up)
 {

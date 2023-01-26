@@ -1,7 +1,13 @@
 properties:
+
+
   - name: filename
     constructor_arg: true
+
+
 functions:
+
+
   - name: last_write_time
     type: std::time_t
     body: |
@@ -18,8 +24,14 @@ functions:
       //return last_write_time;
     body_dependency_symbols:
       - std::filesystem::last_write_time
+
+
 dependencies:
+
+
   - symbol: std::filesystem::last_write_time
     headers: [ 'filesystem' ]
   - symbol: std::time_t
     headers: [ 'ctime' ]
+
+
