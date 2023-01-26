@@ -1003,7 +1003,7 @@ TEST(SystemTest, ripgrep_is_installed_through_homebrew)
 }
 
 
-TEST(SystemTest, the_ApplicationsHexagonapp_symlink_points_to_the_expected_hexagon_app_package_create_with_ln_s_UsersmarkoatesReposhexagonbinHexagonapp_ApplicationsHexagonapp)
+TEST(SystemTest, the_Applications_Hexagon_app_symlink_points_to_the_expected_hexagon_app_package)
 {
    EXPECT_EQ(true, check_hexagon_app_package_symlink_destination()) << "Test: the /Applications/Hexagon.app symlink points to the expected hexagon app package (create with \"ln -s /Users/markoates/Repos/hexagon/bin/Hexagon.app /Applications/Hexagon.app\")";
 }
