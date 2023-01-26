@@ -121,9 +121,7 @@ std::time_t Component::check_fragment_file_last_write_time(std::string project_r
    std::string full_filename = project_root + fragment_filename;
    if (!Blast::FileExistenceChecker(full_filename).exists())
    {
-      return 0; // consider returning "(std::time_t)(-1)", which is returned by std::time.
-      // See: https://en.cppreference.com/w/cpp/chrono/c/time
-
+      return 0;
    }
    return Blast::FileLastWriteTime(full_filename).last_write_time();
 
