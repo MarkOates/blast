@@ -1,10 +1,16 @@
 properties:
+
+
   - name: project_root
     type: std::string
     init_with: "\"\""
     constructor_arg: true
     getter: true
+
+
 functions:
+
+
   - name: build_program_lister_shell_command
     type: std::string
     body: |
@@ -17,6 +23,8 @@ functions:
       return find_command.str();
     body_dependency_symbols:
       - std::stringstream
+
+
   - name: program_filenames
     type: std::vector<std::string>
     body: |
@@ -36,10 +44,16 @@ functions:
       - Blast::ShellCommandExecutorWithCallback
       - StringSplitter
       - std::sort
+
+
 dependencies:
+
+
   - symbol: std::sort
     headers: [ algorithm ]
   - symbol: Blast::ShellCommandExecutorWithCallback
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
   - symbol: StringSplitter
     headers: [ Blast/StringSplitter.hpp ]
+
+

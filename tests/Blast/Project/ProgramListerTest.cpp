@@ -5,10 +5,12 @@
 
 static std::string TEST_PROJECT_ROOT_DIRECTORY = "bin/fixtures/FixtureProject2/";
 
+
 TEST(Blast_Project_ProgramListerTest, can_be_created_without_blowing_up)
 {
    Blast::Project::ProgramLister program_lister;
 }
+
 
 TEST(Blast_Project_ProgramListerTest,
    build_program_lister_shell_command__returns_the_expected_shell_command)
@@ -18,6 +20,7 @@ TEST(Blast_Project_ProgramListerTest,
    std::string actual_shell_command = program_lister.build_program_lister_shell_command();
    EXPECT_EQ(expected_shell_command, actual_shell_command);
 }
+
 
 TEST(Blast_Project_ProgramListerTest, program_filenames__returns_the_sorted_list_of_program_filenames_in_the_project)
 {
@@ -29,3 +32,5 @@ TEST(Blast_Project_ProgramListerTest, program_filenames__returns_the_sorted_list
       };
    EXPECT_EQ(expected_program_filenames, program_lister.program_filenames());
 }
+
+
