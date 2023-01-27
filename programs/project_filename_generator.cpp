@@ -113,6 +113,8 @@ int main(int argc, char **argv)
       if (argument.compare(0, 3, "-e") == 0) { std::cout << project_component_filenames.generate_example_src_filename(); return 0; }
       if (argument.compare(0, 3, "-E") == 0) { std::cout << project_component_filenames.generate_example_binary(); return 0; }
    }
+
+   return 0;
 }
 
 
