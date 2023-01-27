@@ -126,8 +126,8 @@ std::string check_it(std::string label, bool check)
 {
    std::stringstream result;
    result << label;
-   if (check) result << PROPERTY_DELIMITER << "✓ yes";
-   else result << PROPERTY_DELIMITER << "✗ no";
+   if (check) result << PROPERTY_DELIMITER << "🔹 yes";
+   else result << PROPERTY_DELIMITER << "🔸 no";
    return result.str();
 }
 
@@ -389,8 +389,11 @@ void initialize()
             << status_icon_and_text;
          if (project_has_been_processed == true && !(final_status == CLEAN || final_status == EXTRA_LOCAL_BRANCHES))
          {
-            result_text << "  " << show_it("repo name", repo_name) << std::endl;
-            result_text << "  " << check_it("exists locally", exists_locally) << std::endl;
+
+            result_text << std::endl;
+            result_text << std::endl;
+            //result_text << "  " << show_it("repo name", repo_name) << std::endl;
+            result_text << "  " << check_it("repo exists locally", exists_locally) << std::endl;
             result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
             result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
             result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
