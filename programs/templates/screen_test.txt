@@ -4,11 +4,17 @@
 #include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
 
 #include <AllegroFlare/Testing/WithAllegroRenderingFixture.hpp>
+#include <AllegroFlare/Testing/WithAllegroFlareFrameworksFullFixture.hpp>
+//#include <AllegroFlare/Frameworks/Full.hpp>
 
 class [[COMPONENT_TEST_DESCRIPTION_NAME]] : public ::testing::Test {};
 class [[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture
    : public AllegroFlare::Testing::WithAllegroRenderingFixture
 {};
+class [[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroFrameworksFullFixture
+   : public AllegroFlare::Testing::WithAllegroFlareFrameworksFullFixture
+{};
+
 
 
 TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
@@ -113,4 +119,18 @@ TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture,
    al_uninstall_keyboard();
 }
 
+
+TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroFrameworksFullFixture
+   TIMED_INTERACTIVE__will_run_as_expected)
+{
+   AllegroFlare::Screens::JoystickConfiguration joystick_configuration_screen;
+   joystick_configuration_screen.set_event_emitter(&get_event_emitter_ref());
+   joystick_configuration_screen.set_bitmap_bin(&get_bitmap_bin_ref());
+   joystick_configuration_screen.set_font_bin(&get_font_bin_ref());
+   joystick_configuration_screen.initialize();
+
+   framework_register_and_activate_screen("joystick_configuration_screen", &joystick_configuration_screen);
+
+   framework_run_loop(3);
+}
 
