@@ -237,8 +237,8 @@ int main(int argc, char **argv)
          std::string test_template_content = quintessence_test_template_pair->test_template_content;
 
          outfiles = {
-            { generator.get_quintessence_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
-            { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
+            { generator.get_quintessence_path_and_filename(), std::pair<std::string, std::ofstream *>(quintessence_template_content, nullptr) },
+            { generator.get_test_path_and_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
          };
       }
       else if (template_set->is_type(HeaderSourceTestTemplatePair::TYPE))
@@ -265,7 +265,7 @@ int main(int argc, char **argv)
          outfiles = {
             { generator.get_header_path_and_filename(), std::pair<std::string, std::ofstream *>(header_template_content, nullptr) },
             { generator.get_source_path_and_filename(), std::pair<std::string, std::ofstream *>(source_template_content, nullptr) },
-            { generator.get_test_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
+            { generator.get_test_path_and_filename(), std::pair<std::string, std::ofstream *>(test_template_content, nullptr) },
          };
       }
    }

@@ -22,10 +22,8 @@ public:
    std::string get_class_name();
    std::string get_class_name_up_to_last_fragment();
 
-   std::string get_quintessence_filename();
    std::string get_quintessence_path_and_filename();
    std::string get_documentation_path_and_filename();
-   std::string get_test_filename();
    std::string get_test_path_and_filename();
    std::string get_quintessence_foldername();
    std::string get_test_foldername();

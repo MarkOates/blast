@@ -99,16 +99,6 @@ std::string ComponentGenerator::get_class_name_up_to_last_fragment()
 
 
 
-std::string ComponentGenerator::get_quintessence_filename()
-{
-   // TODO fix instances of this to use get_quintessence_path_and_filename() instead
-   std::cout << "WARNING: ComponentGenerator::get_quintessence_filename is depreciated, use ComponentGenerator::get_quintessence_path_and_filename() instead (it's the same, but the prior function will change return value in the future.)" << std::endl;
-   std::stringstream ss;
-   ss << QUINTESSENCE_FOLDER_NAME << "/" << get_component_name() << ".q.yml";
-   return ss.str();
-}
-
-
 std::string ComponentGenerator::get_quintessence_path_and_filename()
 {
    std::stringstream ss;
@@ -127,17 +117,6 @@ std::string ComponentGenerator::get_documentation_path_and_filename()
 
 
 
-
-std::string ComponentGenerator::get_test_filename()
-{
-   // TODO fix instances of this to use get_quintessence_path_and_filename() instead
-   std::cout << "WARNING: ComponentGenerator::get_test_filename is depreciated, use ComponentGenerator::get_test_path_and_filename() instead (it's the same, but the prior function will change return value in the future.)" << std::endl;
-   std::stringstream ss;
-   ss << TEST_FOLDER_NAME << "/" << get_component_name() << "Test.cpp";
-   return ss.str();
-}
-
-
 std::string ComponentGenerator::get_test_path_and_filename()
 {
    std::stringstream ss;
@@ -149,7 +128,7 @@ std::string ComponentGenerator::get_test_path_and_filename()
 
 std::string ComponentGenerator::get_quintessence_foldername()
 {
-   std::vector<std::string> tokens = Blast::StringSplitter(get_quintessence_filename(), '/').split();
+   std::vector<std::string> tokens = Blast::StringSplitter(get_quintessence_path_and_filename(), '/').split();
    if (!tokens.empty()) tokens.pop_back();
    std::string result = Blast::StringJoiner(tokens, "/").join();
    return result;
@@ -159,7 +138,7 @@ std::string ComponentGenerator::get_quintessence_foldername()
 
 std::string ComponentGenerator::get_test_foldername()
 {
-   std::vector<std::string> tokens = Blast::StringSplitter(get_test_filename(), '/').split();
+   std::vector<std::string> tokens = Blast::StringSplitter(get_test_path_and_filename(), '/').split();
    if (!tokens.empty()) tokens.pop_back();
    std::string result = Blast::StringJoiner(tokens, "/").join();
    return result;
