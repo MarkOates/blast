@@ -1,15 +1,23 @@
 properties:
+
+
   - name: template_content
     type: std::string
     init_with: "\"[[GREETING]], [[SUBJECT]]!\""
     constructor_arg: true
+
+
   - name: insertion_variables
     type: std::vector<std::pair<std::string, std::string>>
     init_with: "{ { \"[[GREETING]]\", \"Hello\" }, { \"[[SUBJECT]]\", \"World\" } }"
     constructor_arg: true
     getter: true
     setter: true
+
+
 functions:
+
+
   - name: __replace
     type: std::string
     private: true
@@ -30,6 +38,8 @@ functions:
           start_pos += to.length();
        }
        return str;
+
+
   - name: generate_content
     type: std::string
     body: |
@@ -41,6 +51,12 @@ functions:
       }
 
       return result;
+
+
 dependencies:
+
+
   - symbol: std::vector<std::pair<std::string, std::string>>
     headers: [ string, vector ]
+
+

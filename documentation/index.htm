@@ -55,6 +55,7 @@ table td
   <li><a href="#quintessence/Blast/CamelCaseToConstantConverter.q.yml">quintessence/Blast/CamelCaseToConstantConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</a></li>
+  <li><a href="#quintessence/Blast/DependencyHeadersSuggester.q.yml">quintessence/Blast/DependencyHeadersSuggester.q.yml</a></li>
   <li><a href="#quintessence/Blast/DependencySymbolAtomizer.q.yml">quintessence/Blast/DependencySymbolAtomizer.q.yml</a></li>
   <li><a href="#quintessence/Blast/DirectoryCreator.q.yml">quintessence/Blast/DirectoryCreator.q.yml</a></li>
   <li><a href="#quintessence/Blast/DirectoryExistenceChecker.q.yml">quintessence/Blast/DirectoryExistenceChecker.q.yml</a></li>
@@ -306,6 +307,39 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::FunctionArgument&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/FunctionArgument.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/DependencyHeadersSuggester.q.yml">quintessence/Blast/DependencyHeadersSuggester.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">suggested_symbol_headers</td>
+  <td class="property">std::map&lt;std::string, std::vector&lt;std::string&gt;&gt;</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">generate_autofill_suggestion_for_symbol(std::string symbol=&quot;[unset-symbol]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">find_suggested_headers(std::string symbol=&quot;[unset-symbol]&quot;, bool autogenerate_a_header_if_one_is_not_present=true)</td>
+</tr>
+<tr>
+  <td class="method">find_suggested_headers_csv(std::string symbol=&quot;[unset-symbol]&quot;, bool autogenerate_a_header_if_one_is_not_present=true)</td>
+</tr>
+<tr>
+  <td class="method">get_default_suggested_symbol_headers()</td>
+</tr>
+<tr>
+  <td class="private_method">__replace(std::string str=&quot;source string&quot;, std::string from=&quot;source&quot;, std::string to=&quot;result&quot;)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringJoiner&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringJoiner.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -2238,6 +2272,10 @@ table td
   "Blast/Cpp/FunctionArgument": [
     "Blast/Cpp/Function"
   ],
+  "Blast/StringJoiner": [
+    "Blast/DependencyHeadersSuggester",
+    "Quizes/MultiplexQuizRunner"
+  ],
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
     "NcursesArt/GithubRepoStatusFetcher",
@@ -2559,9 +2597,6 @@ table td
     "Quizes/MultiplexQuizRunner"
   ],
   "Quizes/MultiplexQuestionCollectionHelper": [
-    "Quizes/MultiplexQuizRunner"
-  ],
-  "Blast/StringJoiner": [
     "Quizes/MultiplexQuizRunner"
   ],
   "assert": [

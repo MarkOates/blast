@@ -20,15 +20,28 @@ DependencyHeadersSuggester::~DependencyHeadersSuggester()
 }
 
 
-std::vector<std::string> DependencyHeadersSuggester::suggested_headers(std::string symbol)
+std::string DependencyHeadersSuggester::generate_autofill_suggestion_for_symbol(std::string symbol)
 {
-   if (suggested_symbol_headers.count(symbol) == 0) return {};
+   std::string header = __replace(symbol, "::", "/") + ".hpp";
+   return header;
+}
+
+std::vector<std::string> DependencyHeadersSuggester::find_suggested_headers(std::string symbol, bool autogenerate_a_header_if_one_is_not_present)
+{
+   if (suggested_symbol_headers.count(symbol) == 0)
+   {
+      if (autogenerate_a_header_if_one_is_not_present) return { generate_autofill_suggestion_for_symbol(symbol) };
+      return {};
+   }
    return suggested_symbol_headers[symbol];
 }
 
-std::string DependencyHeadersSuggester::suggested_headers_csv(std::string symbol)
+std::string DependencyHeadersSuggester::find_suggested_headers_csv(std::string symbol, bool autogenerate_a_header_if_one_is_not_present)
 {
-   return Blast::StringJoiner(suggested_headers(symbol), ", ").join();
+   return Blast::StringJoiner(
+         find_suggested_headers(symbol, autogenerate_a_header_if_one_is_not_present),
+         ", "
+      ).join();
 }
 
 std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_default_suggested_symbol_headers()
@@ -44,6 +57,16 @@ std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_
       { "std::max", { "algorithm" }, },
       { "fmod", { "cmath" }, },
    };
+}
+
+std::string DependencyHeadersSuggester::__replace(std::string str, std::string from, std::string to)
+{
+   size_t start_pos = 0;
+   while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+      str.replace(start_pos, from.length(), to);
+      start_pos += to.length();
+   }
+   return str;
 }
 
 

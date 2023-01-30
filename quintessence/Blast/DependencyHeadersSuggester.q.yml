@@ -9,25 +9,49 @@ properties:
 functions:
 
 
-  - name: suggested_headers
-    type: std::vector<std::string>
-    parameters:
-      - name: symbol
-        type: std::string
-        default_argument: '"[unset-symbol]"'
-    body: |
-      if (suggested_symbol_headers.count(symbol) == 0) return {};
-      return suggested_symbol_headers[symbol];
-
-
-  - name: suggested_headers_csv
+  - name: generate_autofill_suggestion_for_symbol
     type: std::string
     parameters:
       - name: symbol
         type: std::string
         default_argument: '"[unset-symbol]"'
     body: |
-      return Blast::StringJoiner(suggested_headers(symbol), ", ").join();
+      std::string header = __replace(symbol, "::", "/") + ".hpp";
+      return header;
+
+
+  - name: find_suggested_headers
+    type: std::vector<std::string>
+    parameters:
+      - name: symbol
+        type: std::string
+        default_argument: '"[unset-symbol]"'
+      - name: autogenerate_a_header_if_one_is_not_present
+        type: bool
+        default_argument: true
+    body: |
+      if (suggested_symbol_headers.count(symbol) == 0)
+      {
+         if (autogenerate_a_header_if_one_is_not_present) return { generate_autofill_suggestion_for_symbol(symbol) };
+         return {};
+      }
+      return suggested_symbol_headers[symbol];
+
+
+  - name: find_suggested_headers_csv
+    type: std::string
+    parameters:
+      - name: symbol
+        type: std::string
+        default_argument: '"[unset-symbol]"'
+      - name: autogenerate_a_header_if_one_is_not_present
+        type: bool
+        default_argument: true
+    body: |
+      return Blast::StringJoiner(
+            find_suggested_headers(symbol, autogenerate_a_header_if_one_is_not_present),
+            ", "
+         ).join();
     body_dependency_symbols:
       - Blast::StringJoiner
 
@@ -46,6 +70,28 @@ functions:
          { "std::max", { "algorithm" }, },
          { "fmod", { "cmath" }, },
       };
+
+
+  - name: __replace
+    type: std::string
+    private: true
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: "\"source string\""
+      - name: from
+        type: std::string
+        default_argument: "\"source\""
+      - name: to
+        type: std::string
+        default_argument: "\"result\""
+    body: |
+       size_t start_pos = 0;
+       while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+          str.replace(start_pos, from.length(), to);
+          start_pos += to.length();
+       }
+       return str;
 
 
 dependencies:

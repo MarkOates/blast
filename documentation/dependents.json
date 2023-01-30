@@ -56,6 +56,10 @@
   "Blast/Cpp/FunctionArgument": [
     "Blast/Cpp/Function"
   ],
+  "Blast/StringJoiner": [
+    "Blast/DependencyHeadersSuggester",
+    "Quizes/MultiplexQuizRunner"
+  ],
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
     "NcursesArt/GithubRepoStatusFetcher",
@@ -377,9 +381,6 @@
     "Quizes/MultiplexQuizRunner"
   ],
   "Quizes/MultiplexQuestionCollectionHelper": [
-    "Quizes/MultiplexQuizRunner"
-  ],
-  "Blast/StringJoiner": [
     "Quizes/MultiplexQuizRunner"
   ],
   "assert": [
