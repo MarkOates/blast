@@ -4,6 +4,7 @@
 
 #include <Blast/Cpp/FunctionFormatter.hpp>
 #include <Blast/DependencySymbolAtomizer.hpp>
+#include <Blast/DependencyHeadersSuggester.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <set>
 #include <unordered_set>
@@ -425,19 +426,23 @@ std::string ClassGenerator::dependency_include_directives()
       for (auto &undefined_symbol : undefined_symbols) error_message << "  - " << undefined_symbol << std::endl;
 
       error_message << std::endl;
+      Blast::DependencyHeadersSuggester dependency_headers_suggester;
       for (auto &undefined_symbol : undefined_symbols)
       {
-         std::string symbol = undefined_symbol;
-         std::string header = undefined_symbol;
-         __replace(header, "::", "/");
-         header += ".hpp";
+         std::string dependency = undefined_symbol;
+         std::string headers = dependency_headers_suggester.find_suggested_headers_csv(dependency);
 
-         if (symbol == "ALLEGRO_BITMAP") header = "allegro5/allegro.h";
-         if (symbol == "ALLEGRO_FONT") header = "allegro5/allegro_font.h";
-         if (symbol == "ALLEGRO_DISPLAY") header = "allegro5/allegro.h";
+         //std::string symbol = undefined_symbol;
+         //std::string header = undefined_symbol;
+         //__replace(header, "::", "/");
+         //header += ".hpp";
+
+         //if (symbol == "ALLEGRO_BITMAP") header = "allegro5/allegro.h";
+         //if (symbol == "ALLEGRO_FONT") header = "allegro5/allegro_font.h";
+         //if (symbol == "ALLEGRO_DISPLAY") header = "allegro5/allegro.h";
 
          error_message << "  - symbol: " << undefined_symbol << std::endl;
-         error_message << "    headers: [ " << header << " ]" << std::endl;
+         error_message << "    headers: [ " << headers << " ]" << std::endl;
       }
 
       error_message << std::endl;
