@@ -864,6 +864,7 @@ std::vector<std::string> extract_function_body_symbol_dependency_symbols(YAML::N
 
 #include <Blast/DependencySymbolAtomizer.hpp>
 #include <Blast/StringJoiner.hpp>
+#include <Blast/DependencyHeadersSuggester.hpp>
 
 std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(
       std::vector<std::string> dependency_symbols,
@@ -918,38 +919,43 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
                     << "===============================\n\n";
        for (auto &not_found_dependency : not_found_dependencies)
       {
-         std::string dependency = not_found_dependency;
-         std::string headers = __replace(not_found_dependency, "::", "/") + ".hpp";
+         Blast::DependencyHeadersSuggester dependency_headers_suggester;
 
-         if (dependency == "ALLEGRO_BITMAP") headers = "allegro5/allegro.h";
-         if (dependency == "ALLEGRO_FONT") headers = "allegro5/allegro_font.h";
-         if (dependency == "ALLEGRO_DISPLAY") headers = "allegro5/allegro_display.h";
-         if (dependency == "ALLEGRO_COLOR") headers = "allegro5/allegro.h";
-         if (dependency == "StageInterface") headers = "Hexagon/StageInterface.hpp";
-         if (dependency == "std::function") headers = "functional";
-         if (dependency == "std::min") headers = "algorithm";
-         if (dependency == "std::max") headers = "algorithm";
-         if (dependency == "fmod") headers = "cmath";
-         if (dependency == "AllegroFlare::interpolator")
-         {
-            dependency = "'AllegroFlare::interpolator'";
-            headers = "AllegroFlare/Interpolators.hpp";
-         }
-         if (dependency == "AllegroFlare::interpolator::")
-         {
-            dependency = "'AllegroFlare::interpolator::'";
-            headers = "AllegroFlare/Interpolators.hpp";
-         }
-         if (dependency == "AllegroFlare::Color::")
-         {
-            dependency = "'AllegroFlare::Color::'";
-            headers = "AllegroFlare/Color.hpp";
-         }
-         if (dependency == "AllegroFlare::Interpolators::")
-         {
-            dependency = "'AllegroFlare::Interpolators::'";
-            headers = "AllegroFlare/Interpolators.hpp";
-         }
+         std::string dependency = not_found_dependency;
+         std::string headers = dependency_headers_suggester.find_suggested_headers_csv(dependency);
+
+         //std::string dependency = not_found_dependency;
+         //std::string headers = __replace(not_found_dependency, "::", "/") + ".hpp";
+
+         //if (dependency == "ALLEGRO_BITMAP") headers = "allegro5/allegro.h";
+         //if (dependency == "ALLEGRO_FONT") headers = "allegro5/allegro_font.h";
+         //if (dependency == "ALLEGRO_DISPLAY") headers = "allegro5/allegro_display.h";
+         //if (dependency == "ALLEGRO_COLOR") headers = "allegro5/allegro.h";
+         //if (dependency == "StageInterface") headers = "Hexagon/StageInterface.hpp";
+         //if (dependency == "std::function") headers = "functional";
+         //if (dependency == "std::min") headers = "algorithm";
+         //if (dependency == "std::max") headers = "algorithm";
+         //if (dependency == "fmod") headers = "cmath";
+         //if (dependency == "AllegroFlare::interpolator")
+         //{
+            //dependency = "'AllegroFlare::interpolator'";
+            //headers = "AllegroFlare/Interpolators.hpp";
+         //}
+         //if (dependency == "AllegroFlare::interpolator::")
+         //{
+            //dependency = "'AllegroFlare::interpolator::'";
+            //headers = "AllegroFlare/Interpolators.hpp";
+         //}
+         //if (dependency == "AllegroFlare::Color::")
+         //{
+            //dependency = "'AllegroFlare::Color::'";
+            //headers = "AllegroFlare/Color.hpp";
+         //}
+         //if (dependency == "AllegroFlare::Interpolators::")
+         //{
+            //dependency = "'AllegroFlare::Interpolators::'";
+            //headers = "AllegroFlare/Interpolators.hpp";
+         //}
 
          error_message
             << "  - symbol: " << dependency << "\n"
