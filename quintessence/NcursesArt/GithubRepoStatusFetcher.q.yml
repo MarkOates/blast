@@ -117,6 +117,14 @@ functions:
     body_dependency_symbols:
       - std::sort
 
+  - name: get_branch_count_at_remote
+    type: int
+    body: |
+      // TODO: this needs to be tested
+      return get_branch_names_at_remote().size();
+    body_dependency_symbols:
+      - std::sort
+
   - name: is_current_branch_master
     type: bool
     body: |

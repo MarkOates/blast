@@ -51,6 +51,7 @@ namespace NcursesArt
       bool is_the_local_repo_behind();
       int get_branch_count();
       std::vector<std::string> get_branch_names_at_remote();
+      int get_branch_count_at_remote();
       bool is_current_branch_master();
       std::string get_current_branch_name_command();
       std::string get_pull_command();

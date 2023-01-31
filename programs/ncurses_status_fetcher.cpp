@@ -46,6 +46,7 @@ private:
    bool has_no_untracked_files;
    bool has_no_staged_files;
    int num_local_branches;
+   int num_remote_branches;
 
    GithubRepoStatusFetcher fetcher;
 
@@ -91,6 +92,11 @@ public:
       return num_local_branches;
    }
 
+   int get_num_remote_branches()
+   {
+      return num_remote_branches;
+   }
+
    int get_has_no_staged_files()
    {
       return has_no_staged_files;
@@ -104,6 +110,7 @@ public:
       has_no_untracked_files = !fetcher.has_untracked_files();
       num_local_branches = fetcher.get_branch_count();
       has_no_staged_files = (fetcher.get_current_staged_files().size() == 0);
+      num_remote_branches = fetcher.get_branch_count_at_remote();
    }
 };
 
@@ -192,6 +199,7 @@ enum final_status_t
    UNSYNCED,
    SOME_CLUTTERED_FILES,
    EXTRA_LOCAL_BRANCHES,
+   //EXTRA_REMOTE_BRANCHES,
 };
 
 
@@ -213,7 +221,7 @@ std::string get_hostname()
 }
 
 
-std::string get_status_icon_and_text(final_status_t status, int num_local_branches)
+std::string get_status_icon_and_text(final_status_t status, int num_local_branches, int num_remote_branches)
 {
    switch (status)
    {
@@ -235,6 +243,9 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
    case EXTRA_LOCAL_BRANCHES:
       return std::string("🔹 some extra local branches (") + std::to_string(num_local_branches) + ")";
       break;
+   //case EXTRA_LOCAL_REMOTE_BRANCHES:
+      //return std::string("🔹 some extra remote branches (") + std::to_string(num_remote_branches) + ")";
+      //break;
    }
 
    return "🌌 status unknown";
@@ -365,6 +376,7 @@ void initialize()
       std::stringstream result_text;
 
       result_text << "[i] This tool does not check the status of *branches* within the repos" << std::endl << std::endl << std::endl;
+      result_text << "[i] This tool does check if there are extra remote branches, but will not include it in the final evaluation." << std::endl << std::endl << std::endl;
 
       for (auto &project : projects)
       {
@@ -375,6 +387,7 @@ void initialize()
          bool has_no_untracked_files = project_status.get_has_no_untracked_files();
          bool has_no_staged_files = project_status.get_has_no_staged_files();
          int num_local_branches = project_status.get_num_local_branches();
+         int num_remote_branches = project_status.get_num_remote_branches();
          std::string project_identifier = project.first;
          std::string repo_name = project_status.get_repo_name();
          bool project_has_been_processed = project.second.first;
@@ -383,7 +396,7 @@ void initialize()
          int longest_project_name_length = 24;
          int project_name_right_padding = 3;
          //std::setw(longest_project_name_length + project_name_right_padding) << std::setfill('-');
-         std::string status_icon_and_text = get_status_icon_and_text(final_status, num_local_branches);
+         std::string status_icon_and_text = get_status_icon_and_text(final_status, num_local_branches, num_remote_branches);
          result_text
             << std::left << std::setw(longest_project_name_length + project_name_right_padding) << std::setfill('-') << (project_identifier + " ")
             << status_icon_and_text;
@@ -395,6 +408,7 @@ void initialize()
             //result_text << "  " << show_it("repo name", repo_name) << std::endl;
             result_text << "  " << check_it("repo exists locally", exists_locally) << std::endl;
             result_text << "  " << diamond_it("num local branches", num_local_branches) << std::endl;
+            result_text << "  " << diamond_it("num remote branches", num_remote_branches) << std::endl;
             result_text << "  " << check_it("in sync with remote", in_sync) << std::endl;
             result_text << "  " << check_it("has no changed files", has_no_changed_files) << std::endl;
             result_text << "  " << check_it("has no untracked files", has_no_untracked_files) << std::endl;

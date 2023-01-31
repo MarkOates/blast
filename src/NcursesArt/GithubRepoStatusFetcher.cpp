@@ -180,6 +180,12 @@ std::vector<std::string> GithubRepoStatusFetcher::get_branch_names_at_remote()
    return lines;
 }
 
+int GithubRepoStatusFetcher::get_branch_count_at_remote()
+{
+   // TODO: this needs to be tested
+   return get_branch_names_at_remote().size();
+}
+
 bool GithubRepoStatusFetcher::is_current_branch_master()
 {
    return get_current_branch_name() == "master\n";

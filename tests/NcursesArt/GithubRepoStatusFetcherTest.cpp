@@ -65,12 +65,18 @@ TEST(GithubRepoStatusFetcherTest,
 
 //TEST(GithubRepoStatusFetcherTest, branch_names_at_remote__returns_a_sorted_list_of_branch_names_at_remote)
 //{
-   //GithubRepoStatusFetcher fetcher("adventures-of-beary");
+   //GithubRepoStatusFetcher fetcher("Golf");
    //std::vector<std::string> expected_branch_names_at_remote = {
-      //"origin/fix-missing-tilemap",
       //"origin/master",
+      //"origin/update",
    //};
    //EXPECT_EQ(expected_branch_names_at_remote, fetcher.get_branch_names_at_remote());
+//}
+
+//TEST(GithubRepoStatusFetcherTest, get_branch_count_at_remote__returns_a_count_of_the_number_of_branches_at_remote)
+//{
+   //GithubRepoStatusFetcher fetcher("Golf");
+   //EXPECT_EQ(2, fetcher.get_branch_count_at_remote());
 //}
 
 //TEST(GithubRepoStatusFetcherTest, run__returns_the_expected_response)
