@@ -29,11 +29,6 @@ properties:
     init_with: nullptr
     constructor_arg: true
 
-  - name: sample_bin
-    type: AllegroFlare::SampleBin*
-    init_with: nullptr
-    constructor_arg: true
-
   - name: model_bin
     type: AllegroFlare::ModelBin*
     init_with: nullptr
@@ -64,7 +59,6 @@ functions:
       - event_emitter
       - bitmap_bin
       - font_bin
-      - sample_bin
       - model_bin
     body: |
       // TODO: consider adding achievements, title_screen, opening_credits, etc to this runner
@@ -73,7 +67,6 @@ functions:
       cube_shooter_screen.set_event_emitter(event_emitter);
       cube_shooter_screen.set_bitmap_bin(bitmap_bin);
       cube_shooter_screen.set_font_bin(font_bin);
-      cube_shooter_screen.set_sample_bin(sample_bin);
       cube_shooter_screen.set_model_bin(model_bin);
       cube_shooter_screen.initialize();
       framework->register_screen("cube_shooter_screen", &cube_shooter_screen);
@@ -152,7 +145,6 @@ functions:
          &framework.get_event_emitter_ref(),
          &framework.get_bitmap_bin_ref(),
          &framework.get_font_bin_ref(),
-         &framework.get_sample_bin_ref(),
          &framework.get_model_bin_ref()
       );
       runner.initialize();
@@ -179,8 +171,6 @@ dependencies:
     headers: [ AllegroFlare/FontBin.hpp ]
   - symbol: AllegroFlare::ModelBin
     headers: [ AllegroFlare/ModelBin.hpp ]
-  - symbol: AllegroFlare::SampleBin
-    headers: [ AllegroFlare/SampleBin.hpp ]
   - symbol: AllegroFlare::GameEvent
     headers: [ AllegroFlare/GameEvent.hpp ]
   - symbol: CubeShooter::Screen
