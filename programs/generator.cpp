@@ -98,9 +98,9 @@ fi
 
 
 
-std::string PROGRAM_RUNNER_CLASS_NAME = "ProgramRunner";
+std::string PROGRAM_RUNNER_CLASS_NAME = "Runner";
 std::string main_file_content_template = R"END(
-//#include <[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
+#include <[[PROJECT_NAME]]/[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
 #include <allegro5/allegro.h>
 #include <vector> // for parsing command line args
 #include <algorithm> // for parsing command line args
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
          ? AllegroFlare::DeploymentEnvironment::ENVIRONMENT_PRODUCTION
          : AllegroFlare::DeploymentEnvironment::ENVIRONMENT_DEVELOPMENT;
 
-   //[[PROGRAM_RUNNER_CLASS_NAME]]().run(deployment_environment);
+   [[PROJECT_NAME]]::[[PROGRAM_RUNNER_CLASS_NAME]]().run(deployment_environment);
    return 0;
 }
 )END";
@@ -475,6 +475,7 @@ void create_main_file(Generator &generator)
    std::ofstream outfile5;
    outfile5.open(generator.get_project_name() + "/programs/main.cpp", std::ios::binary);
    std::string main_file_content = main_file_content_template;
+   ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
    ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    outfile5 << main_file_content;
    outfile5.close();

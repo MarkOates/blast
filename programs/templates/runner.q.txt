@@ -44,7 +44,7 @@ properties:
 
   - name: EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN
     type: char*
-    init_with: '"activate_primary_gameplay_screen"'
+    init_with: '(char*)"activate_primary_gameplay_screen"'
     static: true
     constexpr: true
 
@@ -100,7 +100,7 @@ functions:
 
       std::map<std::string, std::function<void()>> event_map = {
          { "initialize", [this](){
-            if (
+            // TODO: branch out conditional for production
             event_emitter->emit_game_event(AllegroFlare::GameEvent(EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN));
          }},
          { EVENT_ACTIVATE_CUBE_SHOOTER_SCREEN, [this](){
@@ -183,5 +183,7 @@ dependencies:
     headers: [ AllegroFlare/GameEvent.hpp ]
   - symbol: CubeShooter::Screen
     headers: [ CubeShooter/Screen.hpp ]
+  - symbol: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::PrimaryGameplay::Screen
+    headers: [ [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]/PrimaryGameplay/Screen.hpp ]
 
 
