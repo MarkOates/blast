@@ -3,7 +3,7 @@ parent_classes:
 
   - class: AllegroFlare::Screens::Base
     scope: public
-    init_with: '"Runner"'
+    init_with: [[COMPONENT_CLASS_NAME]]::TYPE
 
 
 properties:
@@ -34,17 +34,23 @@ properties:
     init_with: nullptr
     constructor_arg: true
 
-  - name: cube_shooter_screen
-    type: CubeShooter::Screen
+  - name: primary_gameplay_screen
+    type: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::PrimaryGameplay::Screen
     init_with: ''
 
   - name: initialized
     type: bool
     init_with: false
 
-  - name: EVENT_ACTIVATE_CUBE_SHOOTER_SCREEN
+  - name: EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN
     type: char*
-    init_with: '"activate_cube_shooter_screen"'
+    init_with: '"activate_primary_gameplay_screen"'
+    static: true
+    constexpr: true
+
+  - name: TYPE
+    type: char*
+    init_with: '(char*)"[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]]"'
     static: true
     constexpr: true
 
@@ -64,12 +70,13 @@ functions:
       // TODO: consider adding achievements, title_screen, opening_credits, etc to this runner
 
       // Setup our main gameplay screen
-      cube_shooter_screen.set_event_emitter(event_emitter);
-      cube_shooter_screen.set_bitmap_bin(bitmap_bin);
-      cube_shooter_screen.set_font_bin(font_bin);
-      cube_shooter_screen.set_model_bin(model_bin);
-      cube_shooter_screen.initialize();
-      framework->register_screen("cube_shooter_screen", &cube_shooter_screen);
+      primary_gameplay_screen.set_event_emitter(event_emitter);
+      primary_gameplay_screen.set_bitmap_bin(bitmap_bin);
+      primary_gameplay_screen.set_font_bin(font_bin);
+      primary_gameplay_screen.set_model_bin(model_bin);
+      primary_gameplay_screen.initialize();
+      framework->register_screen("primary_gameplay_screen", &primary_gameplay_screen);
+
       return;
 
 
@@ -93,10 +100,11 @@ functions:
 
       std::map<std::string, std::function<void()>> event_map = {
          { "initialize", [this](){
-            event_emitter->emit_game_event(AllegroFlare::GameEvent(EVENT_ACTIVATE_CUBE_SHOOTER_SCREEN));
+            if (
+            event_emitter->emit_game_event(AllegroFlare::GameEvent(EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN));
          }},
          { EVENT_ACTIVATE_CUBE_SHOOTER_SCREEN, [this](){
-            framework->activate_screen("cube_shooter_screen");
+            framework->activate_screen("primary_gameplay_screen");
          }},
          //{ EVENT_PAUSE_GAME, [this](){
             //push_screen();
