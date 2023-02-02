@@ -9,11 +9,6 @@ parent_classes:
 properties:
 
 
-  - name: mode
-    type: std::string
-    init_with: MODE_PRODUCTION
-    constructor_arg: true
-
   - name: framework
     type: AllegroFlare::Frameworks::Full*
     init_with: nullptr
@@ -58,24 +53,6 @@ properties:
     static: true
     constexpr: true
 
-  - name: MODE_TEST
-    type: char*
-    init_with: '"test"'
-    static: true
-    constexpr: true
-
-  - name: MODE_PRODUCTION
-    type: char*
-    init_with: '"production"'
-    static: true
-    constexpr: true
-
-  - name: MODE_DEVELOPMENT
-    type: char*
-    init_with: '"development"'
-    static: true
-    constexpr: true
-
 
 functions:
 
@@ -90,6 +67,9 @@ functions:
       - sample_bin
       - model_bin
     body: |
+      // TODO: consider adding achievements, title_screen, opening_credits, etc to this runner
+
+      // Setup our main gameplay screen
       cube_shooter_screen.set_event_emitter(event_emitter);
       cube_shooter_screen.set_bitmap_bin(bitmap_bin);
       cube_shooter_screen.set_font_bin(font_bin);
@@ -152,33 +132,22 @@ functions:
 
   - name: RUN
     parameters:
-      - name: mode
+      - name: deployment_environment_mode
         type: std::string
-        default_argument: '"production"'
+        default_argument: '"[unset-deployment_environment_mode]"'
       - name: disable_escape_key_will_shutdown
         type: bool
         default_argument: false
     static: true
-    guards: [ is_valid_mode(mode) ]
     body: |
       // setup the framework
       AllegroFlare::Frameworks::Full framework;
+      framework.set_deployment_environment(deployment_environment_mode);
       if (disable_escape_key_will_shutdown) framework.disable_escape_key_will_shutdown();
       framework.initialize();
 
-      // setup the environment/asset folders
-      if (is_test_mode(mode) || is_development_mode(mode))
-      {
-         std::string PROJECT_DATA_FOLDER = "/Users/markoates/Repos/CatDetective/bin/data";
-         framework.get_font_bin_ref().set_full_path(PROJECT_DATA_FOLDER + "/fonts");
-         framework.get_bitmap_bin_ref().set_full_path(PROJECT_DATA_FOLDER + "/bitmaps");
-         framework.get_sample_bin_ref().set_full_path(PROJECT_DATA_FOLDER + "/samples");
-         framework.get_model_bin_ref().set_full_path(PROJECT_DATA_FOLDER + "/models");
-      }
-
       // instantiate our actual game runner
       Runner runner(
-         mode,
          &framework,
          &framework.get_event_emitter_ref(),
          &framework.get_bitmap_bin_ref(),
@@ -193,75 +162,6 @@ functions:
       return;
     body_dependency_symbols:
       - AllegroFlare::Frameworks::Full
-
-
-  - name: is_test_mode
-    type: bool
-    static: true
-    parameters:
-      - name: mode
-        type: std::string
-        default_argument: '"[unset-mode]"'
-    body: |
-      return mode == MODE_TEST;
-
-
-  - name: is_development_mode
-    type: bool
-    static: true
-    parameters:
-      - name: mode
-        type: std::string
-        default_argument: '"[unset-mode]"'
-    body: |
-      return mode == MODE_DEVELOPMENT;
-
-
-  - name: is_production_mode
-    type: bool
-    static: true
-    parameters:
-      - name: mode
-        type: std::string
-        default_argument: '"[unset-mode]"'
-    body: |
-      return mode == MODE_PRODUCTION;
-
-
-  - name: in_development_mode
-    type: bool
-    body: |
-      return mode == MODE_DEVELOPMENT;
-
-
-  - name: in_production_mode
-    type: bool
-    body: |
-      return mode == MODE_PRODUCTION;
-
-
-  - name: in_test_mode
-    type: bool
-    body: |
-      return mode == MODE_TEST;
-
-
-  - name: is_valid_mode
-    static: true
-    type: bool
-    parameters:
-      - name: mode
-        type: std::string
-        default_argument: '"[unset-mode]"'
-    body: |
-      static const std::set<std::string> VALID_MODES = {
-         MODE_PRODUCTION,
-         MODE_DEVELOPMENT,
-         MODE_TEST,
-      };
-      return (VALID_MODES.count(mode) > 0);
-    body_dependency_symbols:
-      - std::set
 
 
 dependencies:
