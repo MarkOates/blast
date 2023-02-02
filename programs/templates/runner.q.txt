@@ -131,7 +131,7 @@ functions:
       return;
 
 
-  - name: RUN
+  - name: run
     parameters:
       - name: deployment_environment_mode
         type: std::string
