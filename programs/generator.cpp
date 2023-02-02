@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
 
 
 class ConsoleOutputter
@@ -520,6 +520,28 @@ void output_finished_message(std::string project_name)
 }
 
 
+void generate_gameplay_screen_screen_class(std::string project_name)
+{
+   // TODO: prompt to create
+   // TODO: sanitize the project name so it cannot be injected with arbitrary commands
+   Blast::ShellCommandExecutorWithCallback shell_command_executor(
+      "~/Repos/blast/bin/programs/component_generator " + project_name + "/PrimaryGameplay/Screen screen"
+   );
+   shell_command_executor.execute();
+}
+
+
+void generate_runner_class(std::string project_name)
+{
+   // TODO: prompt to create
+   // TODO: sanitize the project name so it cannot be injected with arbitrary commands
+   Blast::ShellCommandExecutorWithCallback shell_command_executor(
+      "~/Repos/blast/bin/programs/component_generator " + project_name + "/Runner runner"
+   );
+   shell_command_executor.execute();
+}
+
+
 int main(int argc, char **argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
@@ -527,6 +549,8 @@ int main(int argc, char **argv)
    if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
 
    Generator generator(argv[1]);
+   std::string project_name = generator.get_project_name();
+   // TODO: sanitize the project_name (it's passed in to shell commands)
 
    create_directories(generator);
    create_makefile(generator);
@@ -534,10 +558,10 @@ int main(int argc, char **argv)
    create_main_file(generator);
    create_test_runner(generator);
 
-   // TODO: prompt to create "ProjectName/GameplayScreen/Screen screen"
-   // TODO: prompt to create "ProjectName/Runner runner"
+   generate_gameplay_screen_screen_class(project_name);
+   generate_runner_class(project_name);
 
-   output_finished_message(generator.get_project_name());
+   output_finished_message(project_name);
 
    return 0;
 }
