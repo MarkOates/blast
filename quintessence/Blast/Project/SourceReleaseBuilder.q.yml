@@ -433,11 +433,11 @@ functions:
       if (validate_bin_programs_data_folder_from_source_exists)
       {
          // TODO: test this condition
-         std::string expected_data_folder_location = source_directory + "/bin/programs/data";
+         std::string expected_data_folder_location = source_directory + "/bin/data";
          Blast::DirectoryExistenceChecker checker(expected_data_folder_location);
          if (!checker.exists())
          {
-            std::string message = "The expected bin/programs/data folder does not exist. Expected at "
+            std::string message = "The expected bin/data folder does not exist. Expected at "
                                   "\"" + expected_data_folder_location + "\"";
             Blast::Errors::throw_error(
                "Blast::Project::SourceReleaseBuilder::generate_source_release()",
@@ -479,7 +479,7 @@ functions:
       std::stringstream copy_src_files_command;
       copy_src_files_command << "cp -R " << source_directory << "/src " << destination_directory << "/src";
       std::stringstream copy_data_files_command;
-      copy_data_files_command << "cp -R " << source_directory << "/bin/programs/data " << destination_directory << "/data";
+      copy_data_files_command << "cp -R " << source_directory << "/bin/data " << destination_directory << "/data";
       std::stringstream copy_program_files_command;
       copy_program_files_command << "cp -R " << source_directory << "/programs " << destination_directory << "/programs";
       std::stringstream copy_readme_file_command;
