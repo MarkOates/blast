@@ -103,7 +103,7 @@ functions:
             // TODO: branch out conditional for production
             event_emitter->emit_game_event(AllegroFlare::GameEvent(EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN));
          }},
-         { EVENT_ACTIVATE_CUBE_SHOOTER_SCREEN, [this](){
+         { EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN, [this](){
             framework->activate_screen("primary_gameplay_screen");
          }},
          //{ EVENT_PAUSE_GAME, [this](){

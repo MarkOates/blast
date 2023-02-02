@@ -511,6 +511,15 @@ void create_directories(Generator &generator)
 }
 
 
+void output_finished_message(std::string project_name)
+{
+   ConsoleOutputter console_output;
+   std::stringstream finish_message;
+   finish_message << "✅ Project files under \"" << project_name << "/\" generated." << std::endl;
+   console_output.output_line(finish_message.str());
+}
+
+
 int main(int argc, char **argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
@@ -518,7 +527,6 @@ int main(int argc, char **argv)
    if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
 
    Generator generator(argv[1]);
-   ConsoleOutputter console_output;
 
    create_directories(generator);
    create_makefile(generator);
@@ -526,9 +534,10 @@ int main(int argc, char **argv)
    create_main_file(generator);
    create_test_runner(generator);
 
-   std::stringstream finish_message;
-   finish_message << "✅ Project files under \"" << generator.get_project_name() << "/\" generated." << std::endl;
-   console_output.output_line(finish_message.str());
+   // TODO: prompt to create "ProjectName/GameplayScreen/Screen screen"
+   // TODO: prompt to create "ProjectName/Runner runner"
+
+   output_finished_message(generator.get_project_name());
 
    return 0;
 }
