@@ -439,9 +439,6 @@ public:
 };
 
 
-#include <Blast/ShellCommandExecutorWithCallback.hpp>
-
-
 void create_makefile(Generator &generator)
 {
    std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ../union/Makefile ./Makefile)";
@@ -522,22 +519,18 @@ void output_finished_message(std::string project_name)
 
 void generate_gameplay_screen_screen_class(std::string project_name)
 {
-   // TODO: prompt to create
-   // TODO: sanitize the project name so it cannot be injected with arbitrary commands
-   Blast::ShellCommandExecutorWithCallback shell_command_executor(
-      "~/Repos/blast/bin/programs/component_generator " + project_name + "/PrimaryGameplay/Screen screen"
-   );
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/PrimaryGameplay/Screen screen";
+   std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
+   Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
 }
 
 
 void generate_runner_class(std::string project_name)
 {
-   // TODO: prompt to create
-   // TODO: sanitize the project name so it cannot be injected with arbitrary commands
-   Blast::ShellCommandExecutorWithCallback shell_command_executor(
-      "~/Repos/blast/bin/programs/component_generator " + project_name + "/Runner runner"
-   );
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Runner runner";
+   std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
+   Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
 }
 
