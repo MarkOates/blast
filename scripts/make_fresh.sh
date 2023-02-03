@@ -66,4 +66,8 @@ cd ../allegro_flare
 git pull
 make clean && make
 
+# make hexagon
+cd ../hexagon
+git pull
+make clean && make
 
