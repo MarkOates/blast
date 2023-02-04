@@ -56,6 +56,10 @@ cd .dotfiles
 git pull
 source ./.zshrc
 
+# sync union
+cd ../union
+git pull
+
 # make allegro_flare
 cd ../blast
 git pull
