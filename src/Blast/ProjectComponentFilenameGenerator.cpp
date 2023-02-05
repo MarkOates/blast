@@ -2,6 +2,7 @@
 
 #include <Blast/ProjectComponentFilenameGenerator.hpp>
 #include <string>
+#include <stdexcept>
 
 
 namespace Blast
