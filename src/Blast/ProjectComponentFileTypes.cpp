@@ -1,6 +1,7 @@
 
 
 #include <Blast/ProjectComponentFileTypes.hpp>
+#include <stdexcept>
 
 
 namespace Blast
