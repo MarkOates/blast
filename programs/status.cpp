@@ -275,7 +275,7 @@ std::string create_output_report()
       result_text
          << std::left << std::setw(longest_project_name_length + project_name_right_padding) << std::setfill('-') << (project_identifier + " ")
          << status_icon_and_text;
-      if (project_has_been_processed == true && !(final_status == CLEAN || final_status == EXTRA_LOCAL_BRANCHES))
+      if (project_has_been_processed == true && !(final_status == CLEAN || final_status == EXTRA_LOCAL_BRANCHES || final_status == NOT_PRESENT))
       {
 
          result_text << std::endl;
