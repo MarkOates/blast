@@ -170,10 +170,11 @@ enum final_status_t
 
 final_status_t get_final_status(int num_local_branches, bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files, bool has_no_staged_files)
 {
-   if (project_has_been_processed == false) return UNPROCESSED;
-   if (!exists_locally) { status == NOT_PRESENT; return status; };
-
    final_status_t status = CLEAN;
+
+   if (project_has_been_processed == false) return UNPROCESSED;
+   if (!exists_locally) { status = NOT_PRESENT; return status; };
+
    if (num_local_branches > 1) status = EXTRA_LOCAL_BRANCHES;
    if (!in_sync) status = UNSYNCED;
    if (!has_no_changed_files || !has_no_untracked_files || !has_no_staged_files) status = SOME_CLUTTERED_FILES;
