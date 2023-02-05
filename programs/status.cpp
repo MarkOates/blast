@@ -41,6 +41,7 @@ class ProjectStatus
 {
 private:
    std::string repo_name;
+   std::string repo_base_directory;
 
    bool exists_locally;
    bool in_sync;
@@ -53,15 +54,16 @@ private:
    GithubRepoStatusFetcher fetcher;
 
 public:
-   ProjectStatus(std::string repo_name)
+   ProjectStatus(std::string repo_name, std::string repo_base_directory)
       : repo_name(repo_name)
+      , repo_base_directory(repo_base_directory)
       , exists_locally(false)
       , in_sync(false)
       , has_no_changed_files(false)
       , has_no_untracked_files(false)
       , has_no_staged_files(false)
       , num_local_branches(0)
-      , fetcher(repo_name)
+      , fetcher(repo_name, repo_base_directory)
    {}
 
    std::string get_repo_name()
@@ -296,16 +298,26 @@ std::string create_output_report()
 
 //std::map<std::string, std::pair<bool, ProjectStatus>> projects = {};
 
+#if defined(_WIN32) || defined(_WIN64)
+#define REPOS_BASE_DIR "/msys64/home/Mark/Repos/"
+#else
+#define REPOS_BASE_DIR "~/Repos/"
+#endif
+
+
+
 
 int main(int argc, char **argv)
 {
+   std::string base_dir = REPOS_BASE_DIR;
+
    projects = {
       //{ "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
       //{ "Alex Park",            { false, ProjectStatus("AlexPark") } },
       //{ "HomeServer",       { false, ProjectStatus("HomeServer") } },
-      { "LabyrinthOfLore",  { false, ProjectStatus("LabyrinthOfLore") } },
+      { "LabyrinthOfLore",  { false, ProjectStatus("LabyrinthOfLore", base_dir) } },
       //{ "Peri",      { false, ProjectStatus("Peri") } },
-      { "Solitare",          { false, ProjectStatus("Solitare") } },
+      { "Solitare",          { false, ProjectStatus("Solitare", base_dir) } },
       //{ "allegro-planet",   { false, ProjectStatus("allegro-planet") } },
       //{ "allegroflare.github.io", { false, ProjectStatus("allegroflare.github.io") } },
       //{ "beary2d",              { false, ProjectStatus("beary2d") } },
@@ -313,29 +325,29 @@ int main(int argc, char **argv)
       //{ "crayola-client",   { false, ProjectStatus("crayola-client") } },
       //{ "disclife",         { false, ProjectStatus("disclife") } },
       //{ "dungeon",              { false, ProjectStatus("dungeon") } },
-      { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin") } },
+      { "first_vim_plugin", { false, ProjectStatus("first_vim_plugin", base_dir) } },
       //{ "flare_network",    { false, ProjectStatus("flare_network") } },
-      { "fullscore",        { false, ProjectStatus("fullscore") } },
-      { "motris",               { false, ProjectStatus("motris") } },
+      { "fullscore",        { false, ProjectStatus("fullscore", base_dir) } },
+      { "motris",               { false, ProjectStatus("motris", base_dir) } },
       //{ "tilemap",              { false, ProjectStatus("tilemap") } },
-      { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21") } },
-      { ".dotfiles",        { false, ProjectStatus(".dotfiles") } },
-      { "DragonWrath",      { false, ProjectStatus("DragonWrath") } },
-      { "ChatGPT",      { false, ProjectStatus("ChatGPT") } },
-      { "KrampusReturns",      { false, ProjectStatus("KrampusReturns") } },
-      { "Releaser",      { false, ProjectStatus("Releaser") } },
-      { "Slug3D",               { false, ProjectStatus("slug_3d") } },
-      { "allegro_flare",    { false, ProjectStatus("allegro_flare") } },
-      { "beebot",           { false, ProjectStatus("beebot") } },
-      { "blast",            { false, ProjectStatus("blast") } },
-      { "dungeon",            { false, ProjectStatus("dungeon") } },
-      { "hexagon",          { false, ProjectStatus("hexagon") } },
-      { "lightracer-max",       { false, ProjectStatus("lightracer-max") } },
-      { "me",               { false, ProjectStatus("me") } },
+      { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21", base_dir) } },
+      { ".dotfiles",        { false, ProjectStatus(".dotfiles", base_dir) } },
+      { "DragonWrath",      { false, ProjectStatus("DragonWrath", base_dir) } },
+      { "ChatGPT",      { false, ProjectStatus("ChatGPT", base_dir) } },
+      { "KrampusReturns",      { false, ProjectStatus("KrampusReturns", base_dir) } },
+      { "Releaser",      { false, ProjectStatus("Releaser", base_dir) } },
+      { "Slug3D",               { false, ProjectStatus("slug_3d", base_dir) } },
+      { "allegro_flare",    { false, ProjectStatus("allegro_flare", base_dir) } },
+      { "beebot",           { false, ProjectStatus("beebot", base_dir) } },
+      { "blast",            { false, ProjectStatus("blast", base_dir) } },
+      { "dungeon",            { false, ProjectStatus("dungeon", base_dir) } },
+      { "hexagon",          { false, ProjectStatus("hexagon", base_dir) } },
+      { "lightracer-max",       { false, ProjectStatus("lightracer-max", base_dir) } },
+      { "me",               { false, ProjectStatus("me", base_dir) } },
       //{ "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
-      { "oatescodes",       { false, ProjectStatus("oatescodes") } },
+      { "oatescodes",       { false, ProjectStatus("oatescodes", base_dir) } },
       //{ "tileo",                { false, ProjectStatus("tileo") } },
-      { "union",            { false, ProjectStatus("union") } },
+      { "union",            { false, ProjectStatus("union", base_dir) } },
       //{ "Wicked",            { false, ProjectStatus("Wicked") } },
       //{ "/Library/Application Support/Adobe/CEP/extensions", { false, ProjectStatus("unset") } },
    };
