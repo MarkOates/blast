@@ -4,6 +4,7 @@
 #include <HostnameExtractor.hpp>
 
 #include <iostream>
+#include <iomanip> // for std::setw and std::setfill
 #include <algorithm> // for std::find
 
 #define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
