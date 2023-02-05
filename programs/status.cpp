@@ -160,6 +160,7 @@ enum final_status_t
    NONE = 0,
    UNPROCESSED,
    CLEAN,
+   NOT_PRESENT,
    UNSYNCED,
    SOME_CLUTTERED_FILES,
    EXTRA_LOCAL_BRANCHES,
@@ -170,10 +171,11 @@ enum final_status_t
 final_status_t get_final_status(int num_local_branches, bool project_has_been_processed, bool exists_locally, bool in_sync, bool has_no_changed_files, bool has_no_untracked_files, bool has_no_staged_files)
 {
    if (project_has_been_processed == false) return UNPROCESSED;
+   if (!exists_locally) { status == NOT_PRESENT; return status; };
 
    final_status_t status = CLEAN;
    if (num_local_branches > 1) status = EXTRA_LOCAL_BRANCHES;
-   if (!exists_locally || !in_sync) status = UNSYNCED;
+   if (!in_sync) status = UNSYNCED;
    if (!has_no_changed_files || !has_no_untracked_files || !has_no_staged_files) status = SOME_CLUTTERED_FILES;
    return status;
 }
@@ -197,6 +199,9 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
       break;
    case CLEAN:
       return "💎 clean";
+      break;
+   case NOT_PRESENT:
+      return "❌ not present";
       break;
    case UNSYNCED:
       return "🔺 unsynced";
