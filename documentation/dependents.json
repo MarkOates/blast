@@ -78,7 +78,6 @@
     "Blast/Project/ComponentRelativeLister",
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/StringSplitter",
-    "NcursesArt/GithubRepoStatusFetcher",
     "StringSplitter",
     "StringVectorIntersection"
   ],
