@@ -193,7 +193,7 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
       return TERMINAL_COLOR_LIGHT_BLUE "💎 clean" TERMINAL_COLOR_RESET;
       break;
    case NOT_PRESENT:
-      return TERMINAL_COLOR_DARK_GRAY "🫥 not present" TERMINAL_COLOR_RESET;
+      return TERMINAL_COLOR_DARK_GRAY "☐ not present" TERMINAL_COLOR_RESET;
       break;
    case UNSYNCED:
       return TERMINAL_COLOR_RED "🔺 unsynced" TERMINAL_COLOR_RESET;
