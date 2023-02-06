@@ -18,10 +18,11 @@ namespace Blast
 
 
    public:
-      ShellCommandExecutorWithCallback(std::string command="echo hello!", std::function<void(std::string)> callback=ShellCommandExecutorWithCallback::simple_cout_callback, bool capture_stderr=false);
+      ShellCommandExecutorWithCallback(std::string command="echo hello!", std::function<void(std::string)> callback=ShellCommandExecutorWithCallback::simple_cout_callback, bool capture_stderr=true);
       ~ShellCommandExecutorWithCallback();
 
       void set_capture_stderr(bool capture_stderr);
+      bool get_capture_stderr() const;
       static void simple_silent_callback(std::string string_for_appending="");
       static void simple_cout_callback(std::string string_for_appending="");
       std::string execute();

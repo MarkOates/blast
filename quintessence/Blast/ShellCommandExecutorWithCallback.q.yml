@@ -13,9 +13,10 @@ properties:
 
   - name: capture_stderr
     type: bool
-    init_with: false
+    init_with: true
     constructor_arg: true
     setter: true
+    getter: true
 
 
 functions:
@@ -61,6 +62,8 @@ functions:
             result += buffer.data();
             callback(buffer.data());
          }
+
+      //pclose(pipe);
 
       return result;
 

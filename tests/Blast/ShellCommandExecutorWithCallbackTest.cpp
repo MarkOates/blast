@@ -25,7 +25,7 @@ TEST(ShellCommandExecutorWithCallbackTest, execute__executes_a_command_and_retur
 }
 
 
-TEST(ShellCommandExecutorWithCallbackTest, execute__when_capture_stderr_is_true__will_also_include_stderr_in_the_output)
+TEST(ShellCommandExecutorWithCallbackTest, execute__when_capture_stderr_is_true__will_include_stderr_in_the_output)
 {
    std::stringstream command;
    command << "printf \"hello shell command!\" && cd a-directory-that-does-not-exist/";
@@ -49,6 +49,13 @@ TEST(ShellCommandExecutorWithCallbackTest, execute__when_capture_stderr_is_false
    executor.set_capture_stderr(false);
 
    EXPECT_EQ(expected_string, executor.execute());
+}
+
+
+TEST(ShellCommandExecutorWithCallbackTest, capture_stderr__is_true_by_default)
+{
+   Blast::ShellCommandExecutorWithCallback executor;
+   EXPECT_EQ(true, executor.get_capture_stderr());
 }
 
 

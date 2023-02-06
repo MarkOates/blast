@@ -33,6 +33,12 @@ void ShellCommandExecutorWithCallback::set_capture_stderr(bool capture_stderr)
 }
 
 
+bool ShellCommandExecutorWithCallback::get_capture_stderr() const
+{
+   return capture_stderr;
+}
+
+
 void ShellCommandExecutorWithCallback::simple_silent_callback(std::string string_for_appending)
 {
    return;
@@ -60,6 +66,8 @@ std::string ShellCommandExecutorWithCallback::execute()
          result += buffer.data();
          callback(buffer.data());
       }
+
+   //pclose(pipe);
 
    return result;
 }
