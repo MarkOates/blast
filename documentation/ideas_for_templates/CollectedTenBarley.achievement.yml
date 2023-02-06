@@ -1,0 +1,9 @@
+dependencies:
+  - name: player_inventory
+    type: Inventory&
+
+test_condition: |
+  return player_inventory.get_item_count(ITEM_BARLEY) >= 10;
+
+on_achieved: |
+  std::cout << "Congratulations! You've got 10 bundles of barley! Epic!" << std::endl;
