@@ -95,7 +95,6 @@ std::string ShellCommandExecutorWithCallback::execute()
       }
 
    int pclose_result = pclose(pipe);
-   //uint32_t exit_status = 0;
 
    if(WIFEXITED(pclose_result)) {
        //If you need to do something when the pipe exited, this is the time.

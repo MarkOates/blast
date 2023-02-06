@@ -100,6 +100,8 @@ std::vector<std::string> ComponentLister::get_components_of_fragment_type(std::s
       find_command.str(),
       Blast::ShellCommandExecutorWithCallback::simple_silent_callback
    );
+   executor.set_capture_stderr(false); // TODO: figure out why this flag is needed, otherwise resulting in
+                                       // an extra blank line that was included in the command output
    std::string executor_response = executor.execute();
    StringSplitter splitter(executor_response, '\n');
    std::vector<std::string> component_names_with_fragment = splitter.split();
