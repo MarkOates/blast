@@ -13,7 +13,7 @@ properties:
 
   - name: capture_stderr
     type: bool
-    init_with: true
+    init_with: false
     constructor_arg: true
     setter: true
     getter: true

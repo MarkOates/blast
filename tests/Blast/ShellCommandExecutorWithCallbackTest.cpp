@@ -59,6 +59,7 @@ TEST(ShellCommandExecutorWithCallbackTest,
    command << "cd a-directory-that-does-not-exist";
 
    Blast::ShellCommandExecutorWithCallback executor(command.str());
+   executor.set_capture_stderr(true);
 
    EXPECT_EQ("sh: line 0: cd: a-directory-that-does-not-exist: No such file or directory\n", executor.execute());
    EXPECT_EQ(true, executor.get_finished());
@@ -82,10 +83,11 @@ TEST(ShellCommandExecutorWithCallbackTest,
 }
 
 
-TEST(ShellCommandExecutorWithCallbackTest, capture_stderr__is_true_by_default)
+TEST(ShellCommandExecutorWithCallbackTest, capture_stderr__is_false_by_default)
 {
+   // TODO: OK, would highly prefer for for this to be true by default, but for the time being now it breaks things.
    Blast::ShellCommandExecutorWithCallback executor;
-   EXPECT_EQ(true, executor.get_capture_stderr());
+   EXPECT_EQ(false, executor.get_capture_stderr());
 }
 
 
