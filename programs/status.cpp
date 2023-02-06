@@ -271,7 +271,7 @@ std::string create_output_report()
       int longest_project_name_length = 24;
       int project_name_right_padding = 3;
       //std::setw(longest_project_name_length + project_name_right_padding) << std::setfill('-');
-      std::string status_icon_and_text = get_status_icon_and_text(final_status, num_local_branches, num_remote_branches);
+      std::string status_icon_and_text = " " + get_status_icon_and_text(final_status, num_local_branches, num_remote_branches);
       result_text
          << std::left << std::setw(longest_project_name_length + project_name_right_padding) << std::setfill('-') << (project_identifier + " ")
          << status_icon_and_text;
