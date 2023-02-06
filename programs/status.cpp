@@ -188,8 +188,19 @@ std::string get_hostname()
 }
 
 
+
+#define TERMINAL_COLOR_YELLOW "\033[1;33m"
+#define TERMINAL_COLOR_GRAY "\033[1;37m"
+#define TERMINAL_COLOR_GREEN "\033[1;32m"
+#define TERMINAL_COLOR_BLUE "\033[1;34m"
+#define TERMINAL_COLOR_LIGHT_BLUE "\033[1;94m"
+#define TERMINAL_COLOR_RESET "\033[0m"
+
+
+
 std::string get_status_icon_and_text(final_status_t status, int num_local_branches, int num_remote_branches)
 {
+   std::string color_code;
    switch (status)
    {
    case NONE:
@@ -199,19 +210,19 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
       return "▫️  unprocessed";
       break;
    case CLEAN:
-      return "💎 clean";
+      return TERMINAL_COLOR_LIGHT_BLUE "💎 clean" TERMINAL_COLOR_RESET;
       break;
    case NOT_PRESENT:
-      return "❌ not present";
+      return TERMINAL_COLOR_GRAY "🫥 not present" TERMINAL_COLOR_RESET;
       break;
    case UNSYNCED:
       return "🔺 unsynced";
       break;
    case SOME_CLUTTERED_FILES:
-      return "🔸 some cluttered files";
+      return TERMINAL_COLOR_YELLOW "🔸 some cluttered files" TERMINAL_COLOR_RESET;
       break;
    case EXTRA_LOCAL_BRANCHES:
-      return std::string("🔹 some extra local branches (") + std::to_string(num_local_branches) + ")";
+      return std::string(TERMINAL_COLOR_BLUE "🔹 some extra local branches (") + std::to_string(num_local_branches) + ")" TERMINAL_COLOR_RESET;
       break;
    //case EXTRA_LOCAL_REMOTE_BRANCHES:
       //return std::string("🔹 some extra remote branches (") + std::to_string(num_remote_branches) + ")";
