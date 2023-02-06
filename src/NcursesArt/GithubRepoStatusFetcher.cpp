@@ -120,7 +120,7 @@ bool GithubRepoStatusFetcher::local_repo_exists()
 {
    poll_status();
    // TODO: modify this function so it can rely on captured std::err output
-   // std::string string_to_find = "cd: no such file or directory";
+   // std::string string_to_find = "cd: No such file or directory";
    return !get_last_captured_output_from_status_request().empty();
 }
 

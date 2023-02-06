@@ -14,15 +14,22 @@ namespace Blast
 {
 
 
-ShellCommandExecutorWithCallback::ShellCommandExecutorWithCallback(std::string command, std::function<void(std::string)> callback)
+ShellCommandExecutorWithCallback::ShellCommandExecutorWithCallback(std::string command, std::function<void(std::string)> callback, bool capture_stderr)
    : command(command)
    , callback(callback)
+   , capture_stderr(capture_stderr)
 {
 }
 
 
 ShellCommandExecutorWithCallback::~ShellCommandExecutorWithCallback()
 {
+}
+
+
+void ShellCommandExecutorWithCallback::set_capture_stderr(bool capture_stderr)
+{
+   this->capture_stderr = capture_stderr;
 }
 
 
@@ -39,10 +46,11 @@ void ShellCommandExecutorWithCallback::simple_cout_callback(std::string string_f
 std::string ShellCommandExecutorWithCallback::execute()
 {
    static const int BUFFER_SIZE = 128;
+   std::string full_command = capture_stderr ? "(" + command + ") 2>&1" : command;
 
    std::array<char, BUFFER_SIZE> buffer;
    std::string result;
-   std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
+   std::shared_ptr<FILE> pipe(popen(full_command.c_str(), "r"), pclose);
 
    if (!pipe) throw std::runtime_error("ShellCommandExecutor::execute(): Error: popen() failed.");
 
