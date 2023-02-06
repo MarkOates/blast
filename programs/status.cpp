@@ -39,8 +39,8 @@ public:
       , has_no_changed_files(false)
       , has_no_untracked_files(false)
       , has_no_staged_files(false)
-      , num_local_branches(0)
-      , num_remote_branches(0)
+      , num_local_branches(-1)
+      , num_remote_branches(-1)
       , fetcher(repo_name, repo_base_directory)
    {}
 
@@ -87,6 +87,8 @@ public:
    void process()
    {
       exists_locally = fetcher.local_repo_exists();
+      if (!exists_locally) return;
+
       in_sync = fetcher.is_the_repo_in_sync_with_remote();
       has_no_changed_files = !fetcher.has_file_changes();
       has_no_untracked_files = !fetcher.has_untracked_files();
