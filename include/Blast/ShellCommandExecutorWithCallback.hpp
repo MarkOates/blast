@@ -13,6 +13,8 @@ namespace Blast
       std::string command;
       std::function<void(std::string)> callback;
       bool capture_stderr;
+      bool executed_successfully;
+      bool finished;
 
    protected:
 
@@ -23,6 +25,8 @@ namespace Blast
 
       void set_capture_stderr(bool capture_stderr);
       bool get_capture_stderr() const;
+      bool get_executed_successfully() const;
+      bool get_finished() const;
       static void simple_silent_callback(std::string string_for_appending="");
       static void simple_cout_callback(std::string string_for_appending="");
       std::string execute();

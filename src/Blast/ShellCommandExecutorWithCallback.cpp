@@ -18,6 +18,8 @@ ShellCommandExecutorWithCallback::ShellCommandExecutorWithCallback(std::string c
    : command(command)
    , callback(callback)
    , capture_stderr(capture_stderr)
+   , executed_successfully(false)
+   , finished(false)
 {
 }
 
@@ -39,6 +41,18 @@ bool ShellCommandExecutorWithCallback::get_capture_stderr() const
 }
 
 
+bool ShellCommandExecutorWithCallback::get_executed_successfully() const
+{
+   return executed_successfully;
+}
+
+
+bool ShellCommandExecutorWithCallback::get_finished() const
+{
+   return finished;
+}
+
+
 void ShellCommandExecutorWithCallback::simple_silent_callback(std::string string_for_appending)
 {
    return;
@@ -51,7 +65,11 @@ void ShellCommandExecutorWithCallback::simple_cout_callback(std::string string_f
 
 std::string ShellCommandExecutorWithCallback::execute()
 {
+   finished = false;
+   executed_successfully = false;
    static const int BUFFER_SIZE = 128;
+   // NOTE: this technique will stream cerr into cout, so if future implementations were to capture
+   // cout and cerr into different result strings, this command would need to be modififed.
    std::string full_command = capture_stderr ? "(" + command + ") 2>&1" : command;
 
    std::array<char, BUFFER_SIZE> buffer;
@@ -68,7 +86,10 @@ std::string ShellCommandExecutorWithCallback::execute()
          callback(buffer.data());
       }
 
-   pclose(pipe);
+   int pclose_result = pclose(pipe);
+   executed_successfully = (pclose_result == 0);
+
+   finished = true;
 
    return result;
 }

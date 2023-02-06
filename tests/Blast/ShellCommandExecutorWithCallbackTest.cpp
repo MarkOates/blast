@@ -22,6 +22,7 @@ TEST(ShellCommandExecutorWithCallbackTest, execute__executes_a_command_and_retur
    Blast::ShellCommandExecutorWithCallback executor(command.str());
 
    EXPECT_EQ(expected_string, executor.execute());
+   EXPECT_EQ(true, executor.get_executed_successfully());
 }
 
 
@@ -49,6 +50,22 @@ TEST(ShellCommandExecutorWithCallbackTest, execute__when_capture_stderr_is_false
    executor.set_capture_stderr(false);
 
    EXPECT_EQ(expected_string, executor.execute());
+}
+
+
+TEST(ShellCommandExecutorWithCallbackTest,
+   executed_successfully__after_execute___will_return_false_if_there_was_an_error_during_execution)
+{
+   std::string expected_string = "hello shell command!";
+   std::stringstream command;
+   command << "printf \"" << expected_string << "\" && cd a-directory-that-does-not-exist/";
+
+   Blast::ShellCommandExecutorWithCallback executor(command.str());
+   executor.set_capture_stderr(false);
+
+   EXPECT_EQ(expected_string, executor.execute());
+   EXPECT_EQ(true, executor.get_finished());
+   EXPECT_EQ(false, executor.get_executed_successfully());
 }
 
 
