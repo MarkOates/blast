@@ -56,18 +56,19 @@ std::string ShellCommandExecutorWithCallback::execute()
 
    std::array<char, BUFFER_SIZE> buffer;
    std::string result;
-   std::shared_ptr<FILE> pipe(popen(full_command.c_str(), "r"), pclose);
+   //std::shared_ptr<FILE> pipe(popen(full_command.c_str(), "r"), pclose);
+   FILE* pipe = popen(full_command.c_str(), "r");
 
    if (!pipe) throw std::runtime_error("ShellCommandExecutor::execute(): Error: popen() failed.");
 
-   while (!feof(pipe.get()))
-      if (fgets(buffer.data(), BUFFER_SIZE, pipe.get()) != nullptr)
+   while (!feof(pipe))
+      if (fgets(buffer.data(), BUFFER_SIZE, pipe) != nullptr)
       {
          result += buffer.data();
          callback(buffer.data());
       }
 
-   //pclose(pipe);
+   pclose(pipe);
 
    return result;
 }
