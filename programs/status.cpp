@@ -8,29 +8,6 @@
 #include <iomanip> // for std::setw and std::setfill
 #include <algorithm> // for std::find
 
-#define MOVE_CURSOR_UP "MOVE_CURSOR_UP"
-#define MOVE_CURSOR_DOWN "MOVE_CURSOR_DOWN"
-#define MOVE_CURSOR_LEFT "MOVE_CURSOR_LEFT"
-#define MOVE_CURSOR_RIGHT "MOVE_CURSOR_RIGHT"
-#define INITIALIZE_SCENE "INITIALIZE_SCENE"
-#define REFRESH_ALL_STATUSES "REFRESH_ALL_STATUSES"
-#define PROCESS_NEXT_STATUS "PROCESS_NEXT_STATUS"
-#define REFRESH_OUTPUT_REPORT "REFRESH_OUTPUT_REPORT"
-#define REFRESH_PROGRESS_BAR "REFRESH_PROGRESS_BAR"
-#define INCREMENTAL_RUN "INCREMENTAL_RUN"
-
-#define OUTPUT_REPORT_TEXT_IDENTIFIER "output report"
-#define OUTPUT_REPORT_TEXT find_text(OUTPUT_REPORT_TEXT_IDENTIFIER)
-
-#define HOSTNAME_TEXT_IDENTIFIER "hostname text"
-#define HOSTNAME_TEXT find_text(HOSTNAME_TEXT_IDENTIFIER)
-
-#define PROGRESS_BAR_IDENTIFIER "progress bar"
-#define PROGRESS_BAR find_progress_bar(PROGRESS_BAR_IDENTIFIER)
-
-#define PROGRESS_BAR_TEXT_IDENTIFIER "progress bar text"
-#define PROGRESS_BAR_TEXT find_text(PROGRESS_BAR_TEXT_IDENTIFIER)
-
 #define PROPERTY_DELIMITER ": "
 
 
@@ -63,6 +40,7 @@ public:
       , has_no_untracked_files(false)
       , has_no_staged_files(false)
       , num_local_branches(0)
+      , num_remote_branches(0)
       , fetcher(repo_name, repo_base_directory)
    {}
 
@@ -190,7 +168,9 @@ std::string get_hostname()
 
 
 #define TERMINAL_COLOR_YELLOW "\033[1;33m"
+#define TERMINAL_COLOR_RED "\033[1;31m"
 #define TERMINAL_COLOR_GRAY "\033[1;37m"
+#define TERMINAL_COLOR_DARK_GRAY "\033[1;30m"
 #define TERMINAL_COLOR_GREEN "\033[1;32m"
 #define TERMINAL_COLOR_BLUE "\033[1;34m"
 #define TERMINAL_COLOR_LIGHT_BLUE "\033[1;94m"
@@ -213,10 +193,10 @@ std::string get_status_icon_and_text(final_status_t status, int num_local_branch
       return TERMINAL_COLOR_LIGHT_BLUE "💎 clean" TERMINAL_COLOR_RESET;
       break;
    case NOT_PRESENT:
-      return TERMINAL_COLOR_GRAY "🫥 not present" TERMINAL_COLOR_RESET;
+      return TERMINAL_COLOR_DARK_GRAY "🫥 not present" TERMINAL_COLOR_RESET;
       break;
    case UNSYNCED:
-      return "🔺 unsynced";
+      return TERMINAL_COLOR_RED "🔺 unsynced" TERMINAL_COLOR_RESET;
       break;
    case SOME_CLUTTERED_FILES:
       return TERMINAL_COLOR_YELLOW "🔸 some cluttered files" TERMINAL_COLOR_RESET;
