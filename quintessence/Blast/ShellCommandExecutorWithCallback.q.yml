@@ -18,7 +18,7 @@ properties:
     setter: true
     getter: true
 
-  - name: exit_status
+  - name: exit_status_DISABLED__not_supported_on_windows
     type: uint32_t
     init_with: 0
     getter: true
@@ -86,10 +86,12 @@ functions:
 
       int pclose_result = pclose(pipe);
 
-      if(WIFEXITED(pclose_result)) {
-          //If you need to do something when the pipe exited, this is the time.
-          exit_status=WEXITSTATUS(pclose_result);
-      }
+      // TODO: Add an implementation that works on windows
+      // NOTE: This is not supported on Windows, so is disabled
+      //if(WIFEXITED(pclose_result)) {
+          ////If you need to do something when the pipe exited, this is the time.
+          //exit_status=WEXITSTATUS(pclose_result);
+      //}
 
       executed_successfully = (pclose_result == 0);
 
