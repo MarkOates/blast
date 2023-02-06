@@ -18,6 +18,7 @@ ShellCommandExecutorWithCallback::ShellCommandExecutorWithCallback(std::string c
    : command(command)
    , callback(callback)
    , capture_stderr(capture_stderr)
+   , exit_status(0)
    , executed_successfully(false)
    , finished(false)
 {
@@ -38,6 +39,12 @@ void ShellCommandExecutorWithCallback::set_capture_stderr(bool capture_stderr)
 bool ShellCommandExecutorWithCallback::get_capture_stderr() const
 {
    return capture_stderr;
+}
+
+
+uint32_t ShellCommandExecutorWithCallback::get_exit_status() const
+{
+   return exit_status;
 }
 
 
@@ -67,6 +74,7 @@ std::string ShellCommandExecutorWithCallback::execute()
 {
    finished = false;
    executed_successfully = false;
+   exit_status = 0;
    static const int BUFFER_SIZE = 128;
    // NOTE: this technique will stream cerr into cout, so if future implementations were to capture
    // cout and cerr into different result strings, this command would need to be modififed.
@@ -87,6 +95,13 @@ std::string ShellCommandExecutorWithCallback::execute()
       }
 
    int pclose_result = pclose(pipe);
+   //uint32_t exit_status = 0;
+
+   if(WIFEXITED(pclose_result)) {
+       //If you need to do something when the pipe exited, this is the time.
+       exit_status=WEXITSTATUS(pclose_result);
+   }
+
    executed_successfully = (pclose_result == 0);
 
    finished = true;
