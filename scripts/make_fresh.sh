@@ -1,6 +1,8 @@
 #!/bin/sh
 
+
 #----- core -----
+
 
 #- dotfiles
 #- union
@@ -9,7 +11,9 @@
 #- hexagon
 #- me
 
+
 #----- projects -----
+
 
 #CubeShooter
 #KrampusReturns
@@ -37,6 +41,28 @@
 #bearys_bash
 #oatescodes
 #tileo (x)
+
+
+#install google test
+
+       #git clone https://github.com/google/googletest;
+       #cd googletest;
+       #mkdir build;
+       #cd build;
+       #cmake ..;
+       #make;
+       #make install;
+       #cd ..;
+       #cd ..;
+
+#install yaml-cpp
+
+       #// TODO
+
+#install allegro5
+
+       #// TODO
+
 
 
 
