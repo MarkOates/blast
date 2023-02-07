@@ -11,36 +11,8 @@
 #- hexagon
 #- me
 
-
-#----- projects -----
-
-
-#CubeShooter
-#KrampusReturns
-#Mania
-#CatDetective
-#TrackLock
-#LightracerMax
-#LabyrinthOfLore
-#TheWeepingHouse
-#DragonWrath
-#Krampus21 (FadeToWhite)
-#Fullscore
-#Golf
-#Peri (?)
-#Solitare (?)
-#Epidemic (?)
-#AllegroMembersClub (?)
-#Releaser
-#Slug3D (slug_3d)
-#Dungeon
-#Motris
-#ChatGPT
-#beebot
-#AlexPark
-#bearys_bash
-#oatescodes
-#tileo (x)
+# For full list of projects that would require build, see:
+# https://docs.google.com/spreadsheets/d/1aGJLjL2t0RKe0W4nwarA7WwtkUTn1KVzs-Vfw0iXvK8/edit#gid=0
 
 
 #install google test
