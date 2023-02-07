@@ -27,6 +27,10 @@
        #cd ..;
        #cd ..;
 
+#install rerun
+
+       #// TODO
+
 #install yaml-cpp
 
        #// TODO
