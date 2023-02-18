@@ -1,0 +1,29 @@
+properties:
+
+
+  - name: node
+    type: YAML::Node
+    constructor_arg: true
+    init_with: '{}'
+    getter: true
+    setter: true
+
+
+functions:
+
+
+  - name: parse
+    type: Blast::Cpp::EnumClass
+    body: |
+      return {};
+
+
+dependencies:
+
+
+  - symbol: YAML::Node
+    headers: [ yaml-cpp/yaml.h ]
+  - symbol: Blast::Cpp::EnumClass
+    headers: [ Blast/Cpp/EnumClass.hpp ]
+
+

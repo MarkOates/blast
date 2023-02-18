@@ -75,6 +75,7 @@ table td
   <li><a href="#quintessence/Blast/Project/ProjectSymlinkFixer.q.yml">quintessence/Blast/Project/ProjectSymlinkFixer.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/SymlinkChecker.q.yml">quintessence/Blast/Project/SymlinkChecker.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Quinetessence/YAMLParsing/EnumClassParser.q.yml">quintessence/Blast/Quinetessence/YAMLParsing/EnumClassParser.q.yml</a></li>
   <li><a href="#quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</a></li>
   <li><a href="#quintessence/Blast/ShellCommandExecutorWithCallback.q.yml">quintessence/Blast/ShellCommandExecutorWithCallback.q.yml</a></li>
   <li><a href="#quintessence/Blast/SimpleTextSearcher.q.yml">quintessence/Blast/SimpleTextSearcher.q.yml</a></li>
@@ -1134,6 +1135,30 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::filesystem::read_symlink&quot;, &quot;headers&quot;=&gt;[&quot;filesystem&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Quinetessence/YAMLParsing/EnumClassParser.q.yml">quintessence/Blast/Quinetessence/YAMLParsing/EnumClassParser.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">node</td>
+  <td class="property">YAML::Node</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">parse()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::Node&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::EnumClass&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/EnumClass.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -2489,6 +2514,13 @@ table td
   "std/filesystem/read_symlink": [
     "Blast/Project/SymlinkChecker"
   ],
+  "YAML/Node": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser",
+    "QuizYAMLLoader"
+  ],
+  "Blast/Cpp/EnumClass": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  ],
   "std/vector<std/regex_constants/syntax_option_type>": [
     "Blast/RegexMatcher"
   ],
@@ -2588,9 +2620,6 @@ table td
   ],
   "Quiz": [
     "QuizYAMLLoader",
-    "QuizYAMLLoader"
-  ],
-  "YAML/Node": [
     "QuizYAMLLoader"
   ],
   "Quizes/MultiplexQuestion": [

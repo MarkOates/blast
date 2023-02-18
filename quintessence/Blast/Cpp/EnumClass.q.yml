@@ -1,0 +1,18 @@
+properties:
+
+
+  - name: enum_name
+    type: std::string
+    init_with: '"[unset-enum_name]"'
+    constructor_arg: true
+    getter: true
+    setter: true
+    
+  - name: elements
+    type: std::set<std::string>
+    init_with: '{}'
+    constructor_arg: true
+    getter: true
+    setter: true
+    
+

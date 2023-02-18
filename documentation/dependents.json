@@ -257,6 +257,13 @@
   "std/filesystem/read_symlink": [
     "Blast/Project/SymlinkChecker"
   ],
+  "YAML/Node": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser",
+    "QuizYAMLLoader"
+  ],
+  "Blast/Cpp/EnumClass": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  ],
   "std/vector<std/regex_constants/syntax_option_type>": [
     "Blast/RegexMatcher"
   ],
@@ -356,9 +363,6 @@
   ],
   "Quiz": [
     "QuizYAMLLoader",
-    "QuizYAMLLoader"
-  ],
-  "YAML/Node": [
     "QuizYAMLLoader"
   ],
   "Quizes/MultiplexQuestion": [
