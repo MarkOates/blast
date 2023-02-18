@@ -52,18 +52,27 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
        //- RUNNING
        //- HIDING
 
+   // Validate presence and type
    validate_presence_of_key(node, "name");
    validate_node_type(node, "name", YAML::NodeType::Scalar);
+   validate_presence_of_key(node, "items");
+   validate_node_type(node, "items", YAML::NodeType::Sequence);
 
-   if (!(node["name"].Type() == YAML::NodeType::Scalar))
+   // Extract the "name" value
+   result.set_enum_name(node["name"].as<std::string>());
+
+   // Extract the "items" elements
+   std::vector<std::string> enum_items;
+   YAML::Node items_node = node["items"];
+   for (std::size_t i=0; i<items_node.size(); i++)
    {
-      std::stringstream error_message;
-      error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser]: error: "
-                    << "expecting to find node \"name\" as a scalar, but it is a \"" << node["name"] << "\".";
-      throw std::runtime_error(error_message.str());
+      // TODO: validate elements are all std::string and are of valid format (all caps, underscores, unique)
+      std::string enum_item = items_node[i].as<std::string>();
+      enum_items.push_back(enum_item);
    }
 
-   result.set_enum_name(node["name"].as<std::string>());
+   // Set the "items" values
+   result.set_elements(enum_items);
 
    return result;
 }

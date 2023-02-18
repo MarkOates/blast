@@ -9,7 +9,7 @@ properties:
     setter: true
     
   - name: elements
-    type: std::set<std::string>
+    type: std::vector<std::string>
     init_with: '{}'
     constructor_arg: true
     getter: true
@@ -26,6 +26,13 @@ properties:
     static: true
     type: const char*
     init_with: '(char*)"to_string"'
+
+
+documentation:
+
+
+  - todos:
+      - Add an explicit setter on `elements` and validate that it is unique.
 
 
 functions:

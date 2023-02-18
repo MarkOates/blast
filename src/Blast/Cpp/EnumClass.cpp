@@ -16,7 +16,7 @@ namespace Cpp
 {
 
 
-EnumClass::EnumClass(std::string enum_name, std::set<std::string> elements)
+EnumClass::EnumClass(std::string enum_name, std::vector<std::string> elements)
    : enum_name(enum_name)
    , elements(elements)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
@@ -35,7 +35,7 @@ void EnumClass::set_enum_name(std::string enum_name)
 }
 
 
-void EnumClass::set_elements(std::set<std::string> elements)
+void EnumClass::set_elements(std::vector<std::string> elements)
 {
    this->elements = elements;
 }
@@ -53,7 +53,7 @@ std::string EnumClass::get_enum_name() const
 }
 
 
-std::set<std::string> EnumClass::get_elements() const
+std::vector<std::string> EnumClass::get_elements() const
 {
    return elements;
 }

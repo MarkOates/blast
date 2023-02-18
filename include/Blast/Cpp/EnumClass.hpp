@@ -2,8 +2,8 @@
 
 
 #include <Blast/Cpp/Function.hpp>
-#include <set>
 #include <string>
+#include <vector>
 
 
 namespace Blast
@@ -17,21 +17,21 @@ namespace Blast
 
       private:
          std::string enum_name;
-         std::set<std::string> elements;
+         std::vector<std::string> elements;
          std::string name_of_to_string_method;
 
       protected:
 
 
       public:
-         EnumClass(std::string enum_name="[unset-enum_name]", std::set<std::string> elements={});
+         EnumClass(std::string enum_name="[unset-enum_name]", std::vector<std::string> elements={});
          ~EnumClass();
 
          void set_enum_name(std::string enum_name);
-         void set_elements(std::set<std::string> elements);
+         void set_elements(std::vector<std::string> elements);
          void set_name_of_to_string_method(std::string name_of_to_string_method);
          std::string get_enum_name() const;
-         std::set<std::string> get_elements() const;
+         std::vector<std::string> get_elements() const;
          std::string get_name_of_to_string_method() const;
          Blast::Cpp::Function build_to_string_method();
          std::string build_to_string_method_body();
