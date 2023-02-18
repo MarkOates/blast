@@ -27,8 +27,8 @@ namespace Blast
             void set_node(YAML::Node node);
             YAML::Node get_node() const;
             Blast::Cpp::EnumClass parse();
-            static bool validate_presence_of_key(YAML::Node node={}, std::string key="[unset-key]", bool throw_on_error=false);
-            static bool validate_node_type(YAML::Node node={}, std::string key="[unset-key]", YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=false);
+            static bool validate_presence_of_key(YAML::Node node={}, std::string key="[unset-key]", bool throw_on_error=true);
+            static bool validate_node_type(YAML::Node node={}, std::string key="[unset-key]", YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=true);
             static std::string yaml_node_type_as_string(YAML::NodeType::value node_type=YAML::NodeType::Undefined);
          };
       }

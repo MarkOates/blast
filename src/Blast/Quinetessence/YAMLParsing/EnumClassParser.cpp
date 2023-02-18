@@ -52,6 +52,8 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
        //- RUNNING
        //- HIDING
 
+   // DEBUG:
+
    // Validate presence and type
    validate_presence_of_key(node, "name");
    validate_node_type(node, "name", YAML::NodeType::Scalar);
@@ -80,7 +82,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
 bool EnumClassParser::validate_presence_of_key(YAML::Node node, std::string key, bool throw_on_error)
 {
    // TODO: test this function
-   if (node["name"]) return true;
+   if (node[key]) return true;
 
    if (throw_on_error)
    {
@@ -94,7 +96,7 @@ bool EnumClassParser::validate_presence_of_key(YAML::Node node, std::string key,
 
 bool EnumClassParser::validate_node_type(YAML::Node node, std::string key, YAML::NodeType::value expected_type, bool throw_on_error)
 {
-   if (node["name"].Type() == expected_type) return true;
+   if (node[key].Type() == expected_type) return true;
 
    // TODO: test this validators
    if (throw_on_error)

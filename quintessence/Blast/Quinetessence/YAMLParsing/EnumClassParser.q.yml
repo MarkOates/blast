@@ -29,6 +29,8 @@ functions:
           //- RUNNING
           //- HIDING
 
+      // DEBUG:
+
       // Validate presence and type
       validate_presence_of_key(node, "name");
       validate_node_type(node, "name", YAML::NodeType::Scalar);
@@ -66,10 +68,10 @@ functions:
         default_argument: '"[unset-key]"'
       - name: throw_on_error
         type: bool
-        default_argument: false
+        default_argument: true
     body: |
       // TODO: test this function
-      if (node["name"]) return true;
+      if (node[key]) return true;
 
       if (throw_on_error)
       {
@@ -96,9 +98,9 @@ functions:
         default_argument: YAML::NodeType::Undefined
       - name: throw_on_error
         type: bool
-        default_argument: false
+        default_argument: true
     body: |
-      if (node["name"].Type() == expected_type) return true;
+      if (node[key].Type() == expected_type) return true;
 
       // TODO: test this validators
       if (throw_on_error)
