@@ -2,7 +2,7 @@
 
 #include <Blast/Quinetessence/YAMLParsing/EnumClassParser.hpp>
 
-
+#include <unordered_set>
 
 
 namespace Blast
@@ -98,7 +98,7 @@ bool EnumClassParser::validate_node_type(YAML::Node node, std::string key, YAML:
 {
    if (node[key].Type() == expected_type) return true;
 
-   // TODO: test this validators
+   // TODO: test these validators
    if (throw_on_error)
    {
       std::string name_of_type = yaml_node_type_as_string(expected_type);
@@ -109,6 +109,20 @@ bool EnumClassParser::validate_node_type(YAML::Node node, std::string key, YAML:
       throw std::runtime_error(error_message.str());
    }
    return false;
+}
+
+bool EnumClassParser::validate_elements_are_unique(std::vector<std::string> elements)
+{
+   // TODO: test this function
+   std::unordered_set<std::string> unique_set;
+   for (const auto& element : elements)
+   {
+      if (!unique_set.insert(element).second)
+      {
+          return false;
+      }
+   }
+   return true;
 }
 
 std::string EnumClassParser::yaml_node_type_as_string(YAML::NodeType::value node_type)

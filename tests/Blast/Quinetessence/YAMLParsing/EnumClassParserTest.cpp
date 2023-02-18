@@ -54,3 +54,24 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_items_is_n
 }
 
 
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, EmptyVector)
+{
+  std::vector<std::string> empty_vector;
+  EXPECT_TRUE(Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_elements_are_unique(empty_vector));
+}
+
+
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, StringVectorWithUniqueElements)
+{
+  std::vector<std::string> vector = {"apple", "banana", "cherry", "date"};
+  EXPECT_TRUE(Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_elements_are_unique(vector));
+}
+
+
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, StringVectorWithDuplicateElements)
+{
+  std::vector<std::string> vector = {"apple", "banana", "cherry", "banana"};
+  EXPECT_FALSE(Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_elements_are_unique(vector));
+}
+
+

@@ -102,7 +102,7 @@ functions:
     body: |
       if (node[key].Type() == expected_type) return true;
 
-      // TODO: test this validators
+      // TODO: test these validators
       if (throw_on_error)
       {
          std::string name_of_type = yaml_node_type_as_string(expected_type);
@@ -113,6 +113,28 @@ functions:
          throw std::runtime_error(error_message.str());
       }
       return false;
+
+
+  - name: validate_elements_are_unique
+    static: true
+    type: bool
+    parameters:
+      - name: elements
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      // TODO: test this function
+      std::unordered_set<std::string> unique_set;
+      for (const auto& element : elements)
+      {
+         if (!unique_set.insert(element).second)
+         {
+             return false;
+         }
+      }
+      return true;
+    body_dependency_symbols:
+      - std::unordered_set
 
 
   - name: yaml_node_type_as_string
