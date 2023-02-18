@@ -271,6 +271,9 @@
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
     "QuizYAMLLoader"
   ],
+  "YAML/NodeType/value": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  ],
   "Blast/Cpp/EnumClass": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser"
   ],

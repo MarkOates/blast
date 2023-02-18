@@ -1201,10 +1201,22 @@ table td
 <tr>
   <td class="method">parse()</td>
 </tr>
+<tr>
+  <td class="method">validate_presence_of_key(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, bool throw_on_error=false)</td>
+</tr>
+<tr>
+  <td class="method">validate_node_type(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=false)</td>
+</tr>
+<tr>
+  <td class="method">yaml_node_type_as_string(YAML::NodeType::value node_type=YAML::NodeType::Undefined)</td>
+</tr>
     </table>
      <table>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::Node&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::NodeType::value&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::EnumClass&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/EnumClass.hpp&quot;]}</td>
@@ -2576,6 +2588,9 @@ table td
   "YAML/Node": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
     "QuizYAMLLoader"
+  ],
+  "YAML/NodeType/value": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
   ],
   "Blast/Cpp/EnumClass": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser"

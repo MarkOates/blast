@@ -38,6 +38,7 @@ YAML::Node EnumClassParser::get_node() const
 
 Blast::Cpp::EnumClass EnumClassParser::parse()
 {
+   Blast::Cpp::EnumClass result;
 
    // This is the schema:
 
@@ -51,7 +52,72 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
        //- RUNNING
        //- HIDING
 
-   return {};
+   validate_presence_of_key(node, "name");
+   validate_node_type(node, "name", YAML::NodeType::Scalar);
+
+   if (!(node["name"].Type() == YAML::NodeType::Scalar))
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser]: error: "
+                    << "expecting to find node \"name\" as a scalar, but it is a \"" << node["name"] << "\".";
+      throw std::runtime_error(error_message.str());
+   }
+
+   result.set_enum_name(node["name"].as<std::string>());
+
+   return result;
+}
+
+bool EnumClassParser::validate_presence_of_key(YAML::Node node, std::string key, bool throw_on_error)
+{
+   // TODO: test this function
+   if (node["name"]) return true;
+
+   if (throw_on_error)
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_presence_of_key]: error: "
+                    << "expecting to find node \"" << key << "\" but it is not present.";
+      throw std::runtime_error(error_message.str());
+   }
+   return false;
+}
+
+bool EnumClassParser::validate_node_type(YAML::Node node, std::string key, YAML::NodeType::value expected_type, bool throw_on_error)
+{
+   if (node["name"].Type() == expected_type) return true;
+
+   // TODO: test this validators
+   if (throw_on_error)
+   {
+      std::string name_of_type = yaml_node_type_as_string(expected_type);
+      std::stringstream error_message;
+      error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_node_type]: error: "
+                    << "expecting to find node \"" << key << "\" as a \"" << name_of_type << "\", "
+                    << "but it is a \"" << node[key] << "\".";
+      throw std::runtime_error(error_message.str());
+   }
+   return false;
+}
+
+std::string EnumClassParser::yaml_node_type_as_string(YAML::NodeType::value node_type)
+{
+   // TODO: test this function
+   switch(node_type)
+   {
+      case YAML::NodeType::Null: return "Null"; break;
+      case YAML::NodeType::Scalar: return "Scalar"; break;
+      case YAML::NodeType::Sequence: return "Sequence"; break;
+      case YAML::NodeType::Map: return "Map"; break;
+      case YAML::NodeType::Undefined: return "Undefined"; break;
+      default: {
+         std::stringstream error_message;
+         error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser::yaml_node_type_as_string]: error: "
+                       << "Unhandled case for type \"" << node_type << "\"";
+         throw std::runtime_error(error_message.str());
+      } break;
+   }
+   return "";
 }
 
 

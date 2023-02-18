@@ -10,12 +10,15 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, can_be_created_without
 }
 
 
-TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__will_return_an_enum_class_object)
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
+   parse__will_return_an_enum_class_object_with_the_expected_values)
 {
-   std::string yaml_content = "";
+   std::string yaml_content = "name: \"FooBar\"";
    YAML::Node node = YAML::Load(yaml_content);
    Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
    Blast::Cpp::EnumClass enum_class = enum_class_parser.parse();
+
+   EXPECT_EQ("FooBar", enum_class.get_enum_name());
 }
 
 
