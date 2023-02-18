@@ -38,6 +38,19 @@ YAML::Node EnumClassParser::get_node() const
 
 Blast::Cpp::EnumClass EnumClassParser::parse()
 {
+
+   // This is the schema:
+
+   //- name: State
+     //include_undef_item: true (default)
+     //to_string_func: true (default)
+     //from_string_func: true (default)
+     //to_int_func: false (default)
+     //from_int_func: false (default)
+     //items:
+       //- RUNNING
+       //- HIDING
+
    return {};
 }
 

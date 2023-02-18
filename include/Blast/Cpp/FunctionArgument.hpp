@@ -18,7 +18,12 @@ namespace Blast
          std::vector<std::string> default_value_dependency_symbols;
 
       public:
-         FunctionArgument(std::string type="std::string", std::string name="unnamed_parameter", std::string default_value="\"\"", std::vector<std::string> default_value_dependency_symbols={});
+         FunctionArgument(
+            std::string type="std::string",
+            std::string name="unnamed_parameter",
+            std::string default_value="\"\"",
+            std::vector<std::string> default_value_dependency_symbols={}
+         );
          ~FunctionArgument();
 
 

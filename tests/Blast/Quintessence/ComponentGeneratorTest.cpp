@@ -94,6 +94,7 @@ TEST(Blast_Quintessence_ComponentGenerator, get_component_tail_snakecase__return
 
 TEST(Blast_Quintessence_ComponentGenerator, get_component_tail_all_caps_constant__returns_the_expected_string)
 {
+   // TODO: rename these variable names
    std::string expected_snakecase_tail = "BAR_BASIL_BONK";
    ComponentGenerator generator("Baz/Bar/BarBasilBonk");
 

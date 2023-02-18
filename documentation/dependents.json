@@ -50,10 +50,20 @@
     "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter"
   ],
-  "std/vector<Blast/Cpp/FunctionArgument>": [
-    "Blast/Cpp/Function"
+  "Blast/Cpp/Function": [
+    "Blast/Cpp/EnumClass"
+  ],
+  "Blast/TemplatedFile": [
+    "Blast/Cpp/EnumClass"
   ],
   "Blast/Cpp/FunctionArgument": [
+    "Blast/Cpp/EnumClass",
+    "Blast/Cpp/Function"
+  ],
+  "Blast/CamelCaseToUnderscoreConverter": [
+    "Blast/Cpp/EnumClass"
+  ],
+  "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
   ],
   "Blast/StringJoiner": [

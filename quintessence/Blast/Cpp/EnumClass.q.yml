@@ -14,5 +14,89 @@ properties:
     constructor_arg: true
     getter: true
     setter: true
+
+  - name: name_of_to_string_method
+    type: std::string
+    init_with: DEFAULT_NAME_OF_TO_STRING_METHOD
+    getter: true
+    setter: true
+
+  - name: DEFAULT_NAME_OF_TO_STRING_METHOD
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)"to_string"'
+
+
+functions:
+
+
+  - name: build_to_string_method
+    type: Blast::Cpp::Function
+    guards: [ validate(enum_name), validate(name_of_to_string_method) ]
+    body: |
+      // TODO: finish implementing this function
+      Blast::Cpp::Function result(
+         "std::string",
+         name_of_to_string_method,
+         std::vector<Blast::Cpp::FunctionArgument>({
+            Blast::Cpp::FunctionArgument(enum_name, "value"),
+            Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
+         })
+      );
+      return result;
+    body_dependency_symbols:
+      - std::vector
+      - Blast::Cpp::FunctionArgument
+
+
+  - name: build_to_string_method_body
+    type: std::string
+    body: |
+      // TODO: implement this function, which will use a template
+      Blast::TemplatedFile templated_file(
+         "return \"unimplemented\";",
+         {}
+      );
+      return "";
+    body_dependency_symbols:
+      - Blast::TemplatedFile
+
+
+  - name: validate
+    static: true
+    type: bool
+    parameters:
+      - name: method_name
+        type: std::string
+        default_argument: '"[unset-method_name]"'
+    body: |
+      // TODO: test this function
+
+      // Check if string is at least 3 characters long
+      if (method_name.length() < 3) {
+         return false;
+      }
+    
+      // Check if string has only lowercase and underscore characters
+      for (char c : method_name) {
+         if (!std::islower(c) && c != '_' && !std::isupper(c)) {
+            return false;
+         }
+      }
+      return true;
+
+
+dependencies:
+
+
+  - symbol: Blast::Cpp::Function
+    headers: [ Blast/Cpp/Function.hpp ]
+  - symbol: Blast::TemplatedFile
+    headers: [ Blast/TemplatedFile.hpp ]
+  - symbol: Blast::Cpp::FunctionArgument
+    headers: [ Blast/Cpp/FunctionArgument.hpp ]
+  - symbol: Blast::CamelCaseToUnderscoreConverter
+    headers: [ Blast/CamelCaseToUnderscoreConverter.hpp ]
     
 

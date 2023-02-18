@@ -54,6 +54,7 @@ table td
   <li><a href="#quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</a></li>
   <li><a href="#quintessence/Blast/CamelCaseToConstantConverter.q.yml">quintessence/Blast/CamelCaseToConstantConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Cpp/EnumClass.q.yml">quintessence/Blast/Cpp/EnumClass.q.yml</a></li>
   <li><a href="#quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</a></li>
   <li><a href="#quintessence/Blast/DependencyHeadersSuggester.q.yml">quintessence/Blast/DependencyHeadersSuggester.q.yml</a></li>
   <li><a href="#quintessence/Blast/DependencySymbolAtomizer.q.yml">quintessence/Blast/DependencySymbolAtomizer.q.yml</a></li>
@@ -243,6 +244,54 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;islower&quot;, &quot;headers&quot;=&gt;[&quot;cctype&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Cpp/EnumClass.q.yml">quintessence/Blast/Cpp/EnumClass.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">enum_name</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">elements</td>
+  <td class="property">std::set&lt;std::string&gt;</td>
+</tr>
+<tr>
+  <td class="property">name_of_to_string_method</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">DEFAULT_NAME_OF_TO_STRING_METHOD</td>
+  <td class="property">const char*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">build_to_string_method()</td>
+</tr>
+<tr>
+  <td class="method">build_to_string_method_body()</td>
+</tr>
+<tr>
+  <td class="method">validate(std::string method_name=&quot;[unset-method_name]&quot;)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::Function&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/Function.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::TemplatedFile&quot;, &quot;headers&quot;=&gt;[&quot;Blast/TemplatedFile.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::FunctionArgument&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/FunctionArgument.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::CamelCaseToUnderscoreConverter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/CamelCaseToUnderscoreConverter.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -2307,10 +2356,20 @@ table td
     "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter"
   ],
-  "std/vector<Blast/Cpp/FunctionArgument>": [
-    "Blast/Cpp/Function"
+  "Blast/Cpp/Function": [
+    "Blast/Cpp/EnumClass"
+  ],
+  "Blast/TemplatedFile": [
+    "Blast/Cpp/EnumClass"
   ],
   "Blast/Cpp/FunctionArgument": [
+    "Blast/Cpp/EnumClass",
+    "Blast/Cpp/Function"
+  ],
+  "Blast/CamelCaseToUnderscoreConverter": [
+    "Blast/Cpp/EnumClass"
+  ],
+  "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
   ],
   "Blast/StringJoiner": [

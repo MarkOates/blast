@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <Blast/Cpp/Function.hpp>
 #include <set>
 #include <string>
 
@@ -11,9 +12,13 @@ namespace Blast
    {
       class EnumClass
       {
+      public:
+         static constexpr const char* DEFAULT_NAME_OF_TO_STRING_METHOD = (char*)"to_string";
+
       private:
          std::string enum_name;
          std::set<std::string> elements;
+         std::string name_of_to_string_method;
 
       protected:
 
@@ -24,8 +29,13 @@ namespace Blast
 
          void set_enum_name(std::string enum_name);
          void set_elements(std::set<std::string> elements);
+         void set_name_of_to_string_method(std::string name_of_to_string_method);
          std::string get_enum_name() const;
          std::set<std::string> get_elements() const;
+         std::string get_name_of_to_string_method() const;
+         Blast::Cpp::Function build_to_string_method();
+         std::string build_to_string_method_body();
+         static bool validate(std::string method_name="[unset-method_name]");
       };
    }
 }
