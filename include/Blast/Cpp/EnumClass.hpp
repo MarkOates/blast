@@ -28,14 +28,15 @@ namespace Blast
          ~EnumClass();
 
          void set_enum_name(std::string enum_name);
-         void set_elements(std::vector<std::string> elements);
          void set_name_of_to_string_method(std::string name_of_to_string_method);
          std::string get_enum_name() const;
          std::vector<std::string> get_elements() const;
          std::string get_name_of_to_string_method() const;
+         void set_elements(std::vector<std::string> elements={});
          Blast::Cpp::Function build_to_string_method();
          std::string build_to_string_method_body();
          static bool validate(std::string method_name="[unset-method_name]");
+         static bool validate_elements_are_unique(std::vector<std::string> elements={});
       };
    }
 }

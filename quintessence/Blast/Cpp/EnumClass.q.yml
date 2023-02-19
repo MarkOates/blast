@@ -13,7 +13,7 @@ properties:
     init_with: '{}'
     constructor_arg: true
     getter: true
-    setter: true
+    setter: false
 
   - name: name_of_to_string_method
     type: std::string
@@ -36,6 +36,17 @@ documentation:
 
 
 functions:
+
+
+  - name: set_elements
+    parameters:
+      - name: elements
+        type: std::vector<std::string>
+        default_argument: '{}'
+    guards: [ validate_elements_are_unique(elements) ]
+    body: |
+      this->elements = elements;
+      return;
 
 
   - name: build_to_string_method
@@ -92,6 +103,28 @@ functions:
          }
       }
       return true;
+
+
+  - name: validate_elements_are_unique
+    static: true
+    type: bool
+    parameters:
+      - name: elements
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      // TODO: move this function into an isolated class, or class with a set of validation functions
+      std::unordered_set<std::string> unique_set;
+      for (const auto& element : elements)
+      {
+         if (!unique_set.insert(element).second)
+         {
+             return false;
+         }
+      }
+      return true;
+    body_dependency_symbols:
+      - std::unordered_set
 
 
 dependencies:

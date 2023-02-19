@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <unordered_set>
 #include <vector>
 
 
@@ -35,12 +36,6 @@ void EnumClass::set_enum_name(std::string enum_name)
 }
 
 
-void EnumClass::set_elements(std::vector<std::string> elements)
-{
-   this->elements = elements;
-}
-
-
 void EnumClass::set_name_of_to_string_method(std::string name_of_to_string_method)
 {
    this->name_of_to_string_method = name_of_to_string_method;
@@ -64,6 +59,19 @@ std::string EnumClass::get_name_of_to_string_method() const
    return name_of_to_string_method;
 }
 
+
+void EnumClass::set_elements(std::vector<std::string> elements)
+{
+   if (!(validate_elements_are_unique(elements)))
+   {
+      std::stringstream error_message;
+      error_message << "[EnumClass::set_elements]: error: guard \"validate_elements_are_unique(elements)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("EnumClass::set_elements: error: guard \"validate_elements_are_unique(elements)\" not met");
+   }
+   this->elements = elements;
+   return;
+}
 
 Blast::Cpp::Function EnumClass::build_to_string_method()
 {
@@ -116,6 +124,20 @@ bool EnumClass::validate(std::string method_name)
    for (char c : method_name) {
       if (!std::islower(c) && c != '_' && !std::isupper(c)) {
          return false;
+      }
+   }
+   return true;
+}
+
+bool EnumClass::validate_elements_are_unique(std::vector<std::string> elements)
+{
+   // TODO: move this function into an isolated class, or class with a set of validation functions
+   std::unordered_set<std::string> unique_set;
+   for (const auto& element : elements)
+   {
+      if (!unique_set.insert(element).second)
+      {
+          return false;
       }
    }
    return true;
