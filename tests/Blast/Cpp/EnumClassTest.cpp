@@ -24,6 +24,20 @@ TEST(Blast_Cpp_EnumClassTest, build_to_string_method__will_return_a_cpp_function
 }
 
 
+TEST(Blast_Cpp_EnumClassTest, name_of_to_string_method__is_set_to_the_default)
+{
+   Blast::Cpp::EnumClass enum_class;
+   EXPECT_EQ(Blast::Cpp::EnumClass::DEFAULT_NAME_OF_TO_STRING_METHOD, enum_class.get_name_of_to_string_method());
+}
+
+
+TEST(Blast_Cpp_EnumClassTest, name_of_to_string_method__has_the_expected_default_value)
+{
+   Blast::Cpp::EnumClass enum_class;
+   EXPECT_EQ("to_string", Blast::Cpp::EnumClass::DEFAULT_NAME_OF_TO_STRING_METHOD);
+}
+
+
 TEST(Blast_Cpp_EnumClassTest, set_element__will_set_the_elements)
 {
    Blast::Cpp::EnumClass enum_class;
