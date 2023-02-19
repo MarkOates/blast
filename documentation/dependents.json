@@ -63,6 +63,10 @@
   "Blast/CamelCaseToUnderscoreConverter": [
     "Blast/Cpp/EnumClass"
   ],
+  "Blast/Cpp/EnumClass": [
+    "Blast/Cpp/EnumClassFormatter",
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  ],
   "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
   ],
@@ -273,9 +277,6 @@
     "QuizYAMLLoader"
   ],
   "YAML/NodeType/value": [
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
-  ],
-  "Blast/Cpp/EnumClass": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser"
   ],
   "std/vector<std/regex_constants/syntax_option_type>": [

@@ -55,6 +55,7 @@ table td
   <li><a href="#quintessence/Blast/CamelCaseToConstantConverter.q.yml">quintessence/Blast/CamelCaseToConstantConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/Cpp/EnumClass.q.yml">quintessence/Blast/Cpp/EnumClass.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Cpp/EnumClassFormatter.q.yml">quintessence/Blast/Cpp/EnumClassFormatter.q.yml</a></li>
   <li><a href="#quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</a></li>
   <li><a href="#quintessence/Blast/DependencyHeadersSuggester.q.yml">quintessence/Blast/DependencyHeadersSuggester.q.yml</a></li>
   <li><a href="#quintessence/Blast/DependencySymbolAtomizer.q.yml">quintessence/Blast/DependencySymbolAtomizer.q.yml</a></li>
@@ -298,6 +299,27 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::CamelCaseToUnderscoreConverter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/CamelCaseToUnderscoreConverter.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Cpp/EnumClassFormatter.q.yml">quintessence/Blast/Cpp/EnumClassFormatter.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">enum_class</td>
+  <td class="property">Blast::Cpp::EnumClass</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">build_enum_definition()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::EnumClass&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/EnumClass.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -2396,6 +2418,10 @@ table td
   "Blast/CamelCaseToUnderscoreConverter": [
     "Blast/Cpp/EnumClass"
   ],
+  "Blast/Cpp/EnumClass": [
+    "Blast/Cpp/EnumClassFormatter",
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  ],
   "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
   ],
@@ -2606,9 +2632,6 @@ table td
     "QuizYAMLLoader"
   ],
   "YAML/NodeType/value": [
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
-  ],
-  "Blast/Cpp/EnumClass": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser"
   ],
   "std/vector<std/regex_constants/syntax_option_type>": [

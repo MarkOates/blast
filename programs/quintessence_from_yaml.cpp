@@ -980,6 +980,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
+   std::vector<Blast::Cpp::EnumClass> enum_classes = {}; // <-- TODO:
    std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>>> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
@@ -1069,7 +1070,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
    // build the actual class
 
-   Blast::Cpp::Class klass(class_name, namespaces, parent_classes_properties, attribute_properties, functions, symbol_dependencies, function_body_symbol_dependencies);
+   Blast::Cpp::Class klass(class_name, namespaces, parent_classes_properties, attribute_properties, enum_classes, functions, symbol_dependencies, function_body_symbol_dependencies);
 
    return klass;
 }

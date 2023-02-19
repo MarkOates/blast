@@ -4,6 +4,7 @@
 #include <Blast/Cpp/ClassAttributes.hpp>
 #include <Blast/Cpp/Function.hpp>
 #include <Blast/Cpp/ParentClassProperties.hpp>
+#include <Blast/Cpp/EnumClass.hpp>
 #include <Blast/Cpp/SymbolDependencies.hpp>
 #include <string>
 #include <vector>
@@ -20,6 +21,7 @@ namespace Blast
          std::vector<std::string> namespaces;
          std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties;
          std::vector<Blast::Cpp::ClassAttributes> attribute_properties;
+         std::vector<Blast::Cpp::EnumClass> enum_classes;
          std::vector<Blast::Cpp::Function> functions;
          std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies;
          std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies;
@@ -30,6 +32,7 @@ namespace Blast
             std::vector<std::string> namespaces={},
             std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties={},
             std::vector<Blast::Cpp::ClassAttributes> attribute_properties={},
+            std::vector<Blast::Cpp::EnumClass> enum_classes={},
             std::vector<Blast::Cpp::Function> functions={},
             std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies={},
             std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies={}
@@ -43,6 +46,7 @@ namespace Blast
          std::vector<std::string> get_namespaces();
          std::vector<Blast::Cpp::ParentClassProperties> get_parent_classes_properties();
          std::vector<Blast::Cpp::ClassAttributes> get_attribute_properties();
+         std::vector<Blast::Cpp::EnumClass> get_enum_classes();
          std::vector<Blast::Cpp::Function> get_functions();
          std::vector<Blast::Cpp::SymbolDependencies> get_symbol_dependencies();
          std::vector<Blast::Cpp::SymbolDependencies> get_function_body_symbol_dependencies();
