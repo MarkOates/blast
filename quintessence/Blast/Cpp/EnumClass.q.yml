@@ -41,6 +41,16 @@ properties:
     init_with: '(char*)"private"'
 
 
+
+eums:
+
+
+  - name: FooBar
+    items:
+      - THIS
+      - THAT
+
+
 functions:
 
 

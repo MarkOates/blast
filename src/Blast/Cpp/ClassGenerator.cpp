@@ -858,17 +858,17 @@ NAMESPACES_CLOSER
    __replace(
          result,
          "PUBLIC_ENUM_CLASS_DECLARATIONS\n",
-         "" //jpublic_function_declarations(required_namespace_indentation_levels + 1)
+         public_enum_class_declarations(required_namespace_indentation_levels + 1)
       );
    __replace(
          result,
          "PRIVATE_ENUM_CLASS_DECLARATIONS\n",
-         "" //private_function_declarations(required_namespace_indentation_levels + 1)
+         private_enum_class_declarations(required_namespace_indentation_levels + 1)
       );
    __replace(
          result,
          "PROTECTED_ENUM_CLASS_DECLARATIONS\n",
-         "" //protected_function_declarations(required_namespace_indentation_levels + 1)
+         protected_enum_class_declarations(required_namespace_indentation_levels + 1)
       );
 
 
