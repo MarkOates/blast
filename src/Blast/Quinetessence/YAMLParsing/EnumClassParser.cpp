@@ -161,7 +161,7 @@ bool EnumClassParser::validate_unique_all_upper_identifiers(YAML::Node items)
 
       Blast::Errors::throw_error(
         "Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_unique_all_upper_identifiers",
-        "Expecting node \"items\" to be a \"Sequence\" but it was not."
+        error_message.str()
       );
 
       return false;
