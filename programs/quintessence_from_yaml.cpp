@@ -1093,6 +1093,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
    // build the actual class
 
+   if (enum_classes.size() > 0) std::cout << " ENUM CLASSES IN " << quintessence_filename << std::endl; // DEBUGGING
    Blast::Cpp::Class klass(class_name, namespaces, parent_classes_properties, attribute_properties, enum_classes, functions, symbol_dependencies, function_body_symbol_dependencies);
 
    return klass;
@@ -1149,6 +1150,7 @@ int main(int argc, char **argv)
       // convert the yaml structure to the class
 
       Blast::Cpp::Class klass = convert_yaml_to_class(class_name, source, quintessence_filename);
+      if (klass.get_enum_classes().size() > 0) std::cout << " ENUM CLASSES on the class IN " << quintessence_filename << std::endl; // DEBUGGING
 
 
       //// generate and write the files

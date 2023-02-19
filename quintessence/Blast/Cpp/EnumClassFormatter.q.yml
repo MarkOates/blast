@@ -28,7 +28,7 @@ functions:
          result << ",";
          result << std::endl;
       }
-      result << "}" << std::endl;
+      result << "};" << std::endl;
       return result.str();
     body_dependency_symbols:
       - std::stringstream

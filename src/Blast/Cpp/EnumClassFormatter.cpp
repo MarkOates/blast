@@ -39,7 +39,7 @@ std::string EnumClassFormatter::build_enum_definition()
       result << ",";
       result << std::endl;
    }
-   result << "}" << std::endl;
+   result << "};" << std::endl;
    return result.str();
 }
 

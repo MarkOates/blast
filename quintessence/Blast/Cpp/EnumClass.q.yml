@@ -41,8 +41,7 @@ properties:
     init_with: '(char*)"private"'
 
 
-
-eums:
+enums:
 
 
   - name: FooBar
@@ -71,9 +70,16 @@ functions:
         type: std::string
         default_argument: '"[unset-scope]"'
     body: |
-      // TODO: validate is "public", "private", or "protected"
+      // NOTE: this validation is not assured when the value is set during construction
+      static std::set<std::string> valid_scopes = { "public", "private", "protected" };
+      if (valid_scopes.count(scope) == 0)
+      {
+         throw std::runtime_error("[Blast::Cpp::EnumClass::set_scope]: error: scope is invalid");
+      }
       this->scope = scope;
       return;
+    body_dependency_symbols:
+      - std::set
 
 
   - name: is_private

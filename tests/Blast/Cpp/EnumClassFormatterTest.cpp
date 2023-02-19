@@ -20,7 +20,7 @@ R"END(enum class Foo
    BIZ = 0,
    BAZ,
    BUZ,
-}
+};
 )END";
    EXPECT_EQ(expected_string, enum_class_formatter.build_enum_definition());
 }

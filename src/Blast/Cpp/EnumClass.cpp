@@ -5,6 +5,7 @@
 #include <Blast/Cpp/FunctionArgument.hpp>
 #include <Blast/TemplatedFile.hpp>
 #include <iostream>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 #include <unordered_set>
@@ -82,7 +83,12 @@ void EnumClass::set_elements(std::vector<std::string> elements)
 
 void EnumClass::set_scope(std::string scope)
 {
-   // TODO: validate is "public", "private", or "protected"
+   // NOTE: this validation is not assured when the value is set during construction
+   static std::set<std::string> valid_scopes = { "public", "private", "protected" };
+   if (valid_scopes.count(scope) == 0)
+   {
+      throw std::runtime_error("[Blast::Cpp::EnumClass::set_scope]: error: scope is invalid");
+   }
    this->scope = scope;
    return;
 }

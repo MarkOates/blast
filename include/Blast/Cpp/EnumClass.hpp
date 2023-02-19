@@ -17,6 +17,11 @@ namespace Blast
          static constexpr const char* DEFAULT_SCOPE = (char*)"private";
 
       private:
+         enum class FooBar
+{
+   THIS = 0,
+   THAT,
+};
          std::string enum_name;
          std::vector<std::string> elements;
          std::string scope;
