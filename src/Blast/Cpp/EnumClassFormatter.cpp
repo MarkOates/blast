@@ -25,7 +25,15 @@ EnumClassFormatter::~EnumClassFormatter()
 std::string EnumClassFormatter::build_enum_definition()
 {
    std::stringstream result;
-   result << "enum class " << enum_class.get_enum_name() << std::endl;
+   result << "enum";
+
+   // Only show "class Foobar" if it is present
+   if (enum_class.has_class_name())
+   {
+      result << " class " << enum_class.get_class_name();
+   }
+
+   result << std::endl;
    result << "{" << std::endl;
    bool is_first_item = true;
    for (auto &item : enum_class.get_elements())

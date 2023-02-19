@@ -13,11 +13,12 @@ namespace Blast
       class EnumClass
       {
       public:
+         static constexpr const char* DEFAULT_CLASS_NAME = (char*)"";
          static constexpr const char* DEFAULT_NAME_OF_TO_STRING_METHOD = (char*)"to_string";
          static constexpr const char* DEFAULT_SCOPE = (char*)"private";
 
       private:
-         std::string enum_name;
+         std::string class_name;
          std::vector<std::string> elements;
          std::string scope;
          std::string name_of_to_string_method;
@@ -26,16 +27,17 @@ namespace Blast
 
 
       public:
-         EnumClass(std::string enum_name="[unset-enum_name]", std::vector<std::string> elements={}, std::string scope=DEFAULT_SCOPE);
+         EnumClass(std::string class_name=DEFAULT_CLASS_NAME, std::vector<std::string> elements={}, std::string scope=DEFAULT_SCOPE);
          ~EnumClass();
 
-         void set_enum_name(std::string enum_name);
+         void set_class_name(std::string class_name);
          void set_name_of_to_string_method(std::string name_of_to_string_method);
-         std::string get_enum_name() const;
+         std::string get_class_name() const;
          std::vector<std::string> get_elements() const;
          std::string get_scope() const;
          std::string get_name_of_to_string_method() const;
          void set_elements(std::vector<std::string> elements={});
+         bool has_class_name();
          void set_scope(std::string scope="[unset-scope]");
          bool is_private();
          bool is_protected();

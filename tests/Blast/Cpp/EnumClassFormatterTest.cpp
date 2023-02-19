@@ -26,3 +26,21 @@ R"END(enum class Foo
 }
 
 
+TEST(Blast_Cpp_EnumClassFormatterTest, build_definition__when_there_is_no_class_name__is_formatted_as_expected)
+{
+   Blast::Cpp::EnumClass enum_class;
+   enum_class.set_elements({ "BIZ", "BAZ", "BUZ" });
+
+   Blast::Cpp::EnumClassFormatter enum_class_formatter(enum_class);
+   std::string expected_string =
+R"END(enum
+{
+   BIZ = 0,
+   BAZ,
+   BUZ,
+};
+)END";
+   EXPECT_EQ(expected_string, enum_class_formatter.build_enum_definition());
+}
+
+

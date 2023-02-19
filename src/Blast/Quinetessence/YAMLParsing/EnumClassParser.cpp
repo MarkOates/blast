@@ -63,7 +63,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    validate_node_type(node, "items", YAML::NodeType::Sequence);
 
    // Extract the "name" value
-   result.set_enum_name(node["name"].as<std::string>());
+   result.set_class_name(node["name"].as<std::string>());
 
    // Extract the "items" elements
    std::vector<std::string> enum_items;

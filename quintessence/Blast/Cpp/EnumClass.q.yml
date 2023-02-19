@@ -1,9 +1,9 @@
 properties:
 
 
-  - name: enum_name
+  - name: class_name
     type: std::string
-    init_with: '"[unset-enum_name]"'
+    init_with: DEFAULT_CLASS_NAME
     constructor_arg: true
     getter: true
     setter: true
@@ -27,6 +27,12 @@ properties:
     init_with: DEFAULT_NAME_OF_TO_STRING_METHOD
     getter: true
     setter: true
+
+  - name: DEFAULT_CLASS_NAME
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)""'
 
   - name: DEFAULT_NAME_OF_TO_STRING_METHOD
     constexpr: true
@@ -53,6 +59,12 @@ functions:
     body: |
       this->elements = elements;
       return;
+
+
+  - name: has_class_name
+    type: bool
+    body: |
+      return !class_name.empty();
 
 
   - name: set_scope
@@ -93,14 +105,14 @@ functions:
 
   - name: build_to_string_method
     type: Blast::Cpp::Function
-    guards: [ validate(enum_name), validate(name_of_to_string_method) ]
+    guards: [ validate(class_name), validate(name_of_to_string_method) ]
     body: |
       // TODO: finish implementing this function
       Blast::Cpp::Function result(
          "std::string",
          name_of_to_string_method,
          std::vector<Blast::Cpp::FunctionArgument>({
-            Blast::Cpp::FunctionArgument(enum_name, "value"),
+            Blast::Cpp::FunctionArgument(class_name, "value"),
             Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
          })
       );

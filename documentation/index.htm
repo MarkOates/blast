@@ -254,7 +254,7 @@ table td
     <h3 id="quintessence/Blast/Cpp/EnumClass.q.yml">quintessence/Blast/Cpp/EnumClass.q.yml</h3>
      <table>
 <tr>
-  <td class="property">enum_name</td>
+  <td class="property">class_name</td>
   <td class="property">std::string</td>
 </tr>
 <tr>
@@ -270,6 +270,10 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">DEFAULT_CLASS_NAME</td>
+  <td class="property">const char*</td>
+</tr>
+<tr>
   <td class="property">DEFAULT_NAME_OF_TO_STRING_METHOD</td>
   <td class="property">const char*</td>
 </tr>
@@ -281,6 +285,9 @@ table td
      <table>
 <tr>
   <td class="method">set_elements(std::vector&lt;std::string&gt; elements={})</td>
+</tr>
+<tr>
+  <td class="method">has_class_name()</td>
 </tr>
 <tr>
   <td class="method">set_scope(std::string scope=&quot;[unset-scope]&quot;)</td>

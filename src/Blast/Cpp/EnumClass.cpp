@@ -18,8 +18,8 @@ namespace Cpp
 {
 
 
-EnumClass::EnumClass(std::string enum_name, std::vector<std::string> elements, std::string scope)
-   : enum_name(enum_name)
+EnumClass::EnumClass(std::string class_name, std::vector<std::string> elements, std::string scope)
+   : class_name(class_name)
    , elements(elements)
    , scope(scope)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
@@ -32,9 +32,9 @@ EnumClass::~EnumClass()
 }
 
 
-void EnumClass::set_enum_name(std::string enum_name)
+void EnumClass::set_class_name(std::string class_name)
 {
-   this->enum_name = enum_name;
+   this->class_name = class_name;
 }
 
 
@@ -44,9 +44,9 @@ void EnumClass::set_name_of_to_string_method(std::string name_of_to_string_metho
 }
 
 
-std::string EnumClass::get_enum_name() const
+std::string EnumClass::get_class_name() const
 {
-   return enum_name;
+   return class_name;
 }
 
 
@@ -81,6 +81,11 @@ void EnumClass::set_elements(std::vector<std::string> elements)
    return;
 }
 
+bool EnumClass::has_class_name()
+{
+   return !class_name.empty();
+}
+
 void EnumClass::set_scope(std::string scope)
 {
    // NOTE: this validation is not assured when the value is set during construction
@@ -110,12 +115,12 @@ bool EnumClass::is_public()
 
 Blast::Cpp::Function EnumClass::build_to_string_method()
 {
-   if (!(validate(enum_name)))
+   if (!(validate(class_name)))
    {
       std::stringstream error_message;
-      error_message << "[EnumClass::build_to_string_method]: error: guard \"validate(enum_name)\" not met.";
+      error_message << "[EnumClass::build_to_string_method]: error: guard \"validate(class_name)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClass::build_to_string_method: error: guard \"validate(enum_name)\" not met");
+      throw std::runtime_error("EnumClass::build_to_string_method: error: guard \"validate(class_name)\" not met");
    }
    if (!(validate(name_of_to_string_method)))
    {
@@ -129,7 +134,7 @@ Blast::Cpp::Function EnumClass::build_to_string_method()
       "std::string",
       name_of_to_string_method,
       std::vector<Blast::Cpp::FunctionArgument>({
-         Blast::Cpp::FunctionArgument(enum_name, "value"),
+         Blast::Cpp::FunctionArgument(class_name, "value"),
          Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
       })
    );
