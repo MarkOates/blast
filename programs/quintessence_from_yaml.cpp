@@ -552,6 +552,29 @@ std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties
 }
 
 
+#include <Blast/Cpp/EnumClass.hpp>
+#include <Blast/Quinetessence/YAMLParsing/EnumClassParser.hpp>
+std::vector<Blast::Cpp::EnumClass> extract_enum_classes(YAML::Node &node, std::string filename)
+   // NOTE: This function expects the node to be the root object, and will look within it for the "enums:" node
+{
+   // extract and validate root node:
+   std::string this_func_name = "extract_enum_classes";
+   const std::string ENUMS = "enums";
+   YAML::Node enum_classes_node = fetch_node(node, ENUMS, YAML::NodeType::Sequence, YAML::Load("[]"));
+   validate(enum_classes_node.IsSequence(), this_func_name, "Expected \"enums\" to be of a YAML Sequence type.");
+
+   // extract elements from node
+   std::vector<Blast::Cpp::EnumClass> result;
+   for (std::size_t i=0; i<enum_classes_node.size(); i++)
+   {
+      YAML::Node it = enum_classes_node[i];
+      Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(it);
+      Blast::Cpp::EnumClass extracted_enum_class = enum_class_parser.parse(); // TODO: consider try..catch here with nice error messages
+      result.push_back(extracted_enum_class);
+   }
+   return result;
+}
+
 
 std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node &source, std::string filename)
 {
@@ -980,7 +1003,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
-   std::vector<Blast::Cpp::EnumClass> enum_classes = {}; // <-- TODO:
+   std::vector<Blast::Cpp::EnumClass> enum_classes; // TODO: replace with this: extract_enum_classes(source, quintessence_filename);
    std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>>> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
