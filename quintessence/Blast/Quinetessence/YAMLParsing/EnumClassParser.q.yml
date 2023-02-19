@@ -30,16 +30,14 @@ functions:
           //- RUNNING
           //- HIDING
 
-      // DEBUG:
-
       // Validate presence and type
-      validate_presence_of_key(node, "class");
-      validate_node_type(node, "class", YAML::NodeType::Scalar);
+      bool class_node_is_present = (bool)node["class"];
+      if (class_node_is_present) validate_node_type(node, "class", YAML::NodeType::Scalar);
       validate_presence_of_key(node, "items");
       validate_node_type(node, "items", YAML::NodeType::Sequence);
 
       // Extract the "name" value
-      result.set_class_name(node["class"].as<std::string>());
+      if (class_node_is_present) result.set_class_name(node["class"].as<std::string>());
 
       // Extract the "items" elements
       std::vector<std::string> enum_items;

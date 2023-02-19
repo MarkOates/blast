@@ -26,17 +26,18 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
 }
 
 
-TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_name_is_not_present__throws_an_error)
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_class_is_not_present__does_not_throw_an_error)
 {
    std::string yaml_content = "nayme: \"FooBar\"\nitems: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);
    Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
-   EXPECT_THROW_WITH_MESSAGE(
-      enum_class_parser.parse(),
-      std::runtime_error,
-      "[Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_presence_of_key]: error: expecting to "
-         "find node \"class\" but it is not present."
-   );
+   //EXPECT_THROW_WITH_MESSAGE(
+      //enum_class_parser.parse(),
+      //std::runtime_error,
+      //"[Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_presence_of_key]: error: expecting to "
+         //"find node \"class\" but it is not present."
+   //);
+   enum_class_parser.parse();
 }
 
 
