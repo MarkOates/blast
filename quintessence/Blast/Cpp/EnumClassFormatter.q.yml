@@ -1,0 +1,43 @@
+properties:
+
+
+  - name: enum_class
+    type: Blast::Cpp::EnumClass
+    constructor_arg: true
+    init_with: '{}'
+
+
+functions:
+
+
+  - name: build_enum_definition
+    type: std::string
+    body: |
+      std::stringstream result;
+      result << "enum class " << enum_class.get_enum_name() << std::endl;
+      result << "{" << std::endl;
+      bool is_first_item = true;
+      for (auto &item : enum_class.get_elements())
+      {
+         result << "   " << item;
+         if (is_first_item)
+         {
+            result << " = 0";
+            is_first_item = false;
+         }
+         result << ",";
+         result << std::endl;
+      }
+      result << "}" << std::endl;
+      return result.str();
+    body_dependency_symbols:
+      - std::stringstream
+
+
+dependencies:
+
+
+  - symbol: Blast::Cpp::EnumClass
+    headers: [ Blast/Cpp/EnumClass.hpp ]
+
+
