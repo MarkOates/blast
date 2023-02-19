@@ -1,5 +1,6 @@
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include <Blast/Cpp/EnumClass.hpp>
 
@@ -14,11 +15,21 @@ TEST(Blast_Cpp_EnumClassTest, can_be_created_without_blowing_up)
 
 TEST(Blast_Cpp_EnumClassTest, build_to_string_method__will_return_a_cpp_function_with_the_expected_content)
 {
-   Blast::Cpp::EnumClass enum_class("FooBar", { "BIZZ", "BAZZ", "BUZZ" });
+   std::vector<std::string> elements = { "FOO", "BAR", "BAZ" };
+   Blast::Cpp::EnumClass enum_class("FooBar", elements);
    Blast::Cpp::Function method = enum_class.build_to_string_method();
 
    EXPECT_EQ("std::string", method.get_type());
-   // TODO: check remaining properties
+   EXPECT_EQ(enum_class.get_elements(), elements);
+}
+
+
+TEST(Blast_Cpp_EnumClassTest, set_element__will_set_the_elements)
+{
+   Blast::Cpp::EnumClass enum_class;
+   std::vector<std::string> elements = { "FOO", "BAR", "BAZ" };
+   enum_class.set_elements(elements);
+   EXPECT_EQ(enum_class.get_elements(), elements);
 }
 
 
