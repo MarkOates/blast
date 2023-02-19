@@ -26,7 +26,7 @@ namespace Blast
          std::vector<std::string> function_body_dependency_include_directive_elements();
          std::vector<std::string> static_attribute_definition_elements();
          std::vector<std::string> private_enum_class_declaration_elements(int indent_level=0);
-         std::vector<std::string> protected_enum_class_declation_elements(int indent_level=0);
+         std::vector<std::string> protected_enum_class_declaration_elements(int indent_level=0);
          std::vector<std::string> public_enum_class_declaration_elements(int indent_level=0);
          std::vector<std::string> private_function_declaration_elements(int indent_level=0);
          std::vector<std::string> protected_function_declaration_elements(int indent_level=0);
@@ -63,6 +63,9 @@ namespace Blast
          std::string private_function_declarations(int indent_level=0);
          std::string protected_function_declarations(int indent_level=0);
          std::string function_definitions(int indent_level=0);
+         std::string public_enum_class_declarations(int indent_level=0);
+         std::string private_enum_class_declarations(int indent_level=0);
+         std::string protected_enum_class_declarations(int indent_level=0);
 
          std::string constructor_declaration(int indent_level=0);
          std::string constructor_definition(int indent_level=0);

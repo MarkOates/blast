@@ -162,7 +162,7 @@ std::vector<std::string> ClassGenerator::private_enum_class_declaration_elements
 }
 
 
-std::vector<std::string> ClassGenerator::protected_enum_class_declation_elements(int indent_level)
+std::vector<std::string> ClassGenerator::protected_enum_class_declaration_elements(int indent_level)
 {
    // TODO: test this function
    std::vector<std::string> result;
@@ -636,6 +636,35 @@ std::string ClassGenerator::public_function_declarations(int indent_level)
 }
 
 
+//////////// start
+std::string ClassGenerator::private_enum_class_declarations(int indent_level)
+{
+   std::stringstream result;
+   for (auto &private_enum_class_declaration_element : private_enum_class_declaration_elements())
+      result << std::string(3*indent_level, ' ') << private_enum_class_declaration_element;
+   return result.str();
+}
+
+
+std::string ClassGenerator::protected_enum_class_declarations(int indent_level)
+{
+   std::stringstream result;
+   for (auto &protected_enum_class_declaration_element : protected_enum_class_declaration_elements())
+      result << std::string(3*indent_level, ' ') << protected_enum_class_declaration_element;
+   return result.str();
+}
+
+
+std::string ClassGenerator::public_enum_class_declarations(int indent_level)
+{
+   std::stringstream result;
+   for (auto &public_enum_class_declaration_element : public_enum_class_declaration_elements())
+      result << std::string(3*indent_level, ' ') << public_enum_class_declaration_element;
+   return result.str();
+}
+//////////// end
+
+
 std::string ClassGenerator::function_definitions(int indent_level)
 {
    std::stringstream result;
@@ -826,6 +855,21 @@ NAMESPACES_CLOSER
    __replace(result, "PRIVATE_FUNCTION_DECLARATIONS\n", private_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "PROTECTED_FUNCTION_DECLARATIONS\n", protected_function_declarations(required_namespace_indentation_levels + 1));
    
+   __replace(
+         result,
+         "PUBLIC_ENUM_CLASS_DECLARATIONS\n",
+         "", //jpublic_function_declarations(required_namespace_indentation_levels + 1)
+      );
+   __replace(
+         result,
+         "PRIVATE_ENUM_CLASS_DECLARATIONS\n",
+         "", //private_function_declarations(required_namespace_indentation_levels + 1)
+      );
+   __replace(
+         result,
+         "PROTECTED_ENUM_CLASS_DECLARATIONS\n",
+         "", //protected_function_declarations(required_namespace_indentation_levels + 1)
+      );
 
 
    return result;
