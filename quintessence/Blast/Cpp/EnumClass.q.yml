@@ -41,15 +41,6 @@ properties:
     init_with: '(char*)"private"'
 
 
-enums:
-
-
-  - name: FooBar
-    items:
-      - THIS
-      - THAT
-
-
 functions:
 
 
