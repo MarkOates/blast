@@ -63,19 +63,19 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    // Extract the "name" value
    if (class_node_is_present) result.set_class_name(node["class"].as<std::string>());
 
-   // Extract the "items" elements
-   std::vector<std::string> enum_items;
-   YAML::Node items_node = node["enumerators"];
-   validate_unique_all_upper_identifiers(items_node);
-   for (std::size_t i=0; i<items_node.size(); i++)
+   // Extract the "enumerators" elements
+   std::vector<std::string> enum_enumerators;
+   YAML::Node enumerators_node = node["enumerators"];
+   validate_unique_all_upper_identifiers(enumerators_node);
+   for (std::size_t i=0; i<enumerators_node.size(); i++)
    {
       // TODO: validate elements are all std::string and are of valid format (all caps, underscores, unique)
-      std::string enum_item = items_node[i].as<std::string>();
-      enum_items.push_back(enum_item);
+      std::string enum_item = enumerators_node[i].as<std::string>();
+      enum_enumerators.push_back(enum_item);
    }
 
-   // Set the "items" values
-   result.set_elements(enum_items);
+   // Set the "enumerators" values
+   result.set_enumerators(enum_enumerators);
 
    return result;
 }

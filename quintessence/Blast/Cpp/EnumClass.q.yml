@@ -8,7 +8,7 @@ properties:
     getter: true
     setter: true
     
-  - name: elements
+  - name: enumerators
     type: std::vector<std::string>
     init_with: '{}'
     constructor_arg: true
@@ -57,14 +57,14 @@ documentation:
 functions:
 
 
-  - name: set_elements
+  - name: set_enumerators
     parameters:
-      - name: elements
+      - name: enumerators
         type: std::vector<std::string>
         default_argument: '{}'
-    guards: [ validate_elements_are_unique(elements) ]
+    guards: [ validate_elements_are_unique(enumerators) ]
     body: |
-      this->elements = elements;
+      this->enumerators = enumerators;
       return;
 
 

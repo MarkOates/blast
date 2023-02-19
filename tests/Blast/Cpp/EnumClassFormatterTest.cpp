@@ -29,7 +29,7 @@ R"END(enum class Foo
 TEST(Blast_Cpp_EnumClassFormatterTest, build_definition__when_there_is_no_class_name__is_formatted_as_expected)
 {
    Blast::Cpp::EnumClass enum_class;
-   enum_class.set_elements({ "BIZ", "BAZ", "BUZ" });
+   enum_class.set_enumerators({ "BIZ", "BAZ", "BUZ" });
 
    Blast::Cpp::EnumClassFormatter enum_class_formatter(enum_class);
    std::string expected_string =

@@ -18,9 +18,9 @@ namespace Cpp
 {
 
 
-EnumClass::EnumClass(std::string class_name, std::vector<std::string> elements, std::string scope)
+EnumClass::EnumClass(std::string class_name, std::vector<std::string> enumerators, std::string scope)
    : class_name(class_name)
-   , elements(elements)
+   , enumerators(enumerators)
    , scope(scope)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
 {
@@ -50,9 +50,9 @@ std::string EnumClass::get_class_name() const
 }
 
 
-std::vector<std::string> EnumClass::get_elements() const
+std::vector<std::string> EnumClass::get_enumerators() const
 {
-   return elements;
+   return enumerators;
 }
 
 
@@ -68,16 +68,16 @@ std::string EnumClass::get_name_of_to_string_method() const
 }
 
 
-void EnumClass::set_elements(std::vector<std::string> elements)
+void EnumClass::set_enumerators(std::vector<std::string> enumerators)
 {
-   if (!(validate_elements_are_unique(elements)))
+   if (!(validate_elements_are_unique(enumerators)))
    {
       std::stringstream error_message;
-      error_message << "[EnumClass::set_elements]: error: guard \"validate_elements_are_unique(elements)\" not met.";
+      error_message << "[EnumClass::set_enumerators]: error: guard \"validate_elements_are_unique(enumerators)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClass::set_elements: error: guard \"validate_elements_are_unique(elements)\" not met");
+      throw std::runtime_error("EnumClass::set_enumerators: error: guard \"validate_elements_are_unique(enumerators)\" not met");
    }
-   this->elements = elements;
+   this->enumerators = enumerators;
    return;
 }
 

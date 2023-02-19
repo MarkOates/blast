@@ -15,12 +15,12 @@ TEST(Blast_Cpp_EnumClassTest, can_be_created_without_blowing_up)
 
 TEST(Blast_Cpp_EnumClassTest, build_to_string_method__will_return_a_cpp_function_with_the_expected_content)
 {
-   std::vector<std::string> elements = { "FOO", "BAR", "BAZ" };
-   Blast::Cpp::EnumClass enum_class("FooBar", elements);
+   std::vector<std::string> enumerators = { "FOO", "BAR", "BAZ" };
+   Blast::Cpp::EnumClass enum_class("FooBar", enumerators);
    Blast::Cpp::Function method = enum_class.build_to_string_method();
 
    EXPECT_EQ("std::string", method.get_type());
-   EXPECT_EQ(enum_class.get_elements(), elements);
+   EXPECT_EQ(enum_class.get_enumerators(), enumerators);
 }
 
 
@@ -38,22 +38,22 @@ TEST(Blast_Cpp_EnumClassTest, name_of_to_string_method__has_the_expected_default
 }
 
 
-TEST(Blast_Cpp_EnumClassTest, set_element__will_set_the_elements)
+TEST(Blast_Cpp_EnumClassTest, set_enumerators__will_set_the_enumerators)
 {
    Blast::Cpp::EnumClass enum_class;
-   std::vector<std::string> elements = { "FOO", "BAR", "BAZ" };
-   enum_class.set_elements(elements);
-   EXPECT_EQ(enum_class.get_elements(), elements);
+   std::vector<std::string> enumerators = { "FOO", "BAR", "BAZ" };
+   enum_class.set_enumerators(enumerators);
+   EXPECT_EQ(enum_class.get_enumerators(), enumerators);
 }
 
 
-TEST(Blast_Cpp_EnumClassTest, set_element__with_a_list_that_does_not_contain_unique_elements__will_throw_an_error)
+TEST(Blast_Cpp_EnumClassTest, set_element__with_a_list_that_does_not_contain_unique_enumerators__will_throw_an_error)
 {
    Blast::Cpp::EnumClass enum_class;
    EXPECT_THROW_GUARD_ERROR(
-      enum_class.set_elements({ "FOO", "FOO" }),
-      "EnumClass::set_elements",
-      "validate_elements_are_unique(elements)"
+      enum_class.set_enumerators({ "FOO", "FOO" }),
+      "EnumClass::set_enumerators",
+      "validate_elements_are_unique(enumerators)"
    );
 }
 

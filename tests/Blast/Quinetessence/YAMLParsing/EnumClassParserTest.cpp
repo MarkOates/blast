@@ -22,7 +22,7 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
    Blast::Cpp::EnumClass enum_class = enum_class_parser.parse();
 
    EXPECT_EQ("FooBar", enum_class.get_class_name());
-   EXPECT_THAT(enum_class.get_elements(), ::testing::ElementsAre("FOO", "FOE", "FUM"));
+   EXPECT_THAT(enum_class.get_enumerators(), ::testing::ElementsAre("FOO", "FOE", "FUM"));
 }
 
 

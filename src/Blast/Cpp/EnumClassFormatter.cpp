@@ -36,7 +36,7 @@ std::string EnumClassFormatter::build_enum_definition()
    result << std::endl;
    result << "{" << std::endl;
    bool is_first_item = true;
-   for (auto &item : enum_class.get_elements())
+   for (auto &item : enum_class.get_enumerators())
    {
       result << "   " << item;
       if (is_first_item)
