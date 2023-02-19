@@ -16,7 +16,7 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, can_be_created_without
 TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
    parse__will_return_an_enum_class_object_with_the_expected_values)
 {
-   std::string yaml_content = "class: \"FooBar\"\nitems: [ FOO, FOE, FUM ]\n";
+   std::string yaml_content = "class: \"FooBar\"\nenumerators: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);
    Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
    Blast::Cpp::EnumClass enum_class = enum_class_parser.parse();
@@ -28,7 +28,7 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
 
 TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_class_is_not_present__does_not_throw_an_error)
 {
-   std::string yaml_content = "nayme: \"FooBar\"\nitems: [ FOO, FOE, FUM ]\n";
+   std::string yaml_content = "nayme: \"FooBar\"\nenumerators: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);
    Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
    //EXPECT_THROW_WITH_MESSAGE(
@@ -41,7 +41,7 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_class_is
 }
 
 
-TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_items_is_not_present__throws_an_error)
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_enumerators_are_not_present__throws_an_error)
 {
    std::string yaml_content = "class: \"FooBar\"\neyetems: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);
@@ -50,7 +50,7 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_items_is_n
       enum_class_parser.parse(),
       std::runtime_error,
       "[Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_presence_of_key]: error: expecting to "
-         "find node \"items\" but it is not present."
+         "find node \"enumerators\" but it is not present."
    );
 }
 

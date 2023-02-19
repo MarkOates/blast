@@ -57,15 +57,15 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    // Validate presence and type
    bool class_node_is_present = (bool)node["class"];
    if (class_node_is_present) validate_node_type(node, "class", YAML::NodeType::Scalar);
-   validate_presence_of_key(node, "items");
-   validate_node_type(node, "items", YAML::NodeType::Sequence);
+   validate_presence_of_key(node, "enumerators");
+   validate_node_type(node, "enumerators", YAML::NodeType::Sequence);
 
    // Extract the "name" value
    if (class_node_is_present) result.set_class_name(node["class"].as<std::string>());
 
    // Extract the "items" elements
    std::vector<std::string> enum_items;
-   YAML::Node items_node = node["items"];
+   YAML::Node items_node = node["enumerators"];
    validate_unique_all_upper_identifiers(items_node);
    for (std::size_t i=0; i<items_node.size(); i++)
    {
