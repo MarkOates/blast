@@ -3,6 +3,7 @@
 #include <Blast/Cpp/ClassGenerator.hpp>
 
 #include <Blast/Cpp/FunctionFormatter.hpp>
+#include <Blast/Cpp/EnumClassFormatter.hpp>
 #include <Blast/DependencySymbolAtomizer.hpp>
 #include <Blast/DependencyHeadersSuggester.hpp>
 #include <Blast/StringJoiner.hpp>
@@ -148,6 +149,45 @@ std::vector<std::string> ClassGenerator::static_attribute_definition_elements()
 }
 
 
+std::vector<std::string> ClassGenerator::private_enum_class_declaration_elements(int indent_level)
+{
+   // TODO: test this function
+   std::vector<std::string> result;
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.is_private())
+         result.push_back(EnumClassFormatter(enum_class).build_enum_definition());
+   }
+   return result;
+}
+
+
+std::vector<std::string> ClassGenerator::protected_enum_class_declation_elements(int indent_level)
+{
+   // TODO: test this function
+   std::vector<std::string> result;
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.is_protected())
+         result.push_back(EnumClassFormatter(enum_class).build_enum_definition());
+   }
+   return result;
+}
+
+
+std::vector<std::string> ClassGenerator::public_enum_class_declaration_elements(int indent_level)
+{
+   // TODO: test this function
+   std::vector<std::string> result;
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.is_public())
+         result.push_back(EnumClassFormatter(enum_class).build_enum_definition());
+   }
+   return result;
+}
+
+
 std::vector<std::string> ClassGenerator::protected_function_declaration_elements(int indent_level)
 {
    std::vector<std::string> protected_functions;
@@ -156,31 +196,10 @@ std::vector<std::string> ClassGenerator::protected_function_declaration_elements
       if (function.get_is_protected())
          protected_functions.push_back(FunctionFormatter(function).get_function_declaration());
    }
+   // TODO: consider if "enum_classes" that have have "to_string" and "from_string" methods should have their
+   // declarations included here. NOTE: I don't think they should. I think that should be assembled at
+   // quintessence parsing time and added to the classes "functions" outside of here.
    return protected_functions;
-}
-
-
-std::vector<std::string> ClassGenerator::private_enum_class_declaration_elements(int indent_level)
-{
-   std::vector<std::string> result;
-   // TODO:
-   return result;
-}
-
-
-std::vector<std::string> ClassGenerator::protected_enum_class_declation_elements(int indent_level)
-{
-   std::vector<std::string> result;
-   // TODO:
-   return result;
-}
-
-
-std::vector<std::string> ClassGenerator::public_enum_class_declaration_elements(int indent_level)
-{
-   std::vector<std::string> result;
-   // TODO:
-   return result;
 }
 
 

@@ -14,6 +14,7 @@ namespace Blast
       {
       public:
          static constexpr const char* DEFAULT_NAME_OF_TO_STRING_METHOD = (char*)"to_string";
+         static constexpr const char* DEFAULT_SCOPE = (char*)"private";
 
       private:
          std::string enum_name;
@@ -25,7 +26,7 @@ namespace Blast
 
 
       public:
-         EnumClass(std::string enum_name="[unset-enum_name]", std::vector<std::string> elements={}, std::string scope="[unset-scope]");
+         EnumClass(std::string enum_name="[unset-enum_name]", std::vector<std::string> elements={}, std::string scope=DEFAULT_SCOPE);
          ~EnumClass();
 
          void set_enum_name(std::string enum_name);
@@ -36,6 +37,9 @@ namespace Blast
          std::string get_name_of_to_string_method() const;
          void set_elements(std::vector<std::string> elements={});
          void set_scope(std::string scope="[unset-scope]");
+         bool is_private();
+         bool is_protected();
+         bool is_public();
          Blast::Cpp::Function build_to_string_method();
          std::string build_to_string_method_body();
          static bool validate(std::string method_name="[unset-method_name]");

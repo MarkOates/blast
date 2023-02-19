@@ -87,6 +87,21 @@ void EnumClass::set_scope(std::string scope)
    return;
 }
 
+bool EnumClass::is_private()
+{
+   return scope == "private";
+}
+
+bool EnumClass::is_protected()
+{
+   return scope == "protected";
+}
+
+bool EnumClass::is_public()
+{
+   return scope == "public";
+}
+
 Blast::Cpp::Function EnumClass::build_to_string_method()
 {
    if (!(validate(enum_name)))

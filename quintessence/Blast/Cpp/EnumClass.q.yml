@@ -17,7 +17,7 @@ properties:
 
   - name: scope
     type: std::string
-    init_with: '"[unset-scope]"'
+    init_with: DEFAULT_SCOPE
     constructor_arg: true
     getter: true
     setter: false
@@ -33,6 +33,12 @@ properties:
     static: true
     type: const char*
     init_with: '(char*)"to_string"'
+
+  - name: DEFAULT_SCOPE
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)"private"'
 
 
 functions:
@@ -58,6 +64,24 @@ functions:
       // TODO: validate is "public", "private", or "protected"
       this->scope = scope;
       return;
+
+
+  - name: is_private
+    type: bool
+    body: |
+      return scope == "private";
+
+
+  - name: is_protected
+    type: bool
+    body: |
+      return scope == "protected";
+
+
+  - name: is_public
+    type: bool
+    body: |
+      return scope == "public";
 
 
   - name: build_to_string_method
