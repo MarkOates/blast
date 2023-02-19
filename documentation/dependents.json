@@ -256,7 +256,8 @@
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/Errors": [
-    "Blast/Project/SourceReleaseBuilder"
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
   ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker"

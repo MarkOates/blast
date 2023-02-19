@@ -43,13 +43,14 @@ functions:
       // Extract the "items" elements
       std::vector<std::string> enum_items;
       YAML::Node items_node = node["items"];
+      validate_unique_all_upper_identifiers(items_node);
       for (std::size_t i=0; i<items_node.size(); i++)
       {
          // TODO: validate elements are all std::string and are of valid format (all caps, underscores, unique)
          std::string enum_item = items_node[i].as<std::string>();
          enum_items.push_back(enum_item);
       }
-      
+
       // Set the "items" values
       result.set_elements(enum_items);
 
@@ -163,6 +164,60 @@ functions:
       return "";
 
 
+  - name: validate_unique_all_upper_identifiers
+    static: true
+    type: bool
+    parameters:
+      - name: items
+        type: YAML::Node
+        default_argument: '{}'
+    body: |
+      // TODO: add exception messages to areas with return false
+      if (!items.IsSequence())
+      {
+         std::string node_type_as_string = yaml_node_type_as_string(items["items"].Type());
+         std::stringstream error_message;
+         error_message
+           << "Expecting node \"items\" to be a \"Sequence\" but it was a \""
+           << node_type_as_string
+           << "\".";
+
+         Blast::Errors::throw_error(
+           "Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_unique_all_upper_identifiers",
+           "Expecting node \"items\" to be a \"Sequence\" but it was not."
+         );
+
+         return false;
+      }
+
+      // Check that each string in the list meets the requirements
+      for (const auto& item : items) {
+         if (!item.IsScalar()) {
+            return false;
+         }
+
+         const std::string& str = item.as<std::string>();
+         if (str.empty() || !std::isupper(str[0])) {
+            return false;
+         }
+
+         for (char c : str) {
+            if (!std::isalnum(c) && c != '_') {
+              return false;
+            }
+         }
+
+         if (std::any_of(str.begin() + 1, str.end(), [](char c) { return std::isdigit(c); })) {
+            return false;
+         }
+       }
+
+       // All checks passed
+       return true;
+    body_dependency_symbols:
+      - Blast::Errors
+
+
 dependencies:
 
 
@@ -172,5 +227,7 @@ dependencies:
     headers: [ yaml-cpp/yaml.h ]
   - symbol: Blast::Cpp::EnumClass
     headers: [ Blast/Cpp/EnumClass.hpp ]
+  - symbol: Blast::Errors
+    headers: [ Blast/Errors.hpp ]
 
 

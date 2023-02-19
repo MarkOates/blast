@@ -1219,6 +1219,9 @@ table td
 <tr>
   <td class="method">yaml_node_type_as_string(YAML::NodeType::value node_type=YAML::NodeType::Undefined)</td>
 </tr>
+<tr>
+  <td class="method">validate_unique_all_upper_identifiers(YAML::Node items={})</td>
+</tr>
     </table>
      <table>
 <tr>
@@ -1229,6 +1232,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::EnumClass&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/EnumClass.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -2583,7 +2589,8 @@ table td
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/Errors": [
-    "Blast/Project/SourceReleaseBuilder"
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
   ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker"

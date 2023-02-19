@@ -2,6 +2,7 @@
 
 #include <Blast/Quinetessence/YAMLParsing/EnumClassParser.hpp>
 
+#include <Blast/Errors.hpp>
 #include <unordered_set>
 
 
@@ -66,6 +67,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    // Extract the "items" elements
    std::vector<std::string> enum_items;
    YAML::Node items_node = node["items"];
+   validate_unique_all_upper_identifiers(items_node);
    for (std::size_t i=0; i<items_node.size(); i++)
    {
       // TODO: validate elements are all std::string and are of valid format (all caps, underscores, unique)
@@ -143,6 +145,52 @@ std::string EnumClassParser::yaml_node_type_as_string(YAML::NodeType::value node
       } break;
    }
    return "";
+}
+
+bool EnumClassParser::validate_unique_all_upper_identifiers(YAML::Node items)
+{
+   // TODO: add exception messages to areas with return false
+   if (!items.IsSequence())
+   {
+      std::string node_type_as_string = yaml_node_type_as_string(items["items"].Type());
+      std::stringstream error_message;
+      error_message
+        << "Expecting node \"items\" to be a \"Sequence\" but it was a \""
+        << node_type_as_string
+        << "\".";
+
+      Blast::Errors::throw_error(
+        "Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_unique_all_upper_identifiers",
+        "Expecting node \"items\" to be a \"Sequence\" but it was not."
+      );
+
+      return false;
+   }
+
+   // Check that each string in the list meets the requirements
+   for (const auto& item : items) {
+      if (!item.IsScalar()) {
+         return false;
+      }
+
+      const std::string& str = item.as<std::string>();
+      if (str.empty() || !std::isupper(str[0])) {
+         return false;
+      }
+
+      for (char c : str) {
+         if (!std::isalnum(c) && c != '_') {
+           return false;
+         }
+      }
+
+      if (std::any_of(str.begin() + 1, str.end(), [](char c) { return std::isdigit(c); })) {
+         return false;
+      }
+    }
+
+    // All checks passed
+    return true;
 }
 
 
