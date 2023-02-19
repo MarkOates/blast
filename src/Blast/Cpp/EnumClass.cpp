@@ -17,9 +17,10 @@ namespace Cpp
 {
 
 
-EnumClass::EnumClass(std::string enum_name, std::vector<std::string> elements)
+EnumClass::EnumClass(std::string enum_name, std::vector<std::string> elements, std::string scope)
    : enum_name(enum_name)
    , elements(elements)
+   , scope(scope)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
 {
 }
@@ -54,6 +55,12 @@ std::vector<std::string> EnumClass::get_elements() const
 }
 
 
+std::string EnumClass::get_scope() const
+{
+   return scope;
+}
+
+
 std::string EnumClass::get_name_of_to_string_method() const
 {
    return name_of_to_string_method;
@@ -70,6 +77,13 @@ void EnumClass::set_elements(std::vector<std::string> elements)
       throw std::runtime_error("EnumClass::set_elements: error: guard \"validate_elements_are_unique(elements)\" not met");
    }
    this->elements = elements;
+   return;
+}
+
+void EnumClass::set_scope(std::string scope)
+{
+   // TODO: validate is "public", "private", or "protected"
+   this->scope = scope;
    return;
 }
 

@@ -15,6 +15,13 @@ properties:
     getter: true
     setter: false
 
+  - name: scope
+    type: std::string
+    init_with: '"[unset-scope]"'
+    constructor_arg: true
+    getter: true
+    setter: false
+
   - name: name_of_to_string_method
     type: std::string
     init_with: DEFAULT_NAME_OF_TO_STRING_METHOD
@@ -39,6 +46,17 @@ functions:
     guards: [ validate_elements_are_unique(elements) ]
     body: |
       this->elements = elements;
+      return;
+
+
+  - name: set_scope
+    parameters:
+      - name: scope
+        type: std::string
+        default_argument: '"[unset-scope]"'
+    body: |
+      // TODO: validate is "public", "private", or "protected"
+      this->scope = scope;
       return;
 
 

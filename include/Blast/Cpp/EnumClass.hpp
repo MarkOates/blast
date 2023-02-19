@@ -18,21 +18,24 @@ namespace Blast
       private:
          std::string enum_name;
          std::vector<std::string> elements;
+         std::string scope;
          std::string name_of_to_string_method;
 
       protected:
 
 
       public:
-         EnumClass(std::string enum_name="[unset-enum_name]", std::vector<std::string> elements={});
+         EnumClass(std::string enum_name="[unset-enum_name]", std::vector<std::string> elements={}, std::string scope="[unset-scope]");
          ~EnumClass();
 
          void set_enum_name(std::string enum_name);
          void set_name_of_to_string_method(std::string name_of_to_string_method);
          std::string get_enum_name() const;
          std::vector<std::string> get_elements() const;
+         std::string get_scope() const;
          std::string get_name_of_to_string_method() const;
          void set_elements(std::vector<std::string> elements={});
+         void set_scope(std::string scope="[unset-scope]");
          Blast::Cpp::Function build_to_string_method();
          std::string build_to_string_method_body();
          static bool validate(std::string method_name="[unset-method_name]");

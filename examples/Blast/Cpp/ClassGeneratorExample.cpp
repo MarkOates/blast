@@ -1,5 +1,7 @@
 
 
+#include <allegro5/allegro.h>
+
 #include <Blast/Cpp/ClassGenerator.hpp>
 
 #include <iostream>
@@ -34,7 +36,8 @@ int main(int argc, char **argv)
          { "std::vector<std::string>", "typeo", "{}", false, true, true, false, true, true, false },
          { "ALLEGRO_BITMAP*", "bmp", "nullptr", false, true, true, false, false, true, false },
       },
-      {},
+      { /* enum_classes */ },
+      { /* functions */ },
       symbol_dependencies
    );
 

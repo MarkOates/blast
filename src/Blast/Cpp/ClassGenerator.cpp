@@ -160,6 +160,30 @@ std::vector<std::string> ClassGenerator::protected_function_declaration_elements
 }
 
 
+std::vector<std::string> ClassGenerator::private_enum_class_declaration_elements(int indent_level)
+{
+   std::vector<std::string> result;
+   // TODO:
+   return result;
+}
+
+
+std::vector<std::string> ClassGenerator::protected_enum_class_declation_elements(int indent_level)
+{
+   std::vector<std::string> result;
+   // TODO:
+   return result;
+}
+
+
+std::vector<std::string> ClassGenerator::public_enum_class_declaration_elements(int indent_level)
+{
+   std::vector<std::string> result;
+   // TODO:
+   return result;
+}
+
+
 std::vector<std::string> ClassGenerator::private_function_declaration_elements(int indent_level)
 {
    std::vector<std::string> private_functions;

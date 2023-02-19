@@ -251,6 +251,7 @@ TEST_F(ClassGeneratorTest,
          { "float", "time_velocity", "13.0f", true, false, false, false, false, false, false },
       },
       {},
+      {},
       symbol_dependencies
    );
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
@@ -258,6 +259,7 @@ TEST_F(ClassGeneratorTest,
    std::vector<std::string> expected_elements = { "int User::next_id = 0;", "float User::time_velocity = 13.0f;" };
    ASSERT_EQ(expected_elements, class_generator.static_attribute_definition_elements());
 }
+
 
 TEST_F(ClassGeneratorTest,
    static_attribute_definition_elements__will_not_include_constexpr_attributes_even_though_they_are_static_by_default)
@@ -276,6 +278,7 @@ TEST_F(ClassGeneratorTest,
          { "float", "time_velocity", "13.0f", true, false, false, false, false, false, false },
          { "float", "PI", "3.141592f", true, false, false, false, false, false, true }, // constexpr
       },
+      {},
       {},
       symbol_dependencies
    );
@@ -339,6 +342,7 @@ TEST_F(ClassGeneratorTest,
          { "Blast::DiceRoller", "dice_roller", "{}", false, true, true, false, false, true, false },
       },
       {},
+      {},
       symbol_dependencies
    );
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
@@ -357,7 +361,7 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__includes_the_list_of_d
       { "Ascend", { "MyDomain/Ascend.hpp" } },
    };
 
-   Blast::Cpp::Class cpp_class("Ascend", {}, { { "ActionBase" }, { "Scriptable<Ascend>" } }, {}, {}, symbol_dependencies);
+   Blast::Cpp::Class cpp_class("Ascend", {}, { { "ActionBase" }, { "Scriptable<Ascend>" } }, {}, {}, {}, symbol_dependencies);
    Blast::Cpp::ClassGenerator class_generator(cpp_class);
 
    std::string expected_dependency_directives = "#include <Blast/Scriptable.hpp>\n"
@@ -379,6 +383,7 @@ TEST_F(ClassGeneratorTest, dependency_include_directives__when_no_dependencies_a
          { "int", "num_sides", "0", false, false, true, false, false, false, false },
          { "float", "radius", "6.0f", false, true, true, false, false, true, false },
       },
+      {},
       {},
       symbol_dependencies
    );
@@ -438,6 +443,7 @@ TEST_F(ClassGeneratorTest, static_attribute_definitions__returns_a_string_format
          { "int", "id", "next_id++", false, false, true, false, false, false, false },
          { "float", "time_velocity", "13.0f", true, false, false, false, false, false, false },
       },
+      {},
       {},
       symbol_dependencies
    );
@@ -557,7 +563,7 @@ TEST_F(ClassGeneratorTest,
       { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
    };
 
-   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {
+   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {}, {
       Blast::Cpp::Function("std::string", "unnamed_function",         {}, "return;", false, false, false, false, true),
       Blast::Cpp::Function("std::string", "another_unnamed_function", {}, "return;", false, false, false, true, false),
    }, symbol_dependencies);
@@ -581,7 +587,7 @@ TEST_F(ClassGeneratorTest,
       { "Blast::DiceRoller", { "Blast/DiceRoller.hpp" } },
    };
 
-   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {
+   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {}, {
       Blast::Cpp::Function("std::string", "unnamed_function",         {}, "return;", false, false, false, false, true),
       Blast::Cpp::Function("std::string", "another_unnamed_function", {}, "return;", false, false, false, true, false),
    }, symbol_dependencies, function_body_symbol_dependencies );
@@ -599,7 +605,7 @@ TEST_F(ClassGeneratorTest,
 
 TEST_F(ClassGeneratorTest, destructor_declaration__when_virtual_or_pure_virtual_functions_are_present_on_the_class__returns_the_expected_virtual_destructor_string)
 {
-   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {
+   Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {}, {}, {
       Blast::Cpp::Function("void", "unnamed_function",         {}, "return;", false, false, false, false, true),
       Blast::Cpp::Function("void", "another_unnamed_function", {}, "return;", false, false, false, true, false),
    });

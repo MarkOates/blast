@@ -44,6 +44,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    // This is the schema:
 
    //- name: State
+     //scope: protected
      //include_undef_item: true (default)
      //to_string_func: true (default)
      //from_string_func: true (default)
