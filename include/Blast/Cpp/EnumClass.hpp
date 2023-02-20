@@ -19,28 +19,31 @@ namespace Blast
          static constexpr const char* DEFAULT_TYPE = (char*)"";
 
       private:
-         std::string class_name;
+         std::string name;
          std::vector<std::string> enumerators;
          std::string scope;
          std::string type;
+         bool is_class;
          std::string name_of_to_string_method;
 
       protected:
 
 
       public:
-         EnumClass(std::string class_name=DEFAULT_CLASS_NAME, std::vector<std::string> enumerators={}, std::string scope=DEFAULT_SCOPE, std::string type=DEFAULT_TYPE);
+         EnumClass(std::string name=DEFAULT_CLASS_NAME, std::vector<std::string> enumerators={}, std::string scope=DEFAULT_SCOPE, std::string type=DEFAULT_TYPE, bool is_class=false);
          ~EnumClass();
 
-         void set_class_name(std::string class_name);
+         void set_name(std::string name);
+         void set_is_class(bool is_class);
          void set_name_of_to_string_method(std::string name_of_to_string_method);
-         std::string get_class_name() const;
+         std::string get_name() const;
          std::vector<std::string> get_enumerators() const;
          std::string get_scope() const;
          std::string get_type() const;
+         bool get_is_class() const;
          std::string get_name_of_to_string_method() const;
          void set_enumerators(std::vector<std::string> enumerators={});
-         bool has_class_name();
+         bool has_name();
          void set_scope(std::string scope="[unset-scope]");
          void set_type(std::string type="[unset-type]");
          bool has_type();

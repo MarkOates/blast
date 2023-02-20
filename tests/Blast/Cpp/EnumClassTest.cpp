@@ -58,10 +58,10 @@ TEST(Blast_Cpp_EnumClassTest, set_element__with_a_list_that_does_not_contain_uni
 }
 
 
-TEST(Blast_Cpp_EnumClassTest, class_name__is_set_to_the_default_value_by_default)
+TEST(Blast_Cpp_EnumClassTest, name__is_set_to_the_default_value_by_default)
 {
    Blast::Cpp::EnumClass enum_class;
-   EXPECT_EQ(Blast::Cpp::EnumClass::DEFAULT_CLASS_NAME, enum_class.get_class_name());
+   EXPECT_EQ(Blast::Cpp::EnumClass::DEFAULT_CLASS_NAME, enum_class.get_name());
 }
 
 
@@ -72,18 +72,18 @@ TEST(Blast_Cpp_EnumClassTest, DEFAULT_CLASS_NAME__has_the_expected_value_of_bein
 }
 
 
-TEST(Blast_Cpp_EnumClassTest, has_class_name__returns_false_when_the_class_name_is_empty)
+TEST(Blast_Cpp_EnumClassTest, has_name__returns_false_when_the_name_is_empty)
 {
    Blast::Cpp::EnumClass enum_class;
-   EXPECT_EQ(false, enum_class.has_class_name());
+   EXPECT_EQ(false, enum_class.has_name());
 }
 
 
-TEST(Blast_Cpp_EnumClassTest, has_class_name__returns_true_when_a_class_name_is_present)
+TEST(Blast_Cpp_EnumClassTest, has_name__returns_true_when_a_name_is_present)
 {
    Blast::Cpp::EnumClass enum_class;
-   enum_class.set_class_name("Foobar");
-   EXPECT_EQ(true, enum_class.has_class_name());
+   enum_class.set_name("Foobar");
+   EXPECT_EQ(true, enum_class.has_name());
 }
 
 

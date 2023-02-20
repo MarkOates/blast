@@ -13,6 +13,7 @@ TEST(Blast_Cpp_EnumClassFormatterTest, can_be_created_without_blowing_up)
 TEST(Blast_Cpp_EnumClassFormatterTest, build_definition__returns_the_expected_response)
 {
    Blast::Cpp::EnumClass enum_class("Foo", { "BIZ", "BAZ", "BUZ" });
+   enum_class.set_is_class("true");
    Blast::Cpp::EnumClassFormatter enum_class_formatter(enum_class);
    std::string expected_string =
 R"END(enum class Foo

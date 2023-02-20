@@ -1,7 +1,7 @@
 properties:
 
 
-  - name: class_name
+  - name: name
     type: std::string
     init_with: DEFAULT_CLASS_NAME
     constructor_arg: true
@@ -28,6 +28,13 @@ properties:
     constructor_arg: true
     getter: true
     setter: false
+
+  - name: is_class
+    type: bool
+    init_with: false
+    constructor_arg: true
+    getter: true
+    setter: true
 
   - name: name_of_to_string_method
     type: std::string
@@ -81,10 +88,10 @@ functions:
       return;
 
 
-  - name: has_class_name
+  - name: has_name
     type: bool
     body: |
-      return !class_name.empty();
+      return !name.empty();
 
 
   - name: set_scope
@@ -153,14 +160,14 @@ functions:
 
   - name: build_to_string_method
     type: Blast::Cpp::Function
-    guards: [ validate(class_name), validate(name_of_to_string_method) ]
+    guards: [ validate(name), validate(name_of_to_string_method) ]
     body: |
       // TODO: finish implementing this function
       Blast::Cpp::Function result(
          "std::string",
          name_of_to_string_method,
          std::vector<Blast::Cpp::FunctionArgument>({
-            Blast::Cpp::FunctionArgument(class_name, "value"),
+            Blast::Cpp::FunctionArgument(name, "value"),
             Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
          })
       );

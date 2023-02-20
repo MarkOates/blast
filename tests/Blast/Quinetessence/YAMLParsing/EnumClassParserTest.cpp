@@ -16,14 +16,55 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, can_be_created_without
 TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
    parse__will_return_an_enum_class_object_with_the_expected_values)
 {
-   std::string yaml_content = "class: \"FooBar\"\ntype: uint32_t\nenumerators: [ FOO, FOE, FUM ]\n";
+   std::string yaml_content = "name: \"FooBar\"\ntype: uint32_t\nenumerators: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);
    Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
    Blast::Cpp::EnumClass enum_class = enum_class_parser.parse();
 
-   EXPECT_EQ("FooBar", enum_class.get_class_name());
+   EXPECT_EQ("FooBar", enum_class.get_name());
    EXPECT_THAT(enum_class.get_enumerators(), ::testing::ElementsAre("FOO", "FOE", "FUM"));
    EXPECT_EQ("uint32_t", enum_class.get_type());
+}
+
+
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
+   parse__with_a_name_key_defined__will_set_the_name__and__will_set_is_class_as_false)
+{
+   std::string yaml_content = "name: \"FooBar\"\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass enum_class = enum_class_parser.parse();
+
+   EXPECT_EQ("FooBar", enum_class.get_name());
+   EXPECT_EQ(false, enum_class.get_is_class());
+}
+
+
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
+   parse__with_a_class_key_defined__will_set_the_name__and__will_set_is_class_as_true)
+{
+   std::string yaml_content = "class: \"FooBar\"\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass enum_class = enum_class_parser.parse();
+
+   EXPECT_EQ("FooBar", enum_class.get_name());
+   EXPECT_EQ(true, enum_class.get_is_class());
+}
+
+
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
+   parse__when_both_a_name_key_and_a_class_key_are_defined__will_throw_an_error)
+{
+   std::string yaml_content = "class: \"FooBar\"\nname: \"FooBar\"\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
+   EXPECT_THROW_WITH_MESSAGE(
+      enum_class_parser.parse(),
+      std::runtime_error,
+      "[Blast::Quinetessence::YAMLParsing::EnumClassParser::parse]: error: An enum cannot have both "
+         "the \"name\" and \"class\" present. It must be one or neither."
+   );
 }
 
 
@@ -32,12 +73,6 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_class_is
    std::string yaml_content = "nayme: \"FooBar\"\nenumerators: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);
    Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
-   //EXPECT_THROW_WITH_MESSAGE(
-      //enum_class_parser.parse(),
-      //std::runtime_error,
-      //"[Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_presence_of_key]: error: expecting to "
-         //"find node \"class\" but it is not present."
-   //);
    enum_class_parser.parse();
 }
 

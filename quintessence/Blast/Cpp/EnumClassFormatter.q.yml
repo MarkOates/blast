@@ -17,9 +17,14 @@ functions:
       result << "enum";
 
       // Only show "class Foobar" if it is present
-      if (enum_class.has_class_name())
+      if (enum_class.get_is_class() && enum_class.has_name())
       {
-         result << " class " << enum_class.get_class_name();
+         result << " class";
+      }
+      // Only show if a type is present
+      if (enum_class.has_name())
+      {
+         result << " " << enum_class.get_name();
       }
       // Only show ": type" if a type is present
       if (enum_class.has_type())

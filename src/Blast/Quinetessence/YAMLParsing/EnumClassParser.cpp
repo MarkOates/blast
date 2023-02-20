@@ -57,13 +57,33 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    // Validate presence and type
    bool class_node_is_present = (bool)node["class"];
    if (class_node_is_present) validate_node_type(node, "class", YAML::NodeType::Scalar);
+   bool name_node_is_present = (bool)node["name"];
+   if (name_node_is_present) validate_node_type(node, "name", YAML::NodeType::Scalar);
    bool type_node_is_present = (bool)node["type"];
    if (type_node_is_present) validate_node_type(node, "type", YAML::NodeType::Scalar);
+
    validate_presence_of_key(node, "enumerators");
    validate_node_type(node, "enumerators", YAML::NodeType::Sequence);
 
-   // Extract the "class" value
-   if (class_node_is_present) result.set_class_name(node["class"].as<std::string>());
+   // Extract the "class" and/or "name" value, along with the "is_class" property
+   if (name_node_is_present && class_node_is_present)
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser::parse]: error: "
+                    << "An enum cannot have both the \"name\" and \"class\" present. It must be one or neither.";
+                    // TODO: look into the Mark() function in YAML, which should(?) provide data about the line
+                    // number of the node
+      throw std::runtime_error(error_message.str());
+   }
+   else if (class_node_is_present)
+   {
+      result.set_name(node["class"].as<std::string>());
+      result.set_is_class(true);
+   }
+   else if (name_node_is_present)
+   {
+      result.set_name(node["name"].as<std::string>());
+   }
 
    // Extract the "type" value
    if (type_node_is_present) result.set_type(node["type"].as<std::string>());
