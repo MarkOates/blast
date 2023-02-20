@@ -96,6 +96,7 @@ bool EnumClass::has_class_name()
 void EnumClass::set_scope(std::string scope)
 {
    // NOTE: this validation is not assured when the value is set during construction
+   // TODO: add test for this method
    static std::set<std::string> valid_scopes = { "public", "private", "protected" };
    if (valid_scopes.count(scope) == 0)
    {
@@ -109,7 +110,8 @@ void EnumClass::set_scope(std::string scope)
 void EnumClass::set_type(std::string type)
 {
    // NOTE: this validation is not assured when the value is set during construction
-   static std::set<std::string> valid_types = { "int", "int16_t", "uint16_t", "int32_t", "uin32_t" };
+   // TODO: add test for this method
+   static std::set<std::string> valid_types = { "", "int", "int16_t", "uint16_t", "int32_t", "uint32_t" };
    if (valid_types.count(type) == 0)
    {
       // TODO: include incorrect type, and valid types in error message
@@ -117,6 +119,11 @@ void EnumClass::set_type(std::string type)
    }
    this->type = type;
    return;
+}
+
+bool EnumClass::has_type()
+{
+   return (!type.empty());
 }
 
 bool EnumClass::is_private()

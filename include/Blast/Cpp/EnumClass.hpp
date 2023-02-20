@@ -16,7 +16,7 @@ namespace Blast
          static constexpr const char* DEFAULT_CLASS_NAME = (char*)"";
          static constexpr const char* DEFAULT_NAME_OF_TO_STRING_METHOD = (char*)"to_string";
          static constexpr const char* DEFAULT_SCOPE = (char*)"private";
-         static constexpr const char* DEFAULT_TYPE = (char*)"uint32_t";
+         static constexpr const char* DEFAULT_TYPE = (char*)"";
 
       private:
          std::string class_name;
@@ -43,6 +43,7 @@ namespace Blast
          bool has_class_name();
          void set_scope(std::string scope="[unset-scope]");
          void set_type(std::string type="[unset-type]");
+         bool has_type();
          bool is_private();
          bool is_protected();
          bool is_public();

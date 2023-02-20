@@ -131,10 +131,10 @@ TEST(Blast_Cpp_EnumClassTest, type__is_set_to_DEFAULT_TYPE_by_default)
 }
 
 
-TEST(Blast_Cpp_EnumClassTest, DEFAULT_TYPE__has_the_expected_default_value_of_uint32_t)
+TEST(Blast_Cpp_EnumClassTest, DEFAULT_TYPE__has_the_expected_default_value_of_blank)
 {
    Blast::Cpp::EnumClass enum_class;
-   EXPECT_EQ("uint32_t", Blast::Cpp::EnumClass::DEFAULT_TYPE);
+   EXPECT_EQ("", Blast::Cpp::EnumClass::DEFAULT_TYPE);
 }
 
 

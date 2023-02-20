@@ -30,10 +30,11 @@ TEST(Blast_Cpp_EnumClassFormatterTest, build_definition__when_there_is_no_class_
 {
    Blast::Cpp::EnumClass enum_class;
    enum_class.set_enumerators({ "BIZ", "BAZ", "BUZ" });
+   enum_class.set_type("uint32_t");
 
    Blast::Cpp::EnumClassFormatter enum_class_formatter(enum_class);
    std::string expected_string =
-R"END(enum
+R"END(enum : uint32_t
 {
    BIZ = 0,
    BAZ,

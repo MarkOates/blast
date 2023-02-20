@@ -32,6 +32,11 @@ std::string EnumClassFormatter::build_enum_definition()
    {
       result << " class " << enum_class.get_class_name();
    }
+   // Only show ": type" if a type is present
+   if (enum_class.has_type())
+   {
+      result << " : " << enum_class.get_type();
+   }
 
    result << std::endl;
    result << "{" << std::endl;

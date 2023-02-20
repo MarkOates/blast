@@ -57,7 +57,7 @@ properties:
     constexpr: true
     static: true
     type: const char*
-    init_with: '(char*)"uint32_t"'
+    init_with: '(char*)""'
 
 
 documentation:
@@ -94,6 +94,7 @@ functions:
         default_argument: '"[unset-scope]"'
     body: |
       // NOTE: this validation is not assured when the value is set during construction
+      // TODO: add test for this method
       static std::set<std::string> valid_scopes = { "public", "private", "protected" };
       if (valid_scopes.count(scope) == 0)
       {
@@ -113,7 +114,8 @@ functions:
         default_argument: '"[unset-type]"'
     body: |
       // NOTE: this validation is not assured when the value is set during construction
-      static std::set<std::string> valid_types = { "int", "int16_t", "uint16_t", "int32_t", "uin32_t" };
+      // TODO: add test for this method
+      static std::set<std::string> valid_types = { "", "int", "int16_t", "uint16_t", "int32_t", "uint32_t" };
       if (valid_types.count(type) == 0)
       {
          // TODO: include incorrect type, and valid types in error message
@@ -123,6 +125,12 @@ functions:
       return;
     body_dependency_symbols:
       - std::set
+
+
+  - name: has_type
+    type: bool
+    body: |
+      return (!type.empty());
 
 
   - name: is_private
