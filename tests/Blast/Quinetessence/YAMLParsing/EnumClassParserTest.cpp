@@ -41,6 +41,15 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_class_is
 }
 
 
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_type_is_not_present__does_not_throw_an_error)
+{
+   std::string yaml_content = "enumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
+   enum_class_parser.parse();
+}
+
+
 TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_enumerators_are_not_present__throws_an_error)
 {
    std::string yaml_content = "class: \"FooBar\"\neyetems: [ FOO, FOE, FUM ]\n";
