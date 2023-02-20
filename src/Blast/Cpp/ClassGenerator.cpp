@@ -54,6 +54,23 @@ static void __replace(std::string &str, const std::string &find_str, const std::
 }
 
 
+static std::string __indent(int num_spaces, int indent_level, std::string non_split_line)
+{
+   std::stringstream result;
+   std::vector<std::string> indented_results;
+
+   std::stringstream indented_result;
+   std::vector<std::string> tokens = split(non_split_line, '\n');
+   for (auto &token : tokens)
+   {
+      indented_result << std::string(3*indent_level, ' ') << token << '\n';
+   }
+   indented_results.push_back(indented_result.str());
+
+   return __join(indented_results, "\n");
+}
+
+
 namespace Blast
 {
 
@@ -636,33 +653,43 @@ std::string ClassGenerator::public_function_declarations(int indent_level)
 }
 
 
-//////////// start
 std::string ClassGenerator::private_enum_class_declarations(int indent_level)
 {
+   // TODO: add tests for these, including indentation
    std::stringstream result;
    for (auto &private_enum_class_declaration_element : private_enum_class_declaration_elements())
-      result << std::string(3*indent_level, ' ') << private_enum_class_declaration_element;
+   {
+      //result << std::string(3*indent_level, ' ') << private_enum_class_declaration_element;
+      result << __indent(3, indent_level, private_enum_class_declaration_element);
+   }
    return result.str();
 }
 
 
 std::string ClassGenerator::protected_enum_class_declarations(int indent_level)
 {
+   // TODO: add tests for these, including indentation
    std::stringstream result;
    for (auto &protected_enum_class_declaration_element : protected_enum_class_declaration_elements())
-      result << std::string(3*indent_level, ' ') << protected_enum_class_declaration_element;
+   {
+      //result << std::string(3*indent_level, ' ') << protected_enum_class_declaration_element;
+      result << __indent(3, indent_level, protected_enum_class_declaration_element);
+   }
    return result.str();
 }
 
 
 std::string ClassGenerator::public_enum_class_declarations(int indent_level)
 {
+   // TODO: add tests for these, including indentation
    std::stringstream result;
    for (auto &public_enum_class_declaration_element : public_enum_class_declaration_elements())
-      result << std::string(3*indent_level, ' ') << public_enum_class_declaration_element;
+   {
+      //result << std::string(3*indent_level, ' ') << public_enum_class_declaration_element;
+      result << __indent(3, indent_level, public_enum_class_declaration_element);
+   }
    return result.str();
 }
-//////////// end
 
 
 std::string ClassGenerator::function_definitions(int indent_level)
