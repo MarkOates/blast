@@ -12,6 +12,11 @@ functions:
 
   - name: build_enum_definition
     type: std::string
+    parameters:
+      - name: indent_num_spaces
+        type: int
+        default_argument: 3
+    guards: [ (indent_num_spaces >= 0) ]
     body: |
       std::stringstream result;
       result << "enum";
@@ -37,7 +42,7 @@ functions:
       bool is_first_item = true;
       for (auto &item : enum_class.get_enumerators())
       {
-         result << "   " << item;
+         result << std::string(indent_num_spaces, ' ') << item;
          if (is_first_item)
          {
             result << " = 0";

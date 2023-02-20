@@ -21,7 +21,7 @@ namespace Blast
          EnumClassFormatter(Blast::Cpp::EnumClass enum_class={});
          ~EnumClassFormatter();
 
-         std::string build_enum_definition();
+         std::string build_enum_definition(int indent_num_spaces=3);
       };
    }
 }

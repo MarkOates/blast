@@ -2,7 +2,9 @@
 
 #include <Blast/Cpp/EnumClassFormatter.hpp>
 
+#include <iostream>
 #include <sstream>
+#include <stdexcept>
 
 
 namespace Blast
@@ -22,8 +24,15 @@ EnumClassFormatter::~EnumClassFormatter()
 }
 
 
-std::string EnumClassFormatter::build_enum_definition()
+std::string EnumClassFormatter::build_enum_definition(int indent_num_spaces)
 {
+   if (!((indent_num_spaces >= 0)))
+   {
+      std::stringstream error_message;
+      error_message << "[EnumClassFormatter::build_enum_definition]: error: guard \"(indent_num_spaces >= 0)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("EnumClassFormatter::build_enum_definition: error: guard \"(indent_num_spaces >= 0)\" not met");
+   }
    std::stringstream result;
    result << "enum";
 
@@ -48,7 +57,7 @@ std::string EnumClassFormatter::build_enum_definition()
    bool is_first_item = true;
    for (auto &item : enum_class.get_enumerators())
    {
-      result << "   " << item;
+      result << std::string(indent_num_spaces, ' ') << item;
       if (is_first_item)
       {
          result << " = 0";
