@@ -22,6 +22,13 @@ properties:
     getter: true
     setter: false
 
+  - name: type
+    type: std::string
+    init_with: DEFAULT_TYPE
+    constructor_arg: true
+    getter: true
+    setter: false
+
   - name: name_of_to_string_method
     type: std::string
     init_with: DEFAULT_NAME_OF_TO_STRING_METHOD
@@ -45,6 +52,12 @@ properties:
     static: true
     type: const char*
     init_with: '(char*)"private"'
+
+  - name: DEFAULT_TYPE
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)"uint32_t"'
 
 
 documentation:
@@ -84,9 +97,29 @@ functions:
       static std::set<std::string> valid_scopes = { "public", "private", "protected" };
       if (valid_scopes.count(scope) == 0)
       {
+         // TODO: include incorrect type, and valid types in error message
          throw std::runtime_error("[Blast::Cpp::EnumClass::set_scope]: error: scope is invalid");
       }
       this->scope = scope;
+      return;
+    body_dependency_symbols:
+      - std::set
+
+
+  - name: set_type
+    parameters:
+      - name: type
+        type: std::string
+        default_argument: '"[unset-type]"'
+    body: |
+      // NOTE: this validation is not assured when the value is set during construction
+      static std::set<std::string> valid_types = { "int", "int16_t", "uint16_t", "int32_t", "uin32_t" };
+      if (valid_types.count(type) == 0)
+      {
+         // TODO: include incorrect type, and valid types in error message
+         throw std::runtime_error("[Blast::Cpp::EnumClass::set_type]: error: type is invalid");
+      }
+      this->type = type;
       return;
     body_dependency_symbols:
       - std::set

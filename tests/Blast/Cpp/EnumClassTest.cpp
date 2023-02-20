@@ -87,10 +87,17 @@ TEST(Blast_Cpp_EnumClassTest, has_class_name__returns_true_when_a_class_name_is_
 }
 
 
-TEST(Blast_Cpp_EnumClassTest, scope__is_set_to_the_default_value_by_default)
+TEST(Blast_Cpp_EnumClassTest, scope__is_set_to_DEFAULT_SCOPE_by_default)
 {
    Blast::Cpp::EnumClass enum_class;
    EXPECT_EQ(Blast::Cpp::EnumClass::DEFAULT_SCOPE, enum_class.get_scope());
+}
+
+
+TEST(Blast_Cpp_EnumClassTest, DEFAULT_SCOPE__has_the_expected_default_value_of_private)
+{
+   Blast::Cpp::EnumClass enum_class;
+   EXPECT_EQ("private", Blast::Cpp::EnumClass::DEFAULT_SCOPE);
 }
 
 
@@ -114,6 +121,20 @@ TEST(Blast_Cpp_EnumClassTest, is_public__returns_true_if_the_class_is_public)
    Blast::Cpp::EnumClass enum_class;
    enum_class.set_scope("public");
    EXPECT_EQ(true, enum_class.is_public());
+}
+
+
+TEST(Blast_Cpp_EnumClassTest, type__is_set_to_DEFAULT_TYPE_by_default)
+{
+   Blast::Cpp::EnumClass enum_class;
+   EXPECT_EQ(Blast::Cpp::EnumClass::DEFAULT_TYPE, enum_class.get_type());
+}
+
+
+TEST(Blast_Cpp_EnumClassTest, DEFAULT_TYPE__has_the_expected_default_value_of_uint32_t)
+{
+   Blast::Cpp::EnumClass enum_class;
+   EXPECT_EQ("uint32_t", Blast::Cpp::EnumClass::DEFAULT_TYPE);
 }
 
 

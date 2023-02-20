@@ -18,10 +18,11 @@ namespace Cpp
 {
 
 
-EnumClass::EnumClass(std::string class_name, std::vector<std::string> enumerators, std::string scope)
+EnumClass::EnumClass(std::string class_name, std::vector<std::string> enumerators, std::string scope, std::string type)
    : class_name(class_name)
    , enumerators(enumerators)
    , scope(scope)
+   , type(type)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
 {
 }
@@ -62,6 +63,12 @@ std::string EnumClass::get_scope() const
 }
 
 
+std::string EnumClass::get_type() const
+{
+   return type;
+}
+
+
 std::string EnumClass::get_name_of_to_string_method() const
 {
    return name_of_to_string_method;
@@ -92,9 +99,23 @@ void EnumClass::set_scope(std::string scope)
    static std::set<std::string> valid_scopes = { "public", "private", "protected" };
    if (valid_scopes.count(scope) == 0)
    {
+      // TODO: include incorrect type, and valid types in error message
       throw std::runtime_error("[Blast::Cpp::EnumClass::set_scope]: error: scope is invalid");
    }
    this->scope = scope;
+   return;
+}
+
+void EnumClass::set_type(std::string type)
+{
+   // NOTE: this validation is not assured when the value is set during construction
+   static std::set<std::string> valid_types = { "int", "int16_t", "uint16_t", "int32_t", "uin32_t" };
+   if (valid_types.count(type) == 0)
+   {
+      // TODO: include incorrect type, and valid types in error message
+      throw std::runtime_error("[Blast::Cpp::EnumClass::set_type]: error: type is invalid");
+   }
+   this->type = type;
    return;
 }
 
