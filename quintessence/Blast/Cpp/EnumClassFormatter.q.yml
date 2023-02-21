@@ -40,12 +40,13 @@ functions:
       result << std::endl;
       result << "{" << std::endl;
       bool is_first_item = true;
+      int start_from = enum_class.get_start_from();
       for (auto &item : enum_class.get_enumerators())
       {
          result << std::string(indent_num_spaces, ' ') << item;
          if (is_first_item)
          {
-            result << " = 0";
+            result << " = " << start_from;
             is_first_item = false;
          }
          result << ",";

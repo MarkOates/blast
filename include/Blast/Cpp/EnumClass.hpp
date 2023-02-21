@@ -24,13 +24,14 @@ namespace Blast
          std::string scope;
          std::string type;
          bool is_class;
+         int start_from;
          std::string name_of_to_string_method;
 
       protected:
 
 
       public:
-         EnumClass(std::string name=DEFAULT_CLASS_NAME, std::vector<std::string> enumerators={}, std::string scope=DEFAULT_SCOPE, std::string type=DEFAULT_TYPE, bool is_class=false);
+         EnumClass(std::string name=DEFAULT_CLASS_NAME, std::vector<std::string> enumerators={}, bool is_class=false);
          ~EnumClass();
 
          void set_name(std::string name);
@@ -41,11 +42,13 @@ namespace Blast
          std::string get_scope() const;
          std::string get_type() const;
          bool get_is_class() const;
+         int get_start_from() const;
          std::string get_name_of_to_string_method() const;
          void set_enumerators(std::vector<std::string> enumerators={});
          bool has_name();
          void set_scope(std::string scope="[unset-scope]");
          void set_type(std::string type="[unset-type]");
+         void set_start_from(int start_from=0);
          bool has_type();
          bool is_private();
          bool is_protected();

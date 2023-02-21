@@ -18,12 +18,13 @@ namespace Cpp
 {
 
 
-EnumClass::EnumClass(std::string name, std::vector<std::string> enumerators, std::string scope, std::string type, bool is_class)
+EnumClass::EnumClass(std::string name, std::vector<std::string> enumerators, bool is_class)
    : name(name)
    , enumerators(enumerators)
-   , scope(scope)
-   , type(type)
+   , scope(DEFAULT_SCOPE)
+   , type(DEFAULT_TYPE)
    , is_class(is_class)
+   , start_from(0)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
 {
 }
@@ -82,6 +83,12 @@ bool EnumClass::get_is_class() const
 }
 
 
+int EnumClass::get_start_from() const
+{
+   return start_from;
+}
+
+
 std::string EnumClass::get_name_of_to_string_method() const
 {
    return name_of_to_string_method;
@@ -131,6 +138,21 @@ void EnumClass::set_type(std::string type)
       throw std::runtime_error("[Blast::Cpp::EnumClass::set_type]: error: type is invalid");
    }
    this->type = type;
+   return;
+}
+
+void EnumClass::set_start_from(int start_from)
+{
+   if (!((start_from >= 0)))
+   {
+      std::stringstream error_message;
+      error_message << "[EnumClass::set_start_from]: error: guard \"(start_from >= 0)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("EnumClass::set_start_from: error: guard \"(start_from >= 0)\" not met");
+   }
+   // NOTE: this validation is not assured when the value is set during construction
+   // TODO: add test for this method
+   this->start_from = start_from;
    return;
 }
 

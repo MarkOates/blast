@@ -18,14 +18,12 @@ properties:
   - name: scope
     type: std::string
     init_with: DEFAULT_SCOPE
-    constructor_arg: true
     getter: true
     setter: false
 
   - name: type
     type: std::string
     init_with: DEFAULT_TYPE
-    constructor_arg: true
     getter: true
     setter: false
 
@@ -35,6 +33,12 @@ properties:
     constructor_arg: true
     getter: true
     setter: true
+
+  - name: start_from
+    type: int
+    init_with: 0
+    getter: true
+    setter: false
 
   - name: name_of_to_string_method
     type: std::string
@@ -132,6 +136,19 @@ functions:
       return;
     body_dependency_symbols:
       - std::set
+
+
+  - name: set_start_from
+    parameters:
+      - name: start_from
+        type: int
+        default_argument: 0
+    guards: [ (start_from >= 0) ]
+    body: |
+      // NOTE: this validation is not assured when the value is set during construction
+      // TODO: add test for this method
+      this->start_from = start_from;
+      return;
 
 
   - name: has_type

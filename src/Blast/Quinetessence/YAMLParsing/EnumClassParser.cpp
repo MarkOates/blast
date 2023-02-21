@@ -61,6 +61,20 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    if (name_node_is_present) validate_node_type(node, "name", YAML::NodeType::Scalar);
    bool type_node_is_present = (bool)node["type"];
    if (type_node_is_present) validate_node_type(node, "type", YAML::NodeType::Scalar);
+   bool start_from_node_is_present = (bool)node["start_from"];
+   if (start_from_node_is_present) validate_node_type(node, "start_from", YAML::NodeType::Scalar);
+   if (start_from_node_is_present)
+   {
+      if (!validate_node_has_unsigned_int_value(node, "start_from"))
+      {
+         std::stringstream error_message;
+         error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser::parse]: error: "
+                       << "An enum property \"start_from\" must be a valid number.";
+                       // TODO: look into the Mark() function in YAML, which shoutd(?) provide data about the line
+                       // number of the node
+         throw std::runtime_error(error_message.str());
+      }
+   }
 
    validate_presence_of_key(node, "enumerators");
    validate_node_type(node, "enumerators", YAML::NodeType::Sequence);
@@ -87,6 +101,9 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
 
    // Extract the "type" value
    if (type_node_is_present) result.set_type(node["type"].as<std::string>());
+
+   // Extract the "start_from" value
+   if (start_from_node_is_present) result.set_start_from(node["start_from"].as<int>());
 
    // Extract the "enumerators" elements
    std::vector<std::string> enum_enumerators;
@@ -135,6 +152,33 @@ bool EnumClassParser::validate_node_type(YAML::Node node, std::string key, YAML:
       throw std::runtime_error(error_message.str());
    }
    return false;
+}
+
+bool EnumClassParser::validate_node_has_unsigned_int_value(YAML::Node node, std::string key)
+{
+   if (!node[key].IsScalar()) return false;
+
+   std::string str = node[key].as<std::string>();
+
+   if (str.empty())
+   {
+      // An empty string is not a valid numerical string.
+      return false;
+   }
+   else if (str[0] == '0')
+   {
+      // A numerical string cannot start with 0 unless it is only 0.
+      if (str.length() == 1) return true;
+      return false;
+   }
+   for (const char c : str) {
+      if (!isdigit(c)) {
+        // If any character is not a digit, then the string is not a valid numerical string.
+        return false;
+      }
+   }
+
+   return true;
 }
 
 bool EnumClassParser::validate_elements_are_unique(std::vector<std::string> elements)

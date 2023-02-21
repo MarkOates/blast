@@ -14,11 +14,12 @@ TEST(Blast_Cpp_EnumClassFormatterTest, build_definition__returns_the_expected_re
 {
    Blast::Cpp::EnumClass enum_class("Foo", { "BIZ", "BAZ", "BUZ" });
    enum_class.set_is_class("true");
+   enum_class.set_start_from(42);
    Blast::Cpp::EnumClassFormatter enum_class_formatter(enum_class);
    std::string expected_string =
 R"END(enum class Foo
 {
-   BIZ = 0,
+   BIZ = 42,
    BAZ,
    BUZ,
 };
