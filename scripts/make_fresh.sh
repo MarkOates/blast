@@ -1,6 +1,21 @@
 #!/bin/sh
 
 
+#----- pre-core -----
+
+#- allegro
+#- yaml-cpp
+
+
+# Note: yaml-cpp on MSYS
+# git clone git@github.com:jbeder/yaml-cpp.git
+# cd yaml-cpp
+# mkdir build
+# cd build
+# cmake -G "MSYS Makefiles" ..
+# make
+
+
 #----- core -----
 
 
