@@ -295,11 +295,14 @@ functions:
        return true;
     body_dependency_symbols:
       - Blast::Errors
+      - std::any_of
 
 
 dependencies:
 
 
+  - symbol: std::any_of
+    header: [ algorithm ]
   - symbol: YAML::Node
     headers: [ yaml-cpp/yaml.h ]
   - symbol: YAML::NodeType::value

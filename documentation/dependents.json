@@ -272,6 +272,9 @@
   "std/filesystem/read_symlink": [
     "Blast/Project/SymlinkChecker"
   ],
+  "std/any_of": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  ],
   "YAML/Node": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
     "QuizYAMLLoader"
