@@ -302,7 +302,7 @@ dependencies:
 
 
   - symbol: std::any_of
-    header: [ algorithm ]
+    headers: [ algorithm ]
   - symbol: YAML::Node
     headers: [ yaml-cpp/yaml.h ]
   - symbol: YAML::NodeType::value

@@ -3,6 +3,7 @@
 #include <Blast/Quinetessence/YAMLParsing/EnumClassParser.hpp>
 
 #include <Blast/Errors.hpp>
+#include <algorithm>
 #include <stdexcept>
 #include <unordered_set>
 
