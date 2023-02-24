@@ -96,6 +96,8 @@ functions:
       result.set_enumerators(enum_enumerators);
 
       return result;
+    body_dependency_symbols:
+      - std::runtime_error
 
 
   - name: validate_presence_of_key
