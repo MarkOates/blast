@@ -62,7 +62,7 @@ source ./.zshrc
 cd ../union
 git pull
 
-# make allegro_flare
+# make blast
 cd ../blast
 git pull
 make clean && make programs -j8 && make && make clean && make programs -j8 && make
