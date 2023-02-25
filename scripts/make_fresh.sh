@@ -16,7 +16,12 @@
 # make
 
 
+
+
 #----- core -----
+
+
+#- validate git credentials
 
 
 #- dotfiles
