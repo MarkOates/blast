@@ -142,6 +142,15 @@ int main(int argc, char **argv)
       //success_message << "(cd " << destination_directory << "/" << generated_release_folder_name << " && rm -rdf " << project_testing_include_folder_name.str() << ")" << std::endl;
       success_message << "zip -r " << generated_source_release_zip_filename << " " << generated_release_folder_name << std::endl;
       success_message << std::endl;
+      success_message << "If you wish to upload the file to a bucked on google cloud, run the following command:" << std::endl;
+      success_message << "gcloud storage cp ~/Releases/" << generated_source_release_zip_filename << " gs://clubcatt-games-bucket/" << std::endl;
+      success_message << std::endl;
+      success_message << "Your zip release file should then be available on the web at:" << std::endl;
+      success_message << "https://storage.googleapis.com/clubcatt-games-bucket/" << generated_source_release_zip_filename << std::endl;
+      success_message << std::endl;
+      success_message << "For help setting up gcloud, then please reference me/installing_and_setting_up_google_cloud.md" << std::endl;
+      success_message << std::endl;
+      success_message << std::endl;
       success_message << std::endl;
       success_message << "===============================================" << std::endl;
       success_message << "==          Create a Binary Releases          ==" << std::endl;
