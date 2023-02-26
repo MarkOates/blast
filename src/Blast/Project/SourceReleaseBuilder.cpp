@@ -444,6 +444,9 @@ bool SourceReleaseBuilder::generate_source_release()
    generated_release_folder_name = "";
 
 
+   // TODO: validate destination folder does not already exist
+
+
 
    // options:
    bool validate_bin_programs_data_folder_from_source_exists = true;
