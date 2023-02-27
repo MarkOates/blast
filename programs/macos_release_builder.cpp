@@ -1428,12 +1428,12 @@ int main(int argc, char **argv)
       new ValidateCurl(),
       new ValidateUnzip(),
 
-      // TODO: validate README.md in source, validate source icon needed for icns file
-
-      // get copy of source release
+      // get copy of source release (either from copying the source release files or downloading)
       new CopySourceReleaseFilesForBuilding(), // if is local
       //new DownloadSourceReleaseFileForBuilding(),
       //new UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild(),
+
+      // validate README.md in source, validate source icon needed for icns file
       new ValidateSourceReadme(),
 
       // make a build from the source
