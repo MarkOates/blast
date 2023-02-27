@@ -118,6 +118,46 @@ TEST(Blast_SystemInfoTest, get_chip_kind__will_return_a_string_representing_the_
 }
 
 
+TEST(Blast_SystemInfoTest, is_apple_mac__will_return_true_if_the_current_machine_is_a_mac)
+{
+#if defined(_WIN32) || defined(_WIN64)
+   GTEST_SKIP() << "This test is not intended for Windows.";
+#endif
+   Blast::SystemInfo system_info;
+   EXPECT_EQ(true, system_info.is_apple_mac());
+}
+
+
+TEST(Blast_SystemInfoTest, is_apple_mac__will_return_false_if_the_current_machine_is_not_a_mac)
+{
+#if defined(_WIN32) || defined(_WIN64)
+   Blast::SystemInfo system_info;
+   EXPECT_EQ(false, system_info.is_apple_mac());
+#endif
+   GTEST_SKIP() << "This test is not intended for MacOS.";
+}
+
+
+TEST(Blast_SystemInfoTest, is_microsoft_windows__will_return_true_if_the_current_machine_is_a_windows_machine)
+{
+#if defined(_WIN32) || defined(_WIN64)
+   Blast::SystemInfo system_info;
+   EXPECT_EQ(true, system_info.is_microsoft_windows());
+#endif
+   GTEST_SKIP() << "This test is not intended for MacOS.";
+}
+
+
+TEST(Blast_SystemInfoTest, is_microsoft_windows__will_return_false_if_the_current_machine_is_not_a_windows_machine)
+{
+#if defined(_WIN32) || defined(_WIN64)
+   GTEST_SKIP() << "This test is not intended for Windows.";
+#endif
+   Blast::SystemInfo system_info;
+   EXPECT_EQ(false, system_info.is_microsoft_windows());
+}
+
+
 TEST(Blast_SystemInfoTest, operating_system__will_return_a_string_representing_the_os)
 {
    Blast::SystemInfo system_info;
