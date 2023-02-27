@@ -129,9 +129,17 @@ public:
       // concretion:
       //return (SYSTEM_RELEASES_FOLDER + "/" + release_folder_relative_to_system_releases_folder() + "/TheWeepingHouse.app/Contents/MacOS/" + NameGenerator::name_of_built_executable());
    }
+   static std::string full_path_to_temp_directory_for_zip_download()
+   {
+      return TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/";
+   }
    static std::string full_path_to_local_destination_of_downloaded_zip_file()
    {
       return TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + SOURCE_RELEASE_FOLDER_NAME + ".zip";
+   }
+   static std::string full_path_to_local_destination_of_unzipped_downloaded_zip_file_folder()
+   {
+      return TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + SOURCE_RELEASE_FOLDER_NAME;
    }
    static std::string full_url_of_file_to_download()
    {
@@ -527,16 +535,18 @@ public:
 
 
 // HERE:
-class UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild : public Blast::BuildSystem::BuildStages::Base
+class UnzipDownloadedSourceReleaseFile : public Blast::BuildSystem::BuildStages::Base
 {
 private:
    // TODO: Validate presence of ZIP file, see:
    //  - https://stackoverflow.com/questions/12199059/how-to-check-if-an-url-exists-with-the-shell-and-probably-curl
    //  - https://matthewsetter.com/check-if-file-is-available-with-curl/
+   // TODO: Validate zip file name is shell safe
    void execute_shell_commands()
    {
       std::stringstream shell_command;
-      shell_command << "unzip \"" << full_path_to_local_destination_of_downloaded_zip_file << "\" -d \"" << full_path_to_temp_directory_for_build << "\"";
+
+      shell_command << "unzip \"" << full_path_to_local_destination_of_downloaded_zip_file << "\" -d \"" <<  full_path_to_local_destination_for_downloading_zip_file << "\"";
       std::cout << shell_command.str() << std::endl;
       Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
       shell_command_result = shell_command_executor.execute();
@@ -546,16 +556,16 @@ private:
    }
 
 public:
-   static constexpr char* TYPE = (char*)"UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild";
+   static constexpr char* TYPE = (char*)"UnzipDownloadedSourceReleaseFile ";
    std::string full_path_to_local_destination_of_downloaded_zip_file;
-   std::string full_path_to_temp_directory_for_build;
+   std::string full_path_to_local_destination_for_downloading_zip_file;
    std::string shell_command_result;
    std::string shell_command_response_code;
 
-   UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild()
+   UnzipDownloadedSourceReleaseFile ()
       : Blast::BuildSystem::BuildStages::Base(TYPE)
       , full_path_to_local_destination_of_downloaded_zip_file(NameGenerator::full_path_to_local_destination_of_downloaded_zip_file())
-      , full_path_to_temp_directory_for_build(NameGenerator::full_path_of_temp_location())
+      , full_path_to_local_destination_for_downloading_zip_file(NameGenerator::full_path_to_temp_directory_for_zip_download())
       , shell_command_result()
       , shell_command_response_code()
    {}
@@ -568,6 +578,50 @@ public:
    }
 };
 
+
+   //static std::string full_path_to_local_destination_of_unzipped_downloaded_zip_file_folder()
+
+
+
+
+class CopyUnzippedSourceReleaseFilesToTemporaryDirectoryForBuild : public Blast::BuildSystem::BuildStages::Base
+{
+private:
+   void execute_shell_commands()
+   {
+      //TODO: require '/' character at end of "name_of_unzipped_source_release_files_folder"
+      std::stringstream shell_command;
+      shell_command << "cp -R \"" << name_of_unzipped_source_release_files_folder << "\"/* \"" << name_of_temp_location_to_build << "\"";
+      std::cout << shell_command.str() << std::endl;
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      shell_command_result = shell_command_executor.execute();
+
+      Blast::ShellCommandExecutorWithCallback shell_command_executor2("echo $?");
+      shell_command_response_code = shell_command_executor2.execute();
+   }
+
+public:
+   static constexpr char* TYPE = (char*)"CopyUnzippedSourceReleaseFilesToTemporaryDirectoryForBuild";
+   std::string name_of_unzipped_source_release_files_folder;
+   std::string name_of_temp_location_to_build;
+   std::string shell_command_result;
+   std::string shell_command_response_code;
+
+   CopyUnzippedSourceReleaseFilesToTemporaryDirectoryForBuild()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+      , name_of_unzipped_source_release_files_folder(NameGenerator::full_path_to_local_destination_of_unzipped_downloaded_zip_file_folder())
+      , name_of_temp_location_to_build(NameGenerator::full_path_of_temp_location())
+      , shell_command_result()
+      , shell_command_response_code()
+   {}
+
+   virtual bool execute() override
+   {
+      execute_shell_commands();
+      if (shell_command_response_code == "0\n") return true;
+      return false;
+   }
+};
 
 
 
@@ -1429,33 +1483,34 @@ int main(int argc, char **argv)
       new ValidateUnzip(),
 
       // get copy of source release (either from copying the source release files or downloading)
-      new CopySourceReleaseFilesForBuilding(), // if is local
-      //new DownloadSourceReleaseFileForBuilding(),
-      //new UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild(),
+      //new CopySourceReleaseFilesForBuilding(), // if is local
+      new DownloadSourceReleaseFileForBuilding(),
+      new UnzipDownloadedSourceReleaseFile(),
+      new CopyUnzippedSourceReleaseFilesToTemporaryDirectoryForBuild(),
 
       // validate README.md in source, validate source icon needed for icns file
       new ValidateSourceReadme(),
 
       // make a build from the source
-      new BuildFromSourceInTempFolder(),
-      new ValidatePresenceOfBuiltExecutable(),
+      //new BuildFromSourceInTempFolder(),
+      //new ValidatePresenceOfBuiltExecutable(),
 
-      // Make the app package
-      // TODO: copy the source's app icon png into the temp location to build the icns file
-      new CopySourceAppIconPngToTempFolder(),
-      new BuildAppIcons(),
-      new ValidatePresenceOfIcnsFile(),
-      new CreateFoldersForReleaseAndAppPackage(),
-      new CreateInfoDotPlistFile(),
-      new CopyBuiltBinaryToAppPackage(),
-      new CopyDataFolderToAppPackage(),
-      new CopyIcnsFileToAppPackage(),
-      new CopyReadmeFileToRelaseFolder(),
-      new DetectPresenceOfExtendedAttributesAndRemoveIfPresent(),
-      new BuildAndBundleDylibsWithAppPackage(), // TODO: this process can error but it will not report an error
+      //// Make the app package
+      //// TODO: copy the source's app icon png into the temp location to build the icns file
+      //new CopySourceAppIconPngToTempFolder(),
+      //new BuildAppIcons(),
+      //new ValidatePresenceOfIcnsFile(),
+      //new CreateFoldersForReleaseAndAppPackage(),
+      //new CreateInfoDotPlistFile(),
+      //new CopyBuiltBinaryToAppPackage(),
+      //new CopyDataFolderToAppPackage(),
+      //new CopyIcnsFileToAppPackage(),
+      //new CopyReadmeFileToRelaseFolder(),
+      //new DetectPresenceOfExtendedAttributesAndRemoveIfPresent(),
+      //new BuildAndBundleDylibsWithAppPackage(), // TODO: this process can error but it will not report an error
 
-      // Zip it up and prepare it for launch
-      new CreateZipFromReleaseFolder(),
+      //// Zip it up and prepare it for launch
+      //new CreateZipFromReleaseFolder(),
    });
    build->run();
    //parallel_build->run_all_in_parallel();
