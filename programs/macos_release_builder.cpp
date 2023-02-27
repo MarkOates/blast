@@ -1195,8 +1195,8 @@ int main(int argc, char **argv)
    //std::filesystem::path temporary_directory1 = create_temporary_directory();
    //std::filesystem::path temporary_directory2 = create_temporary_directory();
 
-   TEMP_DIRECTORY_FOR_BUILD = create_temporary_directory();
-   TEMP_DIRECTORY_FOR_ICON = create_temporary_directory();
+   TEMP_DIRECTORY_FOR_BUILD = create_temporary_directory().string();
+   TEMP_DIRECTORY_FOR_ICON = create_temporary_directory().string();
 
    std::cout << "=== TEMP_DIRECTORY_FOR_BUILD ===" << std::endl;
    std::cout << TEMP_DIRECTORY_FOR_BUILD << std::endl;
