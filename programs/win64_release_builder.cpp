@@ -1,11 +1,20 @@
 #include <allegro5/allegro.h> // for compatibility with union/Makefile
 
 #include <iostream>
+#include <sstream>
 
 #include <Blast/BuildSystem/BuildFactory.hpp>
 #include <Blast/BuildSystem/ReportRenderer.hpp>
 #include <Blast/BuildSystem/BuildStages/Base.hpp>
 #include <Blast/FileExistenceChecker.hpp>
+#include <Blast/ShellCommandExecutorWithCallback.hpp>
+
+
+
+
+std::string BUILD_WIN64_SCRIPT_FULL_PATH;
+std::string BUILD_WIN64_SCRIPT_TARGET_IDENTIFIER;
+
 
 
 class ValidateBuildWin64ReleaseScript : public Blast::BuildSystem::BuildStages::Base
@@ -16,7 +25,7 @@ public:
 
    ValidateBuildWin64ReleaseScript()
       : Blast::BuildSystem::BuildStages::Base(TYPE)
-      , full_path_to_script("/msys64/home/Mark/Repos/blast/scripts/build_win64_release.sh")
+      , full_path_to_script(BUILD_WIN64_SCRIPT_FULL_PATH)
    {}
 
    virtual bool execute() override
@@ -24,6 +33,40 @@ public:
       // TODO: execute the shell command
       if (Blast::FileExistenceChecker(full_path_to_script).exists()) return true;
       return false;
+   }
+};
+
+
+
+
+class ExecuteBuildWin64ReleaseScript : public Blast::BuildSystem::BuildStages::Base
+{
+private:
+   std::string get_result_of_shell_execution()
+   {
+      std::stringstream shell_command;
+      shell_command << full_path_to_script << " " << script_arg;
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      return shell_command_executor.execute();
+   }
+
+public:
+   static constexpr char* TYPE = (char*)"ExecuteBuildWin64ReleaseScript";
+   std::string full_path_to_script;
+   std::string script_arg;
+
+   ExecuteBuildWin64ReleaseScript()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+      , full_path_to_script(BUILD_WIN64_SCRIPT_FULL_PATH)
+      , script_arg(BUILD_WIN64_SCRIPT_TARGET_IDENTIFIER)
+   {}
+
+   virtual bool execute() override
+   {
+      //std::string match_expression = "\nThe first form lists the names of all xattrs on the given"; // a line from the help file
+      std::string output_string = get_result_of_shell_execution();
+      //if (!ExpressionMatcher(match_expression, actual_string).matches()) return false;
+      return true;
    }
 };
 
@@ -50,15 +93,20 @@ int main(int argc, char **argv)
       std::cout << std::endl;
       std::cout << execution_name << " KrampusReturns-SourceRelease-230101031610UTC" << std::endl;
       std::cout << std::endl;
-      std::cout << std::endl;
       return 1;
    }
+
+
+   BUILD_WIN64_SCRIPT_FULL_PATH = "/msys64/home/Mark/Repos/blast/scripts/build_win64_release.sh";
+   BUILD_WIN64_SCRIPT_TARGET_IDENTIFIER = name_of_source_release;
+
 
 
    Blast::BuildSystem::BuildStageFactory build_stage_factory;
    Blast::BuildSystem::Builds::Base *build = new Blast::BuildSystem::Builds::Base;
    build->set_build_stages({
       new ValidateBuildWin64ReleaseScript(),
+      new ExecuteBuildWin64ReleaseScript(),
    });
    build->run();
    //parallel_build->run_all_in_parallel();

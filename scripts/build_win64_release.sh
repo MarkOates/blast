@@ -28,7 +28,8 @@ fi
 
 SOURCE_URL="https://storage.googleapis.com/clubcatt-games-bucket/$1.zip";
 # SOURCE_URL="https://drive.google.com/uc?export=download&id=$SOURCE_TOKEN";
-TEMP_BUILD_DIR="/c/Users/Mark/Desktop/temp_location_for_building/"
+# TEMP_BUILD_DIR="/c/Users/Mark/Desktop/temp_location_for_building/"
+TEMP_BUILD_DIR="/home/Mark/Releases/"
 FOOBAR="$1.zip"
 FOOBAR_WITHOUT_ZIP="$1"
 SOURCE_FOLDER_NAME="$1"
