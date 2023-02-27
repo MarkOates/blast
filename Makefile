@@ -334,6 +334,13 @@ focus:
 
 
 
+version:
+	@git log --format="%H" -n 1
+	@git log -1 --pretty=format:%h
+	@git log -1 --format=%cd
+
+
+
 fast:
 	make clean
 	make quintessences -j8
