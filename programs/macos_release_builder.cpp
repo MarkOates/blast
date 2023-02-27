@@ -1397,7 +1397,7 @@ int main(int argc, char **argv)
       std::cout << "Oops! This program is not intended to be run on a non-mac machine." << std::endl;
       std::cout << "The Blast::SystemInfo detected that this is a non-MacOS system" << std::endl;
       std::cout << "" << std::endl;
-      std::cout << "   Expecting: Darwin" << std::endl;
+      std::cout << "   Expecting: " << Blast::SystemInfo::MACOS_SYSNAME << std::endl;
       std::cout << "         Got: " << system_info.get_sysname() << std::endl;
       std::cout << std::endl;
       return 1;
