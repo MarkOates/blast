@@ -16,7 +16,7 @@ current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 PROJECT_LIB_NAME=mylibrary
 VERSION_NUMBER=0.0.1
-## This is a temporary hack to have union/Makefile build with allegro_flare
+## This is a temporary hack to have blast/Makefile build with allegro_flare
 ifeq ($(OS),Windows_NT)
 	LIBS_ROOT=/home/Mark/Repos
 	ASIO_LIBS_ROOT=$(LIBS_ROOT)
