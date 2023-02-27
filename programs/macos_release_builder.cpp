@@ -173,6 +173,7 @@ std::string NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG; // "/Users/markoates/Re
 std::string NameGenerator::TEMP_DIRECTORY_FOR_BUILD; // auto-generated, different each run
 std::string NameGenerator::TEMP_DIRECTORY_FOR_ICON; // auto-generated, different each run
 std::string NameGenerator::TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD; // auto-generated, different each run
+std::string NameGenerator::CHIP_NAME; // "x86", "intel", "arm", currently is "unknown-chip", tho
 
 
 
