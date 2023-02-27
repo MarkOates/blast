@@ -73,6 +73,7 @@ public:
    static std::string FULL_VERSION_NUMBER_WITH_BUILD; // "1.0.0.3"
    static std::string VERSION_NUMBER; // "1.0.0"
    static std::string FULL_PATH_TO_SOURCE_ICON_PNG; // "/Users/markoates/Releases/TheWeepingHouse-SourceRelease-220903200818UTC/data/system/allegro-flare-generic-icon-1024.png"
+   static std::string CHIP_NAME; // "x86", "intel"
 
 
    //static std::string FULL_URL_OF_FILE_TO_DOWNLOAD;
@@ -96,7 +97,7 @@ public:
    static std::string app_package_executable_name() { return NameGenerator::NAME_OF_EXECUTABLE; }
    static std::string app_package_folder_name() { return NameGenerator::NAME_OF_EXECUTABLE + ".app"; }
    static std::string full_path_to_copied_source_icns_file() { return NameGenerator::TEMP_DIRECTORY_FOR_ICON + "/" + source_icon_filename(); }
-   static std::string release_folder_relative_to_system_releases_folder() { return NameGenerator::NAME_OF_EXECUTABLE + "-MacOS-chip_unknown"; }
+   static std::string release_folder_relative_to_system_releases_folder() { return NameGenerator::NAME_OF_EXECUTABLE + "-MacOS-" + NameGenerator::CHIP_NAME; }
    static std::string full_path_to_result_info_dot_plist_file()
    {
       return SYSTEM_RELEASES_FOLDER + "/" + release_folder_relative_to_system_releases_folder() + "/" + NAME_OF_EXECUTABLE + ".app/Contents/Info.plist";
@@ -1457,6 +1458,7 @@ int main(int argc, char **argv)
    NameGenerator::TEMP_DIRECTORY_FOR_BUILD = TEMP_DIRECTORY_FOR_BUILD;
    NameGenerator::TEMP_DIRECTORY_FOR_ICON = TEMP_DIRECTORY_FOR_ICON;
    NameGenerator::TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD = TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD;
+   NameGenerator::CHIP_NAME = "unknown_chip";
 
 
 
@@ -1482,8 +1484,12 @@ int main(int argc, char **argv)
       new ValidateCurl(),
       new ValidateUnzip(),
 
-      // get copy of source release (either from copying the source release files or downloading)
-      //new CopySourceReleaseFilesForBuilding(), // if is local
+      // get copy of source release (either from copying the source release files or downloading)...
+
+      // ... this is an option if is local:
+      //new CopySourceReleaseFilesForBuilding(),
+
+      // ... this is the option if it's remote
       new DownloadSourceReleaseFileForBuilding(),
       new UnzipDownloadedSourceReleaseFile(),
       new CopyUnzippedSourceReleaseFilesToTemporaryDirectoryForBuild(),
@@ -1492,25 +1498,25 @@ int main(int argc, char **argv)
       new ValidateSourceReadme(),
 
       // make a build from the source
-      //new BuildFromSourceInTempFolder(),
-      //new ValidatePresenceOfBuiltExecutable(),
+      new BuildFromSourceInTempFolder(),
+      new ValidatePresenceOfBuiltExecutable(),
 
-      //// Make the app package
-      //// TODO: copy the source's app icon png into the temp location to build the icns file
-      //new CopySourceAppIconPngToTempFolder(),
-      //new BuildAppIcons(),
-      //new ValidatePresenceOfIcnsFile(),
-      //new CreateFoldersForReleaseAndAppPackage(),
-      //new CreateInfoDotPlistFile(),
-      //new CopyBuiltBinaryToAppPackage(),
-      //new CopyDataFolderToAppPackage(),
-      //new CopyIcnsFileToAppPackage(),
-      //new CopyReadmeFileToRelaseFolder(),
-      //new DetectPresenceOfExtendedAttributesAndRemoveIfPresent(),
-      //new BuildAndBundleDylibsWithAppPackage(), // TODO: this process can error but it will not report an error
+      // Make the app package
+      // TODO: copy the source's app icon png into the temp location to build the icns file
+      new CopySourceAppIconPngToTempFolder(),
+      new BuildAppIcons(),
+      new ValidatePresenceOfIcnsFile(),
+      new CreateFoldersForReleaseAndAppPackage(),
+      new CreateInfoDotPlistFile(),
+      new CopyBuiltBinaryToAppPackage(),
+      new CopyDataFolderToAppPackage(),
+      new CopyIcnsFileToAppPackage(),
+      new CopyReadmeFileToRelaseFolder(),
+      new DetectPresenceOfExtendedAttributesAndRemoveIfPresent(),
+      new BuildAndBundleDylibsWithAppPackage(), // TODO: this process can error but it will not report an error
 
-      //// Zip it up and prepare it for launch
-      //new CreateZipFromReleaseFolder(),
+      // Zip it up and prepare it for launch
+      new CreateZipFromReleaseFolder(),
    });
    build->run();
    //parallel_build->run_all_in_parallel();
