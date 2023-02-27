@@ -1,0 +1,48 @@
+parent_classes:
+
+
+  - class: Blast::BuildSystem::BuildStageRenderers::Base
+    scope: public
+    init_with: Blast::BuildSystem::BuildStageRenderers::ShellCommand::TYPE
+
+
+properties:
+
+
+  - name: TYPE
+    type: char*
+    static: true
+    init_with: '"ShellCommand"'
+    constexpr: true
+
+  - name: shell_command_build_stage
+    type: Blast::BuildSystem::BuildStages::ShellCommand*
+    constructor_arg: true
+    init_with: nullptr
+    setter: true
+
+
+functions:
+
+
+  - name: render_text
+    type: std::string
+    virtual: true
+    override: true
+    body: |
+      std::stringstream result;
+      result << "  - Command: " << shell_command_build_stage->get_shell_command() << std::endl;
+      return result.str();
+    body_dependency_symbols:
+      - std::stringstream
+
+
+dependencies:
+
+
+  - symbol: Blast::BuildSystem::BuildStageRenderers::Base
+    headers: [ Blast/BuildSystem/BuildStageRenderers/Base.hpp ]
+  - symbol: Blast::BuildSystem::BuildStages::ShellCommand
+    headers: [ Blast/BuildSystem/BuildStages/ShellCommand.hpp ]
+
+

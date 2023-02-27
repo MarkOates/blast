@@ -1,0 +1,181 @@
+properties:
+
+  - name: TYPE
+    type: char*
+    static: true
+    init_with: '(char*)"Base"'
+    constexpr: true
+
+  - name: type
+    type: std::string
+    init_with: TYPE
+    constructor_arg: true
+    getter: true
+
+  - name: started_at
+    type: std::chrono::system_clock::time_point
+    init_with: ''
+    getter: explicit
+    setter: false
+
+  - name: mutex_for_started_at
+    type: std::mutex
+    init_with: ''
+
+  - name: ended_at
+    type: std::chrono::system_clock::time_point
+    init_with: ''
+    getter: explicit
+    setter: false
+
+  - name: mutex_for_ended_at
+    type: std::mutex
+    init_with: ''
+
+  - name: status
+    type: std::string
+    init_with: '"[unset-status]"'
+    getter: explicit
+    setter: false
+
+  - name: mutex_for_status
+    type: std::mutex
+    init_with: ''
+
+  - name: STATUS_WAITING_TO_START
+    type: char*
+    static: true
+    init_with: '(char*)"waiting_to_start"'
+    constexpr: true
+    const: true
+
+  - name: STATUS_RUNNING
+    type: char*
+    static: true
+    init_with: '(char*)"running"'
+    constexpr: true
+    const: true
+
+  - name: STATUS_SUCCEEDED
+    type: char*
+    static: true
+    init_with: '(char*)"succeeded"'
+    constexpr: true
+    const: true
+
+  - name: STATUS_ERROR
+    type: char*
+    static: true
+    init_with: '(char*)"error"'
+    constexpr: true
+    const: true
+
+  - name: STATUS_FAILED
+    type: char*
+    static: true
+    init_with: '(char*)"failed"'
+    constexpr: true
+    const: true
+
+
+
+functions:
+
+
+  - name: get_status
+    type: std::string
+    body: |
+      std::string result;
+      mutex_for_status.lock();
+      result = status;
+      mutex_for_status.unlock();
+      return result;
+
+
+  - name: set_status
+    parameters:
+      - name: status
+        type: std::string
+        default_argument: '"[unset-status]"'
+    body: |
+      mutex_for_status.lock();
+      this->status = status;
+      mutex_for_status.unlock();
+      return;
+
+
+  - name: get_started_at
+    type: std::chrono::system_clock::time_point
+    body: |
+      std::chrono::system_clock::time_point result;
+      mutex_for_started_at.lock();
+      result = started_at;
+      mutex_for_started_at.unlock();
+      return result;
+
+
+  - name: set_started_at
+    parameters:
+      - name: started_at
+        type: std::chrono::system_clock::time_point
+        default_argument: ''
+    body: |
+      mutex_for_started_at.lock();
+      this->started_at = started_at;
+      mutex_for_started_at.unlock();
+
+
+  - name: get_ended_at
+    type: std::chrono::system_clock::time_point
+    body: |
+      std::chrono::system_clock::time_point result;
+      mutex_for_ended_at.lock();
+      result = ended_at;
+      mutex_for_ended_at.unlock();
+      return result;
+
+
+  - name: set_ended_at
+    parameters:
+      - name: ended_at
+        type: std::chrono::system_clock::time_point
+        default_argument: ''
+    body: |
+      mutex_for_ended_at.lock();
+      this->ended_at = ended_at;
+      mutex_for_ended_at.unlock();
+
+
+  - name: is_type
+    type: bool
+    parameters:
+      - name: possible_type
+        type: std::string
+        default_argument: '""'
+    body: |
+      return (possible_type == get_type());
+
+
+  - name: execute
+    type: bool
+    virtual: true
+    body: |
+      return true;
+
+
+  - name: calc_duration_seconds
+    type: double
+    body: |
+      std::chrono::duration<double> elapsed_seconds = get_ended_at() - get_started_at();
+      return elapsed_seconds.count();
+
+
+dependencies:
+
+
+  - symbol: std::chrono::system_clock::time_point
+    headers: [ chrono ]
+  - symbol: std::mutex
+    headers: [ mutex ]
+
+

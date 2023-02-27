@@ -1,0 +1,66 @@
+properties:
+
+
+  - name: build_stage
+    type: Blast::BuildSystem::BuildStages::Base*
+    init_with: nullptr
+    constructor_arg: true
+    getter: true
+    setter: true
+
+
+functions:
+
+
+  - name: build_text_report
+    type: std::string
+    guards: [ build_stage ]
+    body: |
+      std::string result;
+
+      if (build_stage->is_type(Blast::BuildSystem::BuildStages::Base::TYPE))
+      {
+        // do nothing for this case
+      }
+      else if (build_stage->is_type(Blast::BuildSystem::BuildStages::ShellCommand::TYPE))
+      {
+         Blast::BuildSystem::BuildStages::ShellCommand* typed_build_stage =
+            dynamic_cast<Blast::BuildSystem::BuildStages::ShellCommand*>(build_stage);
+
+         Blast::BuildSystem::BuildStageRenderers::ShellCommand renderer;
+         renderer.set_shell_command_build_stage(typed_build_stage);
+
+         result = renderer.render_text();
+      }
+      else
+      {
+         std::stringstream error_message;
+         error_message << "Cannot build report that is of unknown type \"" << build_stage->get_type() << "\".";
+         std::cout << Blast::Errors::build_error_message(
+            "Blast::BuildSystem::BuildStageRenderer::build_text_report()",
+            error_message.str()
+         );
+         //throw std::runtime_error(error_message.str());
+      }
+
+      return result;
+    body_dependency_symbols:
+      - std::cout
+      - Blast::BuildSystem::BuildStageRenderers::Base
+      - Blast::BuildSystem::BuildStageRenderers::ShellCommand
+      - Blast::Errors
+
+
+dependencies:
+
+
+  - symbol: Blast::BuildSystem::BuildStageRenderers::Base
+    headers: [ Blast/BuildSystem/BuildStageRenderers/Base.hpp ]
+  - symbol: Blast::BuildSystem::BuildStageRenderers::ShellCommand
+    headers: [ Blast/BuildSystem/BuildStageRenderers/ShellCommand.hpp ]
+  - symbol: Blast::BuildSystem::BuildStages::Base
+    headers: [ Blast/BuildSystem/BuildStages/Base.hpp ]
+  - symbol: Blast::Errors
+    headers: [ Blast/Errors.hpp ]
+
+

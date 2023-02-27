@@ -52,6 +52,16 @@ table td
   <li><a href="#quintessence/ASCIICharacterRenderer.q.yml">quintessence/ASCIICharacterRenderer.q.yml</a></li>
   <li><a href="#quintessence/Blast/BinaryObfusicator.q.yml">quintessence/Blast/BinaryObfusicator.q.yml</a></li>
   <li><a href="#quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/BuildFactory.q.yml">quintessence/Blast/BuildSystem/BuildFactory.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/BuildStageFactory.q.yml">quintessence/Blast/BuildSystem/BuildStageFactory.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/BuildStageRenderer.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderer.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/BuildStageRenderers/Base.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderers/Base.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/BuildStageRenderers/ShellCommand.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderers/ShellCommand.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/BuildStages/Base.q.yml">quintessence/Blast/BuildSystem/BuildStages/Base.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/BuildStages/ShellCommand.q.yml">quintessence/Blast/BuildSystem/BuildStages/ShellCommand.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/Builds/Base.q.yml">quintessence/Blast/BuildSystem/Builds/Base.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/ReportRenderer.q.yml">quintessence/Blast/BuildSystem/ReportRenderer.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildSystem/ReportRenderers/Base.q.yml">quintessence/Blast/BuildSystem/ReportRenderers/Base.q.yml</a></li>
   <li><a href="#quintessence/Blast/CamelCaseToConstantConverter.q.yml">quintessence/Blast/CamelCaseToConstantConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</a></li>
   <li><a href="#quintessence/Blast/Cpp/EnumClass.q.yml">quintessence/Blast/Cpp/EnumClass.q.yml</a></li>
@@ -191,6 +201,417 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::size_t&quot;, &quot;headers&quot;=&gt;[&quot;cstddef&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/BuildFactory.q.yml">quintessence/Blast/BuildSystem/BuildFactory.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">build_stage_factory</td>
+  <td class="property">Blast::BuildSystem::BuildStageFactory</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">create_placeholder_build()</td>
+</tr>
+<tr>
+  <td class="method">create_shell_command_build(std::string shell_command=&quot;echo \&quot;Having a good day?\&quot;&quot;)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStageFactory&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStageFactory.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::Builds::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/Builds/Base.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/BuildStageFactory.q.yml">quintessence/Blast/BuildSystem/BuildStageFactory.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">create_shell_command_build_stage(std::string shell_command=&quot;echo \&quot;Hi friend\&quot;&quot;)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStages::ShellCommand&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStages/ShellCommand.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/BuildStageRenderer.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderer.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">build_stage</td>
+  <td class="property">Blast::BuildSystem::BuildStages::Base*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">build_text_report()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStageRenderers::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStageRenderers/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStageRenderers::ShellCommand&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStageRenderers/ShellCommand.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStages::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStages/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/BuildStageRenderers/Base.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderers/Base.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">type</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">render_text()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;std::vector&lt;std::string&gt;&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;string&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;char*&quot;, &quot;headers&quot;=&gt;[]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/BuildStageRenderers/ShellCommand.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderers/ShellCommand.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">shell_command_build_stage</td>
+  <td class="property">Blast::BuildSystem::BuildStages::ShellCommand*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">render_text()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStageRenderers::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStageRenderers/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStages::ShellCommand&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStages/ShellCommand.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/BuildStages/Base.q.yml">quintessence/Blast/BuildSystem/BuildStages/Base.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">type</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">started_at</td>
+  <td class="property">std::chrono::system_clock::time_point</td>
+</tr>
+<tr>
+  <td class="property">mutex_for_started_at</td>
+  <td class="property">std::mutex</td>
+</tr>
+<tr>
+  <td class="property">ended_at</td>
+  <td class="property">std::chrono::system_clock::time_point</td>
+</tr>
+<tr>
+  <td class="property">mutex_for_ended_at</td>
+  <td class="property">std::mutex</td>
+</tr>
+<tr>
+  <td class="property">status</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">mutex_for_status</td>
+  <td class="property">std::mutex</td>
+</tr>
+<tr>
+  <td class="property">STATUS_WAITING_TO_START</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">STATUS_RUNNING</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">STATUS_SUCCEEDED</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">STATUS_ERROR</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">STATUS_FAILED</td>
+  <td class="property">char*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">get_status()</td>
+</tr>
+<tr>
+  <td class="method">set_status(std::string status=&quot;[unset-status]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">get_started_at()</td>
+</tr>
+<tr>
+  <td class="method">set_started_at(std::chrono::system_clock::time_point started_at=)</td>
+</tr>
+<tr>
+  <td class="method">get_ended_at()</td>
+</tr>
+<tr>
+  <td class="method">set_ended_at(std::chrono::system_clock::time_point ended_at=)</td>
+</tr>
+<tr>
+  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">execute()</td>
+</tr>
+<tr>
+  <td class="method">calc_duration_seconds()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::chrono::system_clock::time_point&quot;, &quot;headers&quot;=&gt;[&quot;chrono&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::mutex&quot;, &quot;headers&quot;=&gt;[&quot;mutex&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/BuildStages/ShellCommand.q.yml">quintessence/Blast/BuildSystem/BuildStages/ShellCommand.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">shell_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">shell_command_result</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">executed</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">execute()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStages::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStages/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ShellCommandExecutorWithCallback&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ShellCommandExecutorWithCallback.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;char*&quot;, &quot;headers&quot;=&gt;[]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/Builds/Base.q.yml">quintessence/Blast/BuildSystem/Builds/Base.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">type</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">build_stages</td>
+  <td class="property">std::vector&lt;Blast::BuildSystem::BuildStages::Base*&gt;</td>
+</tr>
+<tr>
+  <td class="property">started_at</td>
+  <td class="property">std::chrono::system_clock::time_point</td>
+</tr>
+<tr>
+  <td class="property">ended_at</td>
+  <td class="property">std::chrono::system_clock::time_point</td>
+</tr>
+<tr>
+  <td class="property">status</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">STATUS_WAITING_TO_START</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">STATUS_RUNNING</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">STATUS_FINISHED</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">STATUS_ERROR</td>
+  <td class="property">char*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">run()</td>
+</tr>
+<tr>
+  <td class="method">build_stage_executor(Blast::BuildSystem::BuildStages::Base* build_stage=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">run_all_in_parallel()</td>
+</tr>
+<tr>
+  <td class="method">infer_duration_seconds()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::thread&quot;, &quot;headers&quot;=&gt;[&quot;thread&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::chrono::system_clock::time_point&quot;, &quot;headers&quot;=&gt;[&quot;chrono&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStages::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStages/Base.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/ReportRenderer.q.yml">quintessence/Blast/BuildSystem/ReportRenderer.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">build</td>
+  <td class="property">Blast::BuildSystem::Builds::Base*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">build_text_report()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::ReportRenderers::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/ReportRenderers/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::Builds::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/Builds/Base.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildSystem/ReportRenderers/Base.q.yml">quintessence/Blast/BuildSystem/ReportRenderers/Base.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">TYPE</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
+  <td class="property">type</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">build</td>
+  <td class="property">Blast::BuildSystem::Builds::Base*</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">render_text()</td>
+</tr>
+<tr>
+  <td class="method">colorize_status(std::string status=&quot;[unset-status]&quot;)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStageRenderer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStageRenderer.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStages::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStages/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::Builds::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/Builds/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -2435,6 +2856,8 @@ table td
   ],
   "char": [
     "ASCIICharacterRenderer",
+    "Blast/BuildSystem/BuildStageRenderers/Base",
+    "Blast/BuildSystem/BuildStages/ShellCommand",
     "Blast/StringSplitter",
     "StringSplitter"
   ],
@@ -2449,6 +2872,66 @@ table td
   ],
   "std/size_t": [
     "Blast/Build/Celebrator"
+  ],
+  "Blast/BuildSystem/BuildStageFactory": [
+    "Blast/BuildSystem/BuildFactory"
+  ],
+  "Blast/BuildSystem/Builds/Base": [
+    "Blast/BuildSystem/BuildFactory",
+    "Blast/BuildSystem/ReportRenderer",
+    "Blast/BuildSystem/ReportRenderers/Base"
+  ],
+  "Blast/BuildSystem/BuildStages/ShellCommand": [
+    "Blast/BuildSystem/BuildStageFactory",
+    "Blast/BuildSystem/BuildStageRenderers/ShellCommand"
+  ],
+  "Blast/BuildSystem/BuildStageRenderers/Base": [
+    "Blast/BuildSystem/BuildStageRenderer",
+    "Blast/BuildSystem/BuildStageRenderers/ShellCommand"
+  ],
+  "Blast/BuildSystem/BuildStageRenderers/ShellCommand": [
+    "Blast/BuildSystem/BuildStageRenderer"
+  ],
+  "Blast/BuildSystem/BuildStages/Base": [
+    "Blast/BuildSystem/BuildStageRenderer",
+    "Blast/BuildSystem/BuildStages/ShellCommand",
+    "Blast/BuildSystem/Builds/Base",
+    "Blast/BuildSystem/ReportRenderers/Base"
+  ],
+  "Blast/Errors": [
+    "Blast/BuildSystem/BuildStageRenderer",
+    "Blast/BuildSystem/ReportRenderers/Base",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  ],
+  "std/vector<std/vector<std/string>>": [
+    "Blast/BuildSystem/BuildStageRenderers/Base"
+  ],
+  "std/chrono/system_clock/time_point": [
+    "Blast/BuildSystem/BuildStages/Base",
+    "Blast/BuildSystem/Builds/Base"
+  ],
+  "std/mutex": [
+    "Blast/BuildSystem/BuildStages/Base"
+  ],
+  "Blast/ShellCommandExecutorWithCallback": [
+    "Blast/BuildSystem/BuildStages/ShellCommand",
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ProgramLister",
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Project/SymlinkChecker",
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/thread": [
+    "Blast/BuildSystem/Builds/Base"
+  ],
+  "Blast/BuildSystem/ReportRenderers/Base": [
+    "Blast/BuildSystem/ReportRenderer"
+  ],
+  "Blast/BuildSystem/BuildStageRenderer": [
+    "Blast/BuildSystem/ReportRenderers/Base"
   ],
   "std/transform": [
     "Blast/CamelCaseToConstantConverter",
@@ -2614,15 +3097,6 @@ table td
   "Blast/Project/component_fragment_t": [
     "Blast/Project/ComponentLister"
   ],
-  "Blast/ShellCommandExecutorWithCallback": [
-    "Blast/Project/ComponentLister",
-    "Blast/Project/ProgramLister",
-    "Blast/Project/ProjectSymlinkFixer",
-    "Blast/Project/SourceReleaseBuilder",
-    "Blast/Project/SymlinkChecker",
-    "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher"
-  ],
   "Blast/Project/ComponentBasenameExtractor": [
     "Blast/Project/ComponentLister"
   ],
@@ -2671,10 +3145,6 @@ table td
   ],
   "Blast/TimeStamper": [
     "Blast/Project/SourceReleaseBuilder"
-  ],
-  "Blast/Errors": [
-    "Blast/Project/SourceReleaseBuilder",
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
   ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker"

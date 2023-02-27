@@ -1,0 +1,61 @@
+parent_classes:
+
+
+  - class: Blast::BuildSystem::BuildStages::Base
+    scope: public
+    init_with: Blast::BuildSystem::BuildStages::ShellCommand::TYPE
+
+
+properties:
+
+
+  - name: TYPE
+    type: char*
+    static: true
+    init_with: '(char*)"ShellCommand"'
+    constexpr: true
+
+  - name: shell_command
+    type: std::string
+    init_with: '"echo \"hello, shell command.\""'
+    constructor_arg: true
+    getter: true
+
+  - name: shell_command_result
+    type: std::string
+    init_with: '""'
+    getter: true
+
+  - name: executed
+    type: bool
+    init_with: false
+
+
+functions:
+
+
+  - name: execute
+    type: bool
+    virtual: true
+    override: true
+    guards: [ (!executed) ]
+    body: |
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command);
+      shell_command_result = shell_command_executor.execute();
+      executed = true;
+      return true;
+    body_dependency_symbols:
+      - Blast::ShellCommandExecutorWithCallback
+
+
+dependencies:
+
+
+  - symbol: Blast::BuildSystem::BuildStages::Base
+    headers: [ Blast/BuildSystem/BuildStages/Base.hpp ]
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: char*
+    headers: [ ]
+
+

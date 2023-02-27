@@ -22,6 +22,8 @@
   ],
   "char": [
     "ASCIICharacterRenderer",
+    "Blast/BuildSystem/BuildStageRenderers/Base",
+    "Blast/BuildSystem/BuildStages/ShellCommand",
     "Blast/StringSplitter",
     "StringSplitter"
   ],
@@ -36,6 +38,66 @@
   ],
   "std/size_t": [
     "Blast/Build/Celebrator"
+  ],
+  "Blast/BuildSystem/BuildStageFactory": [
+    "Blast/BuildSystem/BuildFactory"
+  ],
+  "Blast/BuildSystem/Builds/Base": [
+    "Blast/BuildSystem/BuildFactory",
+    "Blast/BuildSystem/ReportRenderer",
+    "Blast/BuildSystem/ReportRenderers/Base"
+  ],
+  "Blast/BuildSystem/BuildStages/ShellCommand": [
+    "Blast/BuildSystem/BuildStageFactory",
+    "Blast/BuildSystem/BuildStageRenderers/ShellCommand"
+  ],
+  "Blast/BuildSystem/BuildStageRenderers/Base": [
+    "Blast/BuildSystem/BuildStageRenderer",
+    "Blast/BuildSystem/BuildStageRenderers/ShellCommand"
+  ],
+  "Blast/BuildSystem/BuildStageRenderers/ShellCommand": [
+    "Blast/BuildSystem/BuildStageRenderer"
+  ],
+  "Blast/BuildSystem/BuildStages/Base": [
+    "Blast/BuildSystem/BuildStageRenderer",
+    "Blast/BuildSystem/BuildStages/ShellCommand",
+    "Blast/BuildSystem/Builds/Base",
+    "Blast/BuildSystem/ReportRenderers/Base"
+  ],
+  "Blast/Errors": [
+    "Blast/BuildSystem/BuildStageRenderer",
+    "Blast/BuildSystem/ReportRenderers/Base",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  ],
+  "std/vector<std/vector<std/string>>": [
+    "Blast/BuildSystem/BuildStageRenderers/Base"
+  ],
+  "std/chrono/system_clock/time_point": [
+    "Blast/BuildSystem/BuildStages/Base",
+    "Blast/BuildSystem/Builds/Base"
+  ],
+  "std/mutex": [
+    "Blast/BuildSystem/BuildStages/Base"
+  ],
+  "Blast/ShellCommandExecutorWithCallback": [
+    "Blast/BuildSystem/BuildStages/ShellCommand",
+    "Blast/Project/ComponentLister",
+    "Blast/Project/ProgramLister",
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Project/SymlinkChecker",
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher"
+  ],
+  "std/thread": [
+    "Blast/BuildSystem/Builds/Base"
+  ],
+  "Blast/BuildSystem/ReportRenderers/Base": [
+    "Blast/BuildSystem/ReportRenderer"
+  ],
+  "Blast/BuildSystem/BuildStageRenderer": [
+    "Blast/BuildSystem/ReportRenderers/Base"
   ],
   "std/transform": [
     "Blast/CamelCaseToConstantConverter",
@@ -201,15 +263,6 @@
   "Blast/Project/component_fragment_t": [
     "Blast/Project/ComponentLister"
   ],
-  "Blast/ShellCommandExecutorWithCallback": [
-    "Blast/Project/ComponentLister",
-    "Blast/Project/ProgramLister",
-    "Blast/Project/ProjectSymlinkFixer",
-    "Blast/Project/SourceReleaseBuilder",
-    "Blast/Project/SymlinkChecker",
-    "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher"
-  ],
   "Blast/Project/ComponentBasenameExtractor": [
     "Blast/Project/ComponentLister"
   ],
@@ -258,10 +311,6 @@
   ],
   "Blast/TimeStamper": [
     "Blast/Project/SourceReleaseBuilder"
-  ],
-  "Blast/Errors": [
-    "Blast/Project/SourceReleaseBuilder",
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
   ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker"

@@ -1,0 +1,23 @@
+functions:
+
+
+  - name: create_shell_command_build_stage
+    type: Blast::BuildSystem::BuildStages::ShellCommand*
+    parameters:
+      - name: shell_command
+        type: std::string
+        default_argument: '"echo \"Hi friend\""'
+    body: |
+      //std::string shell_command = "echo \"Hi friend\"";
+      Blast::BuildSystem::BuildStages::ShellCommand* build_stage =
+         new Blast::BuildSystem::BuildStages::ShellCommand(shell_command);
+      return build_stage;
+
+
+dependencies:
+
+
+  - symbol: Blast::BuildSystem::BuildStages::ShellCommand
+    headers: [ Blast/BuildSystem/BuildStages/ShellCommand.hpp ]
+
+

@@ -1,0 +1,49 @@
+properties:
+
+
+  - name: build_stage_factory
+    type: Blast::BuildSystem::BuildStageFactory
+    init_with: '{}'
+
+
+functions:
+
+
+  - name: create_placeholder_build
+    type: Blast::BuildSystem::Builds::Base*
+    body: |
+      Blast::BuildSystem::Builds::Base *build = new Blast::BuildSystem::Builds::Base;
+      build->set_build_stages({
+         build_stage_factory.create_shell_command_build_stage(),
+         build_stage_factory.create_shell_command_build_stage("echo \"Having a good day?\""),
+      });
+      return build;
+    body_dependency_symbols:
+      - Blast::BuildSystem::BuildStageFactory
+
+
+  - name: create_shell_command_build
+    type: Blast::BuildSystem::Builds::Base*
+    parameters:
+      - name: shell_command
+        type: std::string
+        default_argument: '"echo \"Having a good day?\""'
+    body: |
+      Blast::BuildSystem::Builds::Base *build = new Blast::BuildSystem::Builds::Base;
+      build->set_build_stages({
+         build_stage_factory.create_shell_command_build_stage(shell_command),
+      });
+      return build;
+    body_dependency_symbols:
+      - std::stringstream
+      - Blast::BuildSystem::BuildStageFactory
+
+
+dependencies:
+
+
+  - symbol: Blast::BuildSystem::BuildStageFactory
+    headers: [ Blast/BuildSystem/BuildStageFactory.hpp ]
+  - symbol: Blast::BuildSystem::Builds::Base
+    headers: [ Blast/BuildSystem/Builds/Base.hpp ]
+
