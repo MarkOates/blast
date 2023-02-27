@@ -47,7 +47,7 @@ std::string SystemInfo::get_sysname()
 bool SystemInfo::is_apple_mac()
 {
    // TODO: find a way to test this
-   return get_sysname() == "Darwin";
+   return get_sysname() == MACOS_SYSNAME;
 }
 
 bool SystemInfo::is_microsoft_windows()

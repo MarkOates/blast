@@ -9,6 +9,9 @@ namespace Blast
 {
    class SystemInfo
    {
+   public:
+      static constexpr char* MACOS_SYSNAME = (char*)"Darwin";
+
    private:
 
    protected:

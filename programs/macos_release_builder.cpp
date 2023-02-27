@@ -14,6 +14,7 @@
 #include <Blast/BuildSystem/ReportRenderer.hpp>
 #include <iostream>
 #include <sstream>
+#include <Blast/SystemInfo.hpp>
 
 
 
@@ -1388,6 +1389,21 @@ std::filesystem::path create_temporary_directory(unsigned long long max_tries = 
 
 int main(int argc, char **argv)
 {
+   Blast::SystemInfo system_info;
+
+   if (!system_info.is_apple_mac())
+   {
+      std::cout << std::endl;
+      std::cout << "Oops! This program is not intended to be run on a non-mac machine." << std::endl;
+      std::cout << "The Blast::SystemInfo detected that this is a non-MacOS system" << std::endl;
+      std::cout << "" << std::endl;
+      std::cout << "   Expecting: Darwin" << std::endl;
+      std::cout << "         Got: " << system_info.get_sysname() << std::endl;
+      std::cout << std::endl;
+      return 1;
+   }
+
+
    std::vector<std::string> args;
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
 
@@ -1409,7 +1425,7 @@ int main(int argc, char **argv)
       std::cout << std::endl;
       std::cout << "./bin/programs/builds/macos_release_builder TheWeepingHouse TheWeepingHouse-SourceRelease-221209191155UTC" << std::endl;
       std::cout << std::endl;
-      return 1;
+      return 2;
    }
 
    std::cout << "Building with the folowing information:" << std::endl;

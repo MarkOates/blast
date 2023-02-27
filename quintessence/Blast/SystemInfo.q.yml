@@ -1,3 +1,14 @@
+properties:
+
+
+  - name: MACOS_SYSNAME
+    type: char*
+    static: true
+    const: true
+    init_with: '(char*)"Darwin"'
+    constexpr: true
+
+
 functions:
 
 
@@ -39,7 +50,7 @@ functions:
     type: bool
     body: |
       // TODO: find a way to test this
-      return get_sysname() == "Darwin";
+      return get_sysname() == MACOS_SYSNAME;
 
 
   - name: is_microsoft_windows
