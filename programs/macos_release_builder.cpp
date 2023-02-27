@@ -58,6 +58,7 @@ std::string trim(std::string str)
 
 std::string TEMP_DIRECTORY_FOR_BUILD = "";
 std::string TEMP_DIRECTORY_FOR_ICON = "";
+std::string TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD = "";
 
 
 
@@ -74,8 +75,13 @@ public:
    static std::string FULL_PATH_TO_SOURCE_ICON_PNG; // "/Users/markoates/Releases/TheWeepingHouse-SourceRelease-220903200818UTC/data/system/allegro-flare-generic-icon-1024.png"
 
 
+   //static std::string FULL_URL_OF_FILE_TO_DOWNLOAD;
+
+
+
    static std::string TEMP_DIRECTORY_FOR_BUILD; // is generated
    static std::string TEMP_DIRECTORY_FOR_ICON;  // is generated
+   static std::string TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD;  // is generated
 
 
    static std::string source_release_folder_name() { return NameGenerator::SOURCE_RELEASE_FOLDER_NAME; }
@@ -123,6 +129,16 @@ public:
       // concretion:
       //return (SYSTEM_RELEASES_FOLDER + "/" + release_folder_relative_to_system_releases_folder() + "/TheWeepingHouse.app/Contents/MacOS/" + NameGenerator::name_of_built_executable());
    }
+   static std::string full_path_to_local_destination_of_downloaded_zip_file()
+   {
+      return TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + SOURCE_RELEASE_FOLDER_NAME + ".zip";
+   }
+   static std::string full_url_of_file_to_download()
+   {
+      //return TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + SOURCE_RELEASE_FOLDER_NAME + ".zip";
+      return "https://storage.googleapis.com/clubcatt-games-bucket/" + SOURCE_RELEASE_FOLDER_NAME + ".zip";
+   }
+
 
    // some example concretions:
    //static std::string release_folder_relative_to_system_releases_folder() { return "TheWeepingHouse-MacOS-chip_unknown"; }
@@ -147,7 +163,11 @@ std::string NameGenerator::VERSION_NUMBER; // "1.0.0"
 std::string NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG; // "/Users/markoates/Releases/TheWeepingHouse-SourceRelease-220903200818UTC/data/system/allegro-flare-generic-icon-1024.png"
 std::string NameGenerator::TEMP_DIRECTORY_FOR_BUILD; // auto-generated, different each run
 std::string NameGenerator::TEMP_DIRECTORY_FOR_ICON; // auto-generated, different each run
+std::string NameGenerator::TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD; // auto-generated, different each run
 
+
+
+//std::string NameGenerator::FULL_URL_OF_FILE_TO_DOWNLOAD;
 
 
 
@@ -459,49 +479,48 @@ public:
 };
 
 
-//class DownloadSourceReleaseFileForBuilding : public Blast::BuildSystem::BuildStages::Base
-//{
-//private:
-   //void execute_shell_commands()
-   //{
-      ////TODO: require '/' character at end of "name_of_source_folder"
-      //std::stringstream shell_command;
-      //shell_command << "curl -L -o \"" << name_of_source_folder << "\"/* \"" << name_of_temp_location_to_build << "\"";
-      //std::cout << shell_command.str() << std::endl;
-      //Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
-      //shell_command_result = shell_command_executor.execute();
-
-      //Blast::ShellCommandExecutorWithCallback shell_command_executor2("echo $?");
-      //shell_command_response_code = shell_command_executor2.execute();
-   //}
-
-//public:
-   //static constexpr char* TYPE = (char*)"DownloadSourceReleaseFileForBuilding";
-   //std::string name_of_source_folder;
-   //std::string name_of_temp_location_to_build;
-   //std::string shell_command_result;
-   //std::string shell_command_response_code;
-
-   //DownloadSourceReleaseFileForBuilding()
-      //: Blast::BuildSystem::BuildStages::Base(TYPE)
-      //, name_of_source_folder(NameGenerator::full_path_of_source_release_folder())
-      //, name_of_temp_location_to_build(NameGenerator::full_path_of_temp_location())
-      //, shell_command_result()
-      //, shell_command_response_code()
-   //{}
-
-   //virtual bool execute() override
-   //{
-      //execute_shell_commands();
-      //if (shell_command_response_code == "0\n") return true;
-      //return false;
-   //}
-//};
 
 
+class DownloadSourceReleaseFileForBuilding : public Blast::BuildSystem::BuildStages::Base
+{
+private:
+   // TODO: Validate presence of ZIP file, see:
+   //  - https://stackoverflow.com/questions/12199059/how-to-check-if-an-url-exists-with-the-shell-and-probably-curl
+   //  - https://matthewsetter.com/check-if-file-is-available-with-curl/
+   void execute_shell_commands()
+   {
+      std::stringstream shell_command;
+      shell_command << "curl -L -o \"" << full_path_to_local_destination_of_downloaded_zip_file << "\" \"" << full_url_of_file_to_download << "\"";
+      std::cout << shell_command.str() << std::endl;
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      shell_command_result = shell_command_executor.execute();
 
+      Blast::ShellCommandExecutorWithCallback shell_command_executor2("echo $?");
+      shell_command_response_code = shell_command_executor2.execute();
+   }
 
+public:
+   static constexpr char* TYPE = (char*)"DownloadSourceReleaseFileForBuilding";
+   std::string full_path_to_local_destination_of_downloaded_zip_file;
+   std::string full_url_of_file_to_download;
+   std::string shell_command_result;
+   std::string shell_command_response_code;
 
+   DownloadSourceReleaseFileForBuilding()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+      , full_path_to_local_destination_of_downloaded_zip_file(NameGenerator::full_path_to_local_destination_of_downloaded_zip_file())
+      , full_url_of_file_to_download(NameGenerator::full_url_of_file_to_download())
+      , shell_command_result()
+      , shell_command_response_code()
+   {}
+
+   virtual bool execute() override
+   {
+      execute_shell_commands();
+      if (shell_command_response_code == "0\n") return true;
+      return false;
+   }
+};
 
 
 
@@ -1300,11 +1319,17 @@ int main(int argc, char **argv)
 
    TEMP_DIRECTORY_FOR_BUILD = create_temporary_directory().string();
    TEMP_DIRECTORY_FOR_ICON = create_temporary_directory().string();
+   TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD = create_temporary_directory().string();
+
+
+
 
    std::cout << "=== TEMP_DIRECTORY_FOR_BUILD ===" << std::endl;
    std::cout << TEMP_DIRECTORY_FOR_BUILD << std::endl;
    std::cout << "=== TEMP_DIRECTORY_FOR_ICON ===" << std::endl;
    std::cout << TEMP_DIRECTORY_FOR_ICON << std::endl;
+   std::cout << "=== TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD ===" << std::endl;
+   std::cout << TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD << std::endl;
 
 
 
@@ -1330,8 +1355,14 @@ int main(int argc, char **argv)
    //NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG = "/Users/markoates/Releases/" + NameGenerator::SOURCE_RELEASE_FOLDER_NAME + "/data/system/allegro-flare-generic-icon-1024.png";
    NameGenerator::TEMP_DIRECTORY_FOR_BUILD = TEMP_DIRECTORY_FOR_BUILD;
    NameGenerator::TEMP_DIRECTORY_FOR_ICON = TEMP_DIRECTORY_FOR_ICON;
+   NameGenerator::TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD = TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD;
 
 
+
+   // HERE:::
+   // TODO: assign this:
+   //NameGenerator::FULL_PATH_TO_LOCAL_DESTINATION_OF_ZIP_FILE = TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + arg_source_release_older_name + ".zip"
+   //NameGenerator::FULL_URL_OF_FILE_TO_DOWNLOAD;
 
 
 
@@ -1354,7 +1385,7 @@ int main(int argc, char **argv)
 
       // get copy of source release
       new CopySourceReleaseFilesForBuilding(),
-      //new DownloadSourceReleaseFileForBuilding(),
+      new DownloadSourceReleaseFileForBuilding(),
       new ValidateSourceReadme(),
 
       // make a build from the source
