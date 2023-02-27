@@ -402,6 +402,35 @@ public:
 
 
 
+class ValidateUnzip : public Blast::BuildSystem::BuildStages::Base
+{
+private:
+   std::string get_result_of_shell_execution()
+   {
+      std::stringstream shell_command;
+      shell_command << "unzip -v";
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      return shell_command_executor.execute();
+   }
+
+public:
+   static constexpr char* TYPE = (char*)"ValidateUnzip";
+
+   ValidateUnzip()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+   {}
+
+   virtual bool execute() override
+   {
+      std::string match_expression = "^UnZip [0-9]+.[0-9]+ of [0-9]+ ";
+      std::string actual_string = get_result_of_shell_execution();
+      if (!ExpressionMatcher(match_expression, actual_string).matches()) return false;
+      return true;
+   }
+};
+
+
+
 class ValidateCurl : public Blast::BuildSystem::BuildStages::Base
 {
 private:
@@ -430,14 +459,14 @@ public:
 };
 
 
-//class DownloadSourceReleaseFilesForBuilding : public Blast::BuildSystem::BuildStages::Base
+//class DownloadSourceReleaseFileForBuilding : public Blast::BuildSystem::BuildStages::Base
 //{
 //private:
    //void execute_shell_commands()
    //{
       ////TODO: require '/' character at end of "name_of_source_folder"
       //std::stringstream shell_command;
-      //shell_command << "cp -R \"" << name_of_source_folder << "\"/* \"" << name_of_temp_location_to_build << "\"";
+      //shell_command << "curl -L -o \"" << name_of_source_folder << "\"/* \"" << name_of_temp_location_to_build << "\"";
       //std::cout << shell_command.str() << std::endl;
       //Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
       //shell_command_result = shell_command_executor.execute();
@@ -447,13 +476,13 @@ public:
    //}
 
 //public:
-   //static constexpr char* TYPE = (char*)"DownloadSourceReleaseFilesForBuilding";
+   //static constexpr char* TYPE = (char*)"DownloadSourceReleaseFileForBuilding";
    //std::string name_of_source_folder;
    //std::string name_of_temp_location_to_build;
    //std::string shell_command_result;
    //std::string shell_command_response_code;
 
-   //DownloadSourceReleaseFilesForBuilding()
+   //DownloadSourceReleaseFileForBuilding()
       //: Blast::BuildSystem::BuildStages::Base(TYPE)
       //, name_of_source_folder(NameGenerator::full_path_of_source_release_folder())
       //, name_of_temp_location_to_build(NameGenerator::full_path_of_temp_location())
@@ -1319,11 +1348,13 @@ int main(int argc, char **argv)
       new ValidateSips(),
       new ValidateZip(),
       new ValidateCurl(),
+      new ValidateUnzip(),
 
-      // // TODO: validate README.md in source, validate source icon needed for icns file
+      // TODO: validate README.md in source, validate source icon needed for icns file
 
       // get copy of source release
       new CopySourceReleaseFilesForBuilding(),
+      //new DownloadSourceReleaseFileForBuilding(),
       new ValidateSourceReadme(),
 
       // make a build from the source
