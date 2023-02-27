@@ -12,13 +12,17 @@ if [ $# -ne 1 ]; then
     echo ""
     echo "Example:"
     echo ""
-    echo "./scripts/build_win64_release.sh <expected-folder-name-inside-the-zip>"
+    echo "    ./scripts/build_win64_release.sh <expected-folder-name-inside-the-zip>"
     echo ""
     echo "Example 2:"
     echo ""
-    echo "./scripts/build_win64_release.sh CubeShooter-SourceRelease-230226193517UTC"
+    echo "    ./scripts/build_win64_release.sh CubeShooter-SourceRelease-230226193517UTC"
     echo ""
-    echo "NOTE: Releases can be found at https://storage.googleapis.com/clubcatt-games-bucket/"
+    echo ""
+    echo "NOTE: Releases can be found at:"
+    echo ""
+    echo "https://storage.googleapis.com/clubcatt-games-bucket/"
+    echo ""
     exit 1
 fi
 
