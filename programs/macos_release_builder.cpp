@@ -402,6 +402,80 @@ public:
 
 
 
+class ValidateCurl : public Blast::BuildSystem::BuildStages::Base
+{
+private:
+   std::string get_result_of_shell_execution()
+   {
+      std::stringstream shell_command;
+      shell_command << "curl --version";
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      return shell_command_executor.execute();
+   }
+
+public:
+   static constexpr char* TYPE = (char*)"ValidateCurl";
+
+   ValidateCurl()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+   {}
+
+   virtual bool execute() override
+   {
+      std::string match_expression = "^curl [0-9]+.[0-9]+.[0-9]+ ";
+      std::string actual_string = get_result_of_shell_execution();
+      if (!ExpressionMatcher(match_expression, actual_string).matches()) return false;
+      return true;
+   }
+};
+
+
+//class DownloadSourceReleaseFilesForBuilding : public Blast::BuildSystem::BuildStages::Base
+//{
+//private:
+   //void execute_shell_commands()
+   //{
+      ////TODO: require '/' character at end of "name_of_source_folder"
+      //std::stringstream shell_command;
+      //shell_command << "cp -R \"" << name_of_source_folder << "\"/* \"" << name_of_temp_location_to_build << "\"";
+      //std::cout << shell_command.str() << std::endl;
+      //Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      //shell_command_result = shell_command_executor.execute();
+
+      //Blast::ShellCommandExecutorWithCallback shell_command_executor2("echo $?");
+      //shell_command_response_code = shell_command_executor2.execute();
+   //}
+
+//public:
+   //static constexpr char* TYPE = (char*)"DownloadSourceReleaseFilesForBuilding";
+   //std::string name_of_source_folder;
+   //std::string name_of_temp_location_to_build;
+   //std::string shell_command_result;
+   //std::string shell_command_response_code;
+
+   //DownloadSourceReleaseFilesForBuilding()
+      //: Blast::BuildSystem::BuildStages::Base(TYPE)
+      //, name_of_source_folder(NameGenerator::full_path_of_source_release_folder())
+      //, name_of_temp_location_to_build(NameGenerator::full_path_of_temp_location())
+      //, shell_command_result()
+      //, shell_command_response_code()
+   //{}
+
+   //virtual bool execute() override
+   //{
+      //execute_shell_commands();
+      //if (shell_command_response_code == "0\n") return true;
+      //return false;
+   //}
+//};
+
+
+
+
+
+
+
+
 
 class CopySourceReleaseFilesForBuilding : public Blast::BuildSystem::BuildStages::Base
 {
@@ -1236,7 +1310,7 @@ int main(int argc, char **argv)
    Blast::BuildSystem::BuildStageFactory build_stage_factory;
    Blast::BuildSystem::Builds::Base *build = new Blast::BuildSystem::Builds::Base;
    build->set_build_stages({
-      new CopySourceAppIconPngToTempFolder(),
+      //new CopySourceAppIconPngToTempFolder(),
 
       // validate these are present
       new ValidateDylibBundlerVersion(),
@@ -1244,6 +1318,7 @@ int main(int argc, char **argv)
       new ValidateIconutil(),
       new ValidateSips(),
       new ValidateZip(),
+      new ValidateCurl(),
 
       // // TODO: validate README.md in source, validate source icon needed for icns file
 
