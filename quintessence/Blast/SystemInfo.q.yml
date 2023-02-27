@@ -47,8 +47,8 @@ functions:
     body: |
       // TODO: find a way to test this
       std::string sysname = get_sysname();
-      std::string expected_start_of_string = "Windows";
-      bool starts_with_expected_string = (sysname.compare(0, sysname.length(), expected_start_of_string) == 0);
+      std::string starts_with_string = "Windows";
+      bool starts_with_expected_string = (sysname.compare(0, starts_with_string.length(), starts_with_string) == 0);
       return starts_with_expected_string;
 
 
