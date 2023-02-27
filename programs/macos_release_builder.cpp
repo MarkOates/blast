@@ -1475,7 +1475,7 @@ int main(int argc, char **argv)
    NameGenerator::TEMP_DIRECTORY_FOR_BUILD = TEMP_DIRECTORY_FOR_BUILD;
    NameGenerator::TEMP_DIRECTORY_FOR_ICON = TEMP_DIRECTORY_FOR_ICON;
    NameGenerator::TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD = TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD;
-   NameGenerator::CHIP_NAME = "unknown_chip";
+   NameGenerator::CHIP_NAME = system_info.get_processor_type();
 
 
 
