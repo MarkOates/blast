@@ -75,6 +75,11 @@ public:
 
 int main(int argc, char **argv)
 {
+   std::cout << "For now, this program is not in use.  Please call the script directly "
+                "at blast/scripts/build_win64_release.sh" << std::endl;
+   return 1;
+
+
    std::vector<std::string> args;
    std::string execution_name = argv[0];
    for (int i=1; i<argc; i++) args.push_back(argv[i]);
