@@ -120,41 +120,49 @@ TEST(Blast_SystemInfoTest, get_chip_kind__will_return_a_string_representing_the_
 
 TEST(Blast_SystemInfoTest, is_apple_mac__will_return_true_if_the_current_machine_is_a_mac)
 {
+// NOTE: this may not be correct on Linux machines
 #if defined(_WIN32) || defined(_WIN64)
    GTEST_SKIP() << "This test is not intended for Windows.";
-#endif
+#else
    Blast::SystemInfo system_info;
    EXPECT_EQ(true, system_info.is_apple_mac());
+#endif
 }
 
 
 TEST(Blast_SystemInfoTest, is_apple_mac__will_return_false_if_the_current_machine_is_not_a_mac)
 {
+// NOTE: this may not be correct on Linux machines
 #if defined(_WIN32) || defined(_WIN64)
    Blast::SystemInfo system_info;
    EXPECT_EQ(false, system_info.is_apple_mac());
-#endif
+#else
    GTEST_SKIP() << "This test is not intended for MacOS.";
+#endif
 }
 
 
 TEST(Blast_SystemInfoTest, is_microsoft_windows__will_return_true_if_the_current_machine_is_a_windows_machine)
 {
+// NOTE: this may not be correct on Linux machines
 #if defined(_WIN32) || defined(_WIN64)
    Blast::SystemInfo system_info;
    EXPECT_EQ(true, system_info.is_microsoft_windows());
-#endif
+#else
    GTEST_SKIP() << "This test is not intended for MacOS.";
+#endif
 }
 
 
 TEST(Blast_SystemInfoTest, is_microsoft_windows__will_return_false_if_the_current_machine_is_not_a_windows_machine)
 {
+// NOTE: this may not be correct on Linux machines
 #if defined(_WIN32) || defined(_WIN64)
    GTEST_SKIP() << "This test is not intended for Windows.";
-#endif
+#else
    Blast::SystemInfo system_info;
    EXPECT_EQ(false, system_info.is_microsoft_windows());
+#endif
 }
 
 
