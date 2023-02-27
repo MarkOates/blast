@@ -33,7 +33,26 @@ public:
 int main(int argc, char **argv)
 {
    std::vector<std::string> args;
-   for (int i=0; i<argc; i++) args.push_back(argv[i]);
+   std::string execution_name = argv[0];
+   for (int i=1; i<argc; i++) args.push_back(argv[i]);
+
+
+   std::string name_of_source_release = "";
+
+   if (args.size() == 1)
+   {
+      name_of_source_release = args[0];
+   }
+   else
+   {
+      std::cout << "You did it!" << std::endl;
+      std::cout << "Please see instructions. You will need to pass a release name as the first argument." << std::endl;
+      std::cout << std::endl;
+      std::cout << execution_name << " KrampusReturns-SourceRelease-230101031610UTC" << std::endl;
+      std::cout << std::endl;
+      std::cout << std::endl;
+      return 1;
+   }
 
 
    Blast::BuildSystem::BuildStageFactory build_stage_factory;
