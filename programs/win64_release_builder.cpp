@@ -16,7 +16,7 @@ public:
 
    ValidateBuildWin64ReleaseScript()
       : Blast::BuildSystem::BuildStages::Base(TYPE)
-      , full_path_to_script("/home/Mark/Repos/blast/scripts/build_win64_release.sh")
+      , full_path_to_script("/msys64/home/Mark/Repos/blast/scripts/build_win64_release.sh")
    {}
 
    virtual bool execute() override
