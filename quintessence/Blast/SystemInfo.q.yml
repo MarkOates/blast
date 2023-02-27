@@ -35,6 +35,23 @@ functions:
       - Blast::SystemInfoFetcher
 
 
+  - name: is_apple_mac
+    type: bool
+    body: |
+      // TODO: find a way to test this
+      return get_sysname() == "Darwin";
+
+
+  - name: is_microsoft_windows
+    type: bool
+    body: |
+      // TODO: find a way to test this
+      std::string sysname = get_sysname();
+      std::string expected_start_of_string = "Windows";
+      bool starts_with_expected_string = (sysname.compare(0, sysname.length(), expected_start_of_string) == 0);
+      return starts_with_expected_string;
+
+
   - name: get_version
     type: std::string
     body: |

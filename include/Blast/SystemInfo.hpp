@@ -22,6 +22,8 @@ namespace Blast
       bool num_available_threads_are_known();
       std::string get_processor_type();
       std::string get_sysname();
+      bool is_apple_mac();
+      bool is_microsoft_windows();
       std::string get_version();
       std::string get_release();
       std::string get_hostname();

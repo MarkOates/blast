@@ -392,6 +392,12 @@
   "std/toupper": [
     "Blast/StringUpcaser"
   ],
+  "std/thread/hardware_concurrency": [
+    "Blast/SystemInfo"
+  ],
+  "Blast/SystemInfoFetcher": [
+    "Blast/SystemInfo"
+  ],
   "std/sample": [
     "Blast/TaoTeChingQuoteGenerator"
   ],

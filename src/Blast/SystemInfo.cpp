@@ -44,6 +44,21 @@ std::string SystemInfo::get_sysname()
    return Blast::SystemInfoFetcher().get_sysname();
 }
 
+bool SystemInfo::is_apple_mac()
+{
+   // TODO: find a way to test this
+   return get_sysname() == "Darwin";
+}
+
+bool SystemInfo::is_microsoft_windows()
+{
+   // TODO: find a way to test this
+   std::string sysname = get_sysname();
+   std::string expected_start_of_string = "Windows";
+   bool starts_with_expected_string = (sysname.compare(0, sysname.length(), expected_start_of_string) == 0);
+   return starts_with_expected_string;
+}
+
 std::string SystemInfo::get_version()
 {
    return Blast::SystemInfoFetcher().get_version();
