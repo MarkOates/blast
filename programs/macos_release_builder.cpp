@@ -525,6 +525,53 @@ public:
 
 
 
+
+// HERE:
+class UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild : public Blast::BuildSystem::BuildStages::Base
+{
+private:
+   // TODO: Validate presence of ZIP file, see:
+   //  - https://stackoverflow.com/questions/12199059/how-to-check-if-an-url-exists-with-the-shell-and-probably-curl
+   //  - https://matthewsetter.com/check-if-file-is-available-with-curl/
+   void execute_shell_commands()
+   {
+      std::stringstream shell_command;
+      shell_command << "unzip \"" << full_path_to_local_destination_of_downloaded_zip_file << "\" -d \"" << full_path_to_temp_directory_for_build << "\"";
+      std::cout << shell_command.str() << std::endl;
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      shell_command_result = shell_command_executor.execute();
+
+      Blast::ShellCommandExecutorWithCallback shell_command_executor2("echo $?");
+      shell_command_response_code = shell_command_executor2.execute();
+   }
+
+public:
+   static constexpr char* TYPE = (char*)"UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild";
+   std::string full_path_to_local_destination_of_downloaded_zip_file;
+   std::string full_path_to_temp_directory_for_build;
+   std::string shell_command_result;
+   std::string shell_command_response_code;
+
+   UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+      , full_path_to_local_destination_of_downloaded_zip_file(NameGenerator::full_path_to_local_destination_of_downloaded_zip_file())
+      , full_path_to_temp_directory_for_build(NameGenerator::full_path_of_temp_location())
+      , shell_command_result()
+      , shell_command_response_code()
+   {}
+
+   virtual bool execute() override
+   {
+      execute_shell_commands();
+      if (shell_command_response_code == "0\n") return true;
+      return false;
+   }
+};
+
+
+
+
+
 class CopySourceReleaseFilesForBuilding : public Blast::BuildSystem::BuildStages::Base
 {
 private:
@@ -1384,8 +1431,9 @@ int main(int argc, char **argv)
       // TODO: validate README.md in source, validate source icon needed for icns file
 
       // get copy of source release
-      new CopySourceReleaseFilesForBuilding(),
-      new DownloadSourceReleaseFileForBuilding(),
+      new CopySourceReleaseFilesForBuilding(), // if is local
+      //new DownloadSourceReleaseFileForBuilding(),
+      //new UnzipDownloadedSourceReleaseFileToTempDirectoryForBuild(),
       new ValidateSourceReadme(),
 
       // make a build from the source
