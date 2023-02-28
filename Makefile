@@ -402,6 +402,11 @@ docs:
 
 
 
+debug:
+	python3 /Users/markoates/Repos/blast/scripts/run_debug.py $(EXECUTABLE_TO_RUN)
+
+
+
 source_release:
 	$(SOURCE_RELEASER_EXECUTABLE) $(current_dir)
 
