@@ -109,6 +109,16 @@ int main(int argc, char** argv)
    std::cout << std::endl;
    std::cout << "============================================" << std::endl;
 
+   std::cout << std::endl;
+   std::cout << "lldb ";
+   for (auto &breakpoint_command : breakpoint_commands)
+   {
+      std::cout << "-o '" << breakpoint_command << "' ";
+   }
+   std::cout << "-o 'run' ";
+   std::cout << "-- bin/tests/*" << std::endl;
+   std::cout << std::endl;
+   std::cout << "============================================" << std::endl;
 
    return 0;
 }
