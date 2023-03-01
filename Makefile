@@ -397,9 +397,12 @@ deps: $(DEPS)
 
 
 docs:
+ifeq ($(OS),Windows_NT)
+	@echo "Skipping doc build because we're on Windows."
+else
 	@mkdir -p ./docs
 	@ruby /Users/markoates/Repos/blast/scripts/build_documentation.rb
-
+endif
 
 
 debug:
