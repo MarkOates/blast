@@ -1,6 +1,10 @@
 # see this SO for techniques in using a separate file to define variables
 # https://unix.stackexchange.com/questions/235223/makefile-include-env-file
 
+
+# Silence the "make[1]: Entering directory ..." messages
+MAKEFLAGS += --no-print-directory
+
 FOCUSED_PROJECT_FOLDER_FILENAME=/Users/markoates/Repos/hexagon/bin/programs/data/tmp/current_project_directory.txt
 # PROJECT_BASE_DIRECTORY := $$PWD
 PROJECT_BASE_DIRECTORY=`cat ${FOCUSED_PROJECT_FOLDER_FILENAME}`
