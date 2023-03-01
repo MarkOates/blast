@@ -103,7 +103,8 @@ else
 	ERROR_IF_VIRTUAL_NOT_MARKED_OVERRIDE=-Werror=inconsistent-missing-override
 	ERROR_IF_MACRO_REDEFINED=-Werror=macro-redefined
 
-	DISABLE_UNUSED_WARNINGS_FLAG=-Wno-unused-variable -Wno-unused-private-field -Wno-unused-function
+  #NOTE: -fsanitize=address, and -fsanitize=thread is added to this list thought it is in a different category of flags
+	DISABLE_UNUSED_WARNINGS_FLAG=-Wno-unused-variable -Wno-unused-private-field -Wno-unused-function -fsanitize=address -fsanitize=thread
 
 	#TODO: update to this line that includes an out-of-order ctor error promotion
 	#TODO: include -Woverloaded-virtual -Winconsistent-missing-override to promoted errors
