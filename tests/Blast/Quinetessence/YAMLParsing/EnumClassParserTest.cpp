@@ -29,6 +29,30 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
 
 
 TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
+   parse__with_a_scope_key_defined__will_set_the_scope)
+{
+   std::string yaml_content = "name: \"FooBar\"\nscope: protected\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass enum_class = enum_class_parser.parse();
+
+   EXPECT_EQ("protected", enum_class.get_scope());
+}
+
+
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
+   parse__when_no_scope_key_is_defined__the_scope_will_be_set_to_the_expected_default)
+{
+   std::string yaml_content = "name: \"FooBar\"\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass enum_class = enum_class_parser.parse();
+
+   EXPECT_EQ(Blast::Cpp::EnumClass::DEFAULT_SCOPE, enum_class.get_scope());
+}
+
+
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
    parse__with_a_name_key_defined__will_set_the_name__and__will_set_is_class_as_false)
 {
    std::string yaml_content = "name: \"FooBar\"\nenumerators: [ FOO, FOE, FUM ]\n";
@@ -89,6 +113,15 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest,
 
 
 TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_type_is_not_present__does_not_throw_an_error)
+{
+   std::string yaml_content = "enumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quinetessence::YAMLParsing::EnumClassParser enum_class_parser(node);
+   enum_class_parser.parse();
+}
+
+
+TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_a_scope_is_not_present__does_not_throw_an_error)
 {
    std::string yaml_content = "enumerators: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);

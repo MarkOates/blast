@@ -57,6 +57,8 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
        //- HIDING
 
    // Validate presence and type
+   bool scope_node_is_present = (bool)node["scope"];
+   if (scope_node_is_present) validate_node_type(node, "scope", YAML::NodeType::Scalar);
    bool class_node_is_present = (bool)node["class"];
    if (class_node_is_present) validate_node_type(node, "class", YAML::NodeType::Scalar);
    bool name_node_is_present = (bool)node["name"];
@@ -106,6 +108,9 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
 
    // Extract the "start_from" value
    if (start_from_node_is_present) result.set_start_from(node["start_from"].as<int>());
+
+   // Extract the "scope" value
+   if (scope_node_is_present) result.set_scope(node["scope"].as<std::string>());
 
    // Extract the "enumerators" elements
    std::vector<std::string> enum_enumerators;
