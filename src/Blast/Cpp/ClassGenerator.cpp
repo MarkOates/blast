@@ -807,6 +807,10 @@ DEPENDENCY_INCLUDE_DIRECTIVES
 NAMESPACES_OPENER
 CLASS_DECLARATION_OPENER
 CONSTEXPR_SECTION
+FORWARD_DECLARED_ENUMS_PUBLIC_SCOPE_SPECIFIER
+FORWARD_DECLARED_PUBLIC_ENUM_DECLARATIONS
+FORWARD_DECLARED_ENUMS_PROTECTED_SCOPE_SPECIFIER
+FORWARD_DECLARED_PROTECTED_ENUM_DECLARATIONS
 PRIVATE_SCOPE_SPECIFIER
 PRIVATE_ENUM_CLASS_DECLARATIONS
 PROPERTIES
@@ -833,6 +837,33 @@ NAMESPACES_CLOSER
    std::string result = header_file_template;
 
    int required_namespace_indentation_levels = cpp_class.get_namespaces().size();
+
+
+   // NOTE: Order of replacing is important in this function.  Some replaced symbols have similar
+   // symbos that cointain it as a substring, e.g. "FORWARD_DECLARED_ENUMS_PUBLIC_SCOPE_SPECIFIER" contains
+   // "PUBLIC_SCOPE_SPECIFIER" so the former needs to be replaced in the template first.
+
+
+   // Forward-declared enums
+
+   __replace(
+         result,
+         "FORWARD_DECLARED_ENUMS_PUBLIC_SCOPE_SPECIFIER\n",
+         ""); // <-- TODO;
+   __replace(
+         result,
+         "FORWARD_DECLARED_PUBLIC_ENUM_DECLARATIONS\n",
+         ""); // <-- TODO;
+   __replace(
+         result,
+         "FORWARD_DECLARED_ENUMS_PROTECTED_SCOPE_SPECIFIER\n",
+         ""); // <-- TODO;
+   __replace(
+         result,
+         "FORWARD_DECLARED_PROTECTED_ENUM_DECLARATIONS\n",
+         ""); // <-- TODO;
+
+
 
 
    // replace/expand CONSTEXPR_SECTION if constexpr properties are present
@@ -884,6 +915,10 @@ NAMESPACES_CLOSER
    __replace(result, "PUBLIC_FUNCTION_DECLARATIONS\n", public_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "PRIVATE_FUNCTION_DECLARATIONS\n", private_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "PROTECTED_FUNCTION_DECLARATIONS\n", protected_function_declarations(required_namespace_indentation_levels + 1));
+
+
+
+   // Enums
    
    __replace(
          result,
