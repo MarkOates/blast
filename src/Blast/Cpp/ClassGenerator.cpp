@@ -750,21 +750,33 @@ std::string ClassGenerator::destructor_definition(int indent_level)
 
 bool ClassGenerator::public_enums_are_present()
 {
-   // TODO: this function
+   // TODO: test this function
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.is_public()) return true;
+   }
    return false;
 }
 
 
 bool ClassGenerator::private_enums_are_present()
 {
-   // TODO: this function
+   // TODO: test this function
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.is_private()) return true;
+   }
    return false;
 }
 
 
 bool ClassGenerator::protected_enums_are_present()
 {
-   // TODO: this function
+   // TODO: test this function
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.is_protected()) return true;
+   }
    return false;
 }
 
@@ -866,24 +878,28 @@ NAMESPACES_CLOSER
 
 
    // Forward-declared enums
+   // TODO: consider writing proper forward-declared enums here (rather than fully declaring them in this part, the
+   // forward-delared section of class).
 
+   // TODO: Test this replace
    __replace(
          result,
          "FORWARD_DECLARED_ENUMS_PUBLIC_SCOPE_SPECIFIER\n",
-         public_enums_are_present() ? "public:\n\n" : "" ); // <-- TODO;
+         public_enums_are_present() ? __indent(3, required_namespace_indentation_levels, "public:") + "\n" : "" );
    __replace(
          result,
          "FORWARD_DECLARED_PUBLIC_ENUM_DECLARATIONS\n",
-         ""); // <-- TODO;
+         public_enum_class_declarations(required_namespace_indentation_levels + 1)
+      );
+   // TODO: Test this replace
    __replace(
          result,
          "FORWARD_DECLARED_ENUMS_PROTECTED_SCOPE_SPECIFIER\n",
-         protected_enums_are_present() ? "protected:\n\n" : "" ); // <-- TODO;
+         public_enums_are_present() ? __indent(3, required_namespace_indentation_levels, "protected:") + "\n" : "" );
    __replace(
          result,
          "FORWARD_DECLARED_PROTECTED_ENUM_DECLARATIONS\n",
          ""); // <-- TODO;
-
 
 
 
@@ -944,7 +960,8 @@ NAMESPACES_CLOSER
    __replace(
          result,
          "PUBLIC_ENUM_CLASS_DECLARATIONS\n",
-         public_enum_class_declarations(required_namespace_indentation_levels + 1)
+         ""
+         //public_enum_class_declarations(required_namespace_indentation_levels + 1)
       );
    __replace(
          result,
