@@ -748,6 +748,27 @@ std::string ClassGenerator::destructor_definition(int indent_level)
 }
 
 
+bool ClassGenerator::public_enums_are_present()
+{
+   // TODO: this function
+   return false;
+}
+
+
+bool ClassGenerator::private_enums_are_present()
+{
+   // TODO: this function
+   return false;
+}
+
+
+bool ClassGenerator::protected_enums_are_present()
+{
+   // TODO: this function
+   return false;
+}
+
+
 std::string ClassGenerator::generate_source_file_content()
 {
    std::string source_file_template = R"END(
@@ -849,7 +870,7 @@ NAMESPACES_CLOSER
    __replace(
          result,
          "FORWARD_DECLARED_ENUMS_PUBLIC_SCOPE_SPECIFIER\n",
-         ""); // <-- TODO;
+         public_enums_are_present() ? "public:\n\n" : "" ); // <-- TODO;
    __replace(
          result,
          "FORWARD_DECLARED_PUBLIC_ENUM_DECLARATIONS\n",
@@ -857,7 +878,7 @@ NAMESPACES_CLOSER
    __replace(
          result,
          "FORWARD_DECLARED_ENUMS_PROTECTED_SCOPE_SPECIFIER\n",
-         ""); // <-- TODO;
+         protected_enums_are_present() ? "protected:\n\n" : "" ); // <-- TODO;
    __replace(
          result,
          "FORWARD_DECLARED_PROTECTED_ENUM_DECLARATIONS\n",

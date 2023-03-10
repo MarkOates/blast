@@ -63,6 +63,9 @@ namespace Blast
          std::string private_function_declarations(int indent_level=0);
          std::string protected_function_declarations(int indent_level=0);
          std::string function_definitions(int indent_level=0);
+         bool public_enums_are_present();
+         bool private_enums_are_present();
+         bool protected_enums_are_present();
          std::string public_enum_class_declarations(int indent_level=0);
          std::string private_enum_class_declarations(int indent_level=0);
          std::string protected_enum_class_declarations(int indent_level=0);
