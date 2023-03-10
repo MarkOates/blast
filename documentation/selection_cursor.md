@@ -144,10 +144,46 @@ functions:
       return AllegroFlare::Vec2D(0, cursor_pos * infer_list_item_spacing_y());
 
 
-  - name: infer_list_item_spacing_y
+  - name: infer_container_height
     type: float
+    private: true
+    body: |
+      return 800; // TODO: Note this is a fixed value
+      //return (list_item_box_height + box_gutter_y) * 5.5;
+
+
+  - name: infer_list_item_y_spacing
+    type: float
+    private: true
     body: |
       return list_item_box_height + box_gutter_y;
+
+
+  - name: infer_container_contents_height_for_n_elements
+    type: float
+    private: true
+    parameters:
+      - name: num_elements
+        type: int
+        default_argument: 0
+    guards: [ num_elements >= 0 ]
+    body: |
+      if (num_elements == 0) return 0;
+      return num_elements * infer_list_item_y_spacing() - box_gutter_y;
+
+
+  - name: infer_container_contents_height
+    type: float
+    private: true
+    body: |
+      return infer_container_contents_height_for_n_elements(input_devices.size());
+
+
+  - name: infer_container_scroll_range
+    type: float
+    private: true
+    body: |
+      return infer_container_contents_height() - infer_container_height();
 
 
   - name: scrollbar_movement_mode_is_follow_proportional
