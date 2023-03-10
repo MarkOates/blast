@@ -183,3 +183,31 @@ functions:
          scrollbar.render();
       }
 ```
+
+
+# Inside the `render()` Function
+
+```cpp
+
+      if (list_item_elements_exist)
+      {
+         // TODO: Render an empty state
+      }
+      else // Render list items
+      {
+         AllegroFlare::Placement2D scrollarea_contents(
+            0,
+            -scrollbar_position,
+            0,
+            0
+         );
+
+         // Draw the scrollarea contents
+         scrollarea_contents.start_transform();
+
+         // TODO: Draw the contents of the scrollarea here
+
+
+         scrollarea_contents.restore_transform();
+      }
+```
