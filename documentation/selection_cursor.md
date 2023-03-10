@@ -239,11 +239,30 @@ functions:
          );
 
          // Draw the scrollarea contents
-         scrollarea_contents.start_transform();
+         if (!list_contents_is_smaller_than_the_container())
+         {
+            scrollarea_contents.start_transform();
+         }
 
-         // TODO: Draw the contents of the scrollarea here
+         draw_scrollarea_contents(); // TODO: make this function
 
+         if (!list_contents_is_smaller_than_the_container())
+         {
+            scrollarea_contents.restore_transform();
+         }
 
-         scrollarea_contents.restore_transform();
+         // draw the scrollbar
+         if (!scrollbar_is_autohidden_because_list_contents_is_smaller_than_the_container())
+         {
+            AllegroFlare::Elements::Scrollbar scrollbar(
+               input_devices_list_width + scrollbar_x_padding,
+               scrollbar_y_padding,
+               container_height - scrollbar_y_padding * 2,
+               normalized_scrollbar_position,
+               scrollbar_bar_color,
+               scrollbar_handle_color
+            );
+            scrollbar.render();
+         }
       }
 ```
