@@ -886,6 +886,7 @@ NAMESPACES_CLOSER
          result,
          "FORWARD_DECLARED_ENUMS_PUBLIC_SCOPE_SPECIFIER\n",
          public_enums_are_present() ? __indent(3, required_namespace_indentation_levels, "public:") + "\n" : "" );
+   // TODO: Update this to be a forward-declaration rather than a full declaration (Add full declarations below)
    __replace(
          result,
          "FORWARD_DECLARED_PUBLIC_ENUM_DECLARATIONS\n",
@@ -895,12 +896,13 @@ NAMESPACES_CLOSER
    __replace(
          result,
          "FORWARD_DECLARED_ENUMS_PROTECTED_SCOPE_SPECIFIER\n",
-         public_enums_are_present() ? __indent(3, required_namespace_indentation_levels, "protected:") + "\n" : "" );
+         protected_enums_are_present() ? __indent(3, required_namespace_indentation_levels, "protected:") + "\n" : "" );
+   // TODO: Update this to be a forward-declaration rather than a full declaration (Add full declarations below)
    __replace(
          result,
          "FORWARD_DECLARED_PROTECTED_ENUM_DECLARATIONS\n",
-         ""); // <-- TODO;
-
+         protected_enum_class_declarations(required_namespace_indentation_levels + 1)
+      );
 
 
    // replace/expand CONSTEXPR_SECTION if constexpr properties are present
@@ -960,6 +962,7 @@ NAMESPACES_CLOSER
    __replace(
          result,
          "PUBLIC_ENUM_CLASS_DECLARATIONS\n",
+         // TODO: Update this to be the full declaration (once forward-declarations above are not full declarations)
          ""
          //public_enum_class_declarations(required_namespace_indentation_levels + 1)
       );
@@ -971,7 +974,9 @@ NAMESPACES_CLOSER
    __replace(
          result,
          "PROTECTED_ENUM_CLASS_DECLARATIONS\n",
-         protected_enum_class_declarations(required_namespace_indentation_levels + 1)
+         // TODO: Update this to be the full declaration (once forward-declarations above are not full declarations)
+         ""
+         //protected_enum_class_declarations(required_namespace_indentation_levels + 1)
       );
 
 
