@@ -441,7 +441,7 @@ public:
 
 void create_makefile(Generator &generator)
 {
-   std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ../union/Makefile ./Makefile)";
+   std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ../blast/Makefile ./Makefile)";
    Blast::ShellCommandExecutorWithCallback makefile_symlink_command_executor(command);
    makefile_symlink_command_executor.execute();
 
@@ -456,7 +456,7 @@ void create_makefile(Generator &generator)
 
 void create_test_runner(Generator &generator)
 {
-   std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ../../union/tests/TestRunner.cpp ./tests/TestRunner.cpp)";
+   std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ../../blast/tests/TestRunner.cpp ./tests/TestRunner.cpp)";
    Blast::ShellCommandExecutorWithCallback makefile_symlink_command_executor(command);
    makefile_symlink_command_executor.execute();
 
