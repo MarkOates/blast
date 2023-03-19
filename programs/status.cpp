@@ -374,11 +374,8 @@ int main(int argc, char **argv)
          project_processed_state = true;
          projects_processed++;
 
-
-
-
          //std::cout << "  report:" << std::endl;
-         std::cout << std::endl;
+         //std::cout << std::endl;
       }
    }
 
