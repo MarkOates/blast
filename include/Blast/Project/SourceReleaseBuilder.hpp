@@ -76,6 +76,7 @@ namespace Blast
          void generate_macos_release();
          void recursively_remove_folder_with_prompt(std::string folder_to_remove="/Users/markoates/Desktop/releases");
          bool generate_source_release();
+         static std::vector<std::string> get_top_level_folders_in_include(std::string directory="[unset-directory]");
       };
    }
 }

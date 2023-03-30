@@ -824,6 +824,22 @@ bool SourceReleaseBuilder::generate_source_release()
    return build_process_completed_successfully;
 }
 
+std::vector<std::string> SourceReleaseBuilder::get_top_level_folders_in_include(std::string directory)
+{
+   std::vector<std::string> result;
+
+   std::string path = "/Users/markoates/Repos/blast/include";
+   for (const auto & entry : std::filesystem::directory_iterator(path))
+   {
+      if (std::filesystem::is_directory(entry))
+      {
+         result.push_back(entry.path().filename().string());
+      }
+   }
+
+   return result;
+}
+
 
 } // namespace Project
 } // namespace Blast

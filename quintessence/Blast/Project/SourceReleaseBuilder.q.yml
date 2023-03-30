@@ -778,6 +778,28 @@ functions:
       - Blast::TimeStamper
 
 
+  - name: get_top_level_folders_in_include
+    parameters:
+      - name: directory
+        type: std::string
+        default_argument: '"[unset-directory]"'
+    static: true
+    type: std::vector<std::string>
+    body: |
+      std::vector<std::string> result;
+
+      std::string path = "/Users/markoates/Repos/blast/include";
+      for (const auto & entry : std::filesystem::directory_iterator(path))
+      {
+         if (std::filesystem::is_directory(entry))
+         {
+            result.push_back(entry.path().filename().string());
+         }
+      }
+
+      return result;
+
+
 dependencies:
 
 
