@@ -120,7 +120,7 @@ int main(int argc, char **argv)
       std::stringstream command_to_make_macos_release;
          command_to_make_macos_release << "make macos_release RELEASE_PROJECT_NAME=" << project_name << " RELEASE_FOLDER_NAME=" << generated_release_folder_name;
       std::stringstream command_to_make_win64_release;
-         command_to_make_win64_release << "make win64_release GOOGLE_DRIVE_FILE_ID=" << google_drive_file_id << " EXPECTED_RELEASE_FOLDER_NAME=" << generated_release_folder_name;
+         command_to_make_win64_release << "make win64_release EXPECTED_RELEASE_FOLDER_NAME=" << generated_release_folder_name;
       //std::string project_testing_src_folder_name << 
       //std::string project_testing_include_folder_name << 
       std::stringstream success_message;
@@ -153,7 +153,7 @@ int main(int argc, char **argv)
       success_message << std::endl;
       success_message << std::endl;
       success_message << "===============================================" << std::endl;
-      success_message << "==          Create a Binary Releases          ==" << std::endl;
+      success_message << "==          Create Binary Releases           ==" << std::endl;
       success_message << "===============================================" << std::endl;
       success_message << std::endl;
       success_message << "   Command to make MacOS release: \"" << command_to_make_macos_release.str() << "\"" << std::endl;
