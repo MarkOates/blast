@@ -24,7 +24,7 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool prompt_before_deleting_unneeded_folders)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool remove_Testing_from_project_copy, bool prompt_before_deleting_unneeded_folders)
    : releases_base_folder(releases_base_folder)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
@@ -39,6 +39,7 @@ SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std
    , remove_AllegroFlare_Network2_from_allegro_flare_copy(remove_AllegroFlare_Network2_from_allegro_flare_copy)
    , remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy(remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy)
    , remove_AllegroFlare_Testing_from_allegro_flare_copy(remove_AllegroFlare_Testing_from_allegro_flare_copy)
+   , remove_Testing_from_project_copy(remove_Testing_from_project_copy)
    , prompt_before_deleting_unneeded_folders(prompt_before_deleting_unneeded_folders)
 {
 }
@@ -94,6 +95,12 @@ void SourceReleaseBuilder::set_remove_AllegroFlare_Integrations_Network_from_all
 void SourceReleaseBuilder::set_remove_AllegroFlare_Testing_from_allegro_flare_copy(bool remove_AllegroFlare_Testing_from_allegro_flare_copy)
 {
    this->remove_AllegroFlare_Testing_from_allegro_flare_copy = remove_AllegroFlare_Testing_from_allegro_flare_copy;
+}
+
+
+void SourceReleaseBuilder::set_remove_Testing_from_project_copy(bool remove_Testing_from_project_copy)
+{
+   this->remove_Testing_from_project_copy = remove_Testing_from_project_copy;
 }
 
 
@@ -178,6 +185,12 @@ bool SourceReleaseBuilder::get_remove_AllegroFlare_Integrations_Network_from_all
 bool SourceReleaseBuilder::get_remove_AllegroFlare_Testing_from_allegro_flare_copy() const
 {
    return remove_AllegroFlare_Testing_from_allegro_flare_copy;
+}
+
+
+bool SourceReleaseBuilder::get_remove_Testing_from_project_copy() const
+{
+   return remove_Testing_from_project_copy;
 }
 
 
@@ -746,6 +759,27 @@ bool SourceReleaseBuilder::generate_source_release()
       recursively_remove_folder_with_prompt(include_folder_to_remove);
       std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Testing";
       recursively_remove_folder_with_prompt(src_folder_to_remove);
+   }
+
+
+   if (get_remove_Testing_from_project_copy())
+   {
+      // TODO: Implement this
+
+      // 1) Get top-level folders within "include/" and "src/" folder
+      // 2) Check they are identical lists (sanity check)
+      // 3) Collect each that have a Testing/ folder within them
+
+      std::vector<std::string> Testing_folders_to_remove;
+      for (auto &Testing_folder_to_remove : Testing_folders_to_remove)
+      {
+         // 4) Iterate over each one and remove it
+
+         //std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Testing";
+         //recursively_remove_folder_with_prompt(include_folder_to_remove);
+         //std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Testing";
+         //recursively_remove_folder_with_prompt(src_folder_to_remove);
+      }
    }
 
 

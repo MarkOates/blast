@@ -92,6 +92,13 @@ properties:
     getter: true
     setter: true
 
+  - name: remove_Testing_from_project_copy
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
   - name: prompt_before_deleting_unneeded_folders
     type: bool
     init_with: true
@@ -697,6 +704,27 @@ functions:
          recursively_remove_folder_with_prompt(include_folder_to_remove);
          std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Testing";
          recursively_remove_folder_with_prompt(src_folder_to_remove);
+      }
+
+
+      if (get_remove_Testing_from_project_copy())
+      {
+         // TODO: Implement this
+
+         // 1) Get top-level folders within "include/" and "src/" folder
+         // 2) Check they are identical lists (sanity check)
+         // 3) Collect each that have a Testing/ folder within them
+
+         std::vector<std::string> Testing_folders_to_remove;
+         for (auto &Testing_folder_to_remove : Testing_folders_to_remove)
+         {
+            // 4) Iterate over each one and remove it
+
+            //std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Testing";
+            //recursively_remove_folder_with_prompt(include_folder_to_remove);
+            //std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Testing";
+            //recursively_remove_folder_with_prompt(src_folder_to_remove);
+         }
       }
 
 
