@@ -826,10 +826,19 @@ bool SourceReleaseBuilder::generate_source_release()
 
 std::vector<std::string> SourceReleaseBuilder::get_top_level_folders_in_include(std::string directory)
 {
+   return get_top_level_folders(directory + "/include");
+}
+
+std::vector<std::string> SourceReleaseBuilder::get_top_level_folders_in_src(std::string directory)
+{
+   return get_top_level_folders(directory + "/src");
+}
+
+std::vector<std::string> SourceReleaseBuilder::get_top_level_folders(std::string directory)
+{
    std::vector<std::string> result;
 
-   std::string path = "/Users/markoates/Repos/blast/include";
-   for (const auto & entry : std::filesystem::directory_iterator(path))
+   for (const auto & entry : std::filesystem::directory_iterator(directory))
    {
       if (std::filesystem::is_directory(entry))
       {

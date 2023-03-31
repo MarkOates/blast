@@ -94,3 +94,21 @@ TEST(Blast_Project_SourceReleaseBuilderTest, get_top_level_folders_in_include__w
 }
 
 
+TEST(Blast_Project_SourceReleaseBuilderTest, get_top_level_folders_in_src__will_return_the_folder_names_in_include)
+{
+   // TODO: direct this test to a safer test project folder
+   std::string base_folder = "/Users/markoates/Repos/blast";
+   std::vector<std::string> expected_folder_names = {
+      "Hexagon",
+      "NcursesArt",
+      "Blast",
+      "ncurses_art",
+      "Quizes"
+   };
+   std::vector<std::string> actual_folder_names =
+      Blast::Project::SourceReleaseBuilder::get_top_level_folders_in_src(base_folder);
+
+   EXPECT_EQ(expected_folder_names, actual_folder_names); 
+}
+
+

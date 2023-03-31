@@ -786,10 +786,31 @@ functions:
     static: true
     type: std::vector<std::string>
     body: |
+      return get_top_level_folders(directory + "/include");
+
+
+  - name: get_top_level_folders_in_src
+    parameters:
+      - name: directory
+        type: std::string
+        default_argument: '"[unset-directory]"'
+    static: true
+    type: std::vector<std::string>
+    body: |
+      return get_top_level_folders(directory + "/src");
+
+
+  - name: get_top_level_folders
+    parameters:
+      - name: directory
+        type: std::string
+        default_argument: '"[unset-directory]"'
+    static: true
+    type: std::vector<std::string>
+    body: |
       std::vector<std::string> result;
 
-      std::string path = "/Users/markoates/Repos/blast/include";
-      for (const auto & entry : std::filesystem::directory_iterator(path))
+      for (const auto & entry : std::filesystem::directory_iterator(directory))
       {
          if (std::filesystem::is_directory(entry))
          {
