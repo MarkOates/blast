@@ -765,10 +765,47 @@ bool SourceReleaseBuilder::generate_source_release()
    if (get_remove_Testing_from_project_copy())
    {
       // TODO: Implement this
+      std::cout << "Looking in each top-level folder of \"include/\" and \"src/\" if they contain a \"Testing\" "
+                << "folder." << std::endl;
 
       // 1) Get top-level folders within "include/" and "src/" folder
+      std::vector<std::string> folders_in_include = get_top_level_folders_in_include(destination_directory);
+      std::vector<std::string> folders_in_src = get_top_level_folders_in_src(destination_directory);
+
       // 2) Check they are identical lists (sanity check)
+      std::sort(folders_in_include.begin(), folders_in_include.end());
+      std::sort(folders_in_src.begin(), folders_in_src.end());
+
+      std::vector<std::string> diff;
+      std::set_difference(
+         folders_in_include.begin(),
+         folders_in_include.end(),
+         folders_in_src.begin(),
+         folders_in_src.end(),
+         std::back_inserter(diff)
+      );
+
+      if (diff.empty())
+      {
+         // Cool, the two folder lists are identical
+      }
+      else
+      {
+         std::stringstream error_message;
+         error_message << "[Project/ReleaseBuilder] error: When checking for \"Testing\" folders, expecting the "
+                          "folders of \"include/\" and \"src/\" to have the same folder names but they contain "
+                          "different elements.  The following elements are not in both: { ";
+         for (auto &element : diff)
+         {
+            error_message << "\"" << element << "\", ";
+         }
+         error_message << "}.";
+      
+         throw std::runtime_error(error_message.str());
+      }
+
       // 3) Collect each that have a Testing/ folder within them
+      // HERE:
 
       std::vector<std::string> Testing_folders_to_remove;
       for (auto &Testing_folder_to_remove : Testing_folders_to_remove)
