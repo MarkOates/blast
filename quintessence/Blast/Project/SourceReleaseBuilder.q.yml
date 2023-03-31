@@ -709,13 +709,29 @@ functions:
 
       if (get_remove_Testing_from_project_copy())
       {
-         // TODO: Implement this
+         // TODO: Test this
          std::cout << "Looking in each top-level folder of \"include/\" and \"src/\" if they contain a \"Testing\" "
                    << "folder." << std::endl;
 
          // 1) Get top-level folders within "include/" and "src/" folder
          std::vector<std::string> folders_in_include = get_top_level_folders_in_include(destination_directory);
          std::vector<std::string> folders_in_src = get_top_level_folders_in_src(destination_directory);
+
+         // Ignore the "lib" folder if it exists in "include/" by removing it from the list
+         // TODO: Test this case
+         std::string lib_folder_to_look_for = "lib";
+         if (
+            std::find(folders_in_include.begin(), folders_in_include.end(), lib_folder_to_look_for)
+            != folders_in_include.end())
+         {
+            std::cout << "Found a \"lib\" folder in \"include\". Ignoring it when looking for \"Testing\"."
+                      << std::endl;
+            std::string folder_to_remove = "lib";
+            folders_in_include.erase(
+               std::remove(folders_in_include.begin(), folders_in_include.end(), folder_to_remove),
+               folders_in_include.end()
+            );
+         }
 
          // 2) Check they are identical lists (sanity check)
          std::sort(folders_in_include.begin(), folders_in_include.end());
@@ -750,17 +766,45 @@ functions:
          }
 
          // 3) Collect each that have a Testing/ folder within them
-         // HERE:
+         std::vector<std::string> possible_folder_names_to_check_for_existence;
+
+         for (auto &folder : folders_in_include)
+         {
+            std::string include_folder_to_check = destination_directory + "/include/" + folder + "/Testing";
+            std::string src_folder_to_check = destination_directory + "/src/" + folder + "/Testing";
+            possible_folder_names_to_check_for_existence.push_back(include_folder_to_check);
+            possible_folder_names_to_check_for_existence.push_back(src_folder_to_check);
+         }
 
          std::vector<std::string> Testing_folders_to_remove;
-         for (auto &Testing_folder_to_remove : Testing_folders_to_remove)
+         for (auto &possible_folder_name_to_check_for_existence : possible_folder_names_to_check_for_existence)
          {
-            // 4) Iterate over each one and remove it
+            std::cout << "  - Checking in \"" << possible_folder_name_to_check_for_existence << "\" - ";
+            if (Blast::DirectoryExistenceChecker(possible_folder_name_to_check_for_existence).exists())
+            {
+               Testing_folders_to_remove.push_back(possible_folder_name_to_check_for_existence);
+               std::cout << " FOLDER EXISTS!" << std::endl;
+            }
+            else
+            {
+               std::cout << " folder does not exist" << std::endl;
+            }
+         }
 
-            //std::string include_folder_to_remove = destination_directory + "/include/AllegroFlare/Testing";
-            //recursively_remove_folder_with_prompt(include_folder_to_remove);
-            //std::string src_folder_to_remove = destination_directory + "/src/AllegroFlare/Testing";
-            //recursively_remove_folder_with_prompt(src_folder_to_remove);
+         if (Testing_folders_to_remove.empty())
+         {
+            std::cout << "No extra \"Testing\" folders exist in these directories." << std::endl;
+         }
+         else
+         {
+            std::cout << "Some extra \"Testing\" folders were found. Removing..." << std::endl;
+
+            for (auto &Testing_folder_to_remove : Testing_folders_to_remove)
+            {
+               // 4) Iterate over each one and remove it
+               std::string folder_to_remove = Testing_folder_to_remove;
+               recursively_remove_folder_with_prompt(folder_to_remove);
+            }
          }
       }
 
