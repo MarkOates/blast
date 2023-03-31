@@ -900,11 +900,15 @@ functions:
       }
 
       return result;
+    body_dependency_symbols:
+      - std::filesystem
 
 
 dependencies:
 
 
+  - symbol: std::filesystem
+    headers: [ filesystem ]
   - symbol: std::ifstream
     headers: [ fstream ]
   - symbol: std::ofstream

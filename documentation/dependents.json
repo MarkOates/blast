@@ -284,7 +284,8 @@
     "StringVectorIntersection"
   ],
   "std/filesystem": [
-    "Blast/Project/ProjectSymlinkFixer"
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/Project/SourceReleaseBuilder"
   ],
   "std/istream_iterator": [
     "Blast/Project/ProjectSymlinkFixer"

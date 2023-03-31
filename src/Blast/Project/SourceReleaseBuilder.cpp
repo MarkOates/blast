@@ -12,6 +12,7 @@
 #include <Blast/StringSplitter.hpp>
 #include <Blast/TimeStamper.hpp>
 #include <cstdio>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
