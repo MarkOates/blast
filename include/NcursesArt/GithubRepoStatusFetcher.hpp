@@ -16,6 +16,7 @@ namespace NcursesArt
       std::string git_branch_count_command;
       std::string git_current_branch_command;
       std::string git_current_branch_num_commits_command;
+      std::string git_latest_commit_date_and_time_command;
       std::string git_current_hash_command;
       std::string git_remote_branch_names_command;
       std::string component_quintessence_filenames_command;
@@ -39,6 +40,7 @@ namespace NcursesArt
       std::string get_git_branch_count_command() const;
       std::string get_git_current_branch_command() const;
       std::string get_git_current_branch_num_commits_command() const;
+      std::string get_git_latest_commit_date_and_time_command() const;
       std::string get_git_current_hash_command() const;
       std::string get_git_remote_branch_names_command() const;
       std::string get_component_quintessence_filenames_command() const;
@@ -56,6 +58,7 @@ namespace NcursesArt
       std::string get_current_hash();
       int get_branch_count();
       int get_current_branch_num_commits();
+      std::string get_latest_commit_date_and_time();
       std::vector<std::string> get_branch_names_at_remote();
       int get_branch_count_at_remote();
       bool is_current_branch_master();

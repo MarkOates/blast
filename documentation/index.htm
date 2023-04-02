@@ -1843,7 +1843,7 @@ table td
   <td class="property">int</td>
 </tr>
 <tr>
-  <td class="property">project_git_timestamp</td>
+  <td class="property">project_git_latest_commit_date_and_time</td>
   <td class="property">std::string</td>
 </tr>
 <tr>
@@ -1907,7 +1907,7 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
-  <td class="property">allegro_version_git_timestamp</td>
+  <td class="property">allegro_version_git_latest_commit_date_and_time</td>
   <td class="property">std::string</td>
 </tr>
 <tr>
@@ -1927,7 +1927,7 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
-  <td class="property">allegro_flare_version_git_timestamp</td>
+  <td class="property">allegro_flare_version_git_latest_commit_date_and_time</td>
   <td class="property">std::string</td>
 </tr>
 <tr>
@@ -1968,6 +1968,9 @@ table td
   <td class="method">get_project_git_num_commits()</td>
 </tr>
 <tr>
+  <td class="method">get_project_git_latest_commit_date_and_time()</td>
+</tr>
+<tr>
   <td class="method">get_allegro_version_git_hash()</td>
 </tr>
 <tr>
@@ -1977,6 +1980,9 @@ table td
   <td class="method">get_allegro_version_git_num_commits()</td>
 </tr>
 <tr>
+  <td class="method">get_allegro_version_git_latest_commit_date_and_time()</td>
+</tr>
+<tr>
   <td class="method">get_allegro_flare_version_git_hash()</td>
 </tr>
 <tr>
@@ -1984,6 +1990,9 @@ table td
 </tr>
 <tr>
   <td class="method">get_allegro_flare_version_git_branch()</td>
+</tr>
+<tr>
+  <td class="method">get_allegro_flare_version_git_latest_commit_date_and_time()</td>
 </tr>
 <tr>
   <td class="private_method">project_folder()</td>
@@ -2425,6 +2434,10 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">git_latest_commit_date_and_time_command</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
   <td class="property">git_current_hash_command</td>
   <td class="property">std::string</td>
 </tr>
@@ -2484,6 +2497,9 @@ table td
 </tr>
 <tr>
   <td class="method">get_current_branch_num_commits()</td>
+</tr>
+<tr>
+  <td class="method">get_latest_commit_date_and_time()</td>
 </tr>
 <tr>
   <td class="method">get_branch_names_at_remote()</td>

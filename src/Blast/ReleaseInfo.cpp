@@ -13,7 +13,7 @@ ReleaseInfo::ReleaseInfo()
    : project_git_branch("[unset]")
    , project_git_hash("[unset]")
    , project_git_num_commits(0)
-   , project_git_timestamp("[unset]")
+   , project_git_latest_commit_date_and_time("[unset]")
    , version_number_major(0)
    , version_number_minor(0)
    , version_number_patch(0)
@@ -29,12 +29,12 @@ ReleaseInfo::ReleaseInfo()
    , allegro_version_num("[unset]")
    , allegro_version_git_branch("[unset]")
    , allegro_version_git_hash("[unset]")
-   , allegro_version_git_timestamp("[unset]")
+   , allegro_version_git_latest_commit_date_and_time("[unset]")
    , allegro_version_git_num_commits(0)
    , allegro_flare_version_num("[unset]")
    , allegro_flare_version_git_branch("[unset]")
    , allegro_flare_version_git_hash("[unset]")
-   , allegro_flare_version_git_timestamp("[unset]")
+   , allegro_flare_version_git_latest_commit_date_and_time("[unset]")
    , allegro_flare_version_git_num_commits(0)
 {
 }
@@ -63,9 +63,9 @@ void ReleaseInfo::set_project_git_num_commits(int project_git_num_commits)
 }
 
 
-void ReleaseInfo::set_project_git_timestamp(std::string project_git_timestamp)
+void ReleaseInfo::set_project_git_latest_commit_date_and_time(std::string project_git_latest_commit_date_and_time)
 {
-   this->project_git_timestamp = project_git_timestamp;
+   this->project_git_latest_commit_date_and_time = project_git_latest_commit_date_and_time;
 }
 
 
@@ -159,9 +159,9 @@ void ReleaseInfo::set_allegro_version_git_hash(std::string allegro_version_git_h
 }
 
 
-void ReleaseInfo::set_allegro_version_git_timestamp(std::string allegro_version_git_timestamp)
+void ReleaseInfo::set_allegro_version_git_latest_commit_date_and_time(std::string allegro_version_git_latest_commit_date_and_time)
 {
-   this->allegro_version_git_timestamp = allegro_version_git_timestamp;
+   this->allegro_version_git_latest_commit_date_and_time = allegro_version_git_latest_commit_date_and_time;
 }
 
 
@@ -189,9 +189,9 @@ void ReleaseInfo::set_allegro_flare_version_git_hash(std::string allegro_flare_v
 }
 
 
-void ReleaseInfo::set_allegro_flare_version_git_timestamp(std::string allegro_flare_version_git_timestamp)
+void ReleaseInfo::set_allegro_flare_version_git_latest_commit_date_and_time(std::string allegro_flare_version_git_latest_commit_date_and_time)
 {
-   this->allegro_flare_version_git_timestamp = allegro_flare_version_git_timestamp;
+   this->allegro_flare_version_git_latest_commit_date_and_time = allegro_flare_version_git_latest_commit_date_and_time;
 }
 
 
@@ -219,9 +219,9 @@ int ReleaseInfo::get_project_git_num_commits() const
 }
 
 
-std::string ReleaseInfo::get_project_git_timestamp() const
+std::string ReleaseInfo::get_project_git_latest_commit_date_and_time() const
 {
-   return project_git_timestamp;
+   return project_git_latest_commit_date_and_time;
 }
 
 
@@ -315,9 +315,9 @@ std::string ReleaseInfo::get_allegro_version_git_hash() const
 }
 
 
-std::string ReleaseInfo::get_allegro_version_git_timestamp() const
+std::string ReleaseInfo::get_allegro_version_git_latest_commit_date_and_time() const
 {
-   return allegro_version_git_timestamp;
+   return allegro_version_git_latest_commit_date_and_time;
 }
 
 
@@ -345,9 +345,9 @@ std::string ReleaseInfo::get_allegro_flare_version_git_hash() const
 }
 
 
-std::string ReleaseInfo::get_allegro_flare_version_git_timestamp() const
+std::string ReleaseInfo::get_allegro_flare_version_git_latest_commit_date_and_time() const
 {
-   return allegro_flare_version_git_timestamp;
+   return allegro_flare_version_git_latest_commit_date_and_time;
 }
 
 

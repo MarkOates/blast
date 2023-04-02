@@ -56,12 +56,31 @@ TEST(GithubRepoStatusFetcherTest,
 }
 
 
+//TEST(GithubRepoStatusFetcherTest,
+   //get_latest_commit_date_and_time_command__returns_the_shell_command_to_obtain_the_date_and_time_of_the_last_commit)
+//{
+   //GithubRepoStatusFetcher fetcher("blast");
+   // from https://stackoverflow.com/a/51403241
+   //std::string expected_shell_command = "git --no-pager log -1 --format=\"%ai\"";
+   //EXPECT_EQ(expected_shell_command, fetcher.get_git_lastest_commit_date_and_time_command());
+//}
+
+
 TEST(GithubRepoStatusFetcherTest,
    DISABLED__get_current_hash__returns_the_hash_of_the_current_git_head)
 {
    GithubRepoStatusFetcher fetcher("blast");
    std::string expected_hash = "5db8fccd55fe97926003e0f1be57f5c7ee435a6d";
    EXPECT_EQ(expected_hash, fetcher.get_current_hash());
+}
+
+
+TEST(GithubRepoStatusFetcherTest,
+   DISABLED__get_latest_commit_date_and_time__returns_the_date_and_time_of_the_latest_commit_in_the_expected_format)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   std::string expected_hash = "2023-04-01 22:20:07 -0400";
+   EXPECT_EQ(expected_hash, fetcher.get_latest_commit_date_and_time());
 }
 
 

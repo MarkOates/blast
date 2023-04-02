@@ -23,6 +23,7 @@ GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::str
    , git_branch_count_command("git branch | wc -l")
    , git_current_branch_command("git branch | grep \\* | cut -d ' ' -f2")
    , git_current_branch_num_commits_command("git rev-list --count HEAD")
+   , git_latest_commit_date_and_time_command("git --no-pager log -1 --format=\"%ai\"")
    , git_current_hash_command("git rev-parse HEAD")
    , git_remote_branch_names_command("git branch -r")
    , component_quintessence_filenames_command("find quintessence -name '*.q.yml'")
@@ -79,6 +80,12 @@ std::string GithubRepoStatusFetcher::get_git_current_branch_command() const
 std::string GithubRepoStatusFetcher::get_git_current_branch_num_commits_command() const
 {
    return git_current_branch_num_commits_command;
+}
+
+
+std::string GithubRepoStatusFetcher::get_git_latest_commit_date_and_time_command() const
+{
+   return git_latest_commit_date_and_time_command;
 }
 
 
@@ -195,6 +202,14 @@ int GithubRepoStatusFetcher::get_current_branch_num_commits()
    std::string command_output = execute_command(command.str());
    int result = atoi(command_output.c_str());
    return result;
+}
+
+std::string GithubRepoStatusFetcher::get_latest_commit_date_and_time()
+{
+   std::stringstream command;
+   command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_latest_commit_date_and_time_command() << ")";
+   std::string command_output = execute_command(command.str());
+   return Blast::String::Trimmer(command_output).trim();
 }
 
 std::vector<std::string> GithubRepoStatusFetcher::get_branch_names_at_remote()

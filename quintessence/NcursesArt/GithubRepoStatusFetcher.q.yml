@@ -30,6 +30,11 @@ properties:
     init_with: "\"git rev-list --count HEAD\""
     getter: true
 
+  - name: git_latest_commit_date_and_time_command
+    type: std::string
+    init_with: '"git --no-pager log -1 --format=\"%ai\""'
+    getter: true
+
   - name: git_current_hash_command
     type: std::string
     init_with: '"git rev-parse HEAD"'
@@ -154,6 +159,15 @@ functions:
       std::string command_output = execute_command(command.str());
       int result = atoi(command_output.c_str());
       return result;
+
+
+  - name: get_latest_commit_date_and_time
+    type: std::string
+    body: |
+      std::stringstream command;
+      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_latest_commit_date_and_time_command() << ")";
+      std::string command_output = execute_command(command.str());
+      return Blast::String::Trimmer(command_output).trim();
 
 
   - name: get_branch_names_at_remote

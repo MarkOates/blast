@@ -19,7 +19,7 @@ properties:
     getter: true
     setter: true
 
-  - name: project_git_timestamp
+  - name: project_git_latest_commit_date_and_time
     type: std::string
     init_with: '"[unset]"'
     getter: true
@@ -115,7 +115,7 @@ properties:
     getter: true
     setter: true
 
-  - name: allegro_version_git_timestamp
+  - name: allegro_version_git_latest_commit_date_and_time
     type: std::string
     init_with: '"[unset]"'
     getter: true
@@ -145,7 +145,7 @@ properties:
     getter: true
     setter: true
 
-  - name: allegro_flare_version_git_timestamp
+  - name: allegro_flare_version_git_latest_commit_date_and_time
     type: std::string
     init_with: '"[unset]"'
     getter: true
