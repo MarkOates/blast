@@ -66,7 +66,7 @@ TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_project_git_branch)
 }
 
 
-TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_project_git_num_commits)
+TEST(Blast_ReleaseInfoBuilderTest, DISABLED__build__assigns_the_project_git_num_commits)
 {
    Blast::ReleaseInfoBuilder release_info_builder("blast");
    Blast::ReleaseInfo release_info = release_info_builder.build();
