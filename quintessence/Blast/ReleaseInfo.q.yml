@@ -13,6 +13,12 @@ properties:
     getter: true
     setter: true
 
+  - name: project_git_num_commits
+    type: int
+    init_with: 0
+    getter: true
+    setter: true
+
   - name: project_git_timestamp
     type: std::string
     init_with: '"[unset]"'
@@ -115,6 +121,12 @@ properties:
     getter: true
     setter: true
 
+  - name: allegro_version_git_num_commits
+    type: int
+    init_with: 0
+    getter: true
+    setter: true
+
   - name: allegro_flare_version_num
     type: std::string
     init_with: '"[unset]"'
@@ -136,6 +148,12 @@ properties:
   - name: allegro_flare_version_git_timestamp
     type: std::string
     init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: allegro_flare_version_git_num_commits
+    type: int
+    init_with: 0
     getter: true
     setter: true
 

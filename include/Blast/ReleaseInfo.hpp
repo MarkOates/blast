@@ -12,6 +12,7 @@ namespace Blast
    private:
       std::string project_git_branch;
       std::string project_git_hash;
+      int project_git_num_commits;
       std::string project_git_timestamp;
       int version_number_major;
       int version_number_minor;
@@ -29,10 +30,12 @@ namespace Blast
       std::string allegro_version_git_branch;
       std::string allegro_version_git_hash;
       std::string allegro_version_git_timestamp;
+      int allegro_version_git_num_commits;
       std::string allegro_flare_version_num;
       std::string allegro_flare_version_git_branch;
       std::string allegro_flare_version_git_hash;
       std::string allegro_flare_version_git_timestamp;
+      int allegro_flare_version_git_num_commits;
 
    protected:
 
@@ -43,6 +46,7 @@ namespace Blast
 
       void set_project_git_branch(std::string project_git_branch);
       void set_project_git_hash(std::string project_git_hash);
+      void set_project_git_num_commits(int project_git_num_commits);
       void set_project_git_timestamp(std::string project_git_timestamp);
       void set_version_number_major(int version_number_major);
       void set_version_number_minor(int version_number_minor);
@@ -60,12 +64,15 @@ namespace Blast
       void set_allegro_version_git_branch(std::string allegro_version_git_branch);
       void set_allegro_version_git_hash(std::string allegro_version_git_hash);
       void set_allegro_version_git_timestamp(std::string allegro_version_git_timestamp);
+      void set_allegro_version_git_num_commits(int allegro_version_git_num_commits);
       void set_allegro_flare_version_num(std::string allegro_flare_version_num);
       void set_allegro_flare_version_git_branch(std::string allegro_flare_version_git_branch);
       void set_allegro_flare_version_git_hash(std::string allegro_flare_version_git_hash);
       void set_allegro_flare_version_git_timestamp(std::string allegro_flare_version_git_timestamp);
+      void set_allegro_flare_version_git_num_commits(int allegro_flare_version_git_num_commits);
       std::string get_project_git_branch() const;
       std::string get_project_git_hash() const;
+      int get_project_git_num_commits() const;
       std::string get_project_git_timestamp() const;
       int get_version_number_major() const;
       int get_version_number_minor() const;
@@ -83,10 +90,12 @@ namespace Blast
       std::string get_allegro_version_git_branch() const;
       std::string get_allegro_version_git_hash() const;
       std::string get_allegro_version_git_timestamp() const;
+      int get_allegro_version_git_num_commits() const;
       std::string get_allegro_flare_version_num() const;
       std::string get_allegro_flare_version_git_branch() const;
       std::string get_allegro_flare_version_git_hash() const;
       std::string get_allegro_flare_version_git_timestamp() const;
+      int get_allegro_flare_version_git_num_commits() const;
    };
 }
 

@@ -103,13 +103,20 @@ Blast::ReleaseInfo ReleaseInfoBuilder::build()
    }
    Blast::ReleaseInfo result;
 
+   // Set project data
    result.set_project_git_hash(get_project_git_hash());
    result.set_project_git_branch(get_project_git_branch());
+   result.set_project_git_num_commits(get_project_git_num_commits());
 
+   // Set allegro data
    result.set_allegro_version_git_hash(get_allegro_version_git_hash());
    result.set_allegro_version_git_branch(get_allegro_version_git_branch());
+   result.set_allegro_version_git_num_commits(get_allegro_version_git_num_commits());
+
+   // Set allegro_flare data
    result.set_allegro_flare_version_git_hash(get_allegro_flare_version_git_hash());
    result.set_allegro_flare_version_git_branch(get_allegro_flare_version_git_branch());
+   result.set_allegro_flare_version_git_num_commits(get_allegro_flare_version_git_num_commits());
 
    return result;
 }
@@ -128,6 +135,13 @@ std::string ReleaseInfoBuilder::get_project_git_branch()
    return result;
 }
 
+int ReleaseInfoBuilder::get_project_git_num_commits()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher(project_name);
+   int result = fetcher.get_current_branch_num_commits();
+   return result;
+}
+
 std::string ReleaseInfoBuilder::get_allegro_version_git_hash()
 {
    NcursesArt::GithubRepoStatusFetcher fetcher("allegro5");
@@ -142,10 +156,24 @@ std::string ReleaseInfoBuilder::get_allegro_version_git_branch()
    return result;
 }
 
+int ReleaseInfoBuilder::get_allegro_version_git_num_commits()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("allegro5");
+   int result = fetcher.get_current_branch_num_commits();
+   return result;
+}
+
 std::string ReleaseInfoBuilder::get_allegro_flare_version_git_hash()
 {
    NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
    std::string result = fetcher.get_current_hash();
+   return result;
+}
+
+int ReleaseInfoBuilder::get_allegro_flare_version_git_num_commits()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
+   int result = fetcher.get_current_branch_num_commits();
    return result;
 }
 

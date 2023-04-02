@@ -32,13 +32,20 @@ functions:
     body: |
       Blast::ReleaseInfo result;
 
+      // Set project data
       result.set_project_git_hash(get_project_git_hash());
       result.set_project_git_branch(get_project_git_branch());
+      result.set_project_git_num_commits(get_project_git_num_commits());
 
+      // Set allegro data
       result.set_allegro_version_git_hash(get_allegro_version_git_hash());
       result.set_allegro_version_git_branch(get_allegro_version_git_branch());
+      result.set_allegro_version_git_num_commits(get_allegro_version_git_num_commits());
+
+      // Set allegro_flare data
       result.set_allegro_flare_version_git_hash(get_allegro_flare_version_git_hash());
       result.set_allegro_flare_version_git_branch(get_allegro_flare_version_git_branch());
+      result.set_allegro_flare_version_git_num_commits(get_allegro_flare_version_git_num_commits());
 
       return result;
 
@@ -58,6 +65,16 @@ functions:
     body: |
       NcursesArt::GithubRepoStatusFetcher fetcher(project_name);
       std::string result = fetcher.get_current_branch_name();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
+
+
+  - name: get_project_git_num_commits
+    type: int
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher(project_name);
+      int result = fetcher.get_current_branch_num_commits();
       return result;
     body_dependency_symbols:
       - NcursesArt::GithubRepoStatusFetcher
@@ -83,11 +100,31 @@ functions:
       - NcursesArt::GithubRepoStatusFetcher
 
 
+  - name: get_allegro_version_git_num_commits
+    type: int
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher("allegro5");
+      int result = fetcher.get_current_branch_num_commits();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
+
+
   - name: get_allegro_flare_version_git_hash
     type: std::string
     body: |
       NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
       std::string result = fetcher.get_current_hash();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
+
+
+  - name: get_allegro_flare_version_git_num_commits
+    type: int
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
+      int result = fetcher.get_current_branch_num_commits();
       return result;
     body_dependency_symbols:
       - NcursesArt::GithubRepoStatusFetcher

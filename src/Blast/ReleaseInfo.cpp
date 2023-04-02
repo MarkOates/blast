@@ -12,6 +12,7 @@ namespace Blast
 ReleaseInfo::ReleaseInfo()
    : project_git_branch("[unset]")
    , project_git_hash("[unset]")
+   , project_git_num_commits(0)
    , project_git_timestamp("[unset]")
    , version_number_major(0)
    , version_number_minor(0)
@@ -29,10 +30,12 @@ ReleaseInfo::ReleaseInfo()
    , allegro_version_git_branch("[unset]")
    , allegro_version_git_hash("[unset]")
    , allegro_version_git_timestamp("[unset]")
+   , allegro_version_git_num_commits(0)
    , allegro_flare_version_num("[unset]")
    , allegro_flare_version_git_branch("[unset]")
    , allegro_flare_version_git_hash("[unset]")
    , allegro_flare_version_git_timestamp("[unset]")
+   , allegro_flare_version_git_num_commits(0)
 {
 }
 
@@ -51,6 +54,12 @@ void ReleaseInfo::set_project_git_branch(std::string project_git_branch)
 void ReleaseInfo::set_project_git_hash(std::string project_git_hash)
 {
    this->project_git_hash = project_git_hash;
+}
+
+
+void ReleaseInfo::set_project_git_num_commits(int project_git_num_commits)
+{
+   this->project_git_num_commits = project_git_num_commits;
 }
 
 
@@ -156,6 +165,12 @@ void ReleaseInfo::set_allegro_version_git_timestamp(std::string allegro_version_
 }
 
 
+void ReleaseInfo::set_allegro_version_git_num_commits(int allegro_version_git_num_commits)
+{
+   this->allegro_version_git_num_commits = allegro_version_git_num_commits;
+}
+
+
 void ReleaseInfo::set_allegro_flare_version_num(std::string allegro_flare_version_num)
 {
    this->allegro_flare_version_num = allegro_flare_version_num;
@@ -180,6 +195,12 @@ void ReleaseInfo::set_allegro_flare_version_git_timestamp(std::string allegro_fl
 }
 
 
+void ReleaseInfo::set_allegro_flare_version_git_num_commits(int allegro_flare_version_git_num_commits)
+{
+   this->allegro_flare_version_git_num_commits = allegro_flare_version_git_num_commits;
+}
+
+
 std::string ReleaseInfo::get_project_git_branch() const
 {
    return project_git_branch;
@@ -189,6 +210,12 @@ std::string ReleaseInfo::get_project_git_branch() const
 std::string ReleaseInfo::get_project_git_hash() const
 {
    return project_git_hash;
+}
+
+
+int ReleaseInfo::get_project_git_num_commits() const
+{
+   return project_git_num_commits;
 }
 
 
@@ -294,6 +321,12 @@ std::string ReleaseInfo::get_allegro_version_git_timestamp() const
 }
 
 
+int ReleaseInfo::get_allegro_version_git_num_commits() const
+{
+   return allegro_version_git_num_commits;
+}
+
+
 std::string ReleaseInfo::get_allegro_flare_version_num() const
 {
    return allegro_flare_version_num;
@@ -315,6 +348,12 @@ std::string ReleaseInfo::get_allegro_flare_version_git_hash() const
 std::string ReleaseInfo::get_allegro_flare_version_git_timestamp() const
 {
    return allegro_flare_version_git_timestamp;
+}
+
+
+int ReleaseInfo::get_allegro_flare_version_git_num_commits() const
+{
+   return allegro_flare_version_git_num_commits;
 }
 
 

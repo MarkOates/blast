@@ -34,9 +34,12 @@ namespace Blast
       Blast::ReleaseInfo build();
       std::string get_project_git_hash();
       std::string get_project_git_branch();
+      int get_project_git_num_commits();
       std::string get_allegro_version_git_hash();
       std::string get_allegro_version_git_branch();
+      int get_allegro_version_git_num_commits();
       std::string get_allegro_flare_version_git_hash();
+      int get_allegro_flare_version_git_num_commits();
       std::string get_allegro_flare_version_git_branch();
       bool project_name_is_valid();
    };
