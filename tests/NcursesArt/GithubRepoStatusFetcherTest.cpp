@@ -47,11 +47,29 @@ TEST(GithubRepoStatusFetcherTest,
 
 
 TEST(GithubRepoStatusFetcherTest,
+   get_git_current_branch_num_commits_command__returns_the_shell_command_to_obtain_the_number_of_commits)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   // from https://stackoverflow.com/a/949391
+   std::string expected_shell_command = "git rev-list --count HEAD";
+   EXPECT_EQ(expected_shell_command, fetcher.get_git_current_branch_num_commits_command());
+}
+
+
+TEST(GithubRepoStatusFetcherTest,
    DISABLED__get_current_hash__returns_the_hash_of_the_current_git_head)
 {
    GithubRepoStatusFetcher fetcher("blast");
    std::string expected_hash = "5db8fccd55fe97926003e0f1be57f5c7ee435a6d";
    EXPECT_EQ(expected_hash, fetcher.get_current_hash());
+}
+
+
+TEST(GithubRepoStatusFetcherTest,
+   DISABLED__get_current_branch_num_commits__will_return_the_count_of_the_commits_up_to_head)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   EXPECT_EQ(1291, fetcher.get_current_branch_num_commits());
 }
 
 

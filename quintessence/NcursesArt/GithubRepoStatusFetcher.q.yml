@@ -25,6 +25,11 @@ properties:
     init_with: "\"git branch | grep \\\\* | cut -d ' ' -f2\""
     getter: true
 
+  - name: git_current_branch_num_commits_command
+    type: std::string
+    init_with: "\"git rev-list --count HEAD\""
+    getter: true
+
   - name: git_current_hash_command
     type: std::string
     init_with: '"git rev-parse HEAD"'
@@ -136,6 +141,16 @@ functions:
     body: |
       std::stringstream command;
       command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_branch_count_command() << ")";
+      std::string command_output = execute_command(command.str());
+      int result = atoi(command_output.c_str());
+      return result;
+
+
+  - name: get_current_branch_num_commits
+    type: int
+    body: |
+      std::stringstream command;
+      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_current_branch_num_commits_command() << ")";
       std::string command_output = execute_command(command.str());
       int result = atoi(command_output.c_str());
       return result;
