@@ -170,15 +170,15 @@ functions:
   - name: is_current_branch_master
     type: bool
     body: |
-      return get_current_branch_name() == "master\n";
+      return get_current_branch_name() == "master";
 
 
   - name: get_current_branch_name_command
     type: std::string
     body: |
-      std::stringstream command;
-      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_current_branch_command() << ")";
-      return command.str();
+      std::stringstream result;
+      result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_current_branch_command() << ")";
+      return result.str();
 
 
   - name: get_pull_command
@@ -218,7 +218,8 @@ functions:
     type: std::string
     body: |
       std::string current_branch_name_command = get_current_branch_name_command();
-      return execute_command(current_branch_name_command);
+      std::string command_output = execute_command(current_branch_name_command);
+      return Blast::String::Trimmer(command_output).trim();
 
 
   - name: get_quintessence_filenames

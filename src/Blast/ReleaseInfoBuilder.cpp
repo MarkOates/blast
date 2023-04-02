@@ -3,6 +3,7 @@
 #include <Blast/ReleaseInfoBuilder.hpp>
 
 #include <Blast/DirectoryExistenceChecker.hpp>
+#include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -93,6 +94,24 @@ Blast::ReleaseInfo ReleaseInfoBuilder::build()
       throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"allegro_flare_git_repo_active()\" not met");
    }
    Blast::ReleaseInfo result;
+
+   result.set_allegro_flare_version_git_hash(get_allegro_flare_version_git_hash());
+   result.set_allegro_flare_version_git_branch(get_allegro_flare_version_git_branch());
+
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_allegro_flare_version_git_hash()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
+   std::string result = fetcher.get_current_hash();
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_allegro_flare_version_git_branch()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
+   std::string result = fetcher.get_current_branch_name();
    return result;
 }
 

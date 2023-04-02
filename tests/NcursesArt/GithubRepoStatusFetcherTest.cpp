@@ -9,7 +9,7 @@ TEST(GithubRepoStatusFetcherTest,
    get_current_branch_name_command__returns_the_shell_command_to_obtain_the_current_branch)
 {
    GithubRepoStatusFetcher fetcher("blast");
-   std::string expected_shell_command = "(cd ~/Repos/blast && git fetch && git branch | grep \\* | cut -d ' ' -f2)";
+   std::string expected_shell_command = "(cd ~/Repos/blast && git branch | grep \\* | cut -d ' ' -f2)";
    EXPECT_EQ(expected_shell_command, fetcher.get_current_branch_name_command());
 }
 
@@ -78,7 +78,7 @@ TEST(GithubRepoStatusFetcherTest,
 
 //TEST(GithubRepoStatusFetcherTest, is_current_branch_master__returns_true_if_the_current_branch_is_set_to_master)
 //{
-   //GithubRepoStatusFetcher fetcher("adventures-of-beary");
+   //GithubRepoStatusFetcher fetcher("blast");
    //EXPECT_EQ(true, fetcher.is_current_branch_master());
 //}
 

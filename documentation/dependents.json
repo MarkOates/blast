@@ -171,7 +171,8 @@
   ],
   "Blast/DirectoryExistenceChecker": [
     "Blast/DirectoryCreator",
-    "Blast/Project/SourceReleaseBuilder"
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/ReleaseInfoBuilder"
   ],
   "stat": [
     "Blast/DirectoryExistenceChecker"
@@ -353,6 +354,12 @@
   "std/runtime_error": [
     "Blast/RegexMatcher",
     "Blast/ShellCommandExecutorWithCallback"
+  ],
+  "Blast/ReleaseInfo": [
+    "Blast/ReleaseInfoBuilder"
+  ],
+  "NcursesArt/GithubRepoStatusFetcher": [
+    "Blast/ReleaseInfoBuilder"
   ],
   "std/function": [
     "Blast/ShellCommandExecutorWithCallback"

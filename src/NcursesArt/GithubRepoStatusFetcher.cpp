@@ -203,14 +203,14 @@ int GithubRepoStatusFetcher::get_branch_count_at_remote()
 
 bool GithubRepoStatusFetcher::is_current_branch_master()
 {
-   return get_current_branch_name() == "master\n";
+   return get_current_branch_name() == "master";
 }
 
 std::string GithubRepoStatusFetcher::get_current_branch_name_command()
 {
-   std::stringstream command;
-   command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_current_branch_command() << ")";
-   return command.str();
+   std::stringstream result;
+   result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_current_branch_command() << ")";
+   return result.str();
 }
 
 std::string GithubRepoStatusFetcher::get_pull_command()
@@ -245,7 +245,8 @@ std::vector<std::string> GithubRepoStatusFetcher::get_current_staged_files()
 std::string GithubRepoStatusFetcher::get_current_branch_name()
 {
    std::string current_branch_name_command = get_current_branch_name_command();
-   return execute_command(current_branch_name_command);
+   std::string command_output = execute_command(current_branch_name_command);
+   return Blast::String::Trimmer(command_output).trim();
 }
 
 std::vector<std::string> GithubRepoStatusFetcher::get_quintessence_filenames()

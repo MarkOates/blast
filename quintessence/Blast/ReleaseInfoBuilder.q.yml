@@ -30,7 +30,31 @@ functions:
       - allegro_flare_git_repo_active()
     body: |
       Blast::ReleaseInfo result;
+
+      result.set_allegro_flare_version_git_hash(get_allegro_flare_version_git_hash());
+      result.set_allegro_flare_version_git_branch(get_allegro_flare_version_git_branch());
+
       return result;
+
+
+  - name: get_allegro_flare_version_git_hash
+    type: std::string
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
+      std::string result = fetcher.get_current_hash();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
+
+
+  - name: get_allegro_flare_version_git_branch
+    type: std::string
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
+      std::string result = fetcher.get_current_branch_name();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
 
 
   - name: project_folder
@@ -96,5 +120,7 @@ dependencies:
     headers: [ Blast/ReleaseInfo.hpp ]
   - symbol: Blast::DirectoryExistenceChecker
     headers: [ Blast/DirectoryExistenceChecker.hpp ]
+  - symbol: NcursesArt::GithubRepoStatusFetcher
+    headers: [ NcursesArt/GithubRepoStatusFetcher.hpp ]
 
 
