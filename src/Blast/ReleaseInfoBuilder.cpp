@@ -95,9 +95,25 @@ Blast::ReleaseInfo ReleaseInfoBuilder::build()
    }
    Blast::ReleaseInfo result;
 
+   result.set_allegro_version_git_hash(get_allegro_version_git_hash());
+   result.set_allegro_version_git_branch(get_allegro_version_git_branch());
    result.set_allegro_flare_version_git_hash(get_allegro_flare_version_git_hash());
    result.set_allegro_flare_version_git_branch(get_allegro_flare_version_git_branch());
 
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_allegro_version_git_hash()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("allegro5");
+   std::string result = fetcher.get_current_hash();
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_allegro_version_git_branch()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("allegro5");
+   std::string result = fetcher.get_current_branch_name();
    return result;
 }
 

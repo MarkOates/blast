@@ -31,10 +31,32 @@ functions:
     body: |
       Blast::ReleaseInfo result;
 
+      result.set_allegro_version_git_hash(get_allegro_version_git_hash());
+      result.set_allegro_version_git_branch(get_allegro_version_git_branch());
       result.set_allegro_flare_version_git_hash(get_allegro_flare_version_git_hash());
       result.set_allegro_flare_version_git_branch(get_allegro_flare_version_git_branch());
 
       return result;
+
+
+  - name: get_allegro_version_git_hash
+    type: std::string
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher("allegro5");
+      std::string result = fetcher.get_current_hash();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
+
+
+  - name: get_allegro_version_git_branch
+    type: std::string
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher("allegro5");
+      std::string result = fetcher.get_current_branch_name();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
 
 
   - name: get_allegro_flare_version_git_hash

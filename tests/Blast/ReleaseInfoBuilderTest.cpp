@@ -23,6 +23,26 @@ TEST(Blast_ReleaseInfoBuilderTest, build__when_a_project_folder_does_not_exist__
 }
 
 
+TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_allegro_version_git_hash)
+{
+   Blast::ReleaseInfoBuilder release_info_builder("blast");
+   Blast::ReleaseInfo release_info = release_info_builder.build();
+   std::string expected_hash = "802dd8cad4be85dd0a57ed4368963ae954a9c88f";
+   std::string actual_hash = release_info.get_allegro_version_git_hash();
+   EXPECT_EQ(expected_hash, actual_hash);
+}
+
+
+TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_allegro_version_git_branch)
+{
+   Blast::ReleaseInfoBuilder release_info_builder("blast");
+   Blast::ReleaseInfo release_info = release_info_builder.build();
+   std::string expected_branch = "remove-double-free";
+   std::string actual_branch = release_info.get_allegro_version_git_branch();
+   EXPECT_EQ(expected_branch, actual_branch);
+}
+
+
 TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_allegro_flare_version_git_hash)
 {
    Blast::ReleaseInfoBuilder release_info_builder("blast");
