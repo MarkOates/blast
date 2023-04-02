@@ -22,6 +22,7 @@ GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::str
    , git_pull_command("git pull")
    , git_branch_count_command("git branch | wc -l")
    , git_current_branch_command("git branch | grep \\* | cut -d ' ' -f2")
+   , git_current_hash_command("git rev-parse HEAD")
    , git_remote_branch_names_command("git branch -r")
    , component_quintessence_filenames_command("find quintessence -name '*.q.yml'")
    , git_current_staged_files_command("git diff --name-only --cached")
@@ -71,6 +72,12 @@ std::string GithubRepoStatusFetcher::get_git_branch_count_command() const
 std::string GithubRepoStatusFetcher::get_git_current_branch_command() const
 {
    return git_current_branch_command;
+}
+
+
+std::string GithubRepoStatusFetcher::get_git_current_hash_command() const
+{
+   return git_current_hash_command;
 }
 
 
@@ -155,6 +162,14 @@ bool GithubRepoStatusFetcher::is_the_local_repo_behind()
    poll_status();
    std::string string_to_find = "Your branch is behind 'origin/master' by";
    return last_captured_output_from_status_request_contains_string(string_to_find);
+}
+
+std::string GithubRepoStatusFetcher::get_current_hash()
+{
+   std::stringstream command;
+   command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_current_hash_command() << ")";
+   std::string command_output = execute_command(command.str());
+   return Blast::String::Trimmer(command_output).trim();
 }
 
 int GithubRepoStatusFetcher::get_branch_count()

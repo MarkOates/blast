@@ -36,6 +36,25 @@ TEST(GithubRepoStatusFetcherTest,
    EXPECT_EQ(expected_shell_command, fetcher.get_git_current_staged_files_command());
 }
 
+TEST(GithubRepoStatusFetcherTest,
+   get_current_hash_command__returns_the_shell_command_to_obtain_the_list_of_staged_files)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   // from https://stackoverflow.com/a/949391
+   std::string expected_shell_command = "git rev-parse HEAD";
+   EXPECT_EQ(expected_shell_command, fetcher.get_git_current_hash_command());
+}
+
+
+TEST(GithubRepoStatusFetcherTest,
+   DISABLED__get_current_hash__returns_the_hash_of_the_current_git_head)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   std::string expected_hash = "5db8fccd55fe97926003e0f1be57f5c7ee435a6d";
+   EXPECT_EQ(expected_hash, fetcher.get_current_hash());
+}
+
+
 //TEST(GithubRepoStatusFetcherTest, get_current_staged_files__returns_a_list_of_current_staged_files)
 //{
    //std::vector<std::string> expected_staged_files = {

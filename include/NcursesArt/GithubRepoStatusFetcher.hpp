@@ -15,6 +15,7 @@ namespace NcursesArt
       std::string git_pull_command;
       std::string git_branch_count_command;
       std::string git_current_branch_command;
+      std::string git_current_hash_command;
       std::string git_remote_branch_names_command;
       std::string component_quintessence_filenames_command;
       std::string git_current_staged_files_command;
@@ -36,6 +37,7 @@ namespace NcursesArt
       std::string get_git_pull_command() const;
       std::string get_git_branch_count_command() const;
       std::string get_git_current_branch_command() const;
+      std::string get_git_current_hash_command() const;
       std::string get_git_remote_branch_names_command() const;
       std::string get_component_quintessence_filenames_command() const;
       std::string get_git_current_staged_files_command() const;
@@ -49,6 +51,7 @@ namespace NcursesArt
       bool is_the_repo_in_sync_with_remote();
       bool is_the_local_repo_ahead();
       bool is_the_local_repo_behind();
+      std::string get_current_hash();
       int get_branch_count();
       std::vector<std::string> get_branch_names_at_remote();
       int get_branch_count_at_remote();

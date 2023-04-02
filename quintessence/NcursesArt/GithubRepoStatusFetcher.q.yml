@@ -25,6 +25,11 @@ properties:
     init_with: "\"git branch | grep \\\\* | cut -d ' ' -f2\""
     getter: true
 
+  - name: git_current_hash_command
+    type: std::string
+    init_with: '"git rev-parse HEAD"'
+    getter: true
+
   - name: git_remote_branch_names_command
     type: std::string
     init_with: "\"git branch -r\""
@@ -113,6 +118,17 @@ functions:
       poll_status();
       std::string string_to_find = "Your branch is behind 'origin/master' by";
       return last_captured_output_from_status_request_contains_string(string_to_find);
+
+
+  - name: get_current_hash
+    type: std::string
+    body: |
+      std::stringstream command;
+      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_current_hash_command() << ")";
+      std::string command_output = execute_command(command.str());
+      return Blast::String::Trimmer(command_output).trim();
+    body_dependency_symbols:
+      - Blast::String::Trimmer
 
 
   - name: get_branch_count

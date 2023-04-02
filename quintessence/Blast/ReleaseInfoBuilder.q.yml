@@ -1,0 +1,100 @@
+properties:
+
+
+  - name: project_name
+    type: std::string
+    init_with: '"[unset]"'
+    constructor_arg: true
+    getter: true
+    setter: true
+
+  - name: projects_folder
+    type: std::string
+    init_with: '"/Users/markoates/Repos"'
+    constructor_arg: true
+    getter: true
+    setter: true
+
+
+functions:
+
+
+  - name: build
+    type: Blast::ReleaseInfo
+    guards:
+      - project_folder_exists()
+      - project_git_repo_active()
+      - allegro_folder_exists()
+      - allegro_git_repo_active()
+      - allegro_flare_folder_exists()
+      - allegro_flare_git_repo_active()
+    body: |
+      Blast::ReleaseInfo result;
+      return result;
+
+
+  - name: project_folder
+    private: true
+    type: std::string
+    body: |
+      return projects_folder + "/" + project_name;
+
+
+  - name: project_folder_exists
+    type: bool
+    private: true
+    body: |
+      return Blast::DirectoryExistenceChecker(project_folder()).exists();
+    body_dependency_symbols:
+      - Blast::DirectoryExistenceChecker
+
+
+  - name: project_git_repo_active
+    type: bool
+    private: true
+    body: |
+      // TODO: this function
+      return true;
+
+
+  - name: allegro_folder_exists
+    type: bool
+    private: true
+    body: |
+      // TODO: this function
+      return true;
+
+
+  - name: allegro_git_repo_active
+    type: bool
+    private: true
+    body: |
+      // TODO: this function
+      return true;
+
+
+  - name: allegro_flare_folder_exists
+    type: bool
+    private: true
+    body: |
+      // TODO: this function
+      return true;
+
+
+  - name: allegro_flare_git_repo_active
+    type: bool
+    private: true
+    body: |
+      // TODO: this function
+      return true;
+
+
+dependencies:
+
+
+  - symbol: Blast::ReleaseInfo
+    headers: [ Blast/ReleaseInfo.hpp ]
+  - symbol: Blast::DirectoryExistenceChecker
+    headers: [ Blast/DirectoryExistenceChecker.hpp ]
+
+
