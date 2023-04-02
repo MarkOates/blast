@@ -32,10 +32,13 @@ namespace Blast
       std::string get_project_name() const;
       std::string get_projects_folder() const;
       Blast::ReleaseInfo build();
+      std::string get_project_git_hash();
+      std::string get_project_git_branch();
       std::string get_allegro_version_git_hash();
       std::string get_allegro_version_git_branch();
       std::string get_allegro_flare_version_git_hash();
       std::string get_allegro_flare_version_git_branch();
+      bool project_name_is_valid();
    };
 }
 

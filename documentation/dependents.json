@@ -340,7 +340,8 @@
     "Blast/RegexMatcher"
   ],
   "std/regex": [
-    "Blast/RegexMatcher"
+    "Blast/RegexMatcher",
+    "Blast/ReleaseInfoBuilder"
   ],
   "std/regex_iterator": [
     "Blast/RegexMatcher"

@@ -5,6 +5,7 @@
 #include <Blast/DirectoryExistenceChecker.hpp>
 #include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <iostream>
+#include <regex>
 #include <sstream>
 #include <stdexcept>
 
@@ -51,6 +52,13 @@ std::string ReleaseInfoBuilder::get_projects_folder() const
 
 Blast::ReleaseInfo ReleaseInfoBuilder::build()
 {
+   if (!(project_name_is_valid()))
+   {
+      std::stringstream error_message;
+      error_message << "[ReleaseInfoBuilder::build]: error: guard \"project_name_is_valid()\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"project_name_is_valid()\" not met");
+   }
    if (!(project_folder_exists()))
    {
       std::stringstream error_message;
@@ -95,11 +103,28 @@ Blast::ReleaseInfo ReleaseInfoBuilder::build()
    }
    Blast::ReleaseInfo result;
 
+   result.set_project_git_hash(get_project_git_hash());
+   result.set_project_git_branch(get_project_git_branch());
+
    result.set_allegro_version_git_hash(get_allegro_version_git_hash());
    result.set_allegro_version_git_branch(get_allegro_version_git_branch());
    result.set_allegro_flare_version_git_hash(get_allegro_flare_version_git_hash());
    result.set_allegro_flare_version_git_branch(get_allegro_flare_version_git_branch());
 
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_project_git_hash()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher(project_name);
+   std::string result = fetcher.get_current_hash();
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_project_git_branch()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher(project_name);
+   std::string result = fetcher.get_current_branch_name();
    return result;
 }
 
@@ -134,6 +159,13 @@ std::string ReleaseInfoBuilder::get_allegro_flare_version_git_branch()
 std::string ReleaseInfoBuilder::project_folder()
 {
    return projects_folder + "/" + project_name;
+}
+
+bool ReleaseInfoBuilder::project_name_is_valid()
+{
+   // TODO: Test this case
+   static const std::regex pattern("^[a-zA-Z_]+[a-zA-Z0-9_-]*$");
+   return std::regex_match(project_name, pattern);
 }
 
 bool ReleaseInfoBuilder::project_folder_exists()

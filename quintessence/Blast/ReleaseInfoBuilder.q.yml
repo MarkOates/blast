@@ -22,6 +22,7 @@ functions:
   - name: build
     type: Blast::ReleaseInfo
     guards:
+      - project_name_is_valid()
       - project_folder_exists()
       - project_git_repo_active()
       - allegro_folder_exists()
@@ -31,12 +32,35 @@ functions:
     body: |
       Blast::ReleaseInfo result;
 
+      result.set_project_git_hash(get_project_git_hash());
+      result.set_project_git_branch(get_project_git_branch());
+
       result.set_allegro_version_git_hash(get_allegro_version_git_hash());
       result.set_allegro_version_git_branch(get_allegro_version_git_branch());
       result.set_allegro_flare_version_git_hash(get_allegro_flare_version_git_hash());
       result.set_allegro_flare_version_git_branch(get_allegro_flare_version_git_branch());
 
       return result;
+
+
+  - name: get_project_git_hash
+    type: std::string
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher(project_name);
+      std::string result = fetcher.get_current_hash();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
+
+
+  - name: get_project_git_branch
+    type: std::string
+    body: |
+      NcursesArt::GithubRepoStatusFetcher fetcher(project_name);
+      std::string result = fetcher.get_current_branch_name();
+      return result;
+    body_dependency_symbols:
+      - NcursesArt::GithubRepoStatusFetcher
 
 
   - name: get_allegro_version_git_hash
@@ -84,6 +108,16 @@ functions:
     type: std::string
     body: |
       return projects_folder + "/" + project_name;
+
+
+  - name: project_name_is_valid
+    type: bool
+    body: |
+      // TODO: Test this case
+      static const std::regex pattern("^[a-zA-Z_]+[a-zA-Z0-9_-]*$");
+      return std::regex_match(project_name, pattern);
+    body_dependency_symbols:
+      - std::regex
 
 
   - name: project_folder_exists
@@ -138,6 +172,8 @@ functions:
 dependencies:
 
 
+  - symbol: std::regex
+    headers: [ regex ]
   - symbol: Blast::ReleaseInfo
     headers: [ Blast/ReleaseInfo.hpp ]
   - symbol: Blast::DirectoryExistenceChecker
