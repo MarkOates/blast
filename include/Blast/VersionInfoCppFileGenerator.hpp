@@ -32,6 +32,8 @@ namespace Blast
       std::vector<Blast::Cpp::ClassAttributes> build_cpp_class_attribute_properties();
       Blast::Cpp::ClassAttributes build_cpp_class_attribute(std::string datatype="std::string", std::string variable_name="variable", std::string initialization_value="variable");
       std::vector<Blast::Cpp::SymbolDependencies> build_cpp_class_symbol_dependencies();
+      std::string wrap_in_quotes(std::string str="");
+      bool is_valid_datatype(std::string str="");
       std::string header_file_content();
       std::string source_file_content();
    };

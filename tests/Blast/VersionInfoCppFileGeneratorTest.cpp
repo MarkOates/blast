@@ -31,6 +31,14 @@ static std::string file_get_contents(std::string filename, bool raise_on_missing
 }
 
 
+static Blast::ReleaseInfo build_test_release_info()
+{
+   Blast::ReleaseInfo result;
+   result.set_project_version(7, 12, 0, { "wip", "alpha" });
+   return result;
+}
+
+
 TEST(Blast_VersionInfoCppFileGeneratorTest, can_be_created_without_blowing_up)
 {
    Blast::VersionInfoCppFileGenerator version_info_cpp_file_generator;
@@ -56,6 +64,7 @@ TEST(Blast_VersionInfoCppFileGeneratorTest, source_file_content__will_return_the
    std::string VERSION_INFO_EXPECTED_HPP = TEST_FIXTURES_FOLDER + "ThisVersionInfo_cpp_file_content.txt";
 
    Blast::VersionInfoCppFileGenerator version_info_cpp_file_generator;
+   version_info_cpp_file_generator.set_release_info(build_test_release_info());
    version_info_cpp_file_generator.initialize();
 
    std::string expected_generated_content = file_get_contents(VERSION_INFO_EXPECTED_HPP);

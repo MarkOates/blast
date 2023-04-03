@@ -78,17 +78,24 @@ Blast::Cpp::Class VersionInfoCppFileGenerator::build_cpp_class()
 std::vector<Blast::Cpp::ClassAttributes> VersionInfoCppFileGenerator::build_cpp_class_attribute_properties()
 {
    std::vector<Blast::Cpp::ClassAttributes> result = {
-      build_cpp_class_attribute("std::string", "version", "0.0.0"),
+      build_cpp_class_attribute("std::string", "version", release_info.build_project_version_string()),
    };
    return result;
 }
 
 Blast::Cpp::ClassAttributes VersionInfoCppFileGenerator::build_cpp_class_attribute(std::string datatype, std::string variable_name, std::string initialization_value)
 {
+   if (!(is_valid_datatype(datatype)))
+   {
+      std::stringstream error_message;
+      error_message << "[VersionInfoCppFileGenerator::build_cpp_class_attribute]: error: guard \"is_valid_datatype(datatype)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("VersionInfoCppFileGenerator::build_cpp_class_attribute: error: guard \"is_valid_datatype(datatype)\" not met");
+   }
    return Blast::Cpp::ClassAttributes(
          datatype, //std::string datatype,
          variable_name, //std::string variable_name,
-         initialization_value, //std::string initialization_value,
+         (datatype == "std::string") ? wrap_in_quotes(initialization_value) : initialization_value, //std::string initialization_value,
          true, //bool is_static,
          false, //bool is_constructor_parameter,
          true, //bool has_getter,
@@ -116,6 +123,16 @@ std::vector<Blast::Cpp::SymbolDependencies> VersionInfoCppFileGenerator::build_c
       ),
    };
    return result;
+}
+
+std::string VersionInfoCppFileGenerator::wrap_in_quotes(std::string str)
+{
+   return "\"" + str + "\"";
+}
+
+bool VersionInfoCppFileGenerator::is_valid_datatype(std::string str)
+{
+   return (str == "std::string" || str == "int");
 }
 
 std::string VersionInfoCppFileGenerator::header_file_content()

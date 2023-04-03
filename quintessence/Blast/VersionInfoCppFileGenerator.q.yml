@@ -72,7 +72,7 @@ functions:
     type: std::vector<Blast::Cpp::ClassAttributes>
     body: |
       std::vector<Blast::Cpp::ClassAttributes> result = {
-         build_cpp_class_attribute("std::string", "version", "0.0.0"),
+         build_cpp_class_attribute("std::string", "version", release_info.build_project_version_string()),
       };
       return result;
 
@@ -89,11 +89,12 @@ functions:
       - name: initialization_value
         type: std::string
         default_argument: '"variable"'
+    guards: [ is_valid_datatype(datatype) ]
     body: |
       return Blast::Cpp::ClassAttributes(
             datatype, //std::string datatype,
             variable_name, //std::string variable_name,
-            initialization_value, //std::string initialization_value,
+            (datatype == "std::string") ? wrap_in_quotes(initialization_value) : initialization_value, //std::string initialization_value,
             true, //bool is_static,
             false, //bool is_constructor_parameter,
             true, //bool has_getter,
@@ -122,6 +123,26 @@ functions:
          ),
       };
       return result;
+
+
+  - name: wrap_in_quotes
+    type: std::string
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: '""'
+    body: |
+      return "\"" + str + "\"";
+
+
+  - name: is_valid_datatype
+    type: bool
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: '""'
+    body: |
+       return (str == "std::string" || str == "int");
 
 
   - name: header_file_content
