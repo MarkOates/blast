@@ -51,3 +51,17 @@ TEST(Blast_VersionInfoCppFileGeneratorTest, header_file_content__will_return_the
 }
 
 
+TEST(Blast_VersionInfoCppFileGeneratorTest, source_file_content__will_return_the_expected_generated_content)
+{
+   std::string VERSION_INFO_EXPECTED_HPP = TEST_FIXTURES_FOLDER + "ThisVersionInfo_cpp_file_content.txt";
+
+   Blast::VersionInfoCppFileGenerator version_info_cpp_file_generator;
+   version_info_cpp_file_generator.initialize();
+
+   std::string expected_generated_content = file_get_contents(VERSION_INFO_EXPECTED_HPP);
+   std::string actual_generated_content = version_info_cpp_file_generator.source_file_content();
+
+   EXPECT_EQ(expected_generated_content, actual_generated_content);
+}
+
+

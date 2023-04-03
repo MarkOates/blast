@@ -1,0 +1,32 @@
+
+
+#include <ThisVersionInfo.hpp>
+
+
+
+
+
+
+std::string ThisVersionInfo::version = 0.0.0;
+
+
+ThisVersionInfo::ThisVersionInfo()
+{
+}
+
+
+ThisVersionInfo::~ThisVersionInfo()
+{
+}
+
+
+std::string ThisVersionInfo::get_version()
+{
+   return version;
+}
+
+
+
+
+
+
