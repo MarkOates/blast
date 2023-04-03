@@ -1937,8 +1937,17 @@ table td
 </tr>
     </table>
      <table>
+<tr>
+  <td class="method">set_project_version(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::vector&lt;std::string&gt; version_number_labels={}, std::vector&lt;std::string&gt; version_number_metadata={})</td>
+</tr>
+<tr>
+  <td class="method">build_project_version_string()</td>
+</tr>
     </table>
      <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringJoiner&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringJoiner.hpp&quot;]}</td>
+</tr>
     </table>
   </div>
 </ul>
@@ -3334,6 +3343,7 @@ table td
   ],
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
+    "Blast/ReleaseInfo",
     "Quizes/MultiplexQuizRunner"
   ],
   "Blast/StringSplitter": [

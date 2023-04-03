@@ -2,7 +2,8 @@
 
 #include <Blast/ReleaseInfo.hpp>
 
-
+#include <Blast/StringJoiner.hpp>
+#include <sstream>
 
 
 namespace Blast
@@ -357,6 +358,23 @@ int ReleaseInfo::get_allegro_flare_version_git_num_commits() const
 }
 
 
+void ReleaseInfo::set_project_version(int version_number_major, int version_number_minor, int version_number_patch, std::vector<std::string> version_number_labels, std::vector<std::string> version_number_metadata)
+{
+   this->version_number_major = version_number_major;
+   this->version_number_minor = version_number_minor;
+   this->version_number_patch = version_number_patch;
+   this->version_number_labels = version_number_labels;
+   this->version_number_metadata = version_number_metadata;
+   return;
+}
+
+std::string ReleaseInfo::build_project_version_string()
+{
+   std::stringstream result;
+   result << version_number_major << "." << version_number_minor << "." << version_number_patch;
+   if (!version_number_labels.empty()) result << "-" << Blast::StringJoiner(version_number_labels, "-").join();
+   return result.str();
+}
 
 
 } // namespace Blast

@@ -134,6 +134,7 @@
   ],
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
+    "Blast/ReleaseInfo",
     "Quizes/MultiplexQuizRunner"
   ],
   "Blast/StringSplitter": [

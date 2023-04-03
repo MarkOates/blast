@@ -96,6 +96,8 @@ namespace Blast
       std::string get_allegro_flare_version_git_hash() const;
       std::string get_allegro_flare_version_git_latest_commit_date_and_time() const;
       int get_allegro_flare_version_git_num_commits() const;
+      void set_project_version(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::vector<std::string> version_number_labels={}, std::vector<std::string> version_number_metadata={});
+      std::string build_project_version_string();
    };
 }
 
