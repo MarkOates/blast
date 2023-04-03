@@ -15,9 +15,10 @@ TEST(Blast_ReleaseInfoTest, build_project_version_string__will_return_a_nicely_f
    Blast::ReleaseInfo release_info;
    std::vector<std::pair<std::tuple<int, int, int, std::vector<std::string>, std::vector<std::string>>, std::string>>
          test_datas = {
-      { { 7,  12,  0,          {},      {}, },                     "7.12.0" },
-      { { 12,  0,  1, { "alpha" },      {}, },                     "12.0.1-alpha" },
-      { { 12,  0,  1, { "wip", "alpha" },      {}, },              "12.0.1-wip-alpha" },
+      { { 7,  12,  0,          {},         {}, },                "7.12.0" },
+      { { 12,  0,  1, { "alpha" },         {}, },                "12.0.1-alpha" },
+      { { 12,  0,  1, { "wip", "alpha" },  {}, },                "12.0.1-wip-alpha" },
+      { { 12,  0,  1, { "wip", "alpha" },  { "resize_fix" }, },  "12.0.1-wip-alpha+resize_fix" },
    };
 
    for (auto &test_data : test_datas)

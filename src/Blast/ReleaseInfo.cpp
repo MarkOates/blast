@@ -373,6 +373,7 @@ std::string ReleaseInfo::build_project_version_string()
    std::stringstream result;
    result << version_number_major << "." << version_number_minor << "." << version_number_patch;
    if (!version_number_labels.empty()) result << "-" << Blast::StringJoiner(version_number_labels, "-").join();
+   if (!version_number_metadata.empty()) result << "+" << Blast::StringJoiner(version_number_metadata, "+").join();
    return result.str();
 }
 
