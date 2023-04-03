@@ -79,7 +79,7 @@ std::vector<Blast::Cpp::ClassAttributes> VersionInfoCppFileGenerator::build_cpp_
 {
    std::vector<Blast::Cpp::ClassAttributes> result = {
       build_cpp_class_attribute("std::string", "version", release_info.build_project_version_string()),
-      build_cpp_class_attribute("std::string", "allegro_flare_git_hash", release_info.get_allegro_flare_version_git_hash()),
+      build_cpp_class_attribute("std::string", "allegro_flare_version_git_hash", release_info.get_allegro_flare_version_git_hash()),
    };
    return result;
 }
