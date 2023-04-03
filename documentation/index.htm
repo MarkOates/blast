@@ -2363,6 +2363,10 @@ table td
     <h3 id="quintessence/Blast/VersionInfoCppFileGenerator.q.yml">quintessence/Blast/VersionInfoCppFileGenerator.q.yml</h3>
      <table>
 <tr>
+  <td class="property">release_info</td>
+  <td class="property">Blast::ReleaseInfo</td>
+</tr>
+<tr>
   <td class="property">cpp_class</td>
   <td class="property">Blast::Cpp::Class</td>
 </tr>
@@ -2372,6 +2376,9 @@ table td
 </tr>
     </table>
      <table>
+<tr>
+  <td class="method">set_release_info(Blast::ReleaseInfo release_info={})</td>
+</tr>
 <tr>
   <td class="method">initialize()</td>
 </tr>
@@ -2406,6 +2413,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::SymbolDependencies&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/SymbolDependencies.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ReleaseInfo&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ReleaseInfo.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -3547,7 +3557,8 @@ table td
     "Blast/ShellCommandExecutorWithCallback"
   ],
   "Blast/ReleaseInfo": [
-    "Blast/ReleaseInfoBuilder"
+    "Blast/ReleaseInfoBuilder",
+    "Blast/VersionInfoCppFileGenerator"
   ],
   "NcursesArt/GithubRepoStatusFetcher": [
     "Blast/ReleaseInfoBuilder"

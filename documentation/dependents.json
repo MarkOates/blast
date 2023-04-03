@@ -357,7 +357,8 @@
     "Blast/ShellCommandExecutorWithCallback"
   ],
   "Blast/ReleaseInfo": [
-    "Blast/ReleaseInfoBuilder"
+    "Blast/ReleaseInfoBuilder",
+    "Blast/VersionInfoCppFileGenerator"
   ],
   "NcursesArt/GithubRepoStatusFetcher": [
     "Blast/ReleaseInfoBuilder"

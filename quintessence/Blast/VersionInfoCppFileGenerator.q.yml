@@ -1,6 +1,13 @@
 properties:
 
 
+  - name: release_info
+    type: Blast::ReleaseInfo
+    constructor_arg: true
+    init_with: '{}'
+    getter: true
+    setter: false
+
   - name: cpp_class
     type: Blast::Cpp::Class
 
@@ -10,6 +17,23 @@ properties:
 
 
 functions:
+
+
+  - name: set_release_info
+    parameters:
+      - name: release_info
+        type: Blast::ReleaseInfo
+        default_argument: '{}'
+    guards: [ (!initialized) ]
+    body: |
+      this->release_info = release_info;
+      return;
+
+
+    body: |
+      cpp_class = build_cpp_class();
+      initialized = true;
+      return;
 
 
   - name: initialize
@@ -131,5 +155,7 @@ dependencies:
     headers: [ Blast/Cpp/ClassAttributes.hpp ]
   - symbol: Blast::Cpp::SymbolDependencies
     headers: [ Blast/Cpp/SymbolDependencies.hpp ]
+  - symbol: Blast::ReleaseInfo
+    headers: [ Blast/ReleaseInfo.hpp ]
 
 

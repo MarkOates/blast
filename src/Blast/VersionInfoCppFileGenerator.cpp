@@ -12,8 +12,9 @@ namespace Blast
 {
 
 
-VersionInfoCppFileGenerator::VersionInfoCppFileGenerator()
-   : cpp_class("")
+VersionInfoCppFileGenerator::VersionInfoCppFileGenerator(Blast::ReleaseInfo release_info)
+   : release_info(release_info)
+   , cpp_class("")
    , initialized(false)
 {
 }
@@ -23,6 +24,25 @@ VersionInfoCppFileGenerator::~VersionInfoCppFileGenerator()
 {
 }
 
+
+Blast::ReleaseInfo VersionInfoCppFileGenerator::get_release_info() const
+{
+   return release_info;
+}
+
+
+void VersionInfoCppFileGenerator::set_release_info(Blast::ReleaseInfo release_info)
+{
+   if (!((!initialized)))
+   {
+      std::stringstream error_message;
+      error_message << "[VersionInfoCppFileGenerator::set_release_info]: error: guard \"(!initialized)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("VersionInfoCppFileGenerator::set_release_info: error: guard \"(!initialized)\" not met");
+   }
+   this->release_info = release_info;
+   return;
+}
 
 void VersionInfoCppFileGenerator::initialize()
 {

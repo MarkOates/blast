@@ -4,6 +4,7 @@
 #include <Blast/Cpp/Class.hpp>
 #include <Blast/Cpp/ClassAttributes.hpp>
 #include <Blast/Cpp/SymbolDependencies.hpp>
+#include <Blast/ReleaseInfo.hpp>
 #include <string>
 #include <vector>
 
@@ -13,6 +14,7 @@ namespace Blast
    class VersionInfoCppFileGenerator
    {
    private:
+      Blast::ReleaseInfo release_info;
       Blast::Cpp::Class cpp_class;
       bool initialized;
 
@@ -20,9 +22,11 @@ namespace Blast
 
 
    public:
-      VersionInfoCppFileGenerator();
+      VersionInfoCppFileGenerator(Blast::ReleaseInfo release_info={});
       ~VersionInfoCppFileGenerator();
 
+      Blast::ReleaseInfo get_release_info() const;
+      void set_release_info(Blast::ReleaseInfo release_info={});
       void initialize();
       Blast::Cpp::Class build_cpp_class();
       std::vector<Blast::Cpp::ClassAttributes> build_cpp_class_attribute_properties();
