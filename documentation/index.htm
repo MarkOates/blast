@@ -1576,6 +1576,15 @@ table td
   <td class="method">copy_file(std::string source_filename=&quot;&quot;, std::string destination_filename=&quot;&quot;)</td>
 </tr>
 <tr>
+  <td class="method">build_release_info()</td>
+</tr>
+<tr>
+  <td class="method">get_release_info_header_file_contents()</td>
+</tr>
+<tr>
+  <td class="method">get_release_info_source_file_contents()</td>
+</tr>
+<tr>
   <td class="method">list_symlinks()</td>
 </tr>
 <tr>
@@ -1660,6 +1669,15 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::FileExistenceChecker&quot;, &quot;headers&quot;=&gt;[&quot;Blast/FileExistenceChecker.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ReleaseInfoBuilder&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ReleaseInfoBuilder.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ReleaseInfo&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ReleaseInfo.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::VersionInfoCppFileGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/VersionInfoCppFileGenerator.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -3530,6 +3548,17 @@ table td
   "Blast/TimeStamper": [
     "Blast/Project/SourceReleaseBuilder"
   ],
+  "Blast/ReleaseInfoBuilder": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/ReleaseInfo": [
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/ReleaseInfoBuilder",
+    "Blast/VersionInfoCppFileGenerator"
+  ],
+  "Blast/VersionInfoCppFileGenerator": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker"
   ],
@@ -3571,10 +3600,6 @@ table td
   "std/runtime_error": [
     "Blast/RegexMatcher",
     "Blast/ShellCommandExecutorWithCallback"
-  ],
-  "Blast/ReleaseInfo": [
-    "Blast/ReleaseInfoBuilder",
-    "Blast/VersionInfoCppFileGenerator"
   ],
   "NcursesArt/GithubRepoStatusFetcher": [
     "Blast/ReleaseInfoBuilder"

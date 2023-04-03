@@ -257,6 +257,35 @@ functions:
       - std::ofstream
 
 
+  - name: build_release_info
+    type: Blast::ReleaseInfo
+    body: |
+      Blast::ReleaseInfoBuilder release_info_builder(project_name);
+      return release_info_builder.build();
+    body_dependency_symbols:
+      - Blast::ReleaseInfoBuilder
+
+
+  - name: get_release_info_header_file_contents
+    type: std::string
+    body: |
+      Blast::VersionInfoCppFileGenerator release_info_file_generator;
+      release_info_file_generator.set_release_info(build_release_info());
+      return release_info_file_generator.header_file_content();
+    body_dependency_symbols:
+      - Blast::VersionInfoCppFileGenerator
+
+
+  - name: get_release_info_source_file_contents
+    type: std::string
+    body: |
+      Blast::VersionInfoCppFileGenerator release_info_file_generator;
+      release_info_file_generator.set_release_info(build_release_info());
+      return release_info_file_generator.source_file_content();
+    body_dependency_symbols:
+      - Blast::VersionInfoCppFileGenerator
+
+
   - name: list_symlinks
     type: std::vector<std::pair<std::string, std::string>>
     body: |
@@ -810,6 +839,19 @@ functions:
 
 
 
+      // Add version info source file(s)
+      // header file
+      std::string release_info_hpp_filename = destination_directory + "/include/ReleaseInfo.hpp";
+      std::string release_info_header_file_contents = get_release_info_header_file_contents();
+      write_file_contents(release_info_hpp_filename, release_info_header_file_contents);
+
+      // source file
+      std::string release_info_cpp_filename = destination_directory + "/src/ReleaseInfo.cpp";
+      std::string release_info_source_file_contents = get_release_info_source_file_contents();
+      write_file_contents(release_info_cpp_filename, release_info_source_file_contents);
+
+
+
       // Zip up folder contents
 
       std::stringstream zip_release_folder_command;
@@ -937,5 +979,11 @@ dependencies:
     headers: [ Blast/Errors.hpp ]
   - symbol: Blast::FileExistenceChecker
     headers: [ Blast/FileExistenceChecker.hpp ]
+  - symbol: Blast::ReleaseInfoBuilder
+    headers: [ Blast/ReleaseInfoBuilder.hpp ]
+  - symbol: Blast::ReleaseInfo
+    headers: [ Blast/ReleaseInfo.hpp ]
+  - symbol: Blast::VersionInfoCppFileGenerator
+    headers: [ Blast/VersionInfoCppFileGenerator.hpp ]
 
 

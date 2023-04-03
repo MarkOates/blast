@@ -64,7 +64,7 @@ Blast::Cpp::Class VersionInfoCppFileGenerator::build_cpp_class()
       //std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies={}
    //);
    return Blast::Cpp::Class(
-      "ThisVersionInfo",
+      "ThisReleaseInfo",
       {},
       {},
       build_cpp_class_attribute_properties(), // attribute_properties
@@ -79,6 +79,7 @@ std::vector<Blast::Cpp::ClassAttributes> VersionInfoCppFileGenerator::build_cpp_
 {
    std::vector<Blast::Cpp::ClassAttributes> result = {
       build_cpp_class_attribute("std::string", "version", release_info.build_project_version_string()),
+      build_cpp_class_attribute("std::string", "allegro_flare_git_hash", release_info.get_allegro_flare_version_git_hash()),
    };
    return result;
 }

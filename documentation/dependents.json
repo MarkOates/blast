@@ -315,6 +315,17 @@
   "Blast/TimeStamper": [
     "Blast/Project/SourceReleaseBuilder"
   ],
+  "Blast/ReleaseInfoBuilder": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/ReleaseInfo": [
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/ReleaseInfoBuilder",
+    "Blast/VersionInfoCppFileGenerator"
+  ],
+  "Blast/VersionInfoCppFileGenerator": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker"
   ],
@@ -356,10 +367,6 @@
   "std/runtime_error": [
     "Blast/RegexMatcher",
     "Blast/ShellCommandExecutorWithCallback"
-  ],
-  "Blast/ReleaseInfo": [
-    "Blast/ReleaseInfoBuilder",
-    "Blast/VersionInfoCppFileGenerator"
   ],
   "NcursesArt/GithubRepoStatusFetcher": [
     "Blast/ReleaseInfoBuilder"

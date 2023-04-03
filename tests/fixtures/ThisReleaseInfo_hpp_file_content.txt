@@ -1,0 +1,25 @@
+#pragma once
+
+
+#include <string>
+
+
+class ThisReleaseInfo
+{
+private:
+   static std::string version;
+   static std::string allegro_flare_git_hash;
+
+protected:
+
+
+public:
+   ThisReleaseInfo();
+   ~ThisReleaseInfo();
+
+   static std::string get_version();
+   static std::string get_allegro_flare_git_hash();
+};
+
+
+

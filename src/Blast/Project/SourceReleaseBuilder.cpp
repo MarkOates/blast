@@ -8,9 +8,11 @@
 #include <Blast/FileExistenceChecker.hpp>
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <Blast/Project/SymlinkChecker.hpp>
+#include <Blast/ReleaseInfoBuilder.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/TimeStamper.hpp>
+#include <Blast/VersionInfoCppFileGenerator.hpp>
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
@@ -325,6 +327,26 @@ void SourceReleaseBuilder::copy_file(std::string source_filename, std::string de
    std::ifstream src(source_filename, std::ios::binary);
    std::ofstream dst(destination_filename,   std::ios::binary);
    dst << src.rdbuf();
+}
+
+Blast::ReleaseInfo SourceReleaseBuilder::build_release_info()
+{
+   Blast::ReleaseInfoBuilder release_info_builder(project_name);
+   return release_info_builder.build();
+}
+
+std::string SourceReleaseBuilder::get_release_info_header_file_contents()
+{
+   Blast::VersionInfoCppFileGenerator release_info_file_generator;
+   release_info_file_generator.set_release_info(build_release_info());
+   return release_info_file_generator.header_file_content();
+}
+
+std::string SourceReleaseBuilder::get_release_info_source_file_contents()
+{
+   Blast::VersionInfoCppFileGenerator release_info_file_generator;
+   release_info_file_generator.set_release_info(build_release_info());
+   return release_info_file_generator.source_file_content();
 }
 
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
@@ -863,6 +885,19 @@ bool SourceReleaseBuilder::generate_source_release()
          }
       }
    }
+
+
+
+   // Add version info source file(s)
+   // header file
+   std::string release_info_hpp_filename = destination_directory + "/include/ReleaseInfo.hpp";
+   std::string release_info_header_file_contents = get_release_info_header_file_contents();
+   write_file_contents(release_info_hpp_filename, release_info_header_file_contents);
+
+   // source file
+   std::string release_info_cpp_filename = destination_directory + "/src/ReleaseInfo.cpp";
+   std::string release_info_source_file_contents = get_release_info_source_file_contents();
+   write_file_contents(release_info_cpp_filename, release_info_source_file_contents);
 
 
 

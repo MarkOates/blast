@@ -1,0 +1,41 @@
+
+
+#include <ThisReleaseInfo.hpp>
+
+
+
+
+
+
+std::string ThisReleaseInfo::version = "7.12.0-wip-alpha";
+
+
+std::string ThisReleaseInfo::allegro_flare_git_hash = "[unset]";
+
+
+ThisReleaseInfo::ThisReleaseInfo()
+{
+}
+
+
+ThisReleaseInfo::~ThisReleaseInfo()
+{
+}
+
+
+std::string ThisReleaseInfo::get_version()
+{
+   return version;
+}
+
+
+std::string ThisReleaseInfo::get_allegro_flare_git_hash()
+{
+   return allegro_flare_git_hash;
+}
+
+
+
+
+
+

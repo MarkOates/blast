@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <Blast/ReleaseInfo.hpp>
 #include <string>
 #include <utility>
 #include <vector>
@@ -66,6 +67,9 @@ namespace Blast
          std::string get_makefile_content();
          std::string get_pinfo_content();
          void copy_file(std::string source_filename="", std::string destination_filename="");
+         Blast::ReleaseInfo build_release_info();
+         std::string get_release_info_header_file_contents();
+         std::string get_release_info_source_file_contents();
          std::vector<std::pair<std::string, std::string>> list_symlinks();
          void fix_symlink_targets_from_relative_to_absolute();
          void replace_symlinks_with_copies_of_linked_files();
