@@ -1049,6 +1049,12 @@ public:
 
    virtual bool execute() override
    {
+      std::cout << std::endl;
+      std::cout << std::endl;
+      std::cout << "ValidateSourceReadme:" << std::endl;
+      std::cout << "  looking for: \"" << full_location_to_source_readme_file << "\"" << std::endl;
+      std::cout << std::endl;
+      std::cout << std::endl;
       return Blast::FileExistenceChecker(full_location_to_source_readme_file).exists();
    }
 };

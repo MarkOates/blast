@@ -47,7 +47,7 @@ TEST(Blast_VersionInfoCppFileGeneratorTest, can_be_created_without_blowing_up)
 
 TEST(Blast_VersionInfoCppFileGeneratorTest, header_file_content__will_return_the_expected_generated_content)
 {
-   std::string VERSION_INFO_EXPECTED_HPP = TEST_FIXTURES_FOLDER + "ThisReleaseInfo_hpp_file_content.txt";
+   std::string VERSION_INFO_EXPECTED_HPP = TEST_FIXTURES_FOLDER + "ReleaseInfo_hpp_file_content.txt";
 
    Blast::VersionInfoCppFileGenerator version_info_cpp_file_generator;
    version_info_cpp_file_generator.initialize();
@@ -61,7 +61,7 @@ TEST(Blast_VersionInfoCppFileGeneratorTest, header_file_content__will_return_the
 
 TEST(Blast_VersionInfoCppFileGeneratorTest, source_file_content__will_return_the_expected_generated_content)
 {
-   std::string VERSION_INFO_EXPECTED_HPP = TEST_FIXTURES_FOLDER + "ThisReleaseInfo_cpp_file_content.txt";
+   std::string VERSION_INFO_EXPECTED_HPP = TEST_FIXTURES_FOLDER + "ReleaseInfo_cpp_file_content.txt";
 
    Blast::VersionInfoCppFileGenerator version_info_cpp_file_generator;
    version_info_cpp_file_generator.set_release_info(build_test_release_info());

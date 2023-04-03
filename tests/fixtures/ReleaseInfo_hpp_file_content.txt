@@ -4,7 +4,7 @@
 #include <string>
 
 
-class ThisReleaseInfo
+class ReleaseInfo
 {
 private:
    static std::string version;
@@ -14,8 +14,8 @@ protected:
 
 
 public:
-   ThisReleaseInfo();
-   ~ThisReleaseInfo();
+   ReleaseInfo();
+   ~ReleaseInfo();
 
    static std::string get_version();
    static std::string get_allegro_flare_git_hash();
