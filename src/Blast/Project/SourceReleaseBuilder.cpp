@@ -339,6 +339,7 @@ std::string SourceReleaseBuilder::get_release_info_header_file_contents()
 {
    Blast::VersionInfoCppFileGenerator release_info_file_generator;
    release_info_file_generator.set_release_info(build_release_info());
+   release_info_file_generator.initialize();
    return release_info_file_generator.header_file_content();
 }
 
@@ -346,6 +347,7 @@ std::string SourceReleaseBuilder::get_release_info_source_file_contents()
 {
    Blast::VersionInfoCppFileGenerator release_info_file_generator;
    release_info_file_generator.set_release_info(build_release_info());
+   release_info_file_generator.initialize();
    return release_info_file_generator.source_file_content();
 }
 

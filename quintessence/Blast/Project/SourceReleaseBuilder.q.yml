@@ -271,6 +271,7 @@ functions:
     body: |
       Blast::VersionInfoCppFileGenerator release_info_file_generator;
       release_info_file_generator.set_release_info(build_release_info());
+      release_info_file_generator.initialize();
       return release_info_file_generator.header_file_content();
     body_dependency_symbols:
       - Blast::VersionInfoCppFileGenerator
@@ -281,6 +282,7 @@ functions:
     body: |
       Blast::VersionInfoCppFileGenerator release_info_file_generator;
       release_info_file_generator.set_release_info(build_release_info());
+      release_info_file_generator.initialize();
       return release_info_file_generator.source_file_content();
     body_dependency_symbols:
       - Blast::VersionInfoCppFileGenerator
