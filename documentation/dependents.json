@@ -421,6 +421,18 @@
     "Blast/TaoTeChingQuoteGenerator",
     "Quiz"
   ],
+  "Blast/Cpp/Class": [
+    "Blast/VersionInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassGenerator": [
+    "Blast/VersionInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassAttributes": [
+    "Blast/VersionInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/SymbolDependencies": [
+    "Blast/VersionInfoCppFileGenerator"
+  ],
   "Blast/String/Trimmer": [
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher",

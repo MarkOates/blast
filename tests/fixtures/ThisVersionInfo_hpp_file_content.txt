@@ -1,0 +1,23 @@
+#pragma once
+
+
+#include <string>
+
+
+class ThisVersionInfo
+{
+private:
+   static std::string version;
+
+protected:
+
+
+public:
+   ThisVersionInfo();
+   ~ThisVersionInfo();
+
+   static std::string get_version();
+};
+
+
+

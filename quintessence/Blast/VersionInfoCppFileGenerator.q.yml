@@ -1,0 +1,135 @@
+properties:
+
+
+  - name: cpp_class
+    type: Blast::Cpp::Class
+
+  - name: initialized
+    type: bool
+    init_with: false
+
+
+functions:
+
+
+  - name: initialize
+    body: |
+      cpp_class = build_cpp_class();
+      initialized = true;
+      return;
+
+
+  - name: build_cpp_class
+    type: Blast::Cpp::Class
+    body: |
+      //return Blast::Cpp::Class(
+         //std::string class_name="UnnamedClass",
+         //std::vector<std::string> namespaces={},
+         //std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties={},
+         //std::vector<Blast::Cpp::ClassAttributes> attribute_properties={},
+         //std::vector<Blast::Cpp::EnumClass> enum_classes={},
+         //std::vector<Blast::Cpp::Function> functions={},
+         //std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies={},
+         //std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies={}
+      //);
+      return Blast::Cpp::Class(
+         "ThisVersionInfo",
+         {},
+         {},
+         build_cpp_class_attribute_properties(), // attribute_properties
+         {}, // enum_classes
+         {}, // functions
+         build_cpp_class_symbol_dependencies(), // symbol_dependencies
+         {} // function_body_symbol_dependencies
+      );
+
+
+  - name: build_cpp_class_attribute_properties
+    type: std::vector<Blast::Cpp::ClassAttributes>
+    body: |
+      std::vector<Blast::Cpp::ClassAttributes> result = {
+         build_cpp_class_attribute("std::string", "version", "0.0.0"),
+      };
+      return result;
+
+
+  - name: build_cpp_class_attribute
+    type: Blast::Cpp::ClassAttributes
+    parameters:
+      - name: datatype
+        type: std::string
+        default_argument: '"std::string"'
+      - name: variable_name
+        type: std::string
+        default_argument: '"variable"'
+      - name: initialization_value
+        type: std::string
+        default_argument: '"variable"'
+    body: |
+      return Blast::Cpp::ClassAttributes(
+            datatype, //std::string datatype,
+            variable_name, //std::string variable_name,
+            initialization_value, //std::string initialization_value,
+            true, //bool is_static,
+            false, //bool is_constructor_parameter,
+            true, //bool has_getter,
+            false, //bool has_expicit_getter,
+            false, //bool has_getter_ref,
+            false, //bool has_setter,
+            false //bool is_constexpr
+         );
+
+
+  - name: build_cpp_class_symbol_dependencies
+    type: std::vector<Blast::Cpp::SymbolDependencies>
+    body: |
+      std::vector<Blast::Cpp::SymbolDependencies> result = {
+         Blast::Cpp::SymbolDependencies(
+            "std::string", // std::string symbol,
+            { "string" }, // std::vector<std::string> include_header_files={},
+            {}, // std::vector<std::string> dependency_include_directories={},
+            {} // std::vector<std::string> linked_library_names={}
+         ),
+         Blast::Cpp::SymbolDependencies(
+            "int", // std::string symbol,
+            {}, // std::vector<std::string> include_header_files={},
+            {}, // std::vector<std::string> dependency_include_directories={},
+            {} // std::vector<std::string> linked_library_names={}
+         ),
+      };
+      return result;
+
+
+  - name: header_file_content
+    type: std::string
+    guards: [ initialized ]
+    body: |
+      Blast::Cpp::ClassGenerator generator(cpp_class);
+      return generator.generate_header_file_content();
+    body_dependency_symbols:
+      - Blast::Cpp::ClassGenerator
+
+
+  - name: source_file_content
+    type: std::string
+    guards: [ initialized ]
+    body: |
+      Blast::Cpp::ClassGenerator generator(cpp_class);
+      return generator.generate_source_file_content();
+    body_dependency_symbols:
+      - Blast::Cpp::ClassGenerator
+
+
+dependencies:
+
+
+  - symbol: Blast::Cpp::Class
+    headers: [ Blast/Cpp/Class.hpp ]
+  - symbol: Blast::Cpp::ClassGenerator
+    headers: [ Blast/Cpp/ClassGenerator.hpp ]
+  - symbol: Blast::Cpp::ClassAttributes
+    headers: [ Blast/Cpp/ClassAttributes.hpp ]
+  - symbol: Blast::Cpp::SymbolDependencies
+    headers: [ Blast/Cpp/SymbolDependencies.hpp ]
+
+
