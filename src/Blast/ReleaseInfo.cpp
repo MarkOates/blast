@@ -88,13 +88,13 @@ void ReleaseInfo::set_version_number_patch(int version_number_patch)
 }
 
 
-void ReleaseInfo::set_version_number_labels(std::vector<std::string> version_number_labels)
+void ReleaseInfo::set_version_number_labels(std::set<std::string> version_number_labels)
 {
    this->version_number_labels = version_number_labels;
 }
 
 
-void ReleaseInfo::set_version_number_metadata(std::vector<std::string> version_number_metadata)
+void ReleaseInfo::set_version_number_metadata(std::set<std::string> version_number_metadata)
 {
    this->version_number_metadata = version_number_metadata;
 }
@@ -244,13 +244,13 @@ int ReleaseInfo::get_version_number_patch() const
 }
 
 
-std::vector<std::string> ReleaseInfo::get_version_number_labels() const
+std::set<std::string> ReleaseInfo::get_version_number_labels() const
 {
    return version_number_labels;
 }
 
 
-std::vector<std::string> ReleaseInfo::get_version_number_metadata() const
+std::set<std::string> ReleaseInfo::get_version_number_metadata() const
 {
    return version_number_metadata;
 }
@@ -358,7 +358,7 @@ int ReleaseInfo::get_allegro_flare_version_git_num_commits() const
 }
 
 
-void ReleaseInfo::set_project_version(int version_number_major, int version_number_minor, int version_number_patch, std::vector<std::string> version_number_labels, std::vector<std::string> version_number_metadata)
+void ReleaseInfo::set_project_version(int version_number_major, int version_number_minor, int version_number_patch, std::set<std::string> version_number_labels, std::set<std::string> version_number_metadata)
 {
    this->version_number_major = version_number_major;
    this->version_number_minor = version_number_minor;
@@ -372,8 +372,15 @@ std::string ReleaseInfo::build_project_version_string()
 {
    std::stringstream result;
    result << version_number_major << "." << version_number_minor << "." << version_number_patch;
-   if (!version_number_labels.empty()) result << "-" << Blast::StringJoiner(version_number_labels, "-").join();
-   if (!version_number_metadata.empty()) result << "+" << Blast::StringJoiner(version_number_metadata, "+").join();
+
+   std::vector<std::string> version_number_labels_v(version_number_labels.size());
+   std::copy(version_number_labels.begin(), version_number_labels.end(), version_number_labels_v.begin());
+
+   std::vector<std::string> version_number_metadata_v(version_number_metadata.size());
+   std::copy(version_number_metadata.begin(), version_number_metadata.end(), version_number_metadata_v.begin());
+
+   if (!version_number_labels.empty()) result << "-" << Blast::StringJoiner(version_number_labels_v, "-").join();
+   if (!version_number_metadata.empty()) result << "+" << Blast::StringJoiner(version_number_metadata_v, "+").join();
    return result.str();
 }
 

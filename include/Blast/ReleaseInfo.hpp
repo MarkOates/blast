@@ -1,8 +1,8 @@
 #pragma once
 
 
+#include <set>
 #include <string>
-#include <vector>
 
 
 namespace Blast
@@ -17,8 +17,8 @@ namespace Blast
       int version_number_major;
       int version_number_minor;
       int version_number_patch;
-      std::vector<std::string> version_number_labels;
-      std::vector<std::string> version_number_metadata;
+      std::set<std::string> version_number_labels;
+      std::set<std::string> version_number_metadata;
       int build_number;
       std::string time_of_build;
       std::string building_platform_os_name;
@@ -51,8 +51,8 @@ namespace Blast
       void set_version_number_major(int version_number_major);
       void set_version_number_minor(int version_number_minor);
       void set_version_number_patch(int version_number_patch);
-      void set_version_number_labels(std::vector<std::string> version_number_labels);
-      void set_version_number_metadata(std::vector<std::string> version_number_metadata);
+      void set_version_number_labels(std::set<std::string> version_number_labels);
+      void set_version_number_metadata(std::set<std::string> version_number_metadata);
       void set_build_number(int build_number);
       void set_time_of_build(std::string time_of_build);
       void set_building_platform_os_name(std::string building_platform_os_name);
@@ -77,8 +77,8 @@ namespace Blast
       int get_version_number_major() const;
       int get_version_number_minor() const;
       int get_version_number_patch() const;
-      std::vector<std::string> get_version_number_labels() const;
-      std::vector<std::string> get_version_number_metadata() const;
+      std::set<std::string> get_version_number_labels() const;
+      std::set<std::string> get_version_number_metadata() const;
       int get_build_number() const;
       std::string get_time_of_build() const;
       std::string get_building_platform_os_name() const;
@@ -96,7 +96,7 @@ namespace Blast
       std::string get_allegro_flare_version_git_hash() const;
       std::string get_allegro_flare_version_git_latest_commit_date_and_time() const;
       int get_allegro_flare_version_git_num_commits() const;
-      void set_project_version(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::vector<std::string> version_number_labels={}, std::vector<std::string> version_number_metadata={});
+      void set_project_version(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::set<std::string> version_number_labels={}, std::set<std::string> version_number_metadata={});
       std::string build_project_version_string();
    };
 }

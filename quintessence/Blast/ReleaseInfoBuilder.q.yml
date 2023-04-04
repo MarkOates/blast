@@ -16,6 +16,16 @@ properties:
     setter: true
 
 
+documentation:
+
+
+  - note:
+      - |
+        Some "release info" is created at release time. See Blast/Project/SourceReleaseBuilder for additional data
+        that is added during that step. Note it may be a good idea to include it here. Specifically, in this class
+        we should be loading the "version.yml" file and assigning the data to the ReleaseInfo.
+
+
 functions:
 
 

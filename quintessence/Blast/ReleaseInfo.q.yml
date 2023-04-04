@@ -53,13 +53,13 @@ properties:
     setter: true
 
   - name: version_number_labels
-    type: std::vector<std::string> 
+    type: std::set<std::string>
     init_with: '{}'
     getter: true
     setter: true
 
   - name: version_number_metadata
-    type: std::vector<std::string> 
+    type: std::set<std::string>
     init_with: '{}'
     getter: true
     setter: true
@@ -182,10 +182,10 @@ functions:
         type: int
         default_argument: 0
       - name: version_number_labels
-        type: std::vector<std::string>
+        type: std::set<std::string>
         default_argument: '{}'
       - name: version_number_metadata
-        type: std::vector<std::string>
+        type: std::set<std::string>
         default_argument: '{}'
     body: |
       this->version_number_major = version_number_major;
@@ -201,8 +201,15 @@ functions:
     body: |
       std::stringstream result;
       result << version_number_major << "." << version_number_minor << "." << version_number_patch;
-      if (!version_number_labels.empty()) result << "-" << Blast::StringJoiner(version_number_labels, "-").join();
-      if (!version_number_metadata.empty()) result << "+" << Blast::StringJoiner(version_number_metadata, "+").join();
+
+      std::vector<std::string> version_number_labels_v(version_number_labels.size());
+      std::copy(version_number_labels.begin(), version_number_labels.end(), version_number_labels_v.begin());
+
+      std::vector<std::string> version_number_metadata_v(version_number_metadata.size());
+      std::copy(version_number_metadata.begin(), version_number_metadata.end(), version_number_metadata_v.begin());
+
+      if (!version_number_labels.empty()) result << "-" << Blast::StringJoiner(version_number_labels_v, "-").join();
+      if (!version_number_metadata.empty()) result << "+" << Blast::StringJoiner(version_number_metadata_v, "+").join();
       return result.str();
     body_dependency_symbols:
       - std::stringstream

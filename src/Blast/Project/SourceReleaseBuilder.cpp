@@ -36,6 +36,7 @@ SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std
    , link_with_opengl(link_with_opengl)
    , build_process_completed_successfully(false)
    , generated_release_folder_name("")
+   , release_info({})
    , copy_allegro_flare_source(copy_allegro_flare_source)
    , copy_nlohmann_json_from_allegro_flare_source(copy_nlohmann_json_from_allegro_flare_source)
    , copy_ordered_map_from_allegro_flare_source(copy_ordered_map_from_allegro_flare_source)
@@ -147,6 +148,12 @@ bool SourceReleaseBuilder::get_build_process_completed_successfully() const
 std::string SourceReleaseBuilder::get_generated_release_folder_name() const
 {
    return generated_release_folder_name;
+}
+
+
+Blast::ReleaseInfo SourceReleaseBuilder::get_release_info() const
+{
+   return release_info;
 }
 
 
@@ -330,16 +337,10 @@ void SourceReleaseBuilder::copy_file(std::string source_filename, std::string de
    dst << src.rdbuf();
 }
 
-Blast::ReleaseInfo SourceReleaseBuilder::build_release_info()
-{
-   Blast::ReleaseInfoBuilder release_info_builder(project_name);
-   return release_info_builder.build();
-}
-
 std::string SourceReleaseBuilder::get_release_info_header_file_contents()
 {
    Blast::VersionInfoCppFileGenerator release_info_file_generator;
-   release_info_file_generator.set_release_info(build_release_info());
+   release_info_file_generator.set_release_info(release_info);
    release_info_file_generator.initialize();
    return release_info_file_generator.header_file_content();
 }
@@ -347,7 +348,7 @@ std::string SourceReleaseBuilder::get_release_info_header_file_contents()
 std::string SourceReleaseBuilder::get_release_info_source_file_contents()
 {
    Blast::VersionInfoCppFileGenerator release_info_file_generator;
-   release_info_file_generator.set_release_info(build_release_info());
+   release_info_file_generator.set_release_info(release_info);
    release_info_file_generator.initialize();
    return release_info_file_generator.source_file_content();
 }
@@ -532,7 +533,24 @@ bool SourceReleaseBuilder::generate_source_release()
    }
 
 
+
    // TODO: prompt the user if they would like to add "labels" or "metadata" to the version number
+
+
+
+
+   // Now that the current version has been bumped to a release number, build the release info for this project
+   Blast::ReleaseInfoBuilder release_info_builder(project_name);
+   release_info = release_info_builder.build();
+   if (version_yaml_file_exists)
+   {
+      // TODO: This value assignment should be handled in the Blast::ReleaseInfoBuilder instead, and not here
+      release_info.set_version_number_major(version_yaml_loader_emitter.get_major());
+      release_info.set_version_number_minor(version_yaml_loader_emitter.get_minor());
+      release_info.set_version_number_patch(version_yaml_loader_emitter.get_patch());
+      release_info.set_version_number_labels(version_yaml_loader_emitter.get_labels());
+      release_info.set_version_number_metadata(version_yaml_loader_emitter.get_metadata());
+   }
 
 
 

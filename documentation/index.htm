@@ -1529,6 +1529,10 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">release_info</td>
+  <td class="property">Blast::ReleaseInfo</td>
+</tr>
+<tr>
   <td class="property">copy_allegro_flare_source</td>
   <td class="property">bool</td>
 </tr>
@@ -1577,9 +1581,6 @@ table td
 </tr>
 <tr>
   <td class="method">copy_file(std::string source_filename=&quot;&quot;, std::string destination_filename=&quot;&quot;)</td>
-</tr>
-<tr>
-  <td class="method">build_release_info()</td>
 </tr>
 <tr>
   <td class="method">get_release_info_header_file_contents()</td>
@@ -1861,11 +1862,11 @@ table td
 </tr>
 <tr>
   <td class="property">version_number_labels</td>
-  <td class="property">std::vector&lt;std::string&gt;</td>
+  <td class="property">std::set&lt;std::string&gt;</td>
 </tr>
 <tr>
   <td class="property">version_number_metadata</td>
-  <td class="property">std::vector&lt;std::string&gt;</td>
+  <td class="property">std::set&lt;std::string&gt;</td>
 </tr>
 <tr>
   <td class="property">build_number</td>
@@ -1938,7 +1939,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="method">set_project_version(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::vector&lt;std::string&gt; version_number_labels={}, std::vector&lt;std::string&gt; version_number_metadata={})</td>
+  <td class="method">set_project_version(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::set&lt;std::string&gt; version_number_labels={}, std::set&lt;std::string&gt; version_number_metadata={})</td>
 </tr>
 <tr>
   <td class="method">build_project_version_string()</td>

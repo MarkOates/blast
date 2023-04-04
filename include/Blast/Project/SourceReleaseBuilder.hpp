@@ -21,6 +21,7 @@ namespace Blast
          bool link_with_opengl;
          bool build_process_completed_successfully;
          std::string generated_release_folder_name;
+         Blast::ReleaseInfo release_info;
          bool copy_allegro_flare_source;
          bool copy_nlohmann_json_from_allegro_flare_source;
          bool copy_ordered_map_from_allegro_flare_source;
@@ -54,6 +55,7 @@ namespace Blast
          bool get_link_with_opengl() const;
          bool get_build_process_completed_successfully() const;
          std::string get_generated_release_folder_name() const;
+         Blast::ReleaseInfo get_release_info() const;
          bool get_copy_allegro_flare_source() const;
          bool get_copy_nlohmann_json_from_allegro_flare_source() const;
          bool get_copy_ordered_map_from_allegro_flare_source() const;
@@ -67,7 +69,6 @@ namespace Blast
          std::string get_makefile_content();
          std::string get_pinfo_content();
          void copy_file(std::string source_filename="", std::string destination_filename="");
-         Blast::ReleaseInfo build_release_info();
          std::string get_release_info_header_file_contents();
          std::string get_release_info_source_file_contents();
          std::vector<std::pair<std::string, std::string>> list_symlinks();
