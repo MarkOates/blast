@@ -49,6 +49,18 @@ TEST(Blast_VersionYAMLLoaderEmitterTest, load__with_invalid_labels__will_throw_a
 }
 
 
+TEST(Blast_VersionYAMLLoaderEmitterTest, load__with_invalid_metadata__will_throw_an_error)
+{
+   std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version-with_invalid_metadata.yml";
+   Blast::VersionYAMLLoaderEmitter version_yamlloader_emitter(TEST_YAML_VERSION_FILE);
+   ASSERT_THROW_WITH_MESSAGE(
+      version_yamlloader_emitter.load(),
+      std::runtime_error,
+      "[Blast::VersionYAMLLoaderEmitter] error: The following labels are invalid: \" \n\", \"#$\", \"5\", "
+   );
+}
+
+
 TEST(Blast_VersionYAMLLoaderEmitterTest, load__will_extract_the_version_info_from_the_file)
 {
    std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
