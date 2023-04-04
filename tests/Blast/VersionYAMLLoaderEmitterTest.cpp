@@ -5,6 +5,7 @@
 #include <Blast/VersionYAMLLoaderEmitter.hpp>
 
 #include <Blast/Testing/TemporaryDirectoryCreator.hpp>
+#include <Blast/Testing/ErrorAssertions.hpp>
 
 
 #ifdef _WIN32
@@ -33,6 +34,18 @@ TEST(Blast_VersionYAMLLoaderEmitterTest, load__when_the_loaded_yaml_does_not_con
    std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
    Blast::VersionYAMLLoaderEmitter version_yamlloader_emitter(TEST_YAML_VERSION_FILE);
    version_yamlloader_emitter.load();
+}
+
+
+TEST(Blast_VersionYAMLLoaderEmitterTest, load__with_invalid_labels__will_throw_an_error)
+{
+   std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version-with_invalid_labels.yml";
+   Blast::VersionYAMLLoaderEmitter version_yamlloader_emitter(TEST_YAML_VERSION_FILE);
+   ASSERT_THROW_WITH_MESSAGE(
+      version_yamlloader_emitter.load(),
+      std::runtime_error,
+      "[Blast::VersionYAMLLoaderEmitter] error: The following labels are invalid: \"  \", \"&%\", \"-wip\", "
+   );
 }
 
 

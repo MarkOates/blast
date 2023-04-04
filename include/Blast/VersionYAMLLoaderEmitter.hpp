@@ -30,7 +30,7 @@ namespace Blast
       ~VersionYAMLLoaderEmitter();
 
       std::string get_yaml_filename() const;
-      std::string load();
+      void load();
       void save();
       int get_major();
       int get_minor();
@@ -40,6 +40,8 @@ namespace Blast
       void increment();
       void validate_or_throw(YAML::Node node={}, std::string key="[unset-key]");
       void validate_or_throw_v(YAML::Node initial_node={}, std::vector<std::string> nested_keys={}, YAML::NodeType::value type=YAML::NodeType::Undefined);
+      bool validate_labels_format(std::set<std::string> labels={});
+      bool is_valid_label(std::string label="[unset-label]");
    };
 }
 

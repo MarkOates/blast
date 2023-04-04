@@ -39,7 +39,7 @@ std::string VersionYAMLLoaderEmitter::get_yaml_filename() const
 }
 
 
-std::string VersionYAMLLoaderEmitter::load()
+void VersionYAMLLoaderEmitter::load()
 {
    if (!((!loaded)))
    {
@@ -57,13 +57,33 @@ std::string VersionYAMLLoaderEmitter::load()
    validate_or_throw_v(root, { "version", "labels" });
    validate_or_throw_v(root, { "version", "metadata" });
 
+   // Assign the version numbers
    major = root["version"]["major"].as<int>();
    minor = root["version"]["minor"].as<int>();
    patch = root["version"]["patch"].as<int>();
 
-   loaded = true;
+   // Collect, validate, and assign the labels
+   YAML::Node labels_node = root["version"]["labels"];
+   std::set<std::string> labels_vec;
+   for (auto it=labels_node.begin(); it!=labels_node.end(); it++)
+   {
+      labels_vec.insert(it->as<std::string>());
+   }
+   validate_labels_format(labels_vec);
+   labels = labels_vec;
 
-   return "Hello World!";
+   // Collect, validate, and assign the metadata
+   YAML::Node metadata_node = root["version"]["metadata"];
+   std::set<std::string> metadata_vec;
+   for (auto it=metadata_node.begin(); it!=metadata_node.end(); it++)
+   {
+      metadata_vec.insert(it->as<std::string>());
+   }
+   validate_labels_format(metadata_vec);
+   metadata = metadata_vec;
+
+   loaded = true;
+   return;
 }
 
 void VersionYAMLLoaderEmitter::save()
@@ -215,6 +235,50 @@ void VersionYAMLLoaderEmitter::validate_or_throw_v(YAML::Node initial_node, std:
    if (node.Type())
 
    return;
+}
+
+bool VersionYAMLLoaderEmitter::validate_labels_format(std::set<std::string> labels)
+{
+   std::vector<std::string> invalid_labels;
+
+   // Accumulate invalid labels
+   for (auto &label : labels)
+   {
+      if (!is_valid_label(label)) invalid_labels.push_back(label);
+   }
+
+   // Throw error if there are invalid labels
+   if (!invalid_labels.empty())
+   {
+      // Build and throw our error message
+      std::stringstream error_message;
+      error_message << "The following labels are invalid: ";
+      for (auto &invalid_label : invalid_labels)
+      {
+         error_message << "\"" << invalid_label << "\", ";
+      }
+      Blast::Errors::throw_error("Blast::VersionYAMLLoaderEmitter", error_message.str());
+   }
+   return true;
+}
+
+bool VersionYAMLLoaderEmitter::is_valid_label(std::string label)
+{
+   if (label.empty()) return false;
+
+   // Check if first character is a letter
+   if (!isalpha(label[0])) return false;
+
+   for (char c : label)
+   {
+      // check if the character is not alphanumeric or underscore
+      if (!isalnum(c) && c != '_') return false;
+
+         // check if the character is uppercase
+      if (isupper(c)) return false;
+   }
+
+   return true;
 }
 
 
