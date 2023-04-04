@@ -1,0 +1,161 @@
+properties:
+
+
+  - name: yaml_filename
+    type: std::string
+    init_with: '"[unset-yaml_filename]"'
+    constructor_arg: true
+    getter: true
+    setter: false
+
+  - name: major
+    type: int
+    init_with: 0
+    getter: explicit
+
+  - name: minor
+    type: int
+    init_with: 0
+    getter: explicit
+
+  - name: patch
+    type: int
+    init_with: 0
+    getter: explicit
+
+  - name: labels
+    type: std::vector<std::string>
+    init_with: '{}'
+    getter: explicit
+
+  - name: metadata
+    type: std::vector<std::string>
+    init_with: '{}'
+    getter: explicit
+
+  - name: loaded
+    type: bool
+    init_with: false
+
+
+functions:
+
+
+  - name: load
+    type: std::string
+    guards: [ (!loaded) ]
+    body: |
+      YAML::Node root = YAML::LoadFile(yaml_filename);
+
+      validate_or_throw(root, "version");
+      validate_or_throw_v(root, { "version", "major" });
+      validate_or_throw_v(root, { "version", "minor" });
+      validate_or_throw_v(root, { "version", "patch" });
+
+      major = root["version"]["major"].as<int>();
+      minor = root["version"]["minor"].as<int>();
+      patch = root["version"]["patch"].as<int>();
+
+      loaded = true;
+
+      return "Hello World!";
+
+
+  - name: get_major
+    type: int
+    guards: [ loaded ]
+    body: return major;
+
+
+  - name: get_minor
+    type: int
+    guards: [ loaded ]
+    body: return minor;
+
+
+  - name: get_patch
+    type: int
+    guards: [ loaded ]
+    body: return patch;
+
+
+  - name: get_labels
+    type: std::vector<std::string>
+    guards: [ loaded ]
+    body: return labels;
+
+
+  - name: get_metadata
+    type: std::vector<std::string>
+    guards: [ loaded ]
+    body: return metadata;
+
+
+  - name: validate_or_throw
+    parameters:
+      - name: node
+        type: YAML::Node
+        default_argument: '{}'
+      - name: key
+        type: std::string
+        default_argument: '"[unset-key]"'
+    body: |
+      if (!node[key])
+      {
+         std::stringstream error_message;
+         error_message << "Missing key in node. Expecting \"" << key << "\".";
+         Blast::Errors::throw_error("Blast::VersionYAMLLoaderEmitter", error_message.str());
+      }
+      return;
+    body_dependency_symbols:
+      - Blast::Errors
+    
+
+  - name: validate_or_throw_v
+    parameters:
+      - name: initial_node
+        type: YAML::Node
+        default_argument: '{}'
+      - name: nested_keys
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      YAML::Node node = YAML::Clone(initial_node);
+
+      std::vector<std::string> accumulated_keys;
+      for (auto &nested_key : nested_keys)
+      {
+         accumulated_keys.push_back(nested_key);
+
+         if (!node[nested_key])
+         {
+            // Wrap the accumulated keys in nice brackets and quotes
+            for (auto &accumulated_key : accumulated_keys) accumulated_key = "[\"" + accumulated_key + "\"]";
+
+            // Build and throw our error message
+            std::stringstream error_message;
+            error_message << "Missing key in node. Expecting node"
+                          << Blast::StringJoiner(accumulated_keys, "").join()
+                          << ".";
+            Blast::Errors::throw_error("Blast::VersionYAMLLoaderEmitter", error_message.str());
+         }
+
+         node = node[nested_key];
+      }
+      return;
+    body_dependency_symbols:
+      - Blast::Errors
+      - Blast::StringJoiner
+    
+
+dependencies:
+
+
+  - symbol: YAML::Node
+    headers: [ yaml-cpp/yaml.h ]
+  - symbol: Blast::Errors
+    headers: [ Blast/Errors.hpp ]
+  - symbol: Blast::StringJoiner
+    headers: [ Blast/StringJoiner.hpp ]
+
+
