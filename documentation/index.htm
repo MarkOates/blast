@@ -99,9 +99,11 @@ table td
   <li><a href="#quintessence/Blast/SystemInfo.q.yml">quintessence/Blast/SystemInfo.q.yml</a></li>
   <li><a href="#quintessence/Blast/TaoTeChingQuoteGenerator.q.yml">quintessence/Blast/TaoTeChingQuoteGenerator.q.yml</a></li>
   <li><a href="#quintessence/Blast/TemplatedFile.q.yml">quintessence/Blast/TemplatedFile.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Testing/TemporaryDirectoryCreator.q.yml">quintessence/Blast/Testing/TemporaryDirectoryCreator.q.yml</a></li>
   <li><a href="#quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</a></li>
   <li><a href="#quintessence/Blast/VersionInfoCppFileGenerator.q.yml">quintessence/Blast/VersionInfoCppFileGenerator.q.yml</a></li>
   <li><a href="#quintessence/Blast/VersionYAMLLoaderEmitter.q.yml">quintessence/Blast/VersionYAMLLoaderEmitter.q.yml</a></li>
+  <li><a href="#quintessence/Blast/YamlCppValidator.q.yml">quintessence/Blast/YamlCppValidator.q.yml</a></li>
   <li><a href="#quintessence/Checkbox.q.yml">quintessence/Checkbox.q.yml</a></li>
   <li><a href="#quintessence/EpicDarkFont.q.yml">quintessence/EpicDarkFont.q.yml</a></li>
   <li><a href="#quintessence/HostnameExtractor.q.yml">quintessence/HostnameExtractor.q.yml</a></li>
@@ -2347,6 +2349,41 @@ table td
 </ul>
 <ul>
   <div class="component">
+    <h3 id="quintessence/Blast/Testing/TemporaryDirectoryCreator.q.yml">quintessence/Blast/Testing/TemporaryDirectoryCreator.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">create(int max_tries=100000)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;exception&quot;, &quot;headers&quot;=&gt;[&quot;exception&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;fstream&quot;, &quot;headers&quot;=&gt;[&quot;fstream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;iostream&quot;, &quot;headers&quot;=&gt;[&quot;iostream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;random&quot;, &quot;headers&quot;=&gt;[&quot;random&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;sstream&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;filesystem&quot;, &quot;headers&quot;=&gt;[&quot;filesystem&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::filesystem::path&quot;, &quot;headers&quot;=&gt;[&quot;filesystem&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
     <h3 id="quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</h3>
      <table>
     </table>
@@ -2439,6 +2476,10 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">root</td>
+  <td class="property">YAML::Node</td>
+</tr>
+<tr>
   <td class="property">major</td>
   <td class="property">int</td>
 </tr>
@@ -2452,11 +2493,11 @@ table td
 </tr>
 <tr>
   <td class="property">labels</td>
-  <td class="property">std::vector&lt;std::string&gt;</td>
+  <td class="property">std::set&lt;std::string&gt;</td>
 </tr>
 <tr>
   <td class="property">metadata</td>
-  <td class="property">std::vector&lt;std::string&gt;</td>
+  <td class="property">std::set&lt;std::string&gt;</td>
 </tr>
 <tr>
   <td class="property">loaded</td>
@@ -2466,6 +2507,9 @@ table td
      <table>
 <tr>
   <td class="method">load()</td>
+</tr>
+<tr>
+  <td class="method">save()</td>
 </tr>
 <tr>
   <td class="method">get_major()</td>
@@ -2481,6 +2525,9 @@ table td
 </tr>
 <tr>
   <td class="method">get_metadata()</td>
+</tr>
+<tr>
+  <td class="method">increment()</td>
 </tr>
 <tr>
   <td class="method">validate_or_throw(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;)</td>
@@ -2504,6 +2551,53 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::YamlCppValidator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/YamlCppValidator.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::ofstream&quot;, &quot;headers&quot;=&gt;[&quot;fstream&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/YamlCppValidator.q.yml">quintessence/Blast/YamlCppValidator.q.yml</h3>
+     <table>
+    </table>
+     <table>
+<tr>
+  <td class="method">validate_presence_of_key(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, bool throw_on_error=true)</td>
+</tr>
+<tr>
+  <td class="method">validate_node_type(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=true)</td>
+</tr>
+<tr>
+  <td class="method">validate_node_has_unsigned_int_value(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">validate_elements_are_unique(std::vector&lt;std::string&gt; elements={})</td>
+</tr>
+<tr>
+  <td class="method">yaml_node_type_as_string(YAML::NodeType::value node_type=YAML::NodeType::Undefined)</td>
+</tr>
+<tr>
+  <td class="method">validate_unique_all_upper_identifiers(YAML::Node items={})</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::any_of&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::Node&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::NodeType::value&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::EnumClass&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/EnumClass.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -3356,7 +3450,8 @@ table td
     "Blast/BuildSystem/BuildStageRenderer",
     "Blast/BuildSystem/ReportRenderers/Base",
     "Blast/Project/SourceReleaseBuilder",
-    "Blast/VersionYAMLLoaderEmitter"
+    "Blast/VersionYAMLLoaderEmitter",
+    "Blast/YamlCppValidator"
   ],
   "std/vector<std/vector<std/string>>": [
     "Blast/BuildSystem/BuildStageRenderers/Base"
@@ -3415,7 +3510,8 @@ table td
   ],
   "Blast/Cpp/EnumClass": [
     "Blast/Cpp/EnumClassFormatter",
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser",
+    "Blast/YamlCppValidator"
   ],
   "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
@@ -3470,6 +3566,7 @@ table td
   "std/ofstream": [
     "Blast/FileCreator",
     "Blast/Project/SourceReleaseBuilder",
+    "Blast/VersionYAMLLoaderEmitter",
     "Quizes/MultiplexQuizRunner"
   ],
   "std/filesystem/exists": [
@@ -3616,7 +3713,8 @@ table td
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [
-    "Blast/Project/SymlinkChecker"
+    "Blast/Project/SymlinkChecker",
+    "Blast/Testing/TemporaryDirectoryCreator"
   ],
   "std/filesystem/is_symlink": [
     "Blast/Project/SymlinkChecker"
@@ -3627,6 +3725,7 @@ table td
   "YAML/Node": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
     "Blast/VersionYAMLLoaderEmitter",
+    "Blast/YamlCppValidator",
     "QuizYAMLLoader"
   ],
   "Blast/YamlCppValidator": [
@@ -3718,6 +3817,24 @@ table td
     "Blast/TaoTeChingQuoteGenerator",
     "Quiz"
   ],
+  "exception": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "fstream": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "iostream": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "random": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "sstream": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "filesystem": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
   "Blast/Cpp/Class": [
     "Blast/VersionInfoCppFileGenerator"
   ],
@@ -3731,7 +3848,11 @@ table td
     "Blast/VersionInfoCppFileGenerator"
   ],
   "YAML/NodeType/value": [
-    "Blast/VersionYAMLLoaderEmitter"
+    "Blast/VersionYAMLLoaderEmitter",
+    "Blast/YamlCppValidator"
+  ],
+  "std/any_of": [
+    "Blast/YamlCppValidator"
   ],
   "Blast/String/Trimmer": [
     "HostnameExtractor",

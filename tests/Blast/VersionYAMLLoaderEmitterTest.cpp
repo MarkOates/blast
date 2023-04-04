@@ -1,7 +1,10 @@
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include <Blast/VersionYAMLLoaderEmitter.hpp>
+
+#include <Blast/Testing/TemporaryDirectoryCreator.hpp>
 
 
 #ifdef _WIN32
@@ -41,6 +44,79 @@ TEST(Blast_VersionYAMLLoaderEmitterTest, load__will_extract_the_version_info_fro
    EXPECT_EQ(3, loader.get_major());
    EXPECT_EQ(7, loader.get_minor());
    EXPECT_EQ(13, loader.get_patch());
+}
+
+
+TEST(Blast_VersionYAMLLoaderEmitterTest, increment__will_increment_the_patch_number)
+{
+   std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
+   Blast::VersionYAMLLoaderEmitter loader(TEST_YAML_VERSION_FILE);
+   loader.load();
+   EXPECT_EQ(13, loader.get_patch());
+
+   loader.increment();
+
+   EXPECT_EQ(14, loader.get_patch());
+}
+
+
+TEST(Blast_VersionYAMLLoaderEmitterTest, increment__when_the_patch_number_is_even__will_add_a_wip_label)
+{
+   std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
+   Blast::VersionYAMLLoaderEmitter loader(TEST_YAML_VERSION_FILE);
+   loader.load();
+   EXPECT_EQ(13, loader.get_patch());
+
+   loader.increment();
+
+   EXPECT_THAT(loader.get_labels(), ::testing::Contains("wip"));
+}
+
+
+TEST(Blast_VersionYAMLLoaderEmitterTest, increment__when_the_patch_number_is_odd__will_remove_a_wip_label)
+{
+   std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
+   Blast::VersionYAMLLoaderEmitter loader(TEST_YAML_VERSION_FILE);
+   loader.load();
+   EXPECT_EQ(13, loader.get_patch());
+
+   loader.increment();
+   loader.increment();
+
+   EXPECT_THAT(loader.get_labels(), ::testing::Not(::testing::Contains("wip")));
+}
+
+
+TEST(Blast_VersionYAMLLoaderEmitterTest, save__will_overwrite_the_file)
+{
+   std::string SOURCE_TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
+   std::filesystem::path temporary_directory = Blast::Testing::TemporaryDirectoryCreator().create();
+   std::string DESTRUCTIVE_TEST_YAML_VERSION_FILE = temporary_directory.string() + "/version.yml";
+   std::filesystem::copy(SOURCE_TEST_YAML_VERSION_FILE, DESTRUCTIVE_TEST_YAML_VERSION_FILE);
+
+   Blast::VersionYAMLLoaderEmitter loader(DESTRUCTIVE_TEST_YAML_VERSION_FILE);
+   loader.load();
+   loader.increment();
+   loader.increment();
+   loader.save();
+
+   std::stringstream result_yaml_stream;
+   YAML::Node result_yaml_node = YAML::LoadFile(DESTRUCTIVE_TEST_YAML_VERSION_FILE);
+   YAML::Emitter emitter(result_yaml_stream);
+   emitter << result_yaml_node;
+   std::string result_yaml = result_yaml_stream.str();
+
+   std::string expected_result_yaml = R"(note: This is a machine generated file. Do not modify.
+version:
+  major: 3
+  minor: 7
+  patch: 15
+  labels: []
+  metadata: [])";
+
+   std::string actual_result_yaml = result_yaml;
+
+   EXPECT_EQ(expected_result_yaml, actual_result_yaml);
 }
 
 

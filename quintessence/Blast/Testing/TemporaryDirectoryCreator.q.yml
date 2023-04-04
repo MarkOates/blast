@@ -1,0 +1,65 @@
+documentation:
+
+
+  - todos:
+      - The dependencies in this class are not listed correctly and need to be corrected.
+
+
+functions:
+
+
+  - name: create
+    type: std::filesystem::path
+    parameters:
+      - name: max_tries
+        type: int
+        default_argument: 100000
+    body: |
+      auto tmp_dir = std::filesystem::temp_directory_path();
+      unsigned long long i = 0;
+      std::random_device dev;
+      std::mt19937 prng(dev());
+      std::uniform_int_distribution<uint64_t> rand(0);
+      std::filesystem::path path;
+      while (true) {
+          std::stringstream ss;
+          ss << std::hex << rand(prng);
+          path = tmp_dir / ss.str();
+          // true if the directory was created.
+          if (std::filesystem::create_directory(path)) {
+              break;
+          }
+          if (i == max_tries) {
+              throw std::runtime_error("Could not find non-existing directory");
+          }
+          i++;
+      }
+      return path;
+    body_dependency_symbols:
+      - exception
+      - fstream
+      - iostream
+      - random
+      - sstream
+      - filesystem
+
+
+dependencies:
+
+
+  - symbol: exception
+    headers: [ exception ]
+  - symbol: fstream
+    headers: [ fstream ]
+  - symbol: iostream
+    headers: [ iostream ]
+  - symbol: random
+    headers: [ random ]
+  - symbol: sstream
+    headers: [ sstream ]
+  - symbol: filesystem
+    headers: [ filesystem ]
+  - symbol: std::filesystem::path
+    headers: [ filesystem ]
+
+

@@ -68,7 +68,8 @@
     "Blast/BuildSystem/BuildStageRenderer",
     "Blast/BuildSystem/ReportRenderers/Base",
     "Blast/Project/SourceReleaseBuilder",
-    "Blast/VersionYAMLLoaderEmitter"
+    "Blast/VersionYAMLLoaderEmitter",
+    "Blast/YamlCppValidator"
   ],
   "std/vector<std/vector<std/string>>": [
     "Blast/BuildSystem/BuildStageRenderers/Base"
@@ -127,7 +128,8 @@
   ],
   "Blast/Cpp/EnumClass": [
     "Blast/Cpp/EnumClassFormatter",
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser",
+    "Blast/YamlCppValidator"
   ],
   "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
@@ -182,6 +184,7 @@
   "std/ofstream": [
     "Blast/FileCreator",
     "Blast/Project/SourceReleaseBuilder",
+    "Blast/VersionYAMLLoaderEmitter",
     "Quizes/MultiplexQuizRunner"
   ],
   "std/filesystem/exists": [
@@ -328,7 +331,8 @@
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [
-    "Blast/Project/SymlinkChecker"
+    "Blast/Project/SymlinkChecker",
+    "Blast/Testing/TemporaryDirectoryCreator"
   ],
   "std/filesystem/is_symlink": [
     "Blast/Project/SymlinkChecker"
@@ -339,6 +343,7 @@
   "YAML/Node": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
     "Blast/VersionYAMLLoaderEmitter",
+    "Blast/YamlCppValidator",
     "QuizYAMLLoader"
   ],
   "Blast/YamlCppValidator": [
@@ -430,6 +435,24 @@
     "Blast/TaoTeChingQuoteGenerator",
     "Quiz"
   ],
+  "exception": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "fstream": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "iostream": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "random": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "sstream": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "filesystem": [
+    "Blast/Testing/TemporaryDirectoryCreator"
+  ],
   "Blast/Cpp/Class": [
     "Blast/VersionInfoCppFileGenerator"
   ],
@@ -443,7 +466,11 @@
     "Blast/VersionInfoCppFileGenerator"
   ],
   "YAML/NodeType/value": [
-    "Blast/VersionYAMLLoaderEmitter"
+    "Blast/VersionYAMLLoaderEmitter",
+    "Blast/YamlCppValidator"
+  ],
+  "std/any_of": [
+    "Blast/YamlCppValidator"
   ],
   "Blast/String/Trimmer": [
     "HostnameExtractor",
