@@ -7,7 +7,7 @@
 
 
 
-std::string ReleaseInfo::version = "7.12.0-wip-alpha";
+std::string ReleaseInfo::version = "7.12.0-alpha-wip";
 
 
 std::string ReleaseInfo::allegro_flare_version_git_hash = "[unset]";
