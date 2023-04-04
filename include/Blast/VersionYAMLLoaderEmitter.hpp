@@ -42,6 +42,7 @@ namespace Blast
       void validate_or_throw_v(YAML::Node initial_node={}, std::vector<std::string> nested_keys={}, YAML::NodeType::value type=YAML::NodeType::Undefined);
       bool validate_labels_format(std::set<std::string> labels={});
       void add_label(std::string label="[unset-label]");
+      void add_metadata(std::string metadata_element="[unset-metadata_element]");
       static bool is_valid_label(std::string label="[unset-label]");
    };
 }

@@ -178,16 +178,12 @@ void VersionYAMLLoaderEmitter::increment()
    // Update the YAML::Node "patch"
    root["version"]["patch"] = patch;
 
+   labels.clear();
+
    // If the patch version is even, add the "wip" label
    bool incremented_patch_version_is_even = (patch % 2 == 0);
    bool include_wip_label = incremented_patch_version_is_even;
    if (include_wip_label) labels.insert(INTERNAL_DEVELOPMENT_VERSION_LABEL);
-   else
-   {
-      // If the patch version is odd, remove the "wip" label if it's present
-      auto it = labels.find(INTERNAL_DEVELOPMENT_VERSION_LABEL);
-      if (it != labels.end()) labels.erase(INTERNAL_DEVELOPMENT_VERSION_LABEL);
-   }
 
    // Update the YAML::Node "labels"
    std::vector<std::string> labels_as_vector(labels.begin(), labels.end());
@@ -272,6 +268,19 @@ void VersionYAMLLoaderEmitter::add_label(std::string label)
       throw std::runtime_error("VersionYAMLLoaderEmitter::add_label: error: guard \"is_valid_label(label)\" not met");
    }
    labels.insert(label);
+   return;
+}
+
+void VersionYAMLLoaderEmitter::add_metadata(std::string metadata_element)
+{
+   if (!(is_valid_label(metadata_element)))
+   {
+      std::stringstream error_message;
+      error_message << "[VersionYAMLLoaderEmitter::add_metadata]: error: guard \"is_valid_label(metadata_element)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("VersionYAMLLoaderEmitter::add_metadata: error: guard \"is_valid_label(metadata_element)\" not met");
+   }
+   metadata.insert(metadata_element);
    return;
 }
 

@@ -129,7 +129,24 @@ TEST(Blast_VersionYAMLLoaderEmitterTest, add_label__will_add_a_label)
 }
 
 
-TEST(Blast_VersionYAMLLoaderEmitterTest, DISABLED__increment__will_clear_any_labels_and_metadata)
+TEST(Blast_VersionYAMLLoaderEmitterTest, add_metadata__will_add_a_metadata)
+{
+   std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
+   Blast::VersionYAMLLoaderEmitter loader(TEST_YAML_VERSION_FILE);
+   loader.load();
+
+   loader.add_metadata("foo");
+   loader.add_metadata("bar");
+   loader.add_metadata("bazz");
+
+   std::set<std::string> expected_metadata = std::set<std::string>{ "foo", "bar", "bazz" };
+   std::set<std::string> actual_metadata = loader.get_metadata();
+
+   EXPECT_EQ(expected_metadata, actual_metadata);
+}
+
+
+TEST(Blast_VersionYAMLLoaderEmitterTest, increment__will_clear_any_prior_labels_and_metadata)
 {
    std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
    Blast::VersionYAMLLoaderEmitter loader(TEST_YAML_VERSION_FILE);
@@ -138,9 +155,14 @@ TEST(Blast_VersionYAMLLoaderEmitterTest, DISABLED__increment__will_clear_any_lab
    loader.add_label("foo");
    loader.add_label("buz");
    loader.increment();
-   std::set<std::string> labels_after_increment = loader.get_labels();
 
-   EXPECT_EQ(true, labels_after_increment.empty());
+   std::set<std::string> expected_labels_after_increment = { "wip" };
+   std::set<std::string> expected_metadata_after_increment = {};
+   std::set<std::string> actual_labels_after_increment = loader.get_labels();
+   std::set<std::string> actual_metadata_after_increment = loader.get_metadata();
+
+   EXPECT_EQ(expected_labels_after_increment, actual_labels_after_increment);
+   EXPECT_EQ(expected_metadata_after_increment, actual_metadata_after_increment);
 }
 
 
