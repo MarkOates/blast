@@ -241,6 +241,7 @@
   "Blast/FileExistenceChecker": [
     "Blast/Project/Component",
     "Blast/Project/SourceReleaseBuilder",
+    "Blast/VersionYAMLLoaderEmitter",
     "Quizes/MultiplexSheetLoader"
   ],
   "Blast/Project/SymlinkChecker": [
@@ -328,6 +329,9 @@
     "Blast/VersionInfoCppFileGenerator"
   ],
   "Blast/VersionInfoCppFileGenerator": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/VersionYAMLLoaderEmitter": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [

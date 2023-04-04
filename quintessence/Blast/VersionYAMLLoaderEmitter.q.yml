@@ -54,7 +54,7 @@ functions:
 
 
   - name: load
-    guards: [ (!loaded) ]
+    guards: [ (!loaded), 'Blast::FileExistenceChecker(yaml_filename).exists()' ]
     body: |
       root = YAML::LoadFile(yaml_filename);
 
@@ -92,6 +92,8 @@ functions:
 
       loaded = true;
       return;
+    body_dependency_symbols:
+      - Blast::FileExistenceChecker
 
 
   - name: save
@@ -335,5 +337,7 @@ dependencies:
     headers: [ Blast/YamlCppValidator.hpp ]
   - symbol: std::ofstream
     headers: [ fstream ]
+  - symbol: Blast::FileExistenceChecker
+    headers: [ Blast/FileExistenceChecker.hpp ]
 
 

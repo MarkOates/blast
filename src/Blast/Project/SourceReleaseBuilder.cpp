@@ -13,6 +13,7 @@
 #include <Blast/StringSplitter.hpp>
 #include <Blast/TimeStamper.hpp>
 #include <Blast/VersionInfoCppFileGenerator.hpp>
+#include <Blast/VersionYAMLLoaderEmitter.hpp>
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
@@ -497,6 +498,45 @@ bool SourceReleaseBuilder::generate_source_release()
 
    std::string source_directory = get_source_project_directory();
 
+
+
+
+   // Increment the version.yml in the source repo location
+   // TODO: Test this process
+   std::string expected_version_yml_filename = source_directory + "/version.yml";
+   bool version_yaml_file_exists = Blast::FileExistenceChecker(expected_version_yml_filename).exists();
+   Blast::VersionYAMLLoaderEmitter version_yaml_loader_emitter(expected_version_yml_filename);
+
+   if (!version_yaml_file_exists)
+   {
+      std::cout << "[Blast::Project::SourceReleaseBuilder]: info: A \"version.yml\" file does not exist for "
+                << "this project. A version will not be incremented.";
+   }
+   else
+   {
+      // A "version.yml" file exists in this Repo. Increment the version and continue.
+      std::cout << "[Blast::Project::SourceReleaseBuilder]: info: A \"version.yml\" file was found." << std::endl;
+
+      version_yaml_loader_emitter.load();
+
+      std::cout << "[Blast::Project::SourceReleaseBuilder]: info: Current version (before release) is \""
+                << version_yaml_loader_emitter.build_project_version_string() << "\". Incrementing..."
+                << std::endl;
+
+      version_yaml_loader_emitter.increment();
+      version_yaml_loader_emitter.save();
+
+      std::cout << "[Blast::Project::SourceReleaseBuilder]: info: This release version is \""
+                << version_yaml_loader_emitter.build_project_version_string() << "\"."
+                << std::endl;
+   }
+
+
+   // TODO: prompt the user if they would like to add "labels" or "metadata" to the version number
+
+
+
+
    // !! WARNING: local variable name shadows class instance variable name:
    // !! WARNING: local variable name shadows class instance variable name:
    // !! WARNING: local variable name shadows class instance variable name:
@@ -564,6 +604,7 @@ bool SourceReleaseBuilder::generate_source_release()
    std::string destination_directory = xxx;
 
 
+
    std::stringstream copy_include_files_command;
    copy_include_files_command << "cp -R " << source_directory << "/include " << destination_directory << "/include";
    std::stringstream copy_src_files_command;
@@ -608,11 +649,11 @@ bool SourceReleaseBuilder::generate_source_release()
    write_file_contents(makefile_full_filename, get_makefile_content());
    std::cout << "done." << std::endl;
 
-   std::cout << "Fixing symlinks from relative to absolute...";
+   std::cout << "Fixing symlinks from relative to absolute..." << std::flush;
    fix_symlink_targets_from_relative_to_absolute();
    std::cout << "done." << std::endl;
 
-   std::cout << "Replacing sylminked files with original copies.";
+   std::cout << "Replacing sylminked files with original copies..." << std::flush;
    replace_symlinks_with_copies_of_linked_files();
    std::cout << "done." << std::endl;
 
@@ -749,6 +790,30 @@ bool SourceReleaseBuilder::generate_source_release()
 
       std::cout << "done." << std::endl;
    }
+
+
+
+   // In the SOURCE repo, re-increment the version number up to the next development version
+
+   if (version_yaml_file_exists)
+   {
+      // A "version.yml" file exists in this Repo. Increment the version and continue.
+
+      //Blast::VersionYAMLLoaderEmitter version_yaml_loader_emitter(expected_version_yml_filename);
+      //version_yaml_loader_emitter.load();
+
+      std::cout << "[Blast::Project::SourceReleaseBuilder]: info: Incrementing version of source repo to next "
+                << "development version." << std::endl;
+
+      version_yaml_loader_emitter.increment();
+      version_yaml_loader_emitter.save();
+
+      std::cout << "[Blast::Project::SourceReleaseBuilder]: info: Source repo is now at development version \""
+                << version_yaml_loader_emitter.build_project_version_string() << "\"."
+                << std::endl;
+   }
+
+
 
 
    if (get_remove_AllegroFlare_Network_from_allegro_flare_copy())

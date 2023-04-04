@@ -3,6 +3,7 @@
 #include <Blast/VersionYAMLLoaderEmitter.hpp>
 
 #include <Blast/Errors.hpp>
+#include <Blast/FileExistenceChecker.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <fstream>
 #include <iostream>
@@ -47,6 +48,13 @@ void VersionYAMLLoaderEmitter::load()
       error_message << "[VersionYAMLLoaderEmitter::load]: error: guard \"(!loaded)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("VersionYAMLLoaderEmitter::load: error: guard \"(!loaded)\" not met");
+   }
+   if (!(Blast::FileExistenceChecker(yaml_filename).exists()))
+   {
+      std::stringstream error_message;
+      error_message << "[VersionYAMLLoaderEmitter::load]: error: guard \"Blast::FileExistenceChecker(yaml_filename).exists()\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("VersionYAMLLoaderEmitter::load: error: guard \"Blast::FileExistenceChecker(yaml_filename).exists()\" not met");
    }
    root = YAML::LoadFile(yaml_filename);
 

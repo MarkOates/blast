@@ -1682,6 +1682,9 @@ table td
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::VersionInfoCppFileGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/VersionInfoCppFileGenerator.hpp&quot;]}</td>
 </tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::VersionYAMLLoaderEmitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/VersionYAMLLoaderEmitter.hpp&quot;]}</td>
+</tr>
     </table>
   </div>
 </ul>
@@ -2569,6 +2572,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::ofstream&quot;, &quot;headers&quot;=&gt;[&quot;fstream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::FileExistenceChecker&quot;, &quot;headers&quot;=&gt;[&quot;Blast/FileExistenceChecker.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -3638,6 +3644,7 @@ table td
   "Blast/FileExistenceChecker": [
     "Blast/Project/Component",
     "Blast/Project/SourceReleaseBuilder",
+    "Blast/VersionYAMLLoaderEmitter",
     "Quizes/MultiplexSheetLoader"
   ],
   "Blast/Project/SymlinkChecker": [
@@ -3725,6 +3732,9 @@ table td
     "Blast/VersionInfoCppFileGenerator"
   ],
   "Blast/VersionInfoCppFileGenerator": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/VersionYAMLLoaderEmitter": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [
