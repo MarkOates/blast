@@ -502,8 +502,10 @@ bool SourceReleaseBuilder::generate_source_release()
 
 
 
+
    // Increment the version.yml in the source repo location
    // TODO: Test this process
+   // TODO: Offer a version alternative when no "version.yml" file is present... create new? etc...
    std::string expected_version_yml_filename = source_directory + "/version.yml";
    bool version_yaml_file_exists = Blast::FileExistenceChecker(expected_version_yml_filename).exists();
    Blast::VersionYAMLLoaderEmitter version_yaml_loader_emitter(expected_version_yml_filename);
@@ -526,6 +528,9 @@ bool SourceReleaseBuilder::generate_source_release()
 
       version_yaml_loader_emitter.increment();
       version_yaml_loader_emitter.save();
+
+      // TODO: Commit the version change file
+      // TODO: ensure there are no dangling files in the repo before release
 
       std::cout << "[Blast::Project::SourceReleaseBuilder]: info: This release version is \""
                 << version_yaml_loader_emitter.build_project_version_string() << "\"."
