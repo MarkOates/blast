@@ -298,6 +298,26 @@ functions:
       }
 
       return true;
+
+
+  - name: build_project_version_string
+    type: std::string
+    body: |
+      std::stringstream result;
+      result << major << "." << minor << "." << patch;
+
+      std::vector<std::string> labels_v(labels.size());
+      std::copy(labels.begin(), labels.end(), labels_v.begin());
+
+      std::vector<std::string> metadata_v(metadata.size());
+      std::copy(metadata.begin(), metadata.end(), metadata_v.begin());
+
+      if (!labels.empty()) result << "-" << Blast::StringJoiner(labels_v, "-").join();
+      if (!metadata.empty()) result << "+" << Blast::StringJoiner(metadata_v, "+").join();
+      return result.str();
+    body_dependency_symbols:
+      - std::stringstream
+      - Blast::StringJoiner
     
 
 dependencies:

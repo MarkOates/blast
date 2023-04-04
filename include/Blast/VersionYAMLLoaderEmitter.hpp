@@ -44,6 +44,7 @@ namespace Blast
       void add_label(std::string label="[unset-label]");
       void add_metadata(std::string metadata_element="[unset-metadata_element]");
       static bool is_valid_label(std::string label="[unset-label]");
+      std::string build_project_version_string();
    };
 }
 

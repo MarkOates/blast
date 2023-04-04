@@ -303,6 +303,22 @@ bool VersionYAMLLoaderEmitter::is_valid_label(std::string label)
    return true;
 }
 
+std::string VersionYAMLLoaderEmitter::build_project_version_string()
+{
+   std::stringstream result;
+   result << major << "." << minor << "." << patch;
+
+   std::vector<std::string> labels_v(labels.size());
+   std::copy(labels.begin(), labels.end(), labels_v.begin());
+
+   std::vector<std::string> metadata_v(metadata.size());
+   std::copy(metadata.begin(), metadata.end(), metadata_v.begin());
+
+   if (!labels.empty()) result << "-" << Blast::StringJoiner(labels_v, "-").join();
+   if (!metadata.empty()) result << "+" << Blast::StringJoiner(metadata_v, "+").join();
+   return result.str();
+}
+
 
 } // namespace Blast
 
