@@ -1,3 +1,11 @@
+parent_classes:
+
+
+  - class: Blast::YamlCppValidator
+    scope: protected
+    init_with: ''
+
+
 properties:
 
 
@@ -51,6 +59,7 @@ functions:
       validate_or_throw_v(root, { "version", "major" });
       validate_or_throw_v(root, { "version", "minor" });
       validate_or_throw_v(root, { "version", "patch" });
+      validate_or_throw_v(root, { "version", "labels" });
 
       major = root["version"]["major"].as<int>();
       minor = root["version"]["minor"].as<int>();
@@ -119,6 +128,9 @@ functions:
       - name: nested_keys
         type: std::vector<std::string>
         default_argument: '{}'
+      - name: type
+        type: YAML::NodeType::value
+        default_argument: YAML::NodeType::Undefined
     body: |
       YAML::Node node = YAML::Clone(initial_node);
 
@@ -142,6 +154,9 @@ functions:
 
          node = node[nested_key];
       }
+
+      if (node.Type())
+
       return;
     body_dependency_symbols:
       - Blast::Errors
@@ -153,9 +168,13 @@ dependencies:
 
   - symbol: YAML::Node
     headers: [ yaml-cpp/yaml.h ]
+  - symbol: YAML::NodeType::value
+    headers: [ yaml-cpp/yaml.h ]
   - symbol: Blast::Errors
     headers: [ Blast/Errors.hpp ]
   - symbol: Blast::StringJoiner
     headers: [ Blast/StringJoiner.hpp ]
+  - symbol: Blast::YamlCppValidator
+    headers: [ Blast/YamlCppValidator.hpp ]
 
 

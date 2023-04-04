@@ -68,7 +68,7 @@
     "Blast/BuildSystem/BuildStageRenderer",
     "Blast/BuildSystem/ReportRenderers/Base",
     "Blast/Project/SourceReleaseBuilder",
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+    "Blast/VersionYAMLLoaderEmitter"
   ],
   "std/vector<std/vector<std/string>>": [
     "Blast/BuildSystem/BuildStageRenderers/Base"
@@ -135,6 +135,7 @@
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
     "Blast/ReleaseInfo",
+    "Blast/VersionYAMLLoaderEmitter",
     "Quizes/MultiplexQuizRunner"
   ],
   "Blast/StringSplitter": [
@@ -335,15 +336,14 @@
   "std/filesystem/read_symlink": [
     "Blast/Project/SymlinkChecker"
   ],
-  "std/any_of": [
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
-  ],
   "YAML/Node": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
+    "Blast/VersionYAMLLoaderEmitter",
     "QuizYAMLLoader"
   ],
-  "YAML/NodeType/value": [
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  "Blast/YamlCppValidator": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser",
+    "Blast/VersionYAMLLoaderEmitter"
   ],
   "std/vector<std/regex_constants/syntax_option_type>": [
     "Blast/RegexMatcher"
@@ -441,6 +441,9 @@
   ],
   "Blast/Cpp/SymbolDependencies": [
     "Blast/VersionInfoCppFileGenerator"
+  ],
+  "YAML/NodeType/value": [
+    "Blast/VersionYAMLLoaderEmitter"
   ],
   "Blast/String/Trimmer": [
     "HostnameExtractor",

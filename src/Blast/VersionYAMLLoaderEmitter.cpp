@@ -14,7 +14,8 @@ namespace Blast
 
 
 VersionYAMLLoaderEmitter::VersionYAMLLoaderEmitter(std::string yaml_filename)
-   : yaml_filename(yaml_filename)
+   : Blast::YamlCppValidator()
+   , yaml_filename(yaml_filename)
    , major(0)
    , minor(0)
    , patch(0)
@@ -51,6 +52,7 @@ std::string VersionYAMLLoaderEmitter::load()
    validate_or_throw_v(root, { "version", "major" });
    validate_or_throw_v(root, { "version", "minor" });
    validate_or_throw_v(root, { "version", "patch" });
+   validate_or_throw_v(root, { "version", "labels" });
 
    major = root["version"]["major"].as<int>();
    minor = root["version"]["minor"].as<int>();
@@ -132,7 +134,7 @@ void VersionYAMLLoaderEmitter::validate_or_throw(YAML::Node node, std::string ke
    return;
 }
 
-void VersionYAMLLoaderEmitter::validate_or_throw_v(YAML::Node initial_node, std::vector<std::string> nested_keys)
+void VersionYAMLLoaderEmitter::validate_or_throw_v(YAML::Node initial_node, std::vector<std::string> nested_keys, YAML::NodeType::value type)
 {
    YAML::Node node = YAML::Clone(initial_node);
 
@@ -156,6 +158,9 @@ void VersionYAMLLoaderEmitter::validate_or_throw_v(YAML::Node initial_node, std:
 
       node = node[nested_key];
    }
+
+   if (node.Type())
+
    return;
 }
 

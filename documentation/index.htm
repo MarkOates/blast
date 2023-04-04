@@ -101,6 +101,7 @@ table td
   <li><a href="#quintessence/Blast/TemplatedFile.q.yml">quintessence/Blast/TemplatedFile.q.yml</a></li>
   <li><a href="#quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</a></li>
   <li><a href="#quintessence/Blast/VersionInfoCppFileGenerator.q.yml">quintessence/Blast/VersionInfoCppFileGenerator.q.yml</a></li>
+  <li><a href="#quintessence/Blast/VersionYAMLLoaderEmitter.q.yml">quintessence/Blast/VersionYAMLLoaderEmitter.q.yml</a></li>
   <li><a href="#quintessence/Checkbox.q.yml">quintessence/Checkbox.q.yml</a></li>
   <li><a href="#quintessence/EpicDarkFont.q.yml">quintessence/EpicDarkFont.q.yml</a></li>
   <li><a href="#quintessence/HostnameExtractor.q.yml">quintessence/HostnameExtractor.q.yml</a></li>
@@ -1740,40 +1741,16 @@ table td
 <tr>
   <td class="method">parse()</td>
 </tr>
-<tr>
-  <td class="method">validate_presence_of_key(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, bool throw_on_error=true)</td>
-</tr>
-<tr>
-  <td class="method">validate_node_type(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=true)</td>
-</tr>
-<tr>
-  <td class="method">validate_node_has_unsigned_int_value(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;)</td>
-</tr>
-<tr>
-  <td class="method">validate_elements_are_unique(std::vector&lt;std::string&gt; elements={})</td>
-</tr>
-<tr>
-  <td class="method">yaml_node_type_as_string(YAML::NodeType::value node_type=YAML::NodeType::Undefined)</td>
-</tr>
-<tr>
-  <td class="method">validate_unique_all_upper_identifiers(YAML::Node items={})</td>
-</tr>
     </table>
      <table>
 <tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::any_of&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
-</tr>
-<tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::Node&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
-</tr>
-<tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::NodeType::value&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::EnumClass&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/EnumClass.hpp&quot;]}</td>
 </tr>
 <tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::YamlCppValidator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/YamlCppValidator.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -2449,6 +2426,84 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ReleaseInfo&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ReleaseInfo.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/VersionYAMLLoaderEmitter.q.yml">quintessence/Blast/VersionYAMLLoaderEmitter.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">yaml_filename</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">major</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">minor</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">patch</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">labels</td>
+  <td class="property">std::vector&lt;std::string&gt;</td>
+</tr>
+<tr>
+  <td class="property">metadata</td>
+  <td class="property">std::vector&lt;std::string&gt;</td>
+</tr>
+<tr>
+  <td class="property">loaded</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">load()</td>
+</tr>
+<tr>
+  <td class="method">get_major()</td>
+</tr>
+<tr>
+  <td class="method">get_minor()</td>
+</tr>
+<tr>
+  <td class="method">get_patch()</td>
+</tr>
+<tr>
+  <td class="method">get_labels()</td>
+</tr>
+<tr>
+  <td class="method">get_metadata()</td>
+</tr>
+<tr>
+  <td class="method">validate_or_throw(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">validate_or_throw_v(YAML::Node initial_node={}, std::vector&lt;std::string&gt; nested_keys={}, YAML::NodeType::value type=YAML::NodeType::Undefined)</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::Node&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::NodeType::value&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringJoiner&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringJoiner.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::YamlCppValidator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/YamlCppValidator.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -3301,7 +3356,7 @@ table td
     "Blast/BuildSystem/BuildStageRenderer",
     "Blast/BuildSystem/ReportRenderers/Base",
     "Blast/Project/SourceReleaseBuilder",
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+    "Blast/VersionYAMLLoaderEmitter"
   ],
   "std/vector<std/vector<std/string>>": [
     "Blast/BuildSystem/BuildStageRenderers/Base"
@@ -3368,6 +3423,7 @@ table td
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
     "Blast/ReleaseInfo",
+    "Blast/VersionYAMLLoaderEmitter",
     "Quizes/MultiplexQuizRunner"
   ],
   "Blast/StringSplitter": [
@@ -3568,15 +3624,14 @@ table td
   "std/filesystem/read_symlink": [
     "Blast/Project/SymlinkChecker"
   ],
-  "std/any_of": [
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
-  ],
   "YAML/Node": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
+    "Blast/VersionYAMLLoaderEmitter",
     "QuizYAMLLoader"
   ],
-  "YAML/NodeType/value": [
-    "Blast/Quinetessence/YAMLParsing/EnumClassParser"
+  "Blast/YamlCppValidator": [
+    "Blast/Quinetessence/YAMLParsing/EnumClassParser",
+    "Blast/VersionYAMLLoaderEmitter"
   ],
   "std/vector<std/regex_constants/syntax_option_type>": [
     "Blast/RegexMatcher"
@@ -3674,6 +3729,9 @@ table td
   ],
   "Blast/Cpp/SymbolDependencies": [
     "Blast/VersionInfoCppFileGenerator"
+  ],
+  "YAML/NodeType/value": [
+    "Blast/VersionYAMLLoaderEmitter"
   ],
   "Blast/String/Trimmer": [
     "HostnameExtractor",
