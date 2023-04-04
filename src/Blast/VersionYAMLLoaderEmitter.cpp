@@ -262,6 +262,19 @@ bool VersionYAMLLoaderEmitter::validate_labels_format(std::set<std::string> labe
    return true;
 }
 
+void VersionYAMLLoaderEmitter::add_label(std::string label)
+{
+   if (!(is_valid_label(label)))
+   {
+      std::stringstream error_message;
+      error_message << "[VersionYAMLLoaderEmitter::add_label]: error: guard \"is_valid_label(label)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("VersionYAMLLoaderEmitter::add_label: error: guard \"is_valid_label(label)\" not met");
+   }
+   labels.insert(label);
+   return;
+}
+
 bool VersionYAMLLoaderEmitter::is_valid_label(std::string label)
 {
    if (label.empty()) return false;

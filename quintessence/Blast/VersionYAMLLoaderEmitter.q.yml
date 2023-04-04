@@ -257,7 +257,19 @@ functions:
       return true;
 
 
+  - name: add_label
+    parameters:
+      - name: label
+        type: std::string
+        default_argument: '"[unset-label]"'
+    guards: [ is_valid_label(label) ]
+    body: |
+      labels.insert(label);
+      return;
+
+
   - name: is_valid_label
+    static: true
     type: bool
     parameters:
       - name: label

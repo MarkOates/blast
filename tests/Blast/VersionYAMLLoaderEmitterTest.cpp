@@ -112,6 +112,38 @@ TEST(Blast_VersionYAMLLoaderEmitterTest, increment__when_the_patch_number_is_odd
 }
 
 
+TEST(Blast_VersionYAMLLoaderEmitterTest, add_label__will_add_a_label)
+{
+   std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
+   Blast::VersionYAMLLoaderEmitter loader(TEST_YAML_VERSION_FILE);
+   loader.load();
+
+   loader.add_label("foo");
+   loader.add_label("bar");
+   loader.add_label("bazz");
+
+   std::set<std::string> expected_labels = std::set<std::string>{ "wip", "foo", "bar", "bazz" };
+   std::set<std::string> actual_labels = loader.get_labels();
+
+   EXPECT_EQ(expected_labels, actual_labels);
+}
+
+
+TEST(Blast_VersionYAMLLoaderEmitterTest, DISABLED__increment__will_clear_any_labels_and_metadata)
+{
+   std::string TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
+   Blast::VersionYAMLLoaderEmitter loader(TEST_YAML_VERSION_FILE);
+   loader.load();
+
+   loader.add_label("foo");
+   loader.add_label("buz");
+   loader.increment();
+   std::set<std::string> labels_after_increment = loader.get_labels();
+
+   EXPECT_EQ(true, labels_after_increment.empty());
+}
+
+
 TEST(Blast_VersionYAMLLoaderEmitterTest, save__will_overwrite_the_file)
 {
    std::string SOURCE_TEST_YAML_VERSION_FILE = TEST_FIXTURES_PATH "version.yml";
