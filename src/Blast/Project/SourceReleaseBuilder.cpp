@@ -559,8 +559,13 @@ bool SourceReleaseBuilder::generate_source_release()
    // !! WARNING: local variable name shadows class instance variable name:
    // !! WARNING: local variable name shadows class instance variable name:
    std::string generated_folder_name = get_project_name()
-                                     + "-source-"
-                                     + release_info.build_project_version_string();
+                                     + "-"
+                                     + release_info.build_project_version_string()
+                                     + "-SourceRelease";
+
+
+
+   // TODO revert "version.yml" if there is a mistake
 
 
    std::string xxx = releases_base_folder + "/" + generated_folder_name;
