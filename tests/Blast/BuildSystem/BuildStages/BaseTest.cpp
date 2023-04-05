@@ -71,3 +71,30 @@ TEST(Blast_BuildSystem_BuildStages_BaseTest, derived_classes_will_have_the_expec
 }
 
 
+TEST(Blast_BuildSystem_BuildStages_BaseTest,
+   DISABLED__started_at__is_of_the_type_high_resolution_clock)
+{
+   // NOTE: This test is needed to ensure flakey tests to not occur, and that very short, small duration builds
+   // (on the order of milliseconds) still have their durations recorded
+   // TODO: This test, currently "started_at" is private
+   // TODO: This test for "ended_at"
+   // TODO: This test in the other BuildSystem/Builds/Base tests
+   // NOTE: Test is implmented like this:
+   //ASSERT_TRUE(
+      //(
+         //std::is_same<
+            //decltype(Blast::BuildSystem::BuildStages::Base::started_at),
+            //std::chrono::high_resolution_clock::time_point
+         //>::value
+      //)
+   //);
+}
+
+
+TEST(Blast_BuildSystem_BuildStages_BaseTest,
+   DISABLED__ended_at__is_of_the_type_high_resolution_clock)
+{
+   // TODO: See test above
+}
+
+
