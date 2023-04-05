@@ -361,12 +361,6 @@ functions:
       - std::stringstream
 
 
-  - name: get_source_release_folder_name
-    type: std::string
-    body: |
-      return get_project_name() + "-source";
-
-
   - name: get_generated_source_release_zip_filename
     type: std::string
     guards: [ build_process_completed_successfully ]
@@ -435,7 +429,7 @@ functions:
       Blast::TimeStamper time_stamper;
 
       std::string source_directory = get_source_project_directory();
-
+      std::string time_of_source_release = time_stamper.generate_now_timestamp_utc();
 
 
 
@@ -497,6 +491,9 @@ functions:
       }
 
 
+      release_info.set_time_of_source_release(time_of_source_release);
+
+      // HERE
 
 
       std::string version_string = release_info.build_project_version_string();
@@ -505,9 +502,10 @@ functions:
       // !! WARNING: local variable name shadows class instance variable name:
       // !! WARNING: local variable name shadows class instance variable name:
       // !! WARNING: local variable name shadows class instance variable name:
-      std::string generated_folder_name = get_source_release_folder_name()
-                                        + "-"
-                                        + time_stamper.generate_now_timestamp_utc();
+      std::string generated_folder_name = get_project_name()
+                                        + "-source-"
+                                        + release_info.build_project_version_string();
+
 
       std::string xxx = releases_base_folder + "/" + generated_folder_name;
 

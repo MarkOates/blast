@@ -19,6 +19,7 @@ namespace Blast
       int version_number_patch;
       std::set<std::string> version_number_labels;
       std::set<std::string> version_number_metadata;
+      std::string time_of_source_release;
       int build_number;
       std::string time_of_build;
       std::string building_platform_os_name;
@@ -53,6 +54,7 @@ namespace Blast
       void set_version_number_patch(int version_number_patch);
       void set_version_number_labels(std::set<std::string> version_number_labels);
       void set_version_number_metadata(std::set<std::string> version_number_metadata);
+      void set_time_of_source_release(std::string time_of_source_release);
       void set_build_number(int build_number);
       void set_time_of_build(std::string time_of_build);
       void set_building_platform_os_name(std::string building_platform_os_name);
@@ -79,6 +81,7 @@ namespace Blast
       int get_version_number_patch() const;
       std::set<std::string> get_version_number_labels() const;
       std::set<std::string> get_version_number_metadata() const;
+      std::string get_time_of_source_release() const;
       int get_build_number() const;
       std::string get_time_of_build() const;
       std::string get_building_platform_os_name() const;

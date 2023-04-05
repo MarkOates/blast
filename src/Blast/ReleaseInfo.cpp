@@ -20,6 +20,7 @@ ReleaseInfo::ReleaseInfo()
    , version_number_patch(0)
    , version_number_labels({})
    , version_number_metadata({})
+   , time_of_source_release("[unset]")
    , build_number(0)
    , time_of_build("[unset]")
    , building_platform_os_name("[unset]")
@@ -97,6 +98,12 @@ void ReleaseInfo::set_version_number_labels(std::set<std::string> version_number
 void ReleaseInfo::set_version_number_metadata(std::set<std::string> version_number_metadata)
 {
    this->version_number_metadata = version_number_metadata;
+}
+
+
+void ReleaseInfo::set_time_of_source_release(std::string time_of_source_release)
+{
+   this->time_of_source_release = time_of_source_release;
 }
 
 
@@ -253,6 +260,12 @@ std::set<std::string> ReleaseInfo::get_version_number_labels() const
 std::set<std::string> ReleaseInfo::get_version_number_metadata() const
 {
    return version_number_metadata;
+}
+
+
+std::string ReleaseInfo::get_time_of_source_release() const
+{
+   return time_of_source_release;
 }
 
 

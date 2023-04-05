@@ -417,11 +417,6 @@ void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
    return;
 }
 
-std::string SourceReleaseBuilder::get_source_release_folder_name()
-{
-   return get_project_name() + "-source";
-}
-
 std::string SourceReleaseBuilder::get_generated_source_release_zip_filename()
 {
    if (!(build_process_completed_successfully))
@@ -490,7 +485,7 @@ bool SourceReleaseBuilder::generate_source_release()
    Blast::TimeStamper time_stamper;
 
    std::string source_directory = get_source_project_directory();
-
+   std::string time_of_source_release = time_stamper.generate_now_timestamp_utc();
 
 
 
@@ -552,6 +547,9 @@ bool SourceReleaseBuilder::generate_source_release()
    }
 
 
+   release_info.set_time_of_source_release(time_of_source_release);
+
+   // HERE
 
 
    std::string version_string = release_info.build_project_version_string();
@@ -560,9 +558,10 @@ bool SourceReleaseBuilder::generate_source_release()
    // !! WARNING: local variable name shadows class instance variable name:
    // !! WARNING: local variable name shadows class instance variable name:
    // !! WARNING: local variable name shadows class instance variable name:
-   std::string generated_folder_name = get_source_release_folder_name()
-                                     + "-"
-                                     + time_stamper.generate_now_timestamp_utc();
+   std::string generated_folder_name = get_project_name()
+                                     + "-source-"
+                                     + release_info.build_project_version_string();
+
 
    std::string xxx = releases_base_folder + "/" + generated_folder_name;
 

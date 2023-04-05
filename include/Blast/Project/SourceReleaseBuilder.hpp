@@ -74,7 +74,6 @@ namespace Blast
          std::vector<std::pair<std::string, std::string>> list_symlinks();
          void fix_symlink_targets_from_relative_to_absolute();
          void replace_symlinks_with_copies_of_linked_files();
-         std::string get_source_release_folder_name();
          std::string get_generated_source_release_zip_filename();
          void generate_macos_release();
          void recursively_remove_folder_with_prompt(std::string folder_to_remove="/Users/markoates/Desktop/releases");
