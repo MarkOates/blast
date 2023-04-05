@@ -218,6 +218,18 @@ void SourceReleaseBuilder::write_file_contents(std::string filename, std::string
    out.close();
 }
 
+std::string SourceReleaseBuilder::get_released_version_string()
+{
+   if (!(build_process_completed_successfully))
+   {
+      std::stringstream error_message;
+      error_message << "[SourceReleaseBuilder::get_released_version_string]: error: guard \"build_process_completed_successfully\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("SourceReleaseBuilder::get_released_version_string: error: guard \"build_process_completed_successfully\" not met");
+   }
+   return release_info.build_project_version_string();
+}
+
 std::string SourceReleaseBuilder::get_makefile_content()
 {
    std::stringstream MAKEFILE_CONTENT;

@@ -426,7 +426,8 @@ win64_release:
 
 
 macos_release:
-	$(MACOS_RELEASER_EXECUTABLE) $(RELEASE_PROJECT_NAME) $(RELEASE_FOLDER_NAME)
+	# Note: these parameters are expected to be passed during execution time
+	$(MACOS_RELEASER_EXECUTABLE) $(RELEASE_PROJECT_NAME) $(RELEASE_VERSION_NUMBER) $(RELEASE_FOLDER_NAME)
 
 
 

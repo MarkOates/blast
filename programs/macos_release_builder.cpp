@@ -98,7 +98,7 @@ public:
    static std::string app_package_executable_name() { return NameGenerator::NAME_OF_EXECUTABLE; }
    static std::string app_package_folder_name() { return NameGenerator::NAME_OF_EXECUTABLE + ".app"; }
    static std::string full_path_to_copied_source_icns_file() { return NameGenerator::TEMP_DIRECTORY_FOR_ICON + "/" + source_icon_filename(); }
-   static std::string release_folder_relative_to_system_releases_folder() { return NameGenerator::NAME_OF_EXECUTABLE + "-MacOS-" + NameGenerator::CHIP_NAME; }
+   static std::string release_folder_relative_to_system_releases_folder() { return NameGenerator::NAME_OF_EXECUTABLE + "-" + NameGenerator::VERSION_NUMBER + "-macos-" + NameGenerator::CHIP_NAME; }
    static std::string full_path_to_result_info_dot_plist_file()
    {
       return SYSTEM_RELEASES_FOLDER + "/" + release_folder_relative_to_system_releases_folder() + "/" + NAME_OF_EXECUTABLE + ".app/Contents/Info.plist";
@@ -1424,17 +1424,21 @@ int main(int argc, char **argv)
    std::string arg_name_of_executable = "Krampus22_test1"; // This needs to match the name of the project in the source release folder.
                                                            // note that this name is set by the generated Makefile and will match the
                                                            // name of the projcet.
-   std::string arg_source_release_older_name = "Krampus22_test1-SourceRelease-221209191155UTC";
+   std::string arg_source_release_folder_name = "Krampus22_test1-SourceRelease-221209191155UTC";
+   std::string arg_source_version_string = "1.2.3"; // This needs to match the name of the project in the source release folder.
+                                                    // note that this name is set by the generated Makefile and will match the
+                                                    // name of the projcet.
 
-   if (args.size() == 3)
+   if (args.size() == 4)
    {
       arg_name_of_executable = args[1];
-      arg_source_release_older_name = args[2];
+      // TODO: validate version string
+      arg_source_version_string = args[2];
+      arg_source_release_folder_name = args[3];
    }
    else
    {
       // TODO: Improve this error message
-      std::cout << "You did it!" << std::endl;
       std::cout << "Please see instructions, you need to pass two arguments like this:" << std::endl;
       std::cout << std::endl;
       std::cout << "./bin/programs/builds/macos_release_builder TheWeepingHouse TheWeepingHouse-SourceRelease-221209191155UTC" << std::endl;
@@ -1442,10 +1446,11 @@ int main(int argc, char **argv)
       return 2;
    }
 
-   std::cout << "Building with the folowing information:" << std::endl;
-   std::cout << "   Source release folder name: \"" << arg_source_release_older_name << "\"" << std::endl;
-   std::cout << "           Name of executable: \"" << arg_name_of_executable << "\"" << std::endl;
 
+   std::cout << "Building with the folowing information:" << std::endl;
+   std::cout << "   Source release folder name: \"" << arg_source_release_folder_name << "\"" << std::endl;
+   std::cout << "           Name of executable: \"" << arg_name_of_executable << "\"" << std::endl;
+   std::cout << "                      Version: \"" << arg_source_version_string  << "\"" << std::endl;
 
    //std::filesystem::path temporary_directory1 = create_temporary_directory();
    //std::filesystem::path temporary_directory2 = create_temporary_directory();
@@ -1471,7 +1476,7 @@ int main(int argc, char **argv)
                                              //= "TheWeepingHouse-SourceRelease-221209175604UTC";
                                              //= "Krampus22_test1-SourceRelease-221209181637UTC";
                                              //= "Krampus22_test1-SourceRelease-221209191155UTC";
-                                             = arg_source_release_older_name;
+                                             = arg_source_release_folder_name;
 
                                              //221209180525UTC";
 
@@ -1481,8 +1486,8 @@ int main(int argc, char **argv)
                                      = arg_name_of_executable;
    //NameGenerator::NAME_OF_EXECUTABLE = "TheWeepingHouse";
    NameGenerator::COPYRIGHT_FULL_TEXT = "Copyright 2022 - Mark Oates - www.CLUBCATT.com";
-   NameGenerator::FULL_VERSION_NUMBER_WITH_BUILD = "1.0.0.3";
-   NameGenerator::VERSION_NUMBER = "1.0.0";
+   NameGenerator::FULL_VERSION_NUMBER_WITH_BUILD = arg_source_version_string; //"1.0.0.3";
+   NameGenerator::VERSION_NUMBER = arg_source_version_string; //"1.0.0";
    // TODO: consider moving this static location for the default icon, also only use it as a fallback if the repo does not have an app icon
    NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG = "/Users/markoates/Repos/allegro_flare/bin/data/bitmaps/allegro-flare-generic-icon-1024.png";
    //NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG = "/Users/markoates/Releases/" + NameGenerator::SOURCE_RELEASE_FOLDER_NAME + "/data/system/allegro-flare-generic-icon-1024.png";
@@ -1495,7 +1500,7 @@ int main(int argc, char **argv)
 
    // HERE:::
    // TODO: assign this:
-   //NameGenerator::FULL_PATH_TO_LOCAL_DESTINATION_OF_ZIP_FILE = TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + arg_source_release_older_name + ".zip"
+   //NameGenerator::FULL_PATH_TO_LOCAL_DESTINATION_OF_ZIP_FILE = TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + arg_source_release_folder_name + ".zip"
    //NameGenerator::FULL_URL_OF_FILE_TO_DOWNLOAD;
 
 

@@ -133,6 +133,13 @@ functions:
       - std::ofstream
 
 
+  - name: get_released_version_string
+    type: std::string
+    guards: [ build_process_completed_successfully ]
+    body: |
+      return release_info.build_project_version_string();
+
+
   - name: get_makefile_content
     type: std::string
     body: |

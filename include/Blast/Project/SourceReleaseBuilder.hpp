@@ -66,6 +66,7 @@ namespace Blast
          bool get_remove_Testing_from_project_copy() const;
          bool get_prompt_before_deleting_unneeded_folders() const;
          void write_file_contents(std::string filename="", std::string file_contents="");
+         std::string get_released_version_string();
          std::string get_makefile_content();
          std::string get_pinfo_content();
          void copy_file(std::string source_filename="", std::string destination_filename="");

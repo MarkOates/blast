@@ -61,6 +61,8 @@ int main(int argc, char **argv)
       std::cout << "      - \"/include/AllegroFlare/Testing/\" (because it requires Google Test)" << std::endl;
       std::cout << "      - \"/src/AllegroFlare/Testing/\" (because it requires Google Test)" << std::endl;
       std::cout << "   - CREATE a \"Makefile\" that can be used to `make` on cross-platform" << std::endl;
+      std::cout << "   - INCREMENT the \"version.yml\" to create a release version" << std::endl;
+      std::cout << "   - INCREMENT the \"version.yml\" a second time to a development version" << std::endl;
       std::cout << "" << std::endl;
       return 0;
    }
@@ -114,11 +116,12 @@ int main(int argc, char **argv)
    }
    else
    {
+      std::string released_version_number = source_release_builder.get_released_version_string();
       std::string generated_release_folder_name = source_release_builder.get_generated_release_folder_name();
       std::string generated_source_release_zip_filename = source_release_builder.get_generated_source_release_zip_filename();
       std::string google_drive_file_id = "1wyNG-tHiSisNoTaReAlId_btw-7yQAcN"; // TODO: upload source to google bucket
       std::stringstream command_to_make_macos_release;
-         command_to_make_macos_release << "make macos_release RELEASE_PROJECT_NAME=" << project_name << " RELEASE_FOLDER_NAME=" << generated_release_folder_name;
+         command_to_make_macos_release << "make macos_release RELEASE_PROJECT_NAME=" << project_name << " RELEASE_VERSION_NUMBER=" << released_version_number << " RELEASE_FOLDER_NAME=" << generated_release_folder_name;
       std::stringstream command_to_make_win64_release;
          command_to_make_win64_release << "make win64_release EXPECTED_RELEASE_FOLDER_NAME=" << generated_release_folder_name;
       //std::string project_testing_src_folder_name << 
