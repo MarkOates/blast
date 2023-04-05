@@ -94,6 +94,7 @@ int main(int argc, char **argv)
 
 
    std::string name_of_source_release = "";
+   std::string version_number_string = "";
 
    if (args.size() == 1)
    {
