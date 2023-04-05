@@ -21,13 +21,13 @@ properties:
     setter: true
 
   - name: started_at
-    type: std::chrono::system_clock::time_point
+    type: std::chrono::high_resolution_clock::time_point
     init_with: ''
     getter: true
     setter: true
 
   - name: ended_at
-    type: std::chrono::system_clock::time_point
+    type: std::chrono::high_resolution_clock::time_point
     init_with: ''
     getter: true
     setter: true
@@ -78,7 +78,7 @@ functions:
 
   - name: run
     body: |
-      started_at = std::chrono::system_clock::now();
+      started_at = std::chrono::high_resolution_clock::now();
 
       // set all the statuses to STATUS_NOT_STARTED
       for (auto &build_stage : build_stages)
@@ -89,7 +89,7 @@ functions:
       // run the stages one-by-one, or halt when one fails
       for (auto &build_stage : build_stages)
       {
-         build_stage->set_started_at(std::chrono::system_clock::now());
+         build_stage->set_started_at(std::chrono::high_resolution_clock::now());
          build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_RUNNING);
          try
          {
@@ -110,18 +110,18 @@ functions:
             build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_ERROR);
             status = STATUS_ERROR;
          }
-         build_stage->set_ended_at(std::chrono::system_clock::now());
+         build_stage->set_ended_at(std::chrono::high_resolution_clock::now());
 
          if (status == STATUS_ERROR)
          {
-            ended_at = std::chrono::system_clock::now();
+            ended_at = std::chrono::high_resolution_clock::now();
             return;
          }
       }
 
       // set the status to STATUS_FINISHED when all the stages are completed (without error)
       status = STATUS_FINISHED;
-      ended_at = std::chrono::system_clock::now();
+      ended_at = std::chrono::high_resolution_clock::now();
       return;
     body_dependency_symbols:
       - std::cout
@@ -134,7 +134,7 @@ functions:
         type: Blast::BuildSystem::BuildStages::Base*
         default_argument: nullptr
     body: |
-      build_stage->set_started_at(std::chrono::system_clock::now());
+      build_stage->set_started_at(std::chrono::high_resolution_clock::now());
       build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_RUNNING);
       try
       {
@@ -153,13 +153,13 @@ functions:
          std::cout << "There was an error during the execution of build stage." << std::endl;
          build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_ERROR);
       }
-      build_stage->set_ended_at(std::chrono::system_clock::now());
+      build_stage->set_ended_at(std::chrono::high_resolution_clock::now());
       return;
 
 
   - name: run_all_in_parallel
     body: |
-      started_at = std::chrono::system_clock::now();
+      started_at = std::chrono::high_resolution_clock::now();
 
       // set statuses of all stages to WAITING_TO_START
 
@@ -176,7 +176,7 @@ functions:
       //TODO: check for error status
 
       status = STATUS_FINISHED;
-      ended_at = std::chrono::system_clock::now();
+      ended_at = std::chrono::high_resolution_clock::now();
       return;
     body_dependency_symbols:
       - std::thread
@@ -194,7 +194,7 @@ dependencies:
 
   - symbol: std::thread
     headers: [ thread ]
-  - symbol: std::chrono::system_clock::time_point
+  - symbol: std::chrono::high_resolution_clock::time_point
     headers: [ chrono ]
   - symbol: Blast::BuildSystem::BuildStages::Base
     headers: [ Blast/BuildSystem/BuildStages/Base.hpp ]

@@ -35,13 +35,13 @@ void Base::set_build_stages(std::vector<Blast::BuildSystem::BuildStages::Base*> 
 }
 
 
-void Base::set_started_at(std::chrono::system_clock::time_point started_at)
+void Base::set_started_at(std::chrono::high_resolution_clock::time_point started_at)
 {
    this->started_at = started_at;
 }
 
 
-void Base::set_ended_at(std::chrono::system_clock::time_point ended_at)
+void Base::set_ended_at(std::chrono::high_resolution_clock::time_point ended_at)
 {
    this->ended_at = ended_at;
 }
@@ -65,13 +65,13 @@ std::vector<Blast::BuildSystem::BuildStages::Base*> Base::get_build_stages() con
 }
 
 
-std::chrono::system_clock::time_point Base::get_started_at() const
+std::chrono::high_resolution_clock::time_point Base::get_started_at() const
 {
    return started_at;
 }
 
 
-std::chrono::system_clock::time_point Base::get_ended_at() const
+std::chrono::high_resolution_clock::time_point Base::get_ended_at() const
 {
    return ended_at;
 }
@@ -90,7 +90,7 @@ bool Base::is_type(std::string possible_type)
 
 void Base::run()
 {
-   started_at = std::chrono::system_clock::now();
+   started_at = std::chrono::high_resolution_clock::now();
 
    // set all the statuses to STATUS_NOT_STARTED
    for (auto &build_stage : build_stages)
@@ -101,7 +101,7 @@ void Base::run()
    // run the stages one-by-one, or halt when one fails
    for (auto &build_stage : build_stages)
    {
-      build_stage->set_started_at(std::chrono::system_clock::now());
+      build_stage->set_started_at(std::chrono::high_resolution_clock::now());
       build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_RUNNING);
       try
       {
@@ -122,24 +122,24 @@ void Base::run()
          build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_ERROR);
          status = STATUS_ERROR;
       }
-      build_stage->set_ended_at(std::chrono::system_clock::now());
+      build_stage->set_ended_at(std::chrono::high_resolution_clock::now());
 
       if (status == STATUS_ERROR)
       {
-         ended_at = std::chrono::system_clock::now();
+         ended_at = std::chrono::high_resolution_clock::now();
          return;
       }
    }
 
    // set the status to STATUS_FINISHED when all the stages are completed (without error)
    status = STATUS_FINISHED;
-   ended_at = std::chrono::system_clock::now();
+   ended_at = std::chrono::high_resolution_clock::now();
    return;
 }
 
 void Base::build_stage_executor(Blast::BuildSystem::BuildStages::Base* build_stage)
 {
-   build_stage->set_started_at(std::chrono::system_clock::now());
+   build_stage->set_started_at(std::chrono::high_resolution_clock::now());
    build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_RUNNING);
    try
    {
@@ -158,13 +158,13 @@ void Base::build_stage_executor(Blast::BuildSystem::BuildStages::Base* build_sta
       std::cout << "There was an error during the execution of build stage." << std::endl;
       build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_ERROR);
    }
-   build_stage->set_ended_at(std::chrono::system_clock::now());
+   build_stage->set_ended_at(std::chrono::high_resolution_clock::now());
    return;
 }
 
 void Base::run_all_in_parallel()
 {
-   started_at = std::chrono::system_clock::now();
+   started_at = std::chrono::high_resolution_clock::now();
 
    // set statuses of all stages to WAITING_TO_START
 
@@ -181,7 +181,7 @@ void Base::run_all_in_parallel()
    //TODO: check for error status
 
    status = STATUS_FINISHED;
-   ended_at = std::chrono::system_clock::now();
+   ended_at = std::chrono::high_resolution_clock::now();
    return;
 }
 

@@ -13,7 +13,7 @@ properties:
     getter: true
 
   - name: started_at
-    type: std::chrono::system_clock::time_point
+    type: std::chrono::high_resolution_clock::time_point
     init_with: ''
     getter: explicit
     setter: false
@@ -23,7 +23,7 @@ properties:
     init_with: ''
 
   - name: ended_at
-    type: std::chrono::system_clock::time_point
+    type: std::chrono::high_resolution_clock::time_point
     init_with: ''
     getter: explicit
     setter: false
@@ -105,9 +105,9 @@ functions:
 
 
   - name: get_started_at
-    type: std::chrono::system_clock::time_point
+    type: std::chrono::high_resolution_clock::time_point
     body: |
-      std::chrono::system_clock::time_point result;
+      std::chrono::high_resolution_clock::time_point result;
       mutex_for_started_at.lock();
       result = started_at;
       mutex_for_started_at.unlock();
@@ -117,7 +117,7 @@ functions:
   - name: set_started_at
     parameters:
       - name: started_at
-        type: std::chrono::system_clock::time_point
+        type: std::chrono::high_resolution_clock::time_point
         default_argument: ''
     body: |
       mutex_for_started_at.lock();
@@ -126,9 +126,9 @@ functions:
 
 
   - name: get_ended_at
-    type: std::chrono::system_clock::time_point
+    type: std::chrono::high_resolution_clock::time_point
     body: |
-      std::chrono::system_clock::time_point result;
+      std::chrono::high_resolution_clock::time_point result;
       mutex_for_ended_at.lock();
       result = ended_at;
       mutex_for_ended_at.unlock();
@@ -138,7 +138,7 @@ functions:
   - name: set_ended_at
     parameters:
       - name: ended_at
-        type: std::chrono::system_clock::time_point
+        type: std::chrono::high_resolution_clock::time_point
         default_argument: ''
     body: |
       mutex_for_ended_at.lock();
@@ -173,7 +173,7 @@ functions:
 dependencies:
 
 
-  - symbol: std::chrono::system_clock::time_point
+  - symbol: std::chrono::high_resolution_clock::time_point
     headers: [ chrono ]
   - symbol: std::mutex
     headers: [ mutex ]

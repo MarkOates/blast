@@ -359,7 +359,7 @@ table td
 </tr>
 <tr>
   <td class="property">started_at</td>
-  <td class="property">std::chrono::system_clock::time_point</td>
+  <td class="property">std::chrono::high_resolution_clock::time_point</td>
 </tr>
 <tr>
   <td class="property">mutex_for_started_at</td>
@@ -367,7 +367,7 @@ table td
 </tr>
 <tr>
   <td class="property">ended_at</td>
-  <td class="property">std::chrono::system_clock::time_point</td>
+  <td class="property">std::chrono::high_resolution_clock::time_point</td>
 </tr>
 <tr>
   <td class="property">mutex_for_ended_at</td>
@@ -413,13 +413,13 @@ table td
   <td class="method">get_started_at()</td>
 </tr>
 <tr>
-  <td class="method">set_started_at(std::chrono::system_clock::time_point started_at=)</td>
+  <td class="method">set_started_at(std::chrono::high_resolution_clock::time_point started_at=)</td>
 </tr>
 <tr>
   <td class="method">get_ended_at()</td>
 </tr>
 <tr>
-  <td class="method">set_ended_at(std::chrono::system_clock::time_point ended_at=)</td>
+  <td class="method">set_ended_at(std::chrono::high_resolution_clock::time_point ended_at=)</td>
 </tr>
 <tr>
   <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
@@ -433,7 +433,7 @@ table td
     </table>
      <table>
 <tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::chrono::system_clock::time_point&quot;, &quot;headers&quot;=&gt;[&quot;chrono&quot;]}</td>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::chrono::high_resolution_clock::time_point&quot;, &quot;headers&quot;=&gt;[&quot;chrono&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::mutex&quot;, &quot;headers&quot;=&gt;[&quot;mutex&quot;]}</td>
@@ -498,11 +498,11 @@ table td
 </tr>
 <tr>
   <td class="property">started_at</td>
-  <td class="property">std::chrono::system_clock::time_point</td>
+  <td class="property">std::chrono::high_resolution_clock::time_point</td>
 </tr>
 <tr>
   <td class="property">ended_at</td>
-  <td class="property">std::chrono::system_clock::time_point</td>
+  <td class="property">std::chrono::high_resolution_clock::time_point</td>
 </tr>
 <tr>
   <td class="property">status</td>
@@ -547,7 +547,7 @@ table td
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::thread&quot;, &quot;headers&quot;=&gt;[&quot;thread&quot;]}</td>
 </tr>
 <tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::chrono::system_clock::time_point&quot;, &quot;headers&quot;=&gt;[&quot;chrono&quot;]}</td>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::chrono::high_resolution_clock::time_point&quot;, &quot;headers&quot;=&gt;[&quot;chrono&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildSystem::BuildStages::Base&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildSystem/BuildStages/Base.hpp&quot;]}</td>
@@ -3478,7 +3478,7 @@ table td
   "std/vector<std/vector<std/string>>": [
     "Blast/BuildSystem/BuildStageRenderers/Base"
   ],
-  "std/chrono/system_clock/time_point": [
+  "std/chrono/high_resolution_clock/time_point": [
     "Blast/BuildSystem/BuildStages/Base",
     "Blast/BuildSystem/Builds/Base"
   ],

@@ -25,8 +25,8 @@ namespace Blast
          private:
             std::string type;
             std::vector<Blast::BuildSystem::BuildStages::Base*> build_stages;
-            std::chrono::system_clock::time_point started_at;
-            std::chrono::system_clock::time_point ended_at;
+            std::chrono::high_resolution_clock::time_point started_at;
+            std::chrono::high_resolution_clock::time_point ended_at;
             std::string status;
 
          protected:
@@ -37,13 +37,13 @@ namespace Blast
             ~Base();
 
             void set_build_stages(std::vector<Blast::BuildSystem::BuildStages::Base*> build_stages);
-            void set_started_at(std::chrono::system_clock::time_point started_at);
-            void set_ended_at(std::chrono::system_clock::time_point ended_at);
+            void set_started_at(std::chrono::high_resolution_clock::time_point started_at);
+            void set_ended_at(std::chrono::high_resolution_clock::time_point ended_at);
             void set_status(std::string status);
             std::string get_type() const;
             std::vector<Blast::BuildSystem::BuildStages::Base*> get_build_stages() const;
-            std::chrono::system_clock::time_point get_started_at() const;
-            std::chrono::system_clock::time_point get_ended_at() const;
+            std::chrono::high_resolution_clock::time_point get_started_at() const;
+            std::chrono::high_resolution_clock::time_point get_ended_at() const;
             std::string get_status() const;
             bool is_type(std::string possible_type="");
             void run();

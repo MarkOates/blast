@@ -53,32 +53,32 @@ void Base::set_status(std::string status)
    return;
 }
 
-std::chrono::system_clock::time_point Base::get_started_at()
+std::chrono::high_resolution_clock::time_point Base::get_started_at()
 {
-   std::chrono::system_clock::time_point result;
+   std::chrono::high_resolution_clock::time_point result;
    mutex_for_started_at.lock();
    result = started_at;
    mutex_for_started_at.unlock();
    return result;
 }
 
-void Base::set_started_at(std::chrono::system_clock::time_point started_at)
+void Base::set_started_at(std::chrono::high_resolution_clock::time_point started_at)
 {
    mutex_for_started_at.lock();
    this->started_at = started_at;
    mutex_for_started_at.unlock();
 }
 
-std::chrono::system_clock::time_point Base::get_ended_at()
+std::chrono::high_resolution_clock::time_point Base::get_ended_at()
 {
-   std::chrono::system_clock::time_point result;
+   std::chrono::high_resolution_clock::time_point result;
    mutex_for_ended_at.lock();
    result = ended_at;
    mutex_for_ended_at.unlock();
    return result;
 }
 
-void Base::set_ended_at(std::chrono::system_clock::time_point ended_at)
+void Base::set_ended_at(std::chrono::high_resolution_clock::time_point ended_at)
 {
    mutex_for_ended_at.lock();
    this->ended_at = ended_at;
