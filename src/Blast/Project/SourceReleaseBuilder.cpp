@@ -539,8 +539,7 @@ bool SourceReleaseBuilder::generate_source_release()
 
 
 
-   // TODO: prompt the user if they would like to add "labels" or "metadata" to the version number
-
+   // TODO: Prompt the user if they would like to add "labels" or "metadata" to the version number
 
 
 

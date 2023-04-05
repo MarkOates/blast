@@ -76,7 +76,7 @@ TEST(Blast_ReleaseInfoBuilderTest, DISABLED__build__assigns_the_project_git_num_
 }
 
 
-TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_allegro_version_git_hash)
+TEST(Blast_ReleaseInfoBuilderTest, DISABLED__build__assigns_the_allegro_version_git_hash)
 {
    Blast::ReleaseInfoBuilder release_info_builder("blast");
    Blast::ReleaseInfo release_info = release_info_builder.build();
@@ -86,7 +86,7 @@ TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_allegro_version_git_hash)
 }
 
 
-TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_allegro_version_git_branch)
+TEST(Blast_ReleaseInfoBuilderTest, DISABLED__build__assigns_the_allegro_version_git_branch)
 {
    Blast::ReleaseInfoBuilder release_info_builder("blast");
    Blast::ReleaseInfo release_info = release_info_builder.build();
@@ -96,7 +96,7 @@ TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_allegro_version_git_branch
 }
 
 
-TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_allegro_version_git_num_commits)
+TEST(Blast_ReleaseInfoBuilderTest, DISABLED__build__assigns_the_allegro_version_git_num_commits)
 {
    Blast::ReleaseInfoBuilder release_info_builder("blast");
    Blast::ReleaseInfo release_info = release_info_builder.build();

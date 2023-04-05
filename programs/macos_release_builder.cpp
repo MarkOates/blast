@@ -1395,6 +1395,14 @@ std::filesystem::path create_temporary_directory(unsigned long long max_tries = 
 
 int main(int argc, char **argv)
 {
+   // TODO: Warn the builder if allegro repo is not master
+   // TODO: Warn the builder if allegro has dirty worktree files
+   // TODO: Warn the builder if allegro hash does not match the version used to create the release
+
+   // TODO: Warn the builder if allegro_flare repo is not master
+   // TODO: Warn the builder if allegro_flare has dirty worktree files
+   // TODO: Warn the builder if allegro_flare hash does not match the version used to create the release
+
    Blast::SystemInfo system_info;
 
    if (!system_info.is_apple_mac())

@@ -75,6 +75,14 @@ public:
 
 int main(int argc, char **argv)
 {
+   // TODO: Warn the builder if allegro repo is not master
+   // TODO: Warn the builder if allegro has dirty worktree files
+   // TODO: Warn the builder if allegro hash does not match the version used to create the release
+
+   // TODO: Warn the builder if allegro_flare repo is not master
+   // TODO: Warn the builder if allegro_flare has dirty worktree files
+   // TODO: Warn the builder if allegro_flare hash does not match the version used to create the release
+
    std::cout << "For now, this program is not in use.  Please call the script directly "
                 "at blast/scripts/build_win64_release.sh" << std::endl;
    return 1;
