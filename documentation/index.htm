@@ -91,6 +91,7 @@ table td
   <li><a href="#quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</a></li>
   <li><a href="#quintessence/Blast/ReleaseInfo.q.yml">quintessence/Blast/ReleaseInfo.q.yml</a></li>
   <li><a href="#quintessence/Blast/ReleaseInfoBuilder.q.yml">quintessence/Blast/ReleaseInfoBuilder.q.yml</a></li>
+  <li><a href="#quintessence/Blast/ReleaseInfoCppFileGenerator.q.yml">quintessence/Blast/ReleaseInfoCppFileGenerator.q.yml</a></li>
   <li><a href="#quintessence/Blast/ShellCommandExecutorWithCallback.q.yml">quintessence/Blast/ShellCommandExecutorWithCallback.q.yml</a></li>
   <li><a href="#quintessence/Blast/SimpleTextSearcher.q.yml">quintessence/Blast/SimpleTextSearcher.q.yml</a></li>
   <li><a href="#quintessence/Blast/String/Trimmer.q.yml">quintessence/Blast/String/Trimmer.q.yml</a></li>
@@ -101,7 +102,6 @@ table td
   <li><a href="#quintessence/Blast/TemplatedFile.q.yml">quintessence/Blast/TemplatedFile.q.yml</a></li>
   <li><a href="#quintessence/Blast/Testing/TemporaryDirectoryCreator.q.yml">quintessence/Blast/Testing/TemporaryDirectoryCreator.q.yml</a></li>
   <li><a href="#quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</a></li>
-  <li><a href="#quintessence/Blast/VersionInfoCppFileGenerator.q.yml">quintessence/Blast/VersionInfoCppFileGenerator.q.yml</a></li>
   <li><a href="#quintessence/Blast/VersionYAMLLoaderEmitter.q.yml">quintessence/Blast/VersionYAMLLoaderEmitter.q.yml</a></li>
   <li><a href="#quintessence/Blast/YamlCppValidator.q.yml">quintessence/Blast/YamlCppValidator.q.yml</a></li>
   <li><a href="#quintessence/Checkbox.q.yml">quintessence/Checkbox.q.yml</a></li>
@@ -1675,7 +1675,7 @@ table td
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ReleaseInfo&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ReleaseInfo.hpp&quot;]}</td>
 </tr>
 <tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::VersionInfoCppFileGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/VersionInfoCppFileGenerator.hpp&quot;]}</td>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ReleaseInfoCppFileGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ReleaseInfoCppFileGenerator.hpp&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::VersionYAMLLoaderEmitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/VersionYAMLLoaderEmitter.hpp&quot;]}</td>
@@ -2046,6 +2046,74 @@ table td
 </ul>
 <ul>
   <div class="component">
+    <h3 id="quintessence/Blast/ReleaseInfoCppFileGenerator.q.yml">quintessence/Blast/ReleaseInfoCppFileGenerator.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">release_info</td>
+  <td class="property">Blast::ReleaseInfo</td>
+</tr>
+<tr>
+  <td class="property">cpp_class</td>
+  <td class="property">Blast::Cpp::Class</td>
+</tr>
+<tr>
+  <td class="property">initialized</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">set_release_info(Blast::ReleaseInfo release_info={})</td>
+</tr>
+<tr>
+  <td class="method">initialize()</td>
+</tr>
+<tr>
+  <td class="method">build_cpp_class()</td>
+</tr>
+<tr>
+  <td class="method">build_cpp_class_attribute_properties()</td>
+</tr>
+<tr>
+  <td class="method">build_cpp_class_attribute(std::string datatype=&quot;std::string&quot;, std::string variable_name=&quot;variable&quot;, std::string initialization_value=&quot;variable&quot;)</td>
+</tr>
+<tr>
+  <td class="method">build_cpp_class_symbol_dependencies()</td>
+</tr>
+<tr>
+  <td class="method">wrap_in_quotes(std::string str=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">is_valid_datatype(std::string str=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">header_file_content()</td>
+</tr>
+<tr>
+  <td class="method">source_file_content()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::Class&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/Class.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::ClassGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/ClassGenerator.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::ClassAttributes&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/ClassAttributes.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::SymbolDependencies&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/SymbolDependencies.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ReleaseInfo&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ReleaseInfo.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
     <h3 id="quintessence/Blast/ShellCommandExecutorWithCallback.q.yml">quintessence/Blast/ShellCommandExecutorWithCallback.q.yml</h3>
      <table>
 <tr>
@@ -2397,74 +2465,6 @@ table td
      <table>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::time_t&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;, &quot;ctime&quot;, &quot;iomanip&quot;]}</td>
-</tr>
-    </table>
-  </div>
-</ul>
-<ul>
-  <div class="component">
-    <h3 id="quintessence/Blast/VersionInfoCppFileGenerator.q.yml">quintessence/Blast/VersionInfoCppFileGenerator.q.yml</h3>
-     <table>
-<tr>
-  <td class="property">release_info</td>
-  <td class="property">Blast::ReleaseInfo</td>
-</tr>
-<tr>
-  <td class="property">cpp_class</td>
-  <td class="property">Blast::Cpp::Class</td>
-</tr>
-<tr>
-  <td class="property">initialized</td>
-  <td class="property">bool</td>
-</tr>
-    </table>
-     <table>
-<tr>
-  <td class="method">set_release_info(Blast::ReleaseInfo release_info={})</td>
-</tr>
-<tr>
-  <td class="method">initialize()</td>
-</tr>
-<tr>
-  <td class="method">build_cpp_class()</td>
-</tr>
-<tr>
-  <td class="method">build_cpp_class_attribute_properties()</td>
-</tr>
-<tr>
-  <td class="method">build_cpp_class_attribute(std::string datatype=&quot;std::string&quot;, std::string variable_name=&quot;variable&quot;, std::string initialization_value=&quot;variable&quot;)</td>
-</tr>
-<tr>
-  <td class="method">build_cpp_class_symbol_dependencies()</td>
-</tr>
-<tr>
-  <td class="method">wrap_in_quotes(std::string str=&quot;&quot;)</td>
-</tr>
-<tr>
-  <td class="method">is_valid_datatype(std::string str=&quot;&quot;)</td>
-</tr>
-<tr>
-  <td class="method">header_file_content()</td>
-</tr>
-<tr>
-  <td class="method">source_file_content()</td>
-</tr>
-    </table>
-     <table>
-<tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::Class&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/Class.hpp&quot;]}</td>
-</tr>
-<tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::ClassGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/ClassGenerator.hpp&quot;]}</td>
-</tr>
-<tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::ClassAttributes&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/ClassAttributes.hpp&quot;]}</td>
-</tr>
-<tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::SymbolDependencies&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/SymbolDependencies.hpp&quot;]}</td>
-</tr>
-<tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ReleaseInfo&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ReleaseInfo.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -3728,9 +3728,9 @@ table td
   "Blast/ReleaseInfo": [
     "Blast/Project/SourceReleaseBuilder",
     "Blast/ReleaseInfoBuilder",
-    "Blast/VersionInfoCppFileGenerator"
+    "Blast/ReleaseInfoCppFileGenerator"
   ],
-  "Blast/VersionInfoCppFileGenerator": [
+  "Blast/ReleaseInfoCppFileGenerator": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/VersionYAMLLoaderEmitter": [
@@ -3781,6 +3781,18 @@ table td
   ],
   "NcursesArt/GithubRepoStatusFetcher": [
     "Blast/ReleaseInfoBuilder"
+  ],
+  "Blast/Cpp/Class": [
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassGenerator": [
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassAttributes": [
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/SymbolDependencies": [
+    "Blast/ReleaseInfoCppFileGenerator"
   ],
   "std/function": [
     "Blast/ShellCommandExecutorWithCallback"
@@ -3858,18 +3870,6 @@ table td
   ],
   "filesystem": [
     "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "Blast/Cpp/Class": [
-    "Blast/VersionInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/ClassGenerator": [
-    "Blast/VersionInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/ClassAttributes": [
-    "Blast/VersionInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/SymbolDependencies": [
-    "Blast/VersionInfoCppFileGenerator"
   ],
   "YAML/NodeType/value": [
     "Blast/VersionYAMLLoaderEmitter",

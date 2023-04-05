@@ -1,6 +1,6 @@
 
 
-#include <Blast/VersionInfoCppFileGenerator.hpp>
+#include <Blast/ReleaseInfoCppFileGenerator.hpp>
 
 #include <Blast/Cpp/ClassGenerator.hpp>
 #include <iostream>
@@ -12,7 +12,7 @@ namespace Blast
 {
 
 
-VersionInfoCppFileGenerator::VersionInfoCppFileGenerator(Blast::ReleaseInfo release_info)
+ReleaseInfoCppFileGenerator::ReleaseInfoCppFileGenerator(Blast::ReleaseInfo release_info)
    : release_info(release_info)
    , cpp_class("")
    , initialized(false)
@@ -20,38 +20,38 @@ VersionInfoCppFileGenerator::VersionInfoCppFileGenerator(Blast::ReleaseInfo rele
 }
 
 
-VersionInfoCppFileGenerator::~VersionInfoCppFileGenerator()
+ReleaseInfoCppFileGenerator::~ReleaseInfoCppFileGenerator()
 {
 }
 
 
-Blast::ReleaseInfo VersionInfoCppFileGenerator::get_release_info() const
+Blast::ReleaseInfo ReleaseInfoCppFileGenerator::get_release_info() const
 {
    return release_info;
 }
 
 
-void VersionInfoCppFileGenerator::set_release_info(Blast::ReleaseInfo release_info)
+void ReleaseInfoCppFileGenerator::set_release_info(Blast::ReleaseInfo release_info)
 {
    if (!((!initialized)))
    {
       std::stringstream error_message;
-      error_message << "[VersionInfoCppFileGenerator::set_release_info]: error: guard \"(!initialized)\" not met.";
+      error_message << "[ReleaseInfoCppFileGenerator::set_release_info]: error: guard \"(!initialized)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionInfoCppFileGenerator::set_release_info: error: guard \"(!initialized)\" not met");
+      throw std::runtime_error("ReleaseInfoCppFileGenerator::set_release_info: error: guard \"(!initialized)\" not met");
    }
    this->release_info = release_info;
    return;
 }
 
-void VersionInfoCppFileGenerator::initialize()
+void ReleaseInfoCppFileGenerator::initialize()
 {
    cpp_class = build_cpp_class();
    initialized = true;
    return;
 }
 
-Blast::Cpp::Class VersionInfoCppFileGenerator::build_cpp_class()
+Blast::Cpp::Class ReleaseInfoCppFileGenerator::build_cpp_class()
 {
    //return Blast::Cpp::Class(
       //std::string class_name="UnnamedClass",
@@ -75,7 +75,7 @@ Blast::Cpp::Class VersionInfoCppFileGenerator::build_cpp_class()
    );
 }
 
-std::vector<Blast::Cpp::ClassAttributes> VersionInfoCppFileGenerator::build_cpp_class_attribute_properties()
+std::vector<Blast::Cpp::ClassAttributes> ReleaseInfoCppFileGenerator::build_cpp_class_attribute_properties()
 {
    std::vector<Blast::Cpp::ClassAttributes> result = {
       build_cpp_class_attribute("std::string", "version", release_info.build_project_version_string()),
@@ -84,14 +84,14 @@ std::vector<Blast::Cpp::ClassAttributes> VersionInfoCppFileGenerator::build_cpp_
    return result;
 }
 
-Blast::Cpp::ClassAttributes VersionInfoCppFileGenerator::build_cpp_class_attribute(std::string datatype, std::string variable_name, std::string initialization_value)
+Blast::Cpp::ClassAttributes ReleaseInfoCppFileGenerator::build_cpp_class_attribute(std::string datatype, std::string variable_name, std::string initialization_value)
 {
    if (!(is_valid_datatype(datatype)))
    {
       std::stringstream error_message;
-      error_message << "[VersionInfoCppFileGenerator::build_cpp_class_attribute]: error: guard \"is_valid_datatype(datatype)\" not met.";
+      error_message << "[ReleaseInfoCppFileGenerator::build_cpp_class_attribute]: error: guard \"is_valid_datatype(datatype)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionInfoCppFileGenerator::build_cpp_class_attribute: error: guard \"is_valid_datatype(datatype)\" not met");
+      throw std::runtime_error("ReleaseInfoCppFileGenerator::build_cpp_class_attribute: error: guard \"is_valid_datatype(datatype)\" not met");
    }
    return Blast::Cpp::ClassAttributes(
          datatype, //std::string datatype,
@@ -107,7 +107,7 @@ Blast::Cpp::ClassAttributes VersionInfoCppFileGenerator::build_cpp_class_attribu
       );
 }
 
-std::vector<Blast::Cpp::SymbolDependencies> VersionInfoCppFileGenerator::build_cpp_class_symbol_dependencies()
+std::vector<Blast::Cpp::SymbolDependencies> ReleaseInfoCppFileGenerator::build_cpp_class_symbol_dependencies()
 {
    std::vector<Blast::Cpp::SymbolDependencies> result = {
       Blast::Cpp::SymbolDependencies(
@@ -126,37 +126,37 @@ std::vector<Blast::Cpp::SymbolDependencies> VersionInfoCppFileGenerator::build_c
    return result;
 }
 
-std::string VersionInfoCppFileGenerator::wrap_in_quotes(std::string str)
+std::string ReleaseInfoCppFileGenerator::wrap_in_quotes(std::string str)
 {
    return "\"" + str + "\"";
 }
 
-bool VersionInfoCppFileGenerator::is_valid_datatype(std::string str)
+bool ReleaseInfoCppFileGenerator::is_valid_datatype(std::string str)
 {
    return (str == "std::string" || str == "int");
 }
 
-std::string VersionInfoCppFileGenerator::header_file_content()
+std::string ReleaseInfoCppFileGenerator::header_file_content()
 {
    if (!(initialized))
    {
       std::stringstream error_message;
-      error_message << "[VersionInfoCppFileGenerator::header_file_content]: error: guard \"initialized\" not met.";
+      error_message << "[ReleaseInfoCppFileGenerator::header_file_content]: error: guard \"initialized\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionInfoCppFileGenerator::header_file_content: error: guard \"initialized\" not met");
+      throw std::runtime_error("ReleaseInfoCppFileGenerator::header_file_content: error: guard \"initialized\" not met");
    }
    Blast::Cpp::ClassGenerator generator(cpp_class);
    return generator.generate_header_file_content();
 }
 
-std::string VersionInfoCppFileGenerator::source_file_content()
+std::string ReleaseInfoCppFileGenerator::source_file_content()
 {
    if (!(initialized))
    {
       std::stringstream error_message;
-      error_message << "[VersionInfoCppFileGenerator::source_file_content]: error: guard \"initialized\" not met.";
+      error_message << "[ReleaseInfoCppFileGenerator::source_file_content]: error: guard \"initialized\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionInfoCppFileGenerator::source_file_content: error: guard \"initialized\" not met");
+      throw std::runtime_error("ReleaseInfoCppFileGenerator::source_file_content: error: guard \"initialized\" not met");
    }
    Blast::Cpp::ClassGenerator generator(cpp_class);
    return generator.generate_source_file_content();

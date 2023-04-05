@@ -9,10 +9,10 @@
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ReleaseInfoBuilder.hpp>
+#include <Blast/ReleaseInfoCppFileGenerator.hpp>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/TimeStamper.hpp>
-#include <Blast/VersionInfoCppFileGenerator.hpp>
 #include <Blast/VersionYAMLLoaderEmitter.hpp>
 #include <cstdio>
 #include <filesystem>
@@ -351,7 +351,7 @@ void SourceReleaseBuilder::copy_file(std::string source_filename, std::string de
 
 std::string SourceReleaseBuilder::get_release_info_header_file_contents()
 {
-   Blast::VersionInfoCppFileGenerator release_info_file_generator;
+   Blast::ReleaseInfoCppFileGenerator release_info_file_generator;
    release_info_file_generator.set_release_info(release_info);
    release_info_file_generator.initialize();
    return release_info_file_generator.header_file_content();
@@ -359,7 +359,7 @@ std::string SourceReleaseBuilder::get_release_info_header_file_contents()
 
 std::string SourceReleaseBuilder::get_release_info_source_file_contents()
 {
-   Blast::VersionInfoCppFileGenerator release_info_file_generator;
+   Blast::ReleaseInfoCppFileGenerator release_info_file_generator;
    release_info_file_generator.set_release_info(release_info);
    release_info_file_generator.initialize();
    return release_info_file_generator.source_file_content();

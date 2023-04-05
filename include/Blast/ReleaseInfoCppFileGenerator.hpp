@@ -11,7 +11,7 @@
 
 namespace Blast
 {
-   class VersionInfoCppFileGenerator
+   class ReleaseInfoCppFileGenerator
    {
    private:
       Blast::ReleaseInfo release_info;
@@ -22,8 +22,8 @@ namespace Blast
 
 
    public:
-      VersionInfoCppFileGenerator(Blast::ReleaseInfo release_info={});
-      ~VersionInfoCppFileGenerator();
+      ReleaseInfoCppFileGenerator(Blast::ReleaseInfo release_info={});
+      ~ReleaseInfoCppFileGenerator();
 
       Blast::ReleaseInfo get_release_info() const;
       void set_release_info(Blast::ReleaseInfo release_info={});

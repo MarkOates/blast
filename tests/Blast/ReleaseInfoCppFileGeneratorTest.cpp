@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 
-#include <Blast/VersionInfoCppFileGenerator.hpp>
+#include <Blast/ReleaseInfoCppFileGenerator.hpp>
 static std::string TEST_FIXTURES_FOLDER = "/Users/markoates/Repos/blast/tests/fixtures/";
 
 
@@ -39,17 +39,17 @@ static Blast::ReleaseInfo build_test_release_info()
 }
 
 
-TEST(Blast_VersionInfoCppFileGeneratorTest, can_be_created_without_blowing_up)
+TEST(Blast_ReleaseInfoCppFileGeneratorTest, can_be_created_without_blowing_up)
 {
-   Blast::VersionInfoCppFileGenerator version_info_cpp_file_generator;
+   Blast::ReleaseInfoCppFileGenerator version_info_cpp_file_generator;
 }
 
 
-TEST(Blast_VersionInfoCppFileGeneratorTest, header_file_content__will_return_the_expected_generated_content)
+TEST(Blast_ReleaseInfoCppFileGeneratorTest, header_file_content__will_return_the_expected_generated_content)
 {
    std::string VERSION_INFO_EXPECTED_HPP = TEST_FIXTURES_FOLDER + "ReleaseInfo_hpp_file_content.txt";
 
-   Blast::VersionInfoCppFileGenerator version_info_cpp_file_generator;
+   Blast::ReleaseInfoCppFileGenerator version_info_cpp_file_generator;
    version_info_cpp_file_generator.initialize();
 
    std::string expected_generated_content = file_get_contents(VERSION_INFO_EXPECTED_HPP);
@@ -59,11 +59,11 @@ TEST(Blast_VersionInfoCppFileGeneratorTest, header_file_content__will_return_the
 }
 
 
-TEST(Blast_VersionInfoCppFileGeneratorTest, source_file_content__will_return_the_expected_generated_content)
+TEST(Blast_ReleaseInfoCppFileGeneratorTest, source_file_content__will_return_the_expected_generated_content)
 {
    std::string VERSION_INFO_EXPECTED_HPP = TEST_FIXTURES_FOLDER + "ReleaseInfo_cpp_file_content.txt";
 
-   Blast::VersionInfoCppFileGenerator version_info_cpp_file_generator;
+   Blast::ReleaseInfoCppFileGenerator version_info_cpp_file_generator;
    version_info_cpp_file_generator.set_release_info(build_test_release_info());
    version_info_cpp_file_generator.initialize();
 

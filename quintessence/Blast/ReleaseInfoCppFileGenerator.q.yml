@@ -16,13 +16,6 @@ properties:
     init_with: false
 
 
-documentation:
-
-
-  - todos:
-      - Rename this class to ReleaseInfoCppFileGenerator, Add "BuildInfo", Consider a "VersionInfo" would combine both
-
-
 functions:
 
 

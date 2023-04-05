@@ -326,9 +326,9 @@
   "Blast/ReleaseInfo": [
     "Blast/Project/SourceReleaseBuilder",
     "Blast/ReleaseInfoBuilder",
-    "Blast/VersionInfoCppFileGenerator"
+    "Blast/ReleaseInfoCppFileGenerator"
   ],
-  "Blast/VersionInfoCppFileGenerator": [
+  "Blast/ReleaseInfoCppFileGenerator": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/VersionYAMLLoaderEmitter": [
@@ -379,6 +379,18 @@
   ],
   "NcursesArt/GithubRepoStatusFetcher": [
     "Blast/ReleaseInfoBuilder"
+  ],
+  "Blast/Cpp/Class": [
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassGenerator": [
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassAttributes": [
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/SymbolDependencies": [
+    "Blast/ReleaseInfoCppFileGenerator"
   ],
   "std/function": [
     "Blast/ShellCommandExecutorWithCallback"
@@ -456,18 +468,6 @@
   ],
   "filesystem": [
     "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "Blast/Cpp/Class": [
-    "Blast/VersionInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/ClassGenerator": [
-    "Blast/VersionInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/ClassAttributes": [
-    "Blast/VersionInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/SymbolDependencies": [
-    "Blast/VersionInfoCppFileGenerator"
   ],
   "YAML/NodeType/value": [
     "Blast/VersionYAMLLoaderEmitter",

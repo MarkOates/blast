@@ -274,23 +274,23 @@ functions:
   - name: get_release_info_header_file_contents
     type: std::string
     body: |
-      Blast::VersionInfoCppFileGenerator release_info_file_generator;
+      Blast::ReleaseInfoCppFileGenerator release_info_file_generator;
       release_info_file_generator.set_release_info(release_info);
       release_info_file_generator.initialize();
       return release_info_file_generator.header_file_content();
     body_dependency_symbols:
-      - Blast::VersionInfoCppFileGenerator
+      - Blast::ReleaseInfoCppFileGenerator
 
 
   - name: get_release_info_source_file_contents
     type: std::string
     body: |
-      Blast::VersionInfoCppFileGenerator release_info_file_generator;
+      Blast::ReleaseInfoCppFileGenerator release_info_file_generator;
       release_info_file_generator.set_release_info(release_info);
       release_info_file_generator.initialize();
       return release_info_file_generator.source_file_content();
     body_dependency_symbols:
-      - Blast::VersionInfoCppFileGenerator
+      - Blast::ReleaseInfoCppFileGenerator
 
 
   - name: list_symlinks
@@ -1090,8 +1090,8 @@ dependencies:
     headers: [ Blast/ReleaseInfoBuilder.hpp ]
   - symbol: Blast::ReleaseInfo
     headers: [ Blast/ReleaseInfo.hpp ]
-  - symbol: Blast::VersionInfoCppFileGenerator
-    headers: [ Blast/VersionInfoCppFileGenerator.hpp ]
+  - symbol: Blast::ReleaseInfoCppFileGenerator
+    headers: [ Blast/ReleaseInfoCppFileGenerator.hpp ]
   - symbol: Blast::VersionYAMLLoaderEmitter
     headers: [ Blast/VersionYAMLLoaderEmitter.hpp ]
 
