@@ -98,13 +98,16 @@ int main(int argc, char **argv)
    if (args.size() == 1)
    {
       name_of_source_release = args[0];
+      version_number_string = args[1];
+      // TODO: validate version number string format
+      // TODO: validate version number string maches version of source (could remove argument as a result)
    }
    else
    {
       std::cout << "You did it!" << std::endl;
       std::cout << "Please see instructions. You will need to pass a release name as the first argument." << std::endl;
       std::cout << std::endl;
-      std::cout << execution_name << " KrampusReturns-SourceRelease-230101031610UTC" << std::endl;
+      std::cout << execution_name << " KrampusReturns-0.1.2-SourceRelease 0.1.2" << std::endl;
       std::cout << std::endl;
       return 1;
    }

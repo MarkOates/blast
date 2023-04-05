@@ -6,17 +6,17 @@
 
 ## CRITICAL: validate an arg is present representing the download token
 
-if [ $# -ne 1 ]; then
+if [ $# -ne 2 ]; then
     echo ""
     echo "!! Error: Incorrect number of arguments provided. You must provide one."
     echo ""
     echo "Example:"
     echo ""
-    echo "    ./scripts/build_win64_release.sh <expected-folder-name-inside-the-zip>"
+    echo "    ./scripts/build_win64_release.sh <expected-folder-name-inside-the-zip> <version-number-string>"
     echo ""
     echo "Example 2:"
     echo ""
-    echo "    ./scripts/build_win64_release.sh CubeShooter-SourceRelease-230226193517UTC"
+    echo "    ./scripts/build_win64_release.sh CubeShooter-0.1.2-SourceRelease 0.1.2"
     echo ""
     echo ""
     echo "NOTE: Releases can be found at:"
