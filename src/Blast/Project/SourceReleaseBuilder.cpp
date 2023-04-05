@@ -355,6 +355,8 @@ std::string SourceReleaseBuilder::get_release_info_source_file_contents()
 
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
 {
+   // TODO: This process iterates through every folder in the "Releases" folder, not sure this
+   // does what it's supposed to
    std::string command = std::string("find ") + releases_base_folder;
    Blast::ShellCommandExecutorWithCallback executor(
       command,
@@ -417,17 +419,7 @@ void SourceReleaseBuilder::replace_symlinks_with_copies_of_linked_files()
 
 std::string SourceReleaseBuilder::get_source_release_folder_name()
 {
-   return get_project_name() + "-SourceRelease";
-}
-
-std::string SourceReleaseBuilder::get_macos_release_folder_name()
-{
-   return get_project_name() + "-MacOSRelease";
-}
-
-std::string SourceReleaseBuilder::get_win64_release_folder_name()
-{
-   return get_project_name() + "-Win64Release";
+   return get_project_name() + "-source";
 }
 
 std::string SourceReleaseBuilder::get_generated_source_release_zip_filename()
@@ -522,6 +514,8 @@ bool SourceReleaseBuilder::generate_source_release()
 
       version_yaml_loader_emitter.load();
 
+      // TODO: Validate the current version is "wip" and can bump to a release number.
+
       std::cout << "[Blast::Project::SourceReleaseBuilder]: info: Current version (before release) is \""
                 << version_yaml_loader_emitter.build_project_version_string() << "\". Incrementing..."
                 << std::endl;
@@ -536,6 +530,7 @@ bool SourceReleaseBuilder::generate_source_release()
                 << version_yaml_loader_emitter.build_project_version_string() << "\"."
                 << std::endl;
    }
+
 
 
 
@@ -559,6 +554,9 @@ bool SourceReleaseBuilder::generate_source_release()
 
 
 
+   std::string version_string = release_info.build_project_version_string();
+
+
    // !! WARNING: local variable name shadows class instance variable name:
    // !! WARNING: local variable name shadows class instance variable name:
    // !! WARNING: local variable name shadows class instance variable name:
@@ -567,6 +565,20 @@ bool SourceReleaseBuilder::generate_source_release()
                                      + time_stamper.generate_now_timestamp_utc();
 
    std::string xxx = releases_base_folder + "/" + generated_folder_name;
+
+
+
+   // TODO: Validate releases_folder_exists
+   if (Blast::DirectoryExistenceChecker(xxx).exists())
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::Project::SourceReleaseBuilder] error: The directory \""
+                   << xxx
+                   << "\" already exists.";
+      throw std::runtime_error(error_message.str());
+   }
+
+
 
    // create the directory
    std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();

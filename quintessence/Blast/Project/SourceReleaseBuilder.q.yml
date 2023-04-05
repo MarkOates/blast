@@ -289,6 +289,8 @@ functions:
   - name: list_symlinks
     type: std::vector<std::pair<std::string, std::string>>
     body: |
+      // TODO: This process iterates through every folder in the "Releases" folder, not sure this
+      // does what it's supposed to
       std::string command = std::string("find ") + releases_base_folder;
       Blast::ShellCommandExecutorWithCallback executor(
          command,
@@ -362,19 +364,7 @@ functions:
   - name: get_source_release_folder_name
     type: std::string
     body: |
-      return get_project_name() + "-SourceRelease";
-
-
-  - name: get_macos_release_folder_name
-    type: std::string
-    body: |
-      return get_project_name() + "-MacOSRelease";
-
-
-  - name: get_win64_release_folder_name
-    type: std::string
-    body: |
-      return get_project_name() + "-Win64Release";
+      return get_project_name() + "-source";
 
 
   - name: get_generated_source_release_zip_filename
@@ -469,6 +459,8 @@ functions:
 
          version_yaml_loader_emitter.load();
 
+         // TODO: Validate the current version is "wip" and can bump to a release number.
+
          std::cout << "[Blast::Project::SourceReleaseBuilder]: info: Current version (before release) is \""
                    << version_yaml_loader_emitter.build_project_version_string() << "\". Incrementing..."
                    << std::endl;
@@ -483,6 +475,7 @@ functions:
                    << version_yaml_loader_emitter.build_project_version_string() << "\"."
                    << std::endl;
       }
+
 
 
 
@@ -506,6 +499,9 @@ functions:
 
 
 
+      std::string version_string = release_info.build_project_version_string();
+
+
       // !! WARNING: local variable name shadows class instance variable name:
       // !! WARNING: local variable name shadows class instance variable name:
       // !! WARNING: local variable name shadows class instance variable name:
@@ -514,6 +510,20 @@ functions:
                                         + time_stamper.generate_now_timestamp_utc();
 
       std::string xxx = releases_base_folder + "/" + generated_folder_name;
+
+
+
+      // TODO: Validate releases_folder_exists
+      if (Blast::DirectoryExistenceChecker(xxx).exists())
+      {
+         std::stringstream error_message;
+         error_message << "[Blast::Project::SourceReleaseBuilder] error: The directory \""
+                      << xxx
+                      << "\" already exists.";
+         throw std::runtime_error(error_message.str());
+      }
+
+
 
       // create the directory
       std::vector<std::string> directories_that_will_exist = StringSplitter(xxx, '/').split();
