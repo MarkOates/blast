@@ -39,6 +39,25 @@
   "std/size_t": [
     "Blast/Build/Celebrator"
   ],
+  "Blast/Cpp/Class": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassGenerator": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassAttributes": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/SymbolDependencies": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/BuildInfo": [
+    "Blast/BuildInfoCppFileGenerator"
+  ],
   "Blast/BuildSystem/BuildStageFactory": [
     "Blast/BuildSystem/BuildFactory"
   ],
@@ -379,18 +398,6 @@
   ],
   "NcursesArt/GithubRepoStatusFetcher": [
     "Blast/ReleaseInfoBuilder"
-  ],
-  "Blast/Cpp/Class": [
-    "Blast/ReleaseInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/ClassGenerator": [
-    "Blast/ReleaseInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/ClassAttributes": [
-    "Blast/ReleaseInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/SymbolDependencies": [
-    "Blast/ReleaseInfoCppFileGenerator"
   ],
   "std/function": [
     "Blast/ShellCommandExecutorWithCallback"

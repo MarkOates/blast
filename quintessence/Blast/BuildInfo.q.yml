@@ -1,0 +1,79 @@
+documentation:
+
+
+  - todos:
+    - |
+      Consider adding c++ language version
+      see https://learn.microsoft.com/en-us/cpp/build/reference/zc-cplusplus?view=msvc-170&viewFallbackFrom=vs-2019
+
+
+properties:
+
+
+  - name: time_of_build
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: building_platform_os_name
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: building_platform_os_version
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: building_platform_chipset
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: compiler_name
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: compiler_version
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: allegro_version_num
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: allegro_version_git_branch
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: allegro_version_git_hash
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: allegro_version_git_latest_commit_date_and_time
+    type: std::string
+    init_with: '"[unset]"'
+    getter: true
+    setter: true
+
+  - name: allegro_version_git_num_commits
+    type: int
+    init_with: 0
+    getter: true
+    setter: true
+
+

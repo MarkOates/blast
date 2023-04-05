@@ -52,6 +52,8 @@ table td
   <li><a href="#quintessence/ASCIICharacterRenderer.q.yml">quintessence/ASCIICharacterRenderer.q.yml</a></li>
   <li><a href="#quintessence/Blast/BinaryObfusicator.q.yml">quintessence/Blast/BinaryObfusicator.q.yml</a></li>
   <li><a href="#quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildInfo.q.yml">quintessence/Blast/BuildInfo.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildInfoCppFileGenerator.q.yml">quintessence/Blast/BuildInfoCppFileGenerator.q.yml</a></li>
   <li><a href="#quintessence/Blast/BuildSystem/BuildFactory.q.yml">quintessence/Blast/BuildSystem/BuildFactory.q.yml</a></li>
   <li><a href="#quintessence/Blast/BuildSystem/BuildStageFactory.q.yml">quintessence/Blast/BuildSystem/BuildStageFactory.q.yml</a></li>
   <li><a href="#quintessence/Blast/BuildSystem/BuildStageRenderer.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderer.q.yml</a></li>
@@ -208,6 +210,129 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::size_t&quot;, &quot;headers&quot;=&gt;[&quot;cstddef&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildInfo.q.yml">quintessence/Blast/BuildInfo.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">time_of_build</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">building_platform_os_name</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">building_platform_os_version</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">building_platform_chipset</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">compiler_name</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">compiler_version</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">allegro_version_num</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">allegro_version_git_branch</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">allegro_version_git_hash</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">allegro_version_git_latest_commit_date_and_time</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">allegro_version_git_num_commits</td>
+  <td class="property">int</td>
+</tr>
+    </table>
+     <table>
+    </table>
+     <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildInfoCppFileGenerator.q.yml">quintessence/Blast/BuildInfoCppFileGenerator.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">build_info</td>
+  <td class="property">Blast::BuildInfo</td>
+</tr>
+<tr>
+  <td class="property">cpp_class</td>
+  <td class="property">Blast::Cpp::Class</td>
+</tr>
+<tr>
+  <td class="property">initialized</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">set_build_info(Blast::BuildInfo build_info={})</td>
+</tr>
+<tr>
+  <td class="method">initialize()</td>
+</tr>
+<tr>
+  <td class="method">build_cpp_class()</td>
+</tr>
+<tr>
+  <td class="method">build_cpp_class_attribute_properties()</td>
+</tr>
+<tr>
+  <td class="method">build_cpp_class_attribute(std::string datatype=&quot;std::string&quot;, std::string variable_name=&quot;variable&quot;, std::string initialization_value=&quot;variable&quot;)</td>
+</tr>
+<tr>
+  <td class="method">build_cpp_class_symbol_dependencies()</td>
+</tr>
+<tr>
+  <td class="method">wrap_in_quotes(std::string str=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">is_valid_datatype(std::string str=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">header_file_content()</td>
+</tr>
+<tr>
+  <td class="method">source_file_content()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::Class&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/Class.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::ClassGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/ClassGenerator.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::ClassAttributes&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/ClassAttributes.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::SymbolDependencies&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/SymbolDependencies.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildInfo&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildInfo.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -3441,6 +3566,25 @@ table td
   "std/size_t": [
     "Blast/Build/Celebrator"
   ],
+  "Blast/Cpp/Class": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassGenerator": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/ClassAttributes": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/SymbolDependencies": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/BuildInfo": [
+    "Blast/BuildInfoCppFileGenerator"
+  ],
   "Blast/BuildSystem/BuildStageFactory": [
     "Blast/BuildSystem/BuildFactory"
   ],
@@ -3781,18 +3925,6 @@ table td
   ],
   "NcursesArt/GithubRepoStatusFetcher": [
     "Blast/ReleaseInfoBuilder"
-  ],
-  "Blast/Cpp/Class": [
-    "Blast/ReleaseInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/ClassGenerator": [
-    "Blast/ReleaseInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/ClassAttributes": [
-    "Blast/ReleaseInfoCppFileGenerator"
-  ],
-  "Blast/Cpp/SymbolDependencies": [
-    "Blast/ReleaseInfoCppFileGenerator"
   ],
   "std/function": [
     "Blast/ShellCommandExecutorWithCallback"
