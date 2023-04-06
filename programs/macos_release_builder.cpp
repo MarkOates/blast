@@ -15,6 +15,9 @@
 #include <iostream>
 #include <sstream>
 #include <Blast/SystemInfo.hpp>
+#include <Blast/BuildInfo.hpp>
+#include <Blast/BuildInfoBuilder.hpp>
+#include <Blast/BuildInfoCppFileGenerator.hpp>
 
 
 
@@ -537,7 +540,6 @@ public:
 
 
 
-// HERE:
 class UnzipDownloadedSourceReleaseFile : public Blast::BuildSystem::BuildStages::Base
 {
 private:
@@ -1064,39 +1066,33 @@ public:
 class GenerateBuildInfoCppFileInTempSrcFolder : public Blast::BuildSystem::BuildStages::Base
 {
 private:
-   void execute_shell_commands()
+   void generate_and_create_file()
    {
       // TODO: Add this build step
-      //std::string source = name_of_temp_location_with_build + name_of_built_executable;
-      //std::string destination = NameGenerator::full_binary_app_package_destination();
 
-      //std::stringstream shell_command;
-      //shell_command << "cp \"" << source << "\" \"" << destination << "\"";
-      //std::cout << shell_command.str() << std::endl;
+      Blast::BuildInfo build_info = Blast::BuildInfoBuilder().build();
+      Blast::BuildInfoCppFileGenerator build_info_cpp_file_generator(build_info);
+      build_info_cpp_file_generator.initialize();
 
-      //Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
-      //shell_command_result = shell_command_executor.execute();
-
-      //Blast::ShellCommandExecutorWithCallback shell_command_executor2("echo $?");
-      //shell_command_response_code = shell_command_executor2.execute();
+      std::string target_build_info_filename = name_of_temp_location_with_build + "src/BuildInfo.cpp"; // TODO: Move this filename up to the NameGenerator
+      file_was_created_successfully = file_put_contents(target_build_info_filename, build_info_cpp_file_generator.source_file_content());
    }
 
 public:
    static constexpr char* TYPE = (char*)"GenerateBuildInfoCppFileInTempSrcFolder";
    std::string name_of_temp_location_with_build;
-   std::string shell_command_result;
-   std::string shell_command_response_code;
+   bool file_was_created_successfully;
 
    GenerateBuildInfoCppFileInTempSrcFolder()
       : Blast::BuildSystem::BuildStages::Base(TYPE)
       , name_of_temp_location_with_build(NameGenerator::full_path_of_temp_location())
+      , file_was_created_successfully(false)
    {}
 
    virtual bool execute() override
    {
-      execute_shell_commands();
-      if (shell_command_response_code == ("0\n")) return true;
-      return false;
+      generate_and_create_file();
+      return file_was_created_successfully;
    }
 };
 
@@ -1539,7 +1535,6 @@ int main(int argc, char **argv)
 
 
 
-   // HERE:::
    // TODO: assign this:
    //NameGenerator::FULL_PATH_TO_LOCAL_DESTINATION_OF_ZIP_FILE = TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + arg_source_release_folder_name + ".zip"
    //NameGenerator::FULL_URL_OF_FILE_TO_DOWNLOAD;
