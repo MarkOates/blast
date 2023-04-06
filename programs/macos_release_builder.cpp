@@ -1061,6 +1061,47 @@ public:
 
 
 
+class GenerateBuildInfoCppFileInTempSrcFolder : public Blast::BuildSystem::BuildStages::Base
+{
+private:
+   void execute_shell_commands()
+   {
+      // TODO: Add this build step
+      //std::string source = name_of_temp_location_with_build + name_of_built_executable;
+      //std::string destination = NameGenerator::full_binary_app_package_destination();
+
+      //std::stringstream shell_command;
+      //shell_command << "cp \"" << source << "\" \"" << destination << "\"";
+      //std::cout << shell_command.str() << std::endl;
+
+      //Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      //shell_command_result = shell_command_executor.execute();
+
+      //Blast::ShellCommandExecutorWithCallback shell_command_executor2("echo $?");
+      //shell_command_response_code = shell_command_executor2.execute();
+   }
+
+public:
+   static constexpr char* TYPE = (char*)"GenerateBuildInfoCppFileInTempSrcFolder";
+   std::string name_of_temp_location_with_build;
+   std::string shell_command_result;
+   std::string shell_command_response_code;
+
+   GenerateBuildInfoCppFileInTempSrcFolder()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+      , name_of_temp_location_with_build(NameGenerator::full_path_of_temp_location())
+   {}
+
+   virtual bool execute() override
+   {
+      execute_shell_commands();
+      if (shell_command_response_code == ("0\n")) return true;
+      return false;
+   }
+};
+
+
+
 class CopyBuiltBinaryToAppPackage : public Blast::BuildSystem::BuildStages::Base
 {
 private:
@@ -1532,6 +1573,9 @@ int main(int argc, char **argv)
 
       // validate README.md in source, validate source icon needed for icns file
       new ValidateSourceReadme(),
+
+      // generate a src/BuildInfo.cpp file
+      new GenerateBuildInfoCppFileInTempSrcFolder(),
 
       // make a build from the source
       new BuildFromSourceInTempFolder(),
