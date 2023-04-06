@@ -46,7 +46,8 @@
   ],
   "Blast/BuildInfo": [
     "Blast/BuildInfoBuilder",
-    "Blast/BuildInfoCppFileGenerator"
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/DirectoryExistenceChecker": [
     "Blast/BuildInfoBuilder",
@@ -359,6 +360,9 @@
     "Blast/ReleaseInfoCppFileGenerator"
   ],
   "Blast/ReleaseInfoCppFileGenerator": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/BuildInfoCppFileGenerator": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/VersionYAMLLoaderEmitter": [

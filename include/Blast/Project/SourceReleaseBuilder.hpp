@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <Blast/BuildInfo.hpp>
 #include <Blast/ReleaseInfo.hpp>
 #include <string>
 #include <utility>
@@ -22,6 +23,7 @@ namespace Blast
          bool build_process_completed_successfully;
          std::string generated_release_folder_name;
          Blast::ReleaseInfo release_info;
+         Blast::BuildInfo build_info;
          bool copy_allegro_flare_source;
          bool copy_nlohmann_json_from_allegro_flare_source;
          bool copy_ordered_map_from_allegro_flare_source;
@@ -56,6 +58,7 @@ namespace Blast
          bool get_build_process_completed_successfully() const;
          std::string get_generated_release_folder_name() const;
          Blast::ReleaseInfo get_release_info() const;
+         Blast::BuildInfo get_build_info() const;
          bool get_copy_allegro_flare_source() const;
          bool get_copy_nlohmann_json_from_allegro_flare_source() const;
          bool get_copy_ordered_map_from_allegro_flare_source() const;
@@ -72,6 +75,8 @@ namespace Blast
          void copy_file(std::string source_filename="", std::string destination_filename="");
          std::string get_release_info_header_file_contents();
          std::string get_release_info_source_file_contents();
+         std::string get_build_info_header_file_contents();
+         std::string get_build_info_source_file_contents();
          std::vector<std::pair<std::string, std::string>> list_symlinks();
          void fix_symlink_targets_from_relative_to_absolute();
          void replace_symlinks_with_copies_of_linked_files();

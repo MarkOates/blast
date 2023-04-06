@@ -2,6 +2,7 @@
 
 #include <Blast/Project/SourceReleaseBuilder.hpp>
 
+#include <Blast/BuildInfoCppFileGenerator.hpp>
 #include <Blast/DirectoryCreator.hpp>
 #include <Blast/DirectoryExistenceChecker.hpp>
 #include <Blast/Errors.hpp>
@@ -37,6 +38,7 @@ SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std
    , build_process_completed_successfully(false)
    , generated_release_folder_name("")
    , release_info({})
+   , build_info({})
    , copy_allegro_flare_source(copy_allegro_flare_source)
    , copy_nlohmann_json_from_allegro_flare_source(copy_nlohmann_json_from_allegro_flare_source)
    , copy_ordered_map_from_allegro_flare_source(copy_ordered_map_from_allegro_flare_source)
@@ -154,6 +156,12 @@ std::string SourceReleaseBuilder::get_generated_release_folder_name() const
 Blast::ReleaseInfo SourceReleaseBuilder::get_release_info() const
 {
    return release_info;
+}
+
+
+Blast::BuildInfo SourceReleaseBuilder::get_build_info() const
+{
+   return build_info;
 }
 
 
@@ -363,6 +371,22 @@ std::string SourceReleaseBuilder::get_release_info_source_file_contents()
    release_info_file_generator.set_release_info(release_info);
    release_info_file_generator.initialize();
    return release_info_file_generator.source_file_content();
+}
+
+std::string SourceReleaseBuilder::get_build_info_header_file_contents()
+{
+   Blast::BuildInfoCppFileGenerator build_info_file_generator;
+   build_info_file_generator.set_build_info(build_info);
+   build_info_file_generator.initialize();
+   return build_info_file_generator.header_file_content();
+}
+
+std::string SourceReleaseBuilder::get_build_info_source_file_contents()
+{
+   Blast::BuildInfoCppFileGenerator build_info_file_generator;
+   build_info_file_generator.set_build_info(build_info);
+   build_info_file_generator.initialize();
+   return build_info_file_generator.source_file_content();
 }
 
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
@@ -1006,15 +1030,27 @@ bool SourceReleaseBuilder::generate_source_release()
 
 
    // Add version info source file(s)
-   // header file
+   // Add the ReleeaseInfo.hpp header file
    std::string release_info_hpp_filename = destination_directory + "/include/ReleaseInfo.hpp";
    std::string release_info_header_file_contents = get_release_info_header_file_contents();
    write_file_contents(release_info_hpp_filename, release_info_header_file_contents);
 
-   // source file
+   // Add the ReleeaseInfo.cpp source file
    std::string release_info_cpp_filename = destination_directory + "/src/ReleaseInfo.cpp";
    std::string release_info_source_file_contents = get_release_info_source_file_contents();
    write_file_contents(release_info_cpp_filename, release_info_source_file_contents);
+
+
+
+   // Add the ReleeaseInfo.hpp header file
+   std::string build_info_hpp_filename = destination_directory + "/include/BuildInfo.hpp";
+   std::string build_info_header_file_contents = get_build_info_header_file_contents();
+   write_file_contents(build_info_hpp_filename, build_info_header_file_contents);
+
+   // Add the ReleeaseInfo.cpp source file
+   std::string build_info_cpp_filename = destination_directory + "/src/BuildInfo.cpp";
+   std::string build_info_source_file_contents = get_build_info_source_file_contents();
+   write_file_contents(build_info_cpp_filename, build_info_source_file_contents);
 
 
 

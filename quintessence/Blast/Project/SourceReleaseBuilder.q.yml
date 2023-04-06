@@ -50,6 +50,13 @@ properties:
     getter_ref: false
     setter: false
 
+  - name: build_info
+    type: Blast::BuildInfo
+    init_with: '{}'
+    getter: true
+    getter_ref: false
+    setter: false
+
   - name: copy_allegro_flare_source
     type: bool
     init_with: true
@@ -291,6 +298,28 @@ functions:
       return release_info_file_generator.source_file_content();
     body_dependency_symbols:
       - Blast::ReleaseInfoCppFileGenerator
+
+
+  - name: get_build_info_header_file_contents
+    type: std::string
+    body: |
+      Blast::BuildInfoCppFileGenerator build_info_file_generator;
+      build_info_file_generator.set_build_info(build_info);
+      build_info_file_generator.initialize();
+      return build_info_file_generator.header_file_content();
+    body_dependency_symbols:
+      - Blast::BuildInfoCppFileGenerator
+
+
+  - name: get_build_info_source_file_contents
+    type: std::string
+    body: |
+      Blast::BuildInfoCppFileGenerator build_info_file_generator;
+      build_info_file_generator.set_build_info(build_info);
+      build_info_file_generator.initialize();
+      return build_info_file_generator.source_file_content();
+    body_dependency_symbols:
+      - Blast::BuildInfoCppFileGenerator
 
 
   - name: list_symlinks
@@ -945,15 +974,27 @@ functions:
 
 
       // Add version info source file(s)
-      // header file
+      // Add the ReleeaseInfo.hpp header file
       std::string release_info_hpp_filename = destination_directory + "/include/ReleaseInfo.hpp";
       std::string release_info_header_file_contents = get_release_info_header_file_contents();
       write_file_contents(release_info_hpp_filename, release_info_header_file_contents);
 
-      // source file
+      // Add the ReleeaseInfo.cpp source file
       std::string release_info_cpp_filename = destination_directory + "/src/ReleaseInfo.cpp";
       std::string release_info_source_file_contents = get_release_info_source_file_contents();
       write_file_contents(release_info_cpp_filename, release_info_source_file_contents);
+
+
+
+      // Add the ReleeaseInfo.hpp header file
+      std::string build_info_hpp_filename = destination_directory + "/include/BuildInfo.hpp";
+      std::string build_info_header_file_contents = get_build_info_header_file_contents();
+      write_file_contents(build_info_hpp_filename, build_info_header_file_contents);
+
+      // Add the ReleeaseInfo.cpp source file
+      std::string build_info_cpp_filename = destination_directory + "/src/BuildInfo.cpp";
+      std::string build_info_source_file_contents = get_build_info_source_file_contents();
+      write_file_contents(build_info_cpp_filename, build_info_source_file_contents);
 
 
 
@@ -1092,6 +1133,10 @@ dependencies:
     headers: [ Blast/ReleaseInfo.hpp ]
   - symbol: Blast::ReleaseInfoCppFileGenerator
     headers: [ Blast/ReleaseInfoCppFileGenerator.hpp ]
+  - symbol: Blast::BuildInfo
+    headers: [ Blast/BuildInfo.hpp ]
+  - symbol: Blast::BuildInfoCppFileGenerator
+    headers: [ Blast/BuildInfoCppFileGenerator.hpp ]
   - symbol: Blast::VersionYAMLLoaderEmitter
     headers: [ Blast/VersionYAMLLoaderEmitter.hpp ]
 
