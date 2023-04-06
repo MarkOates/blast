@@ -54,6 +54,69 @@ std::string file_get_contents(std::string filename)
 }
 
 
+
+
+
+#include <iostream>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
+#include <ctime>
+
+
+//std::string get_formatted_timestamp(std::chrono::system_clock::time_point time_point)
+//{
+  //// Get the current time in UTC
+  //std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+  //std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+
+  //// Create a tm struct from the time_t value
+  //std::tm tm = *std::gmtime(&now_c);
+
+  //// Get the UTC offset in seconds
+  //std::chrono::seconds offset = std::chrono::system_clock::now().time_since_epoch() -
+                                 //std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())s;
+
+  //// Convert the UTC offset to hours and minutes
+  //int offset_hours = std::chrono::duration_cast<std::chrono::hours>(offset).count();
+  //int offset_minutes = std::chrono::duration_cast<std::chrono::minutes>(offset % std::chrono::hours(1)).count();
+
+  //// Create a stringstream to hold the formatted string
+  //std::stringstream ss;
+
+  //// Format the timestamp as "Month day year, hour:minute AM/PM Timezone Abbreviation (UTC±offset)"
+  //ss << std::put_time(&tm, "%B %d %Y, %I:%M %p %Z") << " (UTC" 
+     //<< (offset_hours >= 0 ? "+" : "") << offset_hours 
+     //<< ":" << std::setw(2) << std::setfill('0') << std::abs(offset_minutes) << ")";
+
+  //// Return the formatted string
+  //return ss.str();
+//}
+
+
+std::string get_formatted_timestamp(std::chrono::system_clock::time_point time_point)
+{
+  // Get the current time in UTC
+  std::time_t now_c = std::chrono::system_clock::to_time_t(time_point);
+
+  // Create a tm struct from the time_t value
+  std::tm tm = *std::gmtime(&now_c);
+
+  // Create a stringstream to hold the formatted string
+  std::stringstream ss;
+
+  // Format the timestamp as "Month day year, hour:minute AM/PM UTC"
+  // TODO: Include the local time zone in which the program was built
+  ss << std::put_time(&tm, "%B %d %Y, %I:%M %p UTC");
+
+  // Return the formatted string
+  return ss.str();
+}
+
+
+
+
+
 std::string trim(std::string str)
 {
    return Blast::String::Trimmer(str).trim();
@@ -78,6 +141,7 @@ public:
    static std::string VERSION_NUMBER; // "1.0.0"
    static std::string FULL_PATH_TO_SOURCE_ICON_PNG; // "/Users/markoates/Releases/TheWeepingHouse-SourceRelease-220903200818UTC/data/system/allegro-flare-generic-icon-1024.png"
    static std::string CHIP_NAME; // "x86", "intel"
+   static std::chrono::system_clock::time_point START_TIME_OF_BUILD;
 
 
    //static std::string FULL_URL_OF_FILE_TO_DOWNLOAD;
@@ -151,6 +215,10 @@ public:
       //return TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD + "/" + SOURCE_RELEASE_FOLDER_NAME + ".zip";
       return "https://storage.googleapis.com/clubcatt-games-bucket/" + SOURCE_RELEASE_FOLDER_NAME + ".zip";
    }
+   static std::string get_time_of_build_string()
+   {
+      return get_formatted_timestamp(START_TIME_OF_BUILD);
+   }
 
 
    // some example concretions:
@@ -178,6 +246,7 @@ std::string NameGenerator::TEMP_DIRECTORY_FOR_BUILD; // auto-generated, differen
 std::string NameGenerator::TEMP_DIRECTORY_FOR_ICON; // auto-generated, different each run
 std::string NameGenerator::TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD; // auto-generated, different each run
 std::string NameGenerator::CHIP_NAME; // "x86", "intel", "arm", currently is "unknown-chip", tho
+std::chrono::system_clock::time_point NameGenerator::START_TIME_OF_BUILD; // will be std::chrono::system_clock::now(), set at the start of build
 
 
 
@@ -1068,12 +1137,14 @@ class GenerateBuildInfoCppFileInTempSrcFolder : public Blast::BuildSystem::Build
 private:
    void generate_and_create_file()
    {
-      // TODO: Add this build step
-
       Blast::BuildInfo build_info = Blast::BuildInfoBuilder().build();
+
+      // Assign the build time
+      build_info.set_time_of_build(time_of_build_string);
+
+      // Generate and create the file
       Blast::BuildInfoCppFileGenerator build_info_cpp_file_generator(build_info);
       build_info_cpp_file_generator.initialize();
-
       std::string target_build_info_filename = name_of_temp_location_with_build + "src/BuildInfo.cpp"; // TODO: Move this filename up to the NameGenerator
       file_was_created_successfully = file_put_contents(target_build_info_filename, build_info_cpp_file_generator.source_file_content());
    }
@@ -1081,11 +1152,13 @@ private:
 public:
    static constexpr char* TYPE = (char*)"GenerateBuildInfoCppFileInTempSrcFolder";
    std::string name_of_temp_location_with_build;
+   std::string time_of_build_string;
    bool file_was_created_successfully;
 
    GenerateBuildInfoCppFileInTempSrcFolder()
       : Blast::BuildSystem::BuildStages::Base(TYPE)
       , name_of_temp_location_with_build(NameGenerator::full_path_of_temp_location())
+      , time_of_build_string(NameGenerator::get_time_of_build_string())
       , file_was_created_successfully(false)
    {}
 
@@ -1482,6 +1555,10 @@ int main(int argc, char **argv)
       std::cout << std::endl;
       return 2;
    }
+
+
+
+   NameGenerator::START_TIME_OF_BUILD = std::chrono::system_clock::now();
 
 
    std::cout << "Building with the folowing information:" << std::endl;
