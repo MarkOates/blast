@@ -3,7 +3,7 @@ properties:
 
   - name: project_name
     type: std::string
-    init_with: '"[unset]"'
+    init_with: '"[unset-project_name]"'
     constructor_arg: true
     getter: true
     setter: true

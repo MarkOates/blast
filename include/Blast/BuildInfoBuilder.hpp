@@ -24,7 +24,7 @@ namespace Blast
 
 
    public:
-      BuildInfoBuilder(std::string project_name="[unset]", std::string projects_folder="/Users/markoates/Repos");
+      BuildInfoBuilder(std::string project_name="[unset-project_name]", std::string projects_folder="/Users/markoates/Repos");
       ~BuildInfoBuilder();
 
       void set_project_name(std::string project_name);
