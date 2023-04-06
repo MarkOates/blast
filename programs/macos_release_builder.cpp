@@ -7,6 +7,11 @@
 // https://docs.google.com/document/d/1nTsH72zSUxwj--fjOwiCnbI7XXGvQvUtuvOSf5f5KVs/edit#
 
 
+#define CONSOLE_COLOR_RED "\033[1;31m"
+#define CONSOLE_COLOR_YELLOW "\033[1;33m"
+#define CONSOLE_COLOR_GREEN "\033[1;32m"
+#define CONSOLE_COLOR_DEFAULT "\033[0m"
+#define CONSOLE_COLOR_CYAN "\033[1;36m"
 
 
 #include <allegro5/allegro.h> // for compatibility with union/Makefile
@@ -1679,6 +1684,64 @@ int main(int argc, char **argv)
 
    Blast::BuildSystem::ReportRenderer report_renderer(build);
    std::cout << report_renderer.build_text_report() << std::endl;
+
+
+
+   if (!build->finished_successfully())
+   {
+      std::stringstream failure_message;
+      failure_message << std::endl;
+      failure_message << "///////////////////////////////////////////////////////////" << std::endl;
+      failure_message << "///      MacOS Build Did not complete successfully!     ///" << std::endl;
+      failure_message << "///////////////////////////////////////////////////////////" << std::endl;
+      failure_message << std::endl;
+      failure_message << "See the report above to find out where the build failed." << std::endl;
+      failure_message << std::endl;
+      failure_message << std::endl;
+      std::cout << CONSOLE_COLOR_YELLOW << failure_message.str() << CONSOLE_COLOR_DEFAULT << std::endl;
+   }
+   else 
+   {
+      std::string generated_source_release_zip_filename = NameGenerator::release_zip_filename();
+      std::stringstream success_message;
+
+      success_message << std::endl;
+      success_message << "===============================================" << std::endl;
+      success_message << "==     MacOS Build Finished Successfully!    ==" << std::endl;
+      success_message << "===============================================" << std::endl;
+      success_message << std::endl;
+      //success_message << "                   ~Releases base folder: \"" << destination_directory << "\"" << std::endl;
+      //success_message << "   Command to go to the ~Releases folder: \"cd " << destination_directory << "\"" << std::endl;
+      //success_message << "                     Release folder name: \"" << generated_release_folder_name << "\"" << std::endl;
+      //success_message << "                        Release zip file: \"" << generated_source_release_zip_filename << "\"" << std::endl;
+      //success_message << std::endl;
+      //success_message << "Note that a zip file was automatically crated.  The following command can be used to zip it up if you wish to modify the folder and re-zip it:" << std::endl;
+      //success_message << std::endl;
+      //success_message << "(cd " << destination_directory << " && rm " << generated_source_release_zip_filename << ")" << std::endl;
+      //success_message << "(cd " << destination_directory << "/" << generated_release_folder_name << " && rm -rdf " << project_testing_src_folder_name.str() << ")" << std::endl;
+      //success_message << "(cd " << destination_directory << "/" << generated_release_folder_name << " && rm -rdf " << project_testing_include_folder_name.str() << ")" << std::endl;
+      //success_message << "zip -r " << generated_source_release_zip_filename << " " << generated_release_folder_name << std::endl;
+      success_message << std::endl;
+      success_message << "If you wish to upload the file to a bucked on google cloud, run the following command:" << std::endl;
+      success_message << "gcloud storage cp ~/Releases/" << generated_source_release_zip_filename << " gs://clubcatt-games-bucket/" << std::endl;
+      success_message << std::endl;
+      success_message << "Your zip release file should then be available on the web at:" << std::endl;
+      success_message << "https://storage.googleapis.com/clubcatt-games-bucket/" << generated_source_release_zip_filename << std::endl;
+      success_message << std::endl;
+      success_message << "For help setting up gcloud, then please reference me/installing_and_setting_up_google_cloud.md" << std::endl;
+      success_message << std::endl;
+      success_message << std::endl;
+      //success_message << std::endl;
+      //success_message << "===============================================" << std::endl;
+      //success_message << "==          Create Binary Releases           ==" << std::endl;
+      //success_message << "===============================================" << std::endl;
+      //success_message << std::endl;
+      //success_message << "   Command to make MacOS release: \"" << command_to_make_macos_release.str() << "\"" << std::endl;
+      //success_message << "   Command to make Win64 release: \"" << command_to_make_win64_release.str() << "\"" << std::endl;
+      //success_message << std::endl;
+      std::cout << CONSOLE_COLOR_CYAN << success_message.str() << CONSOLE_COLOR_DEFAULT << std::endl;
+   }
+
 
    return 0;
 }

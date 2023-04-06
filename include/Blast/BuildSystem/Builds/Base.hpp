@@ -17,7 +17,8 @@ namespace Blast
          {
          public:
             static constexpr char* TYPE = (char*)"Base";
-            static constexpr char* STATUS_WAITING_TO_START = (char*)"waiting_to_started";
+            static constexpr char* STATUS_UNDEFINED = (char*)"undefined";
+            static constexpr char* STATUS_WAITING_TO_START = (char*)"waiting_to_start";
             static constexpr char* STATUS_RUNNING = (char*)"running";
             static constexpr char* STATUS_FINISHED = (char*)"finished";
             static constexpr char* STATUS_ERROR = (char*)"error";
@@ -49,6 +50,8 @@ namespace Blast
             void run();
             static void build_stage_executor(Blast::BuildSystem::BuildStages::Base* build_stage=nullptr);
             void run_all_in_parallel();
+            bool status_is(std::string possible_status=STATUS_UNDEFINED);
+            bool finished_successfully();
             double infer_duration_seconds();
          };
       }

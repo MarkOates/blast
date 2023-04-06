@@ -688,6 +688,10 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">STATUS_UNDEFINED</td>
+  <td class="property">char*</td>
+</tr>
+<tr>
   <td class="property">STATUS_WAITING_TO_START</td>
   <td class="property">char*</td>
 </tr>
@@ -716,6 +720,12 @@ table td
 </tr>
 <tr>
   <td class="method">run_all_in_parallel()</td>
+</tr>
+<tr>
+  <td class="method">status_is(std::string possible_status=STATUS_UNDEFINED)</td>
+</tr>
+<tr>
+  <td class="method">finished_successfully()</td>
 </tr>
 <tr>
   <td class="method">infer_duration_seconds()</td>

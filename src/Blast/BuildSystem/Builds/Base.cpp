@@ -91,6 +91,7 @@ bool Base::is_type(std::string possible_type)
 void Base::run()
 {
    started_at = std::chrono::high_resolution_clock::now();
+   status = STATUS_RUNNING;
 
    // set all the statuses to STATUS_NOT_STARTED
    for (auto &build_stage : build_stages)
@@ -183,6 +184,16 @@ void Base::run_all_in_parallel()
    status = STATUS_FINISHED;
    ended_at = std::chrono::high_resolution_clock::now();
    return;
+}
+
+bool Base::status_is(std::string possible_status)
+{
+   return possible_status == get_status();
+}
+
+bool Base::finished_successfully()
+{
+   return status == STATUS_FINISHED;
 }
 
 double Base::infer_duration_seconds()

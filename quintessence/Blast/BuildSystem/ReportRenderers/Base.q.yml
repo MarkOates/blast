@@ -81,7 +81,7 @@ functions:
 
       std::string color;
 
-      if (status == Blast::BuildSystem::BuildStages::Base::STATUS_WAITING_TO_START) { color = CONSOLE_COLOR_CYAN; }
+      if (status == Blast::BuildSystem::BuildStages::Base::STATUS_WAITING_TO_START) { color = CONSOLE_COLOR_YELLOW; }
       else if (status == Blast::BuildSystem::BuildStages::Base::STATUS_RUNNING) { color = CONSOLE_COLOR_YELLOW; }
       else if (status == Blast::BuildSystem::BuildStages::Base::STATUS_SUCCEEDED) { color = CONSOLE_COLOR_GREEN; }
       else if (status == Blast::BuildSystem::BuildStages::Base::STATUS_ERROR) { color = CONSOLE_COLOR_RED; }

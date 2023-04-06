@@ -38,10 +38,16 @@ properties:
     getter: true
     setter: true
 
+  - name: STATUS_UNDEFINED
+    type: char*
+    static: true
+    init_with: '(char*)"undefined"'
+    constexpr: true
+
   - name: STATUS_WAITING_TO_START
     type: char*
     static: true
-    init_with: '(char*)"waiting_to_started"'
+    init_with: '(char*)"waiting_to_start"'
     constexpr: true
 
   - name: STATUS_RUNNING
@@ -79,6 +85,7 @@ functions:
   - name: run
     body: |
       started_at = std::chrono::high_resolution_clock::now();
+      status = STATUS_RUNNING;
 
       // set all the statuses to STATUS_NOT_STARTED
       for (auto &build_stage : build_stages)
@@ -180,6 +187,22 @@ functions:
       return;
     body_dependency_symbols:
       - std::thread
+
+
+  - name: status_is
+    type: bool
+    parameters:
+      - name: possible_status
+        type: std::string
+        default_argument: STATUS_UNDEFINED
+    body: |
+      return possible_status == get_status();
+
+
+  - name: finished_successfully
+    type: bool
+    body: |
+      return status == STATUS_FINISHED;
 
 
   - name: infer_duration_seconds
