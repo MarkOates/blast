@@ -148,13 +148,16 @@ functions:
     virtual: true
     override: true
     parameters:
-      - name: player_num
+      - name: player
+        type: AllegroFlare::Player*
+        default_argument: nullptr
+      - name: virtual_controller
+        type: AllegroFlare::VirtualControllers::Base*
+        default_argument: nullptr
+      - name: virtual_controller_button_num
         type: int
         default_argument: 0
-      - name: button_num
-        type: int
-        default_argument: 0
-      - name: repeat
+      - name: is_repeat
         type: bool
         default_argument: false
     guards: [ initialized ]
@@ -167,13 +170,16 @@ functions:
     virtual: true
     override: true
     parameters:
-      - name: player_num
+      - name: player
+        type: AllegroFlare::Player*
+        default_argument: nullptr
+      - name: virtual_controller
+        type: AllegroFlare::VirtualControllers::Base*
+        default_argument: nullptr
+      - name: virtual_controller_button_num
         type: int
         default_argument: 0
-      - name: button_num
-        type: int
-        default_argument: 0
-      - name: repeat
+      - name: is_repeat
         type: bool
         default_argument: false
     guards: [ initialized ]
