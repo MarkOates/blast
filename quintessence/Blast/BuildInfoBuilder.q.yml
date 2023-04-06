@@ -16,6 +16,15 @@ properties:
     setter: true
 
 
+documentation:
+
+
+  - todo:
+      - Note that the allegro version is obtained from the "allegro5" library. It's possible I may have built and
+        installed allegro through a fork at MarkOates/allegro5, but there is currently no way to know if this is
+        the version used to build.
+
+
 functions:
 
 

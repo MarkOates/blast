@@ -39,6 +39,25 @@
   "std/size_t": [
     "Blast/Build/Celebrator"
   ],
+  "std/regex": [
+    "Blast/BuildInfoBuilder",
+    "Blast/RegexMatcher",
+    "Blast/ReleaseInfoBuilder"
+  ],
+  "Blast/BuildInfo": [
+    "Blast/BuildInfoBuilder",
+    "Blast/BuildInfoCppFileGenerator"
+  ],
+  "Blast/DirectoryExistenceChecker": [
+    "Blast/BuildInfoBuilder",
+    "Blast/DirectoryCreator",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/ReleaseInfoBuilder"
+  ],
+  "NcursesArt/GithubRepoStatusFetcher": [
+    "Blast/BuildInfoBuilder",
+    "Blast/ReleaseInfoBuilder"
+  ],
   "Blast/Cpp/Class": [
     "Blast/BuildInfoCppFileGenerator",
     "Blast/ReleaseInfoCppFileGenerator"
@@ -54,9 +73,6 @@
   "Blast/Cpp/SymbolDependencies": [
     "Blast/BuildInfoCppFileGenerator",
     "Blast/ReleaseInfoCppFileGenerator"
-  ],
-  "Blast/BuildInfo": [
-    "Blast/BuildInfoCppFileGenerator"
   ],
   "Blast/BuildSystem/BuildStageFactory": [
     "Blast/BuildSystem/BuildFactory"
@@ -191,11 +207,6 @@
     "Blast/Project/SymlinkChecker",
     "Blast/StringSplitter",
     "NcursesArt/GithubRepoStatusFetcher"
-  ],
-  "Blast/DirectoryExistenceChecker": [
-    "Blast/DirectoryCreator",
-    "Blast/Project/SourceReleaseBuilder",
-    "Blast/ReleaseInfoBuilder"
   ],
   "stat": [
     "Blast/DirectoryExistenceChecker"
@@ -379,10 +390,6 @@
   "std/vector<std/pair<int, int>>": [
     "Blast/RegexMatcher"
   ],
-  "std/regex": [
-    "Blast/RegexMatcher",
-    "Blast/ReleaseInfoBuilder"
-  ],
   "std/regex_iterator": [
     "Blast/RegexMatcher"
   ],
@@ -395,9 +402,6 @@
   "std/runtime_error": [
     "Blast/RegexMatcher",
     "Blast/ShellCommandExecutorWithCallback"
-  ],
-  "NcursesArt/GithubRepoStatusFetcher": [
-    "Blast/ReleaseInfoBuilder"
   ],
   "std/function": [
     "Blast/ShellCommandExecutorWithCallback"

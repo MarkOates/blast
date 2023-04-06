@@ -53,6 +53,7 @@ table td
   <li><a href="#quintessence/Blast/BinaryObfusicator.q.yml">quintessence/Blast/BinaryObfusicator.q.yml</a></li>
   <li><a href="#quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</a></li>
   <li><a href="#quintessence/Blast/BuildInfo.q.yml">quintessence/Blast/BuildInfo.q.yml</a></li>
+  <li><a href="#quintessence/Blast/BuildInfoBuilder.q.yml">quintessence/Blast/BuildInfoBuilder.q.yml</a></li>
   <li><a href="#quintessence/Blast/BuildInfoCppFileGenerator.q.yml">quintessence/Blast/BuildInfoCppFileGenerator.q.yml</a></li>
   <li><a href="#quintessence/Blast/BuildSystem/BuildFactory.q.yml">quintessence/Blast/BuildSystem/BuildFactory.q.yml</a></li>
   <li><a href="#quintessence/Blast/BuildSystem/BuildStageFactory.q.yml">quintessence/Blast/BuildSystem/BuildStageFactory.q.yml</a></li>
@@ -266,6 +267,76 @@ table td
      <table>
     </table>
      <table>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/BuildInfoBuilder.q.yml">quintessence/Blast/BuildInfoBuilder.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">project_name</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">projects_folder</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">build()</td>
+</tr>
+<tr>
+  <td class="method">get_allegro_version_git_hash()</td>
+</tr>
+<tr>
+  <td class="method">get_allegro_version_git_branch()</td>
+</tr>
+<tr>
+  <td class="method">get_allegro_version_git_num_commits()</td>
+</tr>
+<tr>
+  <td class="method">get_allegro_version_git_latest_commit_date_and_time()</td>
+</tr>
+<tr>
+  <td class="private_method">project_folder()</td>
+</tr>
+<tr>
+  <td class="method">project_name_is_valid()</td>
+</tr>
+<tr>
+  <td class="private_method">project_folder_exists()</td>
+</tr>
+<tr>
+  <td class="private_method">project_git_repo_active()</td>
+</tr>
+<tr>
+  <td class="private_method">allegro_folder_exists()</td>
+</tr>
+<tr>
+  <td class="private_method">allegro_git_repo_active()</td>
+</tr>
+<tr>
+  <td class="private_method">allegro_flare_folder_exists()</td>
+</tr>
+<tr>
+  <td class="private_method">allegro_flare_git_repo_active()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::regex&quot;, &quot;headers&quot;=&gt;[&quot;regex&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::BuildInfo&quot;, &quot;headers&quot;=&gt;[&quot;Blast/BuildInfo.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::DirectoryExistenceChecker&quot;, &quot;headers&quot;=&gt;[&quot;Blast/DirectoryExistenceChecker.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;NcursesArt::GithubRepoStatusFetcher&quot;, &quot;headers&quot;=&gt;[&quot;NcursesArt/GithubRepoStatusFetcher.hpp&quot;]}</td>
+</tr>
     </table>
   </div>
 </ul>
@@ -3566,6 +3637,25 @@ table td
   "std/size_t": [
     "Blast/Build/Celebrator"
   ],
+  "std/regex": [
+    "Blast/BuildInfoBuilder",
+    "Blast/RegexMatcher",
+    "Blast/ReleaseInfoBuilder"
+  ],
+  "Blast/BuildInfo": [
+    "Blast/BuildInfoBuilder",
+    "Blast/BuildInfoCppFileGenerator"
+  ],
+  "Blast/DirectoryExistenceChecker": [
+    "Blast/BuildInfoBuilder",
+    "Blast/DirectoryCreator",
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/ReleaseInfoBuilder"
+  ],
+  "NcursesArt/GithubRepoStatusFetcher": [
+    "Blast/BuildInfoBuilder",
+    "Blast/ReleaseInfoBuilder"
+  ],
   "Blast/Cpp/Class": [
     "Blast/BuildInfoCppFileGenerator",
     "Blast/ReleaseInfoCppFileGenerator"
@@ -3581,9 +3671,6 @@ table td
   "Blast/Cpp/SymbolDependencies": [
     "Blast/BuildInfoCppFileGenerator",
     "Blast/ReleaseInfoCppFileGenerator"
-  ],
-  "Blast/BuildInfo": [
-    "Blast/BuildInfoCppFileGenerator"
   ],
   "Blast/BuildSystem/BuildStageFactory": [
     "Blast/BuildSystem/BuildFactory"
@@ -3718,11 +3805,6 @@ table td
     "Blast/Project/SymlinkChecker",
     "Blast/StringSplitter",
     "NcursesArt/GithubRepoStatusFetcher"
-  ],
-  "Blast/DirectoryExistenceChecker": [
-    "Blast/DirectoryCreator",
-    "Blast/Project/SourceReleaseBuilder",
-    "Blast/ReleaseInfoBuilder"
   ],
   "stat": [
     "Blast/DirectoryExistenceChecker"
@@ -3906,10 +3988,6 @@ table td
   "std/vector<std/pair<int, int>>": [
     "Blast/RegexMatcher"
   ],
-  "std/regex": [
-    "Blast/RegexMatcher",
-    "Blast/ReleaseInfoBuilder"
-  ],
   "std/regex_iterator": [
     "Blast/RegexMatcher"
   ],
@@ -3922,9 +4000,6 @@ table td
   "std/runtime_error": [
     "Blast/RegexMatcher",
     "Blast/ShellCommandExecutorWithCallback"
-  ],
-  "NcursesArt/GithubRepoStatusFetcher": [
-    "Blast/ReleaseInfoBuilder"
   ],
   "std/function": [
     "Blast/ShellCommandExecutorWithCallback"
