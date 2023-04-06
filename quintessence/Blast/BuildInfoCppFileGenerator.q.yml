@@ -30,12 +30,6 @@ functions:
       return;
 
 
-    body: |
-      cpp_class = build_cpp_class();
-      initialized = true;
-      return;
-
-
   - name: initialize
     body: |
       cpp_class = build_cpp_class();
@@ -196,4 +190,5 @@ dependencies:
     headers: [ Blast/Cpp/SymbolDependencies.hpp ]
   - symbol: Blast::BuildInfo
     headers: [ Blast/BuildInfo.hpp ]
+
 

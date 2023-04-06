@@ -30,12 +30,6 @@ functions:
       return;
 
 
-    body: |
-      cpp_class = build_cpp_class();
-      initialized = true;
-      return;
-
-
   - name: initialize
     body: |
       cpp_class = build_cpp_class();
