@@ -1478,7 +1478,7 @@ int main(int argc, char **argv)
       // TODO: Improve this error message
       std::cout << "Please see instructions, you need to pass two arguments like this:" << std::endl;
       std::cout << std::endl;
-      std::cout << "./bin/programs/builds/macos_release_builder TheWeepingHouse TheWeepingHouse-SourceRelease-221209191155UTC" << std::endl;
+      std::cout << "./bin/programs/builds/macos_release_builder TheWeepingHouse 1.2.3 TheWeepingHouse-1.2.3-SourceRelease" << std::endl;
       std::cout << std::endl;
       return 2;
    }
