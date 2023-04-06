@@ -119,7 +119,6 @@ int main(int argc, char **argv)
       std::string released_version_number = source_release_builder.get_released_version_string();
       std::string generated_release_folder_name = source_release_builder.get_generated_release_folder_name();
       std::string generated_source_release_zip_filename = source_release_builder.get_generated_source_release_zip_filename();
-      std::string google_drive_file_id = "1wyNG-tHiSisNoTaReAlId_btw-7yQAcN"; // TODO: upload source to google bucket
       std::stringstream command_to_make_macos_release;
          command_to_make_macos_release << "make macos_release RELEASE_PROJECT_NAME=" << project_name << " RELEASE_VERSION_NUMBER=" << released_version_number << " RELEASE_FOLDER_NAME=" << generated_release_folder_name;
       std::stringstream command_to_make_win64_release;
