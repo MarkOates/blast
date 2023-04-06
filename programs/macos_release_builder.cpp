@@ -1692,7 +1692,7 @@ int main(int argc, char **argv)
       std::stringstream failure_message;
       failure_message << std::endl;
       failure_message << "///////////////////////////////////////////////////////////" << std::endl;
-      failure_message << "///      MacOS Build Did not complete successfully!     ///" << std::endl;
+      failure_message << "///      MacOS build did not complete successfully      ///" << std::endl;
       failure_message << "///////////////////////////////////////////////////////////" << std::endl;
       failure_message << std::endl;
       failure_message << "See the report above to find out where the build failed." << std::endl;
@@ -1707,7 +1707,7 @@ int main(int argc, char **argv)
 
       success_message << std::endl;
       success_message << "===============================================" << std::endl;
-      success_message << "==     MacOS Build Finished Successfully!    ==" << std::endl;
+      success_message << "==     MacOS build finished successfully!    ==" << std::endl;
       success_message << "===============================================" << std::endl;
       success_message << std::endl;
       //success_message << "                   ~Releases base folder: \"" << destination_directory << "\"" << std::endl;
