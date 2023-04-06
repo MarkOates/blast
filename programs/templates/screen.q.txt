@@ -219,5 +219,9 @@ dependencies:
     headers: [ AllegroFlare/ModelBin.hpp ]
   - symbol: al_is_primitives_addon_initialized
     headers: [ allegro5/allegro_primitives.h ]
+  - symbol: AllegroFlare::Player
+    headers: [ AllegroFlare/Player.hpp ]
+  - symbol: AllegroFlare::VirtualControllers::Base
+    headers: [ AllegroFlare/VirtualControllers/Base.hpp ]
 
 
