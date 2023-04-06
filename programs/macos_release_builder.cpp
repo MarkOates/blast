@@ -173,7 +173,7 @@ public:
       //return SYSTEM_RELEASES_FOLDER + "TheWeepingHouse-MacOS-chip_unknown/TheWeepingHouse.app/Contents/Info.plist";
    }
 
-   static std::string release_zip_filename() { return NameGenerator::NAME_OF_EXECUTABLE + "-MacOS-chip_unknown.zip"; }
+   static std::string release_zip_filename() { return release_folder_relative_to_system_releases_folder() + ".zip"; }
    // TODO: remove these intermediate "/" additions, validate "/" is appended when assigned
    static std::string full_path_of_source_release_folder() { return SYSTEM_RELEASES_FOLDER + "/" + NameGenerator::SOURCE_RELEASE_FOLDER_NAME; }
    static std::string full_path_to_destination_icns_file()
