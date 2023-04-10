@@ -301,7 +301,7 @@ focus:
 	@set -o pipefail && (make quintessences -j8 2>&1 | tee $(BUILD_FILE_QUINTESSENCE_EXTRAPOLATION))
 	$(call output_terminal_message,"Build dependency file for component")
 	@echo "building_dependency_file_for_component" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	@set -o pipefail && (make deps -j8 2>&1 | tee $(BUILD_FILE_DEPS_BUILD))
+	# @set -o pipefail && (make deps -j8 2>&1 | tee $(BUILD_FILE_DEPS_BUILD))
 	$(call output_terminal_message,"Make all the component object files")
 	@echo "building_component_object_files" > $(BUILD_STATUS_SIGNALING_FILENAME)
 	@set -o pipefail && (make objects 2>&1 | tee $(BUILD_FILE_COMPONENT_OBJECT_BUILD))
