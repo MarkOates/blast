@@ -56,7 +56,7 @@ MACOS_RELEASER_EXECUTABLE=~/Repos/blast/bin/programs/macos_release_builder
 
 
 
-ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_primitives allegro_image allegro
+ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_video allegro_primitives allegro_image allegro
 ALLEGRO_LIBS_MAIN=$(ALLEGRO_LIBS) allegro_main
 ALLEGRO_FLARE_LIB=allegro_flare-0.8.11wip
 ALLEGRO_FLARE_LIB_FOR_TESTS=allegro_flare-0.8.11wip-for_tests
