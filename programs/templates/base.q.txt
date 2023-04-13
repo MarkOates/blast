@@ -9,7 +9,7 @@ properties:
 
   - name: TYPE
     type: char*
-    init_with: '(char*)"[[COMPONENT_NAME_PRECEEDING_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]]"'
+    init_with: '(char*)"[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]]"'
     static: true
     constexpr: true
 
