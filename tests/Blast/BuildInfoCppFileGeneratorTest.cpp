@@ -2,7 +2,12 @@
 #include <gtest/gtest.h>
 
 #include <Blast/BuildInfoCppFileGenerator.hpp>
-static std::string TEST_FIXTURES_FOLDER = "/Users/markoates/Repos/blast/tests/fixtures/";
+
+#if defined(_WIN32) || defined(_WIN64)
+   static std::string TEST_FIXTURES_FOLDER = "/msys64/home/Mark/Repos/blast/tests/fixtures/";
+#else // assume MacOS for now
+   static std::string TEST_FIXTURES_FOLDER = "/Users/markoates/Repos/blast/tests/fixtures/";
+#endif
 
 
 #include <fstream>
