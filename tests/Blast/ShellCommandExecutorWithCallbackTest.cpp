@@ -46,8 +46,15 @@ TEST(ShellCommandExecutorWithCallbackTest, execute__when_capture_stderr_is_true_
    Blast::ShellCommandExecutorWithCallback executor(command.str());
    executor.set_capture_stderr(true);
 
+// NOTE: The error message that is output depends on the shell. There are the expected outputs for used during testing.
+#if defined(_WIN32) || defined(_WIN64)
+   std::string expected_result =
+      "hello shell command!The system cannot find the path specified.\n";
+#else // assume MacOS for now
    std::string expected_result =
       "hello shell command!sh: line 0: cd: a-directory-that-does-not-exist/: No such file or directory\n";
+#endif
+
    EXPECT_EQ(expected_result, executor.execute());
 }
 
@@ -61,7 +68,16 @@ TEST(ShellCommandExecutorWithCallbackTest,
    Blast::ShellCommandExecutorWithCallback executor(command.str());
    executor.set_capture_stderr(true);
 
-   EXPECT_EQ("sh: line 0: cd: a-directory-that-does-not-exist: No such file or directory\n", executor.execute());
+// NOTE: The error message that is output depends on the shell. There are the expected outputs for used during testing.
+#if defined(_WIN32) || defined(_WIN64)
+   std::string expected_result =
+      "The system cannot find the path specified.\n";
+#else // assume MacOS for now
+   std::string expected_result =
+      "sh: line 0: cd: a-directory-that-does-not-exist: No such file or directory\n";
+#endif
+
+   EXPECT_EQ(expected_result, executor.execute());
 }
 
 
