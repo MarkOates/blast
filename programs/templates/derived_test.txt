@@ -12,7 +12,9 @@ TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
 
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], TYPE__has_the_expected_value)
 {
-   EXPECT_EQ("[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]]", [[COMPONENT_CLASS_NAME]]::TYPE);
+   std::string expected_type = "[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]]";
+   std::string actual_type = [[COMPONENT_CLASS_NAME]]::TYPE;
+   EXPECT_EQ(expected_type, actual_type);
 }
 
 
