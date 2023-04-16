@@ -53,7 +53,7 @@ TEST(ShellCommandExecutorWithCallbackTest, execute__when_capture_stderr_is_true_
 
 
 TEST(ShellCommandExecutorWithCallbackTest,
-   executed_successfully__after_execute___will_return_false_if_there_was_an_error_during_execution)
+   execute__when_capture_stderr_is_true__when_there_is_an_error_during_execution__will_include_stderr_in_the_output)
 {
    std::stringstream command;
    command << "cd a-directory-that-does-not-exist";
@@ -62,6 +62,18 @@ TEST(ShellCommandExecutorWithCallbackTest,
    executor.set_capture_stderr(true);
 
    EXPECT_EQ("sh: line 0: cd: a-directory-that-does-not-exist: No such file or directory\n", executor.execute());
+}
+
+
+TEST(ShellCommandExecutorWithCallbackTest,
+   executed_successfully__when_capture_stderr_is_true__when_there_is_an_error_during_execution__will_return_false)
+{
+   std::string a_command_that_will_produce_an_error_on_execution = "cd a-directory-that-does-not-exist";
+   Blast::ShellCommandExecutorWithCallback executor(a_command_that_will_produce_an_error_on_execution);
+
+   executor.set_capture_stderr(true);
+   executor.execute();
+
    EXPECT_EQ(true, executor.get_finished());
    EXPECT_EQ(false, executor.get_executed_successfully());
    //EXPECT_EQ(1, executor.get_exit_status()); // NOTE: Not supported on Windows so is DISABLED and commented out
