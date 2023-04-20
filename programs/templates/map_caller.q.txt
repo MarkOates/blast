@@ -1,0 +1,35 @@
+  - name: create_by_identifier
+    type: CubeShooter::Levels::Base*
+    parameters:
+      - name: identifier
+        type: std::string
+        default_argument: '"[unset-identifier"'
+    guards: [ initialized ]
+    body: |
+      CubeShooter::Levels::Base* result = nullptr;
+
+      std::map<std::string, std::function<void()>> items_map = {
+         { "swamp_level", [this](){
+            create_swamp_level();
+         }},
+         { "development_level", [this](){
+            create_development_level();
+         }},
+      };
+
+      // locate and call the function to handle the item
+      if (items_map.count(identifier) == 0)
+      {
+         // item not found
+         std::stringstream error_message;
+         error_message << "[CubeShooter::LevelFactory::load_level]: error: Cannot load the item with the identifier \""
+                       << identifier << "\", it does not exist.";
+         throw std::runtime_error(error_message.str());
+      }
+      else
+      {
+         // call the item
+         items_map[identifier]();
+      }
+
+      return result;
