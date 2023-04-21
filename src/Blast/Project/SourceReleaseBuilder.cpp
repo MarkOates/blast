@@ -257,8 +257,8 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     // NOTE: the previous version without the clause is here:
                     //<< "SRC_FILES := $(shell find src -type f -not -path '*/.*')"
                     << std::endl
-                    << "ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog "
-                    << "-lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro_image -lallegro "
+                    << "ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -allegro_audio "
+                    << "-lallegro_acodec -lallegro_video -lallegro_primitives -lallegro_image -lallegro "
                     << "-lallegro_main" << std::endl
                     << std::endl;
 
