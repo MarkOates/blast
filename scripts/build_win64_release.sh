@@ -147,6 +147,7 @@ fi
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libstdc++-6.dll         ./libstdc++-6.dll)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libtheora-0.dll         ./libtheora-0.dll)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libvorbis-0.dll         ./libvorbis-0.dll)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libtheoradec-1.dll      ./libtheoradec-1.dll)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libvorbisfile-3.dll     ./libvorbisfile-3.dll)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libwebp-7.dll           ./libwebp-7.dll)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libwinpthread-1.dll     ./libwinpthread-1.dll)
