@@ -11,6 +11,9 @@ namespace Blast
    {
       class FunctionBody
       {
+      public:
+         static constexpr char* DEFAULT_BODY_CONTENT = (char*)"return;";
+
       private:
          std::string content;
          std::vector<std::string> dependency_symbols;
@@ -19,7 +22,7 @@ namespace Blast
 
 
       public:
-         FunctionBody(std::string content="return;", std::vector<std::string> dependency_symbols={});
+         FunctionBody(std::string content=DEFAULT_BODY_CONTENT, std::vector<std::string> dependency_symbols={});
          ~FunctionBody();
 
          void set_content(std::string content);

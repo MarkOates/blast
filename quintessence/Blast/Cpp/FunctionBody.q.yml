@@ -3,9 +3,8 @@ properties:
 
   - name: content
     type: std::string
-    init_with: '"return;"'
+    init_with: DEFAULT_BODY_CONTENT
     constructor_arg: true
-    static: false
     getter: true
     setter: true
 
@@ -13,9 +12,15 @@ properties:
     type: std::vector<std::string>
     init_with: '{}'
     constructor_arg: true
-    static: false
     getter: true
     setter: true
+
+  - name: DEFAULT_BODY_CONTENT
+    type: char*
+    init_with: '(char*)"return;"'
+    static: true
+    const: true
+    constexpr: true
 
 
 dependencies:
