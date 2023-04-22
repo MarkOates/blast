@@ -10,7 +10,7 @@ TEST(Blast_Testing_TemporaryDirectoryCreatorTest, can_be_created_without_blowing
 }
 
 
-TEST(Blast_Testing_TemporaryDirectoryCreatorTest, create__on_successive_instances__will_produce_unique_result)
+TEST(Blast_Testing_TemporaryDirectoryCreatorTest, create__on_successive_instances__will_produce_unique_results)
 {
    Blast::Testing::TemporaryDirectoryCreator temporary_directory_creator1;
    Blast::Testing::TemporaryDirectoryCreator temporary_directory_creator2;
