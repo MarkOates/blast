@@ -34,15 +34,22 @@ std::filesystem::path TemporaryDirectoryCreator::create(int max_tries)
    std::mt19937 prng(dev());
    std::uniform_int_distribution<uint64_t> rand(0);
    std::filesystem::path path;
-   while (true) {
+   bool directory_created = false;
+
+   while (true)
+   {
        std::stringstream ss;
        ss << std::hex << rand(prng);
        path = tmp_dir / ss.str();
-       // true if the directory was created.
-       if (std::filesystem::create_directory(path)) {
+
+       directory_created = std::filesystem::create_directory(path);
+
+       if (directory_created)
+       {
            break;
        }
-       if (i == max_tries) {
+       if (i == max_tries)
+       {
            throw std::runtime_error("Could not find non-existing directory");
        }
        i++;
