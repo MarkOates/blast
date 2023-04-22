@@ -16,6 +16,7 @@
   ],
   "std/string": [
     "ASCIICharacterRenderer",
+    "Blast/Cpp/FunctionBody",
     "Blast/DirectoryCreator",
     "Blast/DirectoryExistenceChecker",
     "Blast/ShellCommandExecutorWithCallback"
@@ -170,6 +171,16 @@
   "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
   ],
+  "std/vector<std/string>": [
+    "Blast/Cpp/FunctionBody",
+    "Blast/DirectoryCreator",
+    "Blast/Project/ComponentDependencyLister",
+    "Blast/Project/ComponentRelativeLister",
+    "Blast/Project/ProjectSymlinkFixer",
+    "Blast/StringSplitter",
+    "StringSplitter",
+    "StringVectorIntersection"
+  ],
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
     "Blast/ReleaseInfo",
@@ -187,15 +198,6 @@
   ],
   "bool": [
     "Blast/DirectoryCreator"
-  ],
-  "std/vector<std/string>": [
-    "Blast/DirectoryCreator",
-    "Blast/Project/ComponentDependencyLister",
-    "Blast/Project/ComponentRelativeLister",
-    "Blast/Project/ProjectSymlinkFixer",
-    "Blast/StringSplitter",
-    "StringSplitter",
-    "StringVectorIntersection"
   ],
   "mkdir": [
     "Blast/DirectoryCreator"
