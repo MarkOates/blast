@@ -12,6 +12,10 @@ TEST(Blast_DependencySymbolAtomizerTest, can_be_created_without_blowing_up)
 
 TEST(Blast_DependencySymbolAtomizerTest, atomize__will_split_composite_dependency_into_discreet_dependencies)
 {
+   // NOTE: This test is flakey and has failed twice before. I have not been able to recreate the problem and it happens
+   // almost one in a hundred times. The problem is usually catchable with --gtest_repeat=100 and has been isolated to
+   // the { "const char*", "char" } test case.
+   // TODO: Fix flakey test
    std::vector<std::pair<std::string, std::vector<std::string>>> test_composite_dependencies_and_their_atoms = {
       { "std::vector<std::string>",
          { "std::vector", "std::string" }
