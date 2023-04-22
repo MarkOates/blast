@@ -136,3 +136,33 @@ TEST(Blast_ReleaseInfoBuilderTest, DISABLED__build__assigns_the_allegro_flare_ve
 }
 
 
+TEST(Blast_ReleaseInfoBuilderTest, DISABLED__build__assigns_the_blast_version_git_hash)
+{
+   Blast::ReleaseInfoBuilder release_info_builder("blast");
+   Blast::ReleaseInfo release_info = release_info_builder.build();
+   std::string expected_hash = "2a0529c7c9d643e79293ce59f4f657b1fb751b81";
+   std::string actual_hash = release_info.get_blast_version_git_hash();
+   EXPECT_EQ(expected_hash, actual_hash);
+}
+
+
+TEST(Blast_ReleaseInfoBuilderTest, build__assigns_the_blast_version_git_branch)
+{
+   Blast::ReleaseInfoBuilder release_info_builder("blast");
+   Blast::ReleaseInfo release_info = release_info_builder.build();
+   std::string expected_branch = "master";
+   std::string actual_branch = release_info.get_blast_version_git_branch();
+   EXPECT_EQ(expected_branch, actual_branch);
+}
+
+
+TEST(Blast_ReleaseInfoBuilderTest, DISABLED__build__assigns_the_blast_version_git_num_commits)
+{
+   Blast::ReleaseInfoBuilder release_info_builder("blast");
+   Blast::ReleaseInfo release_info = release_info_builder.build();
+   int expected_num_commits = 1379;
+   int actual_num_commits = release_info.get_blast_version_git_num_commits();
+   EXPECT_EQ(expected_num_commits, actual_num_commits);
+}
+
+

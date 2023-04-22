@@ -121,6 +121,12 @@ Blast::ReleaseInfo ReleaseInfoBuilder::build()
    result.set_allegro_flare_version_git_num_commits(get_allegro_flare_version_git_num_commits());
    result.set_allegro_flare_version_git_latest_commit_date_and_time(get_allegro_flare_version_git_latest_commit_date_and_time());
 
+   // Set blast data
+   result.set_blast_version_git_hash(get_blast_version_git_hash());
+   result.set_blast_version_git_branch(get_blast_version_git_branch());
+   result.set_blast_version_git_num_commits(get_blast_version_git_num_commits());
+   result.set_blast_version_git_latest_commit_date_and_time(get_blast_version_git_latest_commit_date_and_time());
+
    return result;
 }
 
@@ -204,6 +210,34 @@ std::string ReleaseInfoBuilder::get_allegro_flare_version_git_branch()
 std::string ReleaseInfoBuilder::get_allegro_flare_version_git_latest_commit_date_and_time()
 {
    NcursesArt::GithubRepoStatusFetcher fetcher("allegro_flare");
+   std::string result = fetcher.get_latest_commit_date_and_time();
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_blast_version_git_hash()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("blast");
+   std::string result = fetcher.get_current_hash();
+   return result;
+}
+
+int ReleaseInfoBuilder::get_blast_version_git_num_commits()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("blast");
+   int result = fetcher.get_current_branch_num_commits();
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_blast_version_git_branch()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("blast");
+   std::string result = fetcher.get_current_branch_name();
+   return result;
+}
+
+std::string ReleaseInfoBuilder::get_blast_version_git_latest_commit_date_and_time()
+{
+   NcursesArt::GithubRepoStatusFetcher fetcher("blast");
    std::string result = fetcher.get_latest_commit_date_and_time();
    return result;
 }
