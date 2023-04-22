@@ -26,10 +26,10 @@ TemporaryDirectoryCreator::~TemporaryDirectoryCreator()
 }
 
 
-std::filesystem::path TemporaryDirectoryCreator::create(int max_tries)
+std::filesystem::path TemporaryDirectoryCreator::create(uint32_t max_tries)
 {
    auto tmp_dir = std::filesystem::temp_directory_path();
-   unsigned long long i = 0;
+   unsigned long long num_attempts_made = 0;
    std::random_device dev;
    std::mt19937 prng(dev());
    std::uniform_int_distribution<uint64_t> rand(0);
@@ -48,11 +48,11 @@ std::filesystem::path TemporaryDirectoryCreator::create(int max_tries)
        {
            break;
        }
-       if (i == max_tries)
+       if (num_attempts_made == max_tries)
        {
            throw std::runtime_error("Could not find non-existing directory");
        }
-       i++;
+       num_attempts_made++;
    }
    return path;
 }

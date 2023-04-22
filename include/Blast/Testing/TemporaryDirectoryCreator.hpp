@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <cstdint>
 #include <filesystem>
 
 
@@ -19,7 +20,7 @@ namespace Blast
          TemporaryDirectoryCreator();
          ~TemporaryDirectoryCreator();
 
-         std::filesystem::path create(int max_tries=100000);
+         std::filesystem::path create(uint32_t max_tries=100000);
       };
    }
 }
