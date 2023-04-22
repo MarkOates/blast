@@ -38,6 +38,11 @@ ReleaseInfo::ReleaseInfo()
    , allegro_flare_version_git_hash("[unset]")
    , allegro_flare_version_git_latest_commit_date_and_time("[unset]")
    , allegro_flare_version_git_num_commits(0)
+   , blast_version_num("[unset]")
+   , blast_version_git_branch("[unset]")
+   , blast_version_git_hash("[unset]")
+   , blast_version_git_latest_commit_date_and_time("[unset]")
+   , blast_version_git_num_commits(0)
 {
 }
 
@@ -209,6 +214,36 @@ void ReleaseInfo::set_allegro_flare_version_git_num_commits(int allegro_flare_ve
 }
 
 
+void ReleaseInfo::set_blast_version_num(std::string blast_version_num)
+{
+   this->blast_version_num = blast_version_num;
+}
+
+
+void ReleaseInfo::set_blast_version_git_branch(std::string blast_version_git_branch)
+{
+   this->blast_version_git_branch = blast_version_git_branch;
+}
+
+
+void ReleaseInfo::set_blast_version_git_hash(std::string blast_version_git_hash)
+{
+   this->blast_version_git_hash = blast_version_git_hash;
+}
+
+
+void ReleaseInfo::set_blast_version_git_latest_commit_date_and_time(std::string blast_version_git_latest_commit_date_and_time)
+{
+   this->blast_version_git_latest_commit_date_and_time = blast_version_git_latest_commit_date_and_time;
+}
+
+
+void ReleaseInfo::set_blast_version_git_num_commits(int blast_version_git_num_commits)
+{
+   this->blast_version_git_num_commits = blast_version_git_num_commits;
+}
+
+
 std::string ReleaseInfo::get_project_git_branch() const
 {
    return project_git_branch;
@@ -368,6 +403,36 @@ std::string ReleaseInfo::get_allegro_flare_version_git_latest_commit_date_and_ti
 int ReleaseInfo::get_allegro_flare_version_git_num_commits() const
 {
    return allegro_flare_version_git_num_commits;
+}
+
+
+std::string ReleaseInfo::get_blast_version_num() const
+{
+   return blast_version_num;
+}
+
+
+std::string ReleaseInfo::get_blast_version_git_branch() const
+{
+   return blast_version_git_branch;
+}
+
+
+std::string ReleaseInfo::get_blast_version_git_hash() const
+{
+   return blast_version_git_hash;
+}
+
+
+std::string ReleaseInfo::get_blast_version_git_latest_commit_date_and_time() const
+{
+   return blast_version_git_latest_commit_date_and_time;
+}
+
+
+int ReleaseInfo::get_blast_version_git_num_commits() const
+{
+   return blast_version_git_num_commits;
 }
 
 

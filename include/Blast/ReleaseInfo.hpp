@@ -37,6 +37,11 @@ namespace Blast
       std::string allegro_flare_version_git_hash;
       std::string allegro_flare_version_git_latest_commit_date_and_time;
       int allegro_flare_version_git_num_commits;
+      std::string blast_version_num;
+      std::string blast_version_git_branch;
+      std::string blast_version_git_hash;
+      std::string blast_version_git_latest_commit_date_and_time;
+      int blast_version_git_num_commits;
 
    protected:
 
@@ -72,6 +77,11 @@ namespace Blast
       void set_allegro_flare_version_git_hash(std::string allegro_flare_version_git_hash);
       void set_allegro_flare_version_git_latest_commit_date_and_time(std::string allegro_flare_version_git_latest_commit_date_and_time);
       void set_allegro_flare_version_git_num_commits(int allegro_flare_version_git_num_commits);
+      void set_blast_version_num(std::string blast_version_num);
+      void set_blast_version_git_branch(std::string blast_version_git_branch);
+      void set_blast_version_git_hash(std::string blast_version_git_hash);
+      void set_blast_version_git_latest_commit_date_and_time(std::string blast_version_git_latest_commit_date_and_time);
+      void set_blast_version_git_num_commits(int blast_version_git_num_commits);
       std::string get_project_git_branch() const;
       std::string get_project_git_hash() const;
       int get_project_git_num_commits() const;
@@ -99,6 +109,11 @@ namespace Blast
       std::string get_allegro_flare_version_git_hash() const;
       std::string get_allegro_flare_version_git_latest_commit_date_and_time() const;
       int get_allegro_flare_version_git_num_commits() const;
+      std::string get_blast_version_num() const;
+      std::string get_blast_version_git_branch() const;
+      std::string get_blast_version_git_hash() const;
+      std::string get_blast_version_git_latest_commit_date_and_time() const;
+      int get_blast_version_git_num_commits() const;
       void set_project_version(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::set<std::string> version_number_labels={}, std::set<std::string> version_number_metadata={});
       std::string build_project_version_string();
    };
