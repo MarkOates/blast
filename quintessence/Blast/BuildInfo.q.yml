@@ -2,8 +2,7 @@ documentation:
 
 
   - todos:
-    - |
-      Consider adding c++ language version
+    - Consider adding c++ language version
       see https://learn.microsoft.com/en-us/cpp/build/reference/zc-cplusplus?view=msvc-170&viewFallbackFrom=vs-2019
 
 
