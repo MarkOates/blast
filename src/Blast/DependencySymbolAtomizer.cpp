@@ -51,20 +51,22 @@ std::vector<std::string> DependencySymbolAtomizer::atomize()
    std::vector<std::string> items_to_discard = { "const", "unsigned" };
 
    // erase the empty tokens, and/or discard unwanted tokens
-   for (int i=0; i<tokenized_deps.size(); i++)
+   for (std::size_t i=0; i<tokenized_deps.size(); i++)
    {
       if (tokenized_deps[i].empty())
       {
          tokenized_deps.erase(tokenized_deps.begin()+i);
-         i--;
+         if (i > 0) i--;
       }
-
-      for (auto &item_to_discard : items_to_discard)
+      else
       {
-         if (tokenized_deps[i] == item_to_discard)
+         for (auto &item_to_discard : items_to_discard)
          {
-            tokenized_deps.erase(tokenized_deps.begin()+i);
-            i--;
+            if (tokenized_deps[i] == item_to_discard)
+            {
+               tokenized_deps.erase(tokenized_deps.begin()+i);
+               if (i > 0) i--;
+            }
          }
       }
    }
