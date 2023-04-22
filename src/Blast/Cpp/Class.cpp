@@ -5,8 +5,6 @@
 
 namespace Blast
 {
-
-
 namespace Cpp
 {
 
@@ -104,6 +102,6 @@ std::vector<Blast::Cpp::SymbolDependencies> Class::get_function_body_symbol_depe
 
 
 } // namespace Cpp
-
-
 } // namespace Blast
+
+
