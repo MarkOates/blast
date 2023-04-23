@@ -26,10 +26,12 @@ void explode(std::string location, std::string error_message)
 }
 
 
+
 void validate(bool value, std::string location, std::string error_message)
 {
    if (!value) explode(location, error_message);
 }
+
 
 
 std::string __replace(std::string str, std::string from, std::string to)
@@ -40,6 +42,82 @@ std::string __replace(std::string str, std::string from, std::string to)
       start_pos += to.length();
    }
    return str;
+}
+
+
+
+std::string get_type_string(YAML::Node &node)
+{
+   switch (node.Type())
+   {
+   case YAML::NodeType::Null: return "Null"; break;
+   case YAML::NodeType::Scalar: return "Scalar"; break;
+   case YAML::NodeType::Sequence: return "Sequence"; break;
+   case YAML::NodeType::Map: return "Map"; break;
+   case YAML::NodeType::Undefined: return "Undefined"; break;
+   }
+   return "[NO_TYPE_DEFINED_ERROR]";
+}
+
+
+
+YAML::Node fetch_node(YAML::Node &node, std::string key, YAML::NodeType::value expected_type, YAML::Node default_value)
+{
+   if (node[key])
+   {
+      if (node[key].Type() == expected_type) return node[key];
+      else
+      {
+         std::stringstream error_message;
+         error_message << "unexpected type expecting YAML:: " << expected_type << ", is a " << get_type_string(node) << " is present.";
+         throw std::runtime_error(error_message.str());
+      }
+   }
+   return default_value;
+}
+
+
+
+std::vector<std::string> extract_sequence_as_string_array(YAML::Node &source)
+{
+   std::string this_func_name = "extract_sequence_as_string_array";
+   std::vector<std::string> result;
+
+   for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
+   {
+      validate(it->IsScalar(), this_func_name, "Unexpected sequence element, expected to be of a YAML Scalar.");
+      result.push_back(it->as<std::string>());
+   }
+
+   return result;
+}
+
+
+
+std::vector<std::string> extract_function_body_dependency_symbols(YAML::Node &source)
+{
+   const std::string DEPENDENCY_SYMBOLS = "body_dependency_symbols";
+   std::vector<std::string> result;
+
+   YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+
+   result = extract_sequence_as_string_array(dependency_symbols);
+
+   return result;
+}
+
+
+
+std::vector<std::string> extract_default_argument_dependency_symbols(YAML::Node &source)
+{
+   const std::string DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
+   std::vector<std::string> result;
+
+   YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+
+   result = extract_sequence_as_string_array(dependency_symbols);
+
+   return result;
 }
 
 
@@ -134,21 +212,6 @@ public:
       return tokens; // whatever is left is assumed to be valid TODO: consider validating the namespace naming convention
    }
 };
-
-
-std::string get_type_string(YAML::Node &node)
-{
-   switch (node.Type())
-   {
-   case YAML::NodeType::Null: return "Null"; break;
-   case YAML::NodeType::Scalar: return "Scalar"; break;
-   case YAML::NodeType::Sequence: return "Sequence"; break;
-   case YAML::NodeType::Map: return "Map"; break;
-   case YAML::NodeType::Undefined: return "Undefined"; break;
-   }
-   return "[NO_TYPE_DEFINED_ERROR]";
-}
-
 
 
 bool create_folders_for_file(std::string filepath)
@@ -354,39 +417,6 @@ std::string fetch_string(YAML::Node &node, std::string key, std::string default_
       }
    }
    return default_value;
-}
-
-
-
-YAML::Node fetch_node(YAML::Node &node, std::string key, YAML::NodeType::value expected_type, YAML::Node default_value)
-{
-   if (node[key])
-   {
-      if (node[key].Type() == expected_type) return node[key];
-      else
-      {
-         std::stringstream error_message;
-         error_message << "unexpected type expecting YAML:: " << expected_type << ", is a " << get_type_string(node) << " is present.";
-         throw std::runtime_error(error_message.str());
-      }
-   }
-   return default_value;
-}
-
-
-
-std::vector<std::string> extract_sequence_as_string_array(YAML::Node &source)
-{
-   std::string this_func_name = "extract_sequence_as_string_array";
-   std::vector<std::string> result;
-
-   for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
-   {
-      validate(it->IsScalar(), this_func_name, "Unexpected sequence element, expected to be of a YAML Scalar.");
-      result.push_back(it->as<std::string>());
-   }
-
-   return result;
 }
 
 
@@ -673,7 +703,7 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 
    validate(source.IsSequence(), this_func_name, "Expected \"parameters\" to be of a YAML Sequence type.");
 
-   for (std::size_t i=0;i<source.size();i++)
+   for (std::size_t i=0; i<source.size();i++)
    //for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
    {
       YAML::Node node = source[i];
@@ -681,54 +711,30 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
       const std::string TYPE = "type";
       const std::string NAME = "name";
       const std::string DEFAULT_ARGUMENT = "default_argument";
-      const std::string DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
 
       validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
 
       YAML::Node type_node = node.operator[](TYPE);
       YAML::Node name_node = node.operator[](NAME);
       YAML::Node default_argument_node = node.operator[](DEFAULT_ARGUMENT);
-      YAML::Node default_argument_dependency_symbols_node = node.operator[](DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS);
 
       validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
       validate(default_argument_node.IsScalar(), this_func_name, "Unexpected default_argument_node, expected to be of YAML type Scalar.");
+      std::vector<std::string> default_value_dependency_symbols = extract_default_argument_dependency_symbols(node);
 
-      Blast::Cpp::FunctionArgument function_argument(type_node.as<std::string>(), name_node.as<std::string>(), default_argument_node.as<std::string>());
+      Blast::Cpp::FunctionArgument function_argument(
+            type_node.as<std::string>(),
+            name_node.as<std::string>(),
+            default_argument_node.as<std::string>(),
+            default_value_dependency_symbols
+      );
 
       result.push_back(function_argument);
    }
 
    return result;
 }
-
-
-std::vector<std::string> extract_function_body_dependency_symbols(YAML::Node &source)
-{
-   const std::string DEPENDENCY_SYMBOLS = "body_dependency_symbols";
-   std::vector<std::string> result;
-
-   YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
-
-   result = extract_sequence_as_string_array(dependency_symbols);
-
-   return result;
-}
-
-
-
-std::vector<std::string> extract_default_argument_dependency_symbols(YAML::Node &source)
-{
-   const std::string DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
-   std::vector<std::string> result;
-
-   YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
-
-   result = extract_sequence_as_string_array(dependency_symbols);
-
-   return result;
-}
-
 
 
 
