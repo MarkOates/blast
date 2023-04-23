@@ -232,8 +232,9 @@ std::string ComponentGenerator::build_command_to_make_parent_directories_for(std
 {
    // TODO: Consider sanitizing filename
    std::stringstream command;
-   command << "mkdir -p \"$(dirname '" << path_with_filename << "')\" && echo "
-              "\"Directory created: $(dirname '" << path_with_filename << "')\"";
+   command << "mkdir -p \"$(dirname '" << path_with_filename << "')\""
+           //<< " && echo \"Directory created: $(dirname '" << path_with_filename << "')\""
+           ;
    return command.str();
 }
 
