@@ -1,9 +1,31 @@
 properties:
 
 
+  - name: repo_name
+    getter: true
+    init_with: "\"blast\""
+    constructor_arg: true
+
+  - name: repos_directory
+    type: std::string
+    getter: true
+    init_with: "\"~/Repos\""
+    constructor_arg: true
+
   - name: last_captured_output_from_status_request
     type: std::string
     getter: true
+
+  - name: only_poll_once
+    type: bool
+    getter: true
+    init_with: true
+
+  - name: status_polled
+    type: bool
+    getter: true
+    setter: true
+    init_with: false
 
   - name: GIT_STATUS_COMMAND
     type: char*
@@ -61,28 +83,6 @@ properties:
     type: std::string
     init_with: '"git status --short"'
     getter: true
-
-  - name: repo_name
-    getter: true
-    init_with: "\"blast\""
-    constructor_arg: true
-
-  - name: repos_directory
-    type: std::string
-    getter: true
-    init_with: "\"~/Repos\""
-    constructor_arg: true
-
-  - name: only_poll_once
-    type: bool
-    getter: true
-    init_with: true
-
-  - name: status_polled
-    type: bool
-    getter: true
-    setter: true
-    init_with: false
 
 
 functions:

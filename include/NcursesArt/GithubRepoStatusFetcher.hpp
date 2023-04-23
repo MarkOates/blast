@@ -13,7 +13,11 @@ namespace NcursesArt
       static constexpr char* GIT_STATUS_COMMAND = (char*)"git status -uno -u";
 
    private:
+      std::string repo_name;
+      std::string repos_directory;
       std::string last_captured_output_from_status_request;
+      bool only_poll_once;
+      bool status_polled;
       std::string git_pull_command;
       std::string git_branch_count_command;
       std::string git_current_branch_command;
@@ -24,10 +28,6 @@ namespace NcursesArt
       std::string component_quintessence_filenames_command;
       std::string git_current_staged_files_command;
       std::string git_is_clean_command;
-      std::string repo_name;
-      std::string repos_directory;
-      bool only_poll_once;
-      bool status_polled;
 
    protected:
 
@@ -37,7 +37,11 @@ namespace NcursesArt
       ~GithubRepoStatusFetcher();
 
       void set_status_polled(bool status_polled);
+      std::string get_repo_name() const;
+      std::string get_repos_directory() const;
       std::string get_last_captured_output_from_status_request() const;
+      bool get_only_poll_once() const;
+      bool get_status_polled() const;
       std::string get_git_pull_command() const;
       std::string get_git_branch_count_command() const;
       std::string get_git_current_branch_command() const;
@@ -48,10 +52,6 @@ namespace NcursesArt
       std::string get_component_quintessence_filenames_command() const;
       std::string get_git_current_staged_files_command() const;
       std::string get_git_is_clean_command() const;
-      std::string get_repo_name() const;
-      std::string get_repos_directory() const;
-      bool get_only_poll_once() const;
-      bool get_status_polled() const;
       bool local_repo_exists();
       bool has_file_changes();
       bool has_untracked_files();

@@ -17,7 +17,11 @@ namespace NcursesArt
 
 
 GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::string repos_directory)
-   : last_captured_output_from_status_request("")
+   : repo_name(repo_name)
+   , repos_directory(repos_directory)
+   , last_captured_output_from_status_request("")
+   , only_poll_once(true)
+   , status_polled(false)
    , git_pull_command("git pull")
    , git_branch_count_command("git branch | wc -l")
    , git_current_branch_command("git branch | grep \\* | cut -d ' ' -f2")
@@ -28,10 +32,6 @@ GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::str
    , component_quintessence_filenames_command("find quintessence -name '*.q.yml'")
    , git_current_staged_files_command("git diff --name-only --cached")
    , git_is_clean_command("git status --short")
-   , repo_name(repo_name)
-   , repos_directory(repos_directory)
-   , only_poll_once(true)
-   , status_polled(false)
 {
 }
 
@@ -47,9 +47,33 @@ void GithubRepoStatusFetcher::set_status_polled(bool status_polled)
 }
 
 
+std::string GithubRepoStatusFetcher::get_repo_name() const
+{
+   return repo_name;
+}
+
+
+std::string GithubRepoStatusFetcher::get_repos_directory() const
+{
+   return repos_directory;
+}
+
+
 std::string GithubRepoStatusFetcher::get_last_captured_output_from_status_request() const
 {
    return last_captured_output_from_status_request;
+}
+
+
+bool GithubRepoStatusFetcher::get_only_poll_once() const
+{
+   return only_poll_once;
+}
+
+
+bool GithubRepoStatusFetcher::get_status_polled() const
+{
+   return status_polled;
 }
 
 
@@ -110,30 +134,6 @@ std::string GithubRepoStatusFetcher::get_git_current_staged_files_command() cons
 std::string GithubRepoStatusFetcher::get_git_is_clean_command() const
 {
    return git_is_clean_command;
-}
-
-
-std::string GithubRepoStatusFetcher::get_repo_name() const
-{
-   return repo_name;
-}
-
-
-std::string GithubRepoStatusFetcher::get_repos_directory() const
-{
-   return repos_directory;
-}
-
-
-bool GithubRepoStatusFetcher::get_only_poll_once() const
-{
-   return only_poll_once;
-}
-
-
-bool GithubRepoStatusFetcher::get_status_polled() const
-{
-   return status_polled;
 }
 
 
