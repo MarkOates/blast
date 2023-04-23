@@ -1102,7 +1102,16 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
    // build the actual class
 
-   Blast::Cpp::Class klass(class_name, namespaces, parent_classes_properties, attribute_properties, enum_classes, functions, symbol_dependencies, function_body_symbol_dependencies);
+   Blast::Cpp::Class klass(
+         class_name,
+         namespaces,
+         parent_classes_properties,
+         attribute_properties,
+         enum_classes,
+         functions,
+         symbol_dependencies,
+         function_body_symbol_dependencies
+     );
 
    return klass;
 }
