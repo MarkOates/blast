@@ -584,7 +584,7 @@ std::vector<Blast::Cpp::ParentClassProperties> extract_parent_classes_properties
 
 
 #include <Blast/Cpp/EnumClass.hpp>
-#include <Blast/Quintessence/YAMLParsing/EnumClassParser.hpp>
+#include <Blast/Quintessence/YAMLParsers/EnumClassParser.hpp>
 std::vector<Blast::Cpp::EnumClass> extract_enum_classes(YAML::Node &node, std::string filename)
    // NOTE: This function expects the node to be the root object, and will look within it for the "enums:" node
 {
@@ -599,7 +599,7 @@ std::vector<Blast::Cpp::EnumClass> extract_enum_classes(YAML::Node &node, std::s
    for (std::size_t i=0; i<enum_classes_node.size(); i++)
    {
       YAML::Node it = enum_classes_node[i];
-      Blast::Quintessence::YAMLParsing::EnumClassParser enum_class_parser(it);
+      Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(it);
       Blast::Cpp::EnumClass extracted_enum_class = enum_class_parser.parse(); // TODO: consider try..catch here with nice error messages
       result.push_back(extracted_enum_class);
    }

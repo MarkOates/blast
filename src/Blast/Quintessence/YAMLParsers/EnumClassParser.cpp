@@ -1,6 +1,6 @@
 
 
-#include <Blast/Quintessence/YAMLParsing/EnumClassParser.hpp>
+#include <Blast/Quintessence/YAMLParsers/EnumClassParser.hpp>
 
 #include <stdexcept>
 
@@ -9,7 +9,7 @@ namespace Blast
 {
 namespace Quintessence
 {
-namespace YAMLParsing
+namespace YAMLParsers
 {
 
 
@@ -70,7 +70,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
       if (!validate_node_has_unsigned_int_value(node, "start_from"))
       {
          std::stringstream error_message;
-         error_message << "[Blast::Quintessence::YAMLParsing::EnumClassParser::parse]: error: "
+         error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
                        << "An enum property \"start_from\" must be a valid number.";
                        // TODO: look into the Mark() function in YAML, which shoutd(?) provide data about the line
                        // number of the node
@@ -85,7 +85,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    if (name_node_is_present && class_node_is_present)
    {
       std::stringstream error_message;
-      error_message << "[Blast::Quintessence::YAMLParsing::EnumClassParser::parse]: error: "
+      error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
                     << "An enum cannot have both the \"name\" and \"class\" present. It must be one or neither.";
                     // TODO: look into the Mark() function in YAML, which should(?) provide data about the line
                     // number of the node
@@ -128,7 +128,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
 }
 
 
-} // namespace YAMLParsing
+} // namespace YAMLParsers
 } // namespace Quintessence
 } // namespace Blast
 

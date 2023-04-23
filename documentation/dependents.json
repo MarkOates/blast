@@ -165,7 +165,7 @@
   ],
   "Blast/Cpp/EnumClass": [
     "Blast/Cpp/EnumClassFormatter",
-    "Blast/Quintessence/YAMLParsing/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/EnumClassParser",
     "Blast/YAMLValidator"
   ],
   "std/vector<Blast/Cpp/FunctionArgument>": [
@@ -381,13 +381,13 @@
     "Blast/Project/SymlinkChecker"
   ],
   "YAML/Node": [
-    "Blast/Quintessence/YAMLParsing/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/EnumClassParser",
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator",
     "QuizYAMLLoader"
   ],
   "Blast/YAMLValidator": [
-    "Blast/Quintessence/YAMLParsing/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/EnumClassParser",
     "Blast/VersionYAMLLoaderEmitter"
   ],
   "std/vector<std/regex_constants/syntax_option_type>": [

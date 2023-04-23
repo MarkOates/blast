@@ -10,7 +10,7 @@ namespace Blast
 {
    namespace Quintessence
    {
-      namespace YAMLParsing
+      namespace YAMLParsers
       {
          class EnumClassParser : public Blast::YAMLValidator
          {
