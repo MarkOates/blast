@@ -106,10 +106,12 @@ Blast::Cpp::ClassAttributes ReleaseInfoCppFileGenerator::build_cpp_class_attribu
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("ReleaseInfoCppFileGenerator::build_cpp_class_attribute: error: guard \"is_valid_datatype(datatype)\" not met");
    }
+   std::string sanitized_initialization_value = (datatype == "std::string") ? wrap_in_quotes(initialization_value) : initialization_value;
+
    return Blast::Cpp::ClassAttributes(
          datatype, //std::string datatype,
          variable_name, //std::string variable_name,
-         (datatype == "std::string") ? wrap_in_quotes(initialization_value) : initialization_value, //std::string initialization_value,
+         sanitized_initialization_value, //std::string initialization_value,
          true, //bool is_static,
          false, //bool is_constructor_parameter,
          true, //bool has_getter,
