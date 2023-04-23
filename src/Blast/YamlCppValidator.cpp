@@ -29,7 +29,7 @@ bool YamlCppValidator::validate_presence_of_key(YAML::Node node, std::string key
    if (throw_on_error)
    {
       std::stringstream error_message;
-      error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_presence_of_key]: error: "
+      error_message << "[Blast::YamlCppValidator::validate_presence_of_key]: error: "
                     << "expecting to find node \"" << key << "\" but it is not present.";
       throw std::runtime_error(error_message.str());
    }
@@ -45,7 +45,7 @@ bool YamlCppValidator::validate_node_type(YAML::Node node, std::string key, YAML
    {
       std::string name_of_type = yaml_node_type_as_string(expected_type);
       std::stringstream error_message;
-      error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_node_type]: error: "
+      error_message << "[Blast::YamlCppValidator::validate_node_type]: error: "
                     << "expecting to find node \"" << key << "\" as a \"" << name_of_type << "\", "
                     << "but it is a \"" << node[key] << "\".";
       throw std::runtime_error(error_message.str());
@@ -106,7 +106,7 @@ std::string YamlCppValidator::yaml_node_type_as_string(YAML::NodeType::value nod
       case YAML::NodeType::Undefined: return "Undefined"; break;
       default: {
          std::stringstream error_message;
-         error_message << "[Blast::Quinetessence::YAMLParsing::EnumClassParser::yaml_node_type_as_string]: error: "
+         error_message << "[Blast::YamlCppValidator::yaml_node_type_as_string]: error: "
                        << "Unhandled case for type \"" << node_type << "\"";
          throw std::runtime_error(error_message.str());
       } break;
@@ -127,7 +127,7 @@ bool YamlCppValidator::validate_unique_all_upper_identifiers(YAML::Node items)
         << "\".";
 
       Blast::Errors::throw_error(
-        "Blast::Quinetessence::YAMLParsing::EnumClassParser::validate_unique_all_upper_identifiers",
+        "Blast::YamlCppValidator::validate_unique_all_upper_identifiers",
         error_message.str()
       );
 

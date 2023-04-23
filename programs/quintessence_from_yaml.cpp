@@ -8,6 +8,7 @@
 #include <Blast/DirectoryCreator.hpp>
 #include <Blast/CommandLineFlaggedArgumentsParser.hpp>
 #include <Blast/StringSplitter.hpp>
+#include <Blast/YamlCppValidator.hpp>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
 #include <iostream>
@@ -680,12 +681,14 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
       const std::string TYPE = "type";
       const std::string NAME = "name";
       const std::string DEFAULT_ARGUMENT = "default_argument";
+      const std::string DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
 
       validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
 
       YAML::Node type_node = node.operator[](TYPE);
       YAML::Node name_node = node.operator[](NAME);
       YAML::Node default_argument_node = node.operator[](DEFAULT_ARGUMENT);
+      YAML::Node default_argument_dependency_symbols_node = node.operator[](DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS);
 
       validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
