@@ -308,6 +308,7 @@ int main(int argc, char **argv)
    create_gitignore(generator);
    create_main_file(generator);
    create_test_runner(generator);
+   create_version_yaml(generator);
 
    generate_gameplay_screen_screen_class(project_name);
    generate_runner_class(project_name);
