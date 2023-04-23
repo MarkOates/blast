@@ -64,7 +64,7 @@ Blast::Cpp::Class ReleaseInfoCppFileGenerator::build_cpp_class()
       //std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies={}
    //);
    return Blast::Cpp::Class(
-      "ReleaseInfo", // TODO: consider changing this to ThisReleaseInfo
+      "ReleaseInfo",
       {},
       {},
       build_cpp_class_attribute_properties(), // attribute_properties
