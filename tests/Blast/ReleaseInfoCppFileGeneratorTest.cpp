@@ -80,3 +80,14 @@ TEST(Blast_ReleaseInfoCppFileGeneratorTest, source_file_content__will_return_the
 }
 
 
+TEST(Blast_ReleaseInfoCppFileGeneratorTest, truncate_to_n_characters__will_truncate_a_string)
+{
+   std::string expected_truncated_string = "D7s2fKj3";
+   std::string actual_truncated_string = Blast::ReleaseInfoCppFileGenerator::truncate_to_n_characters(
+      "D7s2fKj3LqR8wPvY6tGcX9xZzH4iAnUQa0ObJlI1NkoMyE5hrWgpT",
+      8
+   );
+   EXPECT_EQ(expected_truncated_string, actual_truncated_string);
+}
+
+

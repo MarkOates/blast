@@ -141,6 +141,22 @@ functions:
        return (str == "std::string" || str == "int");
 
 
+  - name: truncate_to_n_characters
+    type: std::string
+    static: true
+    parameters:
+      - name: str
+        type: std::string
+        default_argument: '""'
+      - name: num_characters
+        type: std::size_t
+        default_argument: 8
+    guards: [ (num_characters >= 1) ]
+    body: |
+      if (str.length() <= num_characters) return str;
+      return str.substr(0, num_characters);
+
+
   - name: header_file_content
     type: std::string
     guards: [ initialized ]

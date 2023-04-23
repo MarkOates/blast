@@ -137,6 +137,19 @@ bool ReleaseInfoCppFileGenerator::is_valid_datatype(std::string str)
    return (str == "std::string" || str == "int");
 }
 
+std::string ReleaseInfoCppFileGenerator::truncate_to_n_characters(std::string str, std::size_t num_characters)
+{
+   if (!((num_characters >= 1)))
+   {
+      std::stringstream error_message;
+      error_message << "[ReleaseInfoCppFileGenerator::truncate_to_n_characters]: error: guard \"(num_characters >= 1)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("ReleaseInfoCppFileGenerator::truncate_to_n_characters: error: guard \"(num_characters >= 1)\" not met");
+   }
+   if (str.length() <= num_characters) return str;
+   return str.substr(0, num_characters);
+}
+
 std::string ReleaseInfoCppFileGenerator::header_file_content()
 {
    if (!(initialized))
