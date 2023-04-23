@@ -5,7 +5,6 @@
 #include <Blast/Cpp/ClassAttributes.hpp>
 #include <Blast/Cpp/SymbolDependencies.hpp>
 #include <Blast/ReleaseInfo.hpp>
-#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -35,7 +34,6 @@ namespace Blast
       std::vector<Blast::Cpp::SymbolDependencies> build_cpp_class_symbol_dependencies();
       std::string wrap_in_quotes(std::string str="");
       bool is_valid_datatype(std::string str="");
-      static std::string truncate_to_n_characters(std::string str="", std::size_t num_characters=8);
       std::string header_file_content();
       std::string source_file_content();
    };

@@ -74,12 +74,12 @@ functions:
          build_cpp_class_attribute(
             "std::string",
             "allegro_flare_version_git_hash",
-            truncate_to_n_characters(release_info.get_allegro_flare_version_git_hash())
+            release_info.get_allegro_flare_version_git_hash()
          ),
          build_cpp_class_attribute(
             "std::string",
             "blast_version_git_hash",
-            truncate_to_n_characters(release_info.get_blast_version_git_hash())
+            release_info.get_blast_version_git_hash()
          ),
       };
       return result;
@@ -153,22 +153,6 @@ functions:
         default_argument: '""'
     body: |
        return (str == "std::string" || str == "int");
-
-
-  - name: truncate_to_n_characters
-    type: std::string
-    static: true
-    parameters:
-      - name: str
-        type: std::string
-        default_argument: '""'
-      - name: num_characters
-        type: std::size_t
-        default_argument: 8
-    guards: [ (num_characters >= 1) ]
-    body: |
-      if (str.length() <= num_characters) return str;
-      return str.substr(0, num_characters);
 
 
   - name: header_file_content
