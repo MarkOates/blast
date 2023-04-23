@@ -119,6 +119,18 @@ TEST(GithubRepoStatusFetcherTest,
    //EXPECT_EQ(true, fetcher.is_current_branch_master());
 //}
 
+//TEST(GithubRepoStatusFetcherTest, is_clean__will_return_true_if_the_git_working_tree_is_clean)
+//{
+   //GithubRepoStatusFetcher fetcher("allegro_flare");
+   //EXPECT_EQ(true, fetcher.is_clean());
+//}
+
+//TEST(GithubRepoStatusFetcherTest, is_clean__will_return_false_if_the_git_working_tree_is_clean)
+//{
+   //GithubRepoStatusFetcher fetcher("blast");
+   //EXPECT_EQ(false, fetcher.is_clean());
+//}
+
 //TEST(GithubRepoStatusFetcherTest, branch_names_at_remote__returns_a_sorted_list_of_branch_names_at_remote)
 //{
    //GithubRepoStatusFetcher fetcher("Golf");

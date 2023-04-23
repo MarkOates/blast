@@ -55,6 +55,11 @@ properties:
     init_with: '"git diff --name-only --cached"'
     getter: true
 
+  - name: git_is_clean_command
+    type: std::string
+    init_with: '"git status --short"'
+    getter: true
+
   - name: repo_name
     getter: true
     init_with: "\"blast\""
@@ -128,6 +133,17 @@ functions:
       poll_status();
       std::string string_to_find = "Your branch is behind 'origin/master' by";
       return last_captured_output_from_status_request_contains_string(string_to_find);
+
+
+  - name: is_clean
+    type: bool
+    body: |
+      // run the command
+      std::stringstream command;
+      command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_is_clean_command() << ")";
+      std::string command_output = execute_command(command.str());
+      // return true if response is empty
+      return command_output.empty();
 
 
   - name: get_current_hash
@@ -231,6 +247,14 @@ functions:
     body: |
       std::stringstream result;
       result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_current_staged_files_command() << ")";
+      return result.str();
+
+
+  - name: get_is_clean_command
+    type: std::string
+    body: |
+      std::stringstream result;
+      result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_is_clean_command() << ")";
       return result.str();
 
 

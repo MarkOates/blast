@@ -21,6 +21,7 @@ namespace NcursesArt
       std::string git_remote_branch_names_command;
       std::string component_quintessence_filenames_command;
       std::string git_current_staged_files_command;
+      std::string git_is_clean_command;
       std::string repo_name;
       std::string repos_directory;
       bool only_poll_once;
@@ -45,6 +46,7 @@ namespace NcursesArt
       std::string get_git_remote_branch_names_command() const;
       std::string get_component_quintessence_filenames_command() const;
       std::string get_git_current_staged_files_command() const;
+      std::string get_git_is_clean_command() const;
       std::string get_repo_name() const;
       std::string get_repos_directory() const;
       bool get_only_poll_once() const;
@@ -55,6 +57,7 @@ namespace NcursesArt
       bool is_the_repo_in_sync_with_remote();
       bool is_the_local_repo_ahead();
       bool is_the_local_repo_behind();
+      bool is_clean();
       std::string get_current_hash();
       int get_branch_count();
       int get_current_branch_num_commits();
@@ -66,6 +69,7 @@ namespace NcursesArt
       std::string get_pull_command();
       std::string get_status_command();
       std::string get_current_staged_files_command();
+      std::string get_is_clean_command();
       std::vector<std::string> get_current_staged_files();
       std::string get_current_branch_name();
       std::vector<std::string> get_quintessence_filenames();

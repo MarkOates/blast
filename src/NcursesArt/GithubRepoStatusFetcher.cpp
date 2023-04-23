@@ -28,6 +28,7 @@ GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::str
    , git_remote_branch_names_command("git branch -r")
    , component_quintessence_filenames_command("find quintessence -name '*.q.yml'")
    , git_current_staged_files_command("git diff --name-only --cached")
+   , git_is_clean_command("git status --short")
    , repo_name(repo_name)
    , repos_directory(repos_directory)
    , only_poll_once(true)
@@ -113,6 +114,12 @@ std::string GithubRepoStatusFetcher::get_git_current_staged_files_command() cons
 }
 
 
+std::string GithubRepoStatusFetcher::get_git_is_clean_command() const
+{
+   return git_is_clean_command;
+}
+
+
 std::string GithubRepoStatusFetcher::get_repo_name() const
 {
    return repo_name;
@@ -176,6 +183,16 @@ bool GithubRepoStatusFetcher::is_the_local_repo_behind()
    poll_status();
    std::string string_to_find = "Your branch is behind 'origin/master' by";
    return last_captured_output_from_status_request_contains_string(string_to_find);
+}
+
+bool GithubRepoStatusFetcher::is_clean()
+{
+   // run the command
+   std::stringstream command;
+   command << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_is_clean_command() << ")";
+   std::string command_output = execute_command(command.str());
+   // return true if response is empty
+   return command_output.empty();
 }
 
 std::string GithubRepoStatusFetcher::get_current_hash()
@@ -262,6 +279,13 @@ std::string GithubRepoStatusFetcher::get_current_staged_files_command()
 {
    std::stringstream result;
    result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_current_staged_files_command() << ")";
+   return result.str();
+}
+
+std::string GithubRepoStatusFetcher::get_is_clean_command()
+{
+   std::stringstream result;
+   result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && " << get_git_is_clean_command() << ")";
    return result.str();
 }
 
