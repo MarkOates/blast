@@ -519,7 +519,7 @@ void output_finished_message(std::string project_name)
 
 void generate_gameplay_screen_screen_class(std::string project_name)
 {
-   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/PrimaryGameplay/Screen screen";
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Gameplay/Screen screen";
    std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
    Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
