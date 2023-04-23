@@ -78,15 +78,51 @@ Blast::Cpp::Class BuildInfoCppFileGenerator::build_cpp_class()
 std::vector<Blast::Cpp::ClassAttributes> BuildInfoCppFileGenerator::build_cpp_class_attribute_properties()
 {
    std::vector<Blast::Cpp::ClassAttributes> result = {
-      build_cpp_class_attribute("std::string", "time_of_build", build_info.get_time_of_build()),
-      build_cpp_class_attribute("std::string", "building_platform_os_name", build_info.get_building_platform_os_name()),
-      build_cpp_class_attribute("std::string", "building_platform_os_version", build_info.get_building_platform_os_version()),
-      build_cpp_class_attribute("std::string", "building_platform_chipset", build_info.get_building_platform_chipset()),
-      build_cpp_class_attribute("std::string", "compiler_name", build_info.get_compiler_name()),
-      build_cpp_class_attribute("std::string", "compiler_version", build_info.get_compiler_version()),
-      build_cpp_class_attribute("std::string", "allegro_version_num", build_info.get_allegro_version_num()),
-      build_cpp_class_attribute("std::string", "allegro_version_git_branch", build_info.get_allegro_version_git_branch()),
-      build_cpp_class_attribute("std::string", "allegro_version_git_hash", build_info.get_allegro_version_git_hash()),
+      build_cpp_class_attribute(
+         "std::string",
+         "time_of_build",
+         build_info.get_time_of_build()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "building_platform_os_name",
+         build_info.get_building_platform_os_name()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "building_platform_os_version",
+         build_info.get_building_platform_os_version()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "building_platform_chipset",
+         build_info.get_building_platform_chipset()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "compiler_name",
+         build_info.get_compiler_name()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "compiler_version",
+         build_info.get_compiler_version()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "allegro_version_num",
+         build_info.get_allegro_version_num()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "allegro_version_git_branch",
+         build_info.get_allegro_version_git_branch()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "allegro_version_git_hash",
+         build_info.get_allegro_version_git_hash()
+      ),
       build_cpp_class_attribute(
          "std::string",
          "allegro_version_git_latest_commit_date_and_time",
