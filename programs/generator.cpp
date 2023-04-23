@@ -97,6 +97,22 @@ fi
 
 
 
+std::string const VERSION_YAML_FILE_FILENAME = "version.yml";
+std::string const VERSION_YAML_FILE_CONTENT = R"END(note: This is a machine generated file. Do not modify.
+version:
+  major: 0
+  minor: 0
+  patch: 0
+  labels:
+    - wip
+  metadata: []
+)END";
+
+
+
+
+
+
 
 std::string PROGRAM_RUNNER_CLASS_NAME = "Runner";
 std::string main_file_content_template = R"END(
@@ -197,6 +213,16 @@ void create_test_runner(Generator &generator)
    //outfile6 << TEST_RUNNER_FILE_CONTENT;
    //outfile6.close();
 }
+
+
+void create_version_yaml(Generator &generator)
+{
+   std::ofstream outfile;
+   outfile.open(generator.get_project_name() + VERSION_YAML_FILE_FILENAME, std::ios::binary);
+   outfile << VERSION_YAML_FILE_CONTENT;
+   outfile.close();
+}
+
 
 
 void create_main_file(Generator &generator)
