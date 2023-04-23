@@ -3,6 +3,7 @@
 
 #include <Blast/Project/SourceReleaseBuilder.hpp>
 #include <Blast/DirectoryExistenceChecker.hpp>
+#include <Blast/Testing/TemporaryDirectoryCreator.hpp>
 
 //#define TEMP_SANDBOX_FOLDER ("tmp/test_sandbox")
 //std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
@@ -109,6 +110,21 @@ TEST(Blast_Project_SourceReleaseBuilderTest, get_top_level_folders_in_src__will_
       Blast::Project::SourceReleaseBuilder::get_top_level_folders_in_src(base_folder);
 
    EXPECT_EQ(expected_folder_names, actual_folder_names); 
+}
+
+
+TEST(Blast_Project_SourceReleaseBuilderTest, DISABLED__generate_source_release__will_not_blow_up)
+{
+   // WIP
+   //std::string temp_directory = Blast::Testing::TemporaryDirectoryCreator.create();
+
+   //Blast::Project::SourceReleaseBuilder release_builder;
+   //release_builder.set_releases_base_folder(temp_directory);
+
+   // TODO: Check expected files are created
+   // TODO: Check files have the expected content
+   // TODO: Check expected allegro_flare folders are present
+   // TODO: Check expected removed allegro_flare folders are not present
 }
 
 
