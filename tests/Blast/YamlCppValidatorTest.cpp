@@ -32,3 +32,33 @@ TEST(Blast_YamlCppValidatorTest,
 }
 
 
+TEST(Blast_YamlCppValidatorTest,
+   validate_node_has_unsigned_int_value__will_return_true_if_the_node_contains_a_positive_integer)
+{
+   std::vector<std::string> test_data = { "1234", "1", "999999", "0" };
+   // TODO: Test on other datatypes (float, bool, etc)
+
+   for (auto &test_data_item : test_data)
+   {
+      YAML::Node node;
+      node["key"] = test_data_item;
+      EXPECT_EQ(true, Blast::YamlCppValidator::validate_node_has_unsigned_int_value(node, "key"));
+   }
+}
+
+
+TEST(Blast_YamlCppValidatorTest,
+   validate_node_has_unsigned_int_value__will_return_false_if_the_node_does_not_contain_an_unsigned_integer)
+{
+   std::vector<std::string> test_data = { "-1234", "-1", "-999999", "012", "-0", "&abier", " wohoasd", " ", "    \n" };
+   // TODO: Test on other datatypes (float, bool, etc)
+
+   for (auto &test_data_item : test_data)
+   {
+      YAML::Node node;
+      node["key"] = test_data_item;
+      EXPECT_EQ(false, Blast::YamlCppValidator::validate_node_has_unsigned_int_value(node, "key"));
+   }
+}
+
+
