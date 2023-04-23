@@ -8,7 +8,7 @@
 
 namespace Blast
 {
-   namespace Quinetessence
+   namespace Quintessence
    {
       namespace YAMLParsing
       {
