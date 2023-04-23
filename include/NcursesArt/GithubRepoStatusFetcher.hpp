@@ -9,9 +9,11 @@ namespace NcursesArt
 {
    class GithubRepoStatusFetcher
    {
+   public:
+      static constexpr char* GIT_STATUS_COMMAND = (char*)"git status -uno -u";
+
    private:
       std::string last_captured_output_from_status_request;
-      std::string git_status_command;
       std::string git_pull_command;
       std::string git_branch_count_command;
       std::string git_current_branch_command;
@@ -36,7 +38,6 @@ namespace NcursesArt
 
       void set_status_polled(bool status_polled);
       std::string get_last_captured_output_from_status_request() const;
-      std::string get_git_status_command() const;
       std::string get_git_pull_command() const;
       std::string get_git_branch_count_command() const;
       std::string get_git_current_branch_command() const;

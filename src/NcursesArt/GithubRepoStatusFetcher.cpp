@@ -18,7 +18,6 @@ namespace NcursesArt
 
 GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::string repos_directory)
    : last_captured_output_from_status_request("")
-   , git_status_command("git status -uno -u")
    , git_pull_command("git pull")
    , git_branch_count_command("git branch | wc -l")
    , git_current_branch_command("git branch | grep \\* | cut -d ' ' -f2")
@@ -51,12 +50,6 @@ void GithubRepoStatusFetcher::set_status_polled(bool status_polled)
 std::string GithubRepoStatusFetcher::get_last_captured_output_from_status_request() const
 {
    return last_captured_output_from_status_request;
-}
-
-
-std::string GithubRepoStatusFetcher::get_git_status_command() const
-{
-   return git_status_command;
 }
 
 
@@ -271,7 +264,7 @@ std::string GithubRepoStatusFetcher::get_pull_command()
 std::string GithubRepoStatusFetcher::get_status_command()
 {
    std::stringstream result;
-   result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_status_command() << ")";
+   result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << GIT_STATUS_COMMAND << ")";
    return result.str();
 }
 
