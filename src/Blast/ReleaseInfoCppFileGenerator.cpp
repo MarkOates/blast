@@ -78,9 +78,21 @@ Blast::Cpp::Class ReleaseInfoCppFileGenerator::build_cpp_class()
 std::vector<Blast::Cpp::ClassAttributes> ReleaseInfoCppFileGenerator::build_cpp_class_attribute_properties()
 {
    std::vector<Blast::Cpp::ClassAttributes> result = {
-      build_cpp_class_attribute("std::string", "version", release_info.build_project_version_string()),
-      build_cpp_class_attribute("std::string", "allegro_flare_version_git_hash", release_info.get_allegro_flare_version_git_hash()),
-      build_cpp_class_attribute("std::string", "blast_version_git_hash", release_info.get_blast_version_git_hash()),
+      build_cpp_class_attribute(
+         "std::string",
+         "version",
+         release_info.build_project_version_string()
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "allegro_flare_version_git_hash",
+         truncate_to_n_characters(release_info.get_allegro_flare_version_git_hash())
+      ),
+      build_cpp_class_attribute(
+         "std::string",
+         "blast_version_git_hash",
+         truncate_to_n_characters(release_info.get_blast_version_git_hash())
+      ),
    };
    return result;
 }
