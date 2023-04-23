@@ -94,7 +94,7 @@ int main(int argc, char **argv)
    std::cout << std::endl;
    std::cout << std::endl;
 
-   // remove the generated header and source files
+   // Remove the generated header and source files
    std::string quintessence_filename = current_component_generator.get_quintessence_path_and_filename();
    std::string header_filename = current_component_generator.get_header_path_and_filename();
    std::string source_filename = current_component_generator.get_source_path_and_filename();
@@ -109,17 +109,37 @@ int main(int argc, char **argv)
    std::cout << std::endl;
    std::cout << std::endl;
 
+
+   // Get the new fragment names 
+   std::string new_quintessence_filename = new_component_generator.get_quintessence_path_and_filename();
+   std::string new_header_filename = new_component_generator.get_header_path_and_filename();
+   std::string new_source_filename = new_component_generator.get_source_path_and_filename();
+   std::string new_test_filename = new_component_generator.get_test_path_and_filename();
+   std::string new_documentation_filename = new_component_generator.get_documentation_path_and_filename();
+
+
+   // Create new folders if the destination folders for the new renamed object does not exist 
+   std::cout << "COMMAND: Create any new folder(s) if they does not already exist:" << std::endl;
+   std::cout << "=================================================================" << std::endl;
+   std::cout << std::endl;
+   std::cout
+      << current_component_generator.build_command_to_make_parent_directories_for(new_quintessence_filename) << std::endl
+      << current_component_generator.build_command_to_make_parent_directories_for(new_header_filename) << std::endl
+      << current_component_generator.build_command_to_make_parent_directories_for(new_source_filename) << std::endl
+      << current_component_generator.build_command_to_make_parent_directories_for(new_test_filename) << std::endl
+      << current_component_generator.build_command_to_make_parent_directories_for(new_documentation_filename) << std::endl
+      ;
+   std::cout << std::endl;
+   std::cout << std::endl;
+
+
+
    // move the fragments to the new locations, (or rename them or whatever)
    std::string current_quintessence_filename = current_component_generator.get_quintessence_path_and_filename();
    std::string current_header_filename = current_component_generator.get_header_path_and_filename();
    std::string current_source_filename = current_component_generator.get_source_path_and_filename();
    std::string current_test_filename = current_component_generator.get_test_path_and_filename();
    std::string current_documentation_filename = current_component_generator.get_documentation_path_and_filename();
-   std::string new_quintessence_filename = new_component_generator.get_quintessence_path_and_filename();
-   std::string new_header_filename = new_component_generator.get_header_path_and_filename();
-   std::string new_source_filename = new_component_generator.get_source_path_and_filename();
-   std::string new_test_filename = new_component_generator.get_test_path_and_filename();
-   std::string new_documentation_filename = new_component_generator.get_documentation_path_and_filename();
    std::cout << "COMMAND: Move the files to the new locations:" << std::endl;
    std::cout << "=============================================" << std::endl;
    std::cout << std::endl;

@@ -35,7 +35,7 @@ public:
    std::string get_source_path_and_filename();
    std::string get_google_test_description_prefix();
    std::string get_program_body_class_name();
-   std::string get_command_for_make_dir();
+   static std::string build_command_to_make_parent_directories_for(std::string path_with_filename);
    std::string get_component_tail_snakecase();
    std::string get_component_tail_all_caps_constant();
 

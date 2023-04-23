@@ -120,3 +120,14 @@ TEST(Blast_Quintessence_ComponentGenerator, get_class_name_up_to_last_fragment__
 }
 
 
+TEST(Blast_Quintessence_ComponentGenerator,
+   build_command_to_make_parent_directories_for__will_return_the_expected_command)
+{
+   std::string expected_command = "mkdir -p \"$(dirname 'foo/bar/baz.txt')\" && echo \"Directory created: "
+                                  "$(dirname 'foo/bar/baz.txt')\"";
+   std::string actual_command = ComponentGenerator::build_command_to_make_parent_directories_for("foo/bar/baz.txt");
+
+   EXPECT_EQ(expected_command, actual_command);
+}
+
+

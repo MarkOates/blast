@@ -228,10 +228,12 @@ std::string ComponentGenerator::get_program_body_class_name()
 
 
 
-std::string ComponentGenerator::get_command_for_make_dir()
+std::string ComponentGenerator::build_command_to_make_parent_directories_for(std::string path_with_filename)
 {
+   // TODO: Consider sanitizing filename
    std::stringstream command;
-   command << "mkdir \"" << component_name << "\"";
+   command << "mkdir -p \"$(dirname '" << path_with_filename << "')\" && echo "
+              "\"Directory created: $(dirname '" << path_with_filename << "')\"";
    return command.str();
 }
 
