@@ -14,7 +14,7 @@ namespace YAMLParsing
 
 
 EnumClassParser::EnumClassParser(YAML::Node node)
-   : Blast::YamlCppValidator()
+   : Blast::YAMLValidator()
    , node(node)
 {
 }

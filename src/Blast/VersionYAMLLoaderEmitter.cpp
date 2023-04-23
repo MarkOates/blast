@@ -16,7 +16,7 @@ namespace Blast
 
 
 VersionYAMLLoaderEmitter::VersionYAMLLoaderEmitter(std::string yaml_filename)
-   : Blast::YamlCppValidator()
+   : Blast::YAMLValidator()
    , yaml_filename(yaml_filename)
    , root()
    , major(0)

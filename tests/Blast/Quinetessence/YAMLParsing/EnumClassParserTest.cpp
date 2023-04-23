@@ -138,7 +138,7 @@ TEST(Blast_Quinetessence_YAMLParsing_EnumClassParserTest, parse__when_enumerator
    EXPECT_THROW_WITH_MESSAGE(
       enum_class_parser.parse(),
       std::runtime_error,
-      "[Blast::YamlCppValidator::validate_presence_of_key]: error: expecting to "
+      "[Blast::YAMLValidator::validate_presence_of_key]: error: expecting to "
          "find node \"enumerators\" but it is not present."
    );
 }

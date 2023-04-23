@@ -8,7 +8,7 @@
 #include <Blast/DirectoryCreator.hpp>
 #include <Blast/CommandLineFlaggedArgumentsParser.hpp>
 #include <Blast/StringSplitter.hpp>
-#include <Blast/YamlCppValidator.hpp>
+#include <Blast/YAMLValidator.hpp>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
 #include <iostream>

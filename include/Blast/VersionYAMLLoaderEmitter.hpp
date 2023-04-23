@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <Blast/YamlCppValidator.hpp>
+#include <Blast/YAMLValidator.hpp>
 #include <set>
 #include <string>
 #include <vector>
@@ -10,7 +10,7 @@
 
 namespace Blast
 {
-   class VersionYAMLLoaderEmitter : protected Blast::YamlCppValidator
+   class VersionYAMLLoaderEmitter : protected Blast::YAMLValidator
    {
    private:
       std::string yaml_filename;

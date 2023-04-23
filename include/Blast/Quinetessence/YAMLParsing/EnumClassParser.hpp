@@ -2,7 +2,7 @@
 
 
 #include <Blast/Cpp/EnumClass.hpp>
-#include <Blast/YamlCppValidator.hpp>
+#include <Blast/YAMLValidator.hpp>
 #include <yaml-cpp/yaml.h>
 
 
@@ -12,7 +12,7 @@ namespace Blast
    {
       namespace YAMLParsing
       {
-         class EnumClassParser : public Blast::YamlCppValidator
+         class EnumClassParser : public Blast::YAMLValidator
          {
          private:
             YAML::Node node;

@@ -106,7 +106,7 @@
     "Blast/BuildSystem/ReportRenderers/Base",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/VersionYAMLLoaderEmitter",
-    "Blast/YamlCppValidator"
+    "Blast/YAMLValidator"
   ],
   "std/vector<std/vector<std/string>>": [
     "Blast/BuildSystem/BuildStageRenderers/Base"
@@ -166,7 +166,7 @@
   "Blast/Cpp/EnumClass": [
     "Blast/Cpp/EnumClassFormatter",
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
-    "Blast/YamlCppValidator"
+    "Blast/YAMLValidator"
   ],
   "std/vector<Blast/Cpp/FunctionArgument>": [
     "Blast/Cpp/Function"
@@ -383,10 +383,10 @@
   "YAML/Node": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
     "Blast/VersionYAMLLoaderEmitter",
-    "Blast/YamlCppValidator",
+    "Blast/YAMLValidator",
     "QuizYAMLLoader"
   ],
-  "Blast/YamlCppValidator": [
+  "Blast/YAMLValidator": [
     "Blast/Quinetessence/YAMLParsing/EnumClassParser",
     "Blast/VersionYAMLLoaderEmitter"
   ],
@@ -488,10 +488,10 @@
   ],
   "YAML/NodeType/value": [
     "Blast/VersionYAMLLoaderEmitter",
-    "Blast/YamlCppValidator"
+    "Blast/YAMLValidator"
   ],
   "std/any_of": [
-    "Blast/YamlCppValidator"
+    "Blast/YAMLValidator"
   ],
   "Blast/String/Trimmer": [
     "HostnameExtractor",
