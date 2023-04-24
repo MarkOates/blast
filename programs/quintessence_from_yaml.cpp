@@ -818,8 +818,8 @@ std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vect
          body_dependency_symbols.insert(body_dependency_symbols.end(), guards_dependency_symbols.begin(), guards_dependency_symbols.end());
       }
 
-      // get the dependency symbols that are the result of default arguments (and need to be public)
-      std::vector<std::string> default_argument_dependency_symbols = extract_default_argument_dependency_symbols(it);
+      // consolidate the dependency symbols that are the result of default arguments (and need to be public)
+      std::vector<std::string> default_argument_dependency_symbols = Blast::Quintessence::YAMLParsers::FunctionArgumentParser::consolidate_default_value_dependency_symbols(signature);
 
       result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols });
    }
@@ -1083,6 +1083,31 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
          per_function_dependency_symbols.push_back(dependency_symbol);
       }
    }
+
+
+
+   // TODO: consolidate all the functions' default argument dependencies
+
+   std::set<std::string> consolidated_function_default_argument_dependencies = {};
+   for (auto &function_and_dependency : functions_and_dependencies)
+   {
+      for (auto &this_functions_default_argument_dependency_symbols : std::get<2>(function_and_dependency))
+      {
+         consolidated_function_default_argument_dependencies.insert(this_functions_default_argument_dependency_symbols);
+      }
+   }
+
+   // DEBUG: dump out consolidated default argument dependencies
+   if (!consolidated_function_default_argument_dependencies.empty())
+   {
+      std::cout << "-- default_argument_dependency_symbols are present: ";
+      for (auto &dep : consolidated_function_default_argument_dependencies)
+      {
+         std::cout << "\"" << dep << "\", ";
+      }
+      std::cout << std::endl;
+   }
+
 
 
    // consolidate dependencies
