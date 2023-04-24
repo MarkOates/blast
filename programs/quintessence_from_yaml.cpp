@@ -692,6 +692,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
    return result;
 }
 
+#include <Blast/Quintessence/YAMLParsers/FunctionArgumentParser.hpp>
 
 std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node &source)
 {
@@ -707,28 +708,30 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
    //for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
    {
       YAML::Node node = source[i];
+      Blast::Quintessence::YAMLParsers::FunctionArgumentParser function_argument_parser(node);
+      Blast::Cpp::FunctionArgument function_argument = function_argument_parser.parse();
 
-      const std::string TYPE = "type";
-      const std::string NAME = "name";
-      const std::string DEFAULT_ARGUMENT = "default_argument";
+      //const std::string TYPE = "type";
+      //const std::string NAME = "name";
+      //const std::string DEFAULT_ARGUMENT = "default_argument";
 
-      validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
+      //validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
 
-      YAML::Node type_node = node.operator[](TYPE);
-      YAML::Node name_node = node.operator[](NAME);
-      YAML::Node default_argument_node = node.operator[](DEFAULT_ARGUMENT);
+      //YAML::Node type_node = node.operator[](TYPE);
+      //YAML::Node name_node = node.operator[](NAME);
+      //YAML::Node default_argument_node = node.operator[](DEFAULT_ARGUMENT);
 
-      validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
-      validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
-      validate(default_argument_node.IsScalar(), this_func_name, "Unexpected default_argument_node, expected to be of YAML type Scalar.");
-      std::vector<std::string> default_value_dependency_symbols = extract_default_argument_dependency_symbols(node);
+      //validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
+      //validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
+      //validate(default_argument_node.IsScalar(), this_func_name, "Unexpected default_argument_node, expected to be of YAML type Scalar.");
+      //std::vector<std::string> default_value_dependency_symbols = extract_default_argument_dependency_symbols(node);
 
-      Blast::Cpp::FunctionArgument function_argument(
-            type_node.as<std::string>(),
-            name_node.as<std::string>(),
-            default_argument_node.as<std::string>(),
-            default_value_dependency_symbols
-      );
+      //Blast::Cpp::FunctionArgument function_argument(
+            //type_node.as<std::string>(),
+            //name_node.as<std::string>(),
+            //default_argument_node.as<std::string>(),
+            //default_value_dependency_symbols
+      //);
 
       result.push_back(function_argument);
    }
