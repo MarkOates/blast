@@ -18,10 +18,15 @@ TEST(Blast_Quintessence_YAMLParsers_FunctionArgumentParserTest,
 
    Blast::Quintessence::YAMLParsers::FunctionArgumentParser function_argument_parser(node);
    Blast::Cpp::FunctionArgument function_argument = function_argument_parser.parse();
+   std::vector<std::string> expected_default_value_dependency_symbols = {};
 
    EXPECT_EQ("foo_bar", function_argument.get_name());
    EXPECT_EQ("uint32_t", function_argument.get_type());
    EXPECT_EQ("42", function_argument.get_default_value());
+   EXPECT_EQ(
+      function_argument.get_default_value_dependency_symbols(),
+      expected_default_value_dependency_symbols
+   );
 }
 
 
