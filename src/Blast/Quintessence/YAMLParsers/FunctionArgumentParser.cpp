@@ -68,6 +68,17 @@ Blast::Cpp::FunctionArgument FunctionArgumentParser::parse()
    );
 }
 
+std::vector<std::string> FunctionArgumentParser::extract_default_argument_dependency_symbols(YAML::Node node)
+{
+   std::vector<std::string> result;
+   // TODO: This function
+   //const std::string DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
+   //std::vector<std::string> result;
+   //YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+   //result = extract_sequence_as_string_array(dependency_symbols);
+   return result;
+}
+
 void FunctionArgumentParser::explode(std::string location, std::string error_message)
 {
    std::stringstream ss;

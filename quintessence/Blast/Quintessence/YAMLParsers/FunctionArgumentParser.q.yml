@@ -53,6 +53,22 @@ functions:
       - std::runtime_error
 
 
+  - name: extract_default_argument_dependency_symbols
+    type: std::vector<std::string>
+    parameters:
+      - name: node
+        type: YAML::Node
+        default_argument: '{}'
+    body: |
+      std::vector<std::string> result;
+      // TODO: This function
+      //const std::string DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
+      //std::vector<std::string> result;
+      //YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+      //result = extract_sequence_as_string_array(dependency_symbols);
+      return result;
+
+
   - name: explode
     parameters:
       - name: location
