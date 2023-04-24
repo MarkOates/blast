@@ -12,7 +12,7 @@ TEST(Blast_Quintessence_YAMLParsers_FunctionArgumentParserTest, can_be_created_w
 TEST(Blast_Quintessence_YAMLParsers_FunctionArgumentParserTest,
    parse__will_return_object_with_the_expected_values)
 {
-   std::string yaml_content = "name: \"FooBar\"\nstart_from: 42\ntype: uint32_t\nenumerators: [ FOO, FOE, FUM ]\n";
+   std::string yaml_content = "name: \"FooBar\"\ndefault_argument: 42\ntype: uint32_t\n";
    YAML::Node node = YAML::Load(yaml_content);
 
    Blast::Quintessence::YAMLParsers::FunctionArgumentParser function_argument_parser(node);

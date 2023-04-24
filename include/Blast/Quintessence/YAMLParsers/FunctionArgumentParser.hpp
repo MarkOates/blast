@@ -3,6 +3,7 @@
 
 #include <Blast/Cpp/FunctionArgument.hpp>
 #include <Blast/YAMLValidator.hpp>
+#include <string>
 #include <yaml-cpp/yaml.h>
 
 
@@ -27,6 +28,8 @@ namespace Blast
             void set_node(YAML::Node node);
             YAML::Node get_node() const;
             Blast::Cpp::FunctionArgument parse();
+            void explode(std::string location="[unset-location]", std::string error_message="[unset-error_message]");
+            void validate(bool value=false, std::string location="[unset-location]", std::string error_message="[unset-error_message]");
          };
       }
    }

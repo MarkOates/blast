@@ -2,6 +2,7 @@
 
 #include <Blast/Quintessence/YAMLParsers/FunctionArgumentParser.hpp>
 
+#include <sstream>
 #include <stdexcept>
 
 
@@ -40,10 +41,46 @@ YAML::Node FunctionArgumentParser::get_node() const
 Blast::Cpp::FunctionArgument FunctionArgumentParser::parse()
 {
    Blast::Cpp::FunctionArgument result;
+   std::string this_func_name = "Blast::Quintessence::YAMLParsers::FunctionArgumentParser::parse";
 
-   // YOUR CODE HERE
+   const std::string TYPE = "type";
+   const std::string NAME = "name";
+   const std::string DEFAULT_ARGUMENT = "default_argument";
+
+   validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
+
+   YAML::Node type_node = node.operator[](TYPE);
+   YAML::Node name_node = node.operator[](NAME);
+   YAML::Node default_argument_node = node.operator[](DEFAULT_ARGUMENT);
+
+   validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
+   validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
+   validate(default_argument_node.IsScalar(), this_func_name, "Unexpected default_argument_node, expected to be of YAML type Scalar.");
+
+   std::vector<std::string> default_value_dependency_symbols;
+   // TODO:
+   //std::vector<std::string> default_value_dependency_symbols = extract_default_argument_dependency_symbols(node);
+
+   Blast::Cpp::FunctionArgument function_argument(
+         type_node.as<std::string>(),
+         name_node.as<std::string>(),
+         default_argument_node.as<std::string>(),
+         default_value_dependency_symbols
+   );
 
    return result;
+}
+
+void FunctionArgumentParser::explode(std::string location, std::string error_message)
+{
+   std::stringstream ss;
+   ss << "[" << location << "] " << error_message;
+   throw std::runtime_error(ss.str());
+}
+
+void FunctionArgumentParser::validate(bool value, std::string location, std::string error_message)
+{
+   if (!value) explode(location, error_message);
 }
 
 
