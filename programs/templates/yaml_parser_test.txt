@@ -18,10 +18,10 @@ TEST([[COMPONENT_TEST_DESCRIPTION_NAME]],
    [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]](node);
    //[[YOUR_TARGET_OBJECT]] target_object_parser = [[COMPONENT_BASENAME_SNAKE_CASE]].parse();
 
-   //EXPECT_EQ("FooBar", target_object_parser.get_name());
-   //EXPECT_THAT(target_object_parser.get_enumerators(), ::testing::ElementsAre("FOO", "FOE", "FUM"));
-   //EXPECT_EQ("uint32_t", target_object_parser.get_type());
-   //EXPECT_EQ(42, target_object_parser.get_start_from());
+   //EXPECT_EQ("FooBar", target_object.get_name());
+   //EXPECT_THAT(target_object.get_enumerators(), ::testing::ElementsAre("FOO", "FOE", "FUM"));
+   //EXPECT_EQ("uint32_t", target_object.get_type());
+   //EXPECT_EQ(42, target_object.get_start_from());
 }
 
 

@@ -23,7 +23,6 @@ functions:
   - name: parse
     type: Blast::Cpp::FunctionArgument
     body: |
-      Blast::Cpp::FunctionArgument result;
       std::string this_func_name = "Blast::Quintessence::YAMLParsers::FunctionArgumentParser::parse";
 
       const std::string TYPE = "type";
@@ -44,14 +43,12 @@ functions:
       // TODO:
       //std::vector<std::string> default_value_dependency_symbols = extract_default_argument_dependency_symbols(node);
 
-      Blast::Cpp::FunctionArgument function_argument(
+      return Blast::Cpp::FunctionArgument(
             type_node.as<std::string>(),
             name_node.as<std::string>(),
             default_argument_node.as<std::string>(),
             default_value_dependency_symbols
       );
-
-      return result;
     body_dependency_symbols:
       - std::runtime_error
 
