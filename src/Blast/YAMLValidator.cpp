@@ -172,6 +172,7 @@ std::string YAMLValidator::get_type_string(YAML::Node* node_ptr)
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("YAMLValidator::get_type_string: error: guard \"node_ptr\" not met");
    }
+   // TODO: Test this function
    YAML::Node &node = (*node_ptr);
 
    switch (node.Type())
@@ -192,6 +193,28 @@ std::string YAMLValidator::get_type_string(YAML::Node* node_ptr)
    );
 
    return "[ERROR-get_type_string_result]";
+}
+
+std::vector<std::string> YAMLValidator::extract_sequence_as_string_array(YAML::Node source)
+{
+   // TODO: Test this function
+   // TODO: Rename this function
+   std::string this_func_name = "extract_sequence_as_string_array";
+   std::vector<std::string> result;
+
+   for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
+   {
+      if (!it->IsScalar())
+      {
+         Blast::Errors::throw_error(
+           "Blast::YAMLValidator::extract_sequence_as_string_array",
+           "Unexpected sequence element, expected to be of a YAML Scalar."
+         );
+      }
+      result.push_back(it->as<std::string>());
+   }
+
+   return result;
 }
 
 

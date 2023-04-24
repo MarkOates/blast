@@ -72,16 +72,14 @@ Blast::Cpp::FunctionArgument FunctionArgumentParser::parse()
 std::vector<std::string> FunctionArgumentParser::extract_default_argument_dependency_symbols(YAML::Node source)
 {
    std::vector<std::string> result;
-   // TODO: This function
-   //const std::string DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
-   //std::vector<std::string> result;
-   //YAML::Node dependency_symbols = fetch_node(
-      //source,
-      //DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS,
-      //YAML::NodeType::Sequence,
-      //YAML::Load("[]")
-   //);
-   //result = extract_sequence_as_string_array(dependency_symbols);
+   const std::string DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
+   YAML::Node dependency_symbols = fetch_node(
+      &source,
+      DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS,
+      YAML::NodeType::Sequence,
+      YAML::Load("[]")
+   );
+   result = extract_sequence_as_string_array(dependency_symbols);
    return result;
 }
 
