@@ -158,7 +158,8 @@
   ],
   "Blast/Cpp/FunctionArgument": [
     "Blast/Cpp/EnumClass",
-    "Blast/Cpp/Function"
+    "Blast/Cpp/Function",
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser"
   ],
   "Blast/CamelCaseToUnderscoreConverter": [
     "Blast/Cpp/EnumClass"
@@ -382,12 +383,14 @@
   ],
   "YAML/Node": [
     "Blast/Quintessence/YAMLParsers/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator",
     "QuizYAMLLoader"
   ],
   "Blast/YAMLValidator": [
     "Blast/Quintessence/YAMLParsers/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
     "Blast/VersionYAMLLoaderEmitter"
   ],
   "std/vector<std/regex_constants/syntax_option_type>": [

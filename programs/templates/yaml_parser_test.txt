@@ -1,0 +1,27 @@
+
+#include <gtest/gtest.h>
+
+#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
+
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+}
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]],
+   parse__will_return_object_with_the_expected_values)
+{
+   std::string yaml_content = "name: \"FooBar\"\nstart_from: 42\ntype: uint32_t\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]](node);
+   //[[YOUR_TARGET_OBJECT]] target_object_parser = [[COMPONENT_BASENAME_SNAKE_CASE]].parse();
+
+   //EXPECT_EQ("FooBar", target_object_parser.get_name());
+   //EXPECT_THAT(target_object_parser.get_enumerators(), ::testing::ElementsAre("FOO", "FOE", "FUM"));
+   //EXPECT_EQ("uint32_t", target_object_parser.get_type());
+   //EXPECT_EQ(42, target_object_parser.get_start_from());
+}
+
+

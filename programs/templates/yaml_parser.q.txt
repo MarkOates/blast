@@ -1,0 +1,45 @@
+parent_classes:
+
+
+  - class: Blast::YAMLValidator
+    scope: public
+    init_with: ''
+
+
+properties:
+
+
+  - name: node
+    type: YAML::Node
+    constructor_arg: true
+    init_with: '{}'
+    getter: true
+    setter: true
+
+
+functions:
+
+
+  - name: parse
+    type: Blast::Cpp::EnumClass
+    body: |
+      Blast::Cpp::EnumClass result;
+
+      // YOUR CODE HERE
+
+      return result;
+    body_dependency_symbols:
+      - std::runtime_error
+
+
+dependencies:
+
+
+  - symbol: YAML::Node
+    headers: [ yaml-cpp/yaml.h ]
+  - symbol: Blast::Cpp::EnumClass
+    headers: [ Blast/Cpp/EnumClass.hpp ]
+  - symbol: Blast::YAMLValidator
+    headers: [ Blast/YAMLValidator.hpp ]
+
+

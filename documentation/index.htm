@@ -92,6 +92,7 @@ table td
   <li><a href="#quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/SymlinkChecker.q.yml">quintessence/Blast/Project/SymlinkChecker.q.yml</a></li>
   <li><a href="#quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Quintessence/YAMLParsers/FunctionArgumentParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/FunctionArgumentParser.q.yml</a></li>
   <li><a href="#quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</a></li>
   <li><a href="#quintessence/Blast/ReleaseInfo.q.yml">quintessence/Blast/ReleaseInfo.q.yml</a></li>
   <li><a href="#quintessence/Blast/ReleaseInfoBuilder.q.yml">quintessence/Blast/ReleaseInfoBuilder.q.yml</a></li>
@@ -1992,6 +1993,33 @@ table td
 </ul>
 <ul>
   <div class="component">
+    <h3 id="quintessence/Blast/Quintessence/YAMLParsers/FunctionArgumentParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/FunctionArgumentParser.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">node</td>
+  <td class="property">YAML::Node</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">parse()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::Node&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::FunctionArgument&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/FunctionArgument.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::YAMLValidator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/YAMLValidator.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
     <h3 id="quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</h3>
      <table>
 <tr>
@@ -3837,7 +3865,8 @@ table td
   ],
   "Blast/Cpp/FunctionArgument": [
     "Blast/Cpp/EnumClass",
-    "Blast/Cpp/Function"
+    "Blast/Cpp/Function",
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser"
   ],
   "Blast/CamelCaseToUnderscoreConverter": [
     "Blast/Cpp/EnumClass"
@@ -4061,12 +4090,14 @@ table td
   ],
   "YAML/Node": [
     "Blast/Quintessence/YAMLParsers/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator",
     "QuizYAMLLoader"
   ],
   "Blast/YAMLValidator": [
     "Blast/Quintessence/YAMLParsers/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
     "Blast/VersionYAMLLoaderEmitter"
   ],
   "std/vector<std/regex_constants/syntax_option_type>": [

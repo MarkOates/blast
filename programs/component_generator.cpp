@@ -137,6 +137,7 @@ int main(int argc, char **argv)
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },
       { "comparison", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "comparison.hpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison.cpp.txt"), file_get_contents(TEMPLATES_PATH + "comparison_test.txt")) },
       { "json_loader", new HeaderSourceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "json_loader.hpp.txt"), file_get_contents(TEMPLATES_PATH + "json_loader.cpp.txt"), file_get_contents(TEMPLATES_PATH + "json_loader_test.txt")) },
+      { "yaml_parser", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "yaml_parser.q.txt"), file_get_contents(TEMPLATES_PATH + "yaml_parser_test.txt")) },
    };
 
    std::string dictionary_identifier_to_use = "standard_component";
