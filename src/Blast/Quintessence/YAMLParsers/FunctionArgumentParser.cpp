@@ -3,6 +3,7 @@
 #include <Blast/Quintessence/YAMLParsers/FunctionArgumentParser.hpp>
 
 #include <iostream>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 
@@ -112,6 +113,27 @@ void FunctionArgumentParser::explode(std::string location, std::string error_mes
 void FunctionArgumentParser::validate(bool value, std::string location, std::string error_message)
 {
    if (!value) explode(location, error_message);
+}
+
+std::vector<std::string> FunctionArgumentParser::consolidate_default_value_dependency_symbols(std::vector<Blast::Cpp::FunctionArgument> function_arguments)
+{
+   std::set<std::string> result_set;
+
+   // Consolidate the values
+   for (auto &function_argument : function_arguments)
+   {
+      for (auto &default_value_dependency_symbol : function_argument.get_default_value_dependency_symbols())
+      {
+         result_set.insert(default_value_dependency_symbol);
+      }
+   }
+
+   // Convert the set to a vector
+   std::vector<std::string> result_vector;
+   std::copy(result_set.begin(), result_set.end(), std::back_inserter(result_vector));
+
+   // Return the result
+   return result_vector;
 }
 
 

@@ -1,5 +1,6 @@
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include <Blast/Quintessence/YAMLParsers/FunctionArgumentParser.hpp>
 
@@ -30,6 +31,32 @@ TEST(Blast_Quintessence_YAMLParsers_FunctionArgumentParserTest,
    EXPECT_EQ(
       function_argument.get_default_value_dependency_symbols(),
       expected_default_value_dependency_symbols
+   );
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_FunctionArgumentParserTest,
+   consolidate_default_value_dependency_symbols__will_return_a_consolidated_list_of_dependency_symbols_from_all_of_the\
+function_arguments)
+{
+   std::vector<Blast::Cpp::FunctionArgument> function_arguments = {
+      Blast::Cpp::FunctionArgument("", "", "", { "foo", "bar", "baz" }),
+      Blast::Cpp::FunctionArgument("", "", "", { "baz", "biz" }),
+      Blast::Cpp::FunctionArgument("", "", "", { "basil", "bonk", "buzz" }),
+   };
+
+   std::vector<std::string> expected_consolidated_default_value_dependency_symbols = {
+      "foo", "bar", "baz", "biz", "basil", "bonk", "buzz"
+   };
+
+   std::vector<std::string> actual_consolidated_default_value_dependency_symbols =
+      Blast::Quintessence::YAMLParsers::FunctionArgumentParser::consolidate_default_value_dependency_symbols(
+         function_arguments
+      );
+
+   EXPECT_THAT(
+      actual_consolidated_default_value_dependency_symbols,
+      ::testing::UnorderedElementsAreArray(expected_consolidated_default_value_dependency_symbols)
    );
 }
 

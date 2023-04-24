@@ -33,6 +33,7 @@ namespace Blast
             YAML::Node fetch_node(YAML::Node* node=nullptr, std::string key="[unset-key]", YAML::NodeType::value expected_type=YAML::NodeType::Undefined, YAML::Node default_value={});
             void explode(std::string location="[unset-location]", std::string error_message="[unset-error_message]");
             void validate(bool value=false, std::string location="[unset-location]", std::string error_message="[unset-error_message]");
+            static std::vector<std::string> consolidate_default_value_dependency_symbols(std::vector<Blast::Cpp::FunctionArgument> function_arguments={});
          };
       }
    }
