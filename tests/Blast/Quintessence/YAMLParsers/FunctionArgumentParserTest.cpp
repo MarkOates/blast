@@ -61,3 +61,26 @@ function_arguments)
 }
 
 
+TEST(Blast_Quintessence_YAMLParsers_FunctionArgumentParserTest,
+   consolidate_default_value_dependency_symbols__when_no_default_value_dependency_symbols_are_present__will_be_fine)
+{
+   std::vector<Blast::Cpp::FunctionArgument> function_arguments = {
+      Blast::Cpp::FunctionArgument("", "", "", {}),
+      Blast::Cpp::FunctionArgument("", "", "", {}),
+      Blast::Cpp::FunctionArgument("", "", "", {}),
+   };
+
+   std::vector<std::string> expected_consolidated_default_value_dependency_symbols = {};
+
+   std::vector<std::string> actual_consolidated_default_value_dependency_symbols =
+      Blast::Quintessence::YAMLParsers::FunctionArgumentParser::consolidate_default_value_dependency_symbols(
+         function_arguments
+      );
+
+   EXPECT_THAT(
+      actual_consolidated_default_value_dependency_symbols,
+      ::testing::UnorderedElementsAreArray(expected_consolidated_default_value_dependency_symbols)
+   );
+}
+
+
