@@ -14,8 +14,8 @@ TEST(Blast_Quintessence_YAMLParsers_FunctionArgumentParserTest,
    parse__will_return_object_with_the_expected_values)
 {
    std::string yaml_content = "name: \"foo_bar\"\n"
-                              "default_argument: 42\n"
                               "type: uint32_t\n"
+                              "default_argument: 42\n"
                               "default_argument_dependency_symbols: [ foo, foe, fum ]\n"
                               ;
    YAML::Node node = YAML::Load(yaml_content);
