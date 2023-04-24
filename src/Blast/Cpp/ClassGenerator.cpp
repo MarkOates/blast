@@ -430,8 +430,14 @@ std::string ClassGenerator::dependency_include_directives()
    // gather symbols from function signatures
    for (auto &function : cpp_class.get_functions())
    {
+      // include the type of the function
       present_symbols.insert(function.get_type());
+
+      // include the type(s) for each of the parameters in the function
       for (auto &parameter : function.get_signature()) present_symbols.insert(parameter.get_type());
+
+      // TODO: include the type(s) used in the default arguments
+      // HERE:
    }
 
 
@@ -1018,6 +1024,33 @@ std::string ClassGenerator::project_header_filepath()
    result << "/" << header_filename();
    return result.str();
 }
+
+
+
+std::vector<std::string> ClassGenerator::consolidate_default_value_dependency_symbols(
+      std::vector<Blast::Cpp::FunctionArgument> function_arguments
+   )
+{
+   std::set<std::string> result_set;
+
+   // Consolidate the values
+   for (auto &function_argument : function_arguments)
+   {
+      for (auto &default_value_dependency_symbol : function_argument.get_default_value_dependency_symbols())
+      {
+         result_set.insert(default_value_dependency_symbol);
+      }
+   }
+
+   // Convert the set to a vector
+   std::vector<std::string> result_vector;
+   std::copy(result_set.begin(), result_set.end(), std::back_inserter(result_vector));
+
+   // Return the result
+   return result_vector;
+}
+
+
 
 
 } // namespace Cpp
