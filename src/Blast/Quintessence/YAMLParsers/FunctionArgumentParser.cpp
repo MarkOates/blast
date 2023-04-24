@@ -56,7 +56,6 @@ Blast::Cpp::FunctionArgument FunctionArgumentParser::parse()
    validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
    validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
    validate(default_argument_node.IsScalar(), this_func_name, "Unexpected default_argument_node, expected to be of YAML type Scalar.");
-
    std::vector<std::string> default_value_dependency_symbols = extract_default_argument_dependency_symbols(node);
 
    return Blast::Cpp::FunctionArgument(
