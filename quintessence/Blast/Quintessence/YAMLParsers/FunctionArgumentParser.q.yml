@@ -56,17 +56,52 @@ functions:
   - name: extract_default_argument_dependency_symbols
     type: std::vector<std::string>
     parameters:
-      - name: node
+      - name: source
         type: YAML::Node
         default_argument: '{}'
     body: |
       std::vector<std::string> result;
       // TODO: This function
-      //const std::string DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
+      //const std::string DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
       //std::vector<std::string> result;
-      //YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+      //YAML::Node dependency_symbols = fetch_node(
+         //source,
+         //DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS,
+         //YAML::NodeType::Sequence,
+         //YAML::Load("[]")
+      //);
       //result = extract_sequence_as_string_array(dependency_symbols);
       return result;
+
+
+  - name: fetch_node
+    type: YAML::Node
+    parameters:
+      - name: node
+        type: YAML::Node*
+        default_argument: nullptr
+      - name: key
+        type: std::string
+        default_argument: '"[unset-key]"'
+      - name: expected_type
+        type: YAML::NodeType::value
+        default_argument: YAML::NodeType::Undefined
+      - name: default_value
+        type: YAML::Node
+        default_argument: '{}'
+    guards: [ node ]
+    body: |
+      if (node->operator[](key))
+      {
+         if (node->operator[](key).Type() == expected_type) return node->operator[](key);
+         else
+         {
+            std::stringstream error_message;
+            error_message << "unexpected type expecting YAML:: " << expected_type << ", is a " << get_type_string(node) << " is present.";
+            throw std::runtime_error(error_message.str());
+         }
+      }
+      return default_value;
 
 
   - name: explode
@@ -104,6 +139,8 @@ dependencies:
 
 
   - symbol: YAML::Node
+    headers: [ yaml-cpp/yaml.h ]
+  - symbol: YAML::NodeType::value
     headers: [ yaml-cpp/yaml.h ]
   - symbol: Blast::Cpp::FunctionArgument
     headers: [ Blast/Cpp/FunctionArgument.hpp ]

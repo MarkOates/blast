@@ -199,6 +199,37 @@ functions:
       - std::any_of
 
 
+  - name: get_type_string
+    static: true
+    type: std::string
+    parameters:
+      - name: node_ptr
+        type: YAML::Node*
+        default_argument: nullptr
+    guards: [ node_ptr ]
+    body: |
+      YAML::Node &node = (*node_ptr);
+
+      switch (node.Type())
+      {
+         case YAML::NodeType::Null: return "Null"; break;
+         case YAML::NodeType::Scalar: return "Scalar"; break;
+         case YAML::NodeType::Sequence: return "Sequence"; break;
+         case YAML::NodeType::Map: return "Map"; break;
+         case YAML::NodeType::Undefined: return "Undefined"; break;
+      }
+
+      std::stringstream error_message;
+      error_message << "Unrecognized YAML::NodeType \"" << node.Type() << "\" on node.Type().";
+
+      Blast::Errors::throw_error(
+        "Blast::YAMLValidator::get_type_string",
+        error_message.str()
+      );
+
+      return "[ERROR-get_type_string_result]";
+
+
 dependencies:
 
 

@@ -393,6 +393,11 @@
     "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
     "Blast/VersionYAMLLoaderEmitter"
   ],
+  "YAML/NodeType/value": [
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
+    "Blast/VersionYAMLLoaderEmitter",
+    "Blast/YAMLValidator"
+  ],
   "std/vector<std/regex_constants/syntax_option_type>": [
     "Blast/RegexMatcher"
   ],
@@ -488,10 +493,6 @@
   ],
   "filesystem": [
     "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "YAML/NodeType/value": [
-    "Blast/VersionYAMLLoaderEmitter",
-    "Blast/YAMLValidator"
   ],
   "std/any_of": [
     "Blast/YAMLValidator"

@@ -2,6 +2,7 @@
 
 #include <Blast/Quintessence/YAMLParsers/FunctionArgumentParser.hpp>
 
+#include <iostream>
 #include <sstream>
 #include <stdexcept>
 
@@ -68,15 +69,42 @@ Blast::Cpp::FunctionArgument FunctionArgumentParser::parse()
    );
 }
 
-std::vector<std::string> FunctionArgumentParser::extract_default_argument_dependency_symbols(YAML::Node node)
+std::vector<std::string> FunctionArgumentParser::extract_default_argument_dependency_symbols(YAML::Node source)
 {
    std::vector<std::string> result;
    // TODO: This function
-   //const std::string DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
+   //const std::string DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
    //std::vector<std::string> result;
-   //YAML::Node dependency_symbols = fetch_node(source, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+   //YAML::Node dependency_symbols = fetch_node(
+      //source,
+      //DEFAULT_ARGUMENT_DEPENDENCY_SYMBOLS,
+      //YAML::NodeType::Sequence,
+      //YAML::Load("[]")
+   //);
    //result = extract_sequence_as_string_array(dependency_symbols);
    return result;
+}
+
+YAML::Node FunctionArgumentParser::fetch_node(YAML::Node* node, std::string key, YAML::NodeType::value expected_type, YAML::Node default_value)
+{
+   if (!(node))
+   {
+      std::stringstream error_message;
+      error_message << "[FunctionArgumentParser::fetch_node]: error: guard \"node\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("FunctionArgumentParser::fetch_node: error: guard \"node\" not met");
+   }
+   if (node->operator[](key))
+   {
+      if (node->operator[](key).Type() == expected_type) return node->operator[](key);
+      else
+      {
+         std::stringstream error_message;
+         error_message << "unexpected type expecting YAML:: " << expected_type << ", is a " << get_type_string(node) << " is present.";
+         throw std::runtime_error(error_message.str());
+      }
+   }
+   return default_value;
 }
 
 void FunctionArgumentParser::explode(std::string location, std::string error_message)

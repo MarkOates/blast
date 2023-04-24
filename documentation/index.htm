@@ -2005,7 +2005,10 @@ table td
   <td class="method">parse()</td>
 </tr>
 <tr>
-  <td class="method">extract_default_argument_dependency_symbols(YAML::Node node={})</td>
+  <td class="method">extract_default_argument_dependency_symbols(YAML::Node source={})</td>
+</tr>
+<tr>
+  <td class="method">fetch_node(YAML::Node* node=nullptr, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, YAML::Node default_value={})</td>
 </tr>
 <tr>
   <td class="method">explode(std::string location=&quot;[unset-location]&quot;, std::string error_message=&quot;[unset-error_message]&quot;)</td>
@@ -2017,6 +2020,9 @@ table td
      <table>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::Node&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;YAML::NodeType::value&quot;, &quot;headers&quot;=&gt;[&quot;yaml-cpp/yaml.h&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::FunctionArgument&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/FunctionArgument.hpp&quot;]}</td>
@@ -2905,6 +2911,9 @@ table td
 </tr>
 <tr>
   <td class="method">validate_unique_all_upper_identifiers(YAML::Node items={})</td>
+</tr>
+<tr>
+  <td class="method">get_type_string(YAML::Node* node_ptr=nullptr)</td>
 </tr>
     </table>
      <table>
@@ -4109,6 +4118,11 @@ table td
     "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
     "Blast/VersionYAMLLoaderEmitter"
   ],
+  "YAML/NodeType/value": [
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
+    "Blast/VersionYAMLLoaderEmitter",
+    "Blast/YAMLValidator"
+  ],
   "std/vector<std/regex_constants/syntax_option_type>": [
     "Blast/RegexMatcher"
   ],
@@ -4204,10 +4218,6 @@ table td
   ],
   "filesystem": [
     "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "YAML/NodeType/value": [
-    "Blast/VersionYAMLLoaderEmitter",
-    "Blast/YAMLValidator"
   ],
   "std/any_of": [
     "Blast/YAMLValidator"

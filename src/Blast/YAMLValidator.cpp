@@ -4,6 +4,9 @@
 
 #include <Blast/Errors.hpp>
 #include <algorithm>
+#include <iostream>
+#include <sstream>
+#include <stdexcept>
 #include <unordered_set>
 
 
@@ -158,6 +161,37 @@ bool YAMLValidator::validate_unique_all_upper_identifiers(YAML::Node items)
 
     // All checks passed
     return true;
+}
+
+std::string YAMLValidator::get_type_string(YAML::Node* node_ptr)
+{
+   if (!(node_ptr))
+   {
+      std::stringstream error_message;
+      error_message << "[YAMLValidator::get_type_string]: error: guard \"node_ptr\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("YAMLValidator::get_type_string: error: guard \"node_ptr\" not met");
+   }
+   YAML::Node &node = (*node_ptr);
+
+   switch (node.Type())
+   {
+      case YAML::NodeType::Null: return "Null"; break;
+      case YAML::NodeType::Scalar: return "Scalar"; break;
+      case YAML::NodeType::Sequence: return "Sequence"; break;
+      case YAML::NodeType::Map: return "Map"; break;
+      case YAML::NodeType::Undefined: return "Undefined"; break;
+   }
+
+   std::stringstream error_message;
+   error_message << "Unrecognized YAML::NodeType \"" << node.Type() << "\" on node.Type().";
+
+   Blast::Errors::throw_error(
+     "Blast::YAMLValidator::get_type_string",
+     error_message.str()
+   );
+
+   return "[ERROR-get_type_string_result]";
 }
 
 
