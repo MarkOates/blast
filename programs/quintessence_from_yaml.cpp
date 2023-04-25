@@ -108,6 +108,7 @@ std::vector<std::string> extract_function_body_dependency_symbols(YAML::Node &so
 
 
 
+// TODO: Consider removing this function, it is already parsed during "convert_function_arguments"
 std::vector<std::string> extract_default_argument_dependency_symbols(YAML::Node &source)
 {
    const std::string DEPENDENCY_SYMBOLS = "default_argument_dependency_symbols";
@@ -819,6 +820,7 @@ std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vect
       }
 
       // consolidate the dependency symbols that are the result of default arguments (and need to be public)
+      // TODO: Consider removing this, it is already parsed during "convert_function_arguments"
       std::vector<std::string> default_argument_dependency_symbols = Blast::Quintessence::YAMLParsers::FunctionArgumentParser::consolidate_default_value_dependency_symbols(signature);
 
       result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols });
@@ -1086,7 +1088,8 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
 
 
-   // TODO: consolidate all the functions' default argument dependencies
+   // consolidate all the functions' default argument dependencies
+   // TODO: Consider removing this, it is already parsed during "convert_function_arguments"
 
    std::set<std::string> consolidated_function_default_argument_dependencies = {};
    for (auto &function_and_dependency : functions_and_dependencies)
@@ -1097,6 +1100,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
       }
    }
 
+   // TODO: Consider removing this, it is already parsed during "convert_function_arguments"
    // DEBUG: dump out consolidated default argument dependencies
    if (!consolidated_function_default_argument_dependencies.empty())
    {
