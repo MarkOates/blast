@@ -83,6 +83,7 @@ namespace Blast
          std::string project_source_filepath();
          std::string project_header_filepath();
 
+         std::vector<std::string> consolidated_function_default_argument_dependency_symbols();
          static std::vector<std::string> consolidate_default_value_dependency_symbols(
             std::vector<Blast::Cpp::FunctionArgument> function_arguments
          );

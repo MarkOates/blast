@@ -435,9 +435,11 @@ std::string ClassGenerator::dependency_include_directives()
 
       // include the type(s) for each of the parameters in the function
       for (auto &parameter : function.get_signature()) present_symbols.insert(parameter.get_type());
-
-      // TODO: include the type(s) used in the default arguments
-      // HERE:
+   }
+   // include the type(s) used in default arguments of all of the functions
+   for (auto &dependency_symbol : consolidated_function_default_argument_dependency_symbols())
+   {
+      present_symbols.insert(dependency_symbol);
    }
 
 
@@ -1023,6 +1025,28 @@ std::string ClassGenerator::project_header_filepath()
    for (unsigned i=0; i<cpp_class.get_namespaces().size(); i++) result << "/" << cpp_class.get_namespaces()[i];
    result << "/" << header_filename();
    return result.str();
+}
+
+
+
+std::vector<std::string> ClassGenerator::consolidated_function_default_argument_dependency_symbols()
+{
+   std::vector<std::string> result;
+   std::vector<Blast::Cpp::FunctionArgument> function_arguments;
+
+   for (auto &function : cpp_class.get_functions())
+   {
+      std::vector<Blast::Cpp::FunctionArgument> this_functions_arguments = function.get_signature();
+
+      for (auto &function_argument : this_functions_arguments)
+      {
+         function_arguments.push_back(function_argument);
+      }
+   }
+
+   result = ClassGenerator::consolidate_default_value_dependency_symbols(function_arguments);
+
+   return result;
 }
 
 
