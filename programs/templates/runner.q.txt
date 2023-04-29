@@ -35,7 +35,7 @@ properties:
     constructor_arg: true
 
   - name: primary_gameplay_screen
-    type: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::PrimaryGameplay::Screen
+    type: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::Gameplay::Screen
     init_with: ''
 
   - name: initialized
@@ -183,7 +183,7 @@ dependencies:
     headers: [ AllegroFlare/GameEvent.hpp ]
   - symbol: CubeShooter::Screen
     headers: [ CubeShooter/Screen.hpp ]
-  - symbol: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::PrimaryGameplay::Screen
-    headers: [ [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]/PrimaryGameplay/Screen.hpp ]
+  - symbol: [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::Gameplay::Screen
+    headers: [ [[COMPONENT_CLASS_NAME_UP_TO_LAST_FRAGMENT]]/Gameplay/Screen.hpp ]
 
 
