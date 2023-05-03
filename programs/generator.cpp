@@ -218,7 +218,7 @@ void create_test_runner(Generator &generator)
 void create_version_yaml(Generator &generator)
 {
    std::ofstream outfile;
-   outfile.open(generator.get_project_name() + VERSION_YAML_FILE_FILENAME, std::ios::binary);
+   outfile.open(generator.get_project_name() + "/" + VERSION_YAML_FILE_FILENAME, std::ios::binary);
    outfile << VERSION_YAML_FILE_CONTENT;
    outfile.close();
 }
@@ -277,7 +277,7 @@ void output_finished_message(std::string project_name)
 
 void generate_gameplay_screen_screen_class(std::string project_name)
 {
-   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Gameplay/Screen screen";
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Gameplay/Screen gameplay_screen";
    std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
    Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
@@ -286,7 +286,7 @@ void generate_gameplay_screen_screen_class(std::string project_name)
 
 void generate_runner_class(std::string project_name)
 {
-   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Runner runner";
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Runner runner_with_router";
    std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
    Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
@@ -317,4 +317,5 @@ int main(int argc, char **argv)
 
    return 0;
 }
+
 

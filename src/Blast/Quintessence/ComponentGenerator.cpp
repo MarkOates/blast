@@ -47,6 +47,16 @@ std::string ComponentGenerator::get_component_name()
 
 
 
+std::string ComponentGenerator::get_component_name_first_fragment()
+{
+   std::vector<std::string> tokens = Blast::StringSplitter(get_component_name(), '/').split();
+   if (tokens.empty()) throw std::runtime_error("error extracting get_component_name_first_fragment; extracted tokens appear to be empty");
+   std::string component_tail = tokens.front();
+   return component_tail;
+}
+
+
+
 std::string ComponentGenerator::get_component_name_last_fragment()
 {
    std::vector<std::string> tokens = Blast::StringSplitter(get_component_name(), '/').split();
