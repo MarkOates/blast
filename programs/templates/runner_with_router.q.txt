@@ -34,10 +34,6 @@ properties:
     init_with: nullptr
     constructor_arg: true
 
-  - name: achievements
-    type: AllegroFlare::Achievements
-    init_with: ''
-
   - name: router
     type: AllegroFlare::Routers::Standard
     init_with: ''
@@ -119,6 +115,9 @@ functions:
       - font_bin
       - model_bin
     body: |
+      // Create the resources
+      AllegroFlare::Achievements &achievements = framework->get_achievements_ref();
+
       // Create a storyboard factory
       AllegroFlare::StoryboardFactory storyboard_factory(font_bin, event_emitter);
       AllegroFlare::StoryboardPageFactory page_factory(font_bin);
@@ -130,7 +129,13 @@ functions:
       framework->set_router(&router);
 
       // TODO: Setup achievements
-      //achievements.set_achievements(...)
+      achievements.set_achievements({
+         { "stay_through_the_credits",
+            new AllegroFlare::Achievement("Stay Through the Credits", "Watch the credits"),
+            false,
+            false,
+         },
+      });
 
       // TODO: Setup intro logos screen
       intro_logos_screen.set_event_emitter(event_emitter);
