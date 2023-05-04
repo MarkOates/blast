@@ -142,24 +142,9 @@ functions:
       intro_logos_screen.set_font_bin(font_bin);
       intro_logos_screen.set_auto_advance(true);
       intro_logos_screen.initialize();
-      std::vector<AllegroFlare::Elements::StoryboardPages::Base *> pages;
-      std::vector<std::string> pages_text_ = {
-            "A Game by Mark Oates"
-         };
-
-      for (auto &page_text : pages_text_)
-      {
-         AllegroFlare::Elements::StoryboardPages::Text* advancing_text_page =
-            page_factory.create_text_page(page_text);
-         //advancing_text_page->set_top_padding(page_top_padding);
-         //advancing_text_page->set_left_padding(page_left_padding);
-         //advancing_text_page->set_right_padding(page_right_padding);
-         //advancing_text_page->set_font_name(page_text_font_name);
-         //advancing_text_page->set_font_size(page_text_font_size);
-         //advancing_text_page->set_line_height_multiplier(page_text_line_height_multiplier);
-         pages.push_back(advancing_text_page);
-      }
-      intro_logos_screen.get_storyboard_element_ref().set_pages(pages);
+      intro_logos_screen.get_storyboard_element_ref().set_pages({
+         new AllegroFlare::Elements::StoryboardPages::Image(bitmap_bin->operator[]("clubcatt.png")),
+      });
 
       // TODO: Setup intro storyboard screen
       intro_storyboard_screen.set_event_emitter(event_emitter);
@@ -172,6 +157,7 @@ functions:
          "With the help of his trusty sidekick and a band of unlikely allies, he must navigate treacherous "
             "terrain and battle fierce foes to achieve his goal."
          };
+      std::vector<AllegroFlare::Elements::StoryboardPages::Base *> pages;
       pages.clear();
       for (auto &page_text : pages_text)
       {
