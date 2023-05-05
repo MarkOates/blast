@@ -28,7 +28,6 @@ functions:
 
 
   - name: set_values_to_activated_shader
-    virtual: true
     body: |
       //float pulse_distance = (time_now - pulse_created_at);
       //set_vec3("tint", tint.r, tint.g, tint.b);
