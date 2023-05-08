@@ -148,8 +148,8 @@ functions:
       intro_logos_screen.set_background(&solid_black_background);
       intro_logos_screen.initialize();
       intro_logos_screen.get_storyboard_element_ref().set_pages({
-         new AllegroFlare::Elements::StoryboardPages::Image(bitmap_bin->operator[]("clubcatt-game-logo-01.jpg")),
-         new AllegroFlare::Elements::StoryboardPages::Image(bitmap_bin->operator[]("clubcatt-website-01.jpg")),
+         new AllegroFlare::Elements::StoryboardPages::Image(bitmap_bin->operator[]("clubcatt-game-logo-01.jpg", "fade")),
+         new AllegroFlare::Elements::StoryboardPages::Image(bitmap_bin->operator[]("clubcatt-website-01.jpg", "reveal")),
       });
 
       // TODO: Setup intro storyboard screen
