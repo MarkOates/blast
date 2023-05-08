@@ -247,6 +247,23 @@ void create_gitignore(Generator &generator)
 }
 
 
+void copy_resource_files(Generator &generator)
+{
+   std::string resource_file_folder = "/Users/markoates/Repos/blast/programs/templates/resource_files/";
+   std::string new_project_data_folder = generator.get_project_name() + "/bin/data/";
+   std::string new_project_fixtures_folder = generator.get_project_name() + "/tests/fixtures/";
+
+   std::filesystem::copy(resource_file_folder + "fonts/fa-solid-900.ttf", new_project_data_folder + "fonts/fa-solid-900.ttf");
+   std::filesystem::copy(resource_file_folder + "fonts/fa-solid-900.ttf", new_project_fixtures_folder + "fonts/fa-solid-900.ttf");
+
+   std::filesystem::copy(resource_file_folder + "fonts/Inter-Regular.ttf", new_project_data_folder + "fonts/Inter-Regular.ttf");
+   std::filesystem::copy(resource_file_folder + "fonts/Inter-Regular.ttf", new_project_fixtures_folder + "fonts/Inter-Regular.ttf");
+
+   std::filesystem::copy(resource_file_folder + "fonts/Inter-Bold.ttf", new_project_data_folder + "fonts/Inter-Bold.ttf");
+   std::filesystem::copy(resource_file_folder + "fonts/Inter-Bold.ttf", new_project_fixtures_folder + "fonts/Inter-Bold.ttf");
+}
+
+
 void create_directories(Generator &generator)
 {
    system(generator.get_command_for_make_dir().c_str());
@@ -318,6 +335,7 @@ int main(int argc, char **argv)
    create_gitignore(generator);
    create_main_file(generator);
    create_test_runner(generator);
+   copy_resource_files(generator);
    create_version_yaml(generator);
 
    generate_gameplay_screen_screen_class(project_name);
