@@ -261,6 +261,12 @@ void copy_resource_files(Generator &generator)
 
    std::filesystem::copy(resource_file_folder + "fonts/Inter-Bold.ttf", new_project_data_folder + "fonts/Inter-Bold.ttf");
    std::filesystem::copy(resource_file_folder + "fonts/Inter-Bold.ttf", new_project_fixtures_folder + "fonts/Inter-Bold.ttf");
+
+   std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-game-logo-01.jpg", new_project_data_folder + "bitmaps/clubcatt-game-logo-01.jpg");
+   std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-game-logo-01.jpg", new_project_fixtures_folder + "bitmaps/clubcatt-game-logo-01.jpg");
+
+   std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-website-01.jpg", new_project_data_folder + "bitmaps/clubcatt-website-01.jpg");
+   std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-website-01.jpg", new_project_fixtures_folder + "bitmaps/clubcatt-website-01.jpg");
 }
 
 
