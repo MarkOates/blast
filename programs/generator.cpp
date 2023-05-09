@@ -252,6 +252,7 @@ void copy_resource_files(Generator &generator)
    std::string resource_file_folder = "/Users/markoates/Repos/blast/programs/templates/resource_files/";
    std::string new_project_data_folder = generator.get_project_name() + "/bin/data/";
    std::string new_project_fixtures_folder = generator.get_project_name() + "/tests/fixtures/";
+   std::string asset_name = "";
 
    std::filesystem::copy(resource_file_folder + "fonts/fa-solid-900.ttf", new_project_data_folder + "fonts/fa-solid-900.ttf");
    std::filesystem::copy(resource_file_folder + "fonts/fa-solid-900.ttf", new_project_fixtures_folder + "fonts/fa-solid-900.ttf");
@@ -262,11 +263,23 @@ void copy_resource_files(Generator &generator)
    std::filesystem::copy(resource_file_folder + "fonts/Inter-Bold.ttf", new_project_data_folder + "fonts/Inter-Bold.ttf");
    std::filesystem::copy(resource_file_folder + "fonts/Inter-Bold.ttf", new_project_fixtures_folder + "fonts/Inter-Bold.ttf");
 
-   std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-game-logo-01.jpg", new_project_data_folder + "bitmaps/clubcatt-game-logo-01.jpg");
-   std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-game-logo-01.jpg", new_project_fixtures_folder + "bitmaps/clubcatt-game-logo-01.jpg");
+   //std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-game-logo-01.jpg", new_project_data_folder + "bitmaps/clubcatt-game-logo-01.jpg");
+   //std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-game-logo-01.jpg", new_project_fixtures_folder + "bitmaps/clubcatt-game-logo-01.jpg");
 
    std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-website-01.jpg", new_project_data_folder + "bitmaps/clubcatt-website-01.jpg");
    std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-website-01.jpg", new_project_fixtures_folder + "bitmaps/clubcatt-website-01.jpg");
+
+   asset_name = "models/centered_unit_cube-02.obj";
+   std::filesystem::copy(resource_file_folder + asset_name, new_project_data_folder + asset_name);
+   std::filesystem::copy(resource_file_folder + asset_name, new_project_fixtures_folder + asset_name);
+
+   asset_name = "bitmaps/clubcatt_cube_texture-01.png";
+   std::filesystem::copy(resource_file_folder + asset_name, new_project_data_folder + asset_name);
+   std::filesystem::copy(resource_file_folder + asset_name, new_project_fixtures_folder + asset_name);
+
+   asset_name = "bitmaps/clubcatt_cube_texture-01b.png";
+   std::filesystem::copy(resource_file_folder + asset_name, new_project_data_folder + asset_name);
+   std::filesystem::copy(resource_file_folder + asset_name, new_project_fixtures_folder + asset_name);
 }
 
 
