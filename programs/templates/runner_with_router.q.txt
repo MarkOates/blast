@@ -122,9 +122,14 @@ functions:
       // Create the resources
       AllegroFlare::Achievements &achievements = framework->get_achievements_ref();
 
-      // Create a storyboard factory
-      AllegroFlare::StoryboardFactory storyboard_factory(font_bin, event_emitter);
-      AllegroFlare::StoryboardPageFactory page_factory(font_bin);
+      // Create a storyboard factory and page factory
+      AllegroFlare::StoryboardFactory storyboard_factory;
+      storyboard_factory.set_font_bin(font_bin);
+      storyboard_factory.set_event_emitter(event_emitter);
+      AllegroFlare::StoryboardPageFactory page_factory;
+      page_factory.set_font_bin(font_bin);
+      page_factory.set_bitmap_bin(bitmap_bin);
+      page_factory.set_model_bin(model_bin);
 
       // Setup our router
       setup_router();
@@ -148,7 +153,7 @@ functions:
       intro_logos_screen.set_background(&solid_black_background);
       intro_logos_screen.initialize();
       intro_logos_screen.get_storyboard_element_ref().set_pages({
-         new AllegroFlare::Elements::StoryboardPages::Image(bitmap_bin->operator[]("clubcatt-game-logo-01.jpg"), "reveal"),
+         page_factory.create_clubcatt_logo_page(),
          new AllegroFlare::Elements::StoryboardPages::Image(bitmap_bin->operator[]("clubcatt-website-01.jpg"), "reveal"),
       });
 
