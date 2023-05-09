@@ -1104,12 +1104,13 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    // DEBUG: dump out consolidated default argument dependencies
    if (!consolidated_function_default_argument_dependencies.empty())
    {
-      std::cout << "-- default_argument_dependency_symbols are present: ";
-      for (auto &dep : consolidated_function_default_argument_dependencies)
-      {
-         std::cout << "\"" << dep << "\", ";
-      }
-      std::cout << std::endl;
+      // Output some debug info:
+      //std::cout << "-- default_argument_dependency_symbols are present: ";
+      //for (auto &dep : consolidated_function_default_argument_dependencies)
+      //{
+         //std::cout << "\"" << dep << "\", ";
+      //}
+      //std::cout << std::endl;
    }
 
 
