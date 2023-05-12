@@ -277,7 +277,11 @@ void copy_resource_files(Generator &generator)
    std::filesystem::copy(resource_file_folder + asset_name, new_project_data_folder + asset_name);
    std::filesystem::copy(resource_file_folder + asset_name, new_project_fixtures_folder + asset_name);
 
-   asset_name = "bitmaps/clubcatt_cube_texture-01b.png";
+   asset_name = "bitmaps/storyboard-1-01-1165x500.png";
+   std::filesystem::copy(resource_file_folder + asset_name, new_project_data_folder + asset_name);
+   std::filesystem::copy(resource_file_folder + asset_name, new_project_fixtures_folder + asset_name);
+
+   asset_name = "bitmaps/storyboard-2-01-1165x500.png";
    std::filesystem::copy(resource_file_folder + asset_name, new_project_data_folder + asset_name);
    std::filesystem::copy(resource_file_folder + asset_name, new_project_fixtures_folder + asset_name);
 }

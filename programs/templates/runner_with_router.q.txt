@@ -158,7 +158,7 @@ functions:
       intro_logos_screen.initialize();
       intro_logos_screen.get_storyboard_element_ref().set_pages({
          page_factory.create_clubcatt_logo_page(),
-         new AllegroFlare::Elements::StoryboardPages::Image(bitmap_bin->operator[]("clubcatt-website-01.jpg"), "reveal"),
+         page_factory.create_image_page(bitmap_bin->operator[]("clubcatt-website-01.jpg")),
       });
 
       // TODO: Setup intro storyboard screen
@@ -167,27 +167,21 @@ functions:
       intro_storyboard_screen.set_auto_advance(true);
       intro_storyboard_screen.set_background(&solid_black_background);
       intro_storyboard_screen.initialize();
-      std::vector<std::string> pages_text = {
-         "Once upon a time, in a magical kingdom ruled by a wise and just queen, a young hero sets out on a "
-            "journey to prove himself and save his people from a terrible curse.",
-         "With the help of his trusty sidekick and a band of unlikely allies, he must navigate treacherous "
-            "terrain and battle fierce foes to achieve his goal."
-         };
-      std::vector<AllegroFlare::Elements::StoryboardPages::Base *> pages;
-      pages.clear();
-      for (auto &page_text : pages_text)
-      {
-         AllegroFlare::Elements::StoryboardPages::AdvancingText* advancing_text_page =
-            page_factory.create_advancing_text_page(page_text);
-         //advancing_text_page->set_top_padding(page_top_padding);
-         //advancing_text_page->set_left_padding(page_left_padding);
-         //advancing_text_page->set_right_padding(page_right_padding);
-         //advancing_text_page->set_font_name(page_text_font_name);
-         //advancing_text_page->set_font_size(page_text_font_size);
-         //advancing_text_page->set_line_height_multiplier(page_text_line_height_multiplier);
-         pages.push_back(advancing_text_page);
-      }
-      intro_storyboard_screen.get_storyboard_element_ref().set_pages(pages);
+      intro_storyboard_screen.get_storyboard_element_ref().set_pages({
+         page_factory.create_image_with_advancing_text_page(
+            "storyboard-1-01-1165x500.png",
+            "Once upon a time, in a magical kingdom ruled by a wise and just queen, a young hero sets out on a "
+               "journey to prove himself and save his people from a terrible curse."
+         ),
+         page_factory.create_image_with_advancing_text_page(
+            "storyboard-2-01-1165x500.png",
+            "With the help of his trusty sidekick and a band of unlikely allies, he must navigate treacherous "
+               "terrain and battle fierce foes."
+         ),
+         page_factory.create_advancing_text_page(
+           "And achieve his goal to save the kingdom."
+         ),
+      });
 
       // TODO: Setup title screen
       title_screen.set_event_emitter(event_emitter);
@@ -231,26 +225,16 @@ functions:
       new_game_intro_storyboard_screen.set_font_bin(font_bin);
       new_game_intro_storyboard_screen.set_background(&solid_black_background);
       new_game_intro_storyboard_screen.initialize();
-      std::vector<std::string> __pages_text = {
+      new_game_intro_storyboard_screen.get_storyboard_element_ref().set_pages({
+          page_factory.create_advancing_text_page(
             "In a land beset by darkness, a young hero embarks on a perilous journey to retrieve a powerful "
                "artifact that can restore light to the kingdom.",
+          ),
+          page_factory.create_advancing_text_page(
             "With nothing but a trusty sword and his wits to guide him, he sets out to face whatever dangers "
                "lie ahead."
-         };
-      pages.clear();
-      for (auto &page_text : __pages_text)
-      {
-         AllegroFlare::Elements::StoryboardPages::AdvancingText* advancing_text_page =
-            page_factory.create_advancing_text_page(page_text);
-         //advancing_text_page->set_top_padding(page_top_padding);
-         //advancing_text_page->set_left_padding(page_left_padding);
-         //advancing_text_page->set_right_padding(page_right_padding);
-         //advancing_text_page->set_font_name(page_text_font_name);
-         //advancing_text_page->set_font_size(page_text_font_size);
-         //advancing_text_page->set_line_height_multiplier(page_text_line_height_multiplier);
-         pages.push_back(advancing_text_page);
-      }
-      new_game_intro_storyboard_screen.get_storyboard_element_ref().set_pages(pages);
+          ),
+      });
 
       // TODO: Setup level select screen
       level_select_screen.set_event_emitter(event_emitter);
