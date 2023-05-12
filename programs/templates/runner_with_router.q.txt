@@ -125,6 +125,7 @@ functions:
     body: |
       // Create the resources
       AllegroFlare::Achievements &achievements = framework->get_achievements_ref();
+      AllegroFlare::AudioController &audio_controller = framework->get_audio_controller_ref();
 
       // Create a storyboard factory and page factory
       AllegroFlare::StoryboardFactory storyboard_factory;
@@ -279,6 +280,20 @@ functions:
       primary_gameplay_screen.set_font_bin(font_bin);
       primary_gameplay_screen.set_model_bin(model_bin);
       primary_gameplay_screen.initialize();
+
+      // TODO: Load up our sound effects
+      audio_controller.set_and_load_sound_effect_elements({
+         // { "menu_move", { "menu_move_tink-02.ogg", false, "restart" } }, // TODO: Throw on an unknown replay type
+      });
+
+      // TODO: Load up our music tracks
+      audio_controller.set_and_load_music_track_elements({
+         // An example of how to load a music track:
+         //{ "intro_music", { "wanderer-01.ogg", true, "ignore" } },
+      });
+
+      // An example of how to play a music track:
+      // event_emitter->emit_play_music_track_event("intro_music");
 
       return;
     body_dependency_symbols:
