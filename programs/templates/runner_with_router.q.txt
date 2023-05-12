@@ -206,7 +206,7 @@ functions:
          { "Quit",           "quit" },
       });
       title_screen.set_font_bin(font_bin);
-      std::string copyright_text = "Copyright 2023 - CLUBCATT Games - Version " + release_info.get_version();
+      std::string copyright_text = "© 2023 CLUBCATT Games         clubcatt.com         version " + release_info.get_version();
       title_screen.set_copyright_text(copyright_text);
       title_screen.set_copyright_font_size(-18);
       title_screen.set_copyright_text_color(AllegroFlare::Color(0xefefff, 0.2).to_al());
