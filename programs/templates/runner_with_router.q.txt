@@ -90,6 +90,10 @@ properties:
     type: AllegroFlare::Elements::Backgrounds::ClearToColor
     init_with: ALLEGRO_COLOR{0, 0, 0, 1}
 
+  - name: release_info
+    type: ReleaseInfo
+    init_with: '{}'
+
   - name: initialized
     type: bool
     init_with: false
@@ -202,6 +206,10 @@ functions:
          { "Quit",           "quit" },
       });
       title_screen.set_font_bin(font_bin);
+      std::string copyright_text = "Copyright 2023 - CLUBCATT Games - Version " + release_info.get_version();
+      title_screen.set_copyright_text(copyright_text);
+      title_screen.set_copyright_font_size(-18);
+      title_screen.set_copyright_text_color(AllegroFlare::Color(0xefefff, 0.2).to_al());
       title_screen.set_background(&solid_black_background);
       //title_screen.initialize(); // NOTE: Initialization is not necessary for this screen
 
@@ -293,6 +301,7 @@ functions:
       return;
     body_dependency_symbols:
       - AllegroFlare::StoryboardFactory
+      - AllegroFlare::Color
 
 
   - name: setup_router
@@ -595,7 +604,10 @@ dependencies:
     headers: [ AllegroFlare/RouteEventDatas/StartLevel.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Screen.hpp ]
+  - symbol: AllegroFlare::Color
+    headers: [ AllegroFlare/Color.hpp ]
   - symbol: AllegroFlare::Elements::Backgrounds::ClearToColor
     headers: [ AllegroFlare/Elements/Backgrounds/ClearToColor.hpp ]
-
+  - symbol: ReleaseInfo
+    headers: [ ReleaseInfo.hpp ]
 
