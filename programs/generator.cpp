@@ -1,6 +1,7 @@
 #include <allegro5/allegro.h> // for compatibility with union/Makefile
 
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
