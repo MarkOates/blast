@@ -901,6 +901,26 @@ bool SourceReleaseBuilder::generate_source_release()
 
 
 
+   // Remove select, specific files via a black-list
+
+   std::vector<std::string> blacklist_files = {
+      destination_directory + "/include/AllegroFlare/DialogTree/YAMLLoader.hpp",
+      destination_directory + "/src/AllegroFlare/DialogTree/YAMLLoader.cpp",
+
+      destination_directory + "/include/AllegroFlare/AI/PromptTemplateYAMLLoader.hpp",
+      destination_directory + "/src/AllegroFlare/AI/PromptTemplateYAMLLoader.cpp",
+
+      destination_directory + "/include/AllegroFlare/YAMLValidator.hpp",
+      destination_directory + "/src/AllegroFlare/YAMLValidator.cpp",
+   };
+
+   for (auto &blacklist_file : blacklist_files)
+   {
+      std::string item_to_remove = blacklist_file;
+      recursively_remove_folder_with_prompt(item_to_remove);
+   }
+
+
 
    if (get_remove_AllegroFlare_Network_from_allegro_flare_copy())
    {
