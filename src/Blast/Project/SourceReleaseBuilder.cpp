@@ -247,7 +247,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
    std::string binary_name = project_name; //"FadeToWhite"; // project_name
 
    bool include_opengl = get_link_with_opengl();
-   bool include_yaml_cpp = true; // For now, source builders will need yaml-cpp installed on their system
+   bool include_yaml_cpp = false;
 
    MAKEFILE_CONTENT
                     //<< "SRC_FILES := $(shell find src -type f)"
