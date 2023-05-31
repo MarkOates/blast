@@ -142,6 +142,11 @@ int main(int argc, char **argv)
 
 
 
+std::string README_FILE_CONTENT_TEMPLATE = R"END(# [[PROJECT_NAME]]
+)END";
+
+
+
 
 void ___replace(std::string& str, std::string from, std::string to)
 {
@@ -225,12 +230,22 @@ void create_version_yaml(Generator &generator)
 }
 
 
+void create_readme_file(Generator &generator)
+{
+   std::ofstream outfile5;
+   outfile5.open(generator.get_project_name() + "/README.md", std::ios::binary);
+   std::string main_file_content = README_FILE_CONTENT_TEMPLATE;
+   ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
+   outfile5 << main_file_content;
+   outfile5.close();
+}
+
 
 void create_main_file(Generator &generator)
 {
    std::ofstream outfile5;
    outfile5.open(generator.get_project_name() + "/programs/main.cpp", std::ios::binary);
-   std::string main_file_content = main_file_content_template;
+   std::string main_file_content = README_FILE_CONTENT_TEMPLATE;
    ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
    ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    outfile5 << main_file_content;
@@ -366,6 +381,7 @@ int main(int argc, char **argv)
    create_makefile(generator);
    create_gitignore(generator);
    create_main_file(generator);
+   create_readme_file(generator);
    create_test_runner(generator);
    copy_resource_files(generator);
    create_version_yaml(generator);
