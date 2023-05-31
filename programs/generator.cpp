@@ -126,14 +126,14 @@ int main(int argc, char **argv)
 {
    std::vector<std::string> command_line_args;
    for (int i=1; i<argc; i++) command_line_args.push_back(argv[i]);
-   bool contains_production_flag = std::count(command_line_args.begin(), command_line_args.end(), "--production");
+   bool contains_development_flag = std::count(command_line_args.begin(), command_line_args.end(), "--development");
 
    // TODO: improve this to return an error when an unrecognized flag is present
 
    std::string deployment_environment =
-         contains_production_flag
-         ? AllegroFlare::DeploymentEnvironment::ENVIRONMENT_PRODUCTION
-         : AllegroFlare::DeploymentEnvironment::ENVIRONMENT_DEVELOPMENT;
+         contains_development_flag
+         ? AllegroFlare::DeploymentEnvironment::ENVIRONMENT_DEVELOPMENT
+         : AllegroFlare::DeploymentEnvironment::ENVIRONMENT_PRODUCTION;
 
    [[PROJECT_NAME]]::[[PROGRAM_RUNNER_CLASS_NAME]]().run(deployment_environment);
    return 0;
