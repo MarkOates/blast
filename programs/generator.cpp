@@ -245,7 +245,7 @@ void create_main_file(Generator &generator)
 {
    std::ofstream outfile5;
    outfile5.open(generator.get_project_name() + "/programs/main.cpp", std::ios::binary);
-   std::string main_file_content = README_FILE_CONTENT_TEMPLATE;
+   std::string main_file_content = main_file_content_template;
    ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
    ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
    outfile5 << main_file_content;
