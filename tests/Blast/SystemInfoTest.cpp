@@ -3,6 +3,7 @@
 #include <gmock/gmock.h>
 
 #include <Blast/SystemInfo.hpp>
+#include <regex>
 #include <thread>
 
 
@@ -80,13 +81,29 @@ TEST(Blast_SystemInfoTest, get_version__will_return_a_string_representing_the_sy
 TEST(Blast_SystemInfoTest, get_release__will_return_a_string_representing_the_system)
 {
    Blast::SystemInfo system_info;
+   std::string actual_release = system_info.get_release();
+
+#ifdef _WIN32
    std::vector<std::string> expected_possible_releases = {
       "10.0 (build 19044)",
-      "22.3.0", // Mark's Mac Laptop
-      "21.6.0", // Mark's MacMini
    };
-   std::string actual_release = system_info.get_release();
    EXPECT_THAT(expected_possible_releases, testing::Contains(actual_release));
+#elif __APPLE__ || __MACH__
+   std::string non_zero_starting_digit = "(?!0\\d)\\d+";
+   // NOTE: This regex will match version strings produced on MacOS, values like
+   // [ "22.4.0", "22.3.0", "22.5.0", "21.6.0" ]
+   std::regex release_regex(
+           "^"
+         + non_zero_starting_digit + "\."
+         + non_zero_starting_digit + "\."
+         + non_zero_starting_digit
+         + "$"
+      );
+   bool is_match = std::regex_search(actual_release, release_regex);
+   EXPECT_TRUE(is_match);
+#else
+   throw std::runtime_error("There is no test data for this platform");
+#endif
 }
 
 
