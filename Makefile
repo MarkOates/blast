@@ -102,6 +102,8 @@ else
 	ERROR_IF_ACCIDENTAL_OVERLOAD=-Werror=overloaded-virtual
 	ERROR_IF_VIRTUAL_NOT_MARKED_OVERRIDE=-Werror=inconsistent-missing-override
 	ERROR_IF_MACRO_REDEFINED=-Werror=macro-redefined
+	#TODO: Activate this ERROR_IF_UNKNOWN_ESCAPE_SEQUENCE error:
+	#ERROR_IF_UNKNOWN_ESCAPE_SEQUENCE=-Werror=unknown-escape-sequence
 
   #NOTE: -fsanitize=address is added to this list thought it is in a different category of flags
 	DISABLE_UNUSED_WARNINGS_FLAG=-Wno-unused-variable -Wno-unused-private-field -Wno-unused-function
