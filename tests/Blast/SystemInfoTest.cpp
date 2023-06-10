@@ -65,21 +65,25 @@ TEST(Blast_SystemInfoTest, get_hostname__will_return_a_string_representing_the_s
 TEST(Blast_SystemInfoTest, get_version__will_return_a_string_representing_the_system)
 {
    Blast::SystemInfo system_info;
+   std::string actual_version = system_info.get_version();
+
+// TODO: Update the WIN32 expansion of this test to work in the same way as the MacOS version
+#ifdef _WIN32
+   Blast::SystemInfo system_info;
    std::vector<std::string> expected_possible_versions = {
       // Mark's Windows Laptop:
       "10.0",
-      // Mark's Mac Laptop:
-      "Darwin Kernel Version 22.3.0: Mon Jan 30 20:39:35 PST 2023; root:xnu-8792.81.3~2/RELEASE_ARM64_T8103",
-      "Darwin Kernel Version 22.5.0: Mon Apr 24 20:53:44 PDT 2023; root:xnu-8796.121.2~5/RELEASE_ARM64_T8103",
-      // Mark's MacMini:
-      "Darwin Kernel Version 21.6.0: Wed Aug 10 14:25:27 PDT 2022; root:xnu-8020.141.5~2/RELEASE_X86_64",
    };
-   std::string actual_version = system_info.get_version();
    EXPECT_THAT(expected_possible_versions, testing::Contains(actual_version));
-
-#ifdef _WIN32
-   // TODO: This implementation
 #elif __APPLE__ || __MACH__
+   // NOTE: The regex below will match MacOS version strings, some examples: [
+   //    //Mark's Laptop:
+   //   "Darwin Kernel Version 22.3.0: Mon Jan 30 20:39:35 PST 2023; root:xnu-8792.81.3~2/RELEASE_ARM64_T8103",
+   //   "Darwin Kernel Version 22.5.0: Mon Apr 24 20:53:44 PDT 2023; root:xnu-8796.121.2~5/RELEASE_ARM64_T8103",
+   //   // Mark's MacMini:
+   //   "Darwin Kernel Version 21.6.0: Wed Aug 10 14:25:27 PDT 2022; root:xnu-8020.141.5~2/RELEASE_X86_64",
+   //]
+
    std::string regex_pattern = "^Darwin Kernel Version \\d+\\.\\d+\\.\\d+: "
       "(Mon|Tue|Wed|Thu|Fri|Sat|Sun) "
       "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \\d{2} \\d{2}:\\d{2}:\\d{2} (PST|PDT) \\d{4}; "
