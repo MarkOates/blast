@@ -134,6 +134,8 @@ int main(int argc, char **argv)
       { "screen", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "screen.q.txt"), file_get_contents(TEMPLATES_PATH + "screen_test.txt")) },
       { "runner_with_router", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "runner_with_router.q.txt"), file_get_contents(TEMPLATES_PATH + "runner_with_router_test.txt")) },
       { "gameplay_screen", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "gameplay_screen.q.txt"), file_get_contents(TEMPLATES_PATH + "gameplay_screen_test.txt")) },
+      { "gameplay_level", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "gameplay_level.q.txt"), file_get_contents(TEMPLATES_PATH + "gameplay_level_test.txt")) },
+      { "gameplay_level_factory", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "gameplay_level_factory.q.txt"), file_get_contents(TEMPLATES_PATH + "gameplay_level_factory_test.txt")) },
       { "base", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "base.q.txt"), file_get_contents(TEMPLATES_PATH + "base_test.txt")) },
       { "allegro_flare_shader", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "allegro_flare_shader.q.txt"), file_get_contents(TEMPLATES_PATH + "allegro_flare_shader_test.txt")) },
       { "derived", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "derived.q.txt"), file_get_contents(TEMPLATES_PATH + "derived_test.txt")) },

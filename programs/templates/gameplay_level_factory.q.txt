@@ -2,22 +2,22 @@ functions:
 
 
   - name: load_level_by_identifier
-    type: [[COMPONENT_CLASS_NAME]]::Gameplay::Level*
+    type: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level*
     parameters:
       - name: level_identifier
         type: std::string
         default_argument: '"[unset-level_identifier]"'
     body: |
-      [[COMPONENT_CLASS_NAME]]::Gameplay::Level *result = new [[COMPONENT_CLASS_NAME]]::Gameplay::Level;
+      [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level *result = new [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level;
       return result;
     body_dependency_symbols:
-     - [[COMPONENT_CLASS_NAME]]::Gameplay::Level
+     - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
 
 
 dependencies:
 
 
-  - symbol: [[COMPONENT_CLASS_NAME]]::Gameplay::Level
-    headers: [ [[COMPONENT_CLASS_NAME]]/Gameplay/Level.hpp ]
+  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
+    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Level.hpp ]
 
 
