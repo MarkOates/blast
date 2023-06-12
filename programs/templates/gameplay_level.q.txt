@@ -1,0 +1,10 @@
+properties:
+
+
+  - name: title
+    type: std::string
+    init_with: '"[unset-title]"'
+    getter: true
+    setter: true
+
+

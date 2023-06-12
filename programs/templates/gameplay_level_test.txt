@@ -1,0 +1,12 @@
+
+#include <gtest/gtest.h>
+
+#include <[[COMPONENT_CLASS_NAME]]/Gameplay/Level.hpp>
+
+
+TEST([[COMPONENT_CLASS_NAME]]_Gameplay_LevelTest, can_be_created_without_blowing_up)
+{
+   [[COMPONENT_CLASS_NAME]]::Gameplay::Level level;
+}
+
+

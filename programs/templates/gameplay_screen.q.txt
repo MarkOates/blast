@@ -34,7 +34,7 @@ properties:
     init_with: '"[unset-current_level]"'
 
   - name: current_level
-    type: void*
+    type: [[COMPONENT_CLASS_NAME]]::Gameplay::Level*
     init_with: nullptr
 
   - name: on_finished_callback_func
@@ -114,10 +114,25 @@ functions:
         type: std::string
         default_argument: '"[unset-level_identifier]"'
     body: |
-      current_level_identifier = level_identifier;
-      if (current_level) delete (int*)(current_level);
-      current_level = (void*)(new int(3));
+      // Destroy the current level
+      if (current_level)
+      {
+         // TODO: Shutdown current level
+         delete current_level;
+      }
+
+      // Load the new level
+      [[COMPONENT_CLASS_NAME]]::Gameplay::LevelFactory level_factory;
+      [[COMPONENT_CLASS_NAME]]::Gameplay::Level *loaded_level = level_factory.load_level_by_identifier(level_identifier);
+      if (loaded_level)
+      {
+         current_level_identifier = level_identifier;
+         current_level = loaded_level;
+      }
       return;
+    body_dependency_symbols:
+     - [[COMPONENT_CLASS_NAME]]::Gameplay::Level
+     - [[COMPONENT_CLASS_NAME]]::Gameplay::LevelFactory
 
 
   - name: initialize
@@ -264,5 +279,9 @@ dependencies:
     headers: [ AllegroFlare/VirtualControllers/Base.hpp ]
   - symbol: [[COMPONENT_CLASS_NAME]]
     headers: [ [[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]].hpp ]
+  - symbol: [[COMPONENT_CLASS_NAME]]::Gameplay::LevelFactory
+    headers: [ [[COMPONENT_CLASS_NAME]]/Gameplay/LevelFactory.hpp ]
+  - symbol: [[COMPONENT_CLASS_NAME]]::Gameplay::Level
+    headers: [ [[COMPONENT_CLASS_NAME]]/Gameplay/Level.hpp ]
 
 
