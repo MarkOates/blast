@@ -385,6 +385,14 @@ void generate_runner_class(std::string project_name)
 }
 
 
+bool project_folder_exists(std::string project_name)
+{
+   std::string folder_path = "./" + project_name;
+   bool exists = (std::filesystem::exists(folder_path) && std::filesystem::is_directory(folder_path));
+   return exists;
+}
+
+
 int main(int argc, char **argv)
 {
    for (int i=0; i<argc; i++) args.push_back(argv[i]);
@@ -395,6 +403,13 @@ int main(int argc, char **argv)
    std::string project_name = generator.get_project_name();
    // TODO: sanitize the project_name (it's passed in to shell commands)
 
+   // Guard against overwriting an existing folder
+   if (project_folder_exists(project_name))
+   {
+      throw std::runtime_error("This project folder already exists.");
+   }
+
+   // Generate the files
    create_directories(generator);
    create_makefile(generator);
    create_gitignore(generator);
