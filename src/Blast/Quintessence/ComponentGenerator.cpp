@@ -373,8 +373,8 @@ std::string ComponentGenerator::infer_comparison_operand_class_name()
    {
       Blast::Errors::throw_error(
          "Blast::Quintessence::ComponentGenerator::infer_comparison_operand_class_name",
-         "The component name \"" + component_name + "\" does not appear to be a valid comparison class, and as such "
-            "a comparison operand class name cannot be inferred."
+         "The component name \"" + component_name + "\" does not appear to be a valid comparison class (contains \"" +
+            "/Testing/Comparison/\"), and as such a comparison operand class name cannot be inferred."
       );
    }
 

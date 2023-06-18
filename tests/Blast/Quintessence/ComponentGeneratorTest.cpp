@@ -4,6 +4,8 @@
 
 #include <Blast/Quintessence/ComponentGenerator.hpp>
 
+#include <Blast/Testing/ErrorAssertions.hpp>
+
 
 TEST(Blast_Quintessence_ComponentGenerator, can_be_created_without_blowing_up)
 {
@@ -142,6 +144,22 @@ TEST(Blast_Quintessence_ComponentGenerator,
    ComponentGenerator generator("Baz/Testing/Comparison/Baz/BarBasilBonk");
    std::string expected_comparison_operand_class_name = "Baz/BarBasilBonk";
    ASSERT_EQ(expected_comparison_operand_class_name, generator.infer_comparison_operand_class_name());
+}
+
+
+TEST(Blast_Quintessence_ComponentGenerator,
+   infer_comparison_operand_class_name__with_an_invalid_class_name__will_throw_an_error)
+{
+   ComponentGenerator generator("Baz/Testing/Baz/BarBasilBonk");
+   std::string expected_comparison_operand_class_name = "Baz/BarBasilBonk";
+   std::string expected_error_message = "[Blast::Quintessence::ComponentGenerator::infer_comparison_operand_class_name]"
+      " error: The component name \"Baz/Testing/Baz/BarBasilBonk\" does not appear to be a valid comparison class "
+      "(contains \"/Testing/Comparison/\"), and as such a comparison operand class name cannot be inferred.";
+   EXPECT_THROW_WITH_MESSAGE(
+      generator.infer_comparison_operand_class_name(),
+      std::runtime_error,
+      expected_error_message
+   );
 }
 
 
