@@ -2,10 +2,12 @@
 
 
 #include <Blast/Quintessence/ComponentGenerator.hpp>
+
 #include <Blast/CamelCaseToUnderscoreConverter.hpp>
 #include <Blast/CamelCaseToConstantConverter.hpp>
 #include <Blast/StringSplitter.hpp>
 #include <Blast/StringJoiner.hpp>
+#include <Blast/Errors.hpp>
 
 
 #include <sstream>
@@ -345,8 +347,9 @@ std::string ComponentGenerator::get_component_tail_all_caps_constant()
 
 bool ComponentGenerator::has_valid_comparison_operand_class_name()
 {
-   // TODO:: Add functionality
-   // TODO: Add tests
+   // TODO: Add tests for this function
+   std::vector<std::string> validation_error_messages = __validate_component_name(component_name);
+   if (validation_error_messages.empty()) return true;
    return false;
 }
 
@@ -354,9 +357,28 @@ bool ComponentGenerator::has_valid_comparison_operand_class_name()
 
 std::string ComponentGenerator::infer_comparison_operand_class_name()
 {
-   // TODO: Add functionality
    // TODO: Add tests
-   return "";
+   bool is_valid = has_valid_comparison_operand_class_name();
+   if (!is_valid)
+   {
+      Blast::Errors::throw_error(
+         "Blast::Quintessence::ComponentGenerator::infer_comparison_operand_class_name",
+         "The component name \"" + component_name + "\" does not appear to be a valid component name."
+      );
+   }
+
+   // TODO: Find a better name for this variable
+   std::pair<std::string, std::string> front_and_back_strings = ___extract_strings(component_name);
+   if (front_and_back_strings.first == "" && front_and_back_strings.second == "")
+   {
+      Blast::Errors::throw_error(
+         "Blast::Quintessence::ComponentGenerator::infer_comparison_operand_class_name",
+         "The component name \"" + component_name + "\" does not appear to be a valid comparison class, and as such "
+            "a comparison operand class name cannot be inferred."
+      );
+   }
+
+   return front_and_back_strings.second;
 }
 
 

@@ -142,3 +142,12 @@ TEST(Blast_Quintessence_ComponentGenerator,
 }
 
 
+TEST(Blast_Quintessence_ComponentGenerator,
+   infer_comparison_operand_class_name__will_return_the_name_of_the_comparison_operator)
+{
+   ComponentGenerator generator("Baz/Testing/Comparison/Baz/BarBasilBonk");
+   std::string expected_comparison_operand_class_name = "Baz/BarBasilBonk";
+   ASSERT_EQ(expected_comparison_operand_class_name, generator.infer_comparison_operand_class_name());
+}
+
+
