@@ -34,6 +34,79 @@ static void ___replace(std::string& str, std::string from, std::string to)
 
 
 
+#include <iostream>
+#include <string>
+
+static std::pair<std::string, std::string> ___extract_strings(const std::string& inputString)
+{
+    std::string searchString = "/Testing/Comparison/";
+
+    // Find the position of the searchString in the inputString
+    size_t foundPos = inputString.find(searchString);
+
+    if (foundPos == std::string::npos) {
+        // searchString not found in inputString
+        return std::make_pair("", "");
+    }
+
+    // Calculate the position of the string preceding searchString
+    size_t prefixStart = foundPos;
+    size_t prefixLength = searchString.length();
+    size_t prefixEnd = prefixStart;
+
+    // Calculate the position of the string following searchString
+    size_t suffixStart = foundPos + prefixLength;
+    size_t suffixEnd = inputString.length() - 1;
+
+    // Extract the strings
+    std::string prefix = inputString.substr(prefixStart, prefixEnd);
+    std::string suffix = inputString.substr(suffixStart, suffixEnd);
+
+    return std::make_pair(prefix, suffix);
+}
+
+
+
+#include <regex>
+
+std::vector<std::string> __validate_component_name(const std::string& inputString)
+{
+   // TODO: Move this class to a Blast/StringFormatValidator
+   // TODO: Include validation that each token does not start with a number character
+
+   std::vector<std::string> error_messages = {};
+
+   // Check if the string contains only allowed characters
+   std::regex allowedCharsRegex("^[a-zA-Z0-9_/]+$");
+   if (!std::regex_match(inputString, allowedCharsRegex))
+   {
+      error_messages.push_back("cannot contain invalid characters");
+   }
+
+   // Check if the string starts with a number
+   if (isdigit(inputString[0]))
+   {
+      error_messages.push_back("cannot start with a number");
+   }
+
+   // Check if the string starts or ends with the '/' character
+   if (inputString.front() == '/' || inputString.back() == '/')
+   {
+      error_messages.push_back("cannot start or end with sashes");
+   }
+
+   // Check if the string has successive '/' characters
+   std::regex successiveSlashRegex("//");
+   if (std::regex_search(inputString, successiveSlashRegex))
+   {
+      error_messages.push_back("cannot contain successive sashes");
+   }
+
+   return error_messages;
+}
+
+
+
 ComponentGenerator::ComponentGenerator(std::string component_name)
    : component_name(component_name)
 {}
