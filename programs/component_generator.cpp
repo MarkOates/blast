@@ -227,13 +227,29 @@ int main(int argc, char **argv)
 
    if (template_set->requires_valid_comparison_operand_class_name)
    {
+      // TODO: Check for template names like COMPARISON_OPERAND_CLASS_HEADER_INCLUDE_FILE_PATH in template, but where the template did not have
+      // the requires_valid_comparison_operand_class_name flag set.
+
       if (!generator.has_valid_comparison_operand_class_name())
       {
-         throw std::runtime_error("bin/programs/component_generator: error: This template requires a valid comparison class name.");
+         throw std::runtime_error("bin/programs/component_generator: error: This template requires a valid comparison class name "
+                                  "in order to derive the operand class name.");
       }
 
+      std::string comparison_operand_component_name = generator.infer_comparison_operand_class_name();
+      ComponentGenerator comparison_operand_class_generator(comparison_operand_component_name);
+
+      // TODO: Use this technique instead of multiple push_back operations
+      //std::vector<std::pair<std::string, std::string>> additional_template_specific_template_var_and_replacement_set = {
+         //std::pair<std::string, std::string>("[[COMPARISON_OPERAND_CLASS_HEADER_INCLUDE_FILE_PATH]]", comparison_operand_class_generator.get_header_filename()),
+         //std::pair<std::string, std::string>("[[COMPARISON_OPERAND_CLASS_NAME_UP_TO_LAST_FRAGMENT]]", comparison_operand_class_generator.get_class_name_up_to_last_fragment()),
+      //};
+
       template_var_and_replacement_set.push_back(
-         std::pair<std::string, std::string>("[[INFERRED_COMPARISON_OPERAND_CLASS_NAME]]", generator.infer_comparison_operand_class_name())
+         std::pair<std::string, std::string>("[[COMPARISON_OPERAND_CLASS_HEADER_INCLUDE_FILE_PATH]]", comparison_operand_class_generator.get_header_filename())
+      );
+      template_var_and_replacement_set.push_back(
+         std::pair<std::string, std::string>("[[COMPARISON_OPERAND_CLASS_NAME_UP_TO_LAST_FRAGMENT]]", comparison_operand_class_generator.get_class_name_up_to_last_fragment())
       );
    }
 
