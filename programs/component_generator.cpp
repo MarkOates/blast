@@ -50,8 +50,13 @@ class TemplateSetBase
 {
 public:
    std::string type;
+   bool requires_valid_comparison_operand_class_name;
    static const std::string TYPE;
-   TemplateSetBase(std::string type=TYPE) : type(type) {}
+
+   TemplateSetBase(std::string type=TYPE)
+      : type(type)
+      , requires_valid_comparison_operand_class_name(false)
+   {}
    virtual ~TemplateSetBase() {}
    bool is_type(std::string type) { return this->type == type; }
 };
@@ -144,6 +149,9 @@ int main(int argc, char **argv)
       { "yaml_parser", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "yaml_parser.q.txt"), file_get_contents(TEMPLATES_PATH + "yaml_parser_test.txt")) },
    };
 
+   dictionary["comparison"]->requires_valid_comparison_operand_class_name = true;
+
+
    std::string dictionary_identifier_to_use = "standard_component";
 
    // parse the args into args
@@ -213,9 +221,22 @@ int main(int argc, char **argv)
 
 
 
-
    TemplateSetBase *template_set = dictionary[dictionary_identifier_to_use];
    std::map<std::string, std::pair<std::string, std::ofstream *>> outfiles;
+
+
+   if (template_set->requires_valid_comparison_operand_class_name)
+   {
+      if (!generator.has_valid_comparison_operand_class_name())
+      {
+         throw std::runtime_error("bin/programs/component_generator: error: This template requires a valid comparison class name.");
+      }
+
+      template_var_and_replacement_set.push_back(
+         std::pair<std::string, std::string>("[[INFERRED_COMPARISON_OPERAND_CLASS_NAME]]", generator.infer_comparison_operand_class_name())
+      );
+   }
+
 
    if (!template_set)
    {
