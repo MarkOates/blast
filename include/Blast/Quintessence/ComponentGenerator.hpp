@@ -39,6 +39,8 @@ public:
    static std::string build_command_to_make_parent_directories_for(std::string path_with_filename);
    std::string get_component_tail_snakecase();
    std::string get_component_tail_all_caps_constant();
+   bool has_valid_comparison_operand_class_name();
+   std::string infer_comparison_operand_class_name();
 
    bool generate();
 };

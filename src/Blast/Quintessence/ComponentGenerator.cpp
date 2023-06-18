@@ -270,6 +270,24 @@ std::string ComponentGenerator::get_component_tail_all_caps_constant()
 
 
 
+bool ComponentGenerator::has_valid_comparison_operand_class_name()
+{
+   // TODO:: Add functionality
+   // TODO: Add tests
+   return false;
+}
+
+
+
+std::string ComponentGenerator::infer_comparison_operand_class_name()
+{
+   // TODO: Add functionality
+   // TODO: Add tests
+   return "";
+}
+
+
+
 bool ComponentGenerator::generate()
 {
    return false;
