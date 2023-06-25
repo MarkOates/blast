@@ -62,3 +62,20 @@ TEST(Blast_YAMLValidatorTest,
 }
 
 
+TEST(Blast_YAMLValidatorTest,
+   extract_sequence_as_string_array__will_return_the_sequence_as_a_vector_of_strings)
+{
+   YAML::Node node = YAML::Load("[foo, bar, baz]");
+   // TODO: This tests
+   std::vector<std::string> expected_extracted_data = {
+      "foo",
+      "bar",
+      "baz",
+   };
+   std::vector<std::string> actual_extracted_data =
+      Blast::YAMLValidator::extract_sequence_as_string_array(node);
+
+   EXPECT_EQ(expected_extracted_data, actual_extracted_data);
+}
+
+
