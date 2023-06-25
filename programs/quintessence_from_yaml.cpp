@@ -80,16 +80,7 @@ YAML::Node fetch_node(YAML::Node &node, std::string key, YAML::NodeType::value e
 
 std::vector<std::string> extract_sequence_as_string_array(YAML::Node &source)
 {
-   std::string this_func_name = "extract_sequence_as_string_array";
-   std::vector<std::string> result;
-
-   for (YAML::const_iterator it=source.begin(); it!=source.end(); ++it)
-   {
-      validate(it->IsScalar(), this_func_name, "Unexpected sequence element, expected to be of a YAML Scalar.");
-      result.push_back(it->as<std::string>());
-   }
-
-   return result;
+   return Blast::YAMLValidator::extract_sequence_as_string_array(source);
 }
 
 
