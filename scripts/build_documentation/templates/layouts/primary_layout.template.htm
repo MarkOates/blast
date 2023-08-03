@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<head>
+<title>[page_title] • AllegroFlare Game Programming Docs</title>
+<style>
+*
+{
+  font-family: 'Arial';
+  padding: 0px 0px;
+  margin: 0px 0px;
+}
+#primary_logo
+{
+  width: 80px;
+  float: left;
+}
+#logo_text
+{
+  padding-top: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+#main_nav ul
+{
+  list-style: none;
+}
+#main_nav ul li
+{
+  display: inline-block;
+  padding: 10px;
+}
+#main_nav ul li a
+{
+  color: white;
+}
+
+#components_index_list ul
+{
+  padding: 20px;
+  margin-bottom: 10px;
+}
+html
+{
+}
+h1, h2, h3, h4, h5, p
+{
+  margin-bottom: 20px;
+}
+table td
+{
+  padding: 3px 20px;
+}
+.property
+{
+  color: blue;
+}
+.private_property
+{
+  color: lightblue;
+}
+.method
+{
+  color: red;
+}
+.private_method
+{
+  color: pink;
+}
+.dependency
+{
+  color: green;
+}
+
+.component div.property-box
+{
+  padding: 20px 10px 20px 10px;
+  margin: 20px 10px 20px 10px;
+  border-radius: 8px;
+}
+
+.component .properties
+{
+  background-color: #dfcfdf;
+}
+
+.component .methods
+{
+  background-color: #cfdfdf;
+}
+
+.component .dependencies
+{
+  background-color: #dfdfcf;
+}
+
+
+
+.header
+{
+  background: rgb(204,28,28);
+  background: -moz-linear-gradient(175deg, rgba(204,28,28,1) 0%, rgba(176,28,105,1) 100%);
+  background: -webkit-linear-gradient(175deg, rgba(204,28,28,1) 0%, rgba(176,28,105,1) 100%);
+  background: linear-gradient(175deg, rgba(204,28,28,1) 0%, rgba(176,28,105,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#cc1c1c",endColorstr="#b01c69",GradientType=1);
+
+  color: white;
+}
+.footer
+{
+background: rgb(0,0,0);
+background: -moz-linear-gradient(172deg, rgba(0,0,0,1) 0%, rgba(122,20,97,1) 100%);
+background: -webkit-linear-gradient(172deg, rgba(0,0,0,1) 0%, rgba(122,20,97,1) 100%);
+background: linear-gradient(172deg, rgba(0,0,0,1) 0%, rgba(122,20,97,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#7a1461",GradientType=1);
+
+  height: 200px;
+  color: white;
+  font-weight: bold;
+}
+.footer a
+{
+  color: white;
+}
+
+
+
+
+
+
+/* grid container */
+.holy-grail-grid {
+    display:grid;
+    grid-template-areas:
+        'header'
+        'main-content'
+        'left-sidebar'
+        'right-sidebar'
+        'footer';
+}
+
+/* general column padding */
+.holy-grail-grid > * {
+    padding:1rem;
+}
+
+/* assign columns to grid areas */
+.holy-grail-grid > .header {
+    grid-area:header;
+}
+.holy-grail-grid > .main-content {
+    grid-area:main-content;
+}
+.holy-grail-grid > .left-sidebar {
+    grid-area:left-sidebar;
+}
+.holy-grail-grid > .right-sidebar {
+    grid-area:right-sidebar;
+}
+.holy-grail-grid > .footer {
+    grid-area:footer;
+}
+
+/* tablet breakpoint */
+@media (min-width:768px) {
+    .holy-grail-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            'header header'
+            'main-content main-content'
+            'left-sidebar right-sidebar'
+            'footer footer';
+    }
+}
+
+/* desktop breakpoint */
+@media (min-width:1024px) {
+    .holy-grail-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:
+            'header header header header'
+            'left-sidebar main-content main-content right-sidebar'
+            'footer footer footer footer';
+    }
+}
+
+
+
+
+
+
+
+</style>
+</head>
+
+<body>
+<div class="holy-grail-grid">
+  <header class="header">
+    <a href="https://www.allegroflare.org"/><img id="primary_logo" src="https://cdn.shopify.com/s/files/1/0557/4495/4531/files/allegro-flare-logo-white-01.png?v=1691080699" alt="AllegroFlare" /></a><p><span id="logo_text">AllegroFlare</span><br><span id="logo_subtext"><em>High level objects for Allegro game programming</em></span></p>
+    <div id="main_nav">
+      <ul>
+        <li><a href="https://www.allegroflare.org/docs">Components</a></li>
+        <li><a href="https://github.com/allegroflare/allegro_flare">GitHub</a></li>
+      </ul>
+    </div>
+  </header>
+<main class="main-content">
+
+[main_content]
+
+[main_content_clubcatt_insert]
+
+</main>
+    <section class="left-sidebar"></section>
+    <aside class="right-sidebar"></aside>
+    <footer class="footer">
+
+[footer_content]
+
+    </footer>
+</div>
+</body>
