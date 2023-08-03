@@ -11,6 +11,10 @@ class DocCreator
       'Visit CLUBCATT for <a href="https://clubcatt.com">cat shirts, cat mugs, cat puzzles, and more</a>.',
       'Check out <a href="https://clubcatt.com/collections/cat-shirts">cat shirts</a> available from CLUBCATT.',
       'CLUBCATT has <a href="https://clubcatt.com">cat shirts, mugs, games and puzzles</a> you\'ll love',
+      'Learn about cats at the <a href="https://clubcatt.com/blogs/cat-encyclopedia">Cat Encyclopedia</a>',
+      'Grab cute <a href="https://clubcatt.com/collections/cat-stickers">Cat stickers</a> for your laptop at CLUBCATT',
+      'Get the best designed <a href="https://clubcatt.com">cat shirts</a> at clubatt.com',
+      'Look no further than <a href="https://clubcatt.com">CLUBCATT</a> for cat shirts, cat mugs, and all kinds of cat-fancy stuff.',
     ]
   end
 
@@ -64,23 +68,32 @@ class DocCreator
     yamls.each do |filename, yaml|
       doc_listing_url = build_doc_listing_url_from_yaml_filename(yaml_filename: filename)
       component_name = doc_listing_url
-      result += "  <li><a href=\"/docs/#{doc_listing_url}\">#{component_name}</a></li>\n"
+      result += "  <li><a rel=\"nofollow\" href=\"/docs/#{doc_listing_url}\">#{component_name}</a></li>\n"
     end
     result += "</ul>\n"
     result += "</div>\n"
   end
 
   def generate_single_component_doc(page_title:, main_content:)
+    github_component_url_prefix = "https://github.com/allegroflare/allegro_flare/blob/master/"
     template = File.read("/Users/markoates/Repos/blast/scripts/build_documentation/templates/layouts/primary_layout.template.htm")
     #page_title = "Inserted Page Title"
 
 
     # page title
     template.gsub!("[page_title]", page_title)
+ 
 
+    # path files
+    cpp_github_url = github_component_url_prefix + "src/" + page_title + ".cpp"
+    hpp_github_url = github_component_url_prefix + "include/" + page_title + ".hpp"
+    quintessence_github_url = github_component_url_prefix + "quintessence/" + page_title + ".q.yml"
+    test_github_url = github_component_url_prefix + "tests/" + page_title + "Test.cpp"
 
     # main content
-    primary_page_html_content = "<h1>#{page_title}</h1>" + main_content
+    primary_page_html_content = "<h1>#{page_title}</h1>"
+    primary_page_html_content += "<p>view source (<a href='#{cpp_github_url}'>cpp</a>, <a href='#{hpp_github_url}'>hpp</a>, <a href='#{quintessence_github_url}'>quintessence</a>) &bull; view tests (<a href='#{test_github_url}'>test file</a>)</p>"
+    primary_page_html_content += main_content
     template.gsub!("[main_content]", primary_page_html_content);
 
 

@@ -53,6 +53,7 @@ tree_builder.yamls.each do |filename, yaml|
   #main_content = "Foobar"
 
 
+
   IO.write(final_doc_file_path, doc_creator.generate_single_component_doc(page_title: page_title, main_content: main_content)) 
 end
 
