@@ -350,6 +350,12 @@ YAML::Node default_dependencies()
   headers: [ 'stdexcept' ]
 - symbol: std::stringstream
   headers: [ 'sstream' ]
+- symbol: std::ifstream
+  headers: [ 'fstream' ]
+- symbol: std::ofstream
+  headers: [ 'fstream' ]
+- symbol: std::fstream
+  headers: [ 'fstream' ]
 - symbol: std::function
   headers: [ functional ]
 - symbol: std::size_t
