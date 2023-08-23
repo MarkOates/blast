@@ -358,6 +358,8 @@ YAML::Node default_dependencies()
   headers: [ 'fstream' ]
 - symbol: std::function
   headers: [ functional ]
+- symbol: std::filesystem
+  headers: [ filesystem ]
 - symbol: std::size_t
   headers: [ cstddef ]
 - symbol: std::max
