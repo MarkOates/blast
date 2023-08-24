@@ -23,7 +23,7 @@ BuildFactory::~BuildFactory()
 }
 
 
-Blast::BuildSystem::Builds::Base* BuildFactory::create_placeholder_build()
+Blast::BuildSystem::Builds::Base* BuildFactory::create_generic_build_for_testing()
 {
    Blast::BuildSystem::Builds::Base *build = new Blast::BuildSystem::Builds::Base;
    build->set_build_stages({

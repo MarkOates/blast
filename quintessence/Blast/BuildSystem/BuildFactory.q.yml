@@ -9,7 +9,7 @@ properties:
 functions:
 
 
-  - name: create_placeholder_build
+  - name: create_generic_build_for_testing
     type: Blast::BuildSystem::Builds::Base*
     body: |
       Blast::BuildSystem::Builds::Base *build = new Blast::BuildSystem::Builds::Base;

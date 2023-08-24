@@ -31,7 +31,7 @@ TEST(Blast_BuildSystem_ReportRendererTest,
    // TODO: report contains variable data (namely the duration line at the end of the report)
 {
    Blast::BuildSystem::BuildFactory build_factory;
-   Blast::BuildSystem::Builds::Base* build = build_factory.create_placeholder_build();
+   Blast::BuildSystem::Builds::Base* build = build_factory.create_generic_build_for_testing();
 
    Blast::BuildSystem::ReportRenderer report_renderer(build);
    std::string actual_report = report_renderer.build_text_report();

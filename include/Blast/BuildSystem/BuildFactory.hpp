@@ -22,7 +22,7 @@ namespace Blast
          BuildFactory();
          ~BuildFactory();
 
-         Blast::BuildSystem::Builds::Base* create_placeholder_build();
+         Blast::BuildSystem::Builds::Base* create_generic_build_for_testing();
          Blast::BuildSystem::Builds::Base* create_shell_command_build(std::string shell_command="echo \"Having a good day?\"");
       };
    }
