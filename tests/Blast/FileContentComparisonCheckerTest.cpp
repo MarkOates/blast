@@ -5,7 +5,7 @@
 #include <Blast/FileContentComparisonChecker.hpp>
 
 
-#define FIXTURE_FILENAME "bin/fixtures/test_file.txt"
+#define FIXTURE_FILENAME "tests/fixtures/test_file.txt"
 
 
 TEST(DISABLED_Blast__FileContentComparisonCheckerTest, expected_test_file_exists)

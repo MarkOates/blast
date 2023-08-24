@@ -2,6 +2,9 @@
 #include <sqlite3.h> 
 
 
+#include <allegro5/allegro.h>
+
+
 int main(int argc, char* argv[]) {
    sqlite3 *db;
    char *zErrMsg = 0;
@@ -16,6 +19,8 @@ int main(int argc, char* argv[]) {
       fprintf(stderr, "Opened database successfully\n");
    }
    sqlite3_close(db);
+
+   return 0;
 }
 
 
