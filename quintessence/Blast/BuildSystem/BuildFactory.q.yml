@@ -47,3 +47,4 @@ dependencies:
   - symbol: Blast::BuildSystem::Builds::Base
     headers: [ Blast/BuildSystem/Builds/Base.hpp ]
 
+
