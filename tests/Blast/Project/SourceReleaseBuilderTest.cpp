@@ -27,16 +27,16 @@ TEST(Blast_Project_SourceReleaseBuilderTest, list_symlinks__returns_empty_on_an_
 
 TEST(Blast_Project_SourceReleaseBuilderTest, list_symlinks__returns_the_list_of_all_symlinks_in_the_base_directory)
 {
-   static const std::string FIXTURE_PATH = "bin/fixtures/FixtureProject2";
+   static const std::string FIXTURE_PATH = "tests/fixtures/FixtureProject2";
    Blast::Project::SourceReleaseBuilder release_builder(FIXTURE_PATH);
 
    std::vector<std::pair<std::string, std::string>> expected = {
       {
-         "bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml",
+         "tests/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml",
          "../../test_project/quintessence/ComponentWithExternalSymlink.q.yml",
       },
       {
-         "bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlinkThatIsOnlySymlink.q.yml",
+         "tests/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlinkThatIsOnlySymlink.q.yml",
          "../../test_project/quintessence/ComponentWithExternalSymlinkThatIsOnlySymlink.q.yml",
       },
    };

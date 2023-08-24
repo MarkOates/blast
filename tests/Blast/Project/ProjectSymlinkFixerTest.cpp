@@ -9,7 +9,7 @@
 #include <filesystem>
 
 #define TEMP_SANDBOX_FOLDER ("tmp/test_sandbox")
-#define LIKELY_SYMLINK_TEST_FILE "/Users/markoates/Repos/blast/bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml";
+#define LIKELY_SYMLINK_TEST_FILE "/Users/markoates/Repos/blast/tests/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml";
 
 
 

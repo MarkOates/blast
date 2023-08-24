@@ -13,7 +13,7 @@
 #include <Blast/Project/SymlinkChecker.hpp>
 
 #include <filesystem>
-static const std::string RELATIVE_FIXTURE_PATH = "bin/fixtures/FixtureProject2/";
+static const std::string RELATIVE_FIXTURE_PATH = "tests/fixtures/FixtureProject2/";
 static std::string FIXTURE_PATH()
 {
    return std::filesystem::absolute(RELATIVE_FIXTURE_PATH).string();
@@ -46,7 +46,7 @@ TEST(Blast_Project_SymlinkCheckerTest, is_symlink__if_symlink_does_not_exist__re
 
 TEST(Blast_Project_SymlinkCheckerTest, is_symlink__works_on_relative_fileanmes)
 {
-   std::string symlink_filename = "./bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml";
+   std::string symlink_filename = "./tests/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml";
    Blast::Project::SymlinkChecker symlink_checker(symlink_filename);
 
    ASSERT_EQ(true, symlink_checker.is_symlink());

@@ -8,7 +8,7 @@
    catch ( raised_exception_type const &err ) { EXPECT_EQ(err.what(), std::string( raised_exception_message )); } \
    catch (...) { FAIL() << "Expected " # raised_exception_type; }
 
-static std::string TEST_PROJECT_ROOT_DIRECTORY = "bin/fixtures/test_project/";
+static std::string TEST_PROJECT_ROOT_DIRECTORY = "tests/fixtures/test_project/";
 
 TEST(Blast_Project_ComponentDependencyListerTest, can_be_created_without_blowing_up)
 {

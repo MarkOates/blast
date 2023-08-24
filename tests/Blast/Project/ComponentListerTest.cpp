@@ -9,8 +9,8 @@ using ::testing::Contains;
 
 #include <Blast/Project/Component.hpp>
 
-static std::string TEST_PROJECT_ROOT_DIRECTORY = "bin/fixtures/test_project/";
-static std::string TEST_PROJECT_WITH_SYMLINK_ROOT_DIRECTORY = "bin/fixtures/FixtureProject2/";
+static std::string TEST_PROJECT_ROOT_DIRECTORY = "tests/fixtures/test_project/";
+static std::string TEST_PROJECT_WITH_SYMLINK_ROOT_DIRECTORY = "tests/fixtures/FixtureProject2/";
 
 TEST(Blast__Project__ComponentLister, can_be_created_without_arguments)
 {

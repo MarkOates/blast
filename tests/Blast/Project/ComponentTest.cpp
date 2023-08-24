@@ -6,7 +6,7 @@
 
 #include <filesystem>
 static std::string ABSOLUTE_PATH(std::string relative_path) { return std::filesystem::absolute(relative_path).string(); }
-static const std::string RELATIVE_FIXTURE_PATH = "bin/fixtures/FixtureProject2/";
+static const std::string RELATIVE_FIXTURE_PATH = "tests/fixtures/FixtureProject2/";
 
 
 TEST(Blast_Project_ComponentTest, can_be_created_without_blowing_up)
@@ -146,7 +146,7 @@ TEST(Blast_Project_ComponentTest, read_symlinks__returns_a_list_of_component_fil
 
    std::vector<std::pair<std::string, std::string>> expected = {
       {
-         "bin/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml",
+         "tests/fixtures/FixtureProject2/quintessence/ComponentWithExternalSymlink.q.yml",
          "../../test_project/quintessence/ComponentWithExternalSymlink.q.yml",
       }
    };

@@ -3,7 +3,7 @@
 
 #include <Blast/Project/ProgramLister.hpp>
 
-static std::string TEST_PROJECT_ROOT_DIRECTORY = "bin/fixtures/FixtureProject2/";
+static std::string TEST_PROJECT_ROOT_DIRECTORY = "tests/fixtures/FixtureProject2/";
 
 
 TEST(Blast_Project_ProgramListerTest, can_be_created_without_blowing_up)
