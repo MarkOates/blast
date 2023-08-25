@@ -746,15 +746,32 @@ std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vect
 {
    std::string this_func_name = "extract_functions_and_dependency_info";
    const std::string FUNCTIONS = "functions";
+   const std::string METHODS = "methods";
                          // function            // internal deps          // default arg deps
    std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>>> result;
 
+   // This technique allows for both labels "functions:" and "methods:" to be permitted
    YAML::Node source_functions = fetch_node(source, FUNCTIONS, YAML::NodeType::Sequence, YAML::Load("[]"));
+   YAML::Node source_methods = fetch_node(source, METHODS, YAML::NodeType::Sequence, YAML::Load("[]"));
+
+   YAML::Node source_functions_and_methods = YAML::Load("[]");
 
    for (std::size_t i=0; i<source_functions.size(); i++)
+   {
+      source_functions_and_methods.push_back(source_functions[i]);
+   }
+
+   for (std::size_t i=0; i<source_methods.size(); i++)
+   {
+      source_functions_and_methods.push_back(source_methods[i]);
+   }
+
+
+   for (std::size_t i=0; i<source_functions_and_methods.size(); i++)
+   //for (std::size_t i=0; i<source_functions.size(); i++)
    //for (YAML::const_iterator it=source_functions.begin(); it!=source_functions.end(); ++it)
    {
-      YAML::Node it = source_functions[i];
+      YAML::Node it = source_functions_and_methods[i];
 
       const std::string TYPE = "type";
       const std::string NAME = "name";
