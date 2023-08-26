@@ -147,7 +147,11 @@ class DocCreator
 
       result += "    <h3>Methods</h3>\n"
 
-      methods = yaml['functions']
+      functions = yaml['functions'] ||= []
+      methods = yaml['methods'] ||= []
+
+      methods.concat(functions);
+
       if methods.nil?
         result += "<p>This class contains no methods</p>"
       else
