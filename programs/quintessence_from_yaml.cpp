@@ -741,7 +741,7 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 
 
 
-class FunctionInfo
+class ParsedMethodInfo
 {
 public:
    Blast::Cpp::Function function;
@@ -752,14 +752,14 @@ public:
 
 
                       // function            // internal deps          // default arg deps
-std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, FunctionInfo>>
+std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, ParsedMethodInfo>>
    extract_functions_and_dependency_info(YAML::Node &source, std::string this_class_name="UnknownClass")
 {
    std::string this_func_name = "extract_functions_and_dependency_info";
    const std::string FUNCTIONS = "functions";
    const std::string METHODS = "methods";
                          // function            // internal deps          // default arg deps
-   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, FunctionInfo>> result;
+   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, ParsedMethodInfo>> result;
 
    // This technique allows for both labels "functions:" and "methods:" to be permitted
    YAML::Node source_functions = fetch_node(source, FUNCTIONS, YAML::NodeType::Sequence, YAML::Load("[]"));
@@ -853,9 +853,9 @@ std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vect
       // TODO: Consider removing this, it is already parsed during "convert_function_arguments"
       std::vector<std::string> default_argument_dependency_symbols = Blast::Quintessence::YAMLParsers::FunctionArgumentParser::consolidate_default_value_dependency_symbols(signature);
 
-      FunctionInfo function_info;
+      ParsedMethodInfo parsed_method_info;
 
-      result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols, function_info });
+      result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols, parsed_method_info });
    }
 
    return result;
@@ -1050,7 +1050,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
    std::vector<Blast::Cpp::EnumClass> enum_classes = extract_enum_classes(source, quintessence_filename);
-   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, FunctionInfo>> functions_and_dependencies =
+   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, ParsedMethodInfo>> functions_and_dependencies =
       extract_functions_and_dependency_info(source, class_name);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
