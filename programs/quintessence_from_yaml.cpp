@@ -741,12 +741,31 @@ std::vector<Blast::Cpp::FunctionArgument> convert_function_arguments(YAML::Node 
 
 
 
+class CodePoint
+{
+public:
+   int line_number;
+   int column_number;
+   CodePoint(int line_number=0, int column_number=0)
+      : line_number(line_number)
+      , column_number(column_number)
+   {}
+};
+
+
+
 class ParsedMethodInfo
 {
 public:
    Blast::Cpp::Function function;
    std::vector<std::string> body_dependency_symbols;
    std::vector<std::string> default_argument_dependency_symbols;
+   std::map<std::string, CodePoint> node_key_code_points;
+
+   void add_node_key_code_point(const std::string &name, const CodePoint &code_point)
+   {
+      node_key_code_points[name] = code_point;
+   }
 };
 
 
@@ -781,6 +800,7 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(YAML::Node &
    //for (std::size_t i=0; i<source_functions.size(); i++)
    //for (YAML::const_iterator it=source_functions.begin(); it!=source_functions.end(); ++it)
    {
+      ParsedMethodInfo parsed_method_info_result;
       YAML::Node it = source_functions_and_methods[i];
 
       const std::string TYPE = "type";
@@ -821,6 +841,7 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(YAML::Node &
 
       std::string body = body_node.as<std::string>();
       YAML::Mark body_mark = body_node.Mark();
+      parsed_method_info_result.add_node_key_code_point("body", CodePoint(body_mark.line, body_mark.column));
 
       bool is_static = fetch_bool(it, STATIC, false);
       bool is_const = fetch_bool(it, CONST, false);
@@ -852,12 +873,11 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(YAML::Node &
       // TODO: Consider removing this, it is already parsed during "convert_function_arguments"
       std::vector<std::string> default_argument_dependency_symbols = Blast::Quintessence::YAMLParsers::FunctionArgumentParser::consolidate_default_value_dependency_symbols(signature);
 
-      ParsedMethodInfo parsed_method_info;
-      parsed_method_info.function = function;
-      parsed_method_info.body_dependency_symbols = body_dependency_symbols;
-      parsed_method_info.default_argument_dependency_symbols = default_argument_dependency_symbols;
+      parsed_method_info_result.function = function;
+      parsed_method_info_result.body_dependency_symbols = body_dependency_symbols;
+      parsed_method_info_result.default_argument_dependency_symbols = default_argument_dependency_symbols;
 
-      result.push_back(parsed_method_info);
+      result.push_back(parsed_method_info_result);
       //result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols, parsed_method_info });
    }
 
