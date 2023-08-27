@@ -745,8 +745,8 @@ class ParsedMethodInfo
 {
 public:
    Blast::Cpp::Function function;
-   std::vector<std::string> internal_deps;
-   std::vector<std::string> default_arg_deps;
+   std::vector<std::string> body_dependency_symbols;
+   std::vector<std::string> default_argument_dependency_symbols;
 };
 
 
@@ -854,6 +854,9 @@ std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vect
       std::vector<std::string> default_argument_dependency_symbols = Blast::Quintessence::YAMLParsers::FunctionArgumentParser::consolidate_default_value_dependency_symbols(signature);
 
       ParsedMethodInfo parsed_method_info;
+      parsed_method_info.function = function;
+      parsed_method_info.body_dependency_symbols = body_dependency_symbols;
+      parsed_method_info.default_argument_dependency_symbols = default_argument_dependency_symbols;
 
       result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols, parsed_method_info });
    }
@@ -1076,7 +1079,9 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
       bool function_has_been_explicitly_declared = false;
       for (auto &function_and_dependency : functions_and_dependencies)
       {
-         std::string this_function_name = std::get<0>(function_and_dependency).get_name();
+         ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
+         std::string this_function_name = parsed_method_info.function.get_name();
+         //std::string this_function_name = std::get<0>(function_and_dependency).get_name();
          if (this_function_name == expected_explicit_getter_function_name)
          {
             function_has_been_explicitly_declared = true;
@@ -1112,8 +1117,12 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<std::string> per_function_dependency_symbols = {};
    for (auto &function_and_dependency : functions_and_dependencies)
    {
-      functions.push_back(std::get<0>(function_and_dependency));
-      for (auto &dependency_symbol : std::get<1>(function_and_dependency))
+      ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
+
+      functions.push_back(parsed_method_info.function);
+      //functions.push_back(std::get<0>(function_and_dependency));
+      for (auto &dependency_symbol : parsed_method_info.body_dependency_symbols)
+      //for (auto &dependency_symbol : std::get<1>(function_and_dependency))
       {
          per_function_dependency_symbols.push_back(dependency_symbol);
       }
@@ -1127,7 +1136,10 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::set<std::string> consolidated_function_default_argument_dependencies = {};
    for (auto &function_and_dependency : functions_and_dependencies)
    {
-      for (auto &this_functions_default_argument_dependency_symbols : std::get<2>(function_and_dependency))
+      ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
+
+      for (auto &this_functions_default_argument_dependency_symbols : parsed_method_info.default_argument_dependency_symbols)
+      //for (auto &this_functions_default_argument_dependency_symbols : std::get<2>(function_and_dependency))
       {
          consolidated_function_default_argument_dependencies.insert(this_functions_default_argument_dependency_symbols);
       }
