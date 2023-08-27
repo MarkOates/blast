@@ -761,6 +761,8 @@ public:
    std::vector<std::string> body_dependency_symbols;
    std::vector<std::string> default_argument_dependency_symbols;
    std::map<std::string, CodePoint> node_key_code_points;
+   std::string class_name;
+   std::string quintessence_filename;
 
    void add_node_key_code_point(const std::string &name, const CodePoint &code_point)
    {
@@ -770,8 +772,11 @@ public:
 
 
 
-                      // function            // internal deps          // default arg deps
-std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(YAML::Node &source, std::string this_class_name="UnknownClass")
+std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
+      YAML::Node &source,
+      std::string this_class_name="UnknownClass",
+      std::string quintessence_filename="UnknownQuintessenceFilename.yml"
+   )
 {
    std::string this_func_name = "extract_functions_and_dependency_info";
    const std::string FUNCTIONS = "functions";
@@ -801,7 +806,11 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(YAML::Node &
    //for (YAML::const_iterator it=source_functions.begin(); it!=source_functions.end(); ++it)
    {
       ParsedMethodInfo parsed_method_info_result;
+      parsed_method_info_result.class_name = this_class_name;
+      parsed_method_info_result.quintessence_filename = quintessence_filename;
+
       YAML::Node it = source_functions_and_methods[i];
+      YAML::Mark this_method_mark = it.Mark();
 
       const std::string TYPE = "type";
       const std::string NAME = "name";
@@ -828,6 +837,20 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(YAML::Node &
       //YAML::Node dependency_symbols_node = fetch_node(it, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
       YAML::Node body_node = it.operator[](BODY);
       //YAML::Node dependency_symbols_node = fetch_node(it, DEPENDENCY_SYMBOLS, YAML::NodeType::Sequence, YAML::Load("[]"));
+
+
+      if (!body_node)
+      {
+         std::stringstream error_message;
+         error_message << "[extract_function_body_dependency_symbols] parse failure: For this element in the methods node, expecting to find \"body\"," \
+               "but it is not present.";
+         error_message << "{ error_location: { filename: " << quintessence_filename << ", line: " << this_method_mark.line << ", column: " << this_method_mark.column << " }";
+         std::cout << error_message.str() << std::endl;
+         //throw std::runtime_error("[extract_function_body_dependency_symbols] parse failure: For this node, expecting to find \"body\"," \
+               //"but it is not present.");
+         std::exit(1);
+      }
+
 
       //validate(type_node.IsScalar(), this_func_name, "Unexpected type for node \"type\", expected to be of YAML type Scalar.");
       validate(name_node.IsScalar(), this_func_name, "Unexpected type for node \"name\", expected to be of YAML type Scalar.");
@@ -1073,7 +1096,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
    std::vector<Blast::Cpp::EnumClass> enum_classes = extract_enum_classes(source, quintessence_filename);
-   std::vector<ParsedMethodInfo> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name);
+   std::vector<ParsedMethodInfo> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name, quintessence_filename);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
 

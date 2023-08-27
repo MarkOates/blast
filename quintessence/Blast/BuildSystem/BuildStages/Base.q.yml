@@ -78,7 +78,7 @@ properties:
     const: true
 
 
-functions:
+methods:
 
 
   - name: get_status
