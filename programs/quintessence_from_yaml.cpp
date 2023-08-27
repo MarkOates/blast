@@ -752,14 +752,13 @@ public:
 
 
                       // function            // internal deps          // default arg deps
-std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, ParsedMethodInfo>>
-   extract_functions_and_dependency_info(YAML::Node &source, std::string this_class_name="UnknownClass")
+std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(YAML::Node &source, std::string this_class_name="UnknownClass")
 {
    std::string this_func_name = "extract_functions_and_dependency_info";
    const std::string FUNCTIONS = "functions";
    const std::string METHODS = "methods";
                          // function            // internal deps          // default arg deps
-   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, ParsedMethodInfo>> result;
+   std::vector<ParsedMethodInfo> result;
 
    // This technique allows for both labels "functions:" and "methods:" to be permitted
    YAML::Node source_functions = fetch_node(source, FUNCTIONS, YAML::NodeType::Sequence, YAML::Load("[]"));
@@ -858,7 +857,8 @@ std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vect
       parsed_method_info.body_dependency_symbols = body_dependency_symbols;
       parsed_method_info.default_argument_dependency_symbols = default_argument_dependency_symbols;
 
-      result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols, parsed_method_info });
+      result.push_back(parsed_method_info);
+      //result.push_back({ function, body_dependency_symbols, default_argument_dependency_symbols, parsed_method_info });
    }
 
    return result;
@@ -1053,8 +1053,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
    std::vector<Blast::Cpp::EnumClass> enum_classes = extract_enum_classes(source, quintessence_filename);
-   std::vector<std::tuple<Blast::Cpp::Function, std::vector<std::string>, std::vector<std::string>, ParsedMethodInfo>> functions_and_dependencies =
-      extract_functions_and_dependency_info(source, class_name);
+   std::vector<ParsedMethodInfo> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
 
@@ -1077,9 +1076,10 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    for (auto &expected_explicit_getter_function_name : expected_explicit_getter_function_names)
    {
       bool function_has_been_explicitly_declared = false;
-      for (auto &function_and_dependency : functions_and_dependencies)
+      for (auto &parsed_method_info : functions_and_dependencies)
       {
-         ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
+         //ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
+         //ParsedMethodInfo &parsed_method_info = function_and_dependency;
          std::string this_function_name = parsed_method_info.function.get_name();
          //std::string this_function_name = std::get<0>(function_and_dependency).get_name();
          if (this_function_name == expected_explicit_getter_function_name)
@@ -1115,9 +1115,9 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
 
    std::vector<Blast::Cpp::Function> functions = {};
    std::vector<std::string> per_function_dependency_symbols = {};
-   for (auto &function_and_dependency : functions_and_dependencies)
+   for (auto &parsed_method_info : functions_and_dependencies)
    {
-      ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
+      //ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
 
       functions.push_back(parsed_method_info.function);
       //functions.push_back(std::get<0>(function_and_dependency));
@@ -1134,9 +1134,9 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    // TODO: Consider removing this, it is already parsed during "convert_function_arguments"
 
    std::set<std::string> consolidated_function_default_argument_dependencies = {};
-   for (auto &function_and_dependency : functions_and_dependencies)
+   for (auto &parsed_method_info : functions_and_dependencies)
    {
-      ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
+      //ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
 
       for (auto &this_functions_default_argument_dependency_symbols : parsed_method_info.default_argument_dependency_symbols)
       //for (auto &this_functions_default_argument_dependency_symbols : std::get<2>(function_and_dependency))
