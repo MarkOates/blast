@@ -115,7 +115,7 @@ version:
 
 
 
-std::string PROGRAM_RUNNER_CLASS_NAME = "Runner";
+std::string PROGRAM_RUNNER_CLASS_NAME = "Gameplay/Runner";
 std::string main_file_content_template = R"END(
 #include <[[PROJECT_NAME]]/[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
 #include <allegro5/allegro.h>
@@ -378,7 +378,7 @@ void generate_gameplay_level_factory_class(std::string project_name)
 
 void generate_runner_class(std::string project_name)
 {
-   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Runner runner_with_router";
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/" + PROGRAM_RUNNER_CLASS_NAME + " runner_with_router";
    std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
    Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
