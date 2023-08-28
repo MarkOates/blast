@@ -22,7 +22,7 @@ properties:
     constexpr: true
 
 
-functions:
+methods:
 
 
   - name: property_is

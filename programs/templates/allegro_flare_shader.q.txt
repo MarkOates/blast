@@ -15,7 +15,7 @@ properties:
     static: true
     constexpr: true
 
-functions:
+methods:
 
 
   - name: activate

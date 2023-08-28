@@ -60,7 +60,7 @@ properties:
     constexpr: true
 
 
-functions:
+methods:
 
 
   - name: set_event_emitter

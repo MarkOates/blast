@@ -55,7 +55,7 @@ properties:
     constexpr: true
 
 
-functions:
+methods:
 
 
   - name: initialize

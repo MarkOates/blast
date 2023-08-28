@@ -14,7 +14,7 @@ properties:
     constexpr: true
 
 
-functions:
+methods:
 
 
   - name: is_type
