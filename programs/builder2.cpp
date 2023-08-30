@@ -194,7 +194,6 @@ void initialize()
    std::vector<std::vector<std::string>> elements;
    create_table("table", 10, 5);
 
-   int i=0;
    for (auto &object_basename : object_basenames)
    {
       ObjectSrcComponents object_src_components(object_basename, "Blast");
@@ -208,7 +207,6 @@ void initialize()
          "[run example]",
          };
       elements.push_back(element);
-      i++;
    }
 
    find_table("table").set_elements(elements);
