@@ -221,7 +221,8 @@ int main(int argc, char **argv)
       { "[[JSON_LOADER_OPERAND_CLASS_NAME_UP_TO_LAST_FRAGMENT]]", json_loader_class_name.get_class_name_up_to_last_fragment() },
       { "[[JSON_LOADER_OPERAND_COMPONENT_NAME]]", json_loader_class_name.get_component_name() },
       { "[[JSON_LOADER_OPERAND_CLASS_NAME_LAST_FRAGMENT]]", json_loader_class_name.get_component_name_last_fragment() },
-   };
+      { "[[JSON_LOADER_OPERAND_CLASS_NAME]]", json_loader_class_name.get_class_name() },
+    };
 
 
 
