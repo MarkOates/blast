@@ -41,6 +41,7 @@ public:
    std::string get_component_tail_all_caps_constant();
    bool has_valid_comparison_operand_class_name();
    std::string infer_comparison_operand_class_name();
+   bool has_valid_json_loader_operand_component_name();
    std::string infer_json_loader_operand_component_name();
 
    bool generate();

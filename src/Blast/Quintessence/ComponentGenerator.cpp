@@ -383,9 +383,39 @@ std::string ComponentGenerator::infer_comparison_operand_class_name()
 
 
 
+bool ComponentGenerator::has_valid_json_loader_operand_component_name()
+{
+   // TODO: Add tests for this function
+   std::vector<std::string> validation_error_messages = __validate_component_name(component_name);
+   if (validation_error_messages.empty()) return true;
+   return false;
+}
+
+
+
 std::string ComponentGenerator::infer_json_loader_operand_component_name()
 {
-   return "AllegroFlare/Vec3D";
+   std::vector<std::string> tokens = Blast::StringSplitter(get_component_name(), '/').split();
+   std::vector<std::string> operand_component_name_tokens;
+   bool special_token_found = false;
+   const std::string SPECIAL_JSON_LOADER_NAMESPACE_TOKEN = "JSONLoaders";
+   for (auto &token : tokens)
+   {
+      if (special_token_found)
+      {
+         operand_component_name_tokens.push_back(token);
+      }
+      else
+      {
+         if (token == SPECIAL_JSON_LOADER_NAMESPACE_TOKEN)
+         {
+            special_token_found = true;
+            continue;
+         }
+      }
+   }
+   std::string result = Blast::StringJoiner(operand_component_name_tokens, "/").join();
+   return result;
 }
 
 
