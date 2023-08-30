@@ -163,3 +163,13 @@ TEST(Blast_Quintessence_ComponentGenerator,
 }
 
 
+TEST(Blast_Quintessence_ComponentGenerator,
+   infer_json_loader_operand_component_name__will_return_the_expected_class_name)
+{
+   ComponentGenerator generator("AllegroFlare/JSONLoaders/AllegroFlare/Vec3D");
+   std::string expected_comparison_operand_class_name = "AllegroFlare/Vec3D";
+   std::string actual_comparison_operand_class_name = generator.infer_json_loader_operand_component_name();
+   EXPECT_EQ(expected_comparison_operand_class_name, actual_comparison_operand_class_name);
+}
+
+

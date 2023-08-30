@@ -383,6 +383,13 @@ std::string ComponentGenerator::infer_comparison_operand_class_name()
 
 
 
+std::string ComponentGenerator::infer_json_loader_operand_component_name()
+{
+   return "AllegroFlare/Vec3D";
+}
+
+
+
 bool ComponentGenerator::generate()
 {
    return false;
