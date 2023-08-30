@@ -201,6 +201,7 @@ int main(int argc, char **argv)
 
    // create the component generator
    ComponentGenerator generator(argv[1]);
+   ComponentGenerator json_loader_class_name(generator.infer_json_loader_operand_component_name());
 
    // create the template variable and eplacement set
    std::vector<std::pair<std::string, std::string>> template_var_and_replacement_set = {
@@ -213,10 +214,13 @@ int main(int argc, char **argv)
       { "[[COMPONENT_AS_ALL_CAPS_CONSTANT]]", generator.get_component_tail_all_caps_constant() },
       { "[[COMPONENT_NAME]]", generator.get_component_name() },
       { "[[COMPONENT_NAME_LAST_FRAGMENT]]", generator.get_component_name_last_fragment() },
-      { "[[COMPONENT_NAME_LAST_TWO_FRAGMENTS]]", generator.get_component_name_last_fragment() }, // TODO: create a function that will return this value
+      { "[[COMPONENT_NAME_LAST_TWO_FRAGMENTS]]", generator.get_component_name_last_fragment() },
       { "[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]", generator.get_component_name_up_to_last_fragment() },
       { "[[COMPONENT_NAME_PRECEEDING_FRAGMENT]]", generator.get_component_name_preceeding_fragment() },
-      { "[[COMPONENT_NAME_FROM_THIRD_FRAGMENT_UP_TO_LAST_FRAGMENT]]", generator.get_component_name_up_to_last_fragment() }, // TODO: create a function that will return this
+      { "[[COMPONENT_NAME_FROM_THIRD_FRAGMENT_UP_TO_LAST_FRAGMENT]]", generator.get_component_name_up_to_last_fragment() },
+      { "[[JSON_LOADER_OPERAND_CLASS_NAME_UP_TO_LAST_FRAGMENT]]", json_loader_class_name.get_class_name_up_to_last_fragment() },
+      { "[[JSON_LOADER_OPERAND_COMPONENT_NAME]]", json_loader_class_name.get_component_name() },
+      { "[[JSON_LOADER_OPERAND_CLASS_NAME_LAST_FRAGMENT]]", json_loader_class_name.get_component_name_last_fragment() },
    };
 
 
