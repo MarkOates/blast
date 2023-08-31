@@ -388,7 +388,7 @@ bool ComponentGenerator::has_valid_json_loader_operand_component_name()
    // TODO: Add tests for this function
    std::vector<std::string> validation_error_messages = __validate_component_name(component_name);
    if (validation_error_messages.empty()) return true;
-   return false;
+   return (!infer_json_loader_operand_component_name().empty());
 }
 
 
