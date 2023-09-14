@@ -332,11 +332,11 @@ main:
 
 
 check_for_debug_markers:  # This is an example of how to check for debug markers using fancy_debug
-	$(eval DEBUG_MARKER_CHECK_RESULT=$(shell /Users/markoates/Repos/blast/bin/programs/fancy_debug presence_only))
-	@if [ "$(DEBUG_MARKER_CHECK_RESULT)" = "debug_markers_are_present" ]; then \
-			echo "Debugging symbols have been found"; \
-	else \
+	$(eval DEBUG_MARKER_PREFIX_COMMAND=$(shell /Users/markoates/Repos/blast/bin/programs/fancy_debug command_or_empty))
+	@if [ "$(DEBUG_MARKER_PREFIX_COMMAND)" = "" ]; then \
 			echo "(No debugging symbols found)"; \
+	else \
+			echo "Debugging symbols have been found"; \
 	fi
 
 
