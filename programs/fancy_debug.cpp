@@ -148,14 +148,18 @@ int main(int argc, char** argv)
       std::cout << std::endl;
    }
 
-   std::cout << "lldb ";
-   for (auto &breakpoint_command : breakpoint_commands)
+   bool output_command = (!breakpoint_commands.empty()) || (!outputting_command_prefix_only);
+   if (output_command)
    {
-      std::cout << "-o '" << breakpoint_command << "' ";
+      std::cout << "lldb ";
+      for (auto &breakpoint_command : breakpoint_commands)
+      {
+         std::cout << "-o '" << breakpoint_command << "' ";
+      }
+      std::cout << "-o 'settings set stop-line-count-before 10' ";
+      std::cout << "-o 'settings set stop-line-count-after 10' ";
+      std::cout << "-o 'run' -- ";
    }
-   std::cout << "-o 'settings set stop-line-count-before 10' ";
-   std::cout << "-o 'settings set stop-line-count-after 10' ";
-   std::cout << "-o 'run' -- ";
 
    if (!outputting_command_prefix_only)
    {
