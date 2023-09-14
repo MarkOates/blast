@@ -115,21 +115,46 @@ public:
 };
 
 
+enum Modes
+{
+   UNDEFINED=0,
+   PRESENCE_ONLY,
+   COMMAND_PREFIX_ONLY,
+};
+
+
 int main(int argc, char** argv)
 {
+   Modes mode = UNDEFINED;
+
    bool outputting_command_prefix_only = false;
+   bool outputting_presence_only = false;
    std::vector<std::string> args;
    for (int i=1; i<argc; i++) args.push_back(argv[i]);
    if (!args.empty() && args[0] == "command_or_empty")
    {
       outputting_command_prefix_only = true;
+      mode = COMMAND_PREFIX_ONLY;
+   }
+   else if (!args.empty() && args[0] == "presence_only")
+   {
+      outputting_presence_only= true;
+      mode = PRESENCE_ONLY;
+   }
+   else if (!args.empty())
+   {
+      throw std::runtime_error("Unrecognized argument. Check out the program for what arguments are expected (\"command_or_empty\", \"presence_only\".");
    }
 
+
+   bool silent = (mode == COMMAND_PREFIX_ONLY) || (mode == PRESENCE_ONLY);
+
+
    DebugBreakpointCommandBuilder breakpoint_command_builder;
-   if (outputting_command_prefix_only) breakpoint_command_builder.set_silent(true);
+   if (silent) breakpoint_command_builder.set_silent(true);
    std::vector<std::string> breakpoint_commands = breakpoint_command_builder.build();
 
-   if (!outputting_command_prefix_only)
+   if (!silent)
    {
       std::cout << "============ " << breakpoint_commands.size() << " `~* Fancy Debug *~`====================" << std::endl;
       std::cout << "  Note: You can output *only* the command string to use, given the marked lines on this project " << std::endl;
@@ -148,20 +173,27 @@ int main(int argc, char** argv)
       std::cout << std::endl;
    }
 
-   bool output_command = (!breakpoint_commands.empty()) || (!outputting_command_prefix_only);
-   if (output_command)
+   if (mode == PRESENCE_ONLY)
    {
-      std::cout << "lldb ";
-      for (auto &breakpoint_command : breakpoint_commands)
+      std::cout << (breakpoint_commands.empty() ? "debug_markers_are_not_present" : "debug_markers_are_present");
+   }
+   else
+   {
+      bool output_command = (!breakpoint_commands.empty()) || (!silent);
+      if (output_command)
       {
-         std::cout << "-o '" << breakpoint_command << "' ";
+         std::cout << "lldb ";
+         for (auto &breakpoint_command : breakpoint_commands)
+         {
+            std::cout << "-o '" << breakpoint_command << "' ";
+         }
+         std::cout << "-o 'settings set stop-line-count-before 10' ";
+         std::cout << "-o 'settings set stop-line-count-after 10' ";
+         std::cout << "-o 'run' -- ";
       }
-      std::cout << "-o 'settings set stop-line-count-before 10' ";
-      std::cout << "-o 'settings set stop-line-count-after 10' ";
-      std::cout << "-o 'run' -- ";
    }
 
-   if (!outputting_command_prefix_only)
+   if (!silent)
    {
       std::cout << "-- bin/tests/*" << std::endl;
       std::cout << std::endl;

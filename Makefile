@@ -331,6 +331,16 @@ main:
 
 
 
+check_for_debug_markers:  # This is an example of how to check for debug markers using fancy_debug
+	$(eval DEBUG_MARKER_CHECK_RESULT=$(shell /Users/markoates/Repos/blast/bin/programs/fancy_debug presence_only))
+	@if [ "$(DEBUG_MARKER_CHECK_RESULT)" = "debug_markers_are_present" ]; then \
+			echo "Debugging symbols have been found"; \
+	else \
+			echo "(No debugging symbols found)"; \
+	fi
+
+
+
 ## note: For this process, there are several build stages.  Some stages have their outputs dumpted to a
 ## file located under $(BUILD_FILE_PATH_ROOT).  Both the stdout and stderr are captured using "some_command_here 2>&1 | tee file_to_dump"
 ## For how output piping is used, see reference https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file
@@ -374,7 +384,7 @@ focus:
 	@set -o pipefail && (make bin/tests/$(FOCUSED_COMPONENT_NAME)Test 2>&1 | tee $(BUILD_FILE_COMPONENT_TEST_EXECUTABLE_BUILD))
 	$(call output_terminal_message,"Run the focused component test")
 	@echo "run_test_for_focused_component" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	TEST_NAME_TO_RUN=(./bin/tests/$(FOCUSED_COMPONENT_NAME)Test --gtest_filter=*$(FOCUSED_TEST_FILTER)*)
+	@TEST_NAME_TO_RUN=(./bin/tests/$(FOCUSED_COMPONENT_NAME)Test --gtest_filter=*$(FOCUSED_TEST_FILTER)*)
 	@((set -o pipefail && ($(TEST_NAME_TO_RUN) 2>&1 | tee $(BUILD_FILE_COMPONENT_TESTS_RUN))) && (make celebrate_passing_tests) || (make signal_failing_tests && exit 1) )
 	$(call output_terminal_message,"Make the library")
 	@echo "make_library" > $(BUILD_STATUS_SIGNALING_FILENAME)
