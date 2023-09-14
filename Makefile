@@ -518,7 +518,12 @@ define output_component_built_banner
 	@echo
 endef
 
-
+define output_debug_banner
+	$(eval columns=$(shell tput cols))
+	@echo
+	@${OUTPUT_BANNER_EXECUTABLE} -c green -l $(columns) --debug
+	@echo
+endef
 
 define output_built_banner
 	$(eval columns=$(shell tput cols))
