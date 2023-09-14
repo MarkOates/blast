@@ -32,3 +32,11 @@ TEST(Blast_Build_CelebratorTest, run__returns_the_expected_response)
    EXPECT_EQ(expected_string, celebrator.generate_full_width_output_banner(message));
 }
 
+
+TEST(Blast_Build_CelebratorTest, VISUAL__generate_debug_banner__outputs_the_the_expected_banner)
+{
+   Blast::Build::Celebrator celebrator;
+   std::cout << celebrator.generate_debug_banner();
+}
+
+
