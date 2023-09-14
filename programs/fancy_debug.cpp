@@ -6,6 +6,7 @@
 #include <sstream>
 #include <Blast/RegexMatcher.hpp>
 #include <iostream>
+#include <Blast/Debugger/BreakpointInfo.hpp>
 
 
 #include <string_view>
@@ -26,22 +27,40 @@ class DebugBreakpointCommandBuilder
 private:
    std::string shell_command_result;
    std::vector<std::string> shell_command_result_lines;
+   std::vector<Blast::Debugger::BreakpointInfo> debug_points_v;
+   bool silent;
 
    void capture_from_git_command()
    {
       std::stringstream git_locate_debug_command;
       git_locate_debug_command << "git grep -n --untracked --heading --break \"// DEBUG\" "
                                << "\":(exclude)./documentation/*\" \":(exclude)./include/lib/*\" \"*.cpp\"";
-      Blast::ShellCommandExecutorWithCallback shell_command_executor(git_locate_debug_command.str());
+      std::function<void(std::string)> callback = silent
+                                                ? Blast::ShellCommandExecutorWithCallback::simple_silent_callback
+                                                : Blast::ShellCommandExecutorWithCallback::simple_cout_callback
+                                                ;
+
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(
+            git_locate_debug_command.str(),
+            callback
+         );
       shell_command_result = shell_command_executor.execute();
       shell_command_result_lines = Blast::StringSplitter(shell_command_result, '\n').split();
    }
 
 public:
-   DebugBreakpointCommandBuilder() {}
+   DebugBreakpointCommandBuilder()
+      : silent(false)
+   {}
+
+   void set_silent(bool silent=false)
+   {
+      this->silent = silent;
+   }
 
    std::vector<std::string> build()
    {
+      debug_points_v.clear();
       std::vector<std::string> result;
       std::map<std::string, std::set<int>> debug_points;
 
@@ -56,7 +75,7 @@ public:
          else if (ends_with(shell_command_result_line, ".cpp"))
          {
             current_file = shell_command_result_line;
-            std::cout << "CPP: " << current_file << std::endl;
+            if (!silent) std::cout << "CPP: " << current_file << std::endl;
             continue;
          }
          else
@@ -70,7 +89,8 @@ public:
 
             int line_num = atoi(line_num_as_str.c_str());
             debug_points[current_file].insert(line_num);
-            std::cout << "LINE: " << line_num << std::endl;
+            debug_points_v.push_back(Blast::Debugger::BreakpointInfo(current_file, line_num));
+            if (!silent) std::cout << "LINE: " << line_num << std::endl;
             continue;
          }
       }
@@ -97,19 +117,37 @@ public:
 
 int main(int argc, char** argv)
 {
+   bool outputting_command_prefix_only = false;
+   std::vector<std::string> args;
+   for (int i=1; i<argc; i++) args.push_back(argv[i]);
+   if (!args.empty() && args[0] == "command_or_empty")
+   {
+      outputting_command_prefix_only = true;
+   }
+
    DebugBreakpointCommandBuilder breakpoint_command_builder;
+   if (outputting_command_prefix_only) breakpoint_command_builder.set_silent(true);
    std::vector<std::string> breakpoint_commands = breakpoint_command_builder.build();
 
-   std::cout << "=== " << breakpoint_commands.size() << " DEBUG points found ====================" << std::endl;
-   std::cout << std::endl;
-   for (auto &breakpoint_command : breakpoint_commands)
+   if (!outputting_command_prefix_only)
    {
-      std::cout << breakpoint_command << std::endl;
-   }
-   std::cout << std::endl;
-   std::cout << "============================================" << std::endl;
+      std::cout << "============ " << breakpoint_commands.size() << " `~* Fancy Debug *~`====================" << std::endl;
+      std::cout << "  Note: You can output *only* the command string to use, given the marked lines on this project " << std::endl;
+      std::cout << "        If you pass \"command_or_empty\" as a command-line argument to this program." << std::endl;
+      std::cout << std::endl;
+       
+      std::cout << "=== " << breakpoint_commands.size() << " DEBUG points found ====================" << std::endl;
+      std::cout << std::endl;
+      for (auto &breakpoint_command : breakpoint_commands)
+      {
+         std::cout << breakpoint_command << std::endl;
+      }
+      std::cout << std::endl;
+      std::cout << "============================================" << std::endl;
 
-   std::cout << std::endl;
+      std::cout << std::endl;
+   }
+
    std::cout << "lldb ";
    for (auto &breakpoint_command : breakpoint_commands)
    {
@@ -117,10 +155,14 @@ int main(int argc, char** argv)
    }
    std::cout << "-o 'settings set stop-line-count-before 10' ";
    std::cout << "-o 'settings set stop-line-count-after 10' ";
-   std::cout << "-o 'run' ";
-   std::cout << "-- bin/tests/*" << std::endl;
-   std::cout << std::endl;
-   std::cout << "============================================" << std::endl;
+   std::cout << "-o 'run' -- ";
+
+   if (!outputting_command_prefix_only)
+   {
+      std::cout << "-- bin/tests/*" << std::endl;
+      std::cout << std::endl;
+      std::cout << "============================================" << std::endl;
+   }
    return 0;
 }
 

@@ -1,0 +1,20 @@
+properties:
+
+
+  - name: filename
+    type: std::string
+    init_with: '"[unset-filename]"'
+    constructor_arg: true
+    getter_ref: true
+    getter: true
+    setter: true
+ 
+  - name: line
+    type: int
+    init_with: 0
+    constructor_arg: true
+    getter_ref: true
+    getter: true
+    setter: true
+
+
