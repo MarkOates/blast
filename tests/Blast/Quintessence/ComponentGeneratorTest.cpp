@@ -150,6 +150,7 @@ TEST(Blast_Quintessence_ComponentGenerator,
 TEST(Blast_Quintessence_ComponentGenerator,
    infer_comparison_operand_class_name__with_an_invalid_class_name__will_throw_an_error)
 {
+   // DEBUG:
    ComponentGenerator generator("Baz/Testing/Baz/BarBasilBonk");
    std::string expected_comparison_operand_class_name = "Baz/BarBasilBonk";
    std::string expected_error_message = "[Blast::Quintessence::ComponentGenerator::infer_comparison_operand_class_name]"

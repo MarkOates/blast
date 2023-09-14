@@ -394,7 +394,12 @@ focus:
 	fi
 	$(call output_terminal_message,"Run the focused component test")
 	@echo "run_test_for_focused_component" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	@((set -o pipefail && (./bin/tests/$(FOCUSED_COMPONENT_NAME)Test --gtest_filter=*$(FOCUSED_TEST_FILTER)* 2>&1 | tee $(BUILD_FILE_COMPONENT_TESTS_RUN))) && (make celebrate_passing_tests) || (make signal_failing_tests && exit 1) )
+	@if [ "$(DEBUG_MARKER_PREFIX_COMMAND)" = "" ]; then \
+		((set -o pipefail && (./bin/tests/$(FOCUSED_COMPONENT_NAME)Test --gtest_filter=*$(FOCUSED_TEST_FILTER)* 2>&1 | tee $(BUILD_FILE_COMPONENT_TESTS_RUN))) && (make celebrate_passing_tests) || (make signal_failing_tests && exit 1) ) \
+	else \
+		echo "Use the debugger"; \
+		exit 1; \
+	fi
 	$(call output_terminal_message,"Make the library")
 	@echo "make_library" > $(BUILD_STATUS_SIGNALING_FILENAME)
 	@make library -j8
