@@ -382,10 +382,19 @@ focus:
 	@set -o pipefail && (make obj/tests/$(FOCUSED_COMPONENT_NAME)Test.o 2>&1 | tee $(BUILD_FILE_COMPONENT_TEST_OBJECT_BUILD))
 	@echo "build_focused_component_test_executable" > $(BUILD_STATUS_SIGNALING_FILENAME)
 	@set -o pipefail && (make bin/tests/$(FOCUSED_COMPONENT_NAME)Test 2>&1 | tee $(BUILD_FILE_COMPONENT_TEST_EXECUTABLE_BUILD))
+	$(call output_terminal_message,"Check for DEBUG markers in source files")
+	@echo "run_test_for_focused_component" > $(BUILD_STATUS_SIGNALING_FILENAME)
+	$(eval DEBUG_MARKER_PREFIX_COMMAND=$(shell (cd $(PROJECT_BASE_DIRECTORY) && /Users/markoates/Repos/blast/bin/programs/fancy_debug command_or_empty)))
+	@if [ "$(DEBUG_MARKER_PREFIX_COMMAND)" = "" ]; then \
+			echo "(No debugging symbols found)"; \
+	else \
+			echo "Debugging symbols have been found; TODO: Continue running test with debugger."; \
+			make celebrate_debug_symbol_found; \
+			echo "Use \"/Users/markoates/Repos/blast/bin/programs/fancy_debug command_or_empty\" to output the command."; \
+	fi
 	$(call output_terminal_message,"Run the focused component test")
 	@echo "run_test_for_focused_component" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	@TEST_NAME_TO_RUN=(./bin/tests/$(FOCUSED_COMPONENT_NAME)Test --gtest_filter=*$(FOCUSED_TEST_FILTER)*)
-	@((set -o pipefail && ($(TEST_NAME_TO_RUN) 2>&1 | tee $(BUILD_FILE_COMPONENT_TESTS_RUN))) && (make celebrate_passing_tests) || (make signal_failing_tests && exit 1) )
+	@((set -o pipefail && (./bin/tests/$(FOCUSED_COMPONENT_NAME)Test --gtest_filter=*$(FOCUSED_TEST_FILTER)* 2>&1 | tee $(BUILD_FILE_COMPONENT_TESTS_RUN))) && (make celebrate_passing_tests) || (make signal_failing_tests && exit 1) )
 	$(call output_terminal_message,"Make the library")
 	@echo "make_library" > $(BUILD_STATUS_SIGNALING_FILENAME)
 	@make library -j8
@@ -533,6 +542,9 @@ define output_built_banner
 endef
 
 
+
+celebrate_debug_symbol_found:
+	$(call output_debug_banner)
 
 
 celebrate_passing_tests:
