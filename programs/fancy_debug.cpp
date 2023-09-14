@@ -33,7 +33,8 @@ private:
    void capture_from_git_command()
    {
       std::stringstream git_locate_debug_command;
-      git_locate_debug_command << "git grep -n --untracked --heading --break \"// DEBUG\" "
+      git_locate_debug_command << "git grep -n --untracked --heading --break \"//" " DEBUG\" " // NOTE: Added this empty " " so the debug finder does not
+                                                                                               // think *this* location is a debug point
                                << "\":(exclude)./documentation/*\" \":(exclude)./include/lib/*\" \"*.cpp\"";
       std::function<void(std::string)> callback = silent
                                                 ? Blast::ShellCommandExecutorWithCallback::simple_silent_callback

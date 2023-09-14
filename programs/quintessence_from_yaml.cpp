@@ -1189,7 +1189,6 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    }
 
    // TODO: Consider removing this, it is already parsed during "convert_function_arguments"
-   // DEBUG: dump out consolidated default argument dependencies
    if (!consolidated_function_default_argument_dependencies.empty())
    {
       // Output some debug info:

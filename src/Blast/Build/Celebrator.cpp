@@ -73,7 +73,6 @@ std::string Celebrator::generate_debug_banner(int width)
    std::string CONSOLE_COLOR_GREEN = "\033[32m";
    std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
-   // DEBUG
    // TODO: Add a "debug_output" option, and add a --debug flag to the programs/build_celebrator
 
    int left_padding_width = std::max(0, (width - banner_width) / 2);
@@ -129,7 +128,6 @@ std::string Celebrator::generate_pass_banner(int width)
    std::string CONSOLE_COLOR_GREEN = "\033[32m";
    std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
-   // DEBUG
    // TODO: Add a "debug_output" option, and add a --debug flag to the programs/build_celebrator
 
    int left_padding_width = std::max(0, (width - banner_width) / 2);
@@ -185,7 +183,6 @@ std::string Celebrator::generate_fail_banner(int width)
    std::string CONSOLE_COLOR_RED = "\033[31m";
    std::string CONSOLE_COLOR_DEFAULT = "\033[0m";
 
-   // DEBUG
    // TODO: Add a "debug_output" option, and add a --debug flag to the programs/build_celebrator
 
    int left_padding_width = std::max(0, (width - banner_width) / 2);
@@ -273,7 +270,6 @@ std::string Celebrator::generate_component_built_banner(int width)
    }
 
 
-   // DEBUG
    // TODO: Add a "debug_output" option, and add a --debug flag to the programs/build_celebrator
 
    int left_padding_width = std::max(0, (width - banner_width) / 2);
@@ -332,7 +328,6 @@ std::string Celebrator::generate_built_banner(int width)
    }
 
 
-   // DEBUG
    // TODO: Add a "debug_output" option, and add a --debug flag to the programs/build_celebrator
 
    int left_padding_width = std::max(0, (width - banner_width) / 2);
