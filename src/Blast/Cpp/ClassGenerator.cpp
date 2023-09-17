@@ -532,6 +532,20 @@ std::string ClassGenerator::class_property_list(int indent_level)
    for (auto &attribute_property : cpp_class.get_attribute_properties())
    {
       if (attribute_property.is_constexpr) continue;
+      if (attribute_property.is_exposed) continue;
+      result << std::string(3*indent_level, ' ') << attribute_property.as_class_property() << ";\n";
+   }
+   return result.str();
+}
+
+
+std::string ClassGenerator::exposed_class_property_list(int indent_level)
+{
+   std::stringstream result;
+   for (auto &attribute_property : cpp_class.get_attribute_properties())
+   {
+      if (!attribute_property.is_exposed) continue;
+      if (attribute_property.is_constexpr) continue;
       result << std::string(3*indent_level, ' ') << attribute_property.as_class_property() << ";\n";
    }
    return result.str();
@@ -949,7 +963,8 @@ NAMESPACES_CLOSER
    __replace(result, "CLASS_NAME", cpp_class.get_class_name());
    __replace(result, "CONSTRUCTOR\n", constructor_declaration(required_namespace_indentation_levels + 1));
    __replace(result, "DESTRUCTOR\n", destructor_declaration(required_namespace_indentation_levels + 1));
-   __replace(result, "EXPOSED_PROPERTIES\n", ""); //class_property_list(required_namespace_indentation_levels + 1));
+   //__replace(result, "EXPOSED_PROPERTIES\n", ""); //class_property_list(required_namespace_indentation_levels + 1));
+   __replace(result, "EXPOSED_PROPERTIES\n", exposed_class_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "PROPERTIES\n", class_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(required_namespace_indentation_levels + 1));

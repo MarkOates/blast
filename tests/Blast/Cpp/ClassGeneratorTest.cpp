@@ -22,11 +22,20 @@ protected:
    virtual void SetUp()
    {
       Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {
-         //std::string datatype, std::string variable_name, std::string initialization_value, bool is_static, bool is_constructor_parameter, bool has_getter, bool has_setter
+         //std::string datatype,
+         //  std::string variable_name,
+         //    std::string initialization_value,
+         //      bool is_static,
+         //        bool is_constructor_parameter,
+         //          bool has_getter,
+         //            bool has_setter,
+         //              bool is_constexpr,
+         //                 bool is_exposed
          { "int", "last_id", "0", true, false, false, false, false, false, false, false },
          { "int", "id", "last_id++", false, false, true, false, false, false, false, false },
          { "std::string", "name", "\"[unnamed]\"", false, true, true, false, false, true, false, false },
          { "type_t", "type", "MAGE", false, true, true, false, false, true, false, false },
+         { "float", "an_exposed_variable", "0.25f", false, false, false, false, false, false, false, true },
       });
 
       class_generator_fixture = Blast::Cpp::ClassGenerator(cpp_class);
@@ -431,6 +440,14 @@ TEST_F(ClassGeneratorTest, class_property_list__returns_the_expected_formatted_s
 }
 
 
+TEST_F(ClassGeneratorTest,
+   exposed_class_property_list__returns_the_expected_formatted_string_of_class_properties_that_are_exposed)
+{
+   std::string expected_property_list = "   static int last_id;\n   int id;\n   std::string name;\n   type_t type;\n";
+   ASSERT_EQ(expected_property_list, class_generator_fixture.class_property_list(1));
+}
+
+
 TEST_F(ClassGeneratorTest, static_attribute_definitions__returns_a_string_formatted_with_the_expected_definitions)
 {
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = {
@@ -530,7 +547,10 @@ TEST_F(ClassGeneratorTest, setter_function_definitions__returns_the_expected_for
 
 TEST_F(ClassGeneratorTest, initialization_list__returns_the_expected_formatted_string)
 {
-   std::string expected_initialization_list = "   : id(last_id++)\n   , name(name)\n   , type(type)\n";
+   std::string expected_initialization_list = "   : id(last_id++)\n"
+                                              "   , name(name)\n"
+                                              "   , type(type)\n"
+                                              "   , an_exposed_variable(0.25f)\n";
    ASSERT_EQ(expected_initialization_list, class_generator_fixture.initialization_list(1));
 }
 
@@ -544,7 +564,12 @@ TEST_F(ClassGeneratorTest, constructor_declaration__returns_the_expected_string)
 
 TEST_F(ClassGeneratorTest, constructor_definition_returns_the_expected_string)
 {
-   std::string expected_constructor_definition = "User::User(std::string name, type_t type)\n   : id(last_id++)\n   , name(name)\n   , type(type)\n{\n}\n";
+   std::string expected_constructor_definition = "User::User(std::string name, type_t type)\n"
+                                                 "   : id(last_id++)\n"
+                                                 "   , name(name)\n"
+                                                 "   , type(type)\n"
+                                                 "   , an_exposed_variable(0.25f)\n"
+                                                 "{\n}\n";
    ASSERT_EQ(expected_constructor_definition, class_generator_fixture.constructor_definition(0));
 }
 
