@@ -15,7 +15,7 @@ namespace Blast
          class ShellCommand : public Blast::BuildSystem::BuildStageRenderers::Base
          {
          public:
-            static constexpr char* TYPE = "ShellCommand";
+            static constexpr char* TYPE = (char*)"ShellCommand";
 
          private:
             Blast::BuildSystem::BuildStages::ShellCommand* shell_command_build_stage;

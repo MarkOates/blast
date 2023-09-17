@@ -13,7 +13,7 @@ namespace Blast
          class Base
          {
          public:
-            static constexpr char* TYPE = "Base";
+            static constexpr char* TYPE = (char*)"Base";
 
          private:
             std::string type;
