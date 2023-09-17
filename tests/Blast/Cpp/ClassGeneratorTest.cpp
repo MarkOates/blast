@@ -729,12 +729,44 @@ TEST_F(ClassGeneratorTest,
 
 TEST_F(ClassGeneratorTest, generate_header_file_content__will_produce_the_expected_header_file)
 {
-   std::string expected_header_file_content = R"CONTENT(
+   std::string expected_header_file_content = R"CONTENT(#pragma once
+
+
+#include <string>
+
+
+namespace ProjectName
+{
+   class User
+   {
+   private:
+      static int last_id;
+      int id;
+      std::string name;
+      type_t type;
+
+   protected:
+
+
+   public:
+      float an_exposed_variable;
+      User(std::string name="[unnamed]", type_t type=MAGE);
+      ~User();
+
+      void set_name(std::string name);
+      void set_type(type_t type);
+      int get_id() const;
+      std::string get_name() const;
+      type_t get_type() const;
+   };
+}
+
+
 
 )CONTENT";
    std::string actual_header_file_content = class_generator_fixture.generate_header_file_content();
-   // TODO: This expectation:
-   // EXPECT_EQ(expected_header_file_content, actual_header_file_content);
+
+   EXPECT_EQ(expected_header_file_content, actual_header_file_content);
 }
 
 
