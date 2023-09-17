@@ -21,22 +21,36 @@ protected:
 
    virtual void SetUp()
    {
-      Blast::Cpp::Class cpp_class("User", { "ProjectName" }, {}, {
-         //std::string datatype,
-         //  std::string variable_name,
-         //    std::string initialization_value,
-         //      bool is_static,
-         //        bool is_constructor_parameter,
-         //          bool has_getter,
-         //            bool has_setter,
-         //              bool is_constexpr,
-         //                 bool is_exposed
-         { "int", "last_id", "0", true, false, false, false, false, false, false, false },
-         { "int", "id", "last_id++", false, false, true, false, false, false, false, false },
-         { "std::string", "name", "\"[unnamed]\"", false, true, true, false, false, true, false, false },
-         { "type_t", "type", "MAGE", false, true, true, false, false, true, false, false },
-         { "float", "an_exposed_variable", "0.25f", false, false, false, false, false, false, false, true },
-      });
+      Blast::Cpp::Class cpp_class(
+         "User",
+         { "ProjectName" },
+         {},
+         { // class attributes
+            //std::string datatype,
+            //  std::string variable_name,
+            //    std::string initialization_value,
+            //      bool is_static,
+            //        bool is_constructor_parameter,
+            //          bool has_getter,
+            //            bool has_setter,
+            //              bool is_constexpr,
+            //                 bool is_exposed
+            { "int", "last_id", "0", true, false, false, false, false, false, false, false },
+            { "int", "id", "last_id++", false, false, true, false, false, false, false, false },
+            { "std::string", "name", "\"[unnamed]\"", false, true, true, false, false, true, false, false },
+            { "type_t", "type", "MAGE", false, true, true, false, false, true, false, false },
+            { "float", "an_exposed_variable", "0.25f", false, false, false, false, false, false, false, true },
+         },
+         {}, // enum classes
+         {}, // functions (should be renamed to "methods", btw)
+         { // symbol dependencies
+            { "float" },
+            { "int" },
+            { "std::string", { "string" } },
+            { "type_t" }, // TODO: Come up with something resembling a header for a "type_t"
+         },
+         {} // function body symbol dependencies
+      );
 
       class_generator_fixture = Blast::Cpp::ClassGenerator(cpp_class);
    }
@@ -710,6 +724,17 @@ TEST_F(ClassGeneratorTest,
       actual_consolidated_default_value_dependency_symbols,
       ::testing::UnorderedElementsAreArray(expected_consolidated_default_value_dependency_symbols)
    );
+}
+
+
+TEST_F(ClassGeneratorTest, generate_header_file_content__will_produce_the_expected_header_file)
+{
+   std::string expected_header_file_content = R"CONTENT(
+
+)CONTENT";
+   std::string actual_header_file_content = class_generator_fixture.generate_header_file_content();
+   // TODO: This expectation:
+   // EXPECT_EQ(expected_header_file_content, actual_header_file_content);
 }
 
 
