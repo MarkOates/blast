@@ -128,18 +128,14 @@ int main(int argc, char** argv)
 {
    Modes mode = UNDEFINED;
 
-   bool outputting_command_prefix_only = false;
-   bool outputting_presence_only = false;
    std::vector<std::string> args;
    for (int i=1; i<argc; i++) args.push_back(argv[i]);
    if (!args.empty() && args[0] == "command_or_empty")
    {
-      outputting_command_prefix_only = true;
       mode = COMMAND_PREFIX_ONLY;
    }
    else if (!args.empty() && args[0] == "presence_only")
    {
-      outputting_presence_only= true;
       mode = PRESENCE_ONLY;
    }
    else if (!args.empty())
