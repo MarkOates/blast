@@ -727,7 +727,7 @@ TEST_F(ClassGeneratorTest,
 }
 
 
-TEST_F(ClassGeneratorTest, generate_header_file_content__will_produce_the_expected_header_file)
+TEST_F(ClassGeneratorTest, generate_header_file_content__will_produce_the_expected_header_file_content)
 {
    std::string expected_header_file_content = R"CONTENT(#pragma once
 
@@ -767,6 +767,78 @@ namespace ProjectName
    std::string actual_header_file_content = class_generator_fixture.generate_header_file_content();
 
    EXPECT_EQ(expected_header_file_content, actual_header_file_content);
+}
+
+
+TEST_F(ClassGeneratorTest, generate_source_file_content__will_produce_the_expected_source_file_content)
+{
+   std::string expected_source_file_content = R"CONTENT(
+
+#include <ProjectName/User.hpp>
+
+
+
+
+namespace ProjectName
+{
+
+
+int User::last_id = 0;
+
+
+User::User(std::string name, type_t type)
+   : id(last_id++)
+   , name(name)
+   , type(type)
+   , an_exposed_variable(0.25f)
+{
+}
+
+
+User::~User()
+{
+}
+
+
+void User::set_name(std::string name)
+{
+   this->name = name;
+}
+
+
+void User::set_type(type_t type)
+{
+   this->type = type;
+}
+
+
+int User::get_id() const
+{
+   return id;
+}
+
+
+std::string User::get_name() const
+{
+   return name;
+}
+
+
+type_t User::get_type() const
+{
+   return type;
+}
+
+
+
+
+} // namespace ProjectName
+
+
+)CONTENT";
+   std::string actual_source_file_content = class_generator_fixture.generate_source_file_content();
+
+   EXPECT_EQ(expected_source_file_content, actual_source_file_content);
 }
 
 
