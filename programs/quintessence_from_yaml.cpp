@@ -633,6 +633,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       const std::string GETTER_REF = "getter_ref";
       const std::string SETTER = "setter";
       const std::string CONSTEXPR = "constexpr";
+      const std::string EXPOSED = "exposed";
 
       validate(it.IsMap(), this_func_name, "Unexpected sequence element in \"properties\", expected to be of a YAML Map.");
 
@@ -664,6 +665,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
       bool has_setter = fetch_bool(it, SETTER, false);
       bool is_constexpr = fetch_bool(it, CONSTEXPR, false);
+      bool is_exposed = fetch_bool(it, EXPOSED, false);
       //std::string initialization_value = init_with_node.as<std::string>();
       //bool is_static = static_node.as<bool>();
       //bool is_constructor_parameter = constructor_arg_node.as<bool>();
@@ -678,13 +680,32 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       validate((!(is_constexpr && has_getter_ref)), this_func_name, "Attribute property \"constexpr\" can not be combined with \"getter_ref\". You must access the property directly.");
       validate((!(is_constexpr && has_getter)), this_func_name, "Attribute property \"constexpr\" can not be combined with \"getter\". You must access the property directly.");
 
+      // TODO: Add validations for "is_exposed"
+      // requirements:
+      //  - !has_getter
+      //  - !has_setter
+      //  - !has_getter_ref
+      //  - !has_explicit_getter
+
       validate((has_getter_AS_STR=="true" || has_getter_AS_STR=="false" || has_getter_AS_STR=="explicit"), this_func_name, "Attribute property \"getter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
 
       validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
 
       if (has_getter_AS_STR == "explicit") has_explicit_getter = true;
 
-      Blast::Cpp::ClassAttributes class_attribute_properties(datatype, variable_name, initialization_value, is_static, is_constructor_parameter, has_getter, has_explicit_getter, has_getter_ref, has_setter, is_constexpr);
+      Blast::Cpp::ClassAttributes class_attribute_properties(
+            datatype,
+            variable_name,
+            initialization_value,
+            is_static,
+            is_constructor_parameter,
+            has_getter,
+            has_explicit_getter,
+            has_getter_ref,
+            has_setter,
+            is_constexpr,
+            is_exposed
+         );
 
       result.push_back(class_attribute_properties);
    }
