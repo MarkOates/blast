@@ -827,6 +827,7 @@ NAMESPACES_CLOSER
    __replace(result, "CLASS_HEADER_INCLUDE_DIRECTIVE\n", header_include_directive());
    __replace(result, "FUNCTION_BODY_DEPENDENCY_INCLUDE_DIRECTIVES\n", function_body_dependency_include_directives());
    __replace(result, "HEADER_FILENAME", header_filename());
+   //__replace(result, "EXPOSED_PROPERTIES\n", ""); // TODO
    __replace(result, "CONSTRUCTOR\n", constructor_definition(0));
    __replace(result, "DESTRUCTOR\n", destructor_definition(0));
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_definitions(0));
@@ -861,6 +862,7 @@ PROTECTED_SECTION
 PROTECTED_ENUM_CLASS_DECLARATIONS
 
 PUBLIC_SCOPE_SPECIFIER
+EXPOSED_PROPERTIES
 PUBLIC_ENUM_CLASS_DECLARATIONS
 CONSTRUCTOR
 DESTRUCTOR
@@ -947,6 +949,7 @@ NAMESPACES_CLOSER
    __replace(result, "CLASS_NAME", cpp_class.get_class_name());
    __replace(result, "CONSTRUCTOR\n", constructor_declaration(required_namespace_indentation_levels + 1));
    __replace(result, "DESTRUCTOR\n", destructor_declaration(required_namespace_indentation_levels + 1));
+   __replace(result, "EXPOSED_PROPERTIES\n", ""); //class_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "CONSTEXPR_PROPERTIES\n", constexpr_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "PROPERTIES\n", class_property_list(required_namespace_indentation_levels + 1));
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(required_namespace_indentation_levels + 1));
