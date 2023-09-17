@@ -686,6 +686,10 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       //  - !has_setter
       //  - !has_getter_ref
       //  - !has_explicit_getter
+      if (is_exposed)
+      {
+         validate((!has_getter && !has_setter && !has_getter_ref && !has_explicit_getter), this_func_name, "Property attribute \"exposed\" can only be used when [\"getter\", \"setter\", \"getter_ref\"] are not present (or false).");
+      }
 
       validate((has_getter_AS_STR=="true" || has_getter_AS_STR=="false" || has_getter_AS_STR=="explicit"), this_func_name, "Attribute property \"getter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
 
