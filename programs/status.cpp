@@ -348,7 +348,7 @@ int main(int argc, char **argv)
       //{ "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
       { "oatescodes",       { false, ProjectStatus("oatescodes", base_dir) } },
       //{ "tileo",                { false, ProjectStatus("tileo") } },
-      { "union",            { false, ProjectStatus("union", base_dir) } },
+      //{ "union",            { false, ProjectStatus("union", base_dir) } },
       //{ "Wicked",            { false, ProjectStatus("Wicked") } },
       //{ "/Library/Application Support/Adobe/CEP/extensions", { false, ProjectStatus("unset") } },
    };
