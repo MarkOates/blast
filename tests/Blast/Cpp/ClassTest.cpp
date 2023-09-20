@@ -46,7 +46,7 @@ TEST(ClassTest,
    infer_has_constexpr_properties__returns_true_if_there_are_attributes_in_the_class_that_have_a_constexpr_qualifier)
 {
    Blast::Cpp::Class cpp_class_with_constexpr_properties("User", { "ProjectName" }, {}, {
-      Blast::Cpp::ClassAttributes("float", "PI", "3.141592f", true, false, false, false, false, false, true, false),
+      Blast::Cpp::ClassAttributes("float", "PI", "3.141592f", true, false, false, false, false, false, false, true, false),
    });
 
    EXPECT_TRUE(cpp_class_with_constexpr_properties.infer_has_constexpr_properties());
