@@ -23,6 +23,7 @@ ClassAttributes::ClassAttributes(
       bool has_explicit_getter,
       bool has_getter_ref,
       bool has_setter,
+      bool has_explicit_setter,
       bool is_constexpr,
       bool is_exposed
    )
@@ -35,6 +36,7 @@ ClassAttributes::ClassAttributes(
    , has_explicit_getter(has_explicit_getter)
    , has_getter_ref(has_getter_ref)
    , has_setter(has_setter)
+   , has_explicit_setter(has_explicit_setter)
    , is_constexpr(is_constexpr)
    , is_exposed(is_exposed)
 {

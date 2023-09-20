@@ -156,6 +156,7 @@ Blast::Cpp::ClassAttributes BuildInfoCppFileGenerator::build_cpp_class_attribute
          false, //bool has_expicit_getter,
          false, //bool has_getter_ref,
          false, //bool has_setter,
+         false,
          false, //bool is_constexpr
          false //bool is_exposed
       );

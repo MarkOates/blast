@@ -632,6 +632,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       const std::string EXPLICIT_GETTER = "explicit_getter"; // Consider removing this
       const std::string GETTER_REF = "getter_ref";
       const std::string SETTER = "setter";
+      const std::string EXPLICIT_SETTER = "explicit_setter"; // Consider removing this
       const std::string CONSTEXPR = "constexpr";
       const std::string EXPOSED = "exposed";
 
@@ -659,13 +660,13 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       bool is_static = fetch_bool(it, STATIC, false);
       bool is_constructor_parameter = fetch_bool(it, CONSTRUCTOR_ARG, false);
       std::string has_getter_AS_STR = fetch_string(it, GETTER, "false");
-      std::string has_setter_AS_STR = fetch_string(it, GETTER, "false");
       bool has_getter = (has_getter_AS_STR == "true") ? true : false;
       //bool has_getter = fetch_bool(it, GETTER, false);
       bool has_explicit_getter = fetch_bool(it, EXPLICIT_GETTER, false);
-      bool has_explicit_setter = fetch_bool(it, EXPLICIT_GETTER, false);
       bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
-      bool has_setter = fetch_bool(it, SETTER, false);
+      std::string has_setter_AS_STR = fetch_string(it, SETTER, "false");
+      bool has_setter = (has_setter_AS_STR == "true") ? true : false; //fetch_bool(it, SETTER, false);
+      bool has_explicit_setter = fetch_bool(it, EXPLICIT_SETTER, false);
       bool is_constexpr = fetch_bool(it, CONSTEXPR, false);
       bool is_exposed = fetch_bool(it, EXPOSED, false);
       //std::string initialization_value = init_with_node.as<std::string>();
@@ -686,6 +687,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       // Get "getter" as a string value
       validate((has_getter_AS_STR=="true" || has_getter_AS_STR=="false" || has_getter_AS_STR=="explicit"), this_func_name, "Attribute property \"getter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
       validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
+      validate(!(has_setter && has_explicit_setter), this_func_name, "Attribute property cannot have both \"setter: true\" and \"explicit_setter: true\".");
 
       // Get "setter" as a string value
       validate((has_setter_AS_STR=="true" || has_setter_AS_STR=="false" || has_setter_AS_STR=="explicit"), this_func_name, "Attribute property \"setter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
@@ -701,10 +703,10 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       //  - !has_setter
       //  - !has_getter_ref
       //  - !has_explicit_getter
-      //  - !has_explicit_getter
+      //  - !has_explicit_setter
       if (is_exposed)
       {
-         validate((!has_getter && !has_setter && !has_getter_ref && !has_explicit_getter), this_func_name, "Property attribute \"exposed\" can only be used when [\"getter\", \"setter\", \"getter_ref\"] are not present (or false).");
+         //validate((!has_getter && !has_setter && !has_getter_ref && !has_explicit_getter), this_func_name, "Property attribute \"exposed\" can only be used when [\"getter\", \"setter\", \"getter_ref\"] are not present (or false).");
          validate((!has_getter && !has_setter && !has_getter_ref && !has_explicit_getter && !has_explicit_setter), this_func_name, "Property attribute \"exposed\" can only be used when [\"getter\", \"setter\", \"getter_ref\"] are not present (or false).");
       }
 
@@ -719,6 +721,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
             has_explicit_getter,
             has_getter_ref,
             has_setter,
+            has_explicit_setter,
             is_constexpr,
             is_exposed
          );
@@ -1190,6 +1193,57 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    }
 
 
+   std::vector<std::string> expected_explicit_setter_function_names;
+   for (auto &attribute_property : attribute_properties)
+   {
+      if (attribute_property.has_explicit_setter == true)
+      {
+         std::string expected_explicit_setter_function_name = "set_" + attribute_property.variable_name; // TODO: use a helper to generate the getter function name
+         expected_explicit_setter_function_names.push_back(expected_explicit_setter_function_name);
+      }
+   }
+
+
+   std::vector<std::string> explicit_setter_function_names_that_do_not_exist;
+   // TODO: validate the function names exist
+   for (auto &expected_explicit_setter_function_name : expected_explicit_setter_function_names)
+   {
+      bool function_has_been_explicitly_declared = false;
+      for (auto &parsed_method_info : functions_and_dependencies)
+      {
+         //ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
+         //ParsedMethodInfo &parsed_method_info = function_and_dependency;
+         std::string this_function_name = parsed_method_info.function.get_name();
+         //std::string this_function_name = std::get<0>(function_and_dependency).get_name();
+         if (this_function_name == expected_explicit_setter_function_name)
+         {
+            function_has_been_explicitly_declared = true;
+            break;
+         }
+      }
+
+      if (!function_has_been_explicitly_declared) explicit_setter_function_names_that_do_not_exist.push_back(expected_explicit_setter_function_name);
+   }
+
+   // throw error if explicit_setter functions are missing
+   if (!explicit_setter_function_names_that_do_not_exist.empty())
+   {
+      std::stringstream error_message;
+      error_message << "quintessence_from_yaml error: in \"" << quintessence_filename << "\", explicit setters have been "
+         "set on some properties, yet the expected function declarations for [";
+         for (auto &explicit_setter_function_name_that_does_not_exist : explicit_setter_function_names_that_do_not_exist)
+         {
+            error_message << "\"" << explicit_setter_function_name_that_does_not_exist << "\", ";
+         }
+         error_message << "] are not present.";
+
+         // TODO: validate the return type of the function matches the return type of the property, and, possibly that there are no parameters on the function
+
+      throw std::runtime_error(error_message.str());
+   }
+
+
+   
    
    // consolidate functions and their dependencies
 

@@ -21,6 +21,7 @@ namespace Blast
          bool has_explicit_getter;
          bool has_getter_ref;
          bool has_setter;
+         bool has_explicit_setter;
          bool is_constexpr;
          bool is_exposed;
 
@@ -34,6 +35,7 @@ namespace Blast
             bool has_expicit_getter,
             bool has_getter_ref,
             bool has_setter,
+            bool has_explicit_setter,
             bool is_constexpr,
             bool is_exposed
          );
