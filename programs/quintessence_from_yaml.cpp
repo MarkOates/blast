@@ -629,7 +629,7 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       const std::string CONSTRUCTOR_ARG = "constructor_arg";
       const std::string STATIC = "static";
       const std::string GETTER = "getter";
-      const std::string EXPLICIT_GETTER = "explicit_getter";
+      const std::string EXPLICIT_GETTER = "explicit_getter"; // Consider removing this
       const std::string GETTER_REF = "getter_ref";
       const std::string SETTER = "setter";
       const std::string CONSTEXPR = "constexpr";
@@ -659,9 +659,11 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       bool is_static = fetch_bool(it, STATIC, false);
       bool is_constructor_parameter = fetch_bool(it, CONSTRUCTOR_ARG, false);
       std::string has_getter_AS_STR = fetch_string(it, GETTER, "false");
+      std::string has_setter_AS_STR = fetch_string(it, GETTER, "false");
       bool has_getter = (has_getter_AS_STR == "true") ? true : false;
       //bool has_getter = fetch_bool(it, GETTER, false);
       bool has_explicit_getter = fetch_bool(it, EXPLICIT_GETTER, false);
+      bool has_explicit_setter = fetch_bool(it, EXPLICIT_GETTER, false);
       bool has_getter_ref = fetch_bool(it, GETTER_REF, false);
       bool has_setter = fetch_bool(it, SETTER, false);
       bool is_constexpr = fetch_bool(it, CONSTEXPR, false);
@@ -680,22 +682,32 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       validate((!(is_constexpr && has_getter_ref)), this_func_name, "Attribute property \"constexpr\" can not be combined with \"getter_ref\". You must access the property directly.");
       validate((!(is_constexpr && has_getter)), this_func_name, "Attribute property \"constexpr\" can not be combined with \"getter\". You must access the property directly.");
 
+
+      // Get "getter" as a string value
+      validate((has_getter_AS_STR=="true" || has_getter_AS_STR=="false" || has_getter_AS_STR=="explicit"), this_func_name, "Attribute property \"getter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
+      validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
+
+      // Get "setter" as a string value
+      validate((has_setter_AS_STR=="true" || has_setter_AS_STR=="false" || has_setter_AS_STR=="explicit"), this_func_name, "Attribute property \"setter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
+      //validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
+
+      if (has_getter_AS_STR == "explicit") has_explicit_getter = true;
+      if (has_setter_AS_STR == "explicit") has_explicit_setter = true;
+
+
       // TODO: Add validations for "is_exposed"
       // requirements:
       //  - !has_getter
       //  - !has_setter
       //  - !has_getter_ref
       //  - !has_explicit_getter
+      //  - !has_explicit_getter
       if (is_exposed)
       {
          validate((!has_getter && !has_setter && !has_getter_ref && !has_explicit_getter), this_func_name, "Property attribute \"exposed\" can only be used when [\"getter\", \"setter\", \"getter_ref\"] are not present (or false).");
+         validate((!has_getter && !has_setter && !has_getter_ref && !has_explicit_getter && !has_explicit_setter), this_func_name, "Property attribute \"exposed\" can only be used when [\"getter\", \"setter\", \"getter_ref\"] are not present (or false).");
       }
 
-      validate((has_getter_AS_STR=="true" || has_getter_AS_STR=="false" || has_getter_AS_STR=="explicit"), this_func_name, "Attribute property \"getter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
-
-      validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
-
-      if (has_getter_AS_STR == "explicit") has_explicit_getter = true;
 
       Blast::Cpp::ClassAttributes class_attribute_properties(
             datatype,
