@@ -4,6 +4,9 @@
       - name: identifier
         type: std::string
         default_argument: '"[unset-identifier"'
+      - name: unrecognized_key_callback_func
+        type: std::function<bool()>
+        init_with: 0
     guards: [ initialized ]
     body: |
       CubeShooter::Levels::Base* result = nullptr;
@@ -20,11 +23,20 @@
       // locate and call the function to handle the item
       if (items_map.count(identifier) == 0)
       {
-         // item not found
-         std::stringstream error_message;
-         error_message << "[CubeShooter::LevelFactory::load_level]: error: Cannot load the item with the identifier \""
-                       << identifier << "\", it does not exist.";
-         throw std::runtime_error(error_message.str());
+         bool item_handled = false;
+         if (unrecognized_key_callback_func)
+         {
+            item_handled = unrecognized_key_callback_func();
+         }
+
+         if (!item_handled)
+         {
+            // item not found
+            std::stringstream error_message;
+            error_message << "[CubeShooter::LevelFactory::load_level]: error: Cannot load the item with the identifier \""
+                          << identifier << "\", it does not exist.";
+            throw std::runtime_error(error_message.str());
+         }
       }
       else
       {
