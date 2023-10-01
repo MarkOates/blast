@@ -116,8 +116,8 @@ class DocCreator
     result = ""
     result += "<ul>\n"
     result += "  <div class=\"component\">\n"
-    #result += "    <h3 id=\"#{filename}\">#{filename}</h3>\n"
-    #result += "    <h4>Overview<h4>\n"
+    result += "    <h3 id=\"#{filename}\">#{filename}</h3>\n"
+    result += "    <h4>Overview<h4>\n"
 
     result += "    <h3>Properties</h3>\n"
 
