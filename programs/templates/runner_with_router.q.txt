@@ -271,7 +271,7 @@ methods:
 
       // TODO: Setup rolling credits screen
       AllegroFlare::Elements::RollingCredits::SectionFactory section_factory;
-      rolling_credits_screen.set_event_emitter(event_emitte); // TODO: See if this is necessary
+      rolling_credits_screen.set_event_emitter(event_emitter); // TODO: See if this is necessary
       rolling_credits_screen.set_font_bin(font_bin);
       rolling_credits_screen.set_background(&solid_black_background);
       rolling_credits_screen.set_sections({
@@ -327,6 +327,7 @@ methods:
 
       return;
     body_dependency_symbols:
+      - AllegroFlare::Elements::RollingCredits::SectionFactory
       - AllegroFlare::StoryboardFactory
       - AllegroFlare::Color
 
@@ -637,4 +638,7 @@ dependencies:
     headers: [ AllegroFlare/Elements/Backgrounds/ClearToColor.hpp ]
   - symbol: ReleaseInfo
     headers: [ ReleaseInfo.hpp ]
+  - symbol: AllegroFlare::Elements::RollingCredits::SectionFactory
+    headers: [ AllegroFlare/Elements/RollingCredits/SectionFactory.hpp ]
+
 
