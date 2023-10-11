@@ -568,6 +568,48 @@ public:
 
 
 
+class VerifySourceReleaseFilesAreAvailableForDownloading : public Blast::BuildSystem::BuildStages::Base
+{
+private:
+   //curl -s -o /dev/null -w "%{http_code}" "https://storage.googleapis.com/clubcatt-games-bucket/FadeToWhite-0.0.1-SourceRelease.zip"
+
+   void execute_shell_commands()
+   {
+      //"https://storage.googleapis.com/clubcatt-games-bucket/FadeToWhite-0.0.1-SourceRelease.zip"
+      std::stringstream shell_command;
+      shell_command << "curl -s -o /dev/null -w \"" << full_url_of_file_to_download << "\"";
+      std::cout << shell_command.str() << std::endl;
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      shell_command_result = shell_command_executor.execute();
+
+      Blast::ShellCommandExecutorWithCallback shell_command_executor2("echo $?");
+      shell_command_response_code = shell_command_executor2.execute();
+   }
+
+public:
+   static constexpr char* TYPE = (char*)"DownloadSourceReleaseFileForBuilding";
+   std::string full_path_to_local_destination_of_downloaded_zip_file;
+   std::string full_url_of_file_to_download;
+   std::string shell_command_result;
+   std::string shell_command_response_code;
+
+   VerifySourceReleaseFilesAreAvailableForDownloading()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+      , full_path_to_local_destination_of_downloaded_zip_file(NameGenerator::full_path_to_local_destination_of_downloaded_zip_file())
+      , full_url_of_file_to_download(NameGenerator::full_url_of_file_to_download())
+      , shell_command_result()
+      , shell_command_response_code()
+   {}
+
+   virtual bool execute() override
+   {
+      execute_shell_commands();
+      if (shell_command_response_code == "0\n") return true;
+      return false;
+   }
+};
+
+
 
 class DownloadSourceReleaseFileForBuilding : public Blast::BuildSystem::BuildStages::Base
 {
