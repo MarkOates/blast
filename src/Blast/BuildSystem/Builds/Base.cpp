@@ -119,7 +119,9 @@ void Base::run()
       }
       catch (const std::exception& e)
       {
-         std::cout << "There was an error during the execution of build stage." << std::endl;
+         std::cout << "There was an error during the execution of build stage. The following error message was "
+               "thrown:" << std::endl;
+         std::cout << e.what() << std::endl;
          build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_ERROR);
          status = STATUS_ERROR;
       }
@@ -156,7 +158,9 @@ void Base::build_stage_executor(Blast::BuildSystem::BuildStages::Base* build_sta
    }
    catch (const std::exception& e)
    {
-      std::cout << "There was an error during the execution of build stage." << std::endl;
+      std::cout << "There was an error during the execution of build stage. The following error message was "
+            "thrown:" << std::endl;
+      std::cout << e.what() << std::endl;
       build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_ERROR);
    }
    build_stage->set_ended_at(std::chrono::high_resolution_clock::now());
