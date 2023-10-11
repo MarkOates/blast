@@ -31,6 +31,13 @@ properties:
     getter: true
     setter: true
 
+  - name: link_with_yaml_cpp
+    type: bool
+    init_with: false
+    constructor_arg: true
+    getter: true
+    setter: true
+
   - name: build_process_completed_successfully
     type: bool
     init_with: false
@@ -157,7 +164,7 @@ functions:
       std::string binary_name = project_name; //"FadeToWhite"; // project_name
 
       bool include_opengl = get_link_with_opengl();
-      bool include_yaml_cpp = false;
+      bool include_yaml_cpp = get_link_with_yaml_cpp();
  
       MAKEFILE_CONTENT
                        //<< "SRC_FILES := $(shell find src -type f)"

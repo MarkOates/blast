@@ -88,6 +88,7 @@ int main(int argc, char **argv)
    std::string destination_directory = "/Users/markoates/Releases";
    std::string main_program_filename = "programs/main.cpp";
    bool link_with_opengl = true;
+   bool link_with_yaml_cpp = true;
    bool copy_allegro_flare_source = true;
    bool copy_nlohmann_json_from_allegro_flare_source = true;
    bool remove_AllegroFlare_Network_from_allegro_flare_copy = true;
@@ -99,6 +100,7 @@ int main(int argc, char **argv)
          source_project_directory,
          main_program_filename,
          link_with_opengl,
+         link_with_yaml_cpp,
          copy_allegro_flare_source,
          copy_nlohmann_json_from_allegro_flare_source,
          remove_AllegroFlare_Network_from_allegro_flare_copy,

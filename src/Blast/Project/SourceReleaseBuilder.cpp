@@ -29,12 +29,13 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool remove_Testing_from_project_copy, bool prompt_before_deleting_unneeded_folders)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool link_with_yaml_cpp, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool remove_Testing_from_project_copy, bool prompt_before_deleting_unneeded_folders)
    : releases_base_folder(releases_base_folder)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
    , main_program_filename(main_program_filename)
    , link_with_opengl(link_with_opengl)
+   , link_with_yaml_cpp(link_with_yaml_cpp)
    , build_process_completed_successfully(false)
    , generated_release_folder_name("")
    , release_info({})
@@ -60,6 +61,12 @@ SourceReleaseBuilder::~SourceReleaseBuilder()
 void SourceReleaseBuilder::set_link_with_opengl(bool link_with_opengl)
 {
    this->link_with_opengl = link_with_opengl;
+}
+
+
+void SourceReleaseBuilder::set_link_with_yaml_cpp(bool link_with_yaml_cpp)
+{
+   this->link_with_yaml_cpp = link_with_yaml_cpp;
 }
 
 
@@ -138,6 +145,12 @@ std::string SourceReleaseBuilder::get_main_program_filename() const
 bool SourceReleaseBuilder::get_link_with_opengl() const
 {
    return link_with_opengl;
+}
+
+
+bool SourceReleaseBuilder::get_link_with_yaml_cpp() const
+{
+   return link_with_yaml_cpp;
 }
 
 
@@ -247,7 +260,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
    std::string binary_name = project_name; //"FadeToWhite"; // project_name
 
    bool include_opengl = get_link_with_opengl();
-   bool include_yaml_cpp = false;
+   bool include_yaml_cpp = get_link_with_yaml_cpp();
 
    MAKEFILE_CONTENT
                     //<< "SRC_FILES := $(shell find src -type f)"
