@@ -604,9 +604,9 @@ public:
    virtual bool execute() override
    {
       execute_shell_commands();
-      if (shell_command_result != "200\n")
+      if (shell_command_result != "200")
       {
-         throw std::runtime_error("Shell command result is \"" + shell_command_result + "\", expecting it to be \"200\\n\"");
+         throw std::runtime_error("Shell command result is \"" + shell_command_result + "\", expecting it to be \"200\"");
          return false;
       }
       if (shell_command_response_code != "0\n")
