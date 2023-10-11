@@ -29,7 +29,7 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool link_with_yaml_cpp, bool copy_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool remove_Testing_from_project_copy, bool prompt_before_deleting_unneeded_folders)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool link_with_yaml_cpp, bool copy_allegro_flare_source, bool exclude_yaml_files_from_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool remove_Testing_from_project_copy, bool prompt_before_deleting_unneeded_folders)
    : releases_base_folder(releases_base_folder)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
@@ -41,6 +41,7 @@ SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std
    , release_info({})
    , build_info({})
    , copy_allegro_flare_source(copy_allegro_flare_source)
+   , exclude_yaml_files_from_allegro_flare_source(exclude_yaml_files_from_allegro_flare_source)
    , copy_nlohmann_json_from_allegro_flare_source(copy_nlohmann_json_from_allegro_flare_source)
    , copy_ordered_map_from_allegro_flare_source(copy_ordered_map_from_allegro_flare_source)
    , remove_AllegroFlare_Network_from_allegro_flare_copy(remove_AllegroFlare_Network_from_allegro_flare_copy)
@@ -73,6 +74,12 @@ void SourceReleaseBuilder::set_link_with_yaml_cpp(bool link_with_yaml_cpp)
 void SourceReleaseBuilder::set_copy_allegro_flare_source(bool copy_allegro_flare_source)
 {
    this->copy_allegro_flare_source = copy_allegro_flare_source;
+}
+
+
+void SourceReleaseBuilder::set_exclude_yaml_files_from_allegro_flare_source(bool exclude_yaml_files_from_allegro_flare_source)
+{
+   this->exclude_yaml_files_from_allegro_flare_source = exclude_yaml_files_from_allegro_flare_source;
 }
 
 
@@ -181,6 +188,12 @@ Blast::BuildInfo SourceReleaseBuilder::get_build_info() const
 bool SourceReleaseBuilder::get_copy_allegro_flare_source() const
 {
    return copy_allegro_flare_source;
+}
+
+
+bool SourceReleaseBuilder::get_exclude_yaml_files_from_allegro_flare_source() const
+{
+   return exclude_yaml_files_from_allegro_flare_source;
 }
 
 
@@ -916,21 +929,25 @@ bool SourceReleaseBuilder::generate_source_release()
 
    // Remove select, specific files via a black-list
 
-   std::vector<std::string> blacklist_files = {
-      destination_directory + "/include/AllegroFlare/DialogTree/YAMLLoader.hpp",
-      destination_directory + "/src/AllegroFlare/DialogTree/YAMLLoader.cpp",
-
-      destination_directory + "/include/AllegroFlare/AI/PromptTemplateYAMLLoader.hpp",
-      destination_directory + "/src/AllegroFlare/AI/PromptTemplateYAMLLoader.cpp",
-
-      destination_directory + "/include/AllegroFlare/YAMLValidator.hpp",
-      destination_directory + "/src/AllegroFlare/YAMLValidator.cpp",
-   };
-
-   for (auto &blacklist_file : blacklist_files)
+   // TODO: Test this feature
+   if (get_exclude_yaml_files_from_allegro_flare_source())
    {
-      std::string item_to_remove = blacklist_file;
-      recursively_remove_folder_with_prompt(item_to_remove);
+      std::vector<std::string> blacklist_files = {
+         destination_directory + "/include/AllegroFlare/DialogTree/YAMLLoader.hpp",
+         destination_directory + "/src/AllegroFlare/DialogTree/YAMLLoader.cpp",
+
+         destination_directory + "/include/AllegroFlare/AI/PromptTemplateYAMLLoader.hpp",
+         destination_directory + "/src/AllegroFlare/AI/PromptTemplateYAMLLoader.cpp",
+
+         destination_directory + "/include/AllegroFlare/YAMLValidator.hpp",
+         destination_directory + "/src/AllegroFlare/YAMLValidator.cpp",
+      };
+
+      for (auto &blacklist_file : blacklist_files)
+      {
+         std::string item_to_remove = blacklist_file;
+         recursively_remove_folder_with_prompt(item_to_remove);
+      }
    }
 
 

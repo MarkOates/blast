@@ -26,6 +26,7 @@ namespace Blast
          Blast::ReleaseInfo release_info;
          Blast::BuildInfo build_info;
          bool copy_allegro_flare_source;
+         bool exclude_yaml_files_from_allegro_flare_source;
          bool copy_nlohmann_json_from_allegro_flare_source;
          bool copy_ordered_map_from_allegro_flare_source;
          bool remove_AllegroFlare_Network_from_allegro_flare_copy;
@@ -39,12 +40,13 @@ namespace Blast
 
 
       public:
-         SourceReleaseBuilder(std::string releases_base_folder="/Users/markoates/Releases/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp", bool link_with_opengl=true, bool link_with_yaml_cpp=false, bool copy_allegro_flare_source=true, bool copy_nlohmann_json_from_allegro_flare_source=true, bool copy_ordered_map_from_allegro_flare_source=true, bool remove_AllegroFlare_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Network2_from_allegro_flare_copy=true, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Testing_from_allegro_flare_copy=true, bool remove_Testing_from_project_copy=true, bool prompt_before_deleting_unneeded_folders=true);
+         SourceReleaseBuilder(std::string releases_base_folder="/Users/markoates/Releases/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp", bool link_with_opengl=true, bool link_with_yaml_cpp=false, bool copy_allegro_flare_source=true, bool exclude_yaml_files_from_allegro_flare_source=true, bool copy_nlohmann_json_from_allegro_flare_source=true, bool copy_ordered_map_from_allegro_flare_source=true, bool remove_AllegroFlare_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Network2_from_allegro_flare_copy=true, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Testing_from_allegro_flare_copy=true, bool remove_Testing_from_project_copy=true, bool prompt_before_deleting_unneeded_folders=true);
          ~SourceReleaseBuilder();
 
          void set_link_with_opengl(bool link_with_opengl);
          void set_link_with_yaml_cpp(bool link_with_yaml_cpp);
          void set_copy_allegro_flare_source(bool copy_allegro_flare_source);
+         void set_exclude_yaml_files_from_allegro_flare_source(bool exclude_yaml_files_from_allegro_flare_source);
          void set_copy_nlohmann_json_from_allegro_flare_source(bool copy_nlohmann_json_from_allegro_flare_source);
          void set_copy_ordered_map_from_allegro_flare_source(bool copy_ordered_map_from_allegro_flare_source);
          void set_remove_AllegroFlare_Network_from_allegro_flare_copy(bool remove_AllegroFlare_Network_from_allegro_flare_copy);
@@ -63,6 +65,7 @@ namespace Blast
          Blast::ReleaseInfo get_release_info() const;
          Blast::BuildInfo get_build_info() const;
          bool get_copy_allegro_flare_source() const;
+         bool get_exclude_yaml_files_from_allegro_flare_source() const;
          bool get_copy_nlohmann_json_from_allegro_flare_source() const;
          bool get_copy_ordered_map_from_allegro_flare_source() const;
          bool get_remove_AllegroFlare_Network_from_allegro_flare_copy() const;

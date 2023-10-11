@@ -71,6 +71,13 @@ properties:
     getter: true
     setter: true
 
+  - name: exclude_yaml_files_from_allegro_flare_source
+    type: bool
+    init_with: true
+    constructor_arg: true
+    getter: true
+    setter: true
+
   - name: copy_nlohmann_json_from_allegro_flare_source
     type: bool
     init_with: true
@@ -854,21 +861,25 @@ functions:
 
       // Remove select, specific files via a black-list
 
-      std::vector<std::string> blacklist_files = {
-         destination_directory + "/include/AllegroFlare/DialogTree/YAMLLoader.hpp",
-         destination_directory + "/src/AllegroFlare/DialogTree/YAMLLoader.cpp",
-
-         destination_directory + "/include/AllegroFlare/AI/PromptTemplateYAMLLoader.hpp",
-         destination_directory + "/src/AllegroFlare/AI/PromptTemplateYAMLLoader.cpp",
-
-         destination_directory + "/include/AllegroFlare/YAMLValidator.hpp",
-         destination_directory + "/src/AllegroFlare/YAMLValidator.cpp",
-      };
-
-      for (auto &blacklist_file : blacklist_files)
+      // TODO: Test this feature
+      if (get_exclude_yaml_files_from_allegro_flare_source())
       {
-         std::string item_to_remove = blacklist_file;
-         recursively_remove_folder_with_prompt(item_to_remove);
+         std::vector<std::string> blacklist_files = {
+            destination_directory + "/include/AllegroFlare/DialogTree/YAMLLoader.hpp",
+            destination_directory + "/src/AllegroFlare/DialogTree/YAMLLoader.cpp",
+
+            destination_directory + "/include/AllegroFlare/AI/PromptTemplateYAMLLoader.hpp",
+            destination_directory + "/src/AllegroFlare/AI/PromptTemplateYAMLLoader.cpp",
+
+            destination_directory + "/include/AllegroFlare/YAMLValidator.hpp",
+            destination_directory + "/src/AllegroFlare/YAMLValidator.cpp",
+         };
+
+         for (auto &blacklist_file : blacklist_files)
+         {
+            std::string item_to_remove = blacklist_file;
+            recursively_remove_folder_with_prompt(item_to_remove);
+         }
       }
 
 
