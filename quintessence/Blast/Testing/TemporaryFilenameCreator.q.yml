@@ -1,3 +1,10 @@
+documentation:
+
+
+  - notes:
+      - a TemporaryFilenameCreator exists in AllegroFlare that can create a guaranteed unique file in a directory
+
+
 methods:
 
 
