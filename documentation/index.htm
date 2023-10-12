@@ -2977,19 +2977,13 @@ table td
 </div>    <h3>Dependencies</h3>
 <div class="property-box dependencies">     <table>
 <tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;exception&quot;, &quot;headers&quot;=&gt;[&quot;exception&quot;]}</td>
-</tr>
-<tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;fstream&quot;, &quot;headers&quot;=&gt;[&quot;fstream&quot;]}</td>
-</tr>
-<tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;iostream&quot;, &quot;headers&quot;=&gt;[&quot;iostream&quot;]}</td>
-</tr>
-<tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;random&quot;, &quot;headers&quot;=&gt;[&quot;random&quot;]}</td>
 </tr>
 <tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;sstream&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;]}</td>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::random_device&quot;, &quot;headers&quot;=&gt;[&quot;random&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::mt19937&quot;, &quot;headers&quot;=&gt;[&quot;random&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;filesystem&quot;, &quot;headers&quot;=&gt;[&quot;filesystem&quot;]}</td>
@@ -4504,25 +4498,15 @@ table td
   ],
   "std/mt19937": [
     "Blast/TaoTeChingQuoteGenerator",
+    "Blast/Testing/TemporaryDirectoryCreator",
     "Quiz"
   ],
   "std/random_device": [
     "Blast/TaoTeChingQuoteGenerator",
+    "Blast/Testing/TemporaryDirectoryCreator",
     "Quiz"
   ],
-  "exception": [
-    "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "fstream": [
-    "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "iostream": [
-    "Blast/Testing/TemporaryDirectoryCreator"
-  ],
   "random": [
-    "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "sstream": [
     "Blast/Testing/TemporaryDirectoryCreator"
   ],
   "filesystem": [

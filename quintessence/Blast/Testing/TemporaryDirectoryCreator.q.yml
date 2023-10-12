@@ -43,27 +43,21 @@ functions:
       }
       return path;
     body_dependency_symbols:
-      - exception
-      - fstream
-      - iostream
-      - random
-      - sstream
+      - std::stringstream
+      - std::random_device
+      - std::mt19937
       - filesystem
 
 
 dependencies:
 
 
-  - symbol: exception
-    headers: [ exception ]
-  - symbol: fstream
-    headers: [ fstream ]
-  - symbol: iostream
-    headers: [ iostream ]
   - symbol: random
     headers: [ random ]
-  - symbol: sstream
-    headers: [ sstream ]
+  - symbol: std::random_device
+    headers: [ random ]
+  - symbol: std::mt19937
+    headers: [ random ]
   - symbol: filesystem
     headers: [ filesystem ]
   - symbol: std::filesystem::path

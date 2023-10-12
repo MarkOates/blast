@@ -470,25 +470,15 @@
   ],
   "std/mt19937": [
     "Blast/TaoTeChingQuoteGenerator",
+    "Blast/Testing/TemporaryDirectoryCreator",
     "Quiz"
   ],
   "std/random_device": [
     "Blast/TaoTeChingQuoteGenerator",
+    "Blast/Testing/TemporaryDirectoryCreator",
     "Quiz"
   ],
-  "exception": [
-    "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "fstream": [
-    "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "iostream": [
-    "Blast/Testing/TemporaryDirectoryCreator"
-  ],
   "random": [
-    "Blast/Testing/TemporaryDirectoryCreator"
-  ],
-  "sstream": [
     "Blast/Testing/TemporaryDirectoryCreator"
   ],
   "filesystem": [
