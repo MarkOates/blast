@@ -1,11 +1,9 @@
 #include <gtest/gtest.h>
 
-#define EXPECT_THROW_WITH_MESSAGE(code, raised_exception_type, expected_exception_message) \
-   try { code; FAIL() << "Expected " # raised_exception_type; } \
-   catch ( raised_exception_type const &err ) { EXPECT_EQ(std::string(expected_exception_message), err.what()); } \
-   catch (...) { FAIL() << "Expected " # raised_exception_type; }
-
+#include <AllegroFlare/Testing/ErrorAssertions.hpp>
 #include <AllegroFlare/Testing/WithAllegroRenderingFixture.hpp>
+#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
+#include <allegro5/allegro_primitives.h> // for al_is_primitives_addon_initialized();
 
 
 class [[COMPONENT_TEST_DESCRIPTION_NAME]] : public ::testing::Test {};
@@ -13,9 +11,6 @@ class [[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroRenderingFixture
    : public AllegroFlare::Testing::WithAllegroRenderingFixture
 {};
 
-
-#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
-#include <allegro5/allegro_primitives.h> // for al_is_primitives_addon_initialized();
 
 
 TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
