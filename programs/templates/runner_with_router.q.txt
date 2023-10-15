@@ -98,6 +98,18 @@ properties:
     type: bool
     init_with: false
 
+  - name: MY_ROUTE_EVENT_ACTIVATE_MY_CUSTOM_SCREEN
+    type: uint32_t
+    init_with: AllegroFlare::Routers::Standard::EVENT_LAST_EVENT+1
+    static: true
+    constexpr: true
+
+  - name: MY_CUSTOM_SCREEN_IDENTIFIER
+    type: char*
+    init_with: '(char*)"my_custom_screen"'
+    static: true
+    constexpr: true
+
   - name: TYPE
     type: char*
     init_with: '(char*)"[[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]]"'
@@ -326,10 +338,43 @@ methods:
       - AllegroFlare::Color
 
 
+  - name: on_route_event_unhandled_func
+    type: bool
+    static: true
+    parameters:
+      - name: unhandled_event
+        type: uint32_t
+        default_argument: 0
+      - name: router
+        type: AllegroFlare::Routers::Standard*
+        default_argument: nullptr
+      - name: user_data
+        type: void*
+        default_argument: nullptr
+    guards: [ router, user_data ]
+    body: |
+      FadeToWhite::Gameplay::Runner* this_runner = static_cast<FadeToWhite::Gameplay::Runner*>(user_data);
+      bool handled = false;
+
+      switch(unhandled_event)
+      {
+         //case MY_ROUTE_EVENT_ACTIVATE_MY_CUSTOM_SCREEN:
+            //router->activate_screen(MY_CUSTOM_SCREEN_IDENTIFIER);
+            //handled = true;
+         //break;
+      }
+
+      return handled;
+
+
   - name: setup_router
     body: |
       router.set_screen_manager(&framework->get_screen_manager_ref());
       router.set_event_emitter(event_emitter);
+
+      // Set handlers for route events
+      router.set_on_route_event_unhandled_func(on_route_event_unhandled_func);
+      router.set_on_route_event_unhandled_func_user_data(this);
 
       // Set the "load_level" handler
       router.set_load_level_handler([this](AllegroFlare::RouteEventDatas::Base* route_event_data) -> bool {
