@@ -347,6 +347,7 @@ methods:
       primary_gameplay_screen.set_bitmap_bin(bitmap_bin);
       primary_gameplay_screen.set_font_bin(font_bin);
       primary_gameplay_screen.set_model_bin(model_bin);
+      primary_gameplay_screen.set_game_configuration(game_configuration); // TODO: Consider how to remove this dependency
       primary_gameplay_screen.initialize();
 
       // TODO: Load up our sound effects

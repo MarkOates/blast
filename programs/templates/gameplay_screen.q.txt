@@ -29,6 +29,13 @@ properties:
     init_with: nullptr
     constructor_arg: true
 
+  - name: game_configuration
+    type: AllegroFlare::GameConfigurations::Base*
+    init_with: nullptr
+    constructor_arg: true
+    getter: true
+    setter: true
+
   - name: current_level_identifier
     type: std::string
     init_with: '"[unset-current_level]"'
@@ -113,6 +120,7 @@ methods:
       - name: level_identifier
         type: std::string
         default_argument: '"[unset-level_identifier]"'
+    guards: [ game_configuration ]
     body: |
       // Destroy the current level
       if (current_level)
@@ -122,8 +130,7 @@ methods:
       }
 
       // Load the new level
-      [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main configuration;
-      AllegroFlare::Levels::Base *loaded_level = configuration.load_level_by_identifier(level_identifier);
+      AllegroFlare::Levels::Base *loaded_level = game_configuration->load_level_by_identifier(level_identifier);
       if (loaded_level)
       {
          // TODO: Consider how to have this level loading mechanism removed, specifically the dependency on the configuration
@@ -285,6 +292,8 @@ dependencies:
     headers: [ AllegroFlare/VirtualControllers/Base.hpp ]
   - symbol: [[COMPONENT_CLASS_NAME]]
     headers: [ [[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]].hpp ]
+  - symbol: AllegroFlare::GameConfigurations::Base
+    headers: [ AllegroFlare/GameConfigurations/Base.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/GameConfigurations/Main.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
