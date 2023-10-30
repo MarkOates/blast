@@ -116,6 +116,7 @@ version:
 
 
 std::string PROGRAM_RUNNER_CLASS_NAME = "Gameplay/Runner";
+std::string PROGRAM_RUNNER_CLASS_END_FRAGMENTS_NAME = "Gameplay::Runner";
 std::string main_file_content_template = R"END(
 #include <[[PROJECT_NAME]]/[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
 #include <allegro5/allegro.h>
@@ -135,7 +136,7 @@ int main(int argc, char **argv)
          ? AllegroFlare::DeploymentEnvironment::ENVIRONMENT_DEVELOPMENT
          : AllegroFlare::DeploymentEnvironment::ENVIRONMENT_PRODUCTION;
 
-   [[PROJECT_NAME]]::[[PROGRAM_RUNNER_CLASS_NAME]]().run(deployment_environment);
+   [[PROJECT_NAME]]::[[PROGRAM_RUNNER_CLASS_END_FRAGMENTS_NAME]]().run(deployment_environment);
    return 0;
 }
 )END";
@@ -248,6 +249,7 @@ void create_main_file(Generator &generator)
    std::string main_file_content = main_file_content_template;
    ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
    ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
+   ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_END_FRAGMENTS_NAME]]", PROGRAM_RUNNER_CLASS_END_FRAGMENTS_NAME);
    outfile5 << main_file_content;
    outfile5.close();
 }
