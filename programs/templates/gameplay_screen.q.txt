@@ -122,8 +122,8 @@ methods:
       }
 
       // Load the new level
-      [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::LevelFactory level_factory;
-      [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level *loaded_level = level_factory.load_level_by_identifier(level_identifier);
+      [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main configuration;
+      [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level *loaded_level = configuration.load_level_by_identifier(level_identifier);
       if (loaded_level)
       {
          current_level_identifier = level_identifier;
@@ -131,8 +131,8 @@ methods:
       }
       return;
     body_dependency_symbols:
+     - [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
      - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
-     - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::LevelFactory
 
 
   - name: initialize
@@ -279,8 +279,8 @@ dependencies:
     headers: [ AllegroFlare/VirtualControllers/Base.hpp ]
   - symbol: [[COMPONENT_CLASS_NAME]]
     headers: [ [[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]].hpp ]
-  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::LevelFactory
-    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/LevelFactory.hpp ]
+  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
+    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/GameConfigurations/Main.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Level.hpp ]
 
