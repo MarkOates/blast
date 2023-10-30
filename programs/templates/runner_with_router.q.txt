@@ -175,6 +175,13 @@ methods:
       // Set the framework to use our router
       framework->set_router(&router);
 
+      // TODO: Create the game configuration for our game
+      // Setup the configuration
+      game_configuration = new [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main();
+
+      // Fill our dialog bank
+      framework->set_dialog_system_dialog_node_bank(game_configuration->build_dialog_bank_by_identifier());
+
       // TODO: Setup achievements
       achievements.set_achievements({
          { "stay_through_the_credits",
@@ -274,18 +281,16 @@ methods:
       level_select_screen.set_event_emitter(event_emitter);
       level_select_screen.set_bitmap_bin(bitmap_bin);
       level_select_screen.set_font_bin(font_bin);
-      level_select_screen.set_levels_list({
+      //level_select_screen.set_levels_list({
          //{ "Candy Kingdom", "candy_kingdom" },
          //{ "Cherry Blossom Grove", "cherry_blossom_grove" },
          //{ "Bubble Pop Bay", "bubble_pop_bay" },
          //{ "Neon City Nights", "neon_city_nights" },
          //{ "Wonderland Woods", "wonderland_woods" },
-         { "1", "candy_kingdom" },
-         { "2", "cherry_blossom_grove" },
-         { "3", "bubble_pop_bay" },
-         { "4", "neon_city_nights" },
-         { "5", "wonderland_woods" },
-      });
+      //});
+      level_select_screen.set_levels_list(
+         game_configuration->build_level_list_for_level_select_screen_by_identifier("discarded-for-now")
+      );
       level_select_screen.set_background(&solid_black_background);
       level_select_screen.initialize();
 
@@ -363,6 +368,7 @@ methods:
       - AllegroFlare::Elements::RollingCredits::SectionFactory
       - AllegroFlare::StoryboardFactory
       - AllegroFlare::Color
+      - OutOfTheBox::GameConfigurations::Main
 
 
   - name: on_route_event_unhandled_func
@@ -712,4 +718,7 @@ dependencies:
 
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Screen.hpp ]
+  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
+    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/GameConfigurations/Main.hpp ]
+
 
