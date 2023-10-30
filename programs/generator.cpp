@@ -278,6 +278,9 @@ void copy_resource_files(Generator &generator)
    std::filesystem::copy(resource_file_folder + "fonts/Inter-Regular.ttf", new_project_data_folder + "fonts/Inter-Regular.ttf");
    std::filesystem::copy(resource_file_folder + "fonts/Inter-Regular.ttf", new_project_fixtures_folder + "fonts/Inter-Regular.ttf");
 
+   std::filesystem::copy(resource_file_folder + "fonts/Inter-Medium.ttf", new_project_data_folder + "fonts/Inter-Medium.ttf");
+   std::filesystem::copy(resource_file_folder + "fonts/Inter-Medium.ttf", new_project_fixtures_folder + "fonts/Inter-Medium.ttf");
+
    std::filesystem::copy(resource_file_folder + "fonts/Inter-Bold.ttf", new_project_data_folder + "fonts/Inter-Bold.ttf");
    std::filesystem::copy(resource_file_folder + "fonts/Inter-Bold.ttf", new_project_fixtures_folder + "fonts/Inter-Bold.ttf");
 
