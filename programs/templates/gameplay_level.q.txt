@@ -1,3 +1,11 @@
+parent_classes:
+
+
+  - class: AllegroFlare::Levels::Base
+    scope: public
+    init_with: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level::TYPE
+
+
 properties:
 
 
@@ -6,5 +14,18 @@ properties:
     init_with: '"[unset-title]"'
     getter: true
     setter: true
+
+  - name: TYPE
+    type: char*
+    init_with: '(char*)"[[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Level"'
+    static: true
+    constexpr: true
+
+
+dependencies:
+
+
+  - symbol: AllegroFlare::Levels::Base
+    headers: [ AllegroFlare/Levels/Base.hpp ]
 
 
