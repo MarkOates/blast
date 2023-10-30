@@ -440,7 +440,7 @@ int main(int argc, char **argv)
 
    generate_gameplay_screen_class(project_name);
    generate_gameplay_level_class(project_name);
-   generate_gameplay_level_factory_class(project_name);
+   //generate_gameplay_level_factory_class(project_name);
    generate_game_configurations_main_class(project_name);
    generate_runner_class(project_name);
 

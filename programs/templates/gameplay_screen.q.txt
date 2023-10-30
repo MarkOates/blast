@@ -123,11 +123,17 @@ methods:
 
       // Load the new level
       [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main configuration;
-      [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level *loaded_level = configuration.load_level_by_identifier(level_identifier);
+      AllegroFlare::Levels::Base *loaded_level = configuration.load_level_by_identifier(level_identifier);
       if (loaded_level)
       {
+         // TODO: Consider how to have this level loading mechanism removed, specifically the dependency on the configuration
+         // For now, confirm the type, and cast
+         if (!loaded_level->is_type([[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level::TYPE))
+         {
+            throw std::runtime_error("Loaded level not of expected type");
+         }
          current_level_identifier = level_identifier;
-         current_level = loaded_level;
+         current_level = static_cast<[[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level*>(loaded_level);
       }
       return;
     body_dependency_symbols:
