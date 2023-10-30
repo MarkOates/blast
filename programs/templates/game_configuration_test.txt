@@ -1,0 +1,20 @@
+
+#include <gtest/gtest.h>
+
+#include <[[COMPONENT_HEADER_INCLUDE_FILE_PATH]]>
+
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], can_be_created_without_blowing_up)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+}
+
+
+TEST([[COMPONENT_TEST_DESCRIPTION_NAME]], load_level_by_identifier__will_not_blow_up)
+{
+   [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
+   [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level* level = [[COMPONENT_BASENAME_SNAKE_CASE]].load_level_by_identifier("foobar");
+   EXPECT_NE(nullptr, level);
+}
+
+

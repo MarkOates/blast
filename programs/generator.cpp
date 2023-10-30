@@ -386,6 +386,15 @@ void generate_gameplay_level_factory_class(std::string project_name)
 }
 
 
+void generate_game_configurations_main_class(std::string project_name)
+{
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/GameConfigurations/Main game_configuration";
+   std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
+   Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
+   shell_command_executor.execute();
+}
+
+
 void generate_runner_class(std::string project_name)
 {
    std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/" + PROGRAM_RUNNER_CLASS_NAME + " runner_with_router";
@@ -432,6 +441,7 @@ int main(int argc, char **argv)
    generate_gameplay_screen_class(project_name);
    generate_gameplay_level_class(project_name);
    generate_gameplay_level_factory_class(project_name);
+   generate_game_configurations_main_class(project_name);
    generate_runner_class(project_name);
 
    output_finished_message(project_name);
