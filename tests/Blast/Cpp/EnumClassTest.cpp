@@ -164,3 +164,23 @@ TEST(Blast_Cpp_EnumClassTest, is_power_of_two__returns_false_if_the_value_is_not
 }
 
 
+TEST(Blast_Cpp_EnumClassTest, 
+   validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise__when_bitwise_is_true_and_start_from_is_not_a_power\
+of_two__will_throw_an_error)
+{
+   std::vector<int> test_data = {
+      { 3, 5, 6, 14, 17, 31, 33, 34 },
+   };
+
+   for (auto &test_datum : test_data)
+   {
+      EXPECT_THROW_WITH_MESSAGE(
+         Blast::Cpp::EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(true, test_datum),
+         std::runtime_error,
+         "[Blast::Cpp::EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise]: error: "
+            "\"enumerators_are_bitwise\" is set to true, but \"start_from\" is not a power of two."
+      );
+   }
+}
+
+
