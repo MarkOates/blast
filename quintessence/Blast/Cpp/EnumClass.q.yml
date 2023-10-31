@@ -136,7 +136,15 @@ functions:
       if (valid_types.count(type) == 0)
       {
          // TODO: include incorrect type, and valid types in error message
-         throw std::runtime_error("[Blast::Cpp::EnumClass::set_type]: error: type is invalid");
+         std::stringstream error_message;
+         error_message << "[Blast::Cpp::EnumClass::set_type]: error: The provided type \"" << type << "\" is invalid. ";
+         error_message << "Permitted types are [";
+         for (auto &valid_type : valid_types)
+         {
+            error_message << valid_type << ", ";
+         }
+         error_message << "]";
+         throw std::runtime_error(error_message.str());
       }
       this->type = type;
       return;

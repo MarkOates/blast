@@ -131,6 +131,26 @@ TEST(Blast_Cpp_EnumClassTest, type__is_set_to_DEFAULT_TYPE_by_default)
 }
 
 
+TEST(Blast_Cpp_EnumClassTest, set_type__will_set_the_type)
+{
+   Blast::Cpp::EnumClass enum_class;
+   enum_class.set_type("uint32_t");
+   EXPECT_EQ("uint32_t", enum_class.get_type());
+}
+
+
+TEST(Blast_Cpp_EnumClassTest, set_type__when_setting_an_invalid_type__will_throw_an_error)
+{
+   Blast::Cpp::EnumClass enum_class;
+   EXPECT_THROW_WITH_MESSAGE(
+      enum_class.set_type("an-invalid-type"),
+      std::runtime_error,
+      "[Blast::Cpp::EnumClass::set_type]: error: The provided type \"an-invalid-type\" is invalid. Permitted types "
+         "are [, int, int16_t, int32_t, uint16_t, uint32_t, ]"
+   );
+}
+
+
 TEST(Blast_Cpp_EnumClassTest, DEFAULT_TYPE__has_the_expected_default_value_of_blank)
 {
    Blast::Cpp::EnumClass enum_class;
