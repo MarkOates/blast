@@ -38,13 +38,13 @@ properties:
     type: int
     init_with: 0
     getter: true
-    setter: false
+    setter: explicit
 
   - name: enumerators_are_bitwise
     type: bool
     init_with: false
     getter: true
-    setter: true
+    setter: explicit
 
   - name: name_of_to_string_method
     type: std::string
@@ -151,10 +151,21 @@ functions:
         default_argument: 0
     guards: [ (start_from >= 0) ]
     body: |
-      // NOTE: this validation is not assured when the value is set during construction
-      // NOTE: this validation is not assured if "enumerators_are_bitwise" is set to true
       // TODO: add test for this method
+      validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(enumerators_are_bitwise, start_from);
       this->start_from = start_from;
+      return;
+
+
+  - name: set_enumerators_are_bitwise
+    parameters:
+      - name: enumerators_are_bitwise
+        type: bool
+        default_argument: false
+    body: |
+      // TODO: add test for this method
+      validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(enumerators_are_bitwise, start_from);
+      this->enumerators_are_bitwise = enumerators_are_bitwise;
       return;
 
 
@@ -246,13 +257,24 @@ functions:
         type: uint32_t
         default_argument: 0
     body: |
+      // TODO: Test this
        if (n == 0) return true;
        return (n > 0) && ((n & (n - 1)) == 0);
 
 
   - name: validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise
+    static: true
     type: bool
+    parameters:
+      - name: enumerators_are_bitwise
+        type: bool
+        default_argument: false
+      - name: start_from
+        type: int
+        default_argument: false
+    guards: [ start_from >= 0 ]
     body: |
+      // TODO: Test this
       if (!enumerators_are_bitwise) return true;
       if (!is_power_of_two(start_from))
       {
@@ -264,7 +286,6 @@ functions:
       return true;
     body_dependency_symbols:
       - std::unordered_set
-
 
 
   - name: validate_elements_are_unique

@@ -48,12 +48,6 @@ void EnumClass::set_is_class(bool is_class)
 }
 
 
-void EnumClass::set_enumerators_are_bitwise(bool enumerators_are_bitwise)
-{
-   this->enumerators_are_bitwise = enumerators_are_bitwise;
-}
-
-
 void EnumClass::set_name_of_to_string_method(std::string name_of_to_string_method)
 {
    this->name_of_to_string_method = name_of_to_string_method;
@@ -163,10 +157,17 @@ void EnumClass::set_start_from(int start_from)
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("EnumClass::set_start_from: error: guard \"(start_from >= 0)\" not met");
    }
-   // NOTE: this validation is not assured when the value is set during construction
-   // NOTE: this validation is not assured if "enumerators_are_bitwise" is set to true
    // TODO: add test for this method
+   validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(enumerators_are_bitwise, start_from);
    this->start_from = start_from;
+   return;
+}
+
+void EnumClass::set_enumerators_are_bitwise(bool enumerators_are_bitwise)
+{
+   // TODO: add test for this method
+   validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(enumerators_are_bitwise, start_from);
+   this->enumerators_are_bitwise = enumerators_are_bitwise;
    return;
 }
 
@@ -248,12 +249,21 @@ bool EnumClass::validate(std::string method_name)
 
 bool EnumClass::is_power_of_two(uint32_t n)
 {
-   if (n == 0) return true;
-   return (n > 0) && ((n & (n - 1)) == 0);
+   // TODO: Test this
+    if (n == 0) return true;
+    return (n > 0) && ((n & (n - 1)) == 0);
 }
 
-bool EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise()
+bool EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(bool enumerators_are_bitwise, int start_from)
 {
+   if (!(start_from >= 0))
+   {
+      std::stringstream error_message;
+      error_message << "[EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise]: error: guard \"start_from >= 0\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise: error: guard \"start_from >= 0\" not met");
+   }
+   // TODO: Test this
    if (!enumerators_are_bitwise) return true;
    if (!is_power_of_two(start_from))
    {

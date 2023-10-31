@@ -38,7 +38,6 @@ namespace Blast
 
          void set_name(std::string name);
          void set_is_class(bool is_class);
-         void set_enumerators_are_bitwise(bool enumerators_are_bitwise);
          void set_name_of_to_string_method(std::string name_of_to_string_method);
          std::string get_name() const;
          std::vector<std::string> get_enumerators() const;
@@ -53,6 +52,7 @@ namespace Blast
          void set_scope(std::string scope="[unset-scope]");
          void set_type(std::string type="[unset-type]");
          void set_start_from(int start_from=0);
+         void set_enumerators_are_bitwise(bool enumerators_are_bitwise=false);
          bool has_type();
          bool is_private();
          bool is_protected();
@@ -61,7 +61,7 @@ namespace Blast
          std::string build_to_string_method_body();
          static bool validate(std::string method_name="[unset-method_name]");
          static bool is_power_of_two(uint32_t n=0);
-         bool validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise();
+         static bool validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(bool enumerators_are_bitwise=false, int start_from=false);
          static bool validate_elements_are_unique(std::vector<std::string> elements={});
       };
    }
