@@ -51,16 +51,19 @@ TEST(Blast_Cpp_EnumClassFormatterTest,
    output_nth_bit_as_hex_string__will_return_the_nth_bitfield_enumerator_in_a_string_format)
 {
    std::vector<std::pair<int, std::string>> test_data = {
-      { 0, "0x0000" },
-      { 1, "0x0001" },
-      { 2, "0x0002" },
-      { 3, "0x0004" },
-      { 4, "0x0008" },
-      { 5, "0x0010" },
-      { 6, "0x0020" },
-      { 7, "0x0040" },
-      { 8, "0x0080" },
-      { 9, "0x0100" },
+      { 0,  "0x0000" },
+      { 1,  "0x0001" },
+      { 2,  "0x0002" },
+      { 3,  "0x0004" },
+      { 4,  "0x0008" },
+      { 5,  "0x0010" },
+      { 6,  "0x0020" },
+      { 7,  "0x0040" },
+      { 8,  "0x0080" },
+      { 9,  "0x0100" },
+      { 10, "0x0200" },
+      { 11, "0x0400" },
+      { 12, "0x0800" },
    };
 
    for (auto &test_datum : test_data)
