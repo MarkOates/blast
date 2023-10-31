@@ -64,7 +64,20 @@ functions:
 
       // Extract the "start_from" value
       int start_from_value = 0;
-      if (start_from_node_is_present) start_from_value = node["start_from"].as<int>();
+      if (start_from_node_is_present)
+      {
+         std::string start_from_as_string = node["start_from"].as<std::string>();
+         if (start_from_as_string.size() >= 3 && start_from_as_string.substr(0, 2) == "0x")
+         {
+            // The number is being represented as a hexidecimal. Parse the hex string into its integer value.
+            std::string hexstr = start_from_as_string.substr(2);
+            std::istringstream(hexstr) >> std::hex >> start_from_value;
+         }
+         else
+         {
+            start_from_value = node["start_from"].as<int>();
+         }
+      }
 
       // Extract the "bitwise" value (equivelent to "enumerators_are_bitwise" on the EnumClass)
       bool enumerators_are_bitwise_node_is_present = (bool)node["bitwise"];

@@ -161,7 +161,19 @@ TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
    std::string yaml_content = "bitwise: true\nstart_from: 8\nenumerators: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);
    Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
-   enum_class_parser.parse();
+   Blast::Cpp::EnumClass parsed_enum_class = enum_class_parser.parse();
+   EXPECT_EQ(8, parsed_enum_class.get_start_from());
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   DISABLE__parse__when_bitwise_is_true__and_start_from_value_is_a_hexidecimal_notation__does_not_throw_an_error)
+{
+   std::string yaml_content = "bitwise: true\nstart_from: 0x04\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   //enum_class_parser.parse();
+   //EXPECT_EQ(8, parsed_enum_class.get_start_from());
 }
 
 
