@@ -141,7 +141,7 @@ functions:
          error_message << "Permitted types are [";
          for (auto &valid_type : valid_types)
          {
-            error_message << valid_type << ", ";
+            error_message << "\"" << valid_type << "\"" << ", ";
          }
          error_message << "]";
          throw std::runtime_error(error_message.str());
