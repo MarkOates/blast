@@ -47,3 +47,19 @@ R"END(enum : uint32_t
 }
 
 
+TEST(Blast_Cpp_EnumClassFormatterTest,
+   output_nth_bit_as_hex_string__will_return_the_nth_bitfield_enumerator_in_a_string_format)
+{
+   std::vector<std::pair<int, std::string>> test_data = {
+      { 0, "0x00" }
+   };
+
+   for (auto &test_datum : test_data)
+   {
+      std::string expected = test_datum.second;
+      std::string actual = Blast::Cpp::EnumClassFormatter::output_nth_bit_as_hex_string(test_datum.first);
+      EXPECT_EQ(expected, actual);
+   }
+}
+
+

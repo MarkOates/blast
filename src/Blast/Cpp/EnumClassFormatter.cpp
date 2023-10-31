@@ -2,6 +2,7 @@
 
 #include <Blast/Cpp/EnumClassFormatter.hpp>
 
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -69,6 +70,20 @@ std::string EnumClassFormatter::build_enum_definition(int indent_num_spaces)
    }
    result << "};" << std::endl;
    return result.str();
+}
+
+std::string EnumClassFormatter::output_nth_bit_as_hex_string(int n)
+{
+   if (!((n >= 0)))
+   {
+      std::stringstream error_message;
+      error_message << "[EnumClassFormatter::output_nth_bit_as_hex_string]: error: guard \"(n >= 0)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("EnumClassFormatter::output_nth_bit_as_hex_string: error: guard \"(n >= 0)\" not met");
+   }
+   std::stringstream output;
+   output << "0x" << std::setfill('0') << std::setw(2) << std::hex << n;
+   return output.str();
 }
 
 

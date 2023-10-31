@@ -1057,9 +1057,18 @@ table td
 <tr>
   <td class="method">build_enum_definition(int indent_num_spaces=3)</td>
 </tr>
+<tr>
+  <td class="method">output_nth_bit_as_hex_string(int n=0)</td>
+</tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::setfill&quot;, &quot;headers&quot;=&gt;[&quot;iomanip&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::setw&quot;, &quot;headers&quot;=&gt;[&quot;iomanip&quot;]}</td>
+</tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::EnumClass&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/EnumClass.hpp&quot;]}</td>
 </tr>
@@ -4075,10 +4084,12 @@ table td
     "ASCIICharacterRenderer"
   ],
   "std/setfill": [
-    "Blast/Build/Celebrator"
+    "Blast/Build/Celebrator",
+    "Blast/Cpp/EnumClassFormatter"
   ],
   "std/setw": [
-    "Blast/Build/Celebrator"
+    "Blast/Build/Celebrator",
+    "Blast/Cpp/EnumClassFormatter"
   ],
   "std/size_t": [
     "Blast/Build/Celebrator"

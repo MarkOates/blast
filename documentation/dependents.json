@@ -32,10 +32,12 @@
     "ASCIICharacterRenderer"
   ],
   "std/setfill": [
-    "Blast/Build/Celebrator"
+    "Blast/Build/Celebrator",
+    "Blast/Cpp/EnumClassFormatter"
   ],
   "std/setw": [
-    "Blast/Build/Celebrator"
+    "Blast/Build/Celebrator",
+    "Blast/Cpp/EnumClassFormatter"
   ],
   "std/size_t": [
     "Blast/Build/Celebrator"

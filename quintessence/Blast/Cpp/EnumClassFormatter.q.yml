@@ -58,9 +58,30 @@ functions:
       - std::stringstream
 
 
+  - name: output_nth_bit_as_hex_string
+    static: true
+    type: std::string
+    parameters:
+      - name: n
+        type: int
+        default_argument: 0
+    guards: [ (n >= 0) ]
+    body: |
+      std::stringstream output;
+      output << "0x" << std::setfill('0') << std::setw(2) << std::hex << n;
+      return output.str();
+    body_dependency_symbols:
+      - std::setfill
+      - std::setw
+
+
 dependencies:
 
 
+  - symbol: std::setfill
+    headers: [ iomanip ]
+  - symbol: std::setw
+    headers: [ iomanip ]
   - symbol: Blast::Cpp::EnumClass
     headers: [ Blast/Cpp/EnumClass.hpp ]
 
