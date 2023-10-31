@@ -125,6 +125,37 @@ TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
 
 
 TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_bitwise_is_set_to_an_invalid_value__will_throw_an_error)
+{
+   std::string yaml_content = "bitwise: an-invalid-value\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   EXPECT_THROW_WITH_MESSAGE(
+      enum_class_parser.parse(),
+      std::runtime_error,
+      "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: An enum property \"bitwise\" can only "
+         "be \"true\" or \"false\"."
+   );
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_bitwise_is_true__and_start_from_is_not_a_valid_bitwise_starting_number__will_throw_an_error)
+{
+   std::string yaml_content = "bitwise: true\nstart_from: 3\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   EXPECT_THROW_WITH_MESSAGE(
+      enum_class_parser.parse(),
+      std::runtime_error,
+      "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: \"bitwise\" is set to true, thus "
+         "\"start_from\" must be a valid bitfield number (e.g. a power of two, an int that represents values "
+         "such as 0x04, 0x80, 0x1000, etc.), but is not."
+   );
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
    parse__when_a_start_from_is_not_present__does_not_throw_an_error)
 {
    std::string yaml_content = "enumerators: [ FOO, FOE, FUM ]\n";

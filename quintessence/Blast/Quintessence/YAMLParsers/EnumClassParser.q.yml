@@ -97,7 +97,8 @@ functions:
                // TODO: Test this error
                std::stringstream error_message;
                error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
-                             << "\"bitwise\" is set to true, thus \"start_from\" must be a power of two, but it "
+                             << "\"bitwise\" is set to true, thus \"start_from\" must be a valid bitfield number (e.g. "
+                             << "a power of two, an int that represents values such as 0x04, 0x80, 0x1000, etc.), but "
                              << "is not.";
                throw std::runtime_error(error_message.str());
             }
