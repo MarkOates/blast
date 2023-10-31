@@ -164,6 +164,7 @@ void EnumClass::set_start_from(int start_from)
       throw std::runtime_error("EnumClass::set_start_from: error: guard \"(start_from >= 0)\" not met");
    }
    // NOTE: this validation is not assured when the value is set during construction
+   // NOTE: this validation is not assured if "enumerators_are_bitwise" is set to true
    // TODO: add test for this method
    this->start_from = start_from;
    return;
@@ -241,6 +242,25 @@ bool EnumClass::validate(std::string method_name)
       if (!std::islower(c) && c != '_' && !std::isupper(c)) {
          return false;
       }
+   }
+   return true;
+}
+
+bool EnumClass::is_power_of_two(uint32_t n)
+{
+   if (n == 0) return true;
+   return (n > 0) && ((n & (n - 1)) == 0);
+}
+
+bool EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise()
+{
+   if (!enumerators_are_bitwise) return true;
+   if (!is_power_of_two(start_from))
+   {
+      throw std::runtime_error(
+         "[Blast::Cpp::EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise]: error: "
+            "\"enumerators_are_bitwise\" is set to true, but \"start_from\" is not a power of two."
+      );
    }
    return true;
 }

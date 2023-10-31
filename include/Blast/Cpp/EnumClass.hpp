@@ -2,6 +2,7 @@
 
 
 #include <Blast/Cpp/Function.hpp>
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -59,6 +60,8 @@ namespace Blast
          Blast::Cpp::Function build_to_string_method();
          std::string build_to_string_method_body();
          static bool validate(std::string method_name="[unset-method_name]");
+         static bool is_power_of_two(uint32_t n=0);
+         bool validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise();
          static bool validate_elements_are_unique(std::vector<std::string> elements={});
       };
    }
