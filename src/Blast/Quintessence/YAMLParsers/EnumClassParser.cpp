@@ -65,6 +65,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    if (type_node_is_present) validate_node_type(node, "type", YAML::NodeType::Scalar);
    bool start_from_node_is_present = (bool)node["start_from"];
    if (start_from_node_is_present) validate_node_type(node, "start_from", YAML::NodeType::Scalar);
+   /*
    if (start_from_node_is_present)
    {
       if (!validate_node_has_unsigned_int_value(node, "start_from"))
@@ -77,6 +78,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
          throw std::runtime_error(error_message.str());
       }
    }
+   */
 
    // Extract the "start_from" value
    int start_from_value = 0;
@@ -87,10 +89,21 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
       {
          // The number is being represented as a hexidecimal. Parse the hex string into its integer value.
          std::string hexstr = start_from_as_string.substr(2);
+         // TODO: See how to confirm this conversion is valid
          std::istringstream(hexstr) >> std::hex >> start_from_value;
       }
       else
       {
+         // This appears to be a regular integer-notated number, so attempt to parse as so
+         if (!validate_node_has_unsigned_int_value(node, "start_from"))
+         {
+            std::stringstream error_message;
+            error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                          << "An enum property \"start_from\" must be a valid number.";
+                          // TODO: look into the Mark() function in YAML, which shoutd(?) provide data about the line
+                          // number of the node
+            throw std::runtime_error(error_message.str());
+         }
          start_from_value = node["start_from"].as<int>();
       }
    }
