@@ -56,14 +56,25 @@ std::string EnumClassFormatter::build_enum_definition(int indent_num_spaces)
    result << std::endl;
    result << "{" << std::endl;
    bool is_first_item = true;
-   int start_from = enum_class.get_start_from();
+   bool enumerators_are_bitwise = enum_class.get_enumerators_are_bitwise();
+   int counter = 0;
+   int start_from = enum_class.get_start_from(); // WARNING: This does not work with start_from being hex, counter
+                                                 // being non-hex, and output_nth_bit_as_hex_string needing a non-hex
    for (auto &item : enum_class.get_enumerators())
    {
       result << std::string(indent_num_spaces, ' ') << item;
-      if (is_first_item)
+      if (enumerators_are_bitwise)
       {
-         result << " = " << start_from;
-         is_first_item = false;
+         result << " = " << output_nth_bit_as_hex_string(start_from + counter);
+         counter++;
+      }
+      else
+      {
+         if (is_first_item)
+         {
+            result << " = " << start_from;
+            is_first_item = false;
+         }
       }
       result << ",";
       result << std::endl;

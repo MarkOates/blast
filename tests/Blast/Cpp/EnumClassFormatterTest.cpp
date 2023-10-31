@@ -28,6 +28,27 @@ R"END(enum class Foo
 }
 
 
+TEST(Blast_Cpp_EnumClassFormatterTest, build_definition__when_enumerators_are_bitwise__returns_the_expected_response)
+{
+   Blast::Cpp::EnumClass enum_class("Foo", { "BIZ", "BAZ", "BUZ", "BOZ", "BOX", "BOTZ" });
+   enum_class.set_is_class("true");
+   enum_class.set_enumerators_are_bitwise(true);
+   Blast::Cpp::EnumClassFormatter enum_class_formatter(enum_class);
+   std::string expected_string =
+R"END(enum class Foo
+{
+   BIZ = 0x0000,
+   BAZ = 0x0001,
+   BUZ = 0x0002,
+   BOZ = 0x0004,
+   BOX = 0x0008,
+   BOTZ = 0x0010,
+};
+)END";
+   EXPECT_EQ(expected_string, enum_class_formatter.build_enum_definition());
+}
+
+
 TEST(Blast_Cpp_EnumClassFormatterTest, build_definition__when_there_is_no_class_name__is_formatted_as_expected)
 {
    Blast::Cpp::EnumClass enum_class;
