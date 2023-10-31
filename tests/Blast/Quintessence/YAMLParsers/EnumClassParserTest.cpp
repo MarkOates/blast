@@ -103,12 +103,24 @@ TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest, parse__when_a_class_is_
 
 
 TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
-   parse__when_bitwise_is_present__will_set_enumerators_are_bitwise_to_the_value)
+   parse__when_bitwise_is_set_to_true__will_set_enumerators_are_bitwise_to_the_value)
 {
    std::string yaml_content = "bitwise: true\nenumerators: [ FOO, FOE, FUM ]\n";
    YAML::Node node = YAML::Load(yaml_content);
    Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
-   enum_class_parser.parse();
+   Blast::Cpp::EnumClass parsed_enum_class = enum_class_parser.parse();
+   EXPECT_EQ(true, parsed_enum_class.get_enumerators_are_bitwise());
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_bitwise_is_set_to_false__will_set_enumerators_are_bitwise_to_the_value)
+{
+   std::string yaml_content = "bitwise: false\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass parsed_enum_class = enum_class_parser.parse();
+   EXPECT_EQ(false, parsed_enum_class.get_enumerators_are_bitwise());
 }
 
 
