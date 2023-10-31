@@ -82,7 +82,13 @@ std::string EnumClassFormatter::output_nth_bit_as_hex_string(int n)
       throw std::runtime_error("EnumClassFormatter::output_nth_bit_as_hex_string: error: guard \"(n >= 0)\" not met");
    }
    std::stringstream output;
-   output << "0x" << std::setfill('0') << std::setw(2) << std::hex << n;
+   int i=0;
+   if (n == 0) i = 0;
+   else
+   {
+      i = (1 << (n-1));
+   }
+   output << "0x" << std::setfill('0') << std::setw(4) << std::hex << i;
    return output.str();
 }
 
