@@ -25,6 +25,7 @@ EnumClass::EnumClass(std::string name, std::vector<std::string> enumerators, boo
    , type(DEFAULT_TYPE)
    , is_class(is_class)
    , start_from(0)
+   , enumerators_are_bitwise(false)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
 {
 }
@@ -44,6 +45,12 @@ void EnumClass::set_name(std::string name)
 void EnumClass::set_is_class(bool is_class)
 {
    this->is_class = is_class;
+}
+
+
+void EnumClass::set_enumerators_are_bitwise(bool enumerators_are_bitwise)
+{
+   this->enumerators_are_bitwise = enumerators_are_bitwise;
 }
 
 
@@ -86,6 +93,12 @@ bool EnumClass::get_is_class() const
 int EnumClass::get_start_from() const
 {
    return start_from;
+}
+
+
+bool EnumClass::get_enumerators_are_bitwise() const
+{
+   return enumerators_are_bitwise;
 }
 
 

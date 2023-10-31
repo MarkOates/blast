@@ -40,6 +40,12 @@ properties:
     getter: true
     setter: false
 
+  - name: enumerators_are_bitwise
+    type: bool
+    init_with: false
+    getter: true
+    setter: true
+
   - name: name_of_to_string_method
     type: std::string
     init_with: DEFAULT_NAME_OF_TO_STRING_METHOD
