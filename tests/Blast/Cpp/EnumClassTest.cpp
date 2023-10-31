@@ -138,3 +138,29 @@ TEST(Blast_Cpp_EnumClassTest, DEFAULT_TYPE__has_the_expected_default_value_of_bl
 }
 
 
+TEST(Blast_Cpp_EnumClassTest, is_power_of_two__returns_true_if_the_value_is_a_power_of_two)
+{
+   std::vector<int> test_data = {
+      { 0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 },
+   };
+
+   for (auto &test_datum : test_data)
+   {
+      EXPECT_EQ(true, Blast::Cpp::EnumClass::is_power_of_two(test_datum));
+   }
+}
+
+
+TEST(Blast_Cpp_EnumClassTest, is_power_of_two__returns_false_if_the_value_is_not_a_power_of_two)
+{
+   std::vector<int> test_data = {
+      { -2, 3, 5, 6, 14, 17, 31, 33, 34 },
+   };
+
+   for (auto &test_datum : test_data)
+   {
+      EXPECT_EQ(false, Blast::Cpp::EnumClass::is_power_of_two(test_datum));
+   }
+}
+
+
