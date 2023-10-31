@@ -78,6 +78,51 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
       }
    }
 
+   // Extract the "start_from" value
+   int start_from_value = 0;
+   if (start_from_node_is_present) start_from_value = node["start_from"].as<int>();
+
+   // Extract the "bitwise" value (equivelent to "enumerators_are_bitwise" on the EnumClass)
+   bool enumerators_are_bitwise_node_is_present = (bool)node["bitwise"];
+   bool enumerators_are_bitwise_value = false;
+   if (enumerators_are_bitwise_node_is_present)
+   {
+      // Validate node type
+      validate_node_type(node, "bitwise", YAML::NodeType::Scalar);
+
+      // Validate node value as "true" or "false"
+      std::string val = node["class"].as<std::string>();
+      if (val != "true" || val != "false")
+      {
+         // TODO: Test this error
+         std::stringstream error_message;
+         error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                       << "An enum property \"bitwise\" can only be \"true\" or \"false\".";
+         throw std::runtime_error(error_message.str());
+      }
+
+      if (val == "true") enumerators_are_bitwise_value = true;
+
+      // If enumerators_are_bitwise is true, then confirm start_from is a power of two. Note this error is also
+      // handled at the EnumClass level, but is nice to have it here at this level to be consistent, and
+      // Blast::Cpp::EnumClass is already a core dependency of this class
+      if (enumerators_are_bitwise_value == true)
+      {
+         if (!Blast::Cpp::EnumClass::is_power_of_two(start_from_value))
+         {
+            // TODO: Test this error
+            std::stringstream error_message;
+            error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                          << "\"bitwise\" is set to true, thus \"start_from\" must be a power of two, but it "
+                          << "is not.";
+            throw std::runtime_error(error_message.str());
+         }
+      }
+   }
+
+   result.set_enumerators_are_bitwise(enumerators_are_bitwise_value);
+
+
    validate_presence_of_key(node, "enumerators");
    validate_node_type(node, "enumerators", YAML::NodeType::Sequence);
 
@@ -104,8 +149,8 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    // Extract the "type" value
    if (type_node_is_present) result.set_type(node["type"].as<std::string>());
 
-   // Extract the "start_from" value
-   if (start_from_node_is_present) result.set_start_from(node["start_from"].as<int>());
+   // Set the "start_from" value
+   if (start_from_node_is_present) result.set_start_from(start_from_value);
 
    // Extract the "scope" value
    if (scope_node_is_present) result.set_scope(node["scope"].as<std::string>());
