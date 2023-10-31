@@ -178,7 +178,7 @@ of_two__will_throw_an_error)
          Blast::Cpp::EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(true, test_datum),
          std::runtime_error,
          "[Blast::Cpp::EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise]: error: "
-            "\"enumerators_are_bitwise\" is set to true, but \"start_from\" is not a power of two."
+            "\"enumerators_are_bitwise\" is set to true, and thus \"start_from\" must be a power of two but it is not."
       );
    }
 }

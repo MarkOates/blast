@@ -83,6 +83,23 @@ std::string EnumClassFormatter::build_enum_definition(int indent_num_spaces)
    return result.str();
 }
 
+int EnumClassFormatter::convert_to_bit_set_position(int n)
+{
+   if (n <= 0 || (n & (n - 1)) != 0)
+   {
+      // Return -1 if n is not a power of 2 or if it's non-positive
+      return -1;
+   }
+
+   int position = 0;
+   while ((n & 1) == 0) {
+      n >>= 1;
+      position++;
+   }
+
+   return position;
+}
+
 std::string EnumClassFormatter::output_nth_bit_as_hex_string(int n)
 {
    if (!((n >= 0)))
