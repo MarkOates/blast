@@ -103,6 +103,16 @@ TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest, parse__when_a_class_is_
 
 
 TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_bitwise_is_present__will_set_enumerators_are_bitwise_to_the_value)
+{
+   std::string yaml_content = "bitwise: true\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   enum_class_parser.parse();
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
    parse__when_a_start_from_is_not_present__does_not_throw_an_error)
 {
    std::string yaml_content = "enumerators: [ FOO, FOE, FUM ]\n";

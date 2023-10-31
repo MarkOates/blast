@@ -91,8 +91,8 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
       validate_node_type(node, "bitwise", YAML::NodeType::Scalar);
 
       // Validate node value as "true" or "false"
-      std::string val = node["class"].as<std::string>();
-      if (val != "true" || val != "false")
+      std::string val = node["bitwise"].as<std::string>();
+      if (!(val == "true" || val == "false"))
       {
          // TODO: Test this error
          std::stringstream error_message;
