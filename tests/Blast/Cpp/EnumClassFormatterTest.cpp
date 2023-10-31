@@ -50,7 +50,7 @@ R"END(enum class Foo
 
 
 TEST(Blast_Cpp_EnumClassFormatterTest,
-   DISABLED__build_definition__when_enumerators_are_bitwise__and_a_start_from__returns_the_expected_response)
+   build_definition__when_enumerators_are_bitwise__and_a_start_from__returns_the_expected_response)
 {
    Blast::Cpp::EnumClass enum_class("Foo", { "BIZ", "BAZ", "BUZ" });
    enum_class.set_is_class("true");

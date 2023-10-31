@@ -60,6 +60,11 @@ std::string EnumClassFormatter::build_enum_definition(int indent_num_spaces)
    int counter = 0;
    int start_from = enum_class.get_start_from(); // WARNING: This does not work with start_from being hex, counter
                                                  // being non-hex, and output_nth_bit_as_hex_string needing a non-hex
+   if (enumerators_are_bitwise)
+   {
+      start_from = convert_to_bit_set_position(start_from);
+   }
+
    for (auto &item : enum_class.get_enumerators())
    {
       result << std::string(indent_num_spaces, ' ') << item;
@@ -85,6 +90,7 @@ std::string EnumClassFormatter::build_enum_definition(int indent_num_spaces)
 
 int EnumClassFormatter::convert_to_bit_set_position(int n)
 {
+   if (n == 0) return 0;
    if (n <= 0 || (n & (n - 1)) != 0)
    {
       // Return -1 if n is not a power of 2 or if it's non-positive
@@ -97,7 +103,7 @@ int EnumClassFormatter::convert_to_bit_set_position(int n)
       position++;
    }
 
-   return position;
+   return position + 1;
 }
 
 std::string EnumClassFormatter::output_nth_bit_as_hex_string(int n)
