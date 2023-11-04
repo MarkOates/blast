@@ -78,6 +78,10 @@ properties:
     type: AllegroFlare::Screens::Storyboard
     init_with: ''
 
+  - name: settings_screen
+    type: AllegroFlare::Screens::SettingsScreen
+    init_with: ''
+
   - name: rolling_credits_screen
     type: AllegroFlare::Screens::RollingCredits
     init_with: ''
@@ -234,10 +238,11 @@ methods:
          //{ "Driving",        EVENT_ACTIVATE_TILE_DRIVE_SCREEN },
          //{ "Platforming",    EVENT_ACTIVATE_PLATFORMING_2D_SCREEN },
          //{ "Investigate",    EVENT_ACTIVATE_INVESTIGATION_ROOM_SCREEN },
+         //{ "Storyboard",     EVENT_ACTIVATE_CUT_IN_STORYBOARD_SCREEN },
          { "Achievements",   "goto_achievements_screen" },
-         //{ "Storyboard",     EVENT_ACTIVATE_CUT_IN_STORYBOARD_SCREEN},
+         { "Settings",         "goto_settings_screen" },
          { "Version",        "goto_version_screen" },
-         //{ "Credits",        EVENT_ACTIVATE_CREDITS_SCREEN },
+         { "Credits",        "goto_credits_screen" },
          { "Quit",           "quit" },
       });
       title_screen.set_font_bin(font_bin);
@@ -301,6 +306,7 @@ methods:
       game_over_screen.initialize();
 
       // TODO: Setup game won screen
+      game_won_screen.set_font_bin(font_bin);
       game_won_screen.set_background(&solid_black_background);
       //game_won_screen.initialize(); // NOTE: Initialization is not necessary for this screen
 
@@ -308,6 +314,14 @@ methods:
       game_won_outro_storyboard_screen.set_event_emitter(event_emitter);
       game_won_outro_storyboard_screen.set_background(&solid_black_background);
       game_won_outro_storyboard_screen.initialize();
+
+      // TODO: Setup the settings screen
+      settings_screen.set_event_emitter(event_emitter); // TODO: See if this is necessary
+      settings_screen.set_bitmap_bin(bitmap_bin); // Currently not used, but required
+      settings_screen.set_font_bin(font_bin);
+      settings_screen.set_model_bin(model_bin); // Currently not used, but required
+      settings_screen.set_background(&solid_black_background);
+      settings_screen.initialize();
 
       // TODO: Setup rolling credits screen
       AllegroFlare::Elements::RollingCredits::SectionFactory section_factory;
@@ -470,6 +484,10 @@ methods:
          &game_won_screen
       );
       router.register_screen(
+         AllegroFlare::Routers::Standard::SETTINGS_SCREEN_IDENTIFIER,
+         &settings_screen
+      );
+      router.register_screen(
          AllegroFlare::Routers::Standard::GAME_WON_OUTRO_STORYBOARD_SCREEN_IDENTIFIER,
          &game_won_outro_storyboard_screen
       );
@@ -530,6 +548,18 @@ methods:
          [this]([[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen* screen, void* data) {
             this->router.emit_route_event(
                AllegroFlare::Routers::Standard::EVENT_PRIMARY_GAMEPLAY_SCREEN_FINISHED,
+               nullptr,
+               al_get_time()
+            );
+         }
+      );
+      settings_screen.set_on_exit_callback_func(
+         [this](AllegroFlare::Screens::SettingsScreen* screen, void* data) {
+            this->router.emit_route_event(
+               AllegroFlare::Routers::Standard::EVENT_ACTIVATE_TITLE_SCREEN, // NOTE: If the settings screen is
+                                                                             // made accessible during gameplay,
+                                                                             // this event will need to modified
+                                                                             // for that case
                nullptr,
                al_get_time()
             );
@@ -624,6 +654,22 @@ methods:
             {
                this->router.emit_route_event(
                   AllegroFlare::Routers::Standard::EVENT_ACTIVATE_VERSION_SCREEN,
+                  nullptr,
+                  al_get_time()
+               );
+            }
+            else if (menu_choice == "goto_settings_screen")
+            {
+               this->router.emit_route_event(
+                  AllegroFlare::Routers::Standard::EVENT_ACTIVATE_SETTINGS_SCREEN,
+                  nullptr,
+                  al_get_time()
+               );
+            }
+            else if (menu_choice == "goto_credits_screen")
+            {
+               this->router.emit_route_event(
+                  AllegroFlare::Routers::Standard::EVENT_ACTIVATE_CREDITS_SCREEN,
                   nullptr,
                   al_get_time()
                );
@@ -724,14 +770,16 @@ dependencies:
     headers: [ AllegroFlare/Screens/RollingCredits.hpp ]
   - symbol: AllegroFlare::Screens::Version
     headers: [ AllegroFlare/Screens/Version.hpp ]
+  - symbol: AllegroFlare::Screens::LevelSelectScreen
+    headers: [ AllegroFlare/Screens/LevelSelectScreen.hpp ]
+  - symbol: AllegroFlare::Screens::SettingsScreen
+    headers: [ AllegroFlare/Screens/SettingsScreen.hpp ]
   - symbol: AllegroFlare::Achievements
     headers: [ AllegroFlare/Achievements.hpp ]
   - symbol: AllegroFlare::StoryboardFactory
     headers: [ AllegroFlare/StoryboardFactory.hpp ]
   - symbol: AllegroFlare::Logger
     headers: [ AllegroFlare/Logger.hpp ]
-  - symbol: AllegroFlare::Screens::LevelSelectScreen
-    headers: [ AllegroFlare/Screens/LevelSelectScreen.hpp ]
   - symbol: AllegroFlare::RouteEventDatas::StartLevel
     headers: [ AllegroFlare/RouteEventDatas/StartLevel.hpp ]
   - symbol: AllegroFlare::Color
