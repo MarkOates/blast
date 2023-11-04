@@ -295,6 +295,8 @@ methods:
       level_select_screen.initialize();
 
       // TODO: Setup game over screen
+      game_over_screen.set_event_emitter(event_emitter);
+      game_over_screen.set_font_bin(font_bin);
       game_over_screen.set_background(&solid_black_background);
       game_over_screen.initialize();
 
