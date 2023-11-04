@@ -535,6 +535,36 @@ methods:
             );
          }
       );
+      game_over_screen.set_on_menu_choice_callback_func(
+         [this](AllegroFlare::Screens::GameOverScreen* screen, void* data) {
+            // TODO: validate "screen" is non-void
+
+            std::string menu_choice = screen->infer_current_menu_option_value();
+
+            if (menu_choice == "try_again")
+            {
+               this->router.emit_route_event(
+                  AllegroFlare::Routers::Standard::EVENT_CONTINUE_FROM_LAST_SAVE, // NOTE: This event currently does not
+                                                                                  // have an effect
+                  nullptr,
+                  al_get_time()
+               );
+            }
+            else if (menu_choice == "start_title_screen")
+            {
+               this->router.emit_route_event(
+                  AllegroFlare::Routers::Standard::EVENT_ACTIVATE_TITLE_SCREEN, // TODO: Have this activate a
+                                                                                // confirmation dialog
+                  nullptr,
+                  al_get_time()
+               );
+            }
+            else
+            {
+               AllegroFlare::Logger::throw_error("Boobaz", "buzz");
+            }
+         }
+      );
       game_won_outro_storyboard_screen.set_on_finished_callback_func(
          [this](AllegroFlare::Screens::Storyboard* screen, void* data) {
             this->router.emit_route_event(
