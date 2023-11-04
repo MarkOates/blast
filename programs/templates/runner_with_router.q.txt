@@ -565,6 +565,17 @@ methods:
             );
          }
       );
+      game_won_screen.set_on_submit_callback_func(
+         [this](AllegroFlare::Screens::GameWonScreen* screen, void* data) {
+            // TODO: validate "screen" is non-void
+
+            this->router.emit_route_event(
+               AllegroFlare::Routers::Standard::EVENT_ACTIVATE_TITLE_SCREEN,
+               nullptr,
+               al_get_time()
+            );
+         }
+      );
       game_over_screen.set_on_menu_choice_callback_func(
          [this](AllegroFlare::Screens::GameOverScreen* screen, void* data) {
             // TODO: validate "screen" is non-void
