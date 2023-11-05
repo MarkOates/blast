@@ -418,7 +418,7 @@ methods:
         default_argument: nullptr
     guards: [ router, user_data ]
     body: |
-      [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Runner* this_runner = static_cast<[[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Runner*>(user_data);
+      [[COMPONENT_NAME_FIRST_FRAGMENT]]::Runner* this_runner = static_cast<[[COMPONENT_NAME_FIRST_FRAGMENT]]::Runner*>(user_data);
 
       bool handled = false;
 

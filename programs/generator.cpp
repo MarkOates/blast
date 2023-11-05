@@ -115,8 +115,8 @@ version:
 
 
 
-std::string PROGRAM_RUNNER_CLASS_NAME = "Gameplay/Runner";
-std::string PROGRAM_RUNNER_CLASS_END_FRAGMENTS_NAME = "Gameplay::Runner";
+std::string PROGRAM_RUNNER_CLASS_NAME = "Runner";
+std::string PROGRAM_RUNNER_CLASS_END_FRAGMENTS_NAME = "Runner";
 std::string main_file_content_template = R"END(
 #include <[[PROJECT_NAME]]/[[PROGRAM_RUNNER_CLASS_NAME]].hpp>
 #include <allegro5/allegro.h>
