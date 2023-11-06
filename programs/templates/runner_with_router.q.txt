@@ -234,16 +234,7 @@ methods:
 
       // TODO: Setup title screen
       title_screen.set_event_emitter(event_emitter);
-      title_screen.set_menu_options({
-         { "Continue",          "continue_from_last_save" },
-         { "Load a Saved Game", "goto_load_a_saved_game_screen" },
-         { "Start New Game",    "start_new_game" },
-         { "Achievements",      "goto_achievements_screen" },
-         { "Settings",          "goto_settings_screen" },
-         { "Version",           "goto_version_screen" },
-         { "Credits",           "goto_credits_screen" },
-         { "Quit",              "quit" },
-      });
+      title_screen.set_menu_options( build_title_screen_menu_options());
       title_screen.set_font_bin(font_bin);
       std::string copyright_text = "© 2023 CLUBCATT Games         clubcatt.com         version " + release_info.get_version();
       title_screen.set_copyright_text(copyright_text);
@@ -403,6 +394,23 @@ methods:
       - AllegroFlare::LoadASavedGame::SaveSlots::Empty
 
 
+  - name: build_title_screen_menu_options
+    type: std::vector<std::pair<std::string, std::string>>
+    body: |
+      std::vector<std::pair<std::string, std::string>> options = {
+         { "Continue",          "continue_from_last_save" },       // TODO: If game session is saved and valid
+         { "Load a Saved Game", "goto_load_a_saved_game_screen" }, // TODO: If game session is saved and valid,
+                                                                   // and the game supports save slots
+         { "Start New Game",    "start_new_game" },                // TODO: If the game session has not begun
+         { "Achievements",      "goto_achievements_screen" },
+         { "Settings",          "goto_settings_screen" },
+         { "Version",           "goto_version_screen" },
+         { "Credits",           "goto_credits_screen" },           // TODO: If game has been won
+         { "Quit",              "quit" },
+      };
+      return options;
+
+
   - name: on_route_event_unhandled_func
     type: bool
     static: true
@@ -439,6 +447,28 @@ methods:
       return;
 
 
+  - name: setup_new_game_progress_and_state_info
+    parameters:
+      - name: game_session
+        type: AllegroFlare::GameSession*
+        default_argument: nullptr
+    guards: [ game_session ]
+    body: |
+      // TODO: This method
+      return;
+
+
+  - name: load_last_played_session_or_start_new
+    parameters:
+      - name: game_session
+        type: AllegroFlare::GameSession*
+        default_argument: nullptr
+    guards: [ game_session ]
+    body: |
+      // TODO: This method
+      return;
+
+
   - name: setup_router
     body: |
       router.set_screen_manager(&framework->get_screen_manager_ref());
@@ -467,12 +497,25 @@ methods:
          return true;
       });
 
-      router.set_on_continue_from_last_save_func(
+      // Set the callbacks related related to GameSession
+      router.set_on_create_new_session_func(
          [this](AllegroFlare::Routers::Standard* screen, void* user_data) {
-            this->continue_from_last_save();
+            // TODO: Test this method
+            AllegroFlare::GameSession &game_session = screen->get_game_session_ref();
+            this->setup_new_game_progress_and_state_info(&game_session); // NOTE: user_data is not necessary
          }
       );
-      router.set_on_continue_from_last_save_func_user_data(this);
+      //router.set_on_create_new_session_func_user_data(this);
+
+      router.set_on_load_last_played_session_or_start_new_func(
+         [this](AllegroFlare::Routers::Standard* screen, void* user_data) {
+            // TODO: Test this method
+            AllegroFlare::GameSession &game_session = screen->get_game_session_ref();
+            // NOTE: user_data is not necessary
+            this->load_last_played_session_or_start_new(&game_session);
+         }
+      );
+      //router.set_on_load_last_played_session_or_start_new_func_user_data(this); // NOTE: user_data is not necessary
 
       // Set the routes
       router.register_screen(
@@ -698,6 +741,9 @@ methods:
 
             if (menu_choice == "start_new_game")
             {
+               // TODO: If current game session is valid and has a running GameProgressAndSaveInfo,
+               // Emit a confirmation dialog "this will destroy the current game, do you wish to
+               // continue" OR move the gamer to a "pick a save slot to start new game" screen
                this->router.emit_route_event(
                   AllegroFlare::Routers::Standard::EVENT_START_NEW_GAME,
                   nullptr,
@@ -787,6 +833,7 @@ methods:
     body_dependency_symbols:
       - AllegroFlare::Logger
       - AllegroFlare::RouteEventDatas::StartLevel
+      - AllegroFlare::GameSession
 
 
   - name: run
@@ -866,6 +913,8 @@ dependencies:
     headers: [ AllegroFlare/Logger.hpp ]
   - symbol: AllegroFlare::RouteEventDatas::StartLevel
     headers: [ AllegroFlare/RouteEventDatas/StartLevel.hpp ]
+  - symbol: AllegroFlare::GameSession
+    headers: [ AllegroFlare/GameSession.hpp ]
   - symbol: AllegroFlare::Color
     headers: [ AllegroFlare/Color.hpp ]
   - symbol: AllegroFlare::Elements::Backgrounds::ClearToColor
