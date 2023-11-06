@@ -455,6 +455,8 @@ methods:
     guards: [ game_session ]
     body: |
       // TODO: This method
+      AllegroFlare::GameProgressAndSaveInfos::Base *game_progress_and_state_info =
+        game_session->get_game_progress_and_state_info();
       return;
 
 
@@ -466,6 +468,8 @@ methods:
     guards: [ game_session ]
     body: |
       // TODO: This method
+      AllegroFlare::GameProgressAndSaveInfos::Base *game_progress_and_state_info =
+        game_session->get_game_progress_and_state_info();
       return;
 
 
