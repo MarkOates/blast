@@ -251,7 +251,7 @@ methods:
     guards: [ initialized ]
     body: |
       // TODO: this function
-      call_on_finished_callback_func();
+      //call_on_finished_callback_func(); // Consider technique to exit
       return;
 
 
