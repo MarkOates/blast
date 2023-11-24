@@ -200,6 +200,19 @@ methods:
       if (on_finished_callback_func) on_finished_callback_func(this, on_finished_callback_func_user_data);
 
 
+  - name: game_event_func
+    virtual: true
+    override: true
+    parameters:
+      - name: game_event
+        type: AllegroFlare::GameEvent*
+        default_argument: nullptr
+    guards: [ game_event ]
+    body: |
+      // game_configuration->handle_game_event(game_event);
+      return;
+
+
   - name: primary_timer_func
     virtual: true
     override: true
