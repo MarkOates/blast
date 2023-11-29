@@ -805,6 +805,15 @@ list_test_executables:
 
 
 
+universe:
+	# make blast
+	(cd /Users/markoates/Repos/blast && git pull && make clean && make programs -j && make)
+	# make allegro_flare
+	(cd /Users/markoates/Repos/allegro_flare && git pull && make clean && make)
+	# make hexagon
+	(cd /Users/markoates/Repos/hexagon && git pull && make clean && make)
+
+
 
 clean:
 	-rm -rdf obj/
