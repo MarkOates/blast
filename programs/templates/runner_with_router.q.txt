@@ -359,6 +359,11 @@ methods:
          }),
 
          section_factory.create_section_spacer(),
+
+         section_factory.create_header("People who have contributed code to Allegro 5"),
+         section_factory.create_allegro5_contributors_list(3),
+
+         section_factory.create_section_spacer(),
       });
       rolling_credits_screen.append_sections(section_factory.create_standard_disclaimers_text());
       rolling_credits_screen.initialize();
