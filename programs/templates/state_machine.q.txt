@@ -4,6 +4,8 @@ properties:
   - name: state
     type: uint32_t
     init_with: STATE_UNDEF
+    getter: true
+    setter: explicit
 
   - name: state_is_busy
     type: bool
@@ -13,33 +15,16 @@ properties:
     type: float
     init_with: 0.0f
 
-  - name: STATE_UNDEF
-    type: uint32_t
-    init_with: 0
-    const: true
-    static: true
-    constexpr: true
 
-  - name: STATE_REVEALING
-    type: uint32_t
-    init_with: 1
-    const: true
-    static: true
-    constexpr: true
+enum:
 
-  - name: STATE_AWAITING_USER_INPUT
-    type: uint32_t
-    init_with: 2
-    const: true
-    static: true
-    constexpr: true
 
-  - name: STATE_CLOSING_DOWN
-    type: uint32_t
-    init_with: 3
-    const: true
-    static: true
-    constexpr: true
+  - name: State
+    enumerators:
+      - STATE_UNDEF
+      - STATE_REVEALING
+      - STATE_AWAITING_USER_INPUT
+      - STATE_CLOSING_DOWN
 
 
 methods:
