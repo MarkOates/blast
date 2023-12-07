@@ -1,5 +1,6 @@
 #include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <Blast/String/Trimmer.hpp>
+#include <Blast/Build/Celebrator.hpp>
 
 #include <iostream>
 #include <chrono>
@@ -23,6 +24,7 @@ std::string timestamp_now()
 
 int main(int argc, char **argv)
 {
+   Blast::Build::Celebrator celebrator;
    std::string project_name = "Golf";
    int polling_frequency_sec = 10;
    bool abort = false;
@@ -40,6 +42,22 @@ int main(int argc, char **argv)
       {
          // The local repo is not in sync
          std::cout << "++ Doing actions to sync remote" << std::endl;
+         std::cout << "++ Checking if pull is OK" << std::endl;
+         std::string pull_precheck_result = Blast::String::Trimmer(fetcher.execute_command(fetcher.get_precheck_pull_has_no_conflicts_command())).trim();
+         if (!pull_precheck_result.empty())
+         {
+            // Cannot pull
+            std::cout << "!! Cannot pull" << std::endl;
+         }
+         else
+         {
+            std::cout << "++ Pulling" << std::endl;
+            std::string pull_result = Blast::String::Trimmer(fetcher.execute_command(fetcher.get_pull_command())).trim();
+            std::cout << "++ Assuming pull worked fine, running a \"make clean && make\"" << std::endl;
+            std::string make_shell_command = "(cd ~/Repos/" + project_name + " && make clean && make fast && make programs -j7 && make examples -j7)";
+            std::string make_shell_result = fetcher.execute_command(make_shell_command);
+            std::cout << celebrator.generate_built_banner() << std::endl;
+         }
       }
 
       std::this_thread::sleep_for(std::chrono::seconds(polling_frequency_sec));
