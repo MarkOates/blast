@@ -56,7 +56,7 @@ int main(int argc, char **argv)
             std::cout << "++ Assuming pull worked fine, running a \"make clean && make\"" << std::endl;
             std::string make_shell_command = "(cd ~/Repos/" + project_name + " && make clean && make fast && make programs -j7 && make examples -j7)";
             std::string make_shell_result = fetcher.execute_command(make_shell_command);
-            std::cout << celebrator.generate_built_banner() << std::endl;
+            std::cout << celebrator.generate_synced_banner() << std::endl;
          }
       }
 
