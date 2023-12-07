@@ -2,6 +2,7 @@
 #include <Blast/String/Trimmer.hpp>
 #include <Blast/Build/Celebrator.hpp>
 
+#include <filesystem>
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -10,7 +11,15 @@
 #include <allegro5/allegro.h>
 
 
-std::string project_name = "/Users/markoates/Repos/";
+//std::string project_name = "/Users/markoates/Repos/";
+
+
+bool project_folder_exists(std::string project_name)
+{
+   std::string folder_path = project_name;
+   bool exists = (std::filesystem::exists(folder_path) && std::filesystem::is_directory(folder_path));
+   return exists;
+}
 
 
 std::string timestamp_now()
@@ -22,16 +31,32 @@ std::string timestamp_now()
    return Blast::String::Trimmer(result.str()).trim();
 }
 
+
+
 int main(int argc, char **argv)
 {
+   std::string projects_directory = "/Users/markoates/Repos/";
+   std::vector<std::string> args;
+   for (int i=0; i<argc; i++) args.push_back(argv[i]);
+   if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
+
    Blast::Build::Celebrator celebrator;
-   std::string project_name = "Golf";
+   std::string project_name = args[1];
+
+
+   std::string projects_full_path = projects_directory + project_name;
+   if (!project_folder_exists(projects_full_path))
+   {
+      throw std::runtime_error("The project folder \"" + projects_full_path + "\" does not exist.");
+   }
+
+
    int polling_frequency_sec = 10;
    bool abort = false;
 
    while (!abort)
    {
-      NcursesArt::GithubRepoStatusFetcher fetcher(project_name, "/Users/markoates/Repos/");
+      NcursesArt::GithubRepoStatusFetcher fetcher(project_name, projects_directory);
       std::cout << "Polling (" << project_name << ")..." << std::endl;
       fetcher.poll_status();
       std::cout << "...polling finished." << std::endl;
