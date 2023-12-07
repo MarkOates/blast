@@ -27,6 +27,14 @@ TEST(GithubRepoStatusFetcherTest, get_pull_commnd__returns_the_shell_command_to_
    EXPECT_EQ(expected_shell_command, fetcher.get_pull_command());
 }
 
+TEST(GithubRepoStatusFetcherTest, get_precheck_pull_has_no_conflicts_commnd__returns_the_shell_command_to_check_if_a_\
+git_pull_will_not_cause_a_conflict)
+{
+   GithubRepoStatusFetcher fetcher("blast");
+   std::string expected_shell_command = "(cd ~/Repos/blast && git fetch && git pull --dry-run)";
+   EXPECT_EQ(expected_shell_command, fetcher.get_precheck_pull_has_no_conflicts_command());
+}
+
 TEST(GithubRepoStatusFetcherTest,
    get_current_staged_files_command__returns_the_shell_command_to_obtain_the_list_of_staged_files)
 {

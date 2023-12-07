@@ -19,6 +19,7 @@ namespace NcursesArt
       bool only_poll_once;
       bool status_polled;
       std::string git_pull_command;
+      std::string git_precheck_pull_has_no_conflicts_command;
       std::string git_branch_count_command;
       std::string git_current_branch_command;
       std::string git_current_branch_num_commits_command;
@@ -43,6 +44,7 @@ namespace NcursesArt
       bool get_only_poll_once() const;
       bool get_status_polled() const;
       std::string get_git_pull_command() const;
+      std::string get_git_precheck_pull_has_no_conflicts_command() const;
       std::string get_git_branch_count_command() const;
       std::string get_git_current_branch_command() const;
       std::string get_git_current_branch_num_commits_command() const;
@@ -68,6 +70,7 @@ namespace NcursesArt
       bool is_current_branch_master();
       std::string get_current_branch_name_command();
       std::string get_pull_command();
+      std::string get_precheck_pull_has_no_conflicts_command();
       std::string get_status_command();
       std::string get_current_staged_files_command();
       std::string get_is_clean_command();

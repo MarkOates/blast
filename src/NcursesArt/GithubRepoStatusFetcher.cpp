@@ -23,6 +23,7 @@ GithubRepoStatusFetcher::GithubRepoStatusFetcher(std::string repo_name, std::str
    , only_poll_once(true)
    , status_polled(false)
    , git_pull_command("git pull")
+   , git_precheck_pull_has_no_conflicts_command("git pull --dry-run")
    , git_branch_count_command("git branch | wc -l")
    , git_current_branch_command("git branch | grep \\* | cut -d ' ' -f2")
    , git_current_branch_num_commits_command("git rev-list --count HEAD")
@@ -80,6 +81,12 @@ bool GithubRepoStatusFetcher::get_status_polled() const
 std::string GithubRepoStatusFetcher::get_git_pull_command() const
 {
    return git_pull_command;
+}
+
+
+std::string GithubRepoStatusFetcher::get_git_precheck_pull_has_no_conflicts_command() const
+{
+   return git_precheck_pull_has_no_conflicts_command;
 }
 
 
@@ -258,6 +265,14 @@ std::string GithubRepoStatusFetcher::get_pull_command()
 {
    std::stringstream result;
    result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && " << get_git_pull_command() << ")";
+   return result.str();
+}
+
+std::string GithubRepoStatusFetcher::get_precheck_pull_has_no_conflicts_command()
+{
+   std::stringstream result;
+   result << "(cd " << get_repos_directory() << "/" << get_repo_name() << " && git fetch && "
+          << get_git_precheck_pull_has_no_conflicts_command() << ")";
    return result.str();
 }
 
