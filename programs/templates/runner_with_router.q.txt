@@ -395,7 +395,7 @@ methods:
       - AllegroFlare::Elements::RollingCredits::SectionFactory
       - AllegroFlare::StoryboardFactory
       - AllegroFlare::Color
-      - OutOfTheBox::GameConfigurations::Main
+      - [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
       - AllegroFlare::LoadASavedGame::SaveSlots::Empty
 
 
