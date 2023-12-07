@@ -79,7 +79,7 @@ int main(int argc, char **argv)
             std::cout << "++ Pulling" << std::endl;
             std::string pull_result = Blast::String::Trimmer(fetcher.execute_command(fetcher.get_pull_command())).trim();
             std::cout << "++ Assuming pull worked fine, running a \"make clean && make\"" << std::endl;
-            std::string make_shell_command = "(cd ~/Repos/" + project_name + " && make clean && make fast && make programs -j7 && make examples -j7)";
+            std::string make_shell_command = "(cd ~/Repos/" + project_name + " && make clean && make fast && make tests && make bin/run_all_tests && make programs -j7 && make examples -j7)";
             std::string make_shell_result = fetcher.execute_command(make_shell_command);
             std::cout << celebrator.generate_synced_banner() << std::endl;
          }
