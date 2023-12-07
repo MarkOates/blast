@@ -460,7 +460,7 @@ methods:
     guards: [ game_session ]
     body: |
       // TODO: This method
-      AllegroFlare::GameProgressAndSaveInfos::Base *game_progress_and_state_info =
+      AllegroFlare::GameProgressAndStateInfos::Base *game_progress_and_state_info =
         game_session->get_game_progress_and_state_info();
       return;
 
@@ -473,7 +473,7 @@ methods:
     guards: [ game_session ]
     body: |
       // TODO: This method
-      AllegroFlare::GameProgressAndSaveInfos::Base *game_progress_and_state_info =
+      AllegroFlare::GameProgressAndStateInfos::Base *game_progress_and_state_info =
         game_session->get_game_progress_and_state_info();
       return;
 
@@ -750,7 +750,7 @@ methods:
 
             if (menu_choice == "start_new_game")
             {
-               // TODO: If current game session is valid and has a running GameProgressAndSaveInfo,
+               // TODO: If current game session is valid and has a running GameProgressAndStateInfo,
                // Emit a confirmation dialog "this will destroy the current game, do you wish to
                // continue" OR move the gamer to a "pick a save slot to start new game" screen
                this->router.emit_route_event(

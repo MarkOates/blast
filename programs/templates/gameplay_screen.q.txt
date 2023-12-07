@@ -311,5 +311,6 @@ dependencies:
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/GameConfigurations/Main.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Level.hpp ]
-
+  - symbol: AllegroFlare::GameEvent
+    headers: [ AllegroFlare/GameEvent.hpp ]
 
