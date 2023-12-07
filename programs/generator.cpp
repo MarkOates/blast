@@ -288,6 +288,8 @@ void copy_resource_files(Generator &generator)
    // TODO: Add symlinks for fonts in fixtures folder: e.g. "ln -s ../../../bin/data/fonts/Abel-Regular.ttf ./Abel-Regular.ttf"
    std::filesystem::copy(resource_file_folder + "fonts/Abel-Regular.ttf", new_project_fixtures_folder + "fonts/Abel-Regular.ttf");
 
+   std::filesystem::copy(resource_file_folder + "fonts/PathwayGothicOne-Regular.ttf", new_project_data_folder + "fonts/PathwayGothicOne-Regular.ttf");
+   std::filesystem::copy(resource_file_folder + "fonts/PathwayGothicOne-Regular.ttf", new_project_fixtures_folder + "fonts/PathwayGothicOne-Regular.ttf");
 
    //std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-game-logo-01.jpg", new_project_data_folder + "bitmaps/clubcatt-game-logo-01.jpg");
    //std::filesystem::copy(resource_file_folder + "bitmaps/clubcatt-game-logo-01.jpg", new_project_fixtures_folder + "bitmaps/clubcatt-game-logo-01.jpg");
