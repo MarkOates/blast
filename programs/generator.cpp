@@ -316,6 +316,11 @@ void copy_resource_files(Generator &generator)
    asset_name = "bitmaps/storyboard-2-01-1165x500.png";
    std::filesystem::copy(resource_file_folder + asset_name, new_project_data_folder + asset_name);
    std::filesystem::copy(resource_file_folder + asset_name, new_project_fixtures_folder + asset_name);
+
+   // Default icons
+   std::string icon_filename = "icons/allegro-flare-generic-icon-1024.png";
+   std::filesystem::copy(resource_file_folder + icon_filename, new_project_data_folder + icon_filename);
+   std::filesystem::copy(resource_file_folder + icon_filename, new_project_fixtures_folder + icon_filename);
 }
 
 
@@ -328,6 +333,7 @@ void create_directories(Generator &generator)
    system(generator.mkprojdir_and_keep_file("bin/data/fonts").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/models").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/samples").c_str());
+   system(generator.mkprojdir_and_keep_file("bin/data/icons").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/samples/music_tracks").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/samples/sound_effects").c_str());
    system(generator.mkprojdir_and_keep_file("lib").c_str());
@@ -345,6 +351,7 @@ void create_directories(Generator &generator)
    system(generator.mkprojdir_and_keep_file("tests/fixtures/bitmaps").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/fonts").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/samples").c_str());
+   system(generator.mkprojdir_and_keep_file("tests/fixtures/icons").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/samples/music_tracks").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/samples/sound_effects").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/models").c_str());
