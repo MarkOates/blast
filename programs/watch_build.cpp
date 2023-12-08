@@ -124,11 +124,19 @@ int main(int argc, char **argv)
 
             std::vector<std::string> commands = {
                fashion_build_command(project_name, "make clean", "make_clean", ++build_step_count),
-               fashion_build_command(project_name, "make fast", "make_fast", ++build_step_count),
-               fashion_build_command(project_name, "make tests -j7", "make_tests", ++build_step_count),
+               //fashion_build_command(project_name, "make fast", "make_fast", ++build_step_count),
+               fashion_build_command(project_name, "make quintessences -j8", "make_quintessences", ++build_step_count),
+               fashion_build_command(project_name, "make deps -j8", "make_deps", ++build_step_count),
+               fashion_build_command(project_name, "make objects -j8", "make_objects", ++build_step_count),
+               fashion_build_command(project_name, "make test_objects -j8", "make_test_objects", ++build_step_count),
+               fashion_build_command(project_name, "make library_for_tests", "make_library_for_tests", ++build_step_count),
+               fashion_build_command(project_name, "make tests -j8", "make_tests", ++build_step_count),
+               fashion_build_command(project_name, "make all_tests -j8", "make_all_tests", ++build_step_count),
                fashion_build_command(project_name, "make bin/run_all_tests", "make_bin_run_all_tests", ++build_step_count),
-               fashion_build_command(project_name, "make programs -j7", "make_programs", ++build_step_count),
-               fashion_build_command(project_name, "make examples -j7", "make_examples", ++build_step_count),
+               fashion_build_command(project_name, "make library", "make_library", ++build_step_count),
+               fashion_build_command(project_name, "make programs -j8", "make_programs", ++build_step_count),
+               fashion_build_command(project_name, "make examples -j8", "make_examples", ++build_step_count),
+               fashion_build_command(project_name, "make demos -j8", "make_demos", ++build_step_count),
             };
 
             for (auto &command : commands)
