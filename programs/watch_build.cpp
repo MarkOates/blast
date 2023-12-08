@@ -95,15 +95,17 @@ int main(int argc, char **argv)
       std::string project_name = args[project_num];
 
       NcursesArt::GithubRepoStatusFetcher fetcher(project_name, projects_directory);
-      std::cout << "Polling (" << project_name << ")..." << std::endl;
+      std::cout << "Polling (" << project_name << ")...";
       fetcher.poll_status();
-      std::cout << "...polling finished." << std::endl;
-      std::cout << "Polled at: " << timestamp_now() << std::endl;
-      std::cout << "  In sync: " << fetcher.is_the_repo_in_sync_with_remote() << std::endl;
       bool show_message = false;
 
-      if (!fetcher.is_the_repo_in_sync_with_remote())
+      if (fetcher.is_the_repo_in_sync_with_remote())
       {
+         std::cout << "...polling finished | In sync | Polled at: " << timestamp_now() << std::endl;
+      }
+      else // (!fetcher.is_the_repo_in_sync_with_remote())
+      {
+         std::cout << "...polling finished - Out of sync." << std::endl;
          // The local repo is not in sync
          std::cout << "++ Doing actions to sync remote" << std::endl;
          std::cout << "++ Checking if pull is OK" << std::endl;
@@ -154,7 +156,7 @@ int main(int argc, char **argv)
             {
                std::cout << "Running \"" << command << "\"" << std::endl;
                std::string make_shell_command = command;
-               std::string make_shell_result = fetcher.execute_command(make_shell_command);
+               std::string make_shell_result = fetcher.execute_command(make_shell_command); // TODO: Capture an error
             }
          }
 
