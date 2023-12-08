@@ -122,7 +122,6 @@ int main(int argc, char **argv)
             std::cout << "++ Assuming pull worked fine, running a \"make clean && make\"" << std::endl;
 
             int build_step_count = 0;
-            build_step_count++;
 
             std::vector<std::string> commands = {
                fashion_build_command(project_name, "make clean", "make_clean", ++build_step_count)
@@ -150,7 +149,7 @@ int main(int argc, char **argv)
                fashion_build_command(project_name, "make demos -j8", "make_demos", ++build_step_count),
             };
 
-            commands.insert(commands.begin(), universal_commands.begin(), universal_commands.end());
+            commands.insert(commands.end(), universal_commands.begin(), universal_commands.end());
 
             for (auto &command : commands)
             {
