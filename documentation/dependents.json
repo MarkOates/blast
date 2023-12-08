@@ -106,6 +106,7 @@
   "Blast/Errors": [
     "Blast/BuildSystem/BuildStageRenderer",
     "Blast/BuildSystem/ReportRenderers/Base",
+    "Blast/DeveloperSystem",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator"
@@ -198,6 +199,9 @@
   ],
   "std/replace": [
     "Blast/DependencySymbolAtomizer"
+  ],
+  "Blast/SystemInfo": [
+    "Blast/DeveloperSystem"
   ],
   "bool": [
     "Blast/DirectoryCreator"

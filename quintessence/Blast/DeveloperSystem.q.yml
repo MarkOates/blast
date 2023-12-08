@@ -1,0 +1,58 @@
+properties:
+
+
+  - name: macos_project_directory
+    type: std::string
+    init_with: DEFAULT_MACOS_PROJECT_DIRECTORY
+    getter: true
+    setter: true
+
+  - name: microsoft_windows_project_directory
+    type: std::string
+    init_with: DEFAULT_MICROSOFT_WINDOWS_PROJECT_DIRECTORY
+    getter: true
+    setter: true
+
+  - name: DEFAULT_MACOS_PROJECT_DIRECTORY
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)"/Users/markoates/Repos/"'
+
+  - name: DEFAULT_MICROSOFT_WINDOWS_PROJECT_DIRECTORY
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)"/msys64/home/Mark/Repos/"'
+
+
+methods:
+
+
+  - name: infer_project_directory
+    type: std::string
+    body: |
+      Blast::SystemInfo system_info;
+      if (system_info.is_microsoft_windows()) return microsoft_windows_project_directory;
+      else if (system_info.is_apple_mac()) return macos_project_directory;
+
+      Blast::Errors::throw_error(
+         "Blast::DeveloperSystem::infer_project_directory",
+         "Could not infer the type of system (windows/mac)"
+      );
+
+      return "";
+    body_dependency_symbols:
+      - Blast::SystemInfo
+      - Blast::Errors
+
+
+dependencies:
+
+
+  - symbol: Blast::SystemInfo
+    headers: [ Blast/SystemInfo.hpp ]
+  - symbol: Blast::Errors
+    headers: [ Blast/Errors.hpp ]
+
+
