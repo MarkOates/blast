@@ -59,7 +59,7 @@ methods:
       - Blast::Errors
 
 
-  - name: infer_project_directory
+  - name: infer_projects_directory
     type: std::string
     body: |
       // project? projects? repos?

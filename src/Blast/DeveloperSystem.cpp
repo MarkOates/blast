@@ -60,7 +60,7 @@ std::string DeveloperSystem::infer_base_directory()
    return "";
 }
 
-std::string DeveloperSystem::infer_project_directory()
+std::string DeveloperSystem::infer_projects_directory()
 {
    // project? projects? repos?
    return infer_base_directory() + DEFAULT_PROJECT_DIRECTORY;

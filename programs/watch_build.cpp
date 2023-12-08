@@ -1,6 +1,7 @@
 #include <NcursesArt/GithubRepoStatusFetcher.hpp>
 #include <Blast/String/Trimmer.hpp>
 #include <Blast/Build/Celebrator.hpp>
+#include <Blast/DeveloperSystem.hpp>
 
 #include <filesystem>
 #include <iostream>
@@ -33,12 +34,12 @@ std::string timestamp_now()
 
 
 
-std::string output_folder = "/Users/markoates/builds/";
-std::string projects_directory = "/Users/markoates/Repos/";
+//std::string builds_folder = "/Users/markoates/builds/";
+//std::string projects_directory = "/Users/markoates/Repos/";
 
 
 
-std::string fashion_build_command(std::string project_name, std::string command, std::string snake_cased, int build_step_count_i)
+std::string fashion_build_command(std::string builds_folder, std::string project_name, std::string command, std::string snake_cased, int build_step_count_i)
 {
    std::string build_num = "081a7bcf";
    //std::string command = "make clean";
@@ -49,8 +50,8 @@ std::string fashion_build_command(std::string project_name, std::string command,
 
    std::string build_step_count = build_step_count_ss.str();
 
-   std::string stdout_output_filename = output_folder + build_num + "-" + build_step_count + "_" + snake_cased + "_output_stdout.txt";
-   std::string stderr_output_filename = output_folder + build_num + "-" + build_step_count + "_" + snake_cased + "_output_stderr.txt";
+   std::string stdout_output_filename = builds_folder + build_num + "-" + build_step_count + "_" + snake_cased + "_output_stdout.txt";
+   std::string stderr_output_filename = builds_folder + build_num + "-" + build_step_count + "_" + snake_cased + "_output_stderr.txt";
 
    std::stringstream full_command_with_captures;
    // (cd ~/Repos/"$project_name" && make clean) > make_clean_output_stdout.txt 2> make_clean_output_stderr.txt
@@ -70,6 +71,12 @@ int main(int argc, char **argv)
    std::vector<std::string> args;
    for (int i=1; i<argc; i++) args.push_back(argv[i]);
    if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
+
+
+   Blast::DeveloperSystem developer_system;
+   std::string builds_folder = developer_system.infer_builds_directory();
+   std::string projects_directory = developer_system.infer_projects_directory();
+
 
    Blast::Build::Celebrator celebrator;
 
@@ -127,29 +134,29 @@ int main(int argc, char **argv)
             int build_step_count = 0;
 
             std::vector<std::string> commands = {
-               fashion_build_command(project_name, "make clean", "make_clean", ++build_step_count)
+               fashion_build_command(builds_folder, project_name, "make clean", "make_clean", ++build_step_count)
             };
 
             if (project_name == "blast")
             {
                commands.push_back(
-                  fashion_build_command(project_name, "make programs -j8", "blast_first_make_programs", ++build_step_count)
+                  fashion_build_command(builds_folder, project_name, "make programs -j8", "blast_first_make_programs", ++build_step_count)
                );
             }
 
             std::vector<std::string> universal_commands = {
-               fashion_build_command(project_name, "make quintessences -j8", "make_quintessences", ++build_step_count),
-               fashion_build_command(project_name, "make deps -j8", "make_deps", ++build_step_count),
-               fashion_build_command(project_name, "make objects -j8", "make_objects", ++build_step_count),
-               fashion_build_command(project_name, "make test_objects -j8", "make_test_objects", ++build_step_count),
-               fashion_build_command(project_name, "make library_for_tests", "make_library_for_tests", ++build_step_count),
-               fashion_build_command(project_name, "make tests -j8", "make_tests", ++build_step_count),
-               fashion_build_command(project_name, "make all_tests -j8", "make_all_tests", ++build_step_count),
-               fashion_build_command(project_name, "make bin/run_all_tests", "make_bin_run_all_tests", ++build_step_count),
-               fashion_build_command(project_name, "make library", "make_library", ++build_step_count),
-               fashion_build_command(project_name, "make programs -j8", "make_programs", ++build_step_count),
-               fashion_build_command(project_name, "make examples -j8", "make_examples", ++build_step_count),
-               fashion_build_command(project_name, "make demos -j8", "make_demos", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make quintessences -j8", "make_quintessences", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make deps -j8", "make_deps", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make objects -j8", "make_objects", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make test_objects -j8", "make_test_objects", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make library_for_tests", "make_library_for_tests", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make tests -j8", "make_tests", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make all_tests -j8", "make_all_tests", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make bin/run_all_tests", "make_bin_run_all_tests", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make library", "make_library", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make programs -j8", "make_programs", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make examples -j8", "make_examples", ++build_step_count),
+               fashion_build_command(builds_folder, project_name, "make demos -j8", "make_demos", ++build_step_count),
             };
 
             commands.insert(commands.end(), universal_commands.begin(), universal_commands.end());

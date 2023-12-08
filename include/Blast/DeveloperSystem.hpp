@@ -30,7 +30,7 @@ namespace Blast
       std::string get_macos_base_directory() const;
       std::string get_microsoft_windows_base_directory() const;
       std::string infer_base_directory();
-      std::string infer_project_directory();
+      std::string infer_projects_directory();
       std::string infer_builds_directory();
    };
 }
