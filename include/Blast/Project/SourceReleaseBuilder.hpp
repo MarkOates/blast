@@ -83,6 +83,7 @@ namespace Blast
          std::string get_release_info_source_file_contents();
          std::string get_build_info_header_file_contents();
          std::string get_build_info_source_file_contents();
+         std::string get_app_info_file_contents();
          std::vector<std::pair<std::string, std::string>> list_symlinks();
          void fix_symlink_targets_from_relative_to_absolute();
          void replace_symlinks_with_copies_of_linked_files();

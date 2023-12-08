@@ -427,6 +427,14 @@ std::string SourceReleaseBuilder::get_build_info_source_file_contents()
    return build_info_file_generator.source_file_content();
 }
 
+std::string SourceReleaseBuilder::get_app_info_file_contents()
+{
+   std::string app_icon_filename = "bin/data/icons/golf-icon-01.png";
+   std::stringstream result;
+   result << "app_icon_filename=" << app_icon_filename << std::endl;
+   return result.str();
+}
+
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
 {
    // TODO: This process iterates through every folder in the "Releases" folder, not sure this
@@ -1118,6 +1126,14 @@ bool SourceReleaseBuilder::generate_source_release()
    std::string build_info_cpp_filename = destination_directory + "/src/BuildInfo.cpp";
    std::string build_info_source_file_contents = get_build_info_source_file_contents();
    write_file_contents(build_info_cpp_filename, build_info_source_file_contents);
+
+
+
+   // Add the app info file for icons and titles
+   // TODO: Just confirm there isn't already an "app_info.txt" that might unintentionally get overwritten
+   std::string app_info_file_filename = destination_directory + "/app_info.txt";
+   std::string app_info_file_contents = get_app_info_file_contents();
+   write_file_contents(app_info_file_filename, app_info_file_contents);
 
 
 
