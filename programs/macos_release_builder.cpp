@@ -23,6 +23,7 @@
 #include <Blast/BuildInfo.hpp>
 #include <Blast/BuildInfoBuilder.hpp>
 #include <Blast/BuildInfoCppFileGenerator.hpp>
+#include <Blast/Project/SourceReleaseAppInfoFile.hpp>
 
 
 
@@ -163,6 +164,7 @@ public:
    static std::string readme_filename() { return "README.md"; }
    static std::string source_icon_filename() { return "Icon1024.png"; }
    static std::string built_icns_filename() { return "MyIcon.icns"; }
+   static std::string app_info_filename() { return Blast::Project::SourceReleaseAppInfoFile::APP_INFO_FILENAME; } // Right now, "app.info", might change later
    static std::string full_path_of_temp_location() { return NameGenerator::TEMP_DIRECTORY_FOR_BUILD + "/"; }
    static std::string full_path_to_built_icns_file() { return NameGenerator::TEMP_DIRECTORY_FOR_ICON + "/" + built_icns_filename(); };
    static std::string name_of_project() { return NameGenerator::NAME_OF_EXECUTABLE; }
@@ -188,6 +190,7 @@ public:
       //return SYSTEM_RELEASES_FOLDER + "/" + release_folder_relative_to_system_releases_folder() + "/TheWeepingHouse.app/Contents/Resources/Icon.icns";
    }
    static std::string full_path_to_source_readme() { return (TEMP_DIRECTORY_FOR_BUILD + "/" + NameGenerator::readme_filename()); }
+   static std::string full_path_to_source_app_info_file() { return (TEMP_DIRECTORY_FOR_BUILD + "/" + NameGenerator::app_info_filename()); }
    static std::string full_path_of_source_data_folder() { return (TEMP_DIRECTORY_FOR_BUILD + "/data/"); }
    static std::string full_path_to_destination_readme() { return SYSTEM_RELEASES_FOLDER + "/" + release_folder_relative_to_system_releases_folder() + "/" + "README.md"; }
    static std::string full_path_of_destination_data_folder()
@@ -1188,6 +1191,32 @@ public:
 
 
 
+class ValidatePresenceOfAppInfoFile : public Blast::BuildSystem::BuildStages::Base
+{
+public:
+   static constexpr char* TYPE = (char*)"ValidatePresenceOfAppInfoFile";
+   std::string full_location_to_source_app_info_file;
+
+   ValidatePresenceOfAppInfoFile()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+      , full_location_to_source_app_info_file(NameGenerator::full_path_to_source_app_info_file())
+   {}
+
+   virtual bool execute() override
+   {
+      std::cout << std::endl;
+      std::cout << std::endl;
+      std::cout << "ValidatePresenceOfAppInfoFile:" << std::endl;
+      std::cout << "  looking for: \"" <<  full_location_to_source_app_info_file << "\"" << std::endl;
+      std::cout << std::endl;
+      std::cout << std::endl;
+      return Blast::FileExistenceChecker( full_location_to_source_app_info_file).exists();
+   }
+};
+
+
+
+
 class GenerateBuildInfoCppFileInTempSrcFolder : public Blast::BuildSystem::BuildStages::Base
 {
 private:
@@ -1595,6 +1624,7 @@ int main(int argc, char **argv)
                                                     // note that this name is set by the generated Makefile and will match the
                                                     // name of the projcet.
 
+
    if (args.size() == 4)
    {
       arg_name_of_executable = args[1];
@@ -1634,6 +1664,10 @@ int main(int argc, char **argv)
    TEMP_DIRECTORY_FOR_BUILD = create_temporary_directory().string();
    TEMP_DIRECTORY_FOR_ICON = create_temporary_directory().string();
    TEMP_DIRECTORY_FOR_ZIP_DOWNLOAD = create_temporary_directory().string();
+
+
+
+   //std::string name_of_app_info_file = Blast::Project::SourceReleaseAppInfoFile::APP_INFO_FILENAME; // Right now, "app.info", might change later
 
 
 
@@ -1706,8 +1740,14 @@ int main(int argc, char **argv)
       new UnzipDownloadedSourceReleaseFile(),
       new CopyUnzippedSourceReleaseFilesToTemporaryDirectoryForBuild(),
 
-      // validate README.md in source, validate source icon needed for icns file
+      // validate README.md in source
       new ValidateSourceReadme(),
+
+      // TODO: Validate source icon needed for icns file
+      new ValidatePresenceOfAppInfoFile(),
+
+      // TODO: Validate source icon needed for icns file
+      //new ValidateAppIconFile(),
 
       // generate a src/BuildInfo.cpp file
       new GenerateBuildInfoCppFileInTempSrcFolder(),

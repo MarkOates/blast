@@ -11,6 +11,9 @@ namespace Blast
    {
       class SourceReleaseAppInfoFile
       {
+      public:
+         static constexpr const char* APP_INFO_FILENAME = (char*)"app.info";
+
       private:
          std::string app_icon_filename;
 

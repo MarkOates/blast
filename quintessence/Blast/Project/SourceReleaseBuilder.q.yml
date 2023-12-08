@@ -1065,8 +1065,11 @@ functions:
 
 
       // Add the app info file for icons and titles
-      // TODO: Just confirm there isn't already an "app_info.txt" that might unintentionally get overwritten
-      std::string app_info_file_filename = destination_directory + "/app_info.txt";
+      // TODO: Just confirm there isn't already an "app.info" that might unintentionally get overwritten
+      // TODO: Test 
+      std::string app_info_file_filename = destination_directory
+                                         + "/"
+                                         + Blast::Project::SourceReleaseAppInfoFile::APP_INFO_FILENAME;
       std::string app_info_file_contents = get_app_info_file_contents();
       write_file_contents(app_info_file_filename, app_info_file_contents);
 
