@@ -133,7 +133,7 @@ int main(int argc, char **argv)
             if (project_name == "blast")
             {
                commands.push_back(
-                  fashion_build_command(project_name, "make programs", "blast_first_make_programs", ++build_step_count)
+                  fashion_build_command(project_name, "make programs -j8", "blast_first_make_programs", ++build_step_count)
                );
             }
 
