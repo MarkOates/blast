@@ -33,13 +33,16 @@ std::string timestamp_now()
 
 
 
-std::string fashion_build_command(std::string project_name, std::string command, std::string snake_cased)
+std::string fashion_build_command(std::string project_name, std::string command, std::string snake_cased, int build_step_count_i)
 {
    std::string build_num = "081a7bcf";
    //std::string command = "make clean";
    //std::string snake_cased = "make_clean";
 
-   std::string build_step_count = "001";
+   std::stringstream build_step_count_ss;
+   build_step_count_ss << std::setw(3) << std::setfill('0') << build_step_count_i;
+
+   std::string build_step_count = build_step_count_ss.str();
 
    std::string output_folder = "/Users/markoates/builds/";
    std::string stdout_output_filename = output_folder + build_num + "-" + build_step_count + "_" + snake_cased + "_output_stdout.txt";
@@ -83,7 +86,7 @@ int main(int argc, char **argv)
    }
 
 
-   int polling_frequency_sec = 10;
+   int polling_frequency_sec = 5;
    bool abort = false;
    int project_num = 0;
 
@@ -116,13 +119,16 @@ int main(int argc, char **argv)
             std::string pull_result = Blast::String::Trimmer(fetcher.execute_command(fetcher.get_pull_command())).trim();
             std::cout << "++ Assuming pull worked fine, running a \"make clean && make\"" << std::endl;
 
+            int build_step_count = 0;
+            build_step_count++;
+
             std::vector<std::string> commands = {
-               fashion_build_command(project_name, "make clean", "make_clean"),
-               fashion_build_command(project_name, "make fast", "make_fast"),
-               fashion_build_command(project_name, "make tests -j7", "make_tests"),
-               fashion_build_command(project_name, "make bin/run_all_tests", "make_bin_run_all_tests"),
-               fashion_build_command(project_name, "make programs -j7", "make_programs"),
-               fashion_build_command(project_name, "make examples -j7", "make_examples"),
+               fashion_build_command(project_name, "make clean", "make_clean", ++build_step_count),
+               fashion_build_command(project_name, "make fast", "make_fast", ++build_step_count),
+               fashion_build_command(project_name, "make tests -j7", "make_tests", ++build_step_count),
+               fashion_build_command(project_name, "make bin/run_all_tests", "make_bin_run_all_tests", ++build_step_count),
+               fashion_build_command(project_name, "make programs -j7", "make_programs", ++build_step_count),
+               fashion_build_command(project_name, "make examples -j7", "make_examples", ++build_step_count),
             };
 
             for (auto &command : commands)
