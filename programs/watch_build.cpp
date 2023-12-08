@@ -119,13 +119,12 @@ int main(int argc, char **argv)
             std::vector<std::string> commands = {
                fashion_build_command(project_name, "make clean", "make_clean"),
                fashion_build_command(project_name, "make fast", "make_fast"),
-               fashion_build_command(project_name, "make tests", "make_tests"),
+               fashion_build_command(project_name, "make tests -j7", "make_tests"),
                fashion_build_command(project_name, "make bin/run_all_tests", "make_bin_run_all_tests"),
                fashion_build_command(project_name, "make programs -j7", "make_programs"),
                fashion_build_command(project_name, "make examples -j7", "make_examples"),
             };
 
-            //std::string make_shell_command = "(cd ~/Repos/" + project_name + " && make clean && make fast && make tests && make bin/run_all_tests && make programs -j7 && make examples -j7)";
             for (auto &command : commands)
             {
                std::cout << "Running \"" << command << "\"" << std::endl;
