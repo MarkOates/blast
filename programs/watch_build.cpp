@@ -123,8 +123,17 @@ int main(int argc, char **argv)
             build_step_count++;
 
             std::vector<std::string> commands = {
-               fashion_build_command(project_name, "make clean", "make_clean", ++build_step_count),
-               //fashion_build_command(project_name, "make fast", "make_fast", ++build_step_count),
+               fashion_build_command(project_name, "make clean", "make_clean", ++build_step_count)
+            };
+
+            if (project_name == "blast")
+            {
+               commands.push_back(
+                  fashion_build_command(project_name, "make programs", "blast_first_make_programs", ++build_step_count)
+               );
+            }
+
+            std::vector<std::string> universal_commands = {
                fashion_build_command(project_name, "make quintessences -j8", "make_quintessences", ++build_step_count),
                fashion_build_command(project_name, "make deps -j8", "make_deps", ++build_step_count),
                fashion_build_command(project_name, "make objects -j8", "make_objects", ++build_step_count),
@@ -138,6 +147,8 @@ int main(int argc, char **argv)
                fashion_build_command(project_name, "make examples -j8", "make_examples", ++build_step_count),
                fashion_build_command(project_name, "make demos -j8", "make_demos", ++build_step_count),
             };
+
+            commands.insert(commands.begin(), universal_commands.begin(), universal_commands.end());
 
             for (auto &command : commands)
             {
