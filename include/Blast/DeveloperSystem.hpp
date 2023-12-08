@@ -9,12 +9,14 @@ namespace Blast
    class DeveloperSystem
    {
    public:
-      static constexpr const char* DEFAULT_MACOS_PROJECT_DIRECTORY = (char*)"/Users/markoates/Repos/";
-      static constexpr const char* DEFAULT_MICROSOFT_WINDOWS_PROJECT_DIRECTORY = (char*)"/msys64/home/Mark/Repos/";
+      static constexpr const char* DEFAULT_MACOS_BASE_DIRECTORY = (char*)"/Users/markoates/";
+      static constexpr const char* DEFAULT_MICROSOFT_WINDOWS_BASE_DIRECTORY = (char*)"/msys64/home/Mark/";
+      static constexpr const char* DEFAULT_PROJECT_DIRECTORY = (char*)"Repos/";
+      static constexpr const char* DEFAULT_BUILDS_DIRECTORY = (char*)"Builds/";
 
    private:
-      std::string macos_project_directory;
-      std::string microsoft_windows_project_directory;
+      std::string macos_base_directory;
+      std::string microsoft_windows_base_directory;
 
    protected:
 
@@ -23,11 +25,13 @@ namespace Blast
       DeveloperSystem();
       ~DeveloperSystem();
 
-      void set_macos_project_directory(std::string macos_project_directory);
-      void set_microsoft_windows_project_directory(std::string microsoft_windows_project_directory);
-      std::string get_macos_project_directory() const;
-      std::string get_microsoft_windows_project_directory() const;
+      void set_macos_base_directory(std::string macos_base_directory);
+      void set_microsoft_windows_base_directory(std::string microsoft_windows_base_directory);
+      std::string get_macos_base_directory() const;
+      std::string get_microsoft_windows_base_directory() const;
+      std::string infer_base_directory();
       std::string infer_project_directory();
+      std::string infer_builds_directory();
    };
 }
 

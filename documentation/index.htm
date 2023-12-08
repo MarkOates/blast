@@ -1290,26 +1290,40 @@ table td
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
-  <td class="property">macos_project_directory</td>
+  <td class="property">macos_base_directory</td>
   <td class="property">std::string</td>
 </tr>
 <tr>
-  <td class="property">microsoft_windows_project_directory</td>
+  <td class="property">microsoft_windows_base_directory</td>
   <td class="property">std::string</td>
 </tr>
 <tr>
-  <td class="property">DEFAULT_MACOS_PROJECT_DIRECTORY</td>
+  <td class="property">DEFAULT_MACOS_BASE_DIRECTORY</td>
   <td class="property">const char*</td>
 </tr>
 <tr>
-  <td class="property">DEFAULT_MICROSOFT_WINDOWS_PROJECT_DIRECTORY</td>
+  <td class="property">DEFAULT_MICROSOFT_WINDOWS_BASE_DIRECTORY</td>
+  <td class="property">const char*</td>
+</tr>
+<tr>
+  <td class="property">DEFAULT_PROJECT_DIRECTORY</td>
+  <td class="property">const char*</td>
+</tr>
+<tr>
+  <td class="property">DEFAULT_BUILDS_DIRECTORY</td>
   <td class="property">const char*</td>
 </tr>
     </table>
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
+  <td class="method">infer_base_directory()</td>
+</tr>
+<tr>
   <td class="method">infer_project_directory()</td>
+</tr>
+<tr>
+  <td class="method">infer_builds_directory()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
