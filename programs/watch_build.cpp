@@ -37,25 +37,35 @@ int main(int argc, char **argv)
 {
    std::string projects_directory = "/Users/markoates/Repos/";
    std::vector<std::string> args;
-   for (int i=0; i<argc; i++) args.push_back(argv[i]);
+   for (int i=1; i<argc; i++) args.push_back(argv[i]);
    if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
 
    Blast::Build::Celebrator celebrator;
-   std::string project_name = args[1];
 
 
-   std::string projects_full_path = projects_directory + project_name;
-   if (!project_folder_exists(projects_full_path))
+   std::vector<std::string> project_names_to_check;
+   for (int i=0; i<args.size(); i++)
    {
-      throw std::runtime_error("The project folder \"" + projects_full_path + "\" does not exist.");
+      std::string project_name = args[i];
+
+      std::string projects_full_path = projects_directory + project_name;
+      if (!project_folder_exists(projects_full_path))
+      {
+         throw std::runtime_error("The project folder \"" + projects_full_path + "\" does not exist.");
+      }
+
+      project_names_to_check.push_back(project_name);
    }
 
 
-   int polling_frequency_sec = 10;
+   int polling_frequency_sec = 3;
    bool abort = false;
+   int project_num = 0;
 
    while (!abort)
    {
+      std::string project_name = args[project_num];
+
       NcursesArt::GithubRepoStatusFetcher fetcher(project_name, projects_directory);
       std::cout << "Polling (" << project_name << ")..." << std::endl;
       fetcher.poll_status();
@@ -86,6 +96,9 @@ int main(int argc, char **argv)
       }
 
       std::this_thread::sleep_for(std::chrono::seconds(polling_frequency_sec));
+
+      project_num++;
+      if (project_num >= project_names_to_check.size()) project_num = 0;
    }
 
    return 0;
