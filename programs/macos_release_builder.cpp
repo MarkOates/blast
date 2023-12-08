@@ -166,6 +166,7 @@ public:
    static std::string built_icns_filename() { return "MyIcon.icns"; }
    static std::string app_info_filename() { return Blast::Project::SourceReleaseAppInfoFile::APP_INFO_FILENAME; } // Right now, "app.info", might change later
    static std::string full_path_of_temp_location() { return NameGenerator::TEMP_DIRECTORY_FOR_BUILD + "/"; }
+   //static std::string full_path_of_source_icon_file() { return NameGenerator::TEMP_DIRECTORY_FOR_BUILD + "/"; }
    static std::string full_path_to_built_icns_file() { return NameGenerator::TEMP_DIRECTORY_FOR_ICON + "/" + built_icns_filename(); };
    static std::string name_of_project() { return NameGenerator::NAME_OF_EXECUTABLE; }
    static std::string name_of_built_executable() { return NameGenerator::NAME_OF_EXECUTABLE; }
@@ -888,7 +889,7 @@ class CopySourceAppIconPngToTempFolder : public Blast::BuildSystem::BuildStages:
 private:
    void execute_shell_commands()
    {
-      std::string source = full_path_to_source_icon_png;
+      std::string source = NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG;
       std::string destination = full_destination_path_to_copied_source_icns_file;
 
       std::stringstream shell_command;
@@ -904,14 +905,14 @@ private:
 
 public:
    static constexpr char* TYPE = (char*)"CopySourceAppIconPngToTempFolder";
-   std::string full_path_to_source_icon_png;
+   //std::string full_path_to_source_icon_png;
    std::string full_destination_path_to_copied_source_icns_file;
    std::string shell_command_result;
    std::string shell_command_response_code;
 
    CopySourceAppIconPngToTempFolder()
       : Blast::BuildSystem::BuildStages::Base(TYPE)
-      , full_path_to_source_icon_png(NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG)
+      //, full_path_to_source_icon_png(NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG)
       , full_destination_path_to_copied_source_icns_file(NameGenerator::full_path_to_copied_source_icns_file())
    {}
 
@@ -1214,6 +1215,42 @@ public:
    }
 };
 
+
+
+class ValidateAndSetAppIconFilename : public Blast::BuildSystem::BuildStages::Base
+{
+public:
+   static constexpr char* TYPE = (char*)"ValidateAndSetAppIconFilename";
+   std::string full_location_to_source_app_info_file;
+
+   ValidateAndSetAppIconFilename()
+      : Blast::BuildSystem::BuildStages::Base(TYPE)
+      , full_location_to_source_app_info_file(NameGenerator::full_path_to_source_app_info_file())
+   {}
+
+   virtual bool execute() override
+   {
+      // HERE
+      Blast::Project::SourceReleaseAppInfoFile source_release_app_info_file;
+      std::string file_contents = file_get_contents(full_location_to_source_app_info_file);
+      source_release_app_info_file.load_contents(file_contents);
+
+      std::string app_icon_filename = source_release_app_info_file.get_app_icon_filename();
+      std::string final_full_path = NameGenerator::full_path_of_temp_location() + app_icon_filename;
+
+      std::cout << std::endl;
+      std::cout << std::endl;
+      std::cout << "ValidateAndSetAppIconFilename:" << std::endl;
+      std::cout << "  Found app icon filename: \"" <<  app_icon_filename << "\"" << std::endl;
+      std::cout << "  Assuming path: \"" << NameGenerator::full_path_of_temp_location() << "\"";
+      std::cout << "  Final FULL_PATH_TO_SOURCE_ICON_PNG: \"" << final_full_path << "\"";
+      std::cout << std::endl;
+      std::cout << std::endl;
+
+      NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG = final_full_path;
+      return true;
+   }
+};
 
 
 
@@ -1699,7 +1736,7 @@ int main(int argc, char **argv)
    NameGenerator::FULL_VERSION_NUMBER_WITH_BUILD = arg_source_version_string; //"1.0.0.3";
    NameGenerator::VERSION_NUMBER = arg_source_version_string; //"1.0.0";
    // TODO: consider moving this static location for the default icon, also only use it as a fallback if the repo does not have an app icon
-   NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG = "/Users/markoates/Repos/allegro_flare/bin/data/bitmaps/allegro-flare-generic-icon-1024.png";
+   NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG = "[icon-file-is-not-set]"; //"/Users/markoates/Repos/allegro_flare/bin/data/bitmaps/allegro-flare-generic-icon-1024.png";
    //NameGenerator::FULL_PATH_TO_SOURCE_ICON_PNG = "/Users/markoates/Releases/" + NameGenerator::SOURCE_RELEASE_FOLDER_NAME + "/data/system/allegro-flare-generic-icon-1024.png";
    NameGenerator::TEMP_DIRECTORY_FOR_BUILD = TEMP_DIRECTORY_FOR_BUILD;
    NameGenerator::TEMP_DIRECTORY_FOR_ICON = TEMP_DIRECTORY_FOR_ICON;
@@ -1743,11 +1780,11 @@ int main(int argc, char **argv)
       // validate README.md in source
       new ValidateSourceReadme(),
 
-      // TODO: Validate source icon needed for icns file
+      // TODO: Validate app info file exists
       new ValidatePresenceOfAppInfoFile(),
 
-      // TODO: Validate source icon needed for icns file
-      //new ValidateAppIconFile(),
+      // TODO: Validate source icon filename is present in the app info file, assign to global
+      new ValidateAndSetAppIconFilename(),
 
       // generate a src/BuildInfo.cpp file
       new GenerateBuildInfoCppFileInTempSrcFolder(),
