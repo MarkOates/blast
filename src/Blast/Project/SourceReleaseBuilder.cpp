@@ -573,8 +573,13 @@ bool SourceReleaseBuilder::generate_source_release()
 
    if (!version_yaml_file_exists)
    {
-      std::cout << "[Blast::Project::SourceReleaseBuilder]: info: A \"version.yml\" file does not exist for "
-                << "this project. A version will not be incremented.";
+      // TODO: Add a configuration flag to make this throwing optional
+      std::string message = "A \"version.yml\" file must be present but it not exist.";
+
+      Blast::Errors::throw_error(
+         "Blast::Project::SourceReleaseBuilder::generate_source_release",
+         message
+      );
    }
    else
    {
