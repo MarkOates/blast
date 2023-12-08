@@ -3,7 +3,7 @@ properties:
 
   - name: app_icon_filename
     type: std::string
-    init_with: '"bin/data/icons/allegro-flare-generic-icon-1024.png"'
+    init_with: '"data/icons/allegro-flare-generic-icon-1024.png"'
     constructor_arg: true
     getter: true
     setter: true
@@ -15,7 +15,7 @@ methods:
   - name: get_contents
     type: std::string
     body: |
-      //std::string app_icon_filename = "bin/data/icons/golf-icon-01.png";
+      //std::string app_icon_filename = "data/icons/golf-icon-01.png";
       std::stringstream result;
       result << "app_icon_filename=" << app_icon_filename << std::endl;
       return result.str();

@@ -8,6 +8,7 @@
 #include <Blast/Errors.hpp>
 #include <Blast/FileExistenceChecker.hpp>
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
+#include <Blast/Project/SourceReleaseAppInfoFile.hpp>
 #include <Blast/Project/SymlinkChecker.hpp>
 #include <Blast/ReleaseInfoBuilder.hpp>
 #include <Blast/ReleaseInfoCppFileGenerator.hpp>
@@ -430,10 +431,9 @@ std::string SourceReleaseBuilder::get_build_info_source_file_contents()
 std::string SourceReleaseBuilder::get_app_info_file_contents()
 {
    // TODO: Replace this with an object so that the values can be symmetrically extracted
-   std::string app_icon_filename = "bin/data/icons/golf-icon-01.png";
-   std::stringstream result;
-   result << "app_icon_filename=" << app_icon_filename << std::endl;
-   return result.str();
+   Blast::Project::SourceReleaseAppInfoFile app_info_file;
+   app_info_file.set_app_icon_filename("data/icons/golf-icon-01.png");
+   return app_info_file.get_contents();
 }
 
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()

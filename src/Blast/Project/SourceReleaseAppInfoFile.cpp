@@ -41,7 +41,7 @@ std::string SourceReleaseAppInfoFile::get_app_icon_filename() const
 
 std::string SourceReleaseAppInfoFile::get_contents()
 {
-   //std::string app_icon_filename = "bin/data/icons/golf-icon-01.png";
+   //std::string app_icon_filename = "data/icons/golf-icon-01.png";
    std::stringstream result;
    result << "app_icon_filename=" << app_icon_filename << std::endl;
    return result.str();

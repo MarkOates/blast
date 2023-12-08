@@ -91,6 +91,7 @@ table td
   <li><a href="#quintessence/Blast/Project/ComponentRelativeLister.q.yml">quintessence/Blast/Project/ComponentRelativeLister.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ProgramLister.q.yml">quintessence/Blast/Project/ProgramLister.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ProjectSymlinkFixer.q.yml">quintessence/Blast/Project/ProjectSymlinkFixer.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Project/SourceReleaseAppInfoFile.q.yml">quintessence/Blast/Project/SourceReleaseAppInfoFile.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/SymlinkChecker.q.yml">quintessence/Blast/Project/SymlinkChecker.q.yml</a></li>
   <li><a href="#quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml</a></li>
@@ -1965,6 +1966,49 @@ table td
 </ul>
 <ul>
   <div class="component">
+    <h3 id="quintessence/Blast/Project/SourceReleaseAppInfoFile.q.yml">quintessence/Blast/Project/SourceReleaseAppInfoFile.q.yml</h3>
+    <h4>Overview<h4>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">app_icon_filename</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">get_contents()</td>
+</tr>
+<tr>
+  <td class="method">load_contents(std::string raw_contents=&quot;[unset-raw_contents]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">trim_each(std::vector&lt;std::string&gt; tokens={})</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::find_if&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::filesystem::exists&quot;, &quot;headers&quot;=&gt;[&quot;filesystem&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<ul>
+  <div class="component">
     <h3 id="quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</h3>
     <h4>Overview<h4>
     <h3>Properties</h3>
@@ -2177,6 +2221,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::VersionYAMLLoaderEmitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/VersionYAMLLoaderEmitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Project::SourceReleaseAppInfoFile&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Project/SourceReleaseAppInfoFile.hpp&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -4243,6 +4290,7 @@ table td
     "Blast/BuildSystem/BuildStageRenderer",
     "Blast/BuildSystem/ReportRenderers/Base",
     "Blast/DeveloperSystem",
+    "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator"
@@ -4329,6 +4377,7 @@ table td
   ],
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
+    "Blast/Project/SourceReleaseAppInfoFile",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
@@ -4365,6 +4414,7 @@ table td
   ],
   "std/filesystem/exists": [
     "Blast/FileExistenceChecker",
+    "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/Project/SymlinkChecker"
   ],
   "std/filesystem/last_write_time": [
@@ -4484,6 +4534,18 @@ table td
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder"
   ],
+  "std/find_if": [
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "Blast/String/Trimmer"
+  ],
+  "Blast/String/Trimmer": [
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
   "remove": [
     "Blast/Project/SourceReleaseBuilder"
   ],
@@ -4511,6 +4573,9 @@ table td
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/VersionYAMLLoaderEmitter": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/Project/SourceReleaseAppInfoFile": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [
@@ -4592,9 +4657,6 @@ table td
   "fgets": [
     "Blast/ShellCommandExecutorWithCallback"
   ],
-  "std/find_if": [
-    "Blast/String/Trimmer"
-  ],
   "std/toupper": [
     "Blast/StringUpcaser"
   ],
@@ -4628,13 +4690,6 @@ table td
   ],
   "std/any_of": [
     "Blast/YAMLValidator"
-  ],
-  "Blast/String/Trimmer": [
-    "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher",
-    "Quizes/MultiplexQuestionCollectionHelper",
-    "Quizes/MultiplexQuizRunner",
-    "Quizes/MultiplexSheetLoader"
   ],
   "std/cerr": [
     "NcursesArt/GithubRepoStatusFetcher"

@@ -133,8 +133,7 @@ TEST(Blast_Project_SourceReleaseBuilderTest,
 {
    // TODO: Replace this with an object so that the values can be symmetrically extracted
    Blast::Project::SourceReleaseBuilder release_builder;
-   std::string expected_app_info_file_contents = "app_icon_filename=bin/data/icons/golf-icon-01.png\n";
+   std::string expected_app_info_file_contents = "app_icon_filename=data/icons/golf-icon-01.png\n";
    EXPECT_EQ(expected_app_info_file_contents, release_builder.get_app_info_file_contents());
 }
-
 

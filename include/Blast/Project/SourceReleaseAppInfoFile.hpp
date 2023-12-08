@@ -18,7 +18,7 @@ namespace Blast
 
 
       public:
-         SourceReleaseAppInfoFile(std::string app_icon_filename="bin/data/icons/allegro-flare-generic-icon-1024.png");
+         SourceReleaseAppInfoFile(std::string app_icon_filename="data/icons/allegro-flare-generic-icon-1024.png");
          ~SourceReleaseAppInfoFile();
 
          void set_app_icon_filename(std::string app_icon_filename);

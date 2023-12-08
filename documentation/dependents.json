@@ -107,6 +107,7 @@
     "Blast/BuildSystem/BuildStageRenderer",
     "Blast/BuildSystem/ReportRenderers/Base",
     "Blast/DeveloperSystem",
+    "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator"
@@ -193,6 +194,7 @@
   ],
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
+    "Blast/Project/SourceReleaseAppInfoFile",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
@@ -229,6 +231,7 @@
   ],
   "std/filesystem/exists": [
     "Blast/FileExistenceChecker",
+    "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/Project/SymlinkChecker"
   ],
   "std/filesystem/last_write_time": [
@@ -348,6 +351,18 @@
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder"
   ],
+  "std/find_if": [
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "Blast/String/Trimmer"
+  ],
+  "Blast/String/Trimmer": [
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
   "remove": [
     "Blast/Project/SourceReleaseBuilder"
   ],
@@ -375,6 +390,9 @@
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/VersionYAMLLoaderEmitter": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
+  "Blast/Project/SourceReleaseAppInfoFile": [
     "Blast/Project/SourceReleaseBuilder"
   ],
   "std/filesystem/path": [
@@ -456,9 +474,6 @@
   "fgets": [
     "Blast/ShellCommandExecutorWithCallback"
   ],
-  "std/find_if": [
-    "Blast/String/Trimmer"
-  ],
   "std/toupper": [
     "Blast/StringUpcaser"
   ],
@@ -492,13 +507,6 @@
   ],
   "std/any_of": [
     "Blast/YAMLValidator"
-  ],
-  "Blast/String/Trimmer": [
-    "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher",
-    "Quizes/MultiplexQuestionCollectionHelper",
-    "Quizes/MultiplexQuizRunner",
-    "Quizes/MultiplexSheetLoader"
   ],
   "std/cerr": [
     "NcursesArt/GithubRepoStatusFetcher"

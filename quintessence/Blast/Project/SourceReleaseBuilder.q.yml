@@ -352,12 +352,11 @@ functions:
     type: std::string
     body: |
       // TODO: Replace this with an object so that the values can be symmetrically extracted
-      std::string app_icon_filename = "bin/data/icons/golf-icon-01.png";
-      std::stringstream result;
-      result << "app_icon_filename=" << app_icon_filename << std::endl;
-      return result.str();
+      Blast::Project::SourceReleaseAppInfoFile app_info_file;
+      app_info_file.set_app_icon_filename("data/icons/golf-icon-01.png");
+      return app_info_file.get_contents();
     body_dependency_symbols:
-      - Blast::BuildInfoCppFileGenerator
+      - Blast::Project::SourceReleaseAppInfoFile
 
 
   - name: list_symlinks
@@ -1214,5 +1213,7 @@ dependencies:
     headers: [ Blast/BuildInfoCppFileGenerator.hpp ]
   - symbol: Blast::VersionYAMLLoaderEmitter
     headers: [ Blast/VersionYAMLLoaderEmitter.hpp ]
+  - symbol: Blast::Project::SourceReleaseAppInfoFile
+    headers: [ Blast/Project/SourceReleaseAppInfoFile.hpp ]
 
 
