@@ -33,6 +33,11 @@ std::string timestamp_now()
 
 
 
+std::string output_folder = "/Users/markoates/builds/";
+std::string projects_directory = "/Users/markoates/Repos/";
+
+
+
 std::string fashion_build_command(std::string project_name, std::string command, std::string snake_cased, int build_step_count_i)
 {
    std::string build_num = "081a7bcf";
@@ -44,7 +49,6 @@ std::string fashion_build_command(std::string project_name, std::string command,
 
    std::string build_step_count = build_step_count_ss.str();
 
-   std::string output_folder = "/Users/markoates/builds/";
    std::string stdout_output_filename = output_folder + build_num + "-" + build_step_count + "_" + snake_cased + "_output_stdout.txt";
    std::string stderr_output_filename = output_folder + build_num + "-" + build_step_count + "_" + snake_cased + "_output_stderr.txt";
 
@@ -63,7 +67,6 @@ std::string fashion_build_command(std::string project_name, std::string command,
 
 int main(int argc, char **argv)
 {
-   std::string projects_directory = "/Users/markoates/Repos/";
    std::vector<std::string> args;
    for (int i=1; i<argc; i++) args.push_back(argv[i]);
    if (args.size() <= 1) throw std::runtime_error("You must pass a project name");
