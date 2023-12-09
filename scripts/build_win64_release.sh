@@ -65,10 +65,16 @@ curl -L -o $TEMP_BUILD_DIR$FOOBAR $SOURCE_URL
 
 # Go to the temp location, unzip the folder, and make
 
+
+echo "A"
+
 (cd $TEMP_BUILD_DIR || exit 1)
 
+echo "B"
+## TODO: Validate unzip
 (cd $TEMP_BUILD_DIR && (unzip $FOOBAR || exit 1))
 
+echo "C"
 
 ## TODO: CRITICAL: verify and validate that the expected folder exists in the zip file
 
@@ -85,13 +91,19 @@ fi
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && make)
 
 
+
+echo "Executable built successfully"
+
+
 # Cleanup the unnecessary folders / files
 
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf include/)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf programs/)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf src/)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm Makefile)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm app.info)
 
+echo "Source folders cleared"
 
 
 #(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro-5.2.dll ./allegro-5.2.dll)
@@ -112,6 +124,11 @@ fi
 
 
 # Copying necessary DLLs
+
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libFLAC.dll             ./libFLAC.dll)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libbrotlidec.dll        ./libbrotlidec.dll)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libpcre2-8-0.dll        ./libpcre2-8-0.dll)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libbrotlicommon.dll     ./libbrotlicommon.dll)
 
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_acodec-5.2.dll  ./allegro_acodec-5.2.dll)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_audio-5.2.dll   ./allegro_audio-5.2.dll)
