@@ -104,13 +104,22 @@ if [ ! -f "$full_path_to_icon_png" ]; then
   exit 3
 fi
 
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 data/icons/golf-icon-01.ico)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 app.ico)
 echo "Building the executable - DONE"
 
 
 
+echo "Building the resource file for the icon - STARTING"
+echo "Building the resource file for the icon - making .rc file"
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && echo "1 ICON \"app.ico\"" > windows_app_icon_resource.rc)
+echo "Building the resource file for the icon - compiling .rc file to .o"
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && windres windows_app_icon_resource.rc -O coff -o windows_app_icon_resource.o)
+echo "Building the resource file for the icon - DONE"
+
+
+
 echo "Building the executable - STARTING"
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && make)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && make WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE=windows_app_icon_resource.o)
 echo "Building the executable - DONE"
 
 
