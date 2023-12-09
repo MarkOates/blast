@@ -20,8 +20,9 @@ value=$(grep "^$key=" "$file_path" | cut -d '=' -f 2)
 
 # Check if the key was found
 if [ -n "$value" ]; then
-    echo "Value for $key: $value"
+    echo "$value"
 else
     echo "Key $key not found in the file."
+    exit 3
 fi
 

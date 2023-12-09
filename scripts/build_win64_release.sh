@@ -93,10 +93,18 @@ fi
 echo "Building the ico file - STARTING"
 
 source_icon_png=$(cd "$TEMP_BUILD_DIR" && cd "$SOURCE_FOLDER_NAME" && ~/Repos/blast/scripts/extract_key_from_app_info.sh app_icon_filename)
+full_path_to_icon_png=$TEMP_BUILD_DIR$SOURCE_FOLDER_NAME/$source_icon_png
 
 echo "source_icon_png extracted: \"$source_icon_png\""
+echo "full_path_to_icon_png: \"$full_path_to_icon_png\""
 
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && convert data/icons/golf-icon-01.png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 data/icons/golf-icon-01.ico)
+## TODO: Validate presence of source_icon_file (something like "data/icons/golf-icon-01.png")
+if [ ! -f "$full_path_to_icon_png" ]; then
+  echo "Error: File $full_path_to_icon_png not found."
+  exit 3
+fi
+
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 data/icons/golf-icon-01.ico)
 echo "Building the executable - DONE"
 
 
