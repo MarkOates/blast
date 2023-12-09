@@ -3,20 +3,25 @@
 
 ## TODO: guard this with check that you are actually on windows
 
+command -v zip >/dev/null 2>&1 || { echo >&2 "\"zip\" command not found. Aborting."; exit 1; }
+command -v unzip >/dev/null 2>&1 || { echo >&2 "\"unzip\" command not found. Aborting."; exit 1; }
+command -v convert >/dev/null 2>&1 || { echo >&2 "\"convert\" command not found. Aborting."; exit 1; }
+command -v windres >/dev/null 2>&1 || { echo >&2 "\"windres\" command not found. Aborting."; exit 1; }
+
 
 ## CRITICAL: validate an arg is present representing the download token
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
     echo ""
     echo "!! Error: Incorrect number of arguments provided. You must provide one."
     echo ""
     echo "Example:"
     echo ""
-    echo "    ./scripts/build_win64_release.sh <expected-folder-name-inside-the-zip> <version-number-string>"
+    echo "    ./scripts/build_win64_release.sh <expected-folder-name-inside-the-zip> <version-number-string> <final-zip-name>"
     echo ""
     echo "Example 2:"
     echo ""
-    echo "    ./scripts/build_win64_release.sh CubeShooter-0.1.2-SourceRelease 0.1.2"
+    echo "    ./scripts/build_win64_release.sh CubeShooter-0.1.2-SourceRelease 0.1.2 CubeShooter-0.1.2-win64"
     echo ""
     echo ""
     echo "NOTE: Releases can be found at:"
@@ -37,6 +42,7 @@ TEMP_BUILD_DIR="/home/Mark/Releases/"
 FOOBAR="$1.zip"
 FOOBAR_WITHOUT_ZIP="$1"
 SOURCE_FOLDER_NAME="$1"
+FINAL_FOLDER_NAME="$3"
 
 
 # TODO: validate characters in $1
@@ -132,6 +138,9 @@ echo "Building the executable - DONE"
 
 # Note that this filename could change
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm app.info)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm app.ico)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm windows_app_icon_resource.rc)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm windows_app_icon_resource.o)
 
 echo "Source folders cleared"
 
@@ -204,3 +213,20 @@ echo "Copying necessary DLLs - STARTING"
 
 
 echo "Copying necessary DLLs - DONE"
+
+# TODO: VALIDATE folder names doesn't already exist
+echo "Renaming Folder - STARTING"
+(cd $TEMP_BUILD_DIR && mv $SOURCE_FOLDER_NAME $FINAL_FOLDER_NAME)
+echo "Renaming Folder - DONE"
+
+
+# TODO: VALIDATE Final zip doesn't already exist
+echo "Compressing ZIP - STARTING"
+(cd $TEMP_BUILD_DIR && zip -r $FINAL_FOLDER_NAME.zip $FINAL_FOLDER_NAME)
+echo "Compressing ZIP - DONE"
+
+
+
+echo "WIN64 Build successful!"
+
+
