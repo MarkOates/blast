@@ -88,11 +88,22 @@ else
 fi
 ) || exit 6
 
+
+
+echo "Building the ico file - STARTING"
+
+source_icon_png=$(cd "$TEMP_BUILD_DIR" && cd "$SOURCE_FOLDER_NAME" && ~/Repos/blast/scripts/extract_key_from_app_info.sh app_icon_filename)
+
+echo "source_icon_png extracted: \"$source_icon_png\""
+
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && convert data/icons/golf-icon-01.png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 data/icons/golf-icon-01.ico)
+echo "Building the executable - DONE"
+
+
+
+echo "Building the executable - STARTING"
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && make)
-
-
-
-echo "Executable built successfully"
+echo "Building the executable - DONE"
 
 
 # Cleanup the unnecessary folders / files
@@ -101,9 +112,12 @@ echo "Executable built successfully"
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf programs/)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf src/)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm Makefile)
+
+# Note that this filename could change
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm app.info)
 
 echo "Source folders cleared"
+
 
 
 #(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro-5.2.dll ./allegro-5.2.dll)
@@ -124,6 +138,7 @@ echo "Source folders cleared"
 
 
 # Copying necessary DLLs
+echo "Copying necessary DLLs - STARTING"
 
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libFLAC.dll             ./libFLAC.dll)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libbrotlidec.dll        ./libbrotlidec.dll)
@@ -170,3 +185,5 @@ echo "Source folders cleared"
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libwinpthread-1.dll     ./libwinpthread-1.dll)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/zlib1.dll               ./zlib1.dll)
 
+
+echo "Copying necessary DLLs - DONE"
