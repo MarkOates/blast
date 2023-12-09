@@ -104,12 +104,12 @@ full_path_to_icon_png=$TEMP_BUILD_DIR$SOURCE_FOLDER_NAME/$source_icon_png
 echo "source_icon_png extracted: \"$source_icon_png\""
 echo "full_path_to_icon_png: \"$full_path_to_icon_png\""
 
-## TODO: Validate presence of source_icon_file (something like "data/icons/golf-icon-01.png")
 if [ ! -f "$full_path_to_icon_png" ]; then
   echo "Error: File $full_path_to_icon_png not found."
   exit 3
 fi
 
+## TODO: Validate app.ico does not already exist before running this step
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 app.ico)
 echo "Building the executable - DONE"
 
