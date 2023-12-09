@@ -172,6 +172,7 @@ functions:
 
       bool include_opengl = get_link_with_opengl();
       bool include_yaml_cpp = get_link_with_yaml_cpp();
+      //bool include_windows_app_icon_resource_variable = true;
  
       MAKEFILE_CONTENT
                        //<< "SRC_FILES := $(shell find src -type f)"
@@ -220,10 +221,21 @@ functions:
       MAKEFILE_CONTENT
                        << "main: $(SRC_FILES)" << std::endl
                        << "\t"
-                       << "g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $^ " << main_program_filename << " -o " << binary_name
+                       << "g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $^ "
+                              << main_program_filename
+                              << " "
+                              << "$(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)"
+                              << " "
+                              << "-o"
+                              << " "
+                              << binary_name
                        << " -I./include $(ALLEGRO_LIBS)";
                        if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
                        if (include_yaml_cpp) MAKEFILE_CONTENT << " $(YAML_CPP_LIB)";
+                       //if (include_windows_app_icon_resource_variable)
+                       //{
+                          //MAKEFILE_CONTENT << " $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)";
+                       //}
                        MAKEFILE_CONTENT << std::endl;
                        MAKEFILE_CONTENT << std::endl;
 
