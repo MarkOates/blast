@@ -24,6 +24,12 @@ properties:
     constructor_arg: true
     getter: true
 
+  - name: project_appinfo_yaml_filename
+    type: std::string
+    init_with: '"appinfo.yml"'
+    constructor_arg: true
+    getter: true
+
   - name: link_with_opengl
     type: bool
     init_with: true
@@ -299,6 +305,34 @@ functions:
       return PINFO_CONTENT;
 
 
+  - name: read_contents_of_file
+    type: std::string
+    parameters:
+      - name: filePath
+        type: std::string
+        default_argument: '"[unset-filePath]"'
+    body: |
+      // TODO: Test this method
+      std::ifstream file(filePath);
+      std::string contents;
+
+      if (file.is_open())
+      {
+         // Read the entire file into the string
+         contents.assign((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+         file.close();
+      }
+      else
+      {
+         // Handle the case where the file could not be opened
+         std::cerr << "Unable to open file: " << filePath << std::endl;
+      }
+
+      return contents;
+    body_dependency_symbols:
+      - std::ifstream
+
+
   - name: copy_file
     parameters:
       - name: source_filename
@@ -360,15 +394,59 @@ functions:
       - Blast::BuildInfoCppFileGenerator
 
 
-  - name: get_source_release_app_info_file_contents
+  - name: get_project_appinfo_yaml_file_contents
     type: std::string
     body: |
+      // HERE
+      std::string full_path_to_appinfo_yaml_file = source_project_directory + "/" + project_appinfo_yaml_filename;
+
+      std::string contents = read_contents_of_file(full_path_to_appinfo_yaml_file);
+
+      std::cout << "==========" << std::endl;
+      std::cout << " path: " << full_path_to_appinfo_yaml_file << std::endl;
+      std::cout << " contents: " << std::endl;
+      std::cout << contents << std::endl;
+      std::cout << "==========" << std::endl;
+
+      return contents;
+
+      //return read_contents_of_file(full_path_to_appinfo_yaml_file);
+      //project_appinfo_yaml_filename
       // TODO: Replace this with an object so that the values can be symmetrically extracted
-      Blast::Project::SourceReleaseAppInfoFile app_info_file;
-      app_info_file.set_app_icon_filename("data/icons/golf-icon-01.png");
-      return app_info_file.get_contents();
+      //Blast::Project::SourceReleaseAppInfoFile app_info_file;
+      //app_info_file.set_app_icon_filename("data/icons/golf-icon-01.png");
+      //return app_info_file.get_contents();
     body_dependency_symbols:
       - Blast::Project::SourceReleaseAppInfoFile
+      - std::filesystem
+
+
+  - name: build_source_release_app_info_file_contents
+    type: std::string
+    body: |
+      YAML::Node node = YAML::Load(get_project_appinfo_yaml_file_contents());
+      Blast::Project::SourceReleaseAppInfoFile result_app_info_file;
+
+      // HERE
+      std::string KEY = "app_icon_filename";
+      bool key_exists = Blast::YAMLValidator::validate_presence_of_key(node, KEY, false);
+      if (!key_exists)
+      {
+         throw std::runtime_error("not go file at place");
+      }
+      else
+      {
+         // TODO: Replace this with an object so that the values can be symmetrically extracted
+         //Blast::Project::SourceReleaseAppInfoFile result_app_info_file;
+         std::string app_icon_filename = node[KEY].as<std::string>();
+         
+         result_app_info_file.set_app_icon_filename(app_icon_filename); //"data/icons/golf-icon-01.png");
+      }
+
+      return result_app_info_file.get_contents();
+    body_dependency_symbols:
+      - Blast::Project::SourceReleaseAppInfoFile
+      - Blast::YAMLValidator
 
 
   - name: list_symlinks
@@ -1082,7 +1160,7 @@ functions:
       std::string app_info_file_filename = destination_directory
                                          + "/"
                                          + Blast::Project::SourceReleaseAppInfoFile::APP_INFO_FILENAME;
-      std::string app_info_file_contents = get_source_release_app_info_file_contents();
+      std::string app_info_file_contents = build_source_release_app_info_file_contents();
       write_file_contents(app_info_file_filename, app_info_file_contents);
 
 
@@ -1230,5 +1308,7 @@ dependencies:
     headers: [ Blast/VersionYAMLLoaderEmitter.hpp ]
   - symbol: Blast::Project::SourceReleaseAppInfoFile
     headers: [ Blast/Project/SourceReleaseAppInfoFile.hpp ]
+  - symbol: Blast::YAMLValidator
+    headers: [ Blast/YAMLValidator.hpp ]
 
 

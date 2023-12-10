@@ -16,6 +16,7 @@
 #include <Blast/StringSplitter.hpp>
 #include <Blast/TimeStamper.hpp>
 #include <Blast/VersionYAMLLoaderEmitter.hpp>
+#include <Blast/YAMLValidator.hpp>
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
@@ -30,11 +31,12 @@ namespace Project
 {
 
 
-SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, bool link_with_opengl, bool link_with_yaml_cpp, bool copy_allegro_flare_source, bool exclude_yaml_files_from_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool remove_Testing_from_project_copy, bool prompt_before_deleting_unneeded_folders)
+SourceReleaseBuilder::SourceReleaseBuilder(std::string releases_base_folder, std::string project_name, std::string source_project_directory, std::string main_program_filename, std::string project_appinfo_yaml_filename, bool link_with_opengl, bool link_with_yaml_cpp, bool copy_allegro_flare_source, bool exclude_yaml_files_from_allegro_flare_source, bool copy_nlohmann_json_from_allegro_flare_source, bool copy_ordered_map_from_allegro_flare_source, bool remove_AllegroFlare_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Network2_from_allegro_flare_copy, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy, bool remove_AllegroFlare_Testing_from_allegro_flare_copy, bool remove_Testing_from_project_copy, bool prompt_before_deleting_unneeded_folders)
    : releases_base_folder(releases_base_folder)
    , project_name(project_name)
    , source_project_directory(source_project_directory)
    , main_program_filename(main_program_filename)
+   , project_appinfo_yaml_filename(project_appinfo_yaml_filename)
    , link_with_opengl(link_with_opengl)
    , link_with_yaml_cpp(link_with_yaml_cpp)
    , build_process_completed_successfully(false)
@@ -147,6 +149,12 @@ std::string SourceReleaseBuilder::get_source_project_directory() const
 std::string SourceReleaseBuilder::get_main_program_filename() const
 {
    return main_program_filename;
+}
+
+
+std::string SourceReleaseBuilder::get_project_appinfo_yaml_filename() const
+{
+   return project_appinfo_yaml_filename;
 }
 
 
@@ -401,6 +409,27 @@ std::string SourceReleaseBuilder::get_pinfo_content()
    return PINFO_CONTENT;
 }
 
+std::string SourceReleaseBuilder::read_contents_of_file(std::string filePath)
+{
+   // TODO: Test this method
+   std::ifstream file(filePath);
+   std::string contents;
+
+   if (file.is_open())
+   {
+      // Read the entire file into the string
+      contents.assign((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+      file.close();
+   }
+   else
+   {
+      // Handle the case where the file could not be opened
+      std::cerr << "Unable to open file: " << filePath << std::endl;
+   }
+
+   return contents;
+}
+
 void SourceReleaseBuilder::copy_file(std::string source_filename, std::string destination_filename)
 {
    std::ifstream src(source_filename, std::ios::binary);
@@ -440,12 +469,51 @@ std::string SourceReleaseBuilder::get_build_info_source_file_contents()
    return build_info_file_generator.source_file_content();
 }
 
-std::string SourceReleaseBuilder::get_app_info_file_contents()
+std::string SourceReleaseBuilder::get_project_appinfo_yaml_file_contents()
 {
+   // HERE
+   std::string full_path_to_appinfo_yaml_file = source_project_directory + "/" + project_appinfo_yaml_filename;
+
+   std::string contents = read_contents_of_file(full_path_to_appinfo_yaml_file);
+
+   std::cout << "==========" << std::endl;
+   std::cout << " path: " << full_path_to_appinfo_yaml_file << std::endl;
+   std::cout << " contents: " << std::endl;
+   std::cout << contents << std::endl;
+   std::cout << "==========" << std::endl;
+
+   return contents;
+
+   //return read_contents_of_file(full_path_to_appinfo_yaml_file);
+   //project_appinfo_yaml_filename
    // TODO: Replace this with an object so that the values can be symmetrically extracted
-   Blast::Project::SourceReleaseAppInfoFile app_info_file;
-   app_info_file.set_app_icon_filename("data/icons/golf-icon-01.png");
-   return app_info_file.get_contents();
+   //Blast::Project::SourceReleaseAppInfoFile app_info_file;
+   //app_info_file.set_app_icon_filename("data/icons/golf-icon-01.png");
+   //return app_info_file.get_contents();
+}
+
+std::string SourceReleaseBuilder::build_source_release_app_info_file_contents()
+{
+   YAML::Node node = YAML::Load(get_project_appinfo_yaml_file_contents());
+   Blast::Project::SourceReleaseAppInfoFile result_app_info_file;
+
+   // HERE
+   std::string KEY = "app_icon_filename";
+   bool key_exists = Blast::YAMLValidator::validate_presence_of_key(node, KEY, false);
+   if (!key_exists)
+   {
+      throw std::runtime_error("not go file at place");
+   }
+   else
+   {
+      // TODO: Replace this with an object so that the values can be symmetrically extracted
+      //Blast::Project::SourceReleaseAppInfoFile result_app_info_file;
+      std::string app_icon_filename = node[KEY].as<std::string>();
+      
+      result_app_info_file.set_app_icon_filename(app_icon_filename); //"data/icons/golf-icon-01.png");
+   }
+
+   return result_app_info_file.get_contents();
 }
 
 std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_symlinks()
@@ -1148,7 +1216,7 @@ bool SourceReleaseBuilder::generate_source_release()
    std::string app_info_file_filename = destination_directory
                                       + "/"
                                       + Blast::Project::SourceReleaseAppInfoFile::APP_INFO_FILENAME;
-   std::string app_info_file_contents = get_app_info_file_contents();
+   std::string app_info_file_contents = build_source_release_app_info_file_contents();
    write_file_contents(app_info_file_filename, app_info_file_contents);
 
 

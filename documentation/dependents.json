@@ -395,6 +395,12 @@
   "Blast/Project/SourceReleaseAppInfoFile": [
     "Blast/Project/SourceReleaseBuilder"
   ],
+  "Blast/YAMLValidator": [
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Quintessence/YAMLParsers/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
+    "Blast/VersionYAMLLoaderEmitter"
+  ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker",
     "Blast/Testing/TemporaryDirectoryCreator"
@@ -411,11 +417,6 @@
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator",
     "QuizYAMLLoader"
-  ],
-  "Blast/YAMLValidator": [
-    "Blast/Quintessence/YAMLParsers/EnumClassParser",
-    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
-    "Blast/VersionYAMLLoaderEmitter"
   ],
   "YAML/NodeType/value": [
     "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",

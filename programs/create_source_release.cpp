@@ -87,6 +87,7 @@ int main(int argc, char **argv)
    std::string source_project_directory = complete_folder_path_to_project_folder;
    std::string destination_directory = "/Users/markoates/Releases";
    std::string main_program_filename = "programs/main.cpp";
+   std::string project_appinfo_yaml_filename = "appinfo.yml";
    bool link_with_opengl = true;
    bool link_with_yaml_cpp = false;
    bool copy_allegro_flare_source = true;
@@ -95,11 +96,13 @@ int main(int argc, char **argv)
    bool remove_AllegroFlare_Network_from_allegro_flare_copy = true;
    bool remove_AllegroFlare_Testing_from_allegro_flare_copy = true;
 
+   // TODO: Remove this list from the constructor and assign each after declaring the object
    Blast::Project::SourceReleaseBuilder source_release_builder(
          destination_directory,
          project_name,
          source_project_directory,
          main_program_filename,
+         project_appinfo_yaml_filename,
          link_with_opengl,
          link_with_yaml_cpp,
          copy_allegro_flare_source,

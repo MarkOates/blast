@@ -2034,6 +2034,10 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">project_appinfo_yaml_filename</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
   <td class="property">link_with_opengl</td>
   <td class="property">bool</td>
 </tr>
@@ -2113,6 +2117,9 @@ table td
   <td class="method">get_pinfo_content()</td>
 </tr>
 <tr>
+  <td class="method">read_contents_of_file(std::string filePath=&quot;[unset-filePath]&quot;)</td>
+</tr>
+<tr>
   <td class="method">copy_file(std::string source_filename=&quot;&quot;, std::string destination_filename=&quot;&quot;)</td>
 </tr>
 <tr>
@@ -2128,7 +2135,10 @@ table td
   <td class="method">get_build_info_source_file_contents()</td>
 </tr>
 <tr>
-  <td class="method">get_app_info_file_contents()</td>
+  <td class="method">get_project_appinfo_yaml_file_contents()</td>
+</tr>
+<tr>
+  <td class="method">build_source_release_app_info_file_contents()</td>
 </tr>
 <tr>
   <td class="method">list_symlinks()</td>
@@ -2228,6 +2238,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Project::SourceReleaseAppInfoFile&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Project/SourceReleaseAppInfoFile.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::YAMLValidator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/YAMLValidator.hpp&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -4582,6 +4595,12 @@ table td
   "Blast/Project/SourceReleaseAppInfoFile": [
     "Blast/Project/SourceReleaseBuilder"
   ],
+  "Blast/YAMLValidator": [
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Quintessence/YAMLParsers/EnumClassParser",
+    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
+    "Blast/VersionYAMLLoaderEmitter"
+  ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker",
     "Blast/Testing/TemporaryDirectoryCreator"
@@ -4598,11 +4617,6 @@ table td
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator",
     "QuizYAMLLoader"
-  ],
-  "Blast/YAMLValidator": [
-    "Blast/Quintessence/YAMLParsers/EnumClassParser",
-    "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
-    "Blast/VersionYAMLLoaderEmitter"
   ],
   "YAML/NodeType/value": [
     "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",

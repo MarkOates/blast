@@ -19,6 +19,7 @@ namespace Blast
          std::string project_name;
          std::string source_project_directory;
          std::string main_program_filename;
+         std::string project_appinfo_yaml_filename;
          bool link_with_opengl;
          bool link_with_yaml_cpp;
          bool build_process_completed_successfully;
@@ -40,7 +41,7 @@ namespace Blast
 
 
       public:
-         SourceReleaseBuilder(std::string releases_base_folder="/Users/markoates/Releases/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp", bool link_with_opengl=true, bool link_with_yaml_cpp=false, bool copy_allegro_flare_source=true, bool exclude_yaml_files_from_allegro_flare_source=true, bool copy_nlohmann_json_from_allegro_flare_source=true, bool copy_ordered_map_from_allegro_flare_source=true, bool remove_AllegroFlare_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Network2_from_allegro_flare_copy=true, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Testing_from_allegro_flare_copy=true, bool remove_Testing_from_project_copy=true, bool prompt_before_deleting_unneeded_folders=true);
+         SourceReleaseBuilder(std::string releases_base_folder="/Users/markoates/Releases/", std::string project_name="Flowers", std::string source_project_directory="/Users/markoates/Repos/Flowers", std::string main_program_filename="programs/main.cpp", std::string project_appinfo_yaml_filename="appinfo.yml", bool link_with_opengl=true, bool link_with_yaml_cpp=false, bool copy_allegro_flare_source=true, bool exclude_yaml_files_from_allegro_flare_source=true, bool copy_nlohmann_json_from_allegro_flare_source=true, bool copy_ordered_map_from_allegro_flare_source=true, bool remove_AllegroFlare_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Network2_from_allegro_flare_copy=true, bool remove_AllegroFlare_Integrations_Network_from_allegro_flare_copy=true, bool remove_AllegroFlare_Testing_from_allegro_flare_copy=true, bool remove_Testing_from_project_copy=true, bool prompt_before_deleting_unneeded_folders=true);
          ~SourceReleaseBuilder();
 
          void set_link_with_opengl(bool link_with_opengl);
@@ -58,6 +59,7 @@ namespace Blast
          std::string get_project_name() const;
          std::string get_source_project_directory() const;
          std::string get_main_program_filename() const;
+         std::string get_project_appinfo_yaml_filename() const;
          bool get_link_with_opengl() const;
          bool get_link_with_yaml_cpp() const;
          bool get_build_process_completed_successfully() const;
@@ -78,12 +80,14 @@ namespace Blast
          std::string get_released_version_string();
          std::string get_makefile_content();
          std::string get_pinfo_content();
+         std::string read_contents_of_file(std::string filePath="[unset-filePath]");
          void copy_file(std::string source_filename="", std::string destination_filename="");
          std::string get_release_info_header_file_contents();
          std::string get_release_info_source_file_contents();
          std::string get_build_info_header_file_contents();
          std::string get_build_info_source_file_contents();
-         std::string get_app_info_file_contents();
+         std::string get_project_appinfo_yaml_file_contents();
+         std::string build_source_release_app_info_file_contents();
          std::vector<std::pair<std::string, std::string>> list_symlinks();
          void fix_symlink_targets_from_relative_to_absolute();
          void replace_symlinks_with_copies_of_linked_files();
