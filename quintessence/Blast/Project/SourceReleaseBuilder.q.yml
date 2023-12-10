@@ -360,7 +360,7 @@ functions:
       - Blast::BuildInfoCppFileGenerator
 
 
-  - name: get_app_info_file_contents
+  - name: get_source_release_app_info_file_contents
     type: std::string
     body: |
       // TODO: Replace this with an object so that the values can be symmetrically extracted
@@ -1082,7 +1082,7 @@ functions:
       std::string app_info_file_filename = destination_directory
                                          + "/"
                                          + Blast::Project::SourceReleaseAppInfoFile::APP_INFO_FILENAME;
-      std::string app_info_file_contents = get_app_info_file_contents();
+      std::string app_info_file_contents = get_source_release_app_info_file_contents();
       write_file_contents(app_info_file_filename, app_info_file_contents);
 
 
