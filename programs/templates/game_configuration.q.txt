@@ -129,6 +129,7 @@ methods:
       return result;
     body_dependency_symbols:
      - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
+     - std::function
      - std::stringstream
      - std::map
 
