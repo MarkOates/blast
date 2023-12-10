@@ -44,8 +44,8 @@ tmp/*
 
 
 
-std::string const APPINFO_YML_FILE_CONTENT = R"END(
-app_icon_filename: data/icons/golf-icon-01.png
+std::string const APPINFO_YML_FILE_CONTENT = R"END(# appinfo.yml
+app_icon_filename: data/icons/allegro-flare-generic-icon-1024.png
 )END";
 
 
