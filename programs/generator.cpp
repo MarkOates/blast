@@ -44,6 +44,13 @@ tmp/*
 
 
 
+std::string const APPINFO_YML_FILE_CONTENT = R"END(
+app_icon_filename: data/icons/golf-icon-01.png
+)END";
+
+
+
+
 std::string const HASH_CHECK_FILENAME = "hash_check";
 std::string const HASH_CHECK_FILE_CONTENTS = R"END(#!/bin/bash
 find quintessence -name '*.q.yml'| xargs md5
@@ -265,6 +272,16 @@ void create_gitignore(Generator &generator)
 }
 
 
+void create_appinfo_yml(Generator &generator)
+{
+   std::string filename = generator.get_project_name() + "/appinfo.yml";
+   std::ofstream outfile;
+   outfile.open(filename, std::ios::binary);
+   outfile << APPINFO_YML_FILE_CONTENT;
+   outfile.close();
+}
+
+
 void copy_resource_files(Generator &generator)
 {
    std::string resource_file_folder = "/Users/markoates/Repos/blast/programs/templates/resource_files/";
@@ -441,6 +458,7 @@ int main(int argc, char **argv)
    create_directories(generator);
    create_makefile(generator);
    create_gitignore(generator);
+   create_appinfo_yml(generator);
    create_main_file(generator);
    create_readme_file(generator);
    create_test_runner(generator);

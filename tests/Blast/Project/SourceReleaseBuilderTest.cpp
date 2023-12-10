@@ -138,7 +138,7 @@ TEST(Blast_Project_SourceReleaseBuilderTest,
       "FixtureProject2",
       FIXTURE_PATH + "FixtureProject2"
    );
-   std::string expected_app_info_file_contents = "app_icon_filename=icons/my-custom-app-icon-01.png\n";
+   std::string expected_app_info_file_contents = "app_icon_filename=data/icons/my-custom-app-icon-01.png\n";
    EXPECT_EQ(expected_app_info_file_contents, release_builder.build_source_release_app_info_file_contents());
 }
 
