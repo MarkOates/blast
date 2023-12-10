@@ -471,8 +471,15 @@ std::string SourceReleaseBuilder::get_build_info_source_file_contents()
 
 std::string SourceReleaseBuilder::get_project_appinfo_yaml_file_contents()
 {
-   // HERE
    std::string full_path_to_appinfo_yaml_file = source_project_directory + "/" + project_appinfo_yaml_filename;
+
+   if (!std::filesystem::exists(full_path_to_appinfo_yaml_file))
+   {
+      Blast::Errors::throw_error(
+         "Blast::Project::SourceReleaseBuilder::get_project_appinfo_yaml_file_contents",
+         "The file \"" + full_path_to_appinfo_yaml_file + "\" does not exist."
+      );
+   }
 
    std::string contents = read_contents_of_file(full_path_to_appinfo_yaml_file);
 
@@ -497,12 +504,14 @@ std::string SourceReleaseBuilder::build_source_release_app_info_file_contents()
    YAML::Node node = YAML::Load(get_project_appinfo_yaml_file_contents());
    Blast::Project::SourceReleaseAppInfoFile result_app_info_file;
 
-   // HERE
    std::string KEY = "app_icon_filename";
    bool key_exists = Blast::YAMLValidator::validate_presence_of_key(node, KEY, false);
    if (!key_exists)
    {
-      throw std::runtime_error("not go file at place");
+      Blast::Errors::throw_error(
+         "Blast::Project::SourceReleaseBuilder::build_source_release_app_info_file_contents",
+         "The key \"" + KEY + "\" does not exist in the file."
+      );
    }
    else
    {

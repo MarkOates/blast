@@ -132,22 +132,14 @@ TEST(Blast_Project_SourceReleaseBuilderTest, DISABLED__generate_source_release__
 TEST(Blast_Project_SourceReleaseBuilderTest,
    build_source_release_app_info_file_contents__will_return_the_expected_content_for_the_app_info)
 {
-   static const std::string FIXTURE_PATH = "tests/fixtures/"; //FixtureProject2/"
-   //static const std::string FIXTURE_PROJECT_NAME = "FixtureProject-1.2.3-SourceRelease";
+   static const std::string FIXTURE_PATH = "tests/fixtures/";
    Blast::Project::SourceReleaseBuilder release_builder(
       "/Users/markoates/Releases/", // TODO: Use a fixture path
       "FixtureProject2",
       FIXTURE_PATH + "FixtureProject2"
    );
-   //release_builder.set_project_name("FixtureProject2");
-   //release_builder.set_source_project_directory(FIXTURE_PATH + "FixtureProject2");
-   //release_builder.set_source_project_directory(FIXTURE_PATH);
-
-//(FIXTURE_PATH, "FixtureProject2/");
-   // TODO: Replace this with an object so that the values can be symmetrically extracted
-   //Blast::Project::SourceReleaseBuilder release_builder;
-   //release_builder.
    std::string expected_app_info_file_contents = "app_icon_filename=icons/my-custom-app-icon-01.png\n";
    EXPECT_EQ(expected_app_info_file_contents, release_builder.build_source_release_app_info_file_contents());
 }
+
 
