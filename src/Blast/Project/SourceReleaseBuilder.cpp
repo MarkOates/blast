@@ -355,12 +355,12 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "SOURCES := $(shell find src -name '*.cpp')" << std::endl
                     << "OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)" << std::endl
                     << "NUM_OF_OBJECTS := $(words $(OBJECTS))" << std::endl
-                    << std::endl
-                    << "list_objects:" << std::endl
-                    << "\t@echo \"number of objects: $(NUM_OF_OBJECTS)\"" << std::endl
-                    << "\t@for item in $(OBJECTS) ; do \\" << std::endl
-                    << "\techo $$item ; \\" << std::endl
-                    << "done" << std::endl;
+                    << std::endl;
+                    //<< "list_objects:" << std::endl
+                    //<< "\t@echo \"number of objects: $(NUM_OF_OBJECTS)\"" << std::endl
+                    //<< "\t@for item in $(OBJECTS) ; do \\" << std::endl
+                    //<< "\techo $$item ; \\" << std::endl
+                    //<< "done" << std::endl;
 
 
    return MAKEFILE_CONTENT.str();
