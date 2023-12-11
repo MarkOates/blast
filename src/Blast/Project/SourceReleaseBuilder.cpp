@@ -328,29 +328,6 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << std::endl;
    }
 
-   // the "main:" target
-   MAKEFILE_CONTENT
-                    << "legacy: $(SRC_FILES)" << std::endl
-                    << "\t"
-                    << "g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $^ "
-                           << main_program_filename
-                           << " "
-                           << "$(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)"
-                           << " "
-                           << "-o"
-                           << " "
-                           << binary_name
-                    << " -I./include $(ALLEGRO_LIBS)";
-                    if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
-                    if (include_yaml_cpp) MAKEFILE_CONTENT << " $(YAML_CPP_LIB)";
-                    //if (include_windows_app_icon_resource_variable)
-                    //{
-                       //MAKEFILE_CONTENT << " $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)";
-                    //}
-                    MAKEFILE_CONTENT << std::endl;
-                    MAKEFILE_CONTENT << std::endl;
-
-   // the "list_objects:" target
    MAKEFILE_CONTENT
                     << "SOURCES := $(shell find src -name '*.cpp')" << std::endl
                     << "OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)" << std::endl
@@ -358,6 +335,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << std::endl;
 
 
+   // the "main:" target
    MAKEFILE_CONTENT
                     << "SOURCES := $(shell find src -name '*.cpp')" << std::endl
                     << "OBJECTS := $(SOURCES:src/%.cpp=build/obj/%.o)" << std::endl
@@ -383,7 +361,31 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "\t@mkdir -p build/obj" << std::endl
                     << "\t@mkdir -p $(dir $@)" << std::endl
                     << "\tg++ -c -std=c++17 $< -o $@ -I./include" << std::endl
+                    << "" << std::endl
                     << "" << std::endl;
+
+   // the "legacy:" target
+   MAKEFILE_CONTENT
+                    << "legacy: $(SRC_FILES)" << std::endl
+                    << "\t"
+                    << "g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $^ "
+                           << main_program_filename
+                           << " "
+                           << "$(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)"
+                           << " "
+                           << "-o"
+                           << " "
+                           << binary_name
+                    << " -I./include $(ALLEGRO_LIBS)";
+                    if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
+                    if (include_yaml_cpp) MAKEFILE_CONTENT << " $(YAML_CPP_LIB)";
+                    //if (include_windows_app_icon_resource_variable)
+                    //{
+                       //MAKEFILE_CONTENT << " $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)";
+                    //}
+                    MAKEFILE_CONTENT << std::endl;
+                    MAKEFILE_CONTENT << std::endl;
+
 
                     //<< "list_objects:" << std::endl
                     //<< "\t@echo \"number of objects: $(NUM_OF_OBJECTS)\"" << std::endl
