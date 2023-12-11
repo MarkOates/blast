@@ -330,7 +330,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
 
    // the "main:" target
    MAKEFILE_CONTENT
-                    << "main: $(SRC_FILES)" << std::endl
+                    << "legacy: $(SRC_FILES)" << std::endl
                     << "\t"
                     << "g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $^ "
                            << main_program_filename
@@ -356,6 +356,35 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)" << std::endl
                     << "NUM_OF_OBJECTS := $(words $(OBJECTS))" << std::endl
                     << std::endl;
+
+
+   MAKEFILE_CONTENT
+                    << "SOURCES := $(shell find src -name '*.cpp')" << std::endl
+                    << "OBJECTS := $(SOURCES:src/%.cpp=build/obj/%.o)" << std::endl
+                    << "NUM_OF_OBJECTS := $(words $(OBJECTS))" << std::endl
+                    << "" << std::endl
+                    << "" << std::endl
+                    << "main: $(OBJECTS)" << std::endl
+                    << "\t@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $(OBJECTS) programs/main.cpp $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE) -o Golf -I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)" << std::endl
+                    << "\trm -rdf build" << std::endl
+                    << "\trm -rdf build/obj" << std::endl
+                    << "" << std::endl
+                    << "" << std::endl
+                    << "objects: $(OBJECTS)" << std::endl
+                    << "" << std::endl
+                    << "" << std::endl
+                    << "fast:" << std::endl
+                      << "\tmake objects -j3" << std::endl
+                    << "\tmake main" << std::endl
+                    << "" << std::endl
+                    << "" << std::endl
+                    << "build/obj/%.o: src/%.cpp" << std::endl
+                    << "\t@mkdir -p build" << std::endl
+                    << "\t@mkdir -p build/obj" << std::endl
+                    << "\t@mkdir -p $(dir $@)" << std::endl
+                    << "\tg++ -c -std=c++17 $< -o $@ -I./include" << std::endl
+                    << "" << std::endl;
+
                     //<< "list_objects:" << std::endl
                     //<< "\t@echo \"number of objects: $(NUM_OF_OBJECTS)\"" << std::endl
                     //<< "\t@for item in $(OBJECTS) ; do \\" << std::endl
