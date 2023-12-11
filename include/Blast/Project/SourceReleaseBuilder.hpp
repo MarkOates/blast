@@ -14,6 +14,9 @@ namespace Blast
    {
       class SourceReleaseBuilder
       {
+      public:
+         static constexpr const char* APP_INFO_FILENAME = (char*)"app.info";
+
       private:
          std::string releases_base_folder;
          std::string project_name;

@@ -140,6 +140,13 @@ properties:
     getter: true
     setter: true
 
+  - name: APP_INFO_FILENAME
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)"app.info"'
+
+
 
 functions:
 

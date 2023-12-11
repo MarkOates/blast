@@ -3,7 +3,7 @@ properties:
 
   - name: app_icon_filename
     type: std::string
-    init_with: '"data/icons/allegro-flare-generic-icon-1024.png"'
+    init_with: DEFAULT_APP_ICON_FILENAME
     constructor_arg: true
     getter: true
     setter: true
@@ -14,8 +14,20 @@ properties:
     type: const char*
     init_with: '(char*)"app.info"'
 
+  - name: DEFAULT_APP_ICON_FILENAME
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)"data/icons/allegro-flare-generic-icon-1024.png"'
+
 
 methods:
+
+
+  - name: app_icon_filename_is_default
+    type: bool
+    body: |
+      return (app_icon_filename == DEFAULT_APP_ICON_FILENAME);
 
 
   - name: get_contents
@@ -37,6 +49,7 @@ methods:
     body: |
       std::istringstream iss(raw_contents);
       std::string line;
+
 
       // TODO: Check for extra keys, expected keys that were not found, etc
       std::vector<std::string> duplicate_keys;
