@@ -351,7 +351,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                        << " "
                        << binary_name
                        << " "
-                       << " -I./include $(ALLEGRO_LIBS)";
+                       << "-I./include $(ALLEGRO_LIBS)";
                        if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
                        if (include_yaml_cpp) MAKEFILE_CONTENT << " $(YAML_CPP_LIB)";
                        //"-I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)"
