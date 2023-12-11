@@ -115,17 +115,21 @@ echo "Building the executable - DONE"
 
 
 
+cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME
+
+
+
 echo "Building the resource file for the icon - STARTING"
 echo "Building the resource file for the icon - making .rc file"
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && (echo "1 ICON \"app.ico\"" > windows_app_icon_resource.rc) || exit 9)
+echo "1 ICON \"app.ico\"" > windows_app_icon_resource.rc || exit 9
 echo "Building the resource file for the icon - compiling .rc file to .o"
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && (windres windows_app_icon_resource.rc -O coff -o windows_app_icon_resource.o) || exit 10)
+windres windows_app_icon_resource.rc -O coff -o windows_app_icon_resource.o || exit 10
 echo "Building the resource file for the icon - DONE"
 
 
 
 echo "Building the executable - STARTING"
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && (make WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE=windows_app_icon_resource.o) || exit 11)
+make WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE=windows_app_icon_resource.o || exit 11
 echo "Building the executable - DONE"
 
 
