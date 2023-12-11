@@ -351,9 +351,12 @@ std::string SourceReleaseBuilder::get_makefile_content()
                        << " "
                        << binary_name
                        << " "
-                       "-I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)"
-                       << std::endl
-                    << "\trm -rdf build" << std::endl
+                       << " -I./include $(ALLEGRO_LIBS)";
+                       if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
+                       if (include_yaml_cpp) MAKEFILE_CONTENT << " $(YAML_CPP_LIB)";
+                       //"-I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)"
+                       MAKEFILE_CONTENT << std::endl;
+                    MAKEFILE_CONTENT << "\trm -rdf build" << std::endl
                     << "\trm -rdf build/obj" << std::endl
                     << "" << std::endl
                     << "" << std::endl
