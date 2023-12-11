@@ -345,7 +345,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "main: $(OBJECTS)" << std::endl
                     << "\t@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $(OBJECTS) "
                        << main_program_filename
-                       << "$(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)"
+                       << " $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)"
                        << " "
                        << "-o"
                        << " "
