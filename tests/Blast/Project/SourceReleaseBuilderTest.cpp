@@ -4,9 +4,18 @@
 #include <Blast/Project/SourceReleaseBuilder.hpp>
 #include <Blast/DirectoryExistenceChecker.hpp>
 #include <Blast/Testing/TemporaryDirectoryCreator.hpp>
+#include <filesystem>
 
 //#define TEMP_SANDBOX_FOLDER ("tmp/test_sandbox")
 //std::filesystem::create_directories(TEMP_SANDBOX_FOLDER);
+#include <fstream>
+static std::string get_file_contents(std::string filename)
+{
+   std::ifstream t(filename);
+   std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+   return str;
+}
+
 
 
 TEST(Blast_Project_SourceReleaseBuilderTest, can_be_created_without_blowing_up)
@@ -140,6 +149,31 @@ TEST(Blast_Project_SourceReleaseBuilderTest,
    );
    std::string expected_app_info_file_contents = "app_icon_filename=data/icons/my-custom-app-icon-01.png\n";
    EXPECT_EQ(expected_app_info_file_contents, release_builder.build_source_release_app_info_file_contents());
+}
+
+
+TEST(Blast_Project_SourceReleaseBuilderTest, get_makefile_content__will_return_the_expected_content)
+{
+   static const std::string FIXTURE_PATH = "tests/fixtures/";
+   std::string GENERATED_MAKEFILE_FIXTURE_FILENAME = FIXTURE_PATH + "GeneratedMakefile.txt";
+   EXPECT_EQ(true, std::filesystem::exists(GENERATED_MAKEFILE_FIXTURE_FILENAME));
+   std::string expected_makefile_content = get_file_contents(GENERATED_MAKEFILE_FIXTURE_FILENAME);
+
+   Blast::Project::SourceReleaseBuilder release_builder; //(
+      //"/Users/markoates/Releases/",
+      //"FixtureProject2",
+      //FIXTURE_PATH + "FixtureProject2"
+   //);
+   std::string makefile_content = release_builder.get_makefile_content();
+
+   EXPECT_EQ(expected_makefile_content, makefile_content);
+}
+
+
+TEST(Blast_Project_SourceReleaseBuilderTest,
+   DISABLED__get_makefile_content__will_roduce_that_will_build_as_expected)
+{
+   // TODO
 }
 
 

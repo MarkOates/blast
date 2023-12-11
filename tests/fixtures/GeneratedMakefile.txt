@@ -1,0 +1,49 @@
+SRC_FILES := $(shell find src -type f -not -path '*/.*' -not -name "*~")
+ALLEGRO_LIBS=-lallegro_color -lallegro_font -lallegro_ttf -lallegro_dialog -lallegro_audio -lallegro_acodec -lallegro_video -lallegro_primitives -lallegro_image -lallegro -lallegro_main
+
+ifeq ($(OS), Windows_NT)
+	OPENGL_LIB=-lopengl32
+	WINDOWS_SUBSYSTEM_FLAGS=-Wl,--subsystem,windows
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		OPENGL_LIB=-lGL
+	endif
+	ifeq ($(UNAME_S),Darwin)
+		OPENGL_LIB=-framework OpenGL
+	endif
+endif
+
+SOURCES := $(shell find src -name '*.cpp')
+OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)
+NUM_OF_OBJECTS := $(words $(OBJECTS))
+
+SOURCES := $(shell find src -name '*.cpp')
+OBJECTS := $(SOURCES:src/%.cpp=build/obj/%.o)
+NUM_OF_OBJECTS := $(words $(OBJECTS))
+
+
+main: $(OBJECTS)
+	@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $(OBJECTS) programs/main.cpp $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE) -o Flowers -I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)
+	rm -rdf build
+	rm -rdf build/obj
+
+
+objects: $(OBJECTS)
+
+
+fast:
+	make objects -j3
+	make main
+
+
+build/obj/%.o: src/%.cpp
+	@mkdir -p build
+	@mkdir -p build/obj
+	@mkdir -p $(dir $@)
+	g++ -c -std=c++17 $< -o $@ -I./include
+
+
+legacy: $(SRC_FILES)
+	g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $^ programs/main.cpp $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE) -o Flowers -I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)
+
