@@ -21,11 +21,11 @@ TEST(Blast_Project_SourceReleaseAppInfoFileTest, DEFAULT_APP_ICON_FILENAME__has_
 
 TEST(Blast_Project_SourceReleaseAppInfoFileTest, app_icon_filename__is_set_to_the_default_value)
 {
-   //Blast::Project::SourceReleaseAppInfoFile source_release_app_info_file;
-   //EXPECT_STREQ(
-      //Blast::Project::SourceReleaseAppInfoFile::DEFAULT_APP_ICON_FILENAME,
-      //source_release_app_info_file.get_app_icon_filename()
-   //);
+   Blast::Project::SourceReleaseAppInfoFile source_release_app_info_file;
+   EXPECT_EQ(
+      Blast::Project::SourceReleaseAppInfoFile::DEFAULT_APP_ICON_FILENAME,
+      source_release_app_info_file.get_app_icon_filename()
+   );
 }
 
 

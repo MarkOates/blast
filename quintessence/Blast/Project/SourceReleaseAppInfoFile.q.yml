@@ -33,7 +33,6 @@ methods:
   - name: get_contents
     type: std::string
     body: |
-      //std::string app_icon_filename = "data/icons/golf-icon-01.png";
       std::stringstream result;
       result << "app_icon_filename=" << app_icon_filename << std::endl;
       return result.str();
@@ -49,7 +48,6 @@ methods:
     body: |
       std::istringstream iss(raw_contents);
       std::string line;
-
 
       // TODO: Check for extra keys, expected keys that were not found, etc
       std::vector<std::string> duplicate_keys;

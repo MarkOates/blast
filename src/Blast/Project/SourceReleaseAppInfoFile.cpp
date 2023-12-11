@@ -46,7 +46,6 @@ bool SourceReleaseAppInfoFile::app_icon_filename_is_default()
 
 std::string SourceReleaseAppInfoFile::get_contents()
 {
-   //std::string app_icon_filename = "data/icons/golf-icon-01.png";
    std::stringstream result;
    result << "app_icon_filename=" << app_icon_filename << std::endl;
    return result.str();
@@ -56,7 +55,6 @@ void SourceReleaseAppInfoFile::load_contents(std::string raw_contents)
 {
    std::istringstream iss(raw_contents);
    std::string line;
-
 
    // TODO: Check for extra keys, expected keys that were not found, etc
    std::vector<std::string> duplicate_keys;
