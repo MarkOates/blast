@@ -137,6 +137,9 @@ else
   #NOTE: -fsanitize=address is added to this list thought it is in a different category of flags
 	DISABLE_UNUSED_WARNINGS_FLAG=-Wno-unused-variable -Wno-unused-private-field -Wno-unused-function
 
+	#TODO: Consider adding -Wheader-hygine to catch instances where a header may be present on clang but not on other systems
+	# https://chat.openai.com/c/eb58fb9d-507d-4361-bcc9-a8d87556d1e8
+
 	#TODO: update to this line that includes an out-of-order ctor error promotion
 	#TODO: include -Woverloaded-virtual -Winconsistent-missing-override to promoted errors
 	#TODO: consider unused-but-set-variable
