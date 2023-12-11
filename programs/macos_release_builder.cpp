@@ -810,7 +810,7 @@ private:
    {
       //TODO: require '/' character at end
       std::stringstream shell_command_1;
-      shell_command_1 << "(cd " << name_of_temp_location << " && make)";
+      shell_command_1 << "(cd " << name_of_temp_location << " && make main)";
       std::cout << shell_command_1.str() << std::endl;
       Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command_1.str());
       shell_command_result = shell_command_executor.execute();
