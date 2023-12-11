@@ -60,29 +60,29 @@ FINAL_FOLDER_NAME="$3"
 
 # Create the necessary temp build folder if it does not exist
 
-mkdir -p $TEMP_BUILD_DIR
+(mkdir -p $TEMP_BUILD_DIR || exit 3)
 
 
 # Download the source release
 
 echo "===== Downloading $SOURCE_URL"
-curl -L -o $TEMP_BUILD_DIR$FOOBAR $SOURCE_URL
+(curl -L -o $TEMP_BUILD_DIR$FOOBAR $SOURCE_URL || exit 4)
 
 
 # Go to the temp location, unzip the folder, and make
 
 
-echo "A"
 
 (cd $TEMP_BUILD_DIR || exit 1)
 
-echo "B"
+
 ## TODO: Validate unzip
 (cd $TEMP_BUILD_DIR && (unzip $FOOBAR || exit 1))
 
-echo "C"
 
 ## TODO: CRITICAL: verify and validate that the expected folder exists in the zip file
+
+
 
 (cd $TEMP_BUILD_DIR &&\
 if [ -d $SOURCE_FOLDER_NAME ]
@@ -98,7 +98,7 @@ fi
 
 echo "Building the ico file - STARTING"
 
-source_icon_png=$(cd "$TEMP_BUILD_DIR" && cd "$SOURCE_FOLDER_NAME" && ~/Repos/blast/scripts/extract_key_from_app_info.sh app_icon_filename)
+source_icon_png=$(cd "$TEMP_BUILD_DIR" && cd "$SOURCE_FOLDER_NAME" && (~/Repos/blast/scripts/extract_key_from_app_info.sh app_icon_filename || exit 7))
 full_path_to_icon_png=$TEMP_BUILD_DIR$SOURCE_FOLDER_NAME/$source_icon_png
 
 echo "source_icon_png extracted: \"$source_icon_png\""
@@ -110,57 +110,28 @@ if [ ! -f "$full_path_to_icon_png" ]; then
 fi
 
 ## TODO: Validate app.ico does not already exist before running this step
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 app.ico)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && (convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 app.ico || exit 8))
 echo "Building the executable - DONE"
 
 
 
 echo "Building the resource file for the icon - STARTING"
 echo "Building the resource file for the icon - making .rc file"
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && echo "1 ICON \"app.ico\"" > windows_app_icon_resource.rc)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && (echo "1 ICON \"app.ico\"" > windows_app_icon_resource.rc) || exit 9)
 echo "Building the resource file for the icon - compiling .rc file to .o"
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && windres windows_app_icon_resource.rc -O coff -o windows_app_icon_resource.o)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && (windres windows_app_icon_resource.rc -O coff -o windows_app_icon_resource.o) || exit 10)
 echo "Building the resource file for the icon - DONE"
 
 
 
 echo "Building the executable - STARTING"
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && make WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE=windows_app_icon_resource.o)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && (make WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE=windows_app_icon_resource.o) || exit 11)
 echo "Building the executable - DONE"
 
 
 # Cleanup the unnecessary folders / files
 
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf include/)
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf programs/)
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf src/)
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm Makefile)
-
-# Note that this filename could change
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm app.info)
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm app.ico)
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm windows_app_icon_resource.rc)
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm windows_app_icon_resource.o)
-
 echo "Source folders cleared"
-
-
-
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro-5.2.dll ./allegro-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_acodec-5.2.dll ./allegro_acodec-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_audio-5.2.dll ./allegro_audio-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_color-5.2.dll ./allegro_color-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_dialog-5.2.dll ./allegro_dialog-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_font-5.2.dll ./allegro_font-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_image-5.2.dll ./allegro_image-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_primitives-5.2.dll ./allegro_primitives-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/allegro_ttf-5.2.dll ./allegro_ttf-5.2.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libgcc_s_seh-1.dll ./libgcc_s_seh-1.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libdumb.dll ./libdumb.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libFLAC-8.dll ./libFLAC-8.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libopusfile-0.dll ./libopusfile-0.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libvorbisfile-3.dll ./libvorbisfile-3.dll)
-#(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && cp /mingw64/bin/libopenal-1.dll ./libopenal-1.dll)
 
 
 # Copying necessary DLLs
@@ -214,15 +185,28 @@ echo "Copying necessary DLLs - STARTING"
 
 echo "Copying necessary DLLs - DONE"
 
+
+echo "Cleaning up - STARTING"
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf include/)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf programs/)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf src/)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm Makefile)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm app.info) # Note that this filename could change
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm app.ico)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm windows_app_icon_resource.rc)
+(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm windows_app_icon_resource.o)
+echo "Cleaning up - DONE"
+
+
 # TODO: VALIDATE folder names doesn't already exist
 echo "Renaming Folder - STARTING"
-(cd $TEMP_BUILD_DIR && mv $SOURCE_FOLDER_NAME $FINAL_FOLDER_NAME)
+(cd $TEMP_BUILD_DIR && (mv $SOURCE_FOLDER_NAME $FINAL_FOLDER_NAME) || exit 12)
 echo "Renaming Folder - DONE"
 
 
 # TODO: VALIDATE Final zip doesn't already exist
 echo "Compressing ZIP - STARTING"
-(cd $TEMP_BUILD_DIR && zip -r $FINAL_FOLDER_NAME.zip $FINAL_FOLDER_NAME)
+(cd $TEMP_BUILD_DIR && (zip -r $FINAL_FOLDER_NAME.zip $FINAL_FOLDER_NAME) || exit 13)
 echo "Compressing ZIP - DONE"
 
 
