@@ -343,7 +343,16 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "" << std::endl
                     << "" << std::endl
                     << "main: $(OBJECTS)" << std::endl
-                    << "\t@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $(OBJECTS) programs/main.cpp $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE) -o Golf -I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)" << std::endl
+                    << "\t@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $(OBJECTS) "
+                       << main_program_filename
+                       << "$(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)"
+                       << " "
+                       << "-o"
+                       << " "
+                       << binary_name
+                       << " "
+                       "-I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)"
+                       << std::endl
                     << "\trm -rdf build" << std::endl
                     << "\trm -rdf build/obj" << std::endl
                     << "" << std::endl
