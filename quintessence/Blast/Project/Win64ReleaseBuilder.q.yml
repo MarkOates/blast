@@ -22,10 +22,16 @@ methods:
 
   - name: run
     body: |
-      std::string script_path = build_full_path_to_win64_release_builder_script();
-      Blast::ShellCommandExecutorWithCallback executor(script_path);
+      Blast::Errors::throw_error(
+         "Blast::Project::Win64ReleaseBuilder::run",
+         "This feature is not yet implemented. It would be great if you could move this here."
+      );
+
+      //std::string script_path = build_full_path_to_win64_release_builder_script();
+      //Blast::ShellCommandExecutorWithCallback executor(script_path);
     body_dependency_symbols:
       - Blast::ShellCommandExecutorWithCallback
+      - Blast::Errors
 
 
 dependencies:
@@ -33,5 +39,7 @@ dependencies:
 
   - symbol: Blast::ShellCommandExecutorWithCallback
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: Blast::Errors
+    headers: [ Blast/Errors.hpp ]
 
 

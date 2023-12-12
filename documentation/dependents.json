@@ -109,6 +109,7 @@
     "Blast/DeveloperSystem",
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/Project/SourceReleaseBuilder",
+    "Blast/Project/Win64ReleaseBuilder",
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator"
   ],
