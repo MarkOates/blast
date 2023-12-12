@@ -94,6 +94,7 @@ table td
   <li><a href="#quintessence/Blast/Project/SourceReleaseAppInfoFile.q.yml">quintessence/Blast/Project/SourceReleaseAppInfoFile.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/SymlinkChecker.q.yml">quintessence/Blast/Project/SymlinkChecker.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Project/Win64ReleaseBuilder.q.yml">quintessence/Blast/Project/Win64ReleaseBuilder.q.yml</a></li>
   <li><a href="#quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml</a></li>
   <li><a href="#quintessence/Blast/Quintessence/YAMLParsers/FunctionArgumentParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/FunctionArgumentParser.q.yml</a></li>
   <li><a href="#quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</a></li>
@@ -2307,6 +2308,38 @@ table td
 </ul>
 <ul>
   <div class="component">
+    <h3 id="quintessence/Blast/Project/Win64ReleaseBuilder.q.yml">quintessence/Blast/Project/Win64ReleaseBuilder.q.yml</h3>
+    <h4>Overview<h4>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">projects_folder</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">win64_release_builder_shell_script_filename</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">build_full_path_to_win64_release_builder_script()</td>
+</tr>
+<tr>
+  <td class="method">run()</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ShellCommandExecutorWithCallback&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ShellCommandExecutorWithCallback.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<ul>
+  <div class="component">
     <h3 id="quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml</h3>
     <h4>Overview<h4>
     <h3>Properties</h3>
@@ -4340,6 +4373,7 @@ table td
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/Project/SymlinkChecker",
+    "Blast/Project/Win64ReleaseBuilder",
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher"
   ],

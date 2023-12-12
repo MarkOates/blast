@@ -1,0 +1,37 @@
+properties:
+
+
+  - name: projects_folder
+    type: std::string
+    init_with: '"/Users/markoates/Repos/"'
+    constructor_arg: true
+
+  - name: win64_release_builder_shell_script_filename
+    type: std::string
+    init_with: '"blast/scripts/build_win64_release.sh"'
+
+
+methods:
+
+
+  - name: build_full_path_to_win64_release_builder_script
+    type: std::string
+    body: |
+      return projects_folder + win64_release_builder_shell_script_filename;
+
+
+  - name: run
+    body: |
+      std::string script_path = build_full_path_to_win64_release_builder_script();
+      Blast::ShellCommandExecutorWithCallback executor(script_path);
+    body_dependency_symbols:
+      - Blast::ShellCommandExecutorWithCallback
+
+
+dependencies:
+
+
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+
+

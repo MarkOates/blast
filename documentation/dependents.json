@@ -129,6 +129,7 @@
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/Project/SymlinkChecker",
+    "Blast/Project/Win64ReleaseBuilder",
     "HostnameExtractor",
     "NcursesArt/GithubRepoStatusFetcher"
   ],
