@@ -96,10 +96,10 @@ fi
 
 echo "Building the ico file - STARTING"
 
-source_icon_png=$(cd "$TEMP_BUILD_DIR" && cd "$SOURCE_FOLDER_NAME" && (~/Repos/blast/scripts/extract_key_from_app_info.sh app_icon_filename || exit 7))
-full_path_to_icon_png=$TEMP_BUILD_DIR$SOURCE_FOLDER_NAME/$source_icon_png
+SOURCE_ICON_PNG=$(cd "$TEMP_BUILD_DIR" && cd "$SOURCE_FOLDER_NAME" && (~/Repos/blast/scripts/extract_key_from_app_info.sh app_icon_filename || exit 7))
+full_path_to_icon_png=$TEMP_BUILD_DIR$SOURCE_FOLDER_NAME/$SOURCE_ICON_PNG
 
-echo "source_icon_png extracted: \"$source_icon_png\""
+echo "SOURCE_ICON_PNG extracted: \"$SOURCE_ICON_PNG\""
 echo "full_path_to_icon_png: \"$full_path_to_icon_png\""
 
 if [ ! -f "$full_path_to_icon_png" ]; then
@@ -109,7 +109,7 @@ fi
 
 ## TODO: Validate app.ico does not already exist before running this step
 cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME
-convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 app.ico || exit 8
+convert $SOURCE_ICON_PNG -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 app.ico || exit 8
 echo "Building the executable - DONE"
 
 
