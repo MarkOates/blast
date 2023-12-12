@@ -97,13 +97,13 @@ fi
 echo "Building the ico file - STARTING"
 
 SOURCE_ICON_PNG=$(cd "$TEMP_BUILD_DIR" && cd "$SOURCE_FOLDER_NAME" && (~/Repos/blast/scripts/extract_key_from_app_info.sh app_icon_filename || exit 7))
-full_path_to_icon_png=$TEMP_BUILD_DIR$SOURCE_FOLDER_NAME/$SOURCE_ICON_PNG
+FULL_PATH_TO_ICON_PNG=$TEMP_BUILD_DIR$SOURCE_FOLDER_NAME/$SOURCE_ICON_PNG
 
 echo "SOURCE_ICON_PNG extracted: \"$SOURCE_ICON_PNG\""
-echo "full_path_to_icon_png: \"$full_path_to_icon_png\""
+echo "FULL_PATH_TO_ICON_PNG: \"$FULL_PATH_TO_ICON_PNG\""
 
-if [ ! -f "$full_path_to_icon_png" ]; then
-  echo "Error: File $full_path_to_icon_png not found."
+if [ ! -f "$FULL_PATH_TO_ICON_PNG" ]; then
+  echo "Error: File $FULL_PATH_TO_ICON_PNG not found."
   exit 3
 fi
 
