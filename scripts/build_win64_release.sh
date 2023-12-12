@@ -28,7 +28,7 @@ if [ $# -ne 3 ]; then
     echo ""
     echo "https://storage.googleapis.com/clubcatt-games-bucket/"
     echo ""
-    exit 1
+    exit 2
 fi
 
 
@@ -60,24 +60,22 @@ FINAL_FOLDER_NAME="$3"
 
 # Create the necessary temp build folder if it does not exist
 
-(mkdir -p $TEMP_BUILD_DIR || exit 3)
+mkdir -p $TEMP_BUILD_DIR || exit 3
 
 
 # Download the source release
 
 echo "===== Downloading $SOURCE_URL"
-(curl -L -o $TEMP_BUILD_DIR$FOOBAR $SOURCE_URL || exit 4)
+curl -L -o $TEMP_BUILD_DIR$FOOBAR $SOURCE_URL || exit 4
 
 
 # Go to the temp location, unzip the folder, and make
 
-
-
-(cd $TEMP_BUILD_DIR || exit 1)
+cd $TEMP_BUILD_DIR || exit 1
 
 
 ## TODO: Validate unzip
-(cd $TEMP_BUILD_DIR && (unzip $FOOBAR || exit 1))
+unzip $FOOBAR || exit 2
 
 
 ## TODO: CRITICAL: verify and validate that the expected folder exists in the zip file
@@ -110,7 +108,8 @@ if [ ! -f "$full_path_to_icon_png" ]; then
 fi
 
 ## TODO: Validate app.ico does not already exist before running this step
-(cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && (convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 app.ico || exit 8))
+cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME
+convert $source_icon_png -resize 256x256 -define icon:auto-resize:256,128,96,64,48,32,16 app.ico || exit 8
 echo "Building the executable - DONE"
 
 
