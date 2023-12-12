@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include <Blast/FileCreator.hpp>
+#include <Blast/Testing/TemporaryDirectoryCreator.hpp>
 
 TEST(Blast_FileCreatorTest, can_be_created_without_blowing_up)
 {
@@ -24,7 +25,9 @@ TEST(Blast_FileCreatorTest, create_if_not_exists__when_the_file_does_exist__does
 
 TEST(Blast_FileCreatorTest, create_or_overwrite__when_the_file_does_not_exist__creates_the_file)
 {
-   std::string filename = std::tmpnam(nullptr);
+   std::string temp_directory = Blast::Testing::TemporaryDirectoryCreator::
+   std::string filename = "dummy-filename.txt";
+   //std::string filename = std::tmpnam(nullptr);
    std::string file_contents = "foobar";
 
    Blast::FileCreator file_creator(filename, file_contents);
