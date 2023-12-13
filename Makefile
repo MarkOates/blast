@@ -679,7 +679,7 @@ celebrate_everything_built_legacy:
 obj/%.o: src/%.cpp
 	@mkdir -p $(@D)
 	@printf "Compiling object file \e[1m\e[34m$@\033[0m\n"
-	@g++ -g -c $(ERROR_LIMIT_FLAG) -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall -Weffc++ $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ -I./include -I$(ASIO_INCLUDE_DIR) -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) -D_XOPEN_SOURCE_EXTENDED -I$(ALLEGRO_FLARE_INCLUDE_DIR) $(NCURSES_BUILD_ARGS)
+	@g++ -g -c $(ERROR_LIMIT_FLAG) -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall -Weffc++ $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ -I./include -I$(ASIO_INCLUDE_DIR) -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) -D_XOPEN_SOURCE_EXTENDED -I$(ALLEGRO_FLARE_INCLUDE_DIR) $(NCURSES_BUILD_ARGS) -DNCURSES_STATIC
 	@printf "Object file at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
@@ -752,7 +752,7 @@ bin/run_all_tests: $(TEST_OBJECTS) obj/tests/$(TEST_RUNNER_PROGRAM_NAME).o
 bin/programs/%: programs/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "Compiling program executable \e[1m\e[36m$@\033[0m\n"
-	@$(BIGLINE)
+	$(BIGLINE) -DNCURSES_STATIC
 	@printf "Program executable at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
