@@ -167,6 +167,7 @@ ifdef USING_NCURSES
 	ifeq ($(OS),Windows_NT)
 		NCURSES_INCLUDE_DIR_ARG=-I/usr/include
 		NCURSES_LIB_DIR_ARG=-L.
+		NCURSES_REQUIRED_STATIC_FLAG_ARG=-DNCURSES_STATIC
 	else
 		NCURSES_INCLUDE_DIR_ARG=-I/usr/local/opt/ncurses/include
 		NCURSES_LIB_DIR_ARG=-L/usr/local/opt/ncurses/lib
@@ -175,7 +176,7 @@ ifdef USING_NCURSES
 	NCURSES_LIB=ncurses
 	NCURSES_LIB_ARG=-l$(NCURSES_LIB)
 	# NOTE: the include args are not included in build steps, it's assumed (begrudgingly), that ncurses in installed on the system
-	NCURSES_BUILD_ARGS=$(NCURSES_INCLUDE_DIR_ARG)
+	NCURSES_BUILD_ARGS=$(NCURSES_INCLUDE_DIR_ARG) $(NCURSES_REQUIRED_STATIC_FLAG_ARG)
 	# NOTE: the include args are not included in link steps, it's assumed (begrudgingly), that ncurses in installed on the system
 	NCURSES_LINK_ARGS=$(NCURSES_LIB_ARG)
 endif
@@ -679,14 +680,14 @@ celebrate_everything_built_legacy:
 obj/%.o: src/%.cpp
 	@mkdir -p $(@D)
 	@printf "Compiling object file \e[1m\e[34m$@\033[0m\n"
-	@g++ -g -c $(ERROR_LIMIT_FLAG) -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall -Weffc++ $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ -I./include -I$(ASIO_INCLUDE_DIR) -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) -D_XOPEN_SOURCE_EXTENDED -I$(ALLEGRO_FLARE_INCLUDE_DIR) $(NCURSES_BUILD_ARGS) -DNCURSES_STATIC
+	@g++ -g -c $(ERROR_LIMIT_FLAG) -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall -Weffc++ $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ -I./include -I$(ASIO_INCLUDE_DIR) -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) -D_XOPEN_SOURCE_EXTENDED -I$(ALLEGRO_FLARE_INCLUDE_DIR) $(NCURSES_REQUIRED_STATIC_FLAG_ARG)
 	@printf "Object file at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
 obj/tests/%.o: tests/%.cpp
 	@mkdir -p $(@D)
 	@printf "Compiling test object file \e[1m\e[36m$@\033[0m\n"
-	@g++ -g -c -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall -Wuninitialized -Weffc++ $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ -I./include -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(ASIO_INCLUDE_DIR) -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_MOCK_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) $(ALLEGRO_FLARE_BUILD_ARGS) $(CURL_BUILD_ARGS)
+	@g++ -g -c -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall -Wuninitialized -Weffc++ $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ -I./include -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(ASIO_INCLUDE_DIR) -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_MOCK_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) $(ALLEGRO_FLARE_BUILD_ARGS) $(CURL_BUILD_ARGS) $(NCURSES_REQUIRED_STATIC_FLAG_ARG)
 	@printf "Test object file at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
@@ -694,7 +695,7 @@ obj/tests/%.o: tests/%.cpp
 obj/tests/$(TEST_RUNNER_PROGRAM_NAME).o: tests/$(TEST_RUNNER_PROGRAM_NAME).cpp
 	@mkdir -p $(@D)
 	@printf "Compiling test object for $(TEST_RUNNER_PROGRAM_NAME) \e[1m\e[36m$@\033[0m\n"
-	@g++ -g -c -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall -Wuninitialized -Weffc++ $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_MOCK_INCLUDE_DIR)
+	@g++ -g -c -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall -Wuninitialized -Weffc++ $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(GOOGLE_TEST_INCLUDE_DIR) -I$(GOOGLE_MOCK_INCLUDE_DIR) $(NCURSES_REQUIRED_STATIC_FLAG_ARG)
 	@printf "Object for $(TEST_RUNNER_PROGRAM_NAME) at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
@@ -752,7 +753,7 @@ bin/run_all_tests: $(TEST_OBJECTS) obj/tests/$(TEST_RUNNER_PROGRAM_NAME).o
 bin/programs/%: programs/%.cpp $(OBJECTS)
 	@mkdir -p $(@D)
 	@printf "Compiling program executable \e[1m\e[36m$@\033[0m\n"
-	$(BIGLINE) -DNCURSES_STATIC
+	$(BIGLINE)
 	@printf "Program executable at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
