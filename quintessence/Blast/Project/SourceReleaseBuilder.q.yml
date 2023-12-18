@@ -872,6 +872,9 @@ functions:
       {
          /// Build commands
 
+         // TODO: On this copy command, do not copy if any files will be overwritten
+         // Do this with "-nR" instead of simply "-R". See:
+         // https://chat.openai.com/c/a12a98e7-a3d5-47ab-8b8f-e2e6077ae106
          // headers
          std::string allegro_flare_include_directory = "/Users/markoates/Repos/allegro_flare/include/AllegroFlare/*";
          std::string allegro_flare_include_destination_directory = destination_directory + "/include/AllegroFlare";
@@ -879,6 +882,9 @@ functions:
          copy_allegro_flare_include_files_command << "cp -R "
             << allegro_flare_include_directory << " " << allegro_flare_include_destination_directory;
 
+         // TODO: On this copy command, do not copy if any files will be overwritten
+         // Do this with "-nR" instead of simply "-R". See:
+         // https://chat.openai.com/c/a12a98e7-a3d5-47ab-8b8f-e2e6077ae106
          // src
          std::string allegro_flare_src_directory = "/Users/markoates/Repos/allegro_flare/src/AllegroFlare/*";
          std::string allegro_flare_src_destination_directory = destination_directory + "/src/AllegroFlare";
