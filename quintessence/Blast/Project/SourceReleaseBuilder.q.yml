@@ -873,16 +873,18 @@ functions:
          /// Build commands
 
          // headers
-         std::string allegro_flare_include_directory = "/Users/markoates/Repos/allegro_flare/include/AllegroFlare";
+         std::string allegro_flare_include_directory = "/Users/markoates/Repos/allegro_flare/include/AllegroFlare/*";
          std::string allegro_flare_include_destination_directory = destination_directory + "/include/AllegroFlare";
          std::stringstream copy_allegro_flare_include_files_command;
-         copy_allegro_flare_include_files_command << "cp -R " << allegro_flare_include_directory << " " << allegro_flare_include_destination_directory;
+         copy_allegro_flare_include_files_command << "cp -R "
+            << allegro_flare_include_directory << " " << allegro_flare_include_destination_directory;
 
          // src
-         std::string allegro_flare_src_directory = "/Users/markoates/Repos/allegro_flare/src/AllegroFlare";
+         std::string allegro_flare_src_directory = "/Users/markoates/Repos/allegro_flare/src/AllegroFlare/*";
          std::string allegro_flare_src_destination_directory = destination_directory + "/src/AllegroFlare";
          std::stringstream copy_allegro_flare_src_files_command;
-         copy_allegro_flare_src_files_command << "cp -R " << allegro_flare_src_directory << " " << allegro_flare_src_destination_directory;
+         copy_allegro_flare_src_files_command << "cp -R "
+            << allegro_flare_src_directory << " " << allegro_flare_src_destination_directory;
 
 
          // Create command executors
