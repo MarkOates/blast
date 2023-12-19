@@ -1018,7 +1018,8 @@ TEST(SystemTest, the_hexagon_app_package_is_present_in_the_hexagon_repo)
 
 TEST(SystemTest, the_systems_Applications_folder_contains_a_symlink_to_the_hexagon_repos_app_package)
 {
-   EXPECT_EQ(true, check_hexagon_app_package_alias_test()) << "Test: the system\'s /Applications folder contains a symlink to the hexagon repo\'s app package";
+   EXPECT_EQ(true, check_hexagon_app_package_alias_test()) << "Test: the system\'s /Applications folder contains a symlink to the hexagon repo\'s app package. "
+                                                           << "Use \"ln -s /Applications/Hexagon.app /Users/markoates/Repos/hexagon/bin/Hexagon.app\" to add it."
 }
 
 
