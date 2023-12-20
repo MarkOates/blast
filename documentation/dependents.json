@@ -405,6 +405,9 @@
     "Blast/Quintessence/YAMLParsers/FunctionArgumentParser",
     "Blast/VersionYAMLLoaderEmitter"
   ],
+  "Blast/Project/HardCodedPathInfrencer": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker",
     "Blast/Testing/TemporaryDirectoryCreator"

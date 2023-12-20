@@ -7,6 +7,7 @@
 #include <Blast/DirectoryExistenceChecker.hpp>
 #include <Blast/Errors.hpp>
 #include <Blast/FileExistenceChecker.hpp>
+#include <Blast/Project/HardCodedPathInfrencer.hpp>
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <Blast/Project/SourceReleaseAppInfoFile.hpp>
 #include <Blast/Project/SymlinkChecker.hpp>
@@ -694,6 +695,7 @@ bool SourceReleaseBuilder::generate_source_release()
    bool validate_bin_programs_data_folder_from_source_exists = true;
    bool validate_readme_exists_in_source_folder = true;
    bool validate_zip_command_exists = true;
+   bool check_for_hard_coded_paths = true;
    bool copy_allegro_flare_source_and_header_files_from_source = true;
    bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
    bool copy_allegro_flare_include_lib_ordered_map_from_source = true;
@@ -702,6 +704,37 @@ bool SourceReleaseBuilder::generate_source_release()
    std::string source_directory = get_source_project_directory();
    std::string time_of_source_release = time_stamper.generate_now_timestamp_utc();
 
+
+
+
+   if (check_for_hard_coded_paths)
+   {
+      Blast::Project::HardCodedPathInfrencer hard_coded_path_infrencer;
+      hard_coded_path_infrencer.set_project_directory("/Users/markoates/Repos/Pipeline");
+      std::pair<bool, std::vector<std::string>> hard_coded_path_check_result =
+         hard_coded_path_infrencer.check_for_hard_coded_paths();
+
+      bool hard_coded_paths_detected = hard_coded_path_check_result.first;
+      if (hard_coded_paths_detected)
+      {
+         std::stringstream message;
+         message << "Hard-coded paths were detected. Here are the detected locations of the hard-coded paths:"
+                 << std::endl
+                 << "===============================" << std::endl;
+                 for (auto &result : hard_coded_path_check_result.second)
+                 {
+                    message << result << std::endl;
+                 }
+         message << "===============================" << std::endl
+                 << std::endl
+                 ;
+
+         Blast::Errors::throw_error(
+            "Blast::Project::SourceReleaseBuilder::generate_source_release",
+            message.str()
+         );
+      }
+   }
 
 
 
