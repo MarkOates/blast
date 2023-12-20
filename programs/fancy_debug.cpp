@@ -186,13 +186,13 @@ int main(int argc, char** argv)
          }
          std::cout << "-o 'settings set stop-line-count-before 10' ";
          std::cout << "-o 'settings set stop-line-count-after 10' ";
-         std::cout << "-o 'run' -- ";
+         std::cout << "-o 'run' -- bin/tests/*";
       }
    }
 
    if (!silent)
    {
-      std::cout << "-- bin/tests/*" << std::endl;
+      //std::cout << " bin/tests/*" << std::endl;
       std::cout << std::endl;
       std::cout << "============================================" << std::endl;
    }
