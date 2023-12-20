@@ -564,6 +564,17 @@ std::string get_gcloud_version()
 }
 
 
+std::string get_gcloud_current_project_in_config()
+{
+   std::string command = "gcloud config get-value project";
+
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
 
 std::string get_rails_version()
 {
@@ -810,6 +821,12 @@ bool run_gcloud_presence_test()
 }
 
 
+bool run_gcloud_project_status_test()
+{
+   last_test_result = new TestResultMatcher("game-development-workflow", get_gcloud_current_project_in_config());
+   return last_test_result->assessment();
+}
+
 
 bool run_rails_version_test()
 {
@@ -1022,6 +1039,12 @@ TEST(SystemTest, rerun_is_present_and_installed_otherwise_sudo_gem_install_rerun
 TEST(SystemTest, gcloud_is_present)
 {
    EXPECT_EQ(true, run_gcloud_presence_test()) << "Test: gcloud is not installed. See .dotfiles setup script for mac (at the bottom).";
+}
+
+
+TEST(SystemTest, gcloud_is_configured_to_the_expected_project)
+{
+   EXPECT_EQ(true, run_gcloud_project_status_test()) << "Test: gcloud is not setup as expected. May not be logged in, or, there may have been a change in the config to the active project.";
 }
 
 
