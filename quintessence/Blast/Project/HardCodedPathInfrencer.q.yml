@@ -33,7 +33,6 @@ methods:
   - name: check_for_hard_coded_paths
     type: std::pair<bool, std::vector<std::string>>
     body: |
-      //std::pair<bool, std::vector<std::string>> result;
       Blast::ShellCommandExecutorWithCallback executor(
             get_git_command(),
             ShellCommandExecutorWithCallback::simple_silent_callback
@@ -42,8 +41,7 @@ methods:
       std::vector<std::string> tokens = Blast::StringSplitter(execution_result, '\n').split();
       tokens = trim_each(tokens);
 
-      // TODO: Split "result" into multiple lines
-      return std::pair<bool, std::vector<std::string>>(tokens.empty(), tokens);
+      return { tokens.empty(), tokens };
     body_dependency_symbols:
       - Blast::StringSplitter
       - Blast::ShellCommandExecutorWithCallback

@@ -63,7 +63,6 @@ std::string HardCodedPathInfrencer::get_git_command()
 
 std::pair<bool, std::vector<std::string>> HardCodedPathInfrencer::check_for_hard_coded_paths()
 {
-   //std::pair<bool, std::vector<std::string>> result;
    Blast::ShellCommandExecutorWithCallback executor(
          get_git_command(),
          ShellCommandExecutorWithCallback::simple_silent_callback
@@ -72,8 +71,7 @@ std::pair<bool, std::vector<std::string>> HardCodedPathInfrencer::check_for_hard
    std::vector<std::string> tokens = Blast::StringSplitter(execution_result, '\n').split();
    tokens = trim_each(tokens);
 
-   // TODO: Split "result" into multiple lines
-   return std::pair<bool, std::vector<std::string>>(tokens.empty(), tokens);
+   return { tokens.empty(), tokens };
 }
 
 std::vector<std::string> HardCodedPathInfrencer::trim_each(std::vector<std::string> tokens)
