@@ -54,7 +54,7 @@ bin/*
 
 # OSX image caches
 
-.DS_store
+**/.DS_store
 
 
 # Allegro log files
