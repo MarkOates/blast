@@ -710,7 +710,8 @@ bool SourceReleaseBuilder::generate_source_release()
    if (check_for_hard_coded_paths)
    {
       Blast::Project::HardCodedPathInfrencer hard_coded_path_infrencer;
-      hard_coded_path_infrencer.set_project_directory("/Users/markoates/Repos/Pipeline");
+      //hard_coded_path_infrencer.set_project_directory("/Users/markoates/Repos/Pipeline");
+      hard_coded_path_infrencer.set_project_directory(source_project_directory);
       std::pair<bool, std::vector<std::string>> hard_coded_path_check_result =
          hard_coded_path_infrencer.check_for_hard_coded_paths();
 
