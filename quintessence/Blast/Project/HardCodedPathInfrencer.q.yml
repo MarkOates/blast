@@ -1,16 +1,32 @@
+properties:
+
+
+  - name: project_directory
+    type: std::string
+    init_with: '"/Users/markoates/Repos/Pipeline"'
+    constructor_arg: true
+    getter: true
+    setter: true
+
 
 methods:
 
 
   - name: get_git_command
     type: std::string
+    guards: [ 'std::filesystem::exists(project_directory)' ]
     body: |
       std::stringstream command;
-      command << "git grep --untracked --break \"/Users/markoates/Repos\" "
-              << "\":(exclude)./documentation/*\" \":(exclude)./include/lib/*\""
+      command << "(cd " << project_directory << " && "
+                 << "git grep --untracked --break \"/Users/markoates\" "
+                 << "\":(exclude)./documentation/*\" "
+                 << "\":(exclude)./include/lib/*\" "
+                 << "\":(exclude)./tests/*\" " // NOTE: Excluding tests, consider removing this exclusion
+              << ")"
               ;
       return command.str();
     body_dependency_symbols:
+      - std::filesystem
       - std::stringstream
 
 

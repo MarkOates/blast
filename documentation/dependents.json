@@ -126,6 +126,7 @@
   "Blast/ShellCommandExecutorWithCallback": [
     "Blast/BuildSystem/BuildStages/ShellCommand",
     "Blast/Project/ComponentLister",
+    "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/ProgramLister",
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder",
@@ -335,6 +336,15 @@
     "NcursesArt/GithubRepoStatusFetcher",
     "StringVectorIntersection"
   ],
+  "Blast/String/Trimmer": [
+    "Blast/Project/HardCodedPathInfrencer",
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
   "std/filesystem": [
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder"
@@ -356,14 +366,6 @@
   "std/find_if": [
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/String/Trimmer"
-  ],
-  "Blast/String/Trimmer": [
-    "Blast/Project/SourceReleaseAppInfoFile",
-    "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher",
-    "Quizes/MultiplexQuestionCollectionHelper",
-    "Quizes/MultiplexQuizRunner",
-    "Quizes/MultiplexSheetLoader"
   ],
   "remove": [
     "Blast/Project/SourceReleaseBuilder"

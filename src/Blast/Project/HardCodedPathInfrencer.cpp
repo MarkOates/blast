@@ -4,7 +4,10 @@
 
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/String/Trimmer.hpp>
+#include <filesystem>
+#include <iostream>
 #include <sstream>
+#include <stdexcept>
 
 
 namespace Blast
@@ -13,7 +16,8 @@ namespace Project
 {
 
 
-HardCodedPathInfrencer::HardCodedPathInfrencer()
+HardCodedPathInfrencer::HardCodedPathInfrencer(std::string project_directory)
+   : project_directory(project_directory)
 {
 }
 
@@ -23,11 +27,34 @@ HardCodedPathInfrencer::~HardCodedPathInfrencer()
 }
 
 
+void HardCodedPathInfrencer::set_project_directory(std::string project_directory)
+{
+   this->project_directory = project_directory;
+}
+
+
+std::string HardCodedPathInfrencer::get_project_directory() const
+{
+   return project_directory;
+}
+
+
 std::string HardCodedPathInfrencer::get_git_command()
 {
+   if (!(std::filesystem::exists(project_directory)))
+   {
+      std::stringstream error_message;
+      error_message << "[HardCodedPathInfrencer::get_git_command]: error: guard \"std::filesystem::exists(project_directory)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("HardCodedPathInfrencer::get_git_command: error: guard \"std::filesystem::exists(project_directory)\" not met");
+   }
    std::stringstream command;
-   command << "git grep --untracked --break \"/Users/markoates/Repos\" "
-           << "\":(exclude)./documentation/*\" \":(exclude)./include/lib/*\""
+   command << "(cd " << project_directory << " && "
+              << "git grep --untracked --break \"/Users/markoates\" "
+              << "\":(exclude)./documentation/*\" "
+              << "\":(exclude)./include/lib/*\" "
+              << "\":(exclude)./tests/*\" " // NOTE: Excluding tests, consider removing this exclusion
+           << ")"
            ;
    return command.str();
 }
