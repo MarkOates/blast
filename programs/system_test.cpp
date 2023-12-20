@@ -420,6 +420,50 @@ std::string get_ruby_version()
 }
 
 
+//class ValidateDylibBundlerVersion : public Blast::BuildSystem::BuildStages::Base
+//{
+//private:
+   //std::string get_result_of_dylibbuilder_shell_execution()
+   //{
+      //std::stringstream shell_command;
+      //shell_command << "dylibbundler";
+      //Blast::ShellCommandExecutorWithCallback shell_command_executor(shell_command.str());
+      //return shell_command_executor.execute();
+   //}
+
+//public:
+   //static constexpr char* TYPE = (char*)"ValidateDylibBundlerVersion";
+
+   //ValidateDylibBundlerVersion()
+      //: Blast::BuildSystem::BuildStages::Base(TYPE)
+   //{}
+
+   //virtual bool execute() override
+   //{
+      //std::string match_expression = "dylibbundler is a utility that helps bundle dynamic libraries inside macOS app bundles.\n";
+      //std::string actual_string = get_result_of_dylibbuilder_shell_execution();
+      //if (!ExpressionMatcher(match_expression, actual_string).matches()) return false;
+      //return true;
+   //}
+//};
+
+
+std::string get_dylibbundler_shell_command_response()
+{
+   std::string command = "dylibbundler";
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   //std::string trimmed_output = trim(output);
+
+   //std::vector<std::string> tokens = StringSplitter(trimmed_output, '\n').split();
+   //std::string first_line = tokens.empty() ? "" : tokens[0];
+
+   return output;
+}
+
+
+
+
 std::string get_imagemagick_version()
 {
    std::string command = "convert -version";
@@ -632,6 +676,16 @@ bool check_hexagon_app_package_symlink_destination()
    std::string trimmed_output = trim(output);
 
    return trimmed_output == expected_destination;
+}
+
+
+bool run_dylibbundler_presence_test()
+{
+   std::string match_expression = "dylibbundler is a utility that helps bundle dynamic libraries inside macOS app bundles.";
+   //std::string match_expression = "ruby 2.6.10p210";
+   std::string actual_string = get_dylibbundler_shell_command_response();
+   last_test_result = new TestResultMatcher(match_expression, actual_string);
+   return last_test_result->assessment();
 }
 
 
@@ -956,6 +1010,13 @@ TEST(SystemTest, ImageMagick_is_present_in_the_command_line_run_brew_update_brew
 {
    EXPECT_EQ(true, run_imagemagick_version_test()) << "Test: ImageMagick is present in the command line (run \"brew update && brew install imagemagick\")";
 }
+
+
+TEST(SystemTest, dylibbundler_is_present)
+{
+   EXPECT_EQ(true, run_dylibbundler_presence_test()) << "Test: dylibbundler is present in the command line (run \"brew update && brew install dylibbundler\")";
+}
+
 
 
 TEST(SystemTest, Rails_is_present_and_installed_otherwise_sudo_gem_install_rails_after_instaling_ruby_Needed_by_inflector_components_in_blast)
