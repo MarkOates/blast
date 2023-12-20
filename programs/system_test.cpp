@@ -552,6 +552,19 @@ std::string get_rerun_version()
 }
 
 
+std::string get_gcloud_version()
+{
+   std::string command = "gcloud -v";
+
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
+
 std::string get_rails_version()
 {
    std::string command = "rails --version";
@@ -790,6 +803,14 @@ bool run_rerun_version_test()
 
 
 
+bool run_gcloud_presence_test()
+{
+   last_test_result = new TestResultMatcher("^Google Cloud SDK [0-9]+\\.[0-9]+\\.[0-9]+", get_gcloud_version());
+   return last_test_result->assessment();
+}
+
+
+
 bool run_rails_version_test()
 {
    last_test_result = new TestResultMatcher("^Rails [0-9]+\\.[0-9]+\\.[0-9]+", get_rails_version());
@@ -995,6 +1016,12 @@ TEST(SystemTest, googletest_and_googlemock_library_are_installed)
 TEST(SystemTest, rerun_is_present_and_installed_otherwise_sudo_gem_install_rerun_after_instaling_ruby)
 {
    EXPECT_EQ(true, run_rerun_version_test()) << "Test: rerun is present and installed (otherwise \"sudo gem install rerun\", after instaling ruby)";
+}
+
+
+TEST(SystemTest, gcloud_is_present)
+{
+   EXPECT_EQ(true, run_gcloud_presence_test()) << "Test: gcloud is not installed. See .dotfiles setup script for mac (at the bottom).";
 }
 
 
