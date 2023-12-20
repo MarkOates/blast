@@ -664,11 +664,15 @@ functions:
          std::pair<bool, std::vector<std::string>> hard_coded_path_check_result =
             hard_coded_path_infrencer.check_for_hard_coded_paths();
 
-         bool hard_coded_paths_detected = hard_coded_path_check_result.first;
+         bool hard_coded_paths_detected = (!hard_coded_path_check_result.first);
          if (hard_coded_paths_detected)
          {
             std::stringstream message;
-            message << "Hard-coded paths were detected. Here are the detected locations of the hard-coded paths:"
+            message << "Hard-coded paths were detected. The command used to detect:" << std::endl
+                    << "===============================" << std::endl
+                    << hard_coded_path_infrencer.get_git_command() << std::endl
+                    << "===============================" << std::endl
+                    << "Here are the detected locations of the hard-coded paths:" << std::endl
                     << std::endl
                     << "===============================" << std::endl;
                     for (auto &result : hard_coded_path_check_result.second)
