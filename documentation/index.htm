@@ -1886,6 +1886,9 @@ table td
 <tr>
   <td class="method">check_for_hard_coded_paths()</td>
 </tr>
+<tr>
+  <td class="method">trim_each(std::vector&lt;std::string&gt; tokens={})</td>
+</tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <div class="property-box dependencies">     <table>
@@ -1894,6 +1897,12 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::find_if&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -4479,6 +4488,7 @@ table td
   ],
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
+    "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuizRunner",
@@ -4627,6 +4637,11 @@ table td
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
+  "std/find_if": [
+    "Blast/Project/HardCodedPathInfrencer",
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "Blast/String/Trimmer"
+  ],
   "std/filesystem": [
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder"
@@ -4644,10 +4659,6 @@ table td
   "std/ifstream": [
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder"
-  ],
-  "std/find_if": [
-    "Blast/Project/SourceReleaseAppInfoFile",
-    "Blast/String/Trimmer"
   ],
   "remove": [
     "Blast/Project/SourceReleaseBuilder"

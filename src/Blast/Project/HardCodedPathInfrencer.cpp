@@ -4,6 +4,8 @@
 
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 #include <Blast/String/Trimmer.hpp>
+#include <Blast/StringSplitter.hpp>
+#include <algorithm>
 #include <filesystem>
 #include <iostream>
 #include <sstream>
@@ -67,10 +69,23 @@ std::pair<bool, std::vector<std::string>> HardCodedPathInfrencer::check_for_hard
          ShellCommandExecutorWithCallback::simple_silent_callback
       );
    std::string execution_result = executor.execute();
-   std::string trimmed_result = Blast::String::Trimmer(execution_result).trim();
+   std::vector<std::string> tokens = Blast::StringSplitter(execution_result, '\n').split();
+   tokens = trim_each(tokens);
 
    // TODO: Split "result" into multiple lines
-   return std::pair<bool, std::vector<std::string>>(trimmed_result.empty(), { execution_result });
+   return std::pair<bool, std::vector<std::string>>(tokens.empty(), tokens);
+}
+
+std::vector<std::string> HardCodedPathInfrencer::trim_each(std::vector<std::string> tokens)
+{
+   for (auto &s : tokens)
+   {
+      // ltrim
+      s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) {return !std::isspace(c);}));
+      // rtrim
+      s.erase(std::find_if(s.rbegin(), s.rend(), [](int c) {return !std::isspace(c);}).base(), s.end());
+   }
+   return tokens;
 }
 
 

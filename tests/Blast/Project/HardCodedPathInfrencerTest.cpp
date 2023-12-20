@@ -30,7 +30,7 @@ TEST(Blast_Project_HardCodedPathInfrencerTest,
    hard_coded_path_infrencer.set_project_directory(
       "/Users/markoates/Repos/blast/tests/fixtures/FixtureProject2"
    );
-   std::pair<bool, std::vector<std::string>> expected_result = { true, { "" } }; // TODO: Have this be an empty set
+   std::pair<bool, std::vector<std::string>> expected_result = { true, { } }; // TODO: Have this be an empty set
    std::pair<bool, std::vector<std::string>> actual_result = hard_coded_path_infrencer.check_for_hard_coded_paths();
    EXPECT_EQ(expected_result, actual_result);
 }

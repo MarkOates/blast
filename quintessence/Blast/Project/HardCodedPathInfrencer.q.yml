@@ -39,13 +39,35 @@ methods:
             ShellCommandExecutorWithCallback::simple_silent_callback
          );
       std::string execution_result = executor.execute();
-      std::string trimmed_result = Blast::String::Trimmer(execution_result).trim();
+      std::vector<std::string> tokens = Blast::StringSplitter(execution_result, '\n').split();
+      tokens = trim_each(tokens);
 
       // TODO: Split "result" into multiple lines
-      return std::pair<bool, std::vector<std::string>>(trimmed_result.empty(), { execution_result });
+      return std::pair<bool, std::vector<std::string>>(tokens.empty(), tokens);
     body_dependency_symbols:
+      - Blast::StringSplitter
       - Blast::ShellCommandExecutorWithCallback
       - Blast::String::Trimmer
+
+
+  - name: trim_each
+    type: std::vector<std::string>
+    static: true
+    parameters:
+      - name: tokens
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      for (auto &s : tokens)
+      {
+         // ltrim
+         s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) {return !std::isspace(c);}));
+         // rtrim
+         s.erase(std::find_if(s.rbegin(), s.rend(), [](int c) {return !std::isspace(c);}).base(), s.end());
+      }
+      return tokens;
+    body_dependency_symbols:
+      - std::find_if
 
 
 dependencies:
@@ -55,5 +77,9 @@ dependencies:
     headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
   - symbol: Blast::String::Trimmer
     headers: [ Blast/String/Trimmer.hpp ]
+  - symbol: Blast::StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]
+  - symbol: std::find_if
+    headers: [ algorithm ]
 
 

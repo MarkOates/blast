@@ -197,6 +197,7 @@
   ],
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
+    "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuizRunner",
@@ -345,6 +346,11 @@
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
   ],
+  "std/find_if": [
+    "Blast/Project/HardCodedPathInfrencer",
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "Blast/String/Trimmer"
+  ],
   "std/filesystem": [
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder"
@@ -362,10 +368,6 @@
   "std/ifstream": [
     "Blast/Project/ProjectSymlinkFixer",
     "Blast/Project/SourceReleaseBuilder"
-  ],
-  "std/find_if": [
-    "Blast/Project/SourceReleaseAppInfoFile",
-    "Blast/String/Trimmer"
   ],
   "remove": [
     "Blast/Project/SourceReleaseBuilder"
