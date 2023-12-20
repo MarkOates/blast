@@ -1,0 +1,43 @@
+
+methods:
+
+
+  - name: get_git_command
+    type: std::string
+    body: |
+      std::stringstream command;
+      command << "git grep --untracked --break \"/Users/markoates/Repos\" "
+              << "\":(exclude)./documentation/*\" \":(exclude)./include/lib/*\""
+              ;
+      return command.str();
+    body_dependency_symbols:
+      - std::stringstream
+
+
+  - name: check_for_hard_coded_paths
+    type: std::pair<bool, std::vector<std::string>>
+    body: |
+      //std::pair<bool, std::vector<std::string>> result;
+      Blast::ShellCommandExecutorWithCallback executor(
+            get_git_command(),
+            ShellCommandExecutorWithCallback::simple_silent_callback
+         );
+      std::string execution_result = executor.execute();
+      std::string trimmed_result = Blast::String::Trimmer(execution_result).trim();
+
+      // TODO: Split "result" into multiple lines
+      return std::pair<bool, std::vector<std::string>>(trimmed_result.empty(), { execution_result });
+    body_dependency_symbols:
+      - Blast::ShellCommandExecutorWithCallback
+      - Blast::String::Trimmer
+
+
+dependencies:
+
+
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: Blast::String::Trimmer
+    headers: [ Blast/String/Trimmer.hpp ]
+
+
