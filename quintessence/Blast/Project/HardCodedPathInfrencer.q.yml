@@ -39,7 +39,7 @@ methods:
          );
       std::string execution_result = executor.execute();
       std::vector<std::string> tokens = Blast::StringSplitter(execution_result, '\n').split();
-      tokens = trim_each(tokens);
+      tokens = remove_empty(trim_each(tokens));
 
       return { tokens.empty(), tokens };
     body_dependency_symbols:
@@ -66,6 +66,25 @@ methods:
       return tokens;
     body_dependency_symbols:
       - std::find_if
+
+
+  - name: remove_empty
+    static: true
+    private: true
+    type: std::vector<std::string>
+    parameters:
+      - name: strVector
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      // Use the erase-remove idiom to remove empty strings
+      strVector.erase(
+            std::remove_if(strVector.begin(), strVector.end(), [](const std::string& str)
+                  {
+                     return str.empty();
+                  }),
+                  strVector.end());
+      return strVector;
 
 
 dependencies:

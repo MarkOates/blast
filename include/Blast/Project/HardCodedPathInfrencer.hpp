@@ -14,6 +14,7 @@ namespace Blast
       {
       private:
          std::string project_directory;
+         static std::vector<std::string> remove_empty(std::vector<std::string> strVector={});
 
       protected:
 

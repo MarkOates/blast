@@ -69,7 +69,7 @@ std::pair<bool, std::vector<std::string>> HardCodedPathInfrencer::check_for_hard
       );
    std::string execution_result = executor.execute();
    std::vector<std::string> tokens = Blast::StringSplitter(execution_result, '\n').split();
-   tokens = trim_each(tokens);
+   tokens = remove_empty(trim_each(tokens));
 
    return { tokens.empty(), tokens };
 }
@@ -84,6 +84,18 @@ std::vector<std::string> HardCodedPathInfrencer::trim_each(std::vector<std::stri
       s.erase(std::find_if(s.rbegin(), s.rend(), [](int c) {return !std::isspace(c);}).base(), s.end());
    }
    return tokens;
+}
+
+std::vector<std::string> HardCodedPathInfrencer::remove_empty(std::vector<std::string> strVector)
+{
+   // Use the erase-remove idiom to remove empty strings
+   strVector.erase(
+         std::remove_if(strVector.begin(), strVector.end(), [](const std::string& str)
+               {
+                  return str.empty();
+               }),
+               strVector.end());
+   return strVector;
 }
 
 
