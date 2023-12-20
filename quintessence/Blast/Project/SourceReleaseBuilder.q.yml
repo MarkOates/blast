@@ -668,8 +668,10 @@ functions:
          bool hard_coded_paths_detected = (!hard_coded_path_check_result.first);
          if (hard_coded_paths_detected)
          {
+            int num_infractions = hard_coded_path_check_result.second.size();
             std::stringstream message;
-            message << "Hard-coded paths were detected. The command used to detect:" << std::endl
+            message << "Hard-coded paths were detected (" << num_infractions << " infraction(s))." << std::endl
+                    << "The command used to detect:" << std::endl
                     << "===============================" << std::endl
                     << hard_coded_path_infrencer.get_git_command() << std::endl
                     << "===============================" << std::endl
