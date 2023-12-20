@@ -719,8 +719,10 @@ bool SourceReleaseBuilder::generate_source_release()
       if (hard_coded_paths_detected)
       {
          int num_infractions = hard_coded_path_check_result.second.size();
+         std::string plural_s = (num_infractions != 1) ? "s" : "";
          std::stringstream message;
-         message << "Hard-coded paths were detected (" << num_infractions << " infraction(s))." << std::endl
+         message << "Hard-coded paths were detected "
+                     << "(" << num_infractions << " infraction" << plural_s << ")." << std::endl
                  << "The command used to detect:" << std::endl
                  << "===============================" << std::endl
                  << hard_coded_path_infrencer.get_git_command() << std::endl
