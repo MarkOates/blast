@@ -32,14 +32,47 @@ std::string const PROGRAM_RUNNER_FILE_CONTENT = R"END(functions:
 
 
 std::string const GITIGNORE_FILE_CONTENT = R"END(
-bin/*
-!bin/data/*
-.DS_Store
-*.a
-obj/*
+# temp files from building build dir
+
+build/tmp*
 tmp/*
-.deps/*
-.DS_Store
+obj/**
+*.a
+
+
+# compiled object files and any executable files (but maintain the data folder)
+
+bin/*
+!bin/data/
+!bin/data/**
+
+
+# Dep files
+
+.deps/**
+
+
+# OSX image caches
+
+.DS_store
+
+
+# Allegro log files
+
+allegro.log
+
+
+# Hexagon files
+
+~TMP.txt
+
+
+# vim swap files
+
+*.swp
+*.swo
+
+
 )END";
 
 
