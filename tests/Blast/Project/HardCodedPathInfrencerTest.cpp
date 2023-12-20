@@ -21,14 +21,13 @@ TEST(Blast_Project_HardCodedPathInfrencerTest, DISABLED__run__returns_the_expect
 
 
 TEST(Blast_Project_HardCodedPathInfrencerTest,
-   DISABLED__check_for_hard_coded_paths__when_there_are_none__will_return_true)
+   check_for_hard_coded_paths__when_there_are_none__will_return_true_with_an_empty_strings)
 {
-   // TODO: Thi stest
    Blast::Project::HardCodedPathInfrencer hard_coded_path_infrencer;
    hard_coded_path_infrencer.set_project_directory(
       "/Users/markoates/Repos/blast/tests/fixtures/FixtureProject2"
    );
-   std::pair<bool, std::vector<std::string>> expected_result = { true, { "foo" } };
+   std::pair<bool, std::vector<std::string>> expected_result = { true, { "" } }; // TODO: Have this be an empty set
    std::pair<bool, std::vector<std::string>> actual_result = hard_coded_path_infrencer.check_for_hard_coded_paths();
    EXPECT_EQ(expected_result, actual_result);
 }
