@@ -343,6 +343,11 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "NUM_OF_OBJECTS := $(words $(OBJECTS))" << std::endl
                     << "" << std::endl
                     << "" << std::endl
+                    << "fast:" << std::endl
+                      << "\tmake objects -j6" << std::endl
+                    << "\tmake main" << std::endl
+                    << "" << std::endl
+                    << "" << std::endl
                     << "main: $(OBJECTS)" << std::endl
                     << "\t@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $(OBJECTS) "
                        << main_program_filename
@@ -362,11 +367,6 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "" << std::endl
                     << "" << std::endl
                     << "objects: $(OBJECTS)" << std::endl
-                    << "" << std::endl
-                    << "" << std::endl
-                    << "fast:" << std::endl
-                      << "\tmake objects -j6" << std::endl
-                    << "\tmake main" << std::endl
                     << "" << std::endl
                     << "" << std::endl
                     << "build/obj/%.o: src/%.cpp" << std::endl

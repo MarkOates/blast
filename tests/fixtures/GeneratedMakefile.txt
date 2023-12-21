@@ -23,6 +23,11 @@ OBJECTS := $(SOURCES:src/%.cpp=build/obj/%.o)
 NUM_OF_OBJECTS := $(words $(OBJECTS))
 
 
+fast:
+	make objects -j6
+	make main
+
+
 main: $(OBJECTS)
 	@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $(OBJECTS) programs/main.cpp $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE) -o Flowers -I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)
 	# rm -rdf build
@@ -30,11 +35,6 @@ main: $(OBJECTS)
 
 
 objects: $(OBJECTS)
-
-
-fast:
-	make objects -j6
-	make main
 
 
 build/obj/%.o: src/%.cpp
