@@ -357,15 +357,15 @@ std::string SourceReleaseBuilder::get_makefile_content()
                        if (include_yaml_cpp) MAKEFILE_CONTENT << " $(YAML_CPP_LIB)";
                        //"-I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)"
                        MAKEFILE_CONTENT << std::endl;
-                    MAKEFILE_CONTENT << "\trm -rdf build" << std::endl
-                    << "\trm -rdf build/obj" << std::endl
+                    MAKEFILE_CONTENT << "\t# rm -rdf build" << std::endl
+                    << "\t# rm -rdf build/obj" << std::endl
                     << "" << std::endl
                     << "" << std::endl
                     << "objects: $(OBJECTS)" << std::endl
                     << "" << std::endl
                     << "" << std::endl
                     << "fast:" << std::endl
-                      << "\tmake objects -j3" << std::endl
+                      << "\tmake objects -j6" << std::endl
                     << "\tmake main" << std::endl
                     << "" << std::endl
                     << "" << std::endl
