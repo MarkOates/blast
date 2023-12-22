@@ -138,7 +138,9 @@ else
 	ERROR_IF_IMPLICIT_CONVERSION=-Werror=conversion # Consider
 	ERROR_IF_OVERFLOW_ON_CONVERSION=-Werror=overflow # Consider
 	ERROR_IF_SELF_ASSIGNMENT_ON_FIELD=-Werror=self-assign-field
-
+  # src/AllegroFlare/MusicNotation/MusicNotation.cpp:590:20: warning: enumeration values 'UNDEFINED' and 'EVEN' not handled in switch [-Wswitch]
+	# TODOL Consider using -Werror=switch:
+	# ERROR_IF_UNHANDLED_ENUMERATION_VALUE=-Werror=switch
   #NOTE: -fsanitize=address is added to this list thought it is in a different category of flags
 	DISABLE_UNUSED_WARNINGS_FLAG=-Wno-unused-variable -Wno-unused-private-field -Wno-unused-function
 
