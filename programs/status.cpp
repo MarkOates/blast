@@ -345,6 +345,7 @@ int main(int argc, char **argv)
       //{ "dungeon",            { false, ProjectStatus("dungeon", base_dir) } },
       { "hexagon",          { false, ProjectStatus("hexagon", base_dir) } },
       { "lightracer-max",       { false, ProjectStatus("lightracer-max", base_dir) } },
+      { "Robieo",       { false, ProjectStatus("Robieo", base_dir) } },
       { "me",               { false, ProjectStatus("me", base_dir) } },
       //{ "ncurses-art",      { false, ProjectStatus("ncurses-art") } },
       { "oatescodes",       { false, ProjectStatus("oatescodes", base_dir) } },
