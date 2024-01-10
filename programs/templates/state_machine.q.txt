@@ -16,7 +16,7 @@ properties:
     init_with: 0.0f
 
 
-enum:
+enums:
 
 
   - name: State
