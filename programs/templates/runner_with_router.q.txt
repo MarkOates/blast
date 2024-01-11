@@ -90,6 +90,14 @@ properties:
     type: AllegroFlare::Screens::RollingCredits
     init_with: ''
 
+  - name: display_settings_interface
+    type: AllegroFlare::DisplaySettingsInterfaces::Live
+    init_with: ''
+
+  - name: display_settings_screen
+    type: AllegroFlare::Screens::DisplaySettings
+    init_with: ''
+
   - name: primary_gameplay_screen
     type: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen
     init_with: ''
@@ -287,6 +295,27 @@ methods:
       });
 
 
+
+      // TODO: Setup the display settings
+      // Custom local class option:
+      //MyTestDisplaySettingsInterface display_settings_interface;
+      // This is a "live" option:
+      //AllegroFlare::DisplaySettingsInterfaces::Live display_settings_interface;
+      display_settings_interface.set_display(framework->get_primary_display()->al_display);
+      // Pure mock option:
+      //AllegroFlare::Testing::AllegroFlare::DisplaySettingsInterfaces::DisplayMock display_settings_interface;
+
+      //AllegroFlare::Screens::DisplaySettings display_settings_screen;
+      display_settings_screen.set_event_emitter(event_emitter);
+      display_settings_screen.set_bitmap_bin(bitmap_bin);
+      display_settings_screen.set_font_bin(font_bin);
+      display_settings_screen.set_model_bin(model_bin);
+      display_settings_screen.set_display_settings_interface(&display_settings_interface);
+      //display_settings_screen.set_on_exit_callback_func(my_on_exit_callback_func); // TODO: Exit callback
+      display_settings_screen.initialize();
+
+
+
       // TODO: Setup level select screen
       level_select_screen.set_event_emitter(event_emitter);
       level_select_screen.set_bitmap_bin(bitmap_bin);
@@ -409,6 +438,7 @@ methods:
          { "Start New Game",    "start_new_game" },                // TODO: If the game session has not begun
          { "Achievements",      "goto_achievements_screen" },
          { "Settings",          "goto_settings_screen" },
+         { "Display Settings",  "goto_display_settings_screen" },
          { "Version",           "goto_version_screen" },
          { "Credits",           "goto_credits_screen" },           // TODO: If game has been won
          { "Quit",              "quit" },
@@ -437,6 +467,10 @@ methods:
 
       switch(unhandled_event)
       {
+         case MY_ROUTE_EVENT_ACTIVATE_MY_CUSTOM_SCREEN:
+            router->activate_screen("display_settings_screen");
+            handled = true;
+         break;
          //case MY_ROUTE_EVENT_ACTIVATE_MY_CUSTOM_SCREEN:
             //router->activate_screen(MY_CUSTOM_SCREEN_IDENTIFIER);
             //handled = true;
@@ -763,6 +797,15 @@ methods:
             {
                this->continue_from_last_save();
             }
+            else if (menu_choice == "goto_display_settings_screen")
+            {
+               this->router.emit_route_event(
+                  MY_ROUTE_EVENT_ACTIVATE_MY_CUSTOM_SCREEN,
+                  //AllegroFlare::Routers::Standard::EVENT_ACTIVATE_DISPLAY_SETTINGS_SCREEN,
+                  nullptr,
+                  al_get_time()
+               );
+            }
             else if (menu_choice == "quit")
             {
                this->router.emit_route_event(
@@ -941,6 +984,10 @@ dependencies:
     headers: [ AllegroFlare/GameConfigurations/Base.hpp ]
   - symbol: AllegroFlare::LoadASavedGame::SaveSlots::Empty
     headers: [ AllegroFlare/LoadASavedGame/SaveSlots/Empty.hpp ]
+  - symbol: AllegroFlare::DisplaySettingsInterfaces::Live
+    headers: [ AllegroFlare/DisplaySettingsInterfaces/Live.hpp ]
+  - symbol: AllegroFlare::Screens::DisplaySettings
+    headers: [ AllegroFlare/Screens/DisplaySettings.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Screen.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
