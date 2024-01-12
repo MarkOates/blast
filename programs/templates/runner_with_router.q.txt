@@ -90,10 +90,6 @@ properties:
     type: AllegroFlare::Screens::RollingCredits
     init_with: ''
 
-  - name: display_settings_interface
-    type: AllegroFlare::DisplaySettingsInterfaces::Live
-    init_with: ''
-
   - name: display_settings_screen
     type: AllegroFlare::Screens::DisplaySettings
     init_with: ''
@@ -297,21 +293,13 @@ methods:
 
 
       // TODO: Setup the display settings
-      // Custom local class option:
-      //MyTestDisplaySettingsInterface display_settings_interface;
-      // This is a "live" option:
-      //AllegroFlare::DisplaySettingsInterfaces::Live display_settings_interface;
-      display_settings_interface.set_display(framework->get_primary_display()->al_display);
-      // Pure mock option:
-      //AllegroFlare::Testing::AllegroFlare::DisplaySettingsInterfaces::DisplayMock display_settings_interface;
 
-      //AllegroFlare::Screens::DisplaySettings display_settings_screen;
       display_settings_screen.set_event_emitter(event_emitter);
       display_settings_screen.set_bitmap_bin(bitmap_bin);
       display_settings_screen.set_font_bin(font_bin);
       display_settings_screen.set_model_bin(model_bin);
-      display_settings_screen.set_display_settings_interface(&display_settings_interface);
-      //display_settings_screen.set_on_exit_callback_func(my_on_exit_callback_func); // TODO: Exit callback
+      display_settings_screen.set_background(&solid_black_background);
+      display_settings_screen.set_display_settings_interface(framework->get_display_settings_interface());
       display_settings_screen.initialize();
 
 
@@ -467,10 +455,6 @@ methods:
 
       switch(unhandled_event)
       {
-         case MY_ROUTE_EVENT_ACTIVATE_MY_CUSTOM_SCREEN:
-            router->activate_screen("display_settings_screen");
-            handled = true;
-         break;
          //case MY_ROUTE_EVENT_ACTIVATE_MY_CUSTOM_SCREEN:
             //router->activate_screen(MY_CUSTOM_SCREEN_IDENTIFIER);
             //handled = true;
@@ -602,6 +586,10 @@ methods:
          &settings_screen
       );
       router.register_screen(
+         AllegroFlare::Routers::Standard::DISPLAY_SETTINGS_SCREEN_IDENTIFIER,
+         &display_settings_screen
+      );
+      router.register_screen(
          AllegroFlare::Routers::Standard::GAME_WON_OUTRO_STORYBOARD_SCREEN_IDENTIFIER,
          &game_won_outro_storyboard_screen
       );
@@ -710,6 +698,18 @@ methods:
             );
          }
       );
+      display_settings_screen.set_on_exit_callback_func(
+         [this](AllegroFlare::Screens::DisplaySettings* screen, void* data) {
+            this->router.emit_route_event(
+               AllegroFlare::Routers::Standard::EVENT_ACTIVATE_TITLE_SCREEN, // NOTE: If the settings screen is
+                                                                             // made accessible during gameplay,
+                                                                             // this event will need to modified
+                                                                             // for that case
+               nullptr,
+               al_get_time()
+            );
+         }
+      );
       game_won_screen.set_on_submit_callback_func(
          [this](AllegroFlare::Screens::GameWonScreen* screen, void* data) {
             // TODO: validate "screen" is non-void
@@ -800,8 +800,7 @@ methods:
             else if (menu_choice == "goto_display_settings_screen")
             {
                this->router.emit_route_event(
-                  MY_ROUTE_EVENT_ACTIVATE_MY_CUSTOM_SCREEN,
-                  //AllegroFlare::Routers::Standard::EVENT_ACTIVATE_DISPLAY_SETTINGS_SCREEN,
+                  AllegroFlare::Routers::Standard::EVENT_ACTIVATE_DISPLAY_SETTINGS_SCREEN,
                   nullptr,
                   al_get_time()
                );
