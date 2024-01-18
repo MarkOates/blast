@@ -128,7 +128,7 @@ echo "Building the resource file for the icon - DONE"
 
 
 echo "Building the executable - STARTING"
-make WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE=windows_app_icon_resource.o || exit 11
+make legacy WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE=windows_app_icon_resource.o || exit 11
 echo "Building the executable - DONE"
 
 
