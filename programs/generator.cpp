@@ -183,6 +183,38 @@ int main(int argc, char **argv)
 
 
 
+std::string main_file_content_template_with_configuration = R"END(
+
+#include <AllegroFlare/Runners/Complete.hpp>
+#include <[[PROJECT_NAME]]/GameConfigurations/Main.hpp>
+#include <allegro5/allegro.h>
+#include <vector> // for parsing command line args
+#include <algorithm> // for parsing command line args
+
+int main(int argc, char **argv)
+{
+   std::vector<std::string> command_line_args;
+   for (int i=1; i<argc; i++) command_line_args.push_back(argv[i]);
+   bool contains_development_flag = std::count(command_line_args.begin(), command_line_args.end(), "--development");
+
+   // TODO: improve this to return an error when an unrecognized flag is present
+
+   [[PROJECT_NAME]]::GameConfigurations::Main main_configuration;
+
+   std::string deployment_environment =
+         contains_development_flag
+         ? AllegroFlare::DeploymentEnvironment::ENVIRONMENT_DEVELOPMENT
+         : AllegroFlare::DeploymentEnvironment::ENVIRONMENT_PRODUCTION;
+
+   AllegroFlare::Runners::Complete().run(&main_configuration, deployment_environment);
+   return 0;
+}
+
+)END";
+
+
+
+
 std::string README_FILE_CONTENT_TEMPLATE = R"END(# [[PROJECT_NAME]]
 )END";
 
@@ -277,6 +309,19 @@ void create_readme_file(Generator &generator)
    outfile5.open(generator.get_project_name() + "/README.md", std::ios::binary);
    std::string main_file_content = README_FILE_CONTENT_TEMPLATE;
    ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
+   outfile5 << main_file_content;
+   outfile5.close();
+}
+
+
+void create_main_file_with_configuration(Generator &generator)
+{
+   std::ofstream outfile5;
+   outfile5.open(generator.get_project_name() + "/programs/main.cpp", std::ios::binary);
+   std::string main_file_content = main_file_content_template_with_configuration;
+   ___replace(main_file_content, "[[PROJECT_NAME]]", generator.get_project_name());
+   ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_NAME]]", PROGRAM_RUNNER_CLASS_NAME);
+   ___replace(main_file_content, "[[PROGRAM_RUNNER_CLASS_END_FRAGMENTS_NAME]]", PROGRAM_RUNNER_CLASS_END_FRAGMENTS_NAME);
    outfile5 << main_file_content;
    outfile5.close();
 }
@@ -448,6 +493,15 @@ void generate_gameplay_level_factory_class(std::string project_name)
 }
 
 
+void generate_complete_game_configurations_main_class(std::string project_name)
+{
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/GameConfigurations/Main complete_game_configuration";
+   std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
+   Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
+   shell_command_executor.execute();
+}
+
+
 void generate_game_configurations_main_class(std::string project_name)
 {
    std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/GameConfigurations/Main game_configuration";
@@ -495,7 +549,6 @@ int main(int argc, char **argv)
    create_makefile(generator);
    create_gitignore(generator);
    create_appinfo_yml(generator);
-   create_main_file(generator);
    create_readme_file(generator);
    create_test_runner(generator);
    copy_resource_files(generator);
@@ -503,9 +556,15 @@ int main(int argc, char **argv)
 
    generate_gameplay_screen_class(project_name);
    generate_gameplay_level_class(project_name);
-   //generate_gameplay_level_factory_class(project_name);
-   generate_game_configurations_main_class(project_name);
-   generate_runner_class(project_name);
+   { // With AllegroFlare-managed Runner - Runners::Complete
+      generate_complete_game_configurations_main_class(project_name);
+      create_main_file_with_configuration(generator);
+   }
+   { // With previous "manual" runner
+      //create_main_file(generator);
+      //generate_game_configurations_main_class(project_name);
+      //generate_runner_class(project_name);
+   }
 
    output_finished_message(project_name);
 
