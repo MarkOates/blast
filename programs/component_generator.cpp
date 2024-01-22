@@ -139,6 +139,7 @@ int main(int argc, char **argv)
       { "screen", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "screen.q.txt"), file_get_contents(TEMPLATES_PATH + "screen_test.txt")) },
       { "runner_with_router", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "runner_with_router.q.txt"), file_get_contents(TEMPLATES_PATH + "runner_with_router_test.txt")) },
       { "gameplay_screen", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "gameplay_screen.q.txt"), file_get_contents(TEMPLATES_PATH + "gameplay_screen_test.txt")) },
+      { "complete_gameplay_screen", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "complete_gameplay_screen.q.txt"), file_get_contents(TEMPLATES_PATH + "complete_gameplay_screen_test.txt")) },
       { "gameplay_level", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "gameplay_level.q.txt"), file_get_contents(TEMPLATES_PATH + "gameplay_level_test.txt")) },
       { "gameplay_level_factory", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "gameplay_level_factory.q.txt"), file_get_contents(TEMPLATES_PATH + "gameplay_level_factory_test.txt")) },
       { "game_configuration", new QuintessenceTestTemplatePair(file_get_contents(TEMPLATES_PATH + "game_configuration.q.txt"), file_get_contents(TEMPLATES_PATH + "game_configuration_test.txt")) },

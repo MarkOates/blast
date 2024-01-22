@@ -42,7 +42,7 @@ methods:
       // TODO: Find some way to remove the Runners::Complete dependency, consider injecting
       // the bin dependencies individually into this method
 
-      CatchIt::Gameplay::Screen *result = new CatchIt::Gameplay::Screen;
+      [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen *result = new [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen;
 
       result->set_font_bin(runner->get_font_bin());
       result->set_bitmap_bin(runner->get_bitmap_bin());
@@ -52,7 +52,7 @@ methods:
       result->initialize();
       return result;
     body_dependency_symbols:
-      - CatchIt::Gameplay::Screen
+      - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen
       - AllegroFlare::Runners::Complete
 
 

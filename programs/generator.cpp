@@ -466,9 +466,19 @@ void output_finished_message(std::string project_name)
 }
 
 
+
 void generate_gameplay_screen_class(std::string project_name)
 {
    std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Gameplay/Screen gameplay_screen";
+   std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
+   Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
+   shell_command_executor.execute();
+}
+
+
+void generate_complete_gameplay_screen_class(std::string project_name)
+{
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Gameplay/Screen complete_gameplay_screen";
    std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
    Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
@@ -554,14 +564,16 @@ int main(int argc, char **argv)
    copy_resource_files(generator);
    create_version_yaml(generator);
 
-   generate_gameplay_screen_class(project_name);
+   //generate_gameplay_screen_class(project_name);
    generate_gameplay_level_class(project_name);
    { // With AllegroFlare-managed Runner - Runners::Complete
       generate_complete_game_configurations_main_class(project_name);
       create_main_file_with_configuration(generator);
+      generate_complete_gameplay_screen_class(project_name);
    }
    { // With previous "manual" runner
       //create_main_file(generator);
+      //generate_gameplay_screen_class(project_name);
       //generate_game_configurations_main_class(project_name);
       //generate_runner_class(project_name);
    }
