@@ -30,7 +30,7 @@ properties:
     constructor_arg: true
 
   - name: game_configuration
-    type: AllegroFlare::GameConfigurations::Base*
+    type: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main*
     init_with: nullptr
     constructor_arg: true
     getter: true
@@ -324,6 +324,7 @@ methods:
     body_dependency_symbols:
       - AllegroFlare::VirtualControllers::GenericController
 
+
   - name: virtual_control_axis_change_func
     virtual: true
     override: true
@@ -336,6 +337,12 @@ methods:
       // TODO: this function
       return;
 
+
+  - name: obtain_font
+    type: ALLEGRO_FONT*
+    guards: [ font_bin ]
+    body: |
+      return font_bin->auto_get("Inter-Regular.ttf -32");
 
 
 dependencies:
@@ -363,8 +370,6 @@ dependencies:
     headers: [ AllegroFlare/VirtualControllers/GenericController.hpp ]
   - symbol: [[COMPONENT_CLASS_NAME]]
     headers: [ [[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]].hpp ]
-  - symbol: AllegroFlare::GameConfigurations::Base
-    headers: [ AllegroFlare/GameConfigurations/Base.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/GameConfigurations/Main.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level

@@ -48,6 +48,7 @@ methods:
       result->set_bitmap_bin(runner->get_bitmap_bin());
       result->set_model_bin(runner->get_model_bin());
       result->set_event_emitter(runner->get_event_emitter());
+      result->set_game_configuration(this);
 
       result->initialize();
       return result;
@@ -262,6 +263,13 @@ methods:
       [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level *result = new [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level();
 
       std::map<std::string, std::function<void()>> items_map = {
+         { "", [result](){
+            AllegroFlare::Logger::warn_from(
+               "[[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main::load_level_by_identifier",
+               "Loading a completely blank empty level."
+            );
+            // TODO: Add warning: loading an empty level
+         }},
          { "forest_village_1", [result](){
             //result->set_background_image_identifier("maps/forest-village-1.png");
          }},
