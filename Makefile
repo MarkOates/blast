@@ -138,9 +138,9 @@ else
 	ERROR_IF_IMPLICIT_CONVERSION=-Werror=conversion # Consider
 	ERROR_IF_OVERFLOW_ON_CONVERSION=-Werror=overflow # Consider
 	ERROR_IF_SELF_ASSIGNMENT_ON_FIELD=-Werror=self-assign-field
-  # src/AllegroFlare/MusicNotation/MusicNotation.cpp:590:20: warning: enumeration values 'UNDEFINED' and 'EVEN' not handled in switch [-Wswitch]
-	# TODOL Consider using -Werror=switch:
+	# TODO: Consider using -Werror=switch:
 	# ERROR_IF_UNHANDLED_ENUMERATION_VALUE=-Werror=switch
+	# TODO: Consider using -fms-extensions to remove certain symbol errors that appear on ms-compilation only
   #NOTE: -fsanitize=address is added to this list thought it is in a different category of flags
 	DISABLE_UNUSED_WARNINGS_FLAG=-Wno-unused-variable -Wno-unused-private-field -Wno-unused-function
 
@@ -151,7 +151,7 @@ else
 	#TODO: include -Woverloaded-virtual -Winconsistent-missing-override to promoted errors
 	#TODO: consider unused-but-set-variable
 	#TODO: consider braced-scalar-init
-  WARNINGS_PROMOTED_TO_ERRORS_FLAGS=$(ERROR_IF_UNINITIALIZED) $(ERROR_IF_INCORRECT_RETURN_TYPE) $(ERROR_IF_CONSTRUCTOR_INIT_OUT_OF_ORDER) $(ERROR_IF_ACCIDENTAL_OVERLOAD) $(ERROR_IF_VIRTUAL_NOT_MARKED_OVERRIDE) $(ERROR_IF_MACRO_REDEFINED) $(ERROR_IF_ASSIGNMENT_IN_CONDITIONAL) $(ERROR_ON_HEADER_HYGINE) $(ERROR_IF_SELF_ASSIGNMENT_ON_FIELD)
+  WARNINGS_PROMOTED_TO_ERRORS_FLAGS=$(ERROR_IF_UNINITIALIZED) $(ERROR_IF_INCORRECT_RETURN_TYPE) $(ERROR_IF_CONSTRUCTOR_INIT_OUT_OF_ORDER) $(ERROR_IF_ACCIDENTAL_OVERLOAD) $(ERROR_IF_VIRTUAL_NOT_MARKED_OVERRIDE) $(ERROR_IF_MACRO_REDEFINED) $(ERROR_IF_ASSIGNMENT_IN_CONDITIONAL) $(ERROR_ON_HEADER_HYGINE) $(ERROR_IF_SELF_ASSIGNMENT_ON_FIELD) $(ERROR_IF_UNHANDLED_ENUMERATION_VALUE)
   #WARNINGS_PROMOTED_TO_ERRORS_FLAGS=$(ERROR_IF_UNINITIALIZED) $(ERROR_IF_INCORRECT_RETURN_TYPE) $(ERROR_ON_HEADER_HYGINE)
 
 	ERROR_LIMIT_FLAG=-ferror-limit=1
