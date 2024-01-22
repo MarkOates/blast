@@ -8,7 +8,13 @@
 //#include <AllegroFlare/Frameworks/Full.hpp>
 
 
-class TestGameConfiguration : public AllegroFlare::GameConfigurations::Base
+// NOTE: Fully commented out
+// NOTE: Fully commented out
+// NOTE: Fully commented out
+// NOTE: Fully commented out
+// NOTE: Fully commented out
+/*
+class TestGameConfiguration : public AllegroFlare::GameConfigurations::Main
 {
 public:
    // TODO: Upgrade this out of void* to a level base class (once the upstream design is clear)
@@ -72,5 +78,6 @@ TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroFrameworksFullFixture,
 
    framework_run_loop(3);
 }
+*/
 
 

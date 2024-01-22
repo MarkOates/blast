@@ -348,6 +348,8 @@ methods:
 dependencies:
 
 
+  - symbol: ALLEGRO_FONT
+    headers: [ allegro5/allegro.h ]
   - symbol: ALLEGRO_EVENT
     headers: [ allegro5/allegro.h ]
   - symbol: AllegroFlare::Screens::Gameplay
