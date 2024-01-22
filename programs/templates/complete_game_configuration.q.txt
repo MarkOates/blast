@@ -29,6 +29,33 @@ methods:
       - AllegroFlare::Achievement
 
 
+  - name: create_primary_gameplay_screen
+    type: AllegroFlare::Screens::Gameplay*
+    virtual: true
+    override: true
+    parameters:
+      - name: runner
+        type: AllegroFlare::Runners::Complete*
+        default_argument: nullptr
+    guards: [ runner ]
+    body: |
+      // TODO: Find some way to remove the Runners::Complete dependency, consider injecting
+      // the bin dependencies individually into this method
+
+      CatchIt::Gameplay::Screen *result = new CatchIt::Gameplay::Screen;
+
+      result->set_font_bin(runner->get_font_bin());
+      result->set_bitmap_bin(runner->get_bitmap_bin());
+      result->set_model_bin(runner->get_model_bin());
+      result->set_event_emitter(runner->get_event_emitter());
+
+      result->initialize();
+      return result;
+    body_dependency_symbols:
+      - CatchIt::Gameplay::Screen
+      - AllegroFlare::Runners::Complete
+
+
   - name: create_intro_logos_storyboard_pages
     virtual: true
     override: true
@@ -188,14 +215,14 @@ methods:
         default_argument: '"[unset-identifier]"'
     body: |
       std::vector<std::pair<std::string, std::string>> result = {
-         { "Forest Village 1", "forest_village_1" },
-         { "Forest Village 2", "forest_village_2" },
-         { "Forest", "forest_1" },
-         { "Crystal Cave", "crystal_cave_1" },
-         { "Desert Town", "desert_town_3" },
-         { "Town 2", "town_2" },
-         { "Cave 1", "cave_1" },
-         { "Town 1", "town_1" },
+         //{ "Forest Village 1", "forest_village_1" },
+         //{ "Forest Village 2", "forest_village_2" },
+         //{ "Forest", "forest_1" },
+         //{ "Crystal Cave", "crystal_cave_1" },
+         //{ "Desert Town", "desert_town_3" },
+         //{ "Town 2", "town_2" },
+         //{ "Cave 1", "cave_1" },
+         //{ "Town 1", "town_1" },
       };
       return result;
 
@@ -238,27 +265,27 @@ methods:
          { "forest_village_1", [result](){
             //result->set_background_image_identifier("maps/forest-village-1.png");
          }},
-         { "forest_village_2", [result](){
+         //{ "forest_village_2", [result](){
             //result->set_background_image_identifier("maps/forest-village-2.png");
-         }},
-         { "forest_1", [result](){
+         //}},
+         //{ "forest_1", [result](){
             //result->set_background_image_identifier("maps/forest-1.png");
-         }},
-         { "crystal_cave_1", [result](){
+         //}},
+         //{ "crystal_cave_1", [result](){
             //result->set_background_image_identifier("maps/crystal-cave-1.png");
-         }},
-         { "desert_town_3", [result](){
+         //}},
+         //{ "desert_town_3", [result](){
             //result->set_background_image_identifier("maps/desert-town-3.png");
-         }},
-         { "town_2", [result](){
+         //}},
+         //{ "town_2", [result](){
             //result->set_background_image_identifier("maps/town-2.png");
-         }},
-         { "cave_1", [result](){
+         //}},
+         //{ "cave_1", [result](){
             //result->set_background_image_identifier("maps/rpg-fit-backgrounds-ex-101.png");
-         }},
-         { "town_1", [result](){
+         //}},
+         //{ "town_1", [result](){
             //result->set_background_image_identifier("maps/rpg-fit-backgrounds-x2-01.png");
-         }},
+         //}},
       };
 
       // locate and call the function to handle the item
@@ -314,7 +341,6 @@ dependencies:
     headers: [ AllegroFlare/DialogTree/NodeOptions/GoToNode.hpp ]
   - symbol: AllegroFlare::DialogTree::NodeOptions::ExitDialog
     headers: [ AllegroFlare/DialogTree/NodeOptions/ExitDialog.hpp ]
-
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Level.hpp ]
   - symbol: AllegroFlare::Achievement
@@ -327,4 +353,10 @@ dependencies:
     headers: [ AllegroFlare/GameProgressAndStateInfos/Base.hpp ]
   - symbol: AllegroFlare::LoadASavedGame::SaveSlots::Base
     headers: [ AllegroFlare/LoadASavedGame/SaveSlots/Base.hpp ]
+  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen
+    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Screen.hpp ]
+  - symbol: AllegroFlare::Screens::Gameplay
+    headers: [ AllegroFlare/Screens/Gameplay.hpp ]
+  - symbol: AllegroFlare::Runners::Complete
+    headers: [ AllegroFlare/Runners/Complete.hpp ]
 
