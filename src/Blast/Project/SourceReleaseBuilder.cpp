@@ -949,7 +949,7 @@ bool SourceReleaseBuilder::generate_source_release()
    write_file_contents(makefile_full_filename, get_makefile_content());
    std::cout << "done." << std::endl;
 
-   std::string path_to_fix_symlinks = releases_base_folder;
+   std::string path_to_fix_symlinks = destination_directory; //releases_base_folder; // TODO: Replace this with thing
    std::cout << "Fixing symlinks from relative to absolute in path \"" << path_to_fix_symlinks << "\"..."
              << std::flush;
    fix_symlink_targets_from_relative_to_absolute(path_to_fix_symlinks);
