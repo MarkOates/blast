@@ -92,7 +92,7 @@ namespace Blast
          std::string get_project_appinfo_yaml_file_contents();
          std::string build_source_release_app_info_file_contents();
          std::vector<std::pair<std::string, std::string>> list_symlinks();
-         void fix_symlink_targets_from_relative_to_absolute();
+         void fix_symlink_targets_from_relative_to_absolute(std::string folder="[unset-folder]");
          void replace_symlinks_with_copies_of_linked_files();
          std::string get_generated_source_release_zip_filename();
          void generate_macos_release();

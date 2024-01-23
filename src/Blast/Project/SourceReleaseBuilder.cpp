@@ -601,9 +601,9 @@ std::vector<std::pair<std::string, std::string>> SourceReleaseBuilder::list_syml
    return result;
 }
 
-void SourceReleaseBuilder::fix_symlink_targets_from_relative_to_absolute()
+void SourceReleaseBuilder::fix_symlink_targets_from_relative_to_absolute(std::string folder)
 {
-   Blast::Project::ProjectSymlinkFixer symlink_fixer(releases_base_folder);
+   Blast::Project::ProjectSymlinkFixer symlink_fixer(folder);
    symlink_fixer.run();
    return;
 }
@@ -949,8 +949,10 @@ bool SourceReleaseBuilder::generate_source_release()
    write_file_contents(makefile_full_filename, get_makefile_content());
    std::cout << "done." << std::endl;
 
-   std::cout << "Fixing symlinks from relative to absolute..." << std::flush;
-   fix_symlink_targets_from_relative_to_absolute();
+   std::string path_to_fix_symlinks = releases_base_folder;
+   std::cout << "Fixing symlinks from relative to absolute in path \"" << path_to_fix_symlinks << "\"..."
+             << std::flush;
+   fix_symlink_targets_from_relative_to_absolute(path_to_fix_symlinks);
    std::cout << "done." << std::endl;
 
    std::cout << "Replacing sylminked files with original copies..." << std::flush;
