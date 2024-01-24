@@ -130,6 +130,11 @@ methods:
   - name: load_audio_controller
     virtual: true
     override: true
+    parameters:
+      - name: audio_controller
+        type: AllegroFlare::AudioController*
+        default_argument: nullptr
+    guards: [ audio_controller ]
     body: |
       //AllegroFlare::AudioController &audio_controller = framework->get_audio_controller_ref();
       //audio_controller.set_and_load_sound_effect_elements({
@@ -367,4 +372,7 @@ dependencies:
     headers: [ AllegroFlare/Screens/Gameplay.hpp ]
   - symbol: AllegroFlare::Runners::Complete
     headers: [ AllegroFlare/Runners/Complete.hpp ]
+  - symbol: AllegroFlare::AudioController
+    headers: [ AllegroFlare/AudioController.hpp ]
+
 
