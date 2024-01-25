@@ -136,16 +136,22 @@ methods:
         default_argument: nullptr
     guards: [ audio_controller ]
     body: |
-      //AllegroFlare::AudioController &audio_controller = framework->get_audio_controller_ref();
-      //audio_controller.set_and_load_sound_effect_elements({
-         //// { "menu_move", { "menu_move_tink-02.ogg", false, "restart" } }, // TODO: Throw on an unknown replay type
-      //});
+      // An example of how to load a sound effect track:
+      audio_controller->set_and_load_sound_effect_elements({
+         //{ "menu_move", { "ci-menu_move-01.ogg", false, "restart" } },
+         //{ "menu_select", { "ci-menu_choice-01.ogg", false, "restart" } },
+      });
+
+      // How to play a sound effect:
+      // event_emitter->emit_play_music_track_event("menu_select");
+
+      //// An example of how to load a music track:
       //audio_controller.set_and_load_music_track_elements({
-         //// An example of how to load a music track:
          ////{ "intro_music", { "wanderer-01.ogg", true, "ignore" } },
       //});
-      //// An example of how to play a music track:
-      //// event_emitter->emit_play_music_track_event("intro_music");
+
+      // How to play a music track:
+      // event_emitter->emit_play_music_track_event("intro_music");
       return;
 
 
