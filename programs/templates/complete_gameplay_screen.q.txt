@@ -3,7 +3,7 @@ parent_classes:
 
   - class: AllegroFlare::Screens::Gameplay
     scope: public
-    init_with: [[COMPONENT_CLASS_NAME]]::TYPE
+    init_with: ''
 
 
 properties:
@@ -43,18 +43,6 @@ properties:
   - name: current_level
     type: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level*
     init_with: nullptr
-
-  - name: on_finished_callback_func
-    type: std::function<void([[COMPONENT_CLASS_NAME]]*, void*)>
-    init_with: ''
-    getter: true
-    setter: explicit
-
-  - name: on_finished_callback_func_user_data
-    type: void*
-    init_with: nullptr
-    getter: true
-    setter: explicit
 
   - name: initialized
     type: bool
@@ -112,36 +100,6 @@ methods:
     body: |
       this->model_bin = model_bin;
       return;
-      return;
-
-
-  - name: set_on_finished_callback_func
-    virtual: true
-    override: true
-    parameters:
-      - name: on_finished_callback_func
-        type: std::function<void(AllegroFlare::Screens::Gameplay*, void*)>
-        default_argument: '{}'
-    body: |
-      //AllegroFlare::Logger::throw_error(
-         //"AllegroFlare::Screens::Gameplay::set_on_finished_callback_func",
-         //"Not implemented in the base class. This method must be implemented in the derived class"
-      //);
-      return;
-
-
-  - name: set_on_finished_callback_func_user_data
-    virtual: true
-    override: true
-    parameters:
-      - name: on_finished_callback_func_user_data
-        type: void*
-        default_argument: nullptr
-    body: |
-      //AllegroFlare::Logger::throw_error(
-         //"AllegroFlare::Screens::Gameplay::set_on_finished_callback_func",
-         //"Not implemented in the base class. This method must be implemented in the derived class"
-      //);
       return;
 
 
@@ -224,12 +182,6 @@ methods:
   - name: render
     body: |
       return;
-
-
-  - name: call_on_finished_callback_func
-    body: |
-      // TODO: Test this callback call
-      if (on_finished_callback_func) on_finished_callback_func(this, on_finished_callback_func_user_data);
 
 
   - name: game_event_func
