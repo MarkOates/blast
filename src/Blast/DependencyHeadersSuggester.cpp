@@ -47,6 +47,7 @@ std::string DependencyHeadersSuggester::find_suggested_headers_csv(std::string s
 std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_default_suggested_symbol_headers()
 {
    return std::map<std::string, std::vector<std::string>>{
+      { "ALLEGRO_EVENT", { "allegro5/allegro.h" }, },
       { "ALLEGRO_FONT", { "allegro5/allegro_font.h" }, },
       { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, },
       { "ALLEGRO_DISPLAY", { "allegro5/allegro.h" }, },

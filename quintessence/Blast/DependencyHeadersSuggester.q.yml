@@ -60,6 +60,7 @@ functions:
     type: std::map<std::string, std::vector<std::string>>
     body: |
       return std::map<std::string, std::vector<std::string>>{
+         { "ALLEGRO_EVENT", { "allegro5/allegro.h" }, },
          { "ALLEGRO_FONT", { "allegro5/allegro_font.h" }, },
          { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, },
          { "ALLEGRO_DISPLAY", { "allegro5/allegro.h" }, },
