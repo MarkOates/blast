@@ -63,6 +63,8 @@ std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_
       { "al_color_html", { "allegro5/allegro_color.h" }, },
       { "al_draw_rectangle", { "allegro5/allegro_primitives.h" }, },
       { "al_draw_filled_rectangle", { "allegro5/allegro_primitives.h" }, },
+      { "al_draw_rounded_rectangle", { "allegro5/allegro_primitives.h" }, },
+      { "al_draw_filled_rounded_rectangle", { "allegro5/allegro_primitives.h" }, },
       { "al_draw_circle", { "allegro5/allegro_primitives.h" }, },
       { "al_draw_filled_circle", { "allegro5/allegro_primitives.h" }, },
    };
