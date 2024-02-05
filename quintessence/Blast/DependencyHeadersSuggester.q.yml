@@ -60,16 +60,24 @@ functions:
     type: std::map<std::string, std::vector<std::string>>
     body: |
       return std::map<std::string, std::vector<std::string>>{
-         { "ALLEGRO_EVENT", { "allegro5/allegro.h" }, },
-         { "ALLEGRO_FONT", { "allegro5/allegro_font.h" }, },
-         { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, },
-         { "ALLEGRO_DISPLAY", { "allegro5/allegro.h" }, },
-         { "ALLEGRO_COLOR", { "allegro5/allegro.h" }, },
          { "StageInterface", { "Hexagon/StageInterface.hpp" }, },
          { "std::function", { "functional" }, },
          { "std::min", { "algorithm" }, },
          { "std::max", { "algorithm" }, },
          { "fmod", { "cmath" }, },
+
+         // Allegro
+         { "ALLEGRO_EVENT", { "allegro5/allegro.h" }, },
+         { "ALLEGRO_FONT", { "allegro5/allegro_font.h" }, },
+         { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, },
+         { "ALLEGRO_DISPLAY", { "allegro5/allegro.h" }, },
+         { "ALLEGRO_COLOR", { "allegro5/allegro.h" }, },
+         { "ALLEGRO_STATE", { "allegro5/allegro.h" }, },
+         { "al_color_html", { "allegro5/allegro_color.h" }, },
+         { "al_draw_rectangle", { "allegro5/allegro_primitives.h" }, },
+         { "al_draw_filled_rectangle", { "allegro5/allegro_primitives.h" }, },
+         { "al_draw_circle", { "allegro5/allegro_primitives.h" }, },
+         { "al_draw_filled_circle", { "allegro5/allegro_primitives.h" }, },
       };
 
 
