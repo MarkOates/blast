@@ -56,6 +56,7 @@ TEST(Blast_SystemInfoTest, get_hostname__will_return_a_string_representing_the_s
       "DESKTOP-NC9M1BH",            // Mark's Laptop
       "Marks-13-MacBook-Pro.local", // Mark's Mac Laptop
       "Marks-Mac-mini.local",       // Mark's MacMini
+      "Marks-MacBook-Pro.local",    // Mark's Main Laptop
    };
    std::string actual_hostname = system_info.get_hostname();
    EXPECT_THAT(expected_possible_hostnames, testing::Contains(actual_hostname));
@@ -86,7 +87,7 @@ TEST(Blast_SystemInfoTest, get_version__will_return_a_string_representing_the_sy
    std::string regex_pattern = "^Darwin Kernel Version \\d+\\.\\d+\\.\\d+: "
       "(Mon|Tue|Wed|Thu|Fri|Sat|Sun) "
       "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ( ?\\d{1}|\\d{2}) \\d{2}:\\d{2}:\\d{2} (PST|PDT) \\d{4}; "
-      "root:xnu-\\d+\\.\\d+\\.\\d+~\\d+/RELEASE_(ARM64_T8103|X86_64)$";
+      "root:xnu-\\d+\\.\\d+\\.\\d+~\\d+/RELEASE_(ARM64_T8103|ARM64_T6031|X86_64)$";
    std::regex version_regex(regex_pattern);
    bool is_match = std::regex_match(actual_version, version_regex);
    EXPECT_TRUE(is_match) << "\"" << actual_version << "\"" << " does not match the regex \"" << regex_pattern << "\"";
