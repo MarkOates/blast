@@ -850,8 +850,10 @@ bool check_select_executables_are_up_to_date_to_their_source()
 
 bool check_clang_version_is_expected_version()
 {
-   last_test_result = new TestResultMatcher("^Apple clang version 15\\.[0-9]\\.[0-9]+ \\(clang-14[0-9][0-9]\\.[0-9]+\\.[0-9]+\\.[0-9]+\\)$", get_clang_version());
-
+   last_test_result = new TestResultMatcher("^Apple clang version 15\\.[0-9]\\.[0-9]+ \\(clang-15[0-9][0-9]\\.[0-9]+\\.[0-9]+(\\.[0-9]+)+\\)$", get_clang_version());
+   // Examples:
+   // Apple clang version 15.0.0 (clang-1500.1.0.2.5)
+   // Apple clang version 15.0.0 (clang-1500.1.0.2)
    return last_test_result->assessment();
 }
 
