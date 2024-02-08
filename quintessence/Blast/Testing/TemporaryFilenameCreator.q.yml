@@ -1,16 +1,54 @@
-documentation:
-
-
-  - notes:
-      - a TemporaryFilenameCreator exists in AllegroFlare that can create a guaranteed unique file in a directory
-
-
 methods:
 
 
-  - name: create
+  - name: create_filename
     type: std::string
     body: |
-      return std::tmpnam(nullptr);
+      // NOTE: this method was previously called "create"
+      //return std::tmpnam(nullptr);
+      char template_name[] = "tempfile_XXXXXX";
+      int mkstemp_file_descriptor = mkstemp(template_name);
+
+      if (mkstemp_file_descriptor == -1)
+      {
+          // Handle error, e.g., throw an exception or return an error code
+         Blast::Errors::throw_error(
+            "Blast::Testing::TemporaryFilenameCreator",
+            "When attempting to make a temp file"
+         );
+      }
+
+      // Close the file descriptor since we only needed it to create the file
+      close(mkstemp_file_descriptor);
+
+      return template_name;
+    body_dependency_symbols:
+      - mkstemp
+      - close
+      - Blast::Errors
+
+
+  - name: create_filename_within_guaranteed_unique_directory
+    type: std::string
+    body: |
+      Blast::Testing::TemporaryDirectoryCreator temporary_directory_creator;
+      std::string unique_directory = temporary_directory_creator.create().string();
+      std::string unique_filename = std::filesystem::path(create_filename()).filename().string();
+      return unique_directory + "/" + unique_filename;
+    body_dependency_symbols:
+      - Blast::Testing::TemporaryDirectoryCreator
+
+
+dependencies:
+
+
+  - symbol: mkstemp
+    headers: [ cstdio ]
+  - symbol: close
+    headers: [ unistd.h ]
+  - symbol: Blast::Testing::TemporaryDirectoryCreator
+    headers: [ Blast/Testing/TemporaryDirectoryCreator.hpp ]
+  - symbol: Blast::Errors
+    headers: [ Blast/Errors.hpp ]
 
 

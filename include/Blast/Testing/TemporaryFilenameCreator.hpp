@@ -19,7 +19,8 @@ namespace Blast
          TemporaryFilenameCreator();
          ~TemporaryFilenameCreator();
 
-         std::string create();
+         std::string create_filename();
+         std::string create_filename_within_guaranteed_unique_directory();
       };
    }
 }

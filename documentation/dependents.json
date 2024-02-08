@@ -110,6 +110,7 @@
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/Project/SourceReleaseBuilder",
     "Blast/Project/Win64ReleaseBuilder",
+    "Blast/Testing/TemporaryFilenameCreator",
     "Blast/VersionYAMLLoaderEmitter",
     "Blast/YAMLValidator"
   ],
@@ -514,6 +515,15 @@
   ],
   "filesystem": [
     "Blast/Testing/TemporaryDirectoryCreator"
+  ],
+  "mkstemp": [
+    "Blast/Testing/TemporaryFilenameCreator"
+  ],
+  "close": [
+    "Blast/Testing/TemporaryFilenameCreator"
+  ],
+  "Blast/Testing/TemporaryDirectoryCreator": [
+    "Blast/Testing/TemporaryFilenameCreator"
   ],
   "std/any_of": [
     "Blast/YAMLValidator"
