@@ -2,8 +2,9 @@
 
 #include <Blast/Testing/TemporaryFilenameCreator.hpp>
 
-#include <Blast/Errors.hpp>
+#include <Blast/Random.hpp>
 #include <Blast/Testing/TemporaryDirectoryCreator.hpp>
+#include <Blast/TimeStamper.hpp>
 #include <cstdio>
 #include <unistd.h>
 
@@ -26,24 +27,8 @@ TemporaryFilenameCreator::~TemporaryFilenameCreator()
 
 std::string TemporaryFilenameCreator::create_filename()
 {
-   // NOTE: this method was previously called "create"
-   //return std::tmpnam(nullptr);
-   char template_name[] = "tempfile_XXXXXX";
-   int mkstemp_file_descriptor = mkstemp(template_name);
-
-   if (mkstemp_file_descriptor == -1)
-   {
-       // Handle error, e.g., throw an exception or return an error code
-      Blast::Errors::throw_error(
-         "Blast::Testing::TemporaryFilenameCreator",
-         "When attempting to make a temp file"
-      );
-   }
-
-   // Close the file descriptor since we only needed it to create the file
-   close(mkstemp_file_descriptor);
-
-   return template_name;
+   static Blast::Random random(time(0)); // NOTE: Not sure how else to do this but with static
+   return Blast::TimeStamper().generate_now_timestamp_utc() + "_" + random.get_random_string(26);
 }
 
 std::string TemporaryFilenameCreator::create_filename_within_guaranteed_unique_directory()

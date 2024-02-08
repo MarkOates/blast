@@ -380,7 +380,8 @@
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/TimeStamper": [
-    "Blast/Project/SourceReleaseBuilder"
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Testing/TemporaryFilenameCreator"
   ],
   "Blast/ReleaseInfoBuilder": [
     "Blast/Project/SourceReleaseBuilder"
@@ -516,13 +517,16 @@
   "filesystem": [
     "Blast/Testing/TemporaryDirectoryCreator"
   ],
-  "mkstemp": [
+  "std/tmpnam": [
     "Blast/Testing/TemporaryFilenameCreator"
   ],
   "close": [
     "Blast/Testing/TemporaryFilenameCreator"
   ],
   "Blast/Testing/TemporaryDirectoryCreator": [
+    "Blast/Testing/TemporaryFilenameCreator"
+  ],
+  "Blast/Random": [
     "Blast/Testing/TemporaryFilenameCreator"
   ],
   "std/any_of": [

@@ -3256,7 +3256,7 @@ table td
 </div>    <h3>Dependencies</h3>
 <div class="property-box dependencies">     <table>
 <tr>
-  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;mkstemp&quot;, &quot;headers&quot;=&gt;[&quot;cstdio&quot;]}</td>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::tmpnam&quot;, &quot;headers&quot;=&gt;[&quot;cstdio&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;close&quot;, &quot;headers&quot;=&gt;[&quot;unistd.h&quot;]}</td>
@@ -3266,6 +3266,12 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Errors&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Errors.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Random&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Random.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::TimeStamper&quot;, &quot;headers&quot;=&gt;[&quot;Blast/TimeStamper.hpp&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -4691,7 +4697,8 @@ table td
     "Blast/Project/SourceReleaseBuilder"
   ],
   "Blast/TimeStamper": [
-    "Blast/Project/SourceReleaseBuilder"
+    "Blast/Project/SourceReleaseBuilder",
+    "Blast/Testing/TemporaryFilenameCreator"
   ],
   "Blast/ReleaseInfoBuilder": [
     "Blast/Project/SourceReleaseBuilder"
@@ -4827,13 +4834,16 @@ table td
   "filesystem": [
     "Blast/Testing/TemporaryDirectoryCreator"
   ],
-  "mkstemp": [
+  "std/tmpnam": [
     "Blast/Testing/TemporaryFilenameCreator"
   ],
   "close": [
     "Blast/Testing/TemporaryFilenameCreator"
   ],
   "Blast/Testing/TemporaryDirectoryCreator": [
+    "Blast/Testing/TemporaryFilenameCreator"
+  ],
+  "Blast/Random": [
     "Blast/Testing/TemporaryFilenameCreator"
   ],
   "std/any_of": [

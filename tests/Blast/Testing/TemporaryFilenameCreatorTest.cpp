@@ -1,5 +1,6 @@
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include <Blast/Testing/TemporaryFilenameCreator.hpp>
 #include <filesystem>
@@ -17,6 +18,15 @@ TEST(Blast_Testing_TemporaryFilenameCreatorTest, create_filename__on_successive_
    std::string actual_first_value = temporary_filename_creator.create_filename();
    std::string actual_second_value = temporary_filename_creator.create_filename();
    EXPECT_NE(actual_first_value, actual_second_value);
+}
+
+
+TEST(Blast_Testing_TemporaryFilenameCreatorTest, create_filename__will_create_filenames_in_the_expected_format)
+{
+   Blast::Testing::TemporaryFilenameCreator temporary_filename_creator;
+   std::string filename = temporary_filename_creator.create_filename();
+   // Example format: "240208022635UTC_H5lgJGjDb4CbpBCdS0EjUKU0kz"
+   EXPECT_THAT(filename, ::testing::MatchesRegex("^[0-9]{12}UTC_[a-zA-Z0-9]{26}$"));
 }
 
 
