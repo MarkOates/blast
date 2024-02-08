@@ -10,6 +10,23 @@
 
 #define PROPERTY_DELIMITER ": "
 
+//cd ~/Repos/me
+//git add programming_logs[>.log.txt
+
+
+
+
+#define TERMINAL_COLOR_YELLOW "\033[1;33m"
+#define TERMINAL_COLOR_RED "\033[1;31m"
+#define TERMINAL_COLOR_GRAY "\033[1;37m"
+#define TERMINAL_COLOR_DARK_GRAY "\033[1;30m"
+#define TERMINAL_COLOR_GREEN "\033[1;32m"
+#define TERMINAL_COLOR_BLUE "\033[1;34m"
+#define TERMINAL_COLOR_LIGHT_BLUE "\033[1;94m"
+#define TERMINAL_COLOR_RESET "\033[0m"
+
+
+
 
 using NcursesArt::GithubRepoStatusFetcher;
 
@@ -43,6 +60,11 @@ public:
       , num_remote_branches(-1)
       , fetcher(repo_name, repo_base_directory)
    {}
+
+   std::string get_repo_base_directory()
+   {
+      return repo_base_directory;
+   }
 
    std::string get_repo_name()
    {
@@ -95,6 +117,58 @@ public:
       num_local_branches = fetcher.get_branch_count();
       has_no_staged_files = (fetcher.get_current_staged_files().size() == 0);
       num_remote_branches = fetcher.get_branch_count_at_remote();
+   }
+};
+
+
+#include <sstream>
+class ProgrammingLogsAutoSynchronizer
+{
+private:
+   ProjectStatus project_status;
+
+public:
+   ProgrammingLogsAutoSynchronizer(std::string repo_base_directory)
+      : project_status("me", repo_base_directory)
+   {
+   }
+
+   void process()
+   {
+      std::cout << "Synchronizing programming logs" << std::endl;
+      std::cout << "  - Pre-fetching \"me\" repo status" << std::endl;
+      project_status.process();
+
+      if (!project_status.get_in_sync())
+      {
+         if (
+                  project_status.get_has_no_changed_files()
+               && project_status.get_has_no_staged_files()
+               && project_status.get_has_no_untracked_files()
+            )
+         {
+            // Project is out of sync and clean
+            // TODO: "git pull" here
+         }
+      }
+
+      if (!project_status.get_in_sync())
+      {
+         std::stringstream command;
+         command << TERMINAL_COLOR_BLUE << std::endl;
+         command << "programs/status/ProgrammingLogsAutoSynchronizer: error: Me is not in sync. Consider the following command:" << std::endl;
+         command << "======================" << std::endl;
+         command << "cd " << project_status.get_repo_base_directory() << "me" << std::endl;
+         command << "git reset" << std::endl;
+         command << "git pull" << std::endl;
+         command << "git add programming_logs/*.log.txt" << std::endl;
+         command << "git commit -m \"+programming logs\"" << std::endl;
+         command << "git push" << std::endl;
+         command << "======================" << std::endl;
+         command << TERMINAL_COLOR_RESET << std::endl;
+
+         throw std::runtime_error(command.str());
+      }
    }
 };
 
@@ -166,17 +240,6 @@ std::string get_hostname()
 {
    return HostnameExtractor().get_computer_name();
 }
-
-
-
-#define TERMINAL_COLOR_YELLOW "\033[1;33m"
-#define TERMINAL_COLOR_RED "\033[1;31m"
-#define TERMINAL_COLOR_GRAY "\033[1;37m"
-#define TERMINAL_COLOR_DARK_GRAY "\033[1;30m"
-#define TERMINAL_COLOR_GREEN "\033[1;32m"
-#define TERMINAL_COLOR_BLUE "\033[1;34m"
-#define TERMINAL_COLOR_LIGHT_BLUE "\033[1;94m"
-#define TERMINAL_COLOR_RESET "\033[0m"
 
 
 
@@ -309,6 +372,11 @@ std::string create_output_report()
 int main(int argc, char **argv)
 {
    std::string base_dir = REPOS_BASE_DIR;
+
+
+   //ProgrammingLogsAutoSynchronizer programming_logs_auto_synchronizer(base_dir);
+   //programming_logs_auto_synchronizer.process();
+
 
    projects = {
       //{ "Adventures of Beary",  { false, ProjectStatus("adventures-of-beary") } },
