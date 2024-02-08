@@ -608,6 +608,19 @@ std::string get_gcloud_version()
 }
 
 
+std::string get_ngrok_version()
+{
+   std::string command = "ngrok -v";
+
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
+
 std::string get_gcloud_current_project_in_config()
 {
    std::string command = "gcloud config get-value project";
@@ -873,6 +886,14 @@ bool run_gcloud_presence_test()
    last_test_result = new TestResultMatcher("^Google Cloud SDK [0-9]+\\.[0-9]+\\.[0-9]+", get_gcloud_version());
    return last_test_result->assessment();
 }
+
+
+bool run_ngrok_presence_test()
+{
+   last_test_result = new TestResultMatcher("^ngrok version [0-9]+\\.[0-9]+\\.[0-9]+", get_ngrok_version());
+   return last_test_result->assessment();
+}
+
 
 
 bool run_gcloud_project_status_test()
@@ -1154,13 +1175,7 @@ TEST(SystemTest, vimbackup_folder_exists_run_mkdir_vimbackup_to_create)
 
 TEST(SystemTest, ngrok_is_present_on_the_system)
 {
-   std::string symlink_check_command = "ngrok -v";
-   Blast::ShellCommandExecutorWithCallback executor("ngrok -v", command_callback);
-
-   std::string expected_output = "ngrok version 3.1.1";
-   std::string actual_output = trim(executor.execute());
-
-   EXPECT_EQ(expected_output, actual_output);
+   EXPECT_EQ(true, run_ngrok_presence_test()) << "Test: ngrok does not appear to be installed on the system (\"ngrok -v\"). Check https://dashboard.ngrok.com/get-started/setup/macos for instructions on how to install with homebrew.";
 }
 
 
