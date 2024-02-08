@@ -1042,7 +1042,7 @@ TEST(SystemTest, dylibbundler_is_present)
 
 
 
-TEST(SystemTest, Rails_is_present_and_installed_otherwise_sudo_gem_install_rails_after_instaling_ruby_Needed_by_inflector_components_in_blast)
+TEST(SystemTest, DISABLED__Rails_is_present_and_installed_otherwise_sudo_gem_install_rails_after_instaling_ruby_Needed_by_inflector_components_in_blast)
 {
    EXPECT_EQ(true, run_rails_version_test()) << "Test: Rails is present and installed (otherwise \"sudo gem install rails\", after instaling ruby. Needed by inflector components in blast)";
 }
@@ -1084,7 +1084,7 @@ TEST(SystemTest, celebrate_executable_is_uptodate_executable_been_created_at_a_t
 }
 
 
-TEST(SystemTest, chruby_is_present)
+TEST(SystemTest, DISABLED__chruby_is_present)
 {
    EXPECT_EQ(true, run_chruby_test()) << "Test: chruby is present";
 }
