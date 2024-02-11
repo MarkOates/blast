@@ -402,6 +402,7 @@ int main(int argc, char **argv)
       { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21", base_dir) } },
       { ".dotfiles",        { false, ProjectStatus(".dotfiles", base_dir) } },
       { "DragonWrath",      { false, ProjectStatus("DragonWrath", base_dir) } },
+      { "SomePlatformer",      { false, ProjectStatus("SomePlatformer", base_dir) } },
       { "AssetForgeCustomBlocks",      { false, ProjectStatus("AssetForgeCustomBlocks", base_dir) } },
       { "ChatGPT",      { false, ProjectStatus("ChatGPT", base_dir) } },
       { "KrampusReturns",      { false, ProjectStatus("KrampusReturns", base_dir) } },
