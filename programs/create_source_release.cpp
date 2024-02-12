@@ -126,6 +126,9 @@ int main(int argc, char **argv)
       std::string released_version_number = source_release_builder.get_released_version_string();
       std::string generated_release_folder_name = source_release_builder.get_generated_release_folder_name();
       std::string generated_source_release_zip_filename = source_release_builder.get_generated_source_release_zip_filename();
+      //std::string released_version_number = "1.2.3";
+      //std::string generated_release_folder_name = "ReleaseFolderName";
+      //std::string generated_source_release_zip_filename = "foobar-1.2.3.zip";
       std::stringstream command_to_make_macos_release;
          command_to_make_macos_release << "make macos_release RELEASE_PROJECT_NAME=" << project_name << " RELEASE_VERSION_NUMBER=" << released_version_number << " RELEASE_FOLDER_NAME=" << generated_release_folder_name;
       std::stringstream command_to_make_win64_release;
@@ -162,12 +165,20 @@ int main(int argc, char **argv)
       success_message << std::endl;
       success_message << std::endl;
       success_message << "===============================================" << std::endl;
-      success_message << "==          Create Binary Releases           ==" << std::endl;
+      success_message << "==                Next Steps                 ==" << std::endl;
       success_message << "===============================================" << std::endl;
       success_message << std::endl;
-      success_message << "   Command to make MacOS release: \"" << command_to_make_macos_release.str() << "\"" << std::endl;
-      success_message << "   Command to make Win64 release: \"" << command_to_make_win64_release.str() << "\"" << std::endl;
+      success_message << "Command to upload to gcloud:" << std::endl;
+      success_message << CONSOLE_COLOR_YELLOW << "gcloud storage cp ~/Releases/" << generated_source_release_zip_filename << " gs://clubcatt-games-bucket/" << CONSOLE_COLOR_CYAN << std::endl;
       success_message << std::endl;
+      success_message << "Command to make MacOS release:" << std::endl;
+      success_message << CONSOLE_COLOR_GREEN << "" << command_to_make_macos_release.str() << CONSOLE_COLOR_CYAN << std::endl;
+      success_message << std::endl;
+      success_message << "Command to make Win64 release:" << std::endl;
+      success_message << CONSOLE_COLOR_GREEN << "" << command_to_make_win64_release.str() << CONSOLE_COLOR_CYAN << std::endl;
+      success_message << std::endl;
+      success_message << std::endl;
+
       std::cout << CONSOLE_COLOR_CYAN << success_message.str() << CONSOLE_COLOR_DEFAULT << std::endl;
    }
 
