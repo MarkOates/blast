@@ -117,7 +117,17 @@ class DocCreator
     result += "<ul>\n"
     result += "  <div class=\"component\">\n"
     result += "    <h3 id=\"#{filename}\">#{filename}</h3>\n"
-    result += "    <h4>Overview<h4>\n"
+
+    inline_documentation = yaml['documentation']
+    if inline_documentation.nil?
+      result += "    <p>(This component does not include supplementary documentation)</p>\n"
+    else
+      result += "    <h3>overview</h3>\n"
+      inline_documentation.each do |entry|
+        result += "    <p>#{entry}</p>"
+      end
+    end
+
 
     result += "    <h3>Properties</h3>\n"
 
