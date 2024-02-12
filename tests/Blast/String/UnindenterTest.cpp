@@ -35,3 +35,28 @@ std::string expected = R"END(
 }
 
 
+TEST(Blast_String_UnindenterTest, indent__will_add_spaces_to_the_front_of_each_line)
+{
+std::string source = R"END(
+   Foo
+   Bar
+      Baz
+         Boz
+   Biz
+)END";
+
+   Blast::String::Unindenter unindenter(source);
+   std::string actual = unindenter.indent(3);
+
+std::string expected = R"END(
+      Foo
+      Bar
+         Baz
+            Boz
+      Biz
+)END";
+
+   EXPECT_EQ(expected, actual);
+}
+
+
