@@ -166,6 +166,7 @@ endif
 # NCURSES
 
 # To use NCURSES, add "USING_NCURSES=TRUE" to your ProjectMakefile
+# TODO: Fix "USING_NCURSES=FALSE" that will still evaluate to "ifdef USING_NCURSES"
 
 ifdef USING_NCURSES
 	ifeq ($(OS),Windows_NT)

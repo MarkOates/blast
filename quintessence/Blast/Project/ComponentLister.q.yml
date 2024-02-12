@@ -7,7 +7,7 @@ properties:
     constructor_arg: true
 
 
-functions:
+methods:
 
 
   - name: get_component_fragment_folder_name
