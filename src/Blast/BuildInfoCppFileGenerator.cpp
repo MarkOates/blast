@@ -3,6 +3,7 @@
 #include <Blast/BuildInfoCppFileGenerator.hpp>
 
 #include <Blast/Cpp/ClassGenerator.hpp>
+#include <Blast/String/Unindenter.hpp>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -147,7 +148,7 @@ std::vector<Blast::Cpp::ClassAttributes> BuildInfoCppFileGenerator::build_cpp_cl
 
 Blast::Cpp::Function BuildInfoCppFileGenerator::build_get_cpp_version_function()
 {
-   std::string body = R"END(std::string result = "unknown C++ version";
+   std::string body = R"END(   std::string result = "unknown C++ version";
    #if __cplusplus == 199711L
        result = "C++98";
    #elif __cplusplus == 201103L
@@ -160,6 +161,9 @@ Blast::Cpp::Function BuildInfoCppFileGenerator::build_get_cpp_version_function()
        result = "C++20";
    #endif
    return result;)END";
+
+   body = Blast::String::Unindenter(body).remove_spaces_at_beginning();
+
    return Blast::Cpp::Function(
          "std::string", //type
          "get_cpp_version_string", // name

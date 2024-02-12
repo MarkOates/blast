@@ -137,7 +137,7 @@ functions:
   - name: build_get_cpp_version_function
     type: Blast::Cpp::Function
     body: |
-      std::string body = R"END(std::string result = "unknown C++ version";
+      std::string body = R"END(   std::string result = "unknown C++ version";
       #if __cplusplus == 199711L
           result = "C++98";
       #elif __cplusplus == 201103L
@@ -150,6 +150,9 @@ functions:
           result = "C++20";
       #endif
       return result;)END";
+
+      body = Blast::String::Unindenter(body).remove_spaces_at_beginning();
+
       return Blast::Cpp::Function(
             "std::string", //type
             "get_cpp_version_string", // name
@@ -157,6 +160,8 @@ functions:
             body, // body
             true // is_static
          );
+    body_dependency_symbols:
+      - Blast::String::Unindenter
 
 
   - name: build_cpp_class_attribute
@@ -264,5 +269,7 @@ dependencies:
     headers: [ Blast/Cpp/SymbolDependencies.hpp ]
   - symbol: Blast::BuildInfo
     headers: [ Blast/BuildInfo.hpp ]
+  - symbol: Blast::String::Unindenter
+    headers: [ Blast/String/Unindenter.hpp ]
 
 
