@@ -17,22 +17,22 @@ std::string find_project_basenames_command = std::string("find ./src/* | sed 's/
 class ObjectSrcComponents
 {
 private:
-   std::string basename;
+   std::string component_basename;
    std::string project_name;
 
 public:
-   ObjectSrcComponents(std::string basename, std::string project_name)
-      : basename(basename)
+   ObjectSrcComponents(std::string component_basename, std::string project_name)
+      : component_basename(component_basename)
       , project_name(project_name)
    {}
-   std::string get_source_filename() { return std::string("src/") + basename + ".cpp"; }
-   std::string get_include_filename() { return std::string("include/") + project_name + "/" + basename + ".cpp"; }
-   std::string get_test_src_filename() { return std::string("tests/") + basename + "Test"; }
-   std::string get_example_src_filename() { return std::string("examples/") + basename + "Example.cpp"; }
+   std::string get_source_filename() { return std::string("src/") + component_basename + ".cpp"; }
+   std::string get_include_filename() { return std::string("include/") + project_name + "/" + component_basename + ".cpp"; }
+   std::string get_test_src_filename() { return std::string("tests/") + component_basename + "Test"; }
+   std::string get_example_src_filename() { return std::string("examples/") + component_basename + "Example.cpp"; }
 
-   std::string get_obj_binary() { return std::string("obj/") + basename + ".o"; }
-   std::string get_test_binary() { return std::string("bin/tests/") + basename + "Test"; }
-   std::string get_example_binary() { return std::string("bin/examples/") + basename + "Example"; }
+   std::string get_obj_binary() { return std::string("obj/") + component_basename + ".o"; }
+   std::string get_test_binary() { return std::string("bin/tests/") + component_basename + "Test"; }
+   std::string get_example_binary() { return std::string("bin/examples/") + component_basename + "Example"; }
 };
 
 
@@ -50,18 +50,18 @@ public:
 #define RUN_TEST "RUN_TEST"
 
 
-int get_row_for_basename(std::string basename)
+int get_row_for_basename(std::string component_basename)
 {
    Table &t = find_table("table");
    int row = 0;
    for (auto &rows : t.get_elements())
    {
-      if (rows[0] == basename) return row;
+      if (rows[0] == component_basename) return row;
       row++;
    }
 
    std::stringstream error_message;
-   error_message << "get_row_for_basename error: could not find row number for basename " << basename;
+   error_message << "get_row_for_basename error: could not find row number for component_basename " << component_basename;
    throw std::runtime_error(error_message.str());
 
    return -1;
