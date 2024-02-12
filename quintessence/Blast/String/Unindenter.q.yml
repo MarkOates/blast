@@ -36,8 +36,6 @@ methods:
          if (count < min_num_spaces) min_num_spaces = count;
       }
 
-      std::cout << "min_num_spaces" << min_num_spaces << std::endl;
-
       if (num_unindents > min_num_spaces)
       {
          // Consider if should be reduced to left edge
@@ -48,7 +46,6 @@ methods:
          {
             if (skip_blank_lines && line.empty()) continue;
 
-            std::cout << "   ---:" << line << std::endl;
             line = line.substr(num_unindents);
          }
       }

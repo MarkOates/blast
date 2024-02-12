@@ -54,8 +54,6 @@ std::string Unindenter::remove_spaces_at_beginning(std::size_t num_unindents)
       if (count < min_num_spaces) min_num_spaces = count;
    }
 
-   std::cout << "min_num_spaces" << min_num_spaces << std::endl;
-
    if (num_unindents > min_num_spaces)
    {
       // Consider if should be reduced to left edge
@@ -66,7 +64,6 @@ std::string Unindenter::remove_spaces_at_beginning(std::size_t num_unindents)
       {
          if (skip_blank_lines && line.empty()) continue;
 
-         std::cout << "   ---:" << line << std::endl;
          line = line.substr(num_unindents);
       }
    }
