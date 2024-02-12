@@ -66,6 +66,10 @@
     "Blast/BuildInfoCppFileGenerator",
     "Blast/ReleaseInfoCppFileGenerator"
   ],
+  "Blast/Cpp/Function": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/Cpp/EnumClass"
+  ],
   "Blast/Cpp/ClassGenerator": [
     "Blast/BuildInfoCppFileGenerator",
     "Blast/ReleaseInfoCppFileGenerator"
@@ -157,9 +161,6 @@
   "islower": [
     "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter"
-  ],
-  "Blast/Cpp/Function": [
-    "Blast/Cpp/EnumClass"
   ],
   "Blast/TemplatedFile": [
     "Blast/Cpp/EnumClass"

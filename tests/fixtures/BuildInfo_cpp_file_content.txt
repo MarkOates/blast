@@ -116,6 +116,10 @@ int BuildInfo::get_allegro_version_git_num_commits()
 }
 
 
+std::string BuildInfo::get_cpp_version_string()
+{
+   return "not-implemented";
+}
 
 
 

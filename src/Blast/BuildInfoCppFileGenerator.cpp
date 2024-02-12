@@ -69,10 +69,18 @@ Blast::Cpp::Class BuildInfoCppFileGenerator::build_cpp_class()
       {},
       build_cpp_class_attribute_properties(), // attribute_properties
       {}, // enum_classes
-      {}, // functions
+      build_cpp_class_functions(), // functions
       build_cpp_class_symbol_dependencies(), // symbol_dependencies
       {} // function_body_symbol_dependencies
    );
+}
+
+std::vector<Blast::Cpp::Function> BuildInfoCppFileGenerator::build_cpp_class_functions()
+{
+   std::vector<Blast::Cpp::Function> result = {
+      build_get_cpp_version_function()
+   };
+   return result;
 }
 
 std::vector<Blast::Cpp::ClassAttributes> BuildInfoCppFileGenerator::build_cpp_class_attribute_properties()
@@ -135,6 +143,18 @@ std::vector<Blast::Cpp::ClassAttributes> BuildInfoCppFileGenerator::build_cpp_cl
       ),
    };
    return result;
+}
+
+Blast::Cpp::Function BuildInfoCppFileGenerator::build_get_cpp_version_function()
+{
+   std::string body = "return \"not-implemented\";";
+   return Blast::Cpp::Function(
+         "std::string", //type
+         "get_cpp_version_string", // name
+         {}, // signature
+         body, // body
+         true // is_static
+      );
 }
 
 Blast::Cpp::ClassAttributes BuildInfoCppFileGenerator::build_cpp_class_attribute(std::string datatype, std::string variable_name, std::string initialization_value)

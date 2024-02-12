@@ -56,10 +56,19 @@ functions:
          {},
          build_cpp_class_attribute_properties(), // attribute_properties
          {}, // enum_classes
-         {}, // functions
+         build_cpp_class_functions(), // functions
          build_cpp_class_symbol_dependencies(), // symbol_dependencies
          {} // function_body_symbol_dependencies
       );
+
+
+  - name: build_cpp_class_functions
+    type: std::vector<Blast::Cpp::Function>
+    body: |
+      std::vector<Blast::Cpp::Function> result = {
+         build_get_cpp_version_function()
+      };
+      return result;
 
 
   - name: build_cpp_class_attribute_properties
@@ -123,6 +132,19 @@ functions:
          ),
       };
       return result;
+
+
+  - name: build_get_cpp_version_function
+    type: Blast::Cpp::Function
+    body: |
+      std::string body = "return \"not-implemented\";";
+      return Blast::Cpp::Function(
+            "std::string", //type
+            "get_cpp_version_string", // name
+            {}, // signature
+            body, // body
+            true // is_static
+         );
 
 
   - name: build_cpp_class_attribute
@@ -220,6 +242,8 @@ dependencies:
 
   - symbol: Blast::Cpp::Class
     headers: [ Blast/Cpp/Class.hpp ]
+  - symbol: Blast::Cpp::Function
+    headers: [ Blast/Cpp/Function.hpp ]
   - symbol: Blast::Cpp::ClassGenerator
     headers: [ Blast/Cpp/ClassGenerator.hpp ]
   - symbol: Blast::Cpp::ClassAttributes

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <head>
 <style>
+html
+{
+  background-color: #09090c;
+  color: #dfdfdf;
+}
 *
 {
   font-family: 'Arial';
@@ -12,16 +17,16 @@ table td
 }
 .property
 {
-  color: blue;
+  color: dodgerblue;
 }
 .private_property
 {
-  color: lightblue;
+  color: aliceblue;
 }
 
 .method
 {
-  color: red;
+  color: orange;
 }
 
 .private_method
@@ -31,14 +36,14 @@ table td
 
 .dependency
 {
-  color: green;
+  color: #9f9fa1;
 }
 
 .component
 {
   padding: 20 10 20 10;
   margin: 20 10 20 10;
-  background-color: #dfdfdf;
+  background-color: #1a1a1c;
 }
 
 .component h3
@@ -139,15 +144,18 @@ table td
   <li><a href="#quintessence/ncurses_art/Backends/Ncurses.q.yml">quintessence/ncurses_art/Backends/Ncurses.q.yml</a></li>
 </ul>
 <h1>Components</h1>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/ASCIICharacterRenderer.q.yml">quintessence/ASCIICharacterRenderer.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">draw_character(std::map&lt;char, std::vector&lt;std::string&gt;&gt; letters=&#39;a&#39;, char c=&#39;a&#39;, int x=0, int y=0)</td>
+  <td class="method">int</td>
+  <td class="method"><b>draw_character</b>(std::map&lt;char, std::vector&lt;std::string&gt;&gt; letters=&#39;a&#39;, char c=&#39;a&#39;, int x=0, int y=0)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -173,50 +181,63 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BinaryObfusicator.q.yml">quintessence/Blast/BinaryObfusicator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">run()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>run</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Build/Celebrator.q.yml">quintessence/Blast/Build/Celebrator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">generate_full_width_output_banner(std::string message=&quot;&quot;, int width=80, char fill_char=&#39;=&#39;, std::size_t num_leading_fill_characters=4)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_full_width_output_banner</b>(std::string message=&quot;&quot;, int width=80, char fill_char=&#39;=&#39;, std::size_t num_leading_fill_characters=4)</td>
 </tr>
 <tr>
-  <td class="method">generate_debug_banner(int width=80)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_debug_banner</b>(int width=80)</td>
 </tr>
 <tr>
-  <td class="method">generate_pass_banner(int width=80)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_pass_banner</b>(int width=80)</td>
 </tr>
 <tr>
-  <td class="method">generate_fail_banner(int width=80)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_fail_banner</b>(int width=80)</td>
 </tr>
 <tr>
-  <td class="method">build_patterned_line(int length=127)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_patterned_line</b>(int length=127)</td>
 </tr>
 <tr>
-  <td class="method">generate_component_built_banner(int width=80)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_component_built_banner</b>(int width=80)</td>
 </tr>
 <tr>
-  <td class="method">generate_built_banner(int width=80)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_built_banner</b>(int width=80)</td>
 </tr>
 <tr>
-  <td class="method">generate_synced_banner(int width=80)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_synced_banner</b>(int width=80)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -233,11 +254,13 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildInfo.q.yml">quintessence/Blast/BuildInfo.q.yml</h3>
-    <h4>Overview<h4>
-    <h3>Properties</h3>
+    <h3>Overview</h3>
+    <p>{"todos"=>["Consider adding c++ language version see https://learn.microsoft.com/en-us/cpp/build/reference/zc-cplusplus?view=msvc-170&viewFallbackFrom=vs-2019"]}</p>    <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
   <td class="property">time_of_build</td>
@@ -290,42 +313,54 @@ table td
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildInfoBuilder.q.yml">quintessence/Blast/BuildInfoBuilder.q.yml</h3>
-    <h4>Overview<h4>
-    <h3>Properties</h3>
+    <h3>Overview</h3>
+    <p>{"todo"=>["Note that the allegro version is obtained from the \"allegro5\" library. It's possible I may have built and installed allegro through a fork at MarkOates/allegro5, but there is currently no way to know if this is the version used to build."]}</p>    <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">build()</td>
+  <td class="method">Blast::BuildInfo</td>
+  <td class="method"><b>build</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_version_git_hash()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_version_git_hash</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_version_git_branch()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_version_git_branch</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_version_git_num_commits()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_allegro_version_git_num_commits</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_version_git_latest_commit_date_and_time()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_version_git_latest_commit_date_and_time</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">project_git_repo_active()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>project_git_repo_active</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">allegro_folder_exists()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>allegro_folder_exists</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">allegro_git_repo_active()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>allegro_git_repo_active</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">allegro_flare_folder_exists()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>allegro_flare_folder_exists</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">allegro_flare_git_repo_active()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>allegro_flare_git_repo_active</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -345,10 +380,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildInfoCppFileGenerator.q.yml">quintessence/Blast/BuildInfoCppFileGenerator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -367,40 +404,61 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">set_build_info(Blast::BuildInfo build_info={})</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_build_info</b>(Blast::BuildInfo build_info={})</td>
 </tr>
 <tr>
-  <td class="method">initialize()</td>
+  <td class="method">void</td>
+  <td class="method"><b>initialize</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_cpp_class()</td>
+  <td class="method">Blast::Cpp::Class</td>
+  <td class="method"><b>build_cpp_class</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_cpp_class_attribute_properties()</td>
+  <td class="method">std::vector&lt;Blast::Cpp::Function&gt;</td>
+  <td class="method"><b>build_cpp_class_functions</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_cpp_class_attribute(std::string datatype=&quot;std::string&quot;, std::string variable_name=&quot;variable&quot;, std::string initialization_value=&quot;variable&quot;)</td>
+  <td class="method">std::vector&lt;Blast::Cpp::ClassAttributes&gt;</td>
+  <td class="method"><b>build_cpp_class_attribute_properties</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_cpp_class_symbol_dependencies()</td>
+  <td class="method">Blast::Cpp::Function</td>
+  <td class="method"><b>build_get_cpp_version_function</b>()</td>
 </tr>
 <tr>
-  <td class="method">wrap_in_quotes(std::string str=&quot;&quot;)</td>
+  <td class="method">Blast::Cpp::ClassAttributes</td>
+  <td class="method"><b>build_cpp_class_attribute</b>(std::string datatype=&quot;std::string&quot;, std::string variable_name=&quot;variable&quot;, std::string initialization_value=&quot;variable&quot;)</td>
 </tr>
 <tr>
-  <td class="method">is_valid_datatype(std::string str=&quot;&quot;)</td>
+  <td class="method">std::vector&lt;Blast::Cpp::SymbolDependencies&gt;</td>
+  <td class="method"><b>build_cpp_class_symbol_dependencies</b>()</td>
 </tr>
 <tr>
-  <td class="method">header_file_content()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>wrap_in_quotes</b>(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">source_file_content()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_valid_datatype</b>(std::string str=&quot;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>header_file_content</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>source_file_content</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <div class="property-box dependencies">     <table>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::Class&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/Class.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::Function&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/Function.hpp&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Cpp::ClassGenerator&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Cpp/ClassGenerator.hpp&quot;]}</td>
@@ -417,10 +475,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/BuildFactory.q.yml">quintessence/Blast/BuildSystem/BuildFactory.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -431,10 +491,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">create_generic_build_for_testing()</td>
+  <td class="method">Blast::BuildSystem::Builds::Base*</td>
+  <td class="method"><b>create_generic_build_for_testing</b>()</td>
 </tr>
 <tr>
-  <td class="method">create_shell_command_build(std::string shell_command=&quot;echo \&quot;Having a good day?\&quot;&quot;)</td>
+  <td class="method">Blast::BuildSystem::Builds::Base*</td>
+  <td class="method"><b>create_shell_command_build</b>(std::string shell_command=&quot;echo \&quot;Having a good day?\&quot;&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -448,15 +510,18 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/BuildStageFactory.q.yml">quintessence/Blast/BuildSystem/BuildStageFactory.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">create_shell_command_build_stage(std::string shell_command=&quot;echo \&quot;Hi friend\&quot;&quot;)</td>
+  <td class="method">Blast::BuildSystem::BuildStages::ShellCommand*</td>
+  <td class="method"><b>create_shell_command_build_stage</b>(std::string shell_command=&quot;echo \&quot;Hi friend\&quot;&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -467,10 +532,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/BuildStageRenderer.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderer.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -481,7 +548,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">build_text_report()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_text_report</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -501,10 +569,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/BuildStageRenderers/Base.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderers/Base.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -519,10 +589,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_type</b>(std::string possible_type=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">render_text()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>render_text</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -536,10 +608,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/BuildStageRenderers/ShellCommand.q.yml">quintessence/Blast/BuildSystem/BuildStageRenderers/ShellCommand.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -554,7 +628,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">render_text()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>render_text</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -568,10 +643,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/BuildStages/Base.q.yml">quintessence/Blast/BuildSystem/BuildStages/Base.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -630,31 +707,40 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">get_status()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_status</b>()</td>
 </tr>
 <tr>
-  <td class="method">set_status(std::string status=&quot;[unset-status]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_status</b>(std::string status=&quot;[unset-status]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">get_started_at()</td>
+  <td class="method">std::chrono::high_resolution_clock::time_point</td>
+  <td class="method"><b>get_started_at</b>()</td>
 </tr>
 <tr>
-  <td class="method">set_started_at(std::chrono::high_resolution_clock::time_point started_at=)</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_started_at</b>(std::chrono::high_resolution_clock::time_point started_at=)</td>
 </tr>
 <tr>
-  <td class="method">get_ended_at()</td>
+  <td class="method">std::chrono::high_resolution_clock::time_point</td>
+  <td class="method"><b>get_ended_at</b>()</td>
 </tr>
 <tr>
-  <td class="method">set_ended_at(std::chrono::high_resolution_clock::time_point ended_at=)</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_ended_at</b>(std::chrono::high_resolution_clock::time_point ended_at=)</td>
 </tr>
 <tr>
-  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_type</b>(std::string possible_type=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">execute()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>execute</b>()</td>
 </tr>
 <tr>
-  <td class="method">calc_duration_seconds()</td>
+  <td class="method">double</td>
+  <td class="method"><b>calc_duration_seconds</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -668,10 +754,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/BuildStages/ShellCommand.q.yml">quintessence/Blast/BuildSystem/BuildStages/ShellCommand.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -694,7 +782,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">execute()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>execute</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -711,10 +800,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/Builds/Base.q.yml">quintessence/Blast/BuildSystem/Builds/Base.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -765,25 +856,32 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_type</b>(std::string possible_type=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">run()</td>
+  <td class="method">void</td>
+  <td class="method"><b>run</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_stage_executor(Blast::BuildSystem::BuildStages::Base* build_stage=nullptr)</td>
+  <td class="method">void</td>
+  <td class="method"><b>build_stage_executor</b>(Blast::BuildSystem::BuildStages::Base* build_stage=nullptr)</td>
 </tr>
 <tr>
-  <td class="method">run_all_in_parallel()</td>
+  <td class="method">void</td>
+  <td class="method"><b>run_all_in_parallel</b>()</td>
 </tr>
 <tr>
-  <td class="method">status_is(std::string possible_status=STATUS_UNDEFINED)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>status_is</b>(std::string possible_status=STATUS_UNDEFINED)</td>
 </tr>
 <tr>
-  <td class="method">finished_successfully()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>finished_successfully</b>()</td>
 </tr>
 <tr>
-  <td class="method">infer_duration_seconds()</td>
+  <td class="method">double</td>
+  <td class="method"><b>infer_duration_seconds</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -800,10 +898,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/ReportRenderer.q.yml">quintessence/Blast/BuildSystem/ReportRenderer.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -814,7 +914,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">build_text_report()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_text_report</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -828,10 +929,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/BuildSystem/ReportRenderers/Base.q.yml">quintessence/Blast/BuildSystem/ReportRenderers/Base.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -850,13 +953,16 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_type</b>(std::string possible_type=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">render_text()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>render_text</b>()</td>
 </tr>
 <tr>
-  <td class="method">colorize_status(std::string status=&quot;[unset-status]&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>colorize_status</b>(std::string status=&quot;[unset-status]&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -876,10 +982,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/CamelCaseToConstantConverter.q.yml">quintessence/Blast/CamelCaseToConstantConverter.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -890,7 +998,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">convert_to_constant()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>convert_to_constant</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -907,10 +1016,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml">quintessence/Blast/CamelCaseToUnderscoreConverter.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -921,7 +1032,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">convert_to_underscores()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>convert_to_underscores</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -938,11 +1050,13 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Cpp/EnumClass.q.yml">quintessence/Blast/Cpp/EnumClass.q.yml</h3>
-    <h4>Overview<h4>
-    <h3>Properties</h3>
+    <h3>Overview</h3>
+    <p>{"todos"=>["Rename \"elements\" to \"enumerators\", Update callers"]}</p>    <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
   <td class="property">name</td>
@@ -996,52 +1110,68 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">set_enumerators(std::vector&lt;std::string&gt; enumerators={})</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_enumerators</b>(std::vector&lt;std::string&gt; enumerators={})</td>
 </tr>
 <tr>
-  <td class="method">has_name()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>has_name</b>()</td>
 </tr>
 <tr>
-  <td class="method">set_scope(std::string scope=&quot;[unset-scope]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_scope</b>(std::string scope=&quot;[unset-scope]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">set_type(std::string type=&quot;[unset-type]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_type</b>(std::string type=&quot;[unset-type]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">set_start_from(int start_from=0)</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_start_from</b>(int start_from=0)</td>
 </tr>
 <tr>
-  <td class="method">set_enumerators_are_bitwise(bool enumerators_are_bitwise=false)</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_enumerators_are_bitwise</b>(bool enumerators_are_bitwise=false)</td>
 </tr>
 <tr>
-  <td class="method">has_type()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>has_type</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_private()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_private</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_protected()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_protected</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_public()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_public</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_to_string_method()</td>
+  <td class="method">Blast::Cpp::Function</td>
+  <td class="method"><b>build_to_string_method</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_to_string_method_body()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_to_string_method_body</b>()</td>
 </tr>
 <tr>
-  <td class="method">validate(std::string method_name=&quot;[unset-method_name]&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate</b>(std::string method_name=&quot;[unset-method_name]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">is_power_of_two(uint32_t n=0)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_power_of_two</b>(uint32_t n=0)</td>
 </tr>
 <tr>
-  <td class="method">validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(bool enumerators_are_bitwise=false, int start_from=false)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise</b>(bool enumerators_are_bitwise=false, int start_from=false)</td>
 </tr>
 <tr>
-  <td class="method">validate_elements_are_unique(std::vector&lt;std::string&gt; elements={})</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_elements_are_unique</b>(std::vector&lt;std::string&gt; elements={})</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1061,10 +1191,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Cpp/EnumClassFormatter.q.yml">quintessence/Blast/Cpp/EnumClassFormatter.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1075,13 +1207,16 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">build_enum_definition(int indent_num_spaces=3)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_enum_definition</b>(int indent_num_spaces=3)</td>
 </tr>
 <tr>
-  <td class="method">convert_to_bit_set_position(int n=0)</td>
+  <td class="method">int</td>
+  <td class="method"><b>convert_to_bit_set_position</b>(int n=0)</td>
 </tr>
 <tr>
-  <td class="method">output_nth_bit_as_hex_string(int n=0)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>output_nth_bit_as_hex_string</b>(int n=0)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1098,10 +1233,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Cpp/Function.q.yml">quintessence/Blast/Cpp/Function.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1167,10 +1304,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Cpp/FunctionBody.q.yml">quintessence/Blast/Cpp/FunctionBody.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1200,10 +1339,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Debugger/BreakpointInfo.q.yml">quintessence/Blast/Debugger/BreakpointInfo.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1221,10 +1362,12 @@ table td
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/DependencyHeadersSuggester.q.yml">quintessence/Blast/DependencyHeadersSuggester.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1235,19 +1378,24 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">generate_autofill_suggestion_for_symbol(std::string symbol=&quot;[unset-symbol]&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_autofill_suggestion_for_symbol</b>(std::string symbol=&quot;[unset-symbol]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">find_suggested_headers(std::string symbol=&quot;[unset-symbol]&quot;, bool autogenerate_a_header_if_one_is_not_present=true)</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>find_suggested_headers</b>(std::string symbol=&quot;[unset-symbol]&quot;, bool autogenerate_a_header_if_one_is_not_present=true)</td>
 </tr>
 <tr>
-  <td class="method">find_suggested_headers_csv(std::string symbol=&quot;[unset-symbol]&quot;, bool autogenerate_a_header_if_one_is_not_present=true)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>find_suggested_headers_csv</b>(std::string symbol=&quot;[unset-symbol]&quot;, bool autogenerate_a_header_if_one_is_not_present=true)</td>
 </tr>
 <tr>
-  <td class="method">get_default_suggested_symbol_headers()</td>
+  <td class="method">std::map&lt;std::string, std::vector&lt;std::string&gt;&gt;</td>
+  <td class="method"><b>get_default_suggested_symbol_headers</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">__replace(std::string str=&quot;source string&quot;, std::string from=&quot;source&quot;, std::string to=&quot;result&quot;)</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>__replace</b>(std::string str=&quot;source string&quot;, std::string from=&quot;source&quot;, std::string to=&quot;result&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1258,10 +1406,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/DependencySymbolAtomizer.q.yml">quintessence/Blast/DependencySymbolAtomizer.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1272,7 +1422,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">atomize()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>atomize</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1286,10 +1437,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/DeveloperSystem.q.yml">quintessence/Blast/DeveloperSystem.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1320,13 +1473,16 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">infer_base_directory()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>infer_base_directory</b>()</td>
 </tr>
 <tr>
-  <td class="method">infer_projects_directory()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>infer_projects_directory</b>()</td>
 </tr>
 <tr>
-  <td class="method">infer_builds_directory()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>infer_builds_directory</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1340,10 +1496,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/DirectoryCreator.q.yml">quintessence/Blast/DirectoryCreator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1358,7 +1516,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">create()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>create</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1384,10 +1543,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/DirectoryExistenceChecker.q.yml">quintessence/Blast/DirectoryExistenceChecker.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1398,7 +1559,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">exists()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>exists</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1412,27 +1574,33 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Errors.q.yml">quintessence/Blast/Errors.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">build_error_message(std::string from=&quot;[unset-from]&quot;, std::string message=&quot;[unset-message]&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_error_message</b>(std::string from=&quot;[unset-from]&quot;, std::string message=&quot;[unset-message]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">throw_error(std::string from=&quot;[unset-from]&quot;, std::string message=&quot;[unset-message]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>throw_error</b>(std::string from=&quot;[unset-from]&quot;, std::string message=&quot;[unset-message]&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/FileCreator.q.yml">quintessence/Blast/FileCreator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1447,10 +1615,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">create_if_not_exists()</td>
+  <td class="method">void</td>
+  <td class="method"><b>create_if_not_exists</b>()</td>
 </tr>
 <tr>
-  <td class="method">create_or_overwrite()</td>
+  <td class="method">void</td>
+  <td class="method"><b>create_or_overwrite</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1461,10 +1631,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/FileExistenceChecker.q.yml">quintessence/Blast/FileExistenceChecker.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1475,7 +1647,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">exists()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>exists</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1486,10 +1659,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/FileLastWriteTime.q.yml">quintessence/Blast/FileLastWriteTime.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1500,7 +1675,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">last_write_time()</td>
+  <td class="method">std::time_t</td>
+  <td class="method"><b>last_write_time</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1514,10 +1690,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Inflector.q.yml">quintessence/Blast/Inflector.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1528,10 +1706,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">pluralize()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>pluralize</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_inflections_list()</td>
+  <td class="method">std::vector&lt;std::tuple&lt;std::string, std::string, std::regex_constants::syntax_option_type&gt;&gt;</td>
+  <td class="method"><b>build_inflections_list</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1548,10 +1728,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/ActionCreator.q.yml">quintessence/Blast/Project/ActionCreator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1566,10 +1748,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">generate_action_name_camel_case()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_action_name_camel_case</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">generate_action_name_identifier_constant()</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>generate_action_name_identifier_constant</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1580,10 +1764,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/Component.q.yml">quintessence/Blast/Project/Component.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1598,37 +1784,48 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">generate_full_path_test_binary_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_full_path_test_binary_filename</b>()</td>
 </tr>
 <tr>
-  <td class="method">list_existing_component_files()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>list_existing_component_files</b>()</td>
 </tr>
 <tr>
-  <td class="method">last_write_time()</td>
+  <td class="method">std::time_t</td>
+  <td class="method"><b>last_write_time</b>()</td>
 </tr>
 <tr>
-  <td class="method">check_fragment_file_last_write_time(std::string project_root=&quot;[unset-project_root]&quot;, std::string name=&quot;[unset-name]&quot;, Blast::ProjectComponentFileTypes::project_file_type_t fragment_type=Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE)</td>
+  <td class="method">std::time_t</td>
+  <td class="method"><b>check_fragment_file_last_write_time</b>(std::string project_root=&quot;[unset-project_root]&quot;, std::string name=&quot;[unset-name]&quot;, Blast::ProjectComponentFileTypes::project_file_type_t fragment_type=Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE)</td>
 </tr>
 <tr>
-  <td class="private_method">check_file_existence(Blast::ProjectComponentFileTypes::project_file_type_t type=Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE)</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>check_file_existence</b>(Blast::ProjectComponentFileTypes::project_file_type_t type=Blast::ProjectComponentFileTypes::QUINTESSENCE_FILE)</td>
 </tr>
 <tr>
-  <td class="method">exists()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>exists</b>()</td>
 </tr>
 <tr>
-  <td class="method">has_quintessence()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>has_quintessence</b>()</td>
 </tr>
 <tr>
-  <td class="method">has_only_source_and_header()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>has_only_source_and_header</b>()</td>
 </tr>
 <tr>
-  <td class="method">has_test()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>has_test</b>()</td>
 </tr>
 <tr>
-  <td class="method">has_documentation()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>has_documentation</b>()</td>
 </tr>
 <tr>
-  <td class="method">read_symlinks()</td>
+  <td class="method">std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;</td>
+  <td class="method"><b>read_symlinks</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1666,10 +1863,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/ComponentBasenameExtractor.q.yml">quintessence/Blast/Project/ComponentBasenameExtractor.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1680,13 +1879,16 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">identify_file_type()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>identify_file_type</b>()</td>
 </tr>
 <tr>
-  <td class="method">identify_component_basename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>identify_component_basename</b>()</td>
 </tr>
 <tr>
-  <td class="method">extract_component()</td>
+  <td class="method">std::pair&lt;std::string, std::string&gt;</td>
+  <td class="method"><b>extract_component</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1697,27 +1899,33 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/ComponentCreator.q.yml">quintessence/Blast/Project/ComponentCreator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">get_quintessence_file_default_content()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_quintessence_file_default_content</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/ComponentDependencyLister.q.yml">quintessence/Blast/Project/ComponentDependencyLister.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1728,10 +1936,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">list_component_dependency_names()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>list_component_dependency_names</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">get_component_quintessence_full_filename()</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>get_component_quintessence_full_filename</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1766,10 +1976,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/ComponentLister.q.yml">quintessence/Blast/Project/ComponentLister.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1780,19 +1992,24 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="private_method">get_component_fragment_folder_name(Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>get_component_fragment_folder_name</b>(Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
 </tr>
 <tr>
-  <td class="private_method">get_component_fragment_extension(Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>get_component_fragment_extension</b>(Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
 </tr>
 <tr>
-  <td class="private_method">get_components_of_fragment_type(std::string project_root_directory=&quot;&quot;, Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
+  <td class="private_method">std::vector&lt;std::string&gt;</td>
+  <td class="private_method"><b>get_components_of_fragment_type</b>(std::string project_root_directory=&quot;&quot;, Blast::Project::component_fragment_t component_fragment=COMPONENT_FRAGMENT_TYPE_UNDEFINED)</td>
 </tr>
 <tr>
-  <td class="method">components_sorted_by_most_recent()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>components_sorted_by_most_recent</b>()</td>
 </tr>
 <tr>
-  <td class="method">components()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>components</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1827,10 +2044,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/ComponentRelativeLister.q.yml">quintessence/Blast/Project/ComponentRelativeLister.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1841,7 +2060,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">list_component_relative_names()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>list_component_relative_names</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1867,10 +2087,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/HardCodedPathInfrencer.q.yml">quintessence/Blast/Project/HardCodedPathInfrencer.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1881,16 +2103,20 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">get_git_command()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_git_command</b>()</td>
 </tr>
 <tr>
-  <td class="method">check_for_hard_coded_paths()</td>
+  <td class="method">std::pair&lt;bool, std::vector&lt;std::string&gt;&gt;</td>
+  <td class="method"><b>check_for_hard_coded_paths</b>()</td>
 </tr>
 <tr>
-  <td class="method">trim_each(std::vector&lt;std::string&gt; tokens={})</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>trim_each</b>(std::vector&lt;std::string&gt; tokens={})</td>
 </tr>
 <tr>
-  <td class="private_method">remove_empty(std::vector&lt;std::string&gt; strVector={})</td>
+  <td class="private_method">std::vector&lt;std::string&gt;</td>
+  <td class="private_method"><b>remove_empty</b>(std::vector&lt;std::string&gt; strVector={})</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1910,10 +2136,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/ProgramLister.q.yml">quintessence/Blast/Project/ProgramLister.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1924,10 +2152,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">build_program_lister_shell_command()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_program_lister_shell_command</b>()</td>
 </tr>
 <tr>
-  <td class="method">program_filenames()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>program_filenames</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -1944,10 +2174,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/ProjectSymlinkFixer.q.yml">quintessence/Blast/Project/ProjectSymlinkFixer.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -1962,22 +2194,28 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="private_method">starts_with(std::string source=&quot;&quot;, std::string string_to_find=&quot;&quot;)</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>starts_with</b>(std::string source=&quot;&quot;, std::string string_to_find=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">has_one_line(std::string filename=&quot;&quot;)</td>
+  <td class="method">int</td>
+  <td class="method"><b>has_one_line</b>(std::string filename=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">read_file_firstline(std::string filename=&quot;&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>read_file_firstline</b>(std::string filename=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">likely_an_intended_symlink(std::string filename=&quot;&quot;, std::string string_to_find=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>likely_an_intended_symlink</b>(std::string filename=&quot;&quot;, std::string string_to_find=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">read_symlink(std::string filename=&quot;&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>read_symlink</b>(std::string filename=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">run()</td>
+  <td class="method">void</td>
+  <td class="method"><b>run</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2009,10 +2247,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/SourceReleaseAppInfoFile.q.yml">quintessence/Blast/Project/SourceReleaseAppInfoFile.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2031,16 +2271,20 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">app_icon_filename_is_default()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>app_icon_filename_is_default</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_contents()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_contents</b>()</td>
 </tr>
 <tr>
-  <td class="method">load_contents(std::string raw_contents=&quot;[unset-raw_contents]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>load_contents</b>(std::string raw_contents=&quot;[unset-raw_contents]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">trim_each(std::vector&lt;std::string&gt; tokens={})</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>trim_each</b>(std::vector&lt;std::string&gt; tokens={})</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2063,10 +2307,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/SourceReleaseBuilder.q.yml">quintessence/Blast/Project/SourceReleaseBuilder.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2161,70 +2407,92 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">write_file_contents(std::string filename=&quot;&quot;, std::string file_contents=&quot;&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>write_file_contents</b>(std::string filename=&quot;&quot;, std::string file_contents=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">get_released_version_string()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_released_version_string</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_makefile_content()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_makefile_content</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_pinfo_content()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_pinfo_content</b>()</td>
 </tr>
 <tr>
-  <td class="method">read_contents_of_file(std::string filePath=&quot;[unset-filePath]&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>read_contents_of_file</b>(std::string filePath=&quot;[unset-filePath]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">copy_file(std::string source_filename=&quot;&quot;, std::string destination_filename=&quot;&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>copy_file</b>(std::string source_filename=&quot;&quot;, std::string destination_filename=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">get_release_info_header_file_contents()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_release_info_header_file_contents</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_release_info_source_file_contents()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_release_info_source_file_contents</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_build_info_header_file_contents()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_build_info_header_file_contents</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_build_info_source_file_contents()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_build_info_source_file_contents</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_project_appinfo_yaml_file_contents()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_project_appinfo_yaml_file_contents</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_source_release_app_info_file_contents()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_source_release_app_info_file_contents</b>()</td>
 </tr>
 <tr>
-  <td class="method">list_symlinks()</td>
+  <td class="method">std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;</td>
+  <td class="method"><b>list_symlinks</b>()</td>
 </tr>
 <tr>
-  <td class="method">fix_symlink_targets_from_relative_to_absolute(std::string folder=&quot;[unset-folder]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>fix_symlink_targets_from_relative_to_absolute</b>(std::string folder=&quot;[unset-folder]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">replace_symlinks_with_copies_of_linked_files()</td>
+  <td class="method">void</td>
+  <td class="method"><b>replace_symlinks_with_copies_of_linked_files</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_generated_source_release_zip_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_generated_source_release_zip_filename</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate_macos_release()</td>
+  <td class="method">void</td>
+  <td class="method"><b>generate_macos_release</b>()</td>
 </tr>
 <tr>
-  <td class="method">recursively_remove_folder_with_prompt(std::string folder_to_remove=&quot;/Users/markoates/Desktop/releases&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>recursively_remove_folder_with_prompt</b>(std::string folder_to_remove=&quot;/Users/markoates/Desktop/releases&quot;)</td>
 </tr>
 <tr>
-  <td class="method">generate_source_release()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>generate_source_release</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_top_level_folders_in_include(std::string directory=&quot;[unset-directory]&quot;)</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>get_top_level_folders_in_include</b>(std::string directory=&quot;[unset-directory]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">get_top_level_folders_in_src(std::string directory=&quot;[unset-directory]&quot;)</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>get_top_level_folders_in_src</b>(std::string directory=&quot;[unset-directory]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">get_top_level_folders(std::string directory=&quot;[unset-directory]&quot;)</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>get_top_level_folders</b>(std::string directory=&quot;[unset-directory]&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2304,10 +2572,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/SymlinkChecker.q.yml">quintessence/Blast/Project/SymlinkChecker.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2318,16 +2588,20 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">is_symlink()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_symlink</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_symlink__shell_call_impl()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_symlink__shell_call_impl</b>()</td>
 </tr>
 <tr>
-  <td class="method">read_symlink_target()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>read_symlink_target</b>()</td>
 </tr>
 <tr>
-  <td class="method">read_symlink_target__shell_call_impl()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>read_symlink_target__shell_call_impl</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2353,10 +2627,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Project/Win64ReleaseBuilder.q.yml">quintessence/Blast/Project/Win64ReleaseBuilder.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2371,10 +2647,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">build_full_path_to_win64_release_builder_script()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_full_path_to_win64_release_builder_script</b>()</td>
 </tr>
 <tr>
-  <td class="method">run()</td>
+  <td class="method">void</td>
+  <td class="method"><b>run</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2388,10 +2666,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/EnumClassParser.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2402,7 +2682,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">parse()</td>
+  <td class="method">Blast::Cpp::EnumClass</td>
+  <td class="method"><b>parse</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2419,10 +2700,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Quintessence/YAMLParsers/FunctionArgumentParser.q.yml">quintessence/Blast/Quintessence/YAMLParsers/FunctionArgumentParser.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2433,22 +2716,28 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">parse()</td>
+  <td class="method">Blast::Cpp::FunctionArgument</td>
+  <td class="method"><b>parse</b>()</td>
 </tr>
 <tr>
-  <td class="method">extract_default_argument_dependency_symbols(YAML::Node source={})</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>extract_default_argument_dependency_symbols</b>(YAML::Node source={})</td>
 </tr>
 <tr>
-  <td class="method">fetch_node(YAML::Node* node=nullptr, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, YAML::Node default_value={})</td>
+  <td class="method">YAML::Node</td>
+  <td class="method"><b>fetch_node</b>(YAML::Node* node=nullptr, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, YAML::Node default_value={})</td>
 </tr>
 <tr>
-  <td class="method">explode(std::string location=&quot;[unset-location]&quot;, std::string error_message=&quot;[unset-error_message]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>explode</b>(std::string location=&quot;[unset-location]&quot;, std::string error_message=&quot;[unset-error_message]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">validate(bool value=false, std::string location=&quot;[unset-location]&quot;, std::string error_message=&quot;[unset-error_message]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>validate</b>(bool value=false, std::string location=&quot;[unset-location]&quot;, std::string error_message=&quot;[unset-error_message]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">consolidate_default_value_dependency_symbols(std::vector&lt;Blast::Cpp::FunctionArgument&gt; function_arguments={})</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>consolidate_default_value_dependency_symbols</b>(std::vector&lt;Blast::Cpp::FunctionArgument&gt; function_arguments={})</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2468,10 +2757,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/RegexMatcher.q.yml">quintessence/Blast/RegexMatcher.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2498,16 +2789,20 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">set_regex_expression(std::string regex_expression=&quot;&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_regex_expression</b>(std::string regex_expression=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">set_options(std::vector&lt;std::regex_constants::syntax_option_type&gt; options={})</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_options</b>(std::vector&lt;std::regex_constants::syntax_option_type&gt; options={})</td>
 </tr>
 <tr>
-  <td class="method">compile()</td>
+  <td class="method">void</td>
+  <td class="method"><b>compile</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_match_info()</td>
+  <td class="method">std::vector&lt;std::pair&lt;int, int&gt;&gt;</td>
+  <td class="method"><b>get_match_info</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2539,11 +2834,13 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/ReleaseInfo.q.yml">quintessence/Blast/ReleaseInfo.q.yml</h3>
-    <h4>Overview<h4>
-    <h3>Properties</h3>
+    <h3>Overview</h3>
+    <p>{"todos"=>["Consider adding c++ language version see https://learn.microsoft.com/en-us/cpp/build/reference/zc-cplusplus?view=msvc-170&viewFallbackFrom=vs-2019", "Add blast version info as well"]}</p>    <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
   <td class="property">project_git_branch</td>
@@ -2677,10 +2974,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">set_project_version(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::set&lt;std::string&gt; version_number_labels={}, std::set&lt;std::string&gt; version_number_metadata={})</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_project_version</b>(int version_number_major=0, int version_number_minor=0, int version_number_patch=0, std::set&lt;std::string&gt; version_number_labels={}, std::set&lt;std::string&gt; version_number_metadata={})</td>
 </tr>
 <tr>
-  <td class="method">build_project_version_string()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_project_version_string</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2691,11 +2990,13 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/ReleaseInfoBuilder.q.yml">quintessence/Blast/ReleaseInfoBuilder.q.yml</h3>
-    <h4>Overview<h4>
-    <h3>Properties</h3>
+    <h3>Overview</h3>
+    <p>{"note"=>["Some \"release info\" is created at release time. See Blast/Project/SourceReleaseBuilder for additional data\nthat is added during that step. Note it may be a good idea to include it here. Specifically, in this class\nwe should be loading the \"version.yml\" file and assigning the data to the ReleaseInfo.\n"]}</p>    <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
   <td class="property">project_name</td>
@@ -2709,79 +3010,104 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">build()</td>
+  <td class="method">Blast::ReleaseInfo</td>
+  <td class="method"><b>build</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_project_git_hash()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_project_git_hash</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_project_git_branch()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_project_git_branch</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_project_git_num_commits()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_project_git_num_commits</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_project_git_latest_commit_date_and_time()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_project_git_latest_commit_date_and_time</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_version_git_hash()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_version_git_hash</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_version_git_branch()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_version_git_branch</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_version_git_num_commits()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_allegro_version_git_num_commits</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_version_git_latest_commit_date_and_time()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_version_git_latest_commit_date_and_time</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_flare_version_git_hash()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_flare_version_git_hash</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_flare_version_git_num_commits()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_allegro_flare_version_git_num_commits</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_flare_version_git_branch()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_flare_version_git_branch</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_allegro_flare_version_git_latest_commit_date_and_time()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_allegro_flare_version_git_latest_commit_date_and_time</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_blast_version_git_hash()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_blast_version_git_hash</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_blast_version_git_num_commits()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_blast_version_git_num_commits</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_blast_version_git_branch()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_blast_version_git_branch</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_blast_version_git_latest_commit_date_and_time()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_blast_version_git_latest_commit_date_and_time</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">project_folder()</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>project_folder</b>()</td>
 </tr>
 <tr>
-  <td class="method">project_name_is_valid()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>project_name_is_valid</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">project_folder_exists()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>project_folder_exists</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">project_git_repo_active()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>project_git_repo_active</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">allegro_folder_exists()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>allegro_folder_exists</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">allegro_git_repo_active()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>allegro_git_repo_active</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">allegro_flare_folder_exists()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>allegro_flare_folder_exists</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">allegro_flare_git_repo_active()</td>
+  <td class="private_method">bool</td>
+  <td class="private_method"><b>allegro_flare_git_repo_active</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2801,10 +3127,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/ReleaseInfoCppFileGenerator.q.yml">quintessence/Blast/ReleaseInfoCppFileGenerator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2823,34 +3151,44 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">set_release_info(Blast::ReleaseInfo release_info={})</td>
+  <td class="method">void</td>
+  <td class="method"><b>set_release_info</b>(Blast::ReleaseInfo release_info={})</td>
 </tr>
 <tr>
-  <td class="method">initialize()</td>
+  <td class="method">void</td>
+  <td class="method"><b>initialize</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_cpp_class()</td>
+  <td class="method">Blast::Cpp::Class</td>
+  <td class="method"><b>build_cpp_class</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_cpp_class_attribute_properties()</td>
+  <td class="method">std::vector&lt;Blast::Cpp::ClassAttributes&gt;</td>
+  <td class="method"><b>build_cpp_class_attribute_properties</b>()</td>
 </tr>
 <tr>
-  <td class="method">build_cpp_class_attribute(std::string datatype=&quot;std::string&quot;, std::string variable_name=&quot;variable&quot;, std::string initialization_value=&quot;variable&quot;)</td>
+  <td class="method">Blast::Cpp::ClassAttributes</td>
+  <td class="method"><b>build_cpp_class_attribute</b>(std::string datatype=&quot;std::string&quot;, std::string variable_name=&quot;variable&quot;, std::string initialization_value=&quot;variable&quot;)</td>
 </tr>
 <tr>
-  <td class="method">build_cpp_class_symbol_dependencies()</td>
+  <td class="method">std::vector&lt;Blast::Cpp::SymbolDependencies&gt;</td>
+  <td class="method"><b>build_cpp_class_symbol_dependencies</b>()</td>
 </tr>
 <tr>
-  <td class="method">wrap_in_quotes(std::string str=&quot;&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>wrap_in_quotes</b>(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">is_valid_datatype(std::string str=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_valid_datatype</b>(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">header_file_content()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>header_file_content</b>()</td>
 </tr>
 <tr>
-  <td class="method">source_file_content()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>source_file_content</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2873,10 +3211,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/ShellCommandExecutorWithCallback.q.yml">quintessence/Blast/ShellCommandExecutorWithCallback.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2907,13 +3247,16 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">simple_silent_callback(std::string string_for_appending=&quot;&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>simple_silent_callback</b>(std::string string_for_appending=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">simple_cout_callback(std::string string_for_appending=&quot;&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>simple_cout_callback</b>(std::string string_for_appending=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">execute()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>execute</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -2960,10 +3303,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/SimpleTextSearcher.q.yml">quintessence/Blast/SimpleTextSearcher.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -2978,19 +3323,23 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">would_be_included_in_results(std::string element=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>would_be_included_in_results</b>(std::string element=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">results()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>results</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/String/Trimmer.q.yml">quintessence/Blast/String/Trimmer.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3001,13 +3350,16 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">trim()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>trim</b>()</td>
 </tr>
 <tr>
-  <td class="private_method">ltrim(std::string s=&quot;&quot;)</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>ltrim</b>(std::string s=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="private_method">rtrim(std::string s=&quot;&quot;)</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>rtrim</b>(std::string s=&quot;&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3018,10 +3370,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/StringSplitter.q.yml">quintessence/Blast/StringSplitter.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3036,7 +3390,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">split()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>split</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3053,10 +3408,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/StringUpcaser.q.yml">quintessence/Blast/StringUpcaser.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3067,7 +3424,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">upcase()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>upcase</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3081,10 +3439,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/SystemInfo.q.yml">quintessence/Blast/SystemInfo.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3095,37 +3455,48 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">num_available_threads()</td>
+  <td class="method">uint32_t</td>
+  <td class="method"><b>num_available_threads</b>()</td>
 </tr>
 <tr>
-  <td class="method">num_available_threads_are_known()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>num_available_threads_are_known</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_processor_type()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_processor_type</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_sysname()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_sysname</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_apple_mac()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_apple_mac</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_microsoft_windows()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_microsoft_windows</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_version()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_version</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_release()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_release</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_hostname()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_hostname</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_machine()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_machine</b>()</td>
 </tr>
 <tr>
-  <td class="method">operating_system()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>operating_system</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3139,10 +3510,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/TaoTeChingQuoteGenerator.q.yml">quintessence/Blast/TaoTeChingQuoteGenerator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3153,10 +3526,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">pick_quote()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>pick_quote</b>()</td>
 </tr>
 <tr>
-  <td class="method">default_quotes_list()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>default_quotes_list</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3176,10 +3551,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/TemplatedFile.q.yml">quintessence/Blast/TemplatedFile.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3194,10 +3571,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="private_method">__replace(std::string str=&quot;source string&quot;, std::string from=&quot;source&quot;, std::string to=&quot;result&quot;)</td>
+  <td class="private_method">std::string</td>
+  <td class="private_method"><b>__replace</b>(std::string str=&quot;source string&quot;, std::string from=&quot;source&quot;, std::string to=&quot;result&quot;)</td>
 </tr>
 <tr>
-  <td class="method">generate_content()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_content</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3208,15 +3587,18 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Testing/TemporaryDirectoryCreator.q.yml">quintessence/Blast/Testing/TemporaryDirectoryCreator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">create(uint32_t max_tries=100000)</td>
+  <td class="method">std::filesystem::path</td>
+  <td class="method"><b>create</b>(uint32_t max_tries=100000)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3239,18 +3621,22 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/Testing/TemporaryFilenameCreator.q.yml">quintessence/Blast/Testing/TemporaryFilenameCreator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">create_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>create_filename</b>()</td>
 </tr>
 <tr>
-  <td class="method">create_filename_within_guaranteed_unique_directory()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>create_filename_within_guaranteed_unique_directory</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3276,15 +3662,18 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/TimeStamper.q.yml">quintessence/Blast/TimeStamper.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">generate_now_timestamp_utc()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_now_timestamp_utc</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3295,10 +3684,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/VersionYAMLLoaderEmitter.q.yml">quintessence/Blast/VersionYAMLLoaderEmitter.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3337,49 +3728,64 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">load()</td>
+  <td class="method">void</td>
+  <td class="method"><b>load</b>()</td>
 </tr>
 <tr>
-  <td class="method">save()</td>
+  <td class="method">void</td>
+  <td class="method"><b>save</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_major()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_major</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_minor()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_minor</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_patch()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_patch</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_labels()</td>
+  <td class="method">std::set&lt;std::string&gt;</td>
+  <td class="method"><b>get_labels</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_metadata()</td>
+  <td class="method">std::set&lt;std::string&gt;</td>
+  <td class="method"><b>get_metadata</b>()</td>
 </tr>
 <tr>
-  <td class="method">increment()</td>
+  <td class="method">void</td>
+  <td class="method"><b>increment</b>()</td>
 </tr>
 <tr>
-  <td class="method">validate_or_throw(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>validate_or_throw</b>(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">validate_or_throw_v(YAML::Node initial_node={}, std::vector&lt;std::string&gt; nested_keys={}, YAML::NodeType::value type=YAML::NodeType::Undefined)</td>
+  <td class="method">void</td>
+  <td class="method"><b>validate_or_throw_v</b>(YAML::Node initial_node={}, std::vector&lt;std::string&gt; nested_keys={}, YAML::NodeType::value type=YAML::NodeType::Undefined)</td>
 </tr>
 <tr>
-  <td class="method">validate_labels_format(std::set&lt;std::string&gt; labels={})</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_labels_format</b>(std::set&lt;std::string&gt; labels={})</td>
 </tr>
 <tr>
-  <td class="method">add_label(std::string label=&quot;[unset-label]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>add_label</b>(std::string label=&quot;[unset-label]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">add_metadata(std::string metadata_element=&quot;[unset-metadata_element]&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>add_metadata</b>(std::string metadata_element=&quot;[unset-metadata_element]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">is_valid_label(std::string label=&quot;[unset-label]&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_valid_label</b>(std::string label=&quot;[unset-label]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">build_project_version_string()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_project_version_string</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3408,36 +3814,46 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Blast/YAMLValidator.q.yml">quintessence/Blast/YAMLValidator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">validate_presence_of_key(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, bool throw_on_error=true)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_presence_of_key</b>(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, bool throw_on_error=true)</td>
 </tr>
 <tr>
-  <td class="method">validate_node_type(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=true)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_node_type</b>(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=true)</td>
 </tr>
 <tr>
-  <td class="method">validate_node_has_unsigned_int_value(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_node_has_unsigned_int_value</b>(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;)</td>
 </tr>
 <tr>
-  <td class="method">validate_elements_are_unique(std::vector&lt;std::string&gt; elements={})</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_elements_are_unique</b>(std::vector&lt;std::string&gt; elements={})</td>
 </tr>
 <tr>
-  <td class="method">yaml_node_type_as_string(YAML::NodeType::value node_type=YAML::NodeType::Undefined)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>yaml_node_type_as_string</b>(YAML::NodeType::value node_type=YAML::NodeType::Undefined)</td>
 </tr>
 <tr>
-  <td class="method">validate_unique_all_upper_identifiers(YAML::Node items={})</td>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_unique_all_upper_identifiers</b>(YAML::Node items={})</td>
 </tr>
 <tr>
-  <td class="method">get_type_string(YAML::Node* node_ptr=nullptr)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_type_string</b>(YAML::Node* node_ptr=nullptr)</td>
 </tr>
 <tr>
-  <td class="method">extract_sequence_as_string_array(YAML::Node source={})</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>extract_sequence_as_string_array</b>(YAML::Node source={})</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3460,43 +3876,52 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Checkbox.q.yml">quintessence/Checkbox.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">run()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>run</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/EpicDarkFont.q.yml">quintessence/EpicDarkFont.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">run()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>run</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/HostnameExtractor.q.yml">quintessence/HostnameExtractor.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">get_computer_name()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_computer_name</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3510,10 +3935,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml">quintessence/NcursesArt/GithubRepoStatusFetcher.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3588,85 +4015,112 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">local_repo_exists()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>local_repo_exists</b>()</td>
 </tr>
 <tr>
-  <td class="method">has_file_changes()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>has_file_changes</b>()</td>
 </tr>
 <tr>
-  <td class="method">has_untracked_files()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>has_untracked_files</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_the_repo_in_sync_with_remote()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_the_repo_in_sync_with_remote</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_the_local_repo_ahead()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_the_local_repo_ahead</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_the_local_repo_behind()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_the_local_repo_behind</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_clean()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_clean</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_current_hash()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_current_hash</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_branch_count()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_branch_count</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_current_branch_num_commits()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_current_branch_num_commits</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_latest_commit_date_and_time()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_latest_commit_date_and_time</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_branch_names_at_remote()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>get_branch_names_at_remote</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_branch_count_at_remote()</td>
+  <td class="method">int</td>
+  <td class="method"><b>get_branch_count_at_remote</b>()</td>
 </tr>
 <tr>
-  <td class="method">is_current_branch_master()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_current_branch_master</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_current_branch_name_command()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_current_branch_name_command</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_pull_command()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_pull_command</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_precheck_pull_has_no_conflicts_command()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_precheck_pull_has_no_conflicts_command</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_status_command()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_status_command</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_current_staged_files_command()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_current_staged_files_command</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_is_clean_command()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_is_clean_command</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_current_staged_files()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>get_current_staged_files</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_current_branch_name()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_current_branch_name</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_quintessence_filenames()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>get_quintessence_filenames</b>()</td>
 </tr>
 <tr>
-  <td class="method">have_the_local_and_remote_repos_diverged()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>have_the_local_and_remote_repos_diverged</b>()</td>
 </tr>
 <tr>
-  <td class="method">last_captured_output_from_status_request_contains_string(std::string string_to_find=)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>last_captured_output_from_status_request_contains_string</b>(std::string string_to_find=)</td>
 </tr>
 <tr>
-  <td class="method">poll_status()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>poll_status</b>()</td>
 </tr>
 <tr>
-  <td class="method">execute_command(std::string command=)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>execute_command</b>(std::string command=)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3695,10 +4149,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/NcursesArt/Rails/ComponentFilenameGenerator.q.yml">quintessence/NcursesArt/Rails/ComponentFilenameGenerator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3709,21 +4165,25 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">get_model_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_model_filename</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/OrigamiMommyFontLoader.q.yml">quintessence/OrigamiMommyFontLoader.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">load()</td>
+  <td class="method">std::map&lt;char, std::vector&lt;std::string&gt;&gt;</td>
+  <td class="method"><b>load</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3740,10 +4200,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/ProjectComponentBasenameExtractor.q.yml">quintessence/ProjectComponentBasenameExtractor.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3754,13 +4216,16 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">identify_file_type()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>identify_file_type</b>()</td>
 </tr>
 <tr>
-  <td class="method">identify_component_basename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>identify_component_basename</b>()</td>
 </tr>
 <tr>
-  <td class="method">extract_component()</td>
+  <td class="method">std::pair&lt;std::string, std::string&gt;</td>
+  <td class="method"><b>extract_component</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3771,10 +4236,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/ProjectFilenameGenerator.q.yml">quintessence/ProjectFilenameGenerator.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3789,37 +4256,47 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">generate_quintessence_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_quintessence_filename</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate_source_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_source_filename</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate_header_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_header_filename</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate_test_src_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_test_src_filename</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate_example_src_filename()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_example_src_filename</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate_obj_binary()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_obj_binary</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate_test_binary()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_test_binary</b>()</td>
 </tr>
 <tr>
-  <td class="method">generate_example_binary()</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>generate_example_binary</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/ProjectListBuilder.q.yml">quintessence/ProjectListBuilder.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3830,7 +4307,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">get_directories()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>get_directories</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3841,10 +4319,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Question.q.yml">quintessence/Question.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3870,10 +4350,12 @@ table td
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Quiz.q.yml">quintessence/Quiz.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3884,10 +4366,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">append_questions(std::vector&lt;Question&gt; new_questions=)</td>
+  <td class="method">void</td>
+  <td class="method"><b>append_questions</b>(std::vector&lt;Question&gt; new_questions=)</td>
 </tr>
 <tr>
-  <td class="method">shuffle_questions()</td>
+  <td class="method">void</td>
+  <td class="method"><b>shuffle_questions</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3910,10 +4394,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/QuizYAMLLoader.q.yml">quintessence/QuizYAMLLoader.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3928,10 +4414,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">load_and_append()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>load_and_append</b>()</td>
 </tr>
 <tr>
-  <td class="method">get_type_string(YAML::Node node=YAML::Node())</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_type_string</b>(YAML::Node node=YAML::Node())</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -3948,10 +4436,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Quizes/MultiplexQuestion.q.yml">quintessence/Quizes/MultiplexQuestion.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3981,10 +4471,12 @@ table td
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Quizes/MultiplexQuestionCollectionHelper.q.yml">quintessence/Quizes/MultiplexQuestionCollectionHelper.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -3995,10 +4487,12 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">select_with_dates()</td>
+  <td class="method">std::vector&lt;Quizes::MultiplexQuestion&gt;</td>
+  <td class="method"><b>select_with_dates</b>()</td>
 </tr>
 <tr>
-  <td class="method">select_with_relevance()</td>
+  <td class="method">std::vector&lt;Quizes::MultiplexQuestion&gt;</td>
+  <td class="method"><b>select_with_relevance</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -4012,10 +4506,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Quizes/MultiplexQuizRunner.q.yml">quintessence/Quizes/MultiplexQuizRunner.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -4026,31 +4522,40 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">initialize()</td>
+  <td class="method">void</td>
+  <td class="method"><b>initialize</b>()</td>
 </tr>
 <tr>
-  <td class="method">run()</td>
+  <td class="method">void</td>
+  <td class="method"><b>run</b>()</td>
 </tr>
 <tr>
-  <td class="method">format_for_quiz_yaml_date(std::vector&lt;Quizes::MultiplexQuestion&gt; questions={})</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>format_for_quiz_yaml_date</b>(std::vector&lt;Quizes::MultiplexQuestion&gt; questions={})</td>
 </tr>
 <tr>
-  <td class="method">format_for_quiz_yaml_relevance(std::vector&lt;Quizes::MultiplexQuestion&gt; questions={})</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>format_for_quiz_yaml_relevance</b>(std::vector&lt;Quizes::MultiplexQuestion&gt; questions={})</td>
 </tr>
 <tr>
-  <td class="method">write_file_contents(std::string filename=&quot;&quot;, std::string file_contents=&quot;&quot;)</td>
+  <td class="method">void</td>
+  <td class="method"><b>write_file_contents</b>(std::string filename=&quot;&quot;, std::string file_contents=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">get_file_contents(std::string filename=&quot;no-file.txt&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_file_contents</b>(std::string filename=&quot;no-file.txt&quot;)</td>
 </tr>
 <tr>
-  <td class="method">sanitize_quotes(std::string str=&quot;&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>sanitize_quotes</b>(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">split_trim_and_shuffle_by_semicolon(std::string str=&quot;&quot;)</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>split_trim_and_shuffle_by_semicolon</b>(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">trim(std::string str=&quot;&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>trim</b>(std::string str=&quot;&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -4088,10 +4593,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/Quizes/MultiplexSheetLoader.q.yml">quintessence/Quizes/MultiplexSheetLoader.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -4110,19 +4617,24 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">get_questions()</td>
+  <td class="method">std::vector&lt;Quizes::MultiplexQuestion&gt;</td>
+  <td class="method"><b>get_questions</b>()</td>
 </tr>
 <tr>
-  <td class="method">load()</td>
+  <td class="method">bool</td>
+  <td class="method"><b>load</b>()</td>
 </tr>
 <tr>
-  <td class="method">trim(std::string str=&quot;&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>trim</b>(std::string str=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">extract_subject(std::string event_or_document=&quot;[not-set]&quot;, std::string person_name_or_symbol=&quot;[not-set]&quot;, std::string subject_group=&quot;[not-set]&quot;, int line_number=0)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>extract_subject</b>(std::string event_or_document=&quot;[not-set]&quot;, std::string person_name_or_symbol=&quot;[not-set]&quot;, std::string subject_group=&quot;[not-set]&quot;, int line_number=0)</td>
 </tr>
 <tr>
-  <td class="method">extract_subject_type(std::string event_or_document=&quot;[not-set]&quot;, std::string person_name_or_symbol=&quot;[not-set]&quot;, std::string subject_group=&quot;[not-set]&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>extract_subject_type</b>(std::string event_or_document=&quot;[not-set]&quot;, std::string person_name_or_symbol=&quot;[not-set]&quot;, std::string subject_group=&quot;[not-set]&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -4148,18 +4660,22 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/SmallFontLoader.q.yml">quintessence/SmallFontLoader.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">sanitize_string(std::string unfiltered_phrase=&quot;&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>sanitize_string</b>(std::string unfiltered_phrase=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">load()</td>
+  <td class="method">std::map&lt;char, std::vector&lt;std::string&gt;&gt;</td>
+  <td class="method"><b>load</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -4176,10 +4692,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/StringSplitter.q.yml">quintessence/StringSplitter.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -4194,7 +4712,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">split()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>split</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -4208,10 +4727,12 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/StringVectorIntersection.q.yml">quintessence/StringVectorIntersection.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -4226,7 +4747,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">intersection()</td>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>intersection</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -4243,27 +4765,33 @@ table td
     </table>
 </div>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/VortexFontLoader.q.yml">quintessence/VortexFontLoader.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <p>This class contains no properties</p>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">sanitize_string(std::string unfiltered_phrase=&quot;&quot;)</td>
+  <td class="method">std::string</td>
+  <td class="method"><b>sanitize_string</b>(std::string unfiltered_phrase=&quot;&quot;)</td>
 </tr>
 <tr>
-  <td class="method">load()</td>
+  <td class="method">std::map&lt;char, std::vector&lt;std::string&gt;&gt;</td>
+  <td class="method"><b>load</b>()</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/ncurses_art/Backends/Base.q.yml">quintessence/ncurses_art/Backends/Base.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -4278,16 +4806,19 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">is_type(std::string possible_type=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>is_type</b>(std::string possible_type=&quot;&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
 <p>This class contains no dependencies</p>  </div>
 </ul>
+<br><br><br>
+<br><br><br>
 <ul>
   <div class="component">
     <h3 id="quintessence/ncurses_art/Backends/Ncurses.q.yml">quintessence/ncurses_art/Backends/Ncurses.q.yml</h3>
-    <h4>Overview<h4>
+    <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
 <div class="property-box properties">     <table>
 <tr>
@@ -4302,7 +4833,8 @@ table td
 </div>    <h3>Methods</h3>
 <div class="property-box methods">     <table>
 <tr>
-  <td class="method">property_is(std::string possible_type=&quot;&quot;)</td>
+  <td class="method">bool</td>
+  <td class="method"><b>property_is</b>(std::string possible_type=&quot;&quot;)</td>
 </tr>
     </table>
 </div>    <h3>Dependencies</h3>
@@ -4382,6 +4914,10 @@ table td
   "Blast/Cpp/Class": [
     "Blast/BuildInfoCppFileGenerator",
     "Blast/ReleaseInfoCppFileGenerator"
+  ],
+  "Blast/Cpp/Function": [
+    "Blast/BuildInfoCppFileGenerator",
+    "Blast/Cpp/EnumClass"
   ],
   "Blast/Cpp/ClassGenerator": [
     "Blast/BuildInfoCppFileGenerator",
@@ -4474,9 +5010,6 @@ table td
   "islower": [
     "Blast/CamelCaseToConstantConverter",
     "Blast/CamelCaseToUnderscoreConverter"
-  ],
-  "Blast/Cpp/Function": [
-    "Blast/Cpp/EnumClass"
   ],
   "Blast/TemplatedFile": [
     "Blast/Cpp/EnumClass"
