@@ -10,7 +10,7 @@ TEST(Blast_String_UnindenterTest, can_be_created_without_blowing_up)
 }
 
 
-TEST(Blast_String_UnindenterTest, remove_spaces_at_beginning__will_remove_spaces)
+TEST(Blast_String_UnindenterTest, unindent__will_remove_spaces)
 {
 std::string source = R"END(
    Foo
@@ -21,7 +21,7 @@ std::string source = R"END(
 )END";
 
    Blast::String::Unindenter unindenter(source);
-   std::string actual = unindenter.remove_spaces_at_beginning(2);
+   std::string actual = unindenter.unindent(2);
 
 std::string expected = R"END(
  Foo

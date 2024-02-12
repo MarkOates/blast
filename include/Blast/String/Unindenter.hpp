@@ -21,7 +21,7 @@ namespace Blast
          Unindenter(std::string content="[unset-content]");
          ~Unindenter();
 
-         std::string remove_spaces_at_beginning(std::size_t num_unindents=3);
+         std::string unindent(std::size_t num_unindents=2);
       };
    }
 }

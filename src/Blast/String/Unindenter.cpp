@@ -27,14 +27,14 @@ Unindenter::~Unindenter()
 }
 
 
-std::string Unindenter::remove_spaces_at_beginning(std::size_t num_unindents)
+std::string Unindenter::unindent(std::size_t num_unindents)
 {
    if (!((num_unindents >= 0)))
    {
       std::stringstream error_message;
-      error_message << "[Unindenter::remove_spaces_at_beginning]: error: guard \"(num_unindents >= 0)\" not met.";
+      error_message << "[Unindenter::unindent]: error: guard \"(num_unindents >= 0)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("Unindenter::remove_spaces_at_beginning: error: guard \"(num_unindents >= 0)\" not met");
+      throw std::runtime_error("Unindenter::unindent: error: guard \"(num_unindents >= 0)\" not met");
    }
    std::vector<std::string> lines = Blast::StringSplitter(content, '\n').split();
    bool skip_blank_lines = true;

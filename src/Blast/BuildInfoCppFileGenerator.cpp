@@ -162,7 +162,7 @@ Blast::Cpp::Function BuildInfoCppFileGenerator::build_get_cpp_version_function()
    #endif
    return result;)END";
 
-   body = Blast::String::Unindenter(body).remove_spaces_at_beginning();
+   body = Blast::String::Unindenter(body).unindent(3);
 
    return Blast::Cpp::Function(
          "std::string", //type

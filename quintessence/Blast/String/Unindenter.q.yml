@@ -10,12 +10,12 @@ properties:
 methods:
 
 
-  - name: remove_spaces_at_beginning
+  - name: unindent
     type: std::string
     parameters:
       - name: num_unindents
         type: std::size_t
-        default_argument: 3
+        default_argument: 2
     guards: [ (num_unindents >= 0) ]
     body: |
       std::vector<std::string> lines = Blast::StringSplitter(content, '\n').split();
