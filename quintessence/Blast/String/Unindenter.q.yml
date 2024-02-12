@@ -23,35 +23,11 @@ methods:
 
       std::string prefix_string(num_indents, ' ');
 
-      //int min_num_spaces = 9999;
       for (auto &line : lines)
       {
          if (skip_blank_lines && line.empty()) continue;
          line = prefix_string + line;
-
-         //int count = 0;
-         //for (char ch : line)
-         //{
-            //if (ch == ' ') count++;
-            //else break;
-         //}
-
-         //if (count < min_num_spaces) min_num_spaces = count;
       }
-
-      //if (num_indents > min_num_spaces)
-      //{
-         // Consider if should be reduced to left edge
-      //}
-      //else
-      //{
-         //for (auto &line : lines)
-         //{
-            //if (skip_blank_lines && line.empty()) continue;
-
-            //line = line.substr(num_unindents);
-         //}
-      //}
 
       // Get the result as a string
       return Blast::StringJoiner(lines, "\n").join() + "\n";
