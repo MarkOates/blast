@@ -139,15 +139,15 @@ functions:
     body: |
       std::string body = R"END(   std::string result = "unknown C++ version";
       #if __cplusplus == 199711L
-          result = "C++98";
+         result = "C++98";
       #elif __cplusplus == 201103L
-          result = "C++11";
+         result = "C++11";
       #elif __cplusplus == 201402L
-          result ="C++14";
+         result ="C++14";
       #elif __cplusplus == 201703L
-          result = "C++17";
+         result = "C++17";
       #elif __cplusplus == 202002L
-          result = "C++20";
+         result = "C++20";
       #endif
       return result;)END";
 

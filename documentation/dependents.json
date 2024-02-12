@@ -82,6 +82,9 @@
     "Blast/BuildInfoCppFileGenerator",
     "Blast/ReleaseInfoCppFileGenerator"
   ],
+  "Blast/String/Unindenter": [
+    "Blast/BuildInfoCppFileGenerator"
+  ],
   "Blast/BuildSystem/BuildStageFactory": [
     "Blast/BuildSystem/BuildFactory"
   ],
