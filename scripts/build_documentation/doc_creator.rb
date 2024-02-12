@@ -114,6 +114,8 @@ class DocCreator
 
   def generate_doc_listing(filename:, yaml:)
     result = ""
+    result += "<br><br><br>\n"
+    result += "<br><br><br>\n"
     result += "<ul>\n"
     result += "  <div class=\"component\">\n"
     result += "    <h3 id=\"#{filename}\">#{filename}</h3>\n"
@@ -122,7 +124,7 @@ class DocCreator
     if inline_documentation.nil?
       result += "    <p>(This component does not include supplementary documentation)</p>\n"
     else
-      result += "    <h3>overview</h3>\n"
+      result += "    <h3>Overview</h3>\n"
       inline_documentation.each do |entry|
         result += "    <p>#{entry}</p>"
       end
@@ -169,13 +171,19 @@ class DocCreator
         result += "     <table>\n"
         methods.each do |method|
           result += "<tr>\n"
+          method_type = escape_html_chars(method['type'])
+          if method_type == ""
+            method_type = "void"
+          end
+
           method_name = escape_html_chars(method['name'])
           #num_method_parameters = method['parameters']&.count
           method_parameters = build_parameters_string(parameters: method['parameters'])
           method_is_private = method['private']
 
           css_class = method_is_private ? 'private_method' : 'method'
-          result += "  <td class=\"#{css_class}\">#{method_name}(#{method_parameters})</td>\n"
+          result += "  <td class=\"#{css_class}\">#{method_type}</td>\n"
+          result += "  <td class=\"#{css_class}\"><b>#{method_name}</b>(#{method_parameters})</td>\n"
           result += "</tr>\n"
         end
         result += "    </table>\n"
@@ -258,6 +266,11 @@ class DocCreator
 
   def generate_css
     result =  "<style>\n"
+    result += "html\n"
+    result += "{\n"
+    result += "  background-color: #09090c;\n"
+    result += "  color: #dfdfdf;\n"
+    result += "}\n"
     result += "*\n"
     result += "{\n"
     result += "  font-family: 'Arial';\n"
@@ -269,16 +282,16 @@ class DocCreator
     result += "}\n"
     result += ".property\n"
     result += "{\n"
-    result += "  color: blue;\n"
+    result += "  color: dodgerblue;\n"
     result += "}\n"
     result += ".private_property\n"
     result += "{\n"
-    result += "  color: lightblue;\n"
+    result += "  color: aliceblue;\n"
     result += "}\n"
     result += "\n"
     result += ".method\n"
     result += "{\n"
-    result += "  color: red;\n"
+    result += "  color: orange;\n"
     result += "}\n"
     result += "\n"
     result += ".private_method\n"
@@ -288,14 +301,15 @@ class DocCreator
     result += "\n"
     result += ".dependency\n"
     result += "{\n"
-    result += "  color: green;\n"
+    result += "  color: #9f9fa1;\n"
     result += "}\n"
     result += "\n"
     result += ".component\n"
     result += "{\n"
     result += "  padding: 20 10 20 10;\n"
     result += "  margin: 20 10 20 10;\n"
-    result += "  background-color: #dfdfdf;\n"
+    result += "  background-color: #1a1a1c;\n"
+    #result += "  background-color: #dfdfdf;\n"
     result += "}\n"
     result += "\n"
     result += ".component h3\n"
