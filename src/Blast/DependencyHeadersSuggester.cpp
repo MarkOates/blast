@@ -47,13 +47,20 @@ std::string DependencyHeadersSuggester::find_suggested_headers_csv(std::string s
 std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_default_suggested_symbol_headers()
 {
    return std::map<std::string, std::vector<std::string>>{
-      { "StageInterface", { "Hexagon/StageInterface.hpp" }, },
+      // Commonly used standard C/C++ symbols
       { "std::function", { "functional" }, },
       { "std::min", { "algorithm" }, },
       { "std::max", { "algorithm" }, },
+      { "std::stringstream", { "sstream" }, },
+      { "std::istringstream", { "sstream" }, },
+      { "std::ostringstream", { "sstream" }, },
       { "fmod", { "cmath" }, },
 
-      // Allegro
+      // Project-related Symbols
+      // Hexagon
+      { "StageInterface", { "Hexagon/StageInterface.hpp" }, },
+
+      // Allegro Symbols
       { "ALLEGRO_EVENT", { "allegro5/allegro.h" }, },
       { "ALLEGRO_FONT", { "allegro5/allegro_font.h" }, },
       { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, },

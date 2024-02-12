@@ -194,6 +194,7 @@
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
     "Blast/ReleaseInfo",
+    "Blast/String/Unindenter",
     "Blast/VersionYAMLLoaderEmitter",
     "Quizes/MultiplexQuizRunner"
   ],
@@ -201,6 +202,7 @@
     "Blast/DependencySymbolAtomizer",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
+    "Blast/String/Unindenter",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"

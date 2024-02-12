@@ -110,6 +110,7 @@ table td
   <li><a href="#quintessence/Blast/ShellCommandExecutorWithCallback.q.yml">quintessence/Blast/ShellCommandExecutorWithCallback.q.yml</a></li>
   <li><a href="#quintessence/Blast/SimpleTextSearcher.q.yml">quintessence/Blast/SimpleTextSearcher.q.yml</a></li>
   <li><a href="#quintessence/Blast/String/Trimmer.q.yml">quintessence/Blast/String/Trimmer.q.yml</a></li>
+  <li><a href="#quintessence/Blast/String/Unindenter.q.yml">quintessence/Blast/String/Unindenter.q.yml</a></li>
   <li><a href="#quintessence/Blast/StringSplitter.q.yml">quintessence/Blast/StringSplitter.q.yml</a></li>
   <li><a href="#quintessence/Blast/StringUpcaser.q.yml">quintessence/Blast/StringUpcaser.q.yml</a></li>
   <li><a href="#quintessence/Blast/SystemInfo.q.yml">quintessence/Blast/SystemInfo.q.yml</a></li>
@@ -3374,6 +3375,37 @@ table td
 <br><br><br>
 <ul>
   <div class="component">
+    <h3 id="quintessence/Blast/String/Unindenter.q.yml">quintessence/Blast/String/Unindenter.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">content</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>remove_spaces_at_beginning</b>(std::size_t num_unindents=3)</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringJoiner&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringJoiner.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
     <h3 id="quintessence/Blast/StringSplitter.q.yml">quintessence/Blast/StringSplitter.q.yml</h3>
     <p>(This component does not include supplementary documentation)</p>
     <h3>Properties</h3>
@@ -5043,6 +5075,7 @@ table td
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
     "Blast/ReleaseInfo",
+    "Blast/String/Unindenter",
     "Blast/VersionYAMLLoaderEmitter",
     "Quizes/MultiplexQuizRunner"
   ],
@@ -5050,6 +5083,7 @@ table td
     "Blast/DependencySymbolAtomizer",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
+    "Blast/String/Unindenter",
     "NcursesArt/GithubRepoStatusFetcher",
     "Quizes/MultiplexQuizRunner",
     "Quizes/MultiplexSheetLoader"
