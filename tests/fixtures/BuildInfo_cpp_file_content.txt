@@ -118,7 +118,19 @@ int BuildInfo::get_allegro_version_git_num_commits()
 
 std::string BuildInfo::get_cpp_version_string()
 {
-   return "not-implemented";
+   std::string result = "unknown C++ version";
+      #if __cplusplus == 199711L
+          result = "C++98";
+      #elif __cplusplus == 201103L
+          result = "C++11";
+      #elif __cplusplus == 201402L
+          result ="C++14";
+      #elif __cplusplus == 201703L
+          result = "C++17";
+      #elif __cplusplus == 202002L
+          result = "C++20";
+      #endif
+      return result;
 }
 
 

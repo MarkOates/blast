@@ -147,7 +147,19 @@ std::vector<Blast::Cpp::ClassAttributes> BuildInfoCppFileGenerator::build_cpp_cl
 
 Blast::Cpp::Function BuildInfoCppFileGenerator::build_get_cpp_version_function()
 {
-   std::string body = "return \"not-implemented\";";
+   std::string body = R"END(std::string result = "unknown C++ version";
+   #if __cplusplus == 199711L
+       result = "C++98";
+   #elif __cplusplus == 201103L
+       result = "C++11";
+   #elif __cplusplus == 201402L
+       result ="C++14";
+   #elif __cplusplus == 201703L
+       result = "C++17";
+   #elif __cplusplus == 202002L
+       result = "C++20";
+   #endif
+   return result;)END";
    return Blast::Cpp::Function(
          "std::string", //type
          "get_cpp_version_string", // name
