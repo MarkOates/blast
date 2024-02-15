@@ -71,29 +71,36 @@ while true; do
     esac
 done
 
-cd /Users/markoates/Repos
+REPOS_DIRECTORY=/Users/markoates/Repos
+
+cd $REPOS_DIRECTORY
 
 # sync dotfiles
-cd .dotfiles
+cd $REPOS_DIRECTORY/.dotfiles
 git pull
-source ./.zshrc
+source .zshrc
 
-# sync union
-cd ../union
+# sync me
+cd $REPOS_DIRECTORY/me
 git pull
 
 # make blast
-cd ../blast
+cd $REPOS_DIRECTORY/blast
 git pull
-make clean && make programs -j8 && make && make clean && make programs -j8 && make
+make clean && make programs -j && make
 
 # make allegro_flare
-cd ../allegro_flare
+cd $REPOS_DIRECTORY/allegro_flare
 git pull
-make clean && make
+make fast && make programs -j
 
 # make hexagon
-cd ../hexagon
+cd $REPOS_DIRECTORY/hexagon
 git pull
-make clean && make
+make fast && make programs -j
+
+# make SomePlatformer
+cd $REPOS_DIRECTORY/SomePlatformer
+git pull
+make fast && make programs -j
 
