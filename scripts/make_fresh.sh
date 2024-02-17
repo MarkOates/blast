@@ -104,3 +104,5 @@ cd $REPOS_DIRECTORY/SomePlatformer
 git pull
 make fast && make programs -j
 
+status
+
