@@ -78,7 +78,7 @@ cd $REPOS_DIRECTORY
 # sync dotfiles
 cd $REPOS_DIRECTORY/.dotfiles
 git pull
-source .zshrc
+# source .zshrc
 
 # sync me
 cd $REPOS_DIRECTORY/me
