@@ -669,6 +669,8 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       bool has_explicit_setter = fetch_bool(it, EXPLICIT_SETTER, false);
       bool is_constexpr = fetch_bool(it, CONSTEXPR, false);
       bool is_exposed = fetch_bool(it, EXPOSED, false);
+      bool has_before_init_setter = false; // by default
+
       //std::string initialization_value = init_with_node.as<std::string>();
       //bool is_static = static_node.as<bool>();
       //bool is_constructor_parameter = constructor_arg_node.as<bool>();
@@ -690,11 +692,20 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       validate(!(has_setter && has_explicit_setter), this_func_name, "Attribute property cannot have both \"setter: true\" and \"explicit_setter: true\".");
 
       // Get "setter" as a string value
-      validate((has_setter_AS_STR=="true" || has_setter_AS_STR=="false" || has_setter_AS_STR=="explicit"), this_func_name, "Attribute property \"setter\" can only be one of [\"true\", \"false\", or \"explicit\"].");
+      validate(
+            (has_setter_AS_STR=="true" || has_setter_AS_STR=="false" || has_setter_AS_STR=="explicit" || has_setter_AS_STR=="before_initialized"),
+            this_func_name,
+            "Attribute property \"setter\" can only be one of [\"true\", \"false\", \"explicit\", or \"before_initialized\"].");
       //validate(!(has_getter && has_explicit_getter), this_func_name, "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".");
 
       if (has_getter_AS_STR == "explicit") has_explicit_getter = true;
       if (has_setter_AS_STR == "explicit") has_explicit_setter = true;
+      //if (has_getter_AS_STR == "explicit") has_explicit_getter = true;
+      if (has_setter_AS_STR == "before_initialized")
+      {
+         has_before_init_setter = true;
+         has_setter = true;
+      }
 
 
       // TODO: Add validations for "is_exposed"
@@ -725,6 +736,8 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
             is_constexpr,
             is_exposed
          );
+
+      if (has_before_init_setter) class_attribute_properties.has_before_init_setter = true;
 
       result.push_back(class_attribute_properties);
    }

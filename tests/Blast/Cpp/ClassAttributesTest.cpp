@@ -265,7 +265,7 @@ expectd_guard_clause)
 
    std::string expected_string = R"END(void FooClass::set_my_variable(std::string my_variable)
 {
-   if ((!get_initialized())) throw std::runtime_error("[FooClass::set_my_variable]: error: guard \"(!get_initialized())\" not met.");
+   if (get_initialized()) throw std::runtime_error("[FooClass::set_my_variable]: error: guard \"get_initialized()\" not met.");
    this->my_variable = my_variable;
 }
 )END";

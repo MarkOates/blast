@@ -206,9 +206,9 @@ std::string ClassAttributes::setter_function_definition(std::string class_name)
           << variable_name << ")\n{\n";
    if (has_before_init_setter)
    {
-      std::string guard = "(!get_initialized())";
+      std::string guard = "get_initialized()";
       //auto error_message = Blast::Errors::build_error_message(class_name, "guard \"" + guard + "\" not met.");
-      auto error_message = "[" + class_name + "::set_" + variable_name + "]: error: guard \\\"(!get_initialized())\\\" "
+      auto error_message = "[" + class_name + "::set_" + variable_name + "]: error: guard \\\"get_initialized()\\\" "
           "not met.";
       result << "   if (" << guard << ") throw std::runtime_error(\"" << error_message << "\");\n";
    }
