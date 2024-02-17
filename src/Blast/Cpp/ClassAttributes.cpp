@@ -27,8 +27,8 @@ ClassAttributes::ClassAttributes(
       bool has_explicit_setter,
       bool is_constexpr,
       bool is_exposed,
-      bool has_before_init_setter,
-      bool has_after_init_getter
+      bool has_before_init_setter
+      //bool has_after_init_getter
    )
    : datatype(datatype)
    , variable_name(variable_name)
@@ -43,7 +43,7 @@ ClassAttributes::ClassAttributes(
    , is_constexpr(is_constexpr)
    , is_exposed(is_exposed)
    , has_before_init_setter(false)
-   , has_after_init_getter(false)
+   //, has_after_init_getter(false)
 {
 }
 
