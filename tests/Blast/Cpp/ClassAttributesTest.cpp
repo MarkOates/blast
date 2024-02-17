@@ -254,3 +254,22 @@ TEST(ClassAttributesTest, setter_function_definition__formats_the_function_as_a_
 }
 
 
+TEST(ClassAttributesTest,
+  setter_function_definition__when_before_init_setter_is_true__formats_the_function_as_a_setter_function_with_the_\
+expectd_guard_clause)
+{
+   Blast::Cpp::ClassAttributes attribute_properties(
+      "std::string", "my_variable", "\"Hello World!\"", false, false, false, false, false, false, false, false, false
+   );
+   attribute_properties.has_before_init_setter = true;
+
+   std::string expected_string = R"END(void FooClass::set_my_variable(std::string my_variable)
+{
+   if ((!get_initialized())) throw std::runtime_error("[FooClass::set_my_variable]: error: guard \"(!get_initialized())\" not met.");
+   this->my_variable = my_variable;
+}
+)END";
+   ASSERT_EQ(expected_string, attribute_properties.setter_function_definition("FooClass"));
+}
+
+

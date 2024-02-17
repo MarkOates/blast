@@ -3,6 +3,7 @@
 #include <Blast/Cpp/ClassAttributes.hpp>
 
 #include <sstream>
+#include <Blast/Errors.hpp>
 
 
 namespace Blast
@@ -25,7 +26,9 @@ ClassAttributes::ClassAttributes(
       bool has_setter,
       bool has_explicit_setter,
       bool is_constexpr,
-      bool is_exposed
+      bool is_exposed,
+      bool has_before_init_setter,
+      bool has_after_init_getter
    )
    : datatype(datatype)
    , variable_name(variable_name)
@@ -39,6 +42,8 @@ ClassAttributes::ClassAttributes(
    , has_explicit_setter(has_explicit_setter)
    , is_constexpr(is_constexpr)
    , is_exposed(is_exposed)
+   , has_before_init_setter(false)
+   , has_after_init_getter(false)
 {
 }
 
@@ -168,7 +173,8 @@ std::string ClassAttributes::getter_ref_function_declaration()
 std::string ClassAttributes::getter_ref_function_definition(std::string class_name)
 {
    std::stringstream result;
-   result << datatype << " &" << class_name << "::" << getter_ref_function_symbol() << "()\n{\n   return " << variable_name << ";\n}\n";
+   result << datatype << " &" << class_name << "::" << getter_ref_function_symbol()
+          << "()\n{\n   return " << variable_name << ";\n}\n";
    return result.str();
 }
 
@@ -196,7 +202,18 @@ std::string ClassAttributes::setter_function_definition(std::string class_name)
    if (is_static) throw std::runtime_error("Setter definitions are not implemented for static properties");
 
    std::stringstream result;
-   result << "void " << class_name << "::set_" << variable_name << "(" << datatype << " " << variable_name << ")\n{\n   this->" << variable_name << " = " << variable_name << ";\n}\n";
+   result << "void " << class_name << "::set_" << variable_name << "(" << datatype << " "
+          << variable_name << ")\n{\n";
+   if (has_before_init_setter)
+   {
+      std::string guard = "(!get_initialized())";
+      //auto error_message = Blast::Errors::build_error_message(class_name, "guard \"" + guard + "\" not met.");
+      auto error_message = "[" + class_name + "::set_" + variable_name + "]: error: guard \\\"(!get_initialized())\\\" "
+          "not met.";
+      result << "   if (" << guard << ") throw std::runtime_error(\"" << error_message << "\");\n";
+   }
+
+   result << "   this->" << variable_name << " = " << variable_name << ";\n}\n";
    return result.str();
 }
 
@@ -205,3 +222,5 @@ std::string ClassAttributes::setter_function_definition(std::string class_name)
 
 
 } // namespace Blast
+
+

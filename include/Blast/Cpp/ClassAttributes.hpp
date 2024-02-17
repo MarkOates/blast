@@ -24,6 +24,8 @@ namespace Blast
          bool has_explicit_setter;
          bool is_constexpr;
          bool is_exposed;
+         bool has_before_init_setter;
+         bool has_after_init_getter;
 
          ClassAttributes(
             std::string datatype,
@@ -37,7 +39,9 @@ namespace Blast
             bool has_setter,
             bool has_explicit_setter,
             bool is_constexpr,
-            bool is_exposed
+            bool is_exposed,
+            bool has_before_init_setter = false,
+            bool has_after_init_getter = false
          );
          ~ClassAttributes();
 
