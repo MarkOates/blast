@@ -104,5 +104,6 @@ cd $REPOS_DIRECTORY/SomePlatformer
 git pull
 make fast && make programs -j
 
-status
+# run status
+./$REPOS_DIRECTORY/blast/bin/programs/status
 
