@@ -105,5 +105,5 @@ git pull
 make fast && make programs -j
 
 # run status
-./$REPOS_DIRECTORY/blast/bin/programs/status
+/$REPOS_DIRECTORY/blast/bin/programs/status
 
