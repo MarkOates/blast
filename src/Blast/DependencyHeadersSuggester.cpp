@@ -55,6 +55,8 @@ std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_
       { "std::istringstream", { "sstream" }, },
       { "std::ostringstream", { "sstream" }, },
       { "fmod", { "cmath" }, },
+      { "std::pow", { "cmath" }, },
+      { "std::sqrt", { "cmath" }, },
 
       // Project-related Symbols
       // Hexagon
