@@ -70,6 +70,8 @@ functions:
          { "fmod", { "cmath" }, },
          { "std::pow", { "cmath" }, },
          { "std::sqrt", { "cmath" }, },
+         { "std::abs", { "cmath" }, },
+         { "std::fabs", { "cmath" }, },
 
          // Project-related Symbols
          // Hexagon

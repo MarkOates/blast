@@ -57,6 +57,8 @@ std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_
       { "fmod", { "cmath" }, },
       { "std::pow", { "cmath" }, },
       { "std::sqrt", { "cmath" }, },
+      { "std::abs", { "cmath" }, },
+      { "std::fabs", { "cmath" }, },
 
       // Project-related Symbols
       // Hexagon
