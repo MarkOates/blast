@@ -71,6 +71,10 @@
     #esac
 #done
 
+
+# Ensure that the script will halt entirely if any command fails
+set -e
+
 REPOS_DIRECTORY=/Users/markoates/Repos
 
 cd $REPOS_DIRECTORY
