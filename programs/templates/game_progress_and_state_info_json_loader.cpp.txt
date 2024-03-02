@@ -1,11 +1,11 @@
 
 
-#include <SomePlatformer/JSONLoaders/SomePlatformer/GameProgressAndStateInfo.hpp>
+#include <[[COMPONENT_NAME_FIRST_FRAGMENT]]/JSONLoaders/[[COMPONENT_NAME_FIRST_FRAGMENT]]/GameProgressAndStateInfo.hpp>
 
 #include <AllegroFlare/Logger.hpp>
 
 
-namespace SomePlatformer
+namespace [[COMPONENT_NAME_FIRST_FRAGMENT]]
 {
 
 
@@ -30,6 +30,6 @@ void from_json(const nlohmann::json& j, GameProgressAndStateInfo& v)
 }
 
 
-} // namespace SomePlatformer
+} // namespace [[COMPONENT_NAME_FIRST_FRAGMENT]]
 
 

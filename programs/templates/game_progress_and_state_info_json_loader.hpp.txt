@@ -2,10 +2,10 @@
 
 
 #include <lib/nlohmann/json.hpp>
-#include <SomePlatformer/GameProgressAndStateInfo.hpp>
+#include <[[COMPONENT_NAME_FIRST_FRAGMENT]]/GameProgressAndStateInfo.hpp>
 
 
-namespace SomePlatformer
+namespace [[COMPONENT_NAME_FIRST_FRAGMENT]]
 {
   void to_json(nlohmann::json& j, const GameProgressAndStateInfo& object);
   void from_json(const nlohmann::json& j, GameProgressAndStateInfo& object);

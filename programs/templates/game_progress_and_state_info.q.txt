@@ -3,7 +3,7 @@ parent_classes:
 
   - class: AllegroFlare::GameProgressAndStateInfos::Base
     scope: public
-    init_with: SomePlatformer::GameProgressAndStateInfo::TYPE
+    init_with: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo::TYPE
 
 
 properties:
@@ -18,7 +18,7 @@ properties:
 
   - name: TYPE
     type: char*
-    init_with: '(char*)"SomePlatformer/GameProgressAndStateInfo"'
+    init_with: '(char*)"[[COMPONENT_NAME_FIRST_FRAGMENT]]/GameProgressAndStateInfo"'
     static: true
     constexpr: true
 
@@ -44,7 +44,7 @@ methods:
       std::string string_dump = j.dump(2);
       return string_dump;
     body_dependency_symbols:
-      - SomePlatformer::JSONLoaders::SomePlatformer::GameProgressAndStateInfo
+      - [[COMPONENT_NAME_FIRST_FRAGMENT]]::JSONLoaders::[[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo
 
 
   - name: import_from_string
@@ -58,7 +58,7 @@ methods:
       nlohmann::json parsed_json = nlohmann::json::parse(data_string);
       parsed_json.get_to(*this);
     body_dependency_symbols:
-      - SomePlatformer::JSONLoaders::SomePlatformer::GameProgressAndStateInfo
+      - [[COMPONENT_NAME_FIRST_FRAGMENT]]::JSONLoaders::[[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo
 
 
 dependencies:
@@ -66,7 +66,7 @@ dependencies:
 
   - symbol: AllegroFlare::GameProgressAndStateInfos::Base
     headers: [ AllegroFlare/GameProgressAndStateInfos/Base.hpp ]
-  - symbol: SomePlatformer::JSONLoaders::SomePlatformer::GameProgressAndStateInfo
-    headers: [ SomePlatformer/JSONLoaders/SomePlatformer/GameProgressAndStateInfo.hpp ]
+  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::JSONLoaders::[[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo
+    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/JSONLoaders/[[COMPONENT_NAME_FIRST_FRAGMENT]]/GameProgressAndStateInfo.hpp ]
 
 
