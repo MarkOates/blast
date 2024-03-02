@@ -303,6 +303,40 @@ void create_version_yaml(Generator &generator)
 }
 
 
+//void create_game_progress_and_state_info(Generator &generator)
+//{
+   //std::ofstream outfile;
+   //outfile.open(generator.get_project_name() + "/" + VERSION_YAML_FILE_FILENAME, std::ios::binary);
+   //outfile << VERSION_YAML_FILE_CONTENT;
+   //outfile.close();
+//}
+
+
+void create_game_progress_and_state_info_classes(std::string project_name)
+{
+   {
+      std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Testing/Comparison/" + project_name + "/GameProgressAndStateInfo game_progress_and_state_info_comparison";
+      std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
+      shell_command_executor.execute();
+   }
+
+   {
+      std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/JSONLoaders/" + project_name + "/GameProgressAndStateInfo game_progress_and_state_info_json_loader";
+      std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
+      shell_command_executor.execute();
+   }
+
+   {
+      std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/GameProgressAndStateInfo game_progress_and_state_info";
+      std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
+      Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
+      shell_command_executor.execute();
+   }
+}
+
+
 void create_readme_file(Generator &generator)
 {
    std::ofstream outfile5;
@@ -570,6 +604,7 @@ int main(int argc, char **argv)
       generate_complete_game_configurations_main_class(project_name);
       create_main_file_with_configuration(generator);
       generate_complete_gameplay_screen_class(project_name);
+      create_game_progress_and_state_info_classes(project_name);
    }
    { // With previous "manual" runner
       //create_main_file(generator);
