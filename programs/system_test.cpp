@@ -339,6 +339,20 @@ bool check_hexagon_app_package_alias_test()
 }
 
 
+bool check_tiled_extensions_symlinks_exist()
+{
+   std::string success_message = "symlink exists";
+   std::string symlink_check_command = std::string("if [ -L \"~/Library/Preferences/Tiled/extensions/list_map_properties.js\" ]; then echo \"") + success_message + "\"; else echo \"symlink does not exist\"; fi";
+   std::string COMMAND_TO_CREATE_SYMLINK = "ln -s /Users/markoates/Repos/allegro_flare/scripts/tiled/extensions/list_map_properties.js ~/Library/Preferences/Tiled/extensions/list_map_properties.js";
+
+   Blast::ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output == success_message;
+
+
+
 #include <Blast/DirectoryExistenceChecker.hpp>
 bool check_vimbackup_folder_exists()
 {
@@ -1154,6 +1168,13 @@ TEST(SystemTest, the_systems_Applications_folder_contains_a_symlink_to_the_hexag
 {
    EXPECT_EQ(true, check_hexagon_app_package_alias_test()) << "Test: the system\'s /Applications folder contains a symlink to the hexagon repo\'s app package. "
                                                            << "Use \"ln -s /Applications/Hexagon.app /Users/markoates/Repos/hexagon/bin/Hexagon.app\" to add it.";
+}
+
+
+TEST(SystemTest, the_systems_Tiled_extensions_folder_contains_a_targed_extsion_symlink)
+{
+   EXPECT_EQ(true, check_tiled_extensions_symlinks_exist()) << "Test: the system\'s ~/Library/Preferences/Tiled/extensions/list_map_properties.js folder contains a symlink to allegro_flare's list_map_properties.js tiled script. "
+                                                           << "Use \"ln -s /Users/markoates/Repos/allegro_flare/scripts/tiled/extensions/list_map_properties.js ~/Library/Preferences/Tiled/extensions/list_map_properties.js\" to add it.";
 }
 
 
