@@ -350,6 +350,7 @@ bool check_tiled_extensions_symlinks_exist()
    std::string trimmed_output = trim(output);
 
    return trimmed_output == success_message;
+}
 
 
 
