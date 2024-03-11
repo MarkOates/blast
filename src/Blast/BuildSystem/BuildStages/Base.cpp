@@ -20,7 +20,9 @@ Base::Base(std::string type)
    , ended_at()
    , mutex_for_ended_at()
    , status("[unset-status]")
+   , status_change_count(0)
    , mutex_for_status()
+   , on_status_change_callback({})
 {
 }
 
@@ -30,9 +32,27 @@ Base::~Base()
 }
 
 
+void Base::set_on_status_change_callback(std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int)> on_status_change_callback)
+{
+   this->on_status_change_callback = on_status_change_callback;
+}
+
+
 std::string Base::get_type() const
 {
    return type;
+}
+
+
+int Base::get_status_change_count() const
+{
+   return status_change_count;
+}
+
+
+std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int)> Base::get_on_status_change_callback() const
+{
+   return on_status_change_callback;
 }
 
 
@@ -47,9 +67,18 @@ std::string Base::get_status()
 
 void Base::set_status(std::string status)
 {
+   std::chrono::high_resolution_clock::time_point time_point = std::chrono::high_resolution_clock::now();
+
    mutex_for_status.lock();
    this->status = status;
+   status_change_count++;
    mutex_for_status.unlock();
+
+   // Because this callback occurs outside of the mutex in a threaded context, it's possible this callback
+   // will occur out of synce from its order of execution. For this reason, the "status_change_count" var should
+   // be used externally to ensure the latest status is used.
+   if (on_status_change_callback) on_status_change_callback(status, time_point, status_change_count);
+
    return;
 }
 

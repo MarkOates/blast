@@ -684,8 +684,16 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">status_change_count</td>
+  <td class="property">int</td>
+</tr>
+<tr>
   <td class="property">mutex_for_status</td>
   <td class="property">std::mutex</td>
+</tr>
+<tr>
+  <td class="property">on_status_change_callback</td>
+  <td class="property">std::function&lt;void(std::string, std::chrono::high_resolution_clock::time_point, int)&gt;</td>
 </tr>
 <tr>
   <td class="property">STATUS_WAITING_TO_START</td>

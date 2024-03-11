@@ -38,9 +38,20 @@ properties:
     getter: explicit
     setter: false
 
+  - name: status_change_count
+    type: int
+    init_with: 0
+    getter: true
+
   - name: mutex_for_status
     type: std::mutex
     init_with: ''
+
+  - name: on_status_change_callback
+    type: std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int)>
+    init_with: '{}'
+    getter: true
+    setter: true
 
   - name: STATUS_WAITING_TO_START
     type: char*
@@ -97,9 +108,18 @@ methods:
         type: std::string
         default_argument: '"[unset-status]"'
     body: |
+      std::chrono::high_resolution_clock::time_point time_point = std::chrono::high_resolution_clock::now();
+
       mutex_for_status.lock();
       this->status = status;
+      status_change_count++;
       mutex_for_status.unlock();
+
+      // Because this callback occurs outside of the mutex in a threaded context, it's possible this callback
+      // will occur out of synce from its order of execution. For this reason, the "status_change_count" var should
+      // be used externally to ensure the latest status is used.
+      if (on_status_change_callback) on_status_change_callback(status, time_point, status_change_count);
+
       return;
 
 

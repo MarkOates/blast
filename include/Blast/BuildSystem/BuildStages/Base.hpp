@@ -2,6 +2,7 @@
 
 
 #include <chrono>
+#include <functional>
 #include <mutex>
 #include <string>
 
@@ -29,7 +30,9 @@ namespace Blast
             std::chrono::high_resolution_clock::time_point ended_at;
             std::mutex mutex_for_ended_at;
             std::string status;
+            int status_change_count;
             std::mutex mutex_for_status;
+            std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int)> on_status_change_callback;
 
          protected:
 
@@ -38,7 +41,10 @@ namespace Blast
             Base(std::string type=TYPE);
             virtual ~Base();
 
+            void set_on_status_change_callback(std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int)> on_status_change_callback);
             std::string get_type() const;
+            int get_status_change_count() const;
+            std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int)> get_on_status_change_callback() const;
             std::string get_status();
             void set_status(std::string status="[unset-status]");
             std::chrono::high_resolution_clock::time_point get_started_at();
