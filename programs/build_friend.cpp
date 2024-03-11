@@ -93,11 +93,13 @@ namespace BuildWorkers
       {
       private:
          std::string log_filename;
+         std::string gcloud_executable_name;
          std::string gcloud_destination_bucket;
 
       public:
-         UploadLogFileToGCloud(std::string log_filename, std::string gcloud_destination_bucket)
+         UploadLogFileToGCloud(std::string log_filename, std::string gcloud_executable_name, std::string gcloud_destination_bucket)
             : log_filename(log_filename) //"tmp/build_log_from_build_friend_callback.log")
+            , gcloud_executable_name(gcloud_executable_name)
             , gcloud_destination_bucket(gcloud_destination_bucket) //"tmp/build_log_from_build_friend_callback.log")
          {}
 
@@ -115,7 +117,13 @@ namespace BuildWorkers
 
             // TODO: CRITICAL: Sanitize log_filename and gcloud_destination_bucket
             // "gcloud storage cp "./tmp/build_log_from_build_friend_callback-12345.log" "gs://clubcatt-build-status-and-logs-bucket/";
-            command << "gcloud storage cp \"" << log_filename << "\" \"" << gcloud_destination_bucket << "\""; //gs://clubcatt-build-status-and-logs-bucket/";
+            // std::string gcloud_executable_name = "gcloud";
+            // OR
+            // if (user_data.hostname == "DESKTOP-NC9M1BH") gcloud_executable_name = "/C/Users/Mark/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin/gcloud"
+
+            // CRITICAL: validate the presence of "gcloud_executable" before running this command
+
+            command << gcloud_executable_name << " storage cp \"" << log_filename << "\" \"" << gcloud_destination_bucket << "\""; //gs://clubcatt-build-status-and-logs-bucket/";
 
             Blast::ShellCommandExecutorWithCallback curl_signal_command(command.str());
             curl_signal_command.execute();
@@ -146,12 +154,15 @@ public:
    {
       user_data.hostname = system_identifier;
 
+      std::string gcloud_executable_name = "gcloud";
+      if (user_data.hostname == "DESKTOP-NC9M1BH") gcloud_executable_name = "/C/Users/Mark/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin/gcloud";
+
       // TODO: Generate a random log_file
       set_build_stages({
          // TODO: Add stage to validate gcloud presence
          // TODO: Add stage to validate gcloud's current project is set to the expected project
          new BuildWorkers::Stages::ExecuteTaskAndLogToFile(command, log_filename),
-         new BuildWorkers::Stages::UploadLogFileToGCloud(log_filename, gcloud_destination_bucket),
+         new BuildWorkers::Stages::UploadLogFileToGCloud(log_filename, gcloud_executable_name, gcloud_destination_bucket),
       });
 
       set_on_status_change_callback(BuildWorkers::Stages::curl_signal_to_host_of_status_change);
