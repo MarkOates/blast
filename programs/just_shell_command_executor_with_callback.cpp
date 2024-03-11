@@ -11,6 +11,11 @@ int main(int argc, char** argv)
 
    command << "pwd" << std::endl;
 
+   // The following commands do not work in MSYS2 using the ShellCommandExecutorWithCallback:
+   //command << "\"\\C\\Users\\Mark\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud\" -v";
+   //command << "(cd \"/C/Users/Mark/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin\" && ./gcloud -v)";
+   //command << "(cd \"\\C\\Users\\Mark\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\" && ./gcloud -v)";
+
    std::cout << "============== command begin ===============" << std::endl;
    std::cout << command.str() << std::endl;
    std::cout << "============== command end ===============" << std::endl;
