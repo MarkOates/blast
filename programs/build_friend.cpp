@@ -1,26 +1,30 @@
 #include <allegro5/allegro.h>
 
+#include <fstream>
 #include <iostream>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 
 
-static void append_to_file_callback(std::string input)
-{
-}
-
-
 int main(int argc, char** argv)
 {
+   std::string log_filename = "tmp/build_log_from_build_friend_callback.log";
    std::string command = "ls";
+   std::ofstream outfile;
+   outfile.open(log_filename);
 
-   Blast::ShellCommandExecutorWithCallback executor(command, [](std::string content){
-      std::cout << content;
-      //append_to_file_callback(input
+   if (!outfile.is_open())
+   {
+      std::cerr << "Error opening file: " << log_filename << std::endl;
+      return 1;
+   }
+
+   Blast::ShellCommandExecutorWithCallback executor(command, [&outfile](std::string content){
+      outfile << content;
    });
 
-   std::cout << "================= command start ===================" << std::endl;
    executor.execute();
-   std::cout << "================= command end ===================" << std::endl;
+
+   outfile.close();
 
    return 0;
 }
