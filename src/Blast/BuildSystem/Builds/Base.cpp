@@ -115,6 +115,14 @@ bool Base::is_type(std::string possible_type)
    return (possible_type == get_type());
 }
 
+void Base::cleanup()
+{
+   for (auto &build_stage : build_stages) delete build_stage;
+   build_stages.clear();
+   status = STATUS_SHUTDOWN;
+   return;
+}
+
 void Base::set_status(std::string status)
 {
    // TODO: Should this be private?

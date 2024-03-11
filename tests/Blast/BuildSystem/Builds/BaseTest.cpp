@@ -254,3 +254,35 @@ TEST(Blast_BuildSystem_Builds_BaseTest,
 }
 
 
+TEST(Blast_BuildSystem_Builds_BaseTest,
+   cleanup__will_set_the_status_to_shutdown)
+{
+   BuildsBaseTestClass base_build;
+   base_build.set_build_stages({
+      new BuildStageTestClass(),
+      new BuildStageTestClass(),
+      new BuildStageTestClass(),
+   });
+
+   base_build.cleanup();
+
+   EXPECT_EQ(Blast::BuildSystem::Builds::Base::STATUS_SHUTDOWN, base_build.get_status());
+}
+
+
+TEST(Blast_BuildSystem_Builds_BaseTest,
+   cleanup__will_clear_the_build_stages)
+{
+   BuildsBaseTestClass base_build;
+   base_build.set_build_stages({
+      new BuildStageTestClass(),
+      new BuildStageTestClass(),
+      new BuildStageTestClass(),
+   });
+
+   base_build.cleanup();
+
+   EXPECT_EQ(0, base_build.get_build_stages().size());
+}
+
+

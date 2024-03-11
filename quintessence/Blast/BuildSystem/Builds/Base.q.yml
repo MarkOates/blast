@@ -85,6 +85,12 @@ properties:
     init_with: '(char*)"error"'
     constexpr: true
 
+  - name: STATUS_SHUTDOWN
+    type: char*
+    static: true
+    init_with: '(char*)"shutdown"'
+    constexpr: true
+
 
 functions:
 
@@ -97,6 +103,15 @@ functions:
         default_argument: '""'
     body: |
       return (possible_type == get_type());
+
+
+  - name: cleanup
+    documentation: Consider different name for this method
+    body: |
+      for (auto &build_stage : build_stages) delete build_stage;
+      build_stages.clear();
+      status = STATUS_SHUTDOWN;
+      return;
 
 
   - name: set_status

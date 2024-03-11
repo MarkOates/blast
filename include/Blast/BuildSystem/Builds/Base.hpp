@@ -23,6 +23,7 @@ namespace Blast
             static constexpr char* STATUS_RUNNING = (char*)"running";
             static constexpr char* STATUS_FINISHED = (char*)"finished";
             static constexpr char* STATUS_ERROR = (char*)"error";
+            static constexpr char* STATUS_SHUTDOWN = (char*)"shutdown";
 
          private:
             std::string type;
@@ -55,6 +56,7 @@ namespace Blast
             std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int, void*)> get_on_status_change_callback() const;
             void* get_on_status_change_callback_user_data() const;
             bool is_type(std::string possible_type="");
+            void cleanup();
             void set_status(std::string status="[unset-status]");
             void run();
             static void build_stage_executor(Blast::BuildSystem::BuildStages::Base* build_stage=nullptr);
