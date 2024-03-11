@@ -124,6 +124,9 @@ namespace BuildWorkers
             // CRITICAL: validate the presence of "gcloud_executable" before running this command
 
             command << "\"" << gcloud_executable_name << "\" storage cp \"" << log_filename << "\" \"" << gcloud_destination_bucket << "\""; //gs://clubcatt-build-status-and-logs-bucket/";
+            std::cout << "========= executing begin ==========" << std::endl;
+            std::cout << command.str() << std::endl;
+            std::cout << "========= executing end ==========" << std::endl;
 
             Blast::ShellCommandExecutorWithCallback curl_signal_command(command.str());
             curl_signal_command.execute();
