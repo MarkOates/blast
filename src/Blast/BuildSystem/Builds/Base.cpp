@@ -20,6 +20,9 @@ Base::Base(std::string type, std::vector<Blast::BuildSystem::BuildStages::Base*>
    , started_at()
    , ended_at()
    , status(STATUS_WAITING_TO_START)
+   , status_change_count(0)
+   , on_status_change_callback({})
+   , on_status_change_callback_user_data(nullptr)
 {
 }
 
@@ -47,9 +50,15 @@ void Base::set_ended_at(std::chrono::high_resolution_clock::time_point ended_at)
 }
 
 
-void Base::set_status(std::string status)
+void Base::set_on_status_change_callback(std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int, void*)> on_status_change_callback)
 {
-   this->status = status;
+   this->on_status_change_callback = on_status_change_callback;
+}
+
+
+void Base::set_on_status_change_callback_user_data(void* on_status_change_callback_user_data)
+{
+   this->on_status_change_callback_user_data = on_status_change_callback_user_data;
 }
 
 
@@ -83,15 +92,47 @@ std::string Base::get_status() const
 }
 
 
+int Base::get_status_change_count() const
+{
+   return status_change_count;
+}
+
+
+std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int, void*)> Base::get_on_status_change_callback() const
+{
+   return on_status_change_callback;
+}
+
+
+void* Base::get_on_status_change_callback_user_data() const
+{
+   return on_status_change_callback_user_data;
+}
+
+
 bool Base::is_type(std::string possible_type)
 {
    return (possible_type == get_type());
 }
 
+void Base::set_status(std::string status)
+{
+   // TODO: Should this be private?
+   // TODO: Should this be wrapped in a mutex?
+   this->status = status;
+   std::chrono::high_resolution_clock::time_point time_now = std::chrono::high_resolution_clock::now();
+   if (on_status_change_callback)
+   {
+      on_status_change_callback(status, time_now, status_change_count, on_status_change_callback_user_data);
+   }
+   return;
+}
+
 void Base::run()
 {
    started_at = std::chrono::high_resolution_clock::now();
-   status = STATUS_RUNNING;
+   //status = STATUS_RUNNING;
+   set_status(STATUS_RUNNING);
 
    // set all the statuses to STATUS_NOT_STARTED
    for (auto &build_stage : build_stages)
@@ -114,7 +155,8 @@ void Base::run()
          else
          {
             build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_FAILED);
-            status = STATUS_ERROR;
+            //status = STATUS_ERROR;
+            set_status(STATUS_ERROR);
          }
       }
       catch (const std::exception& e)
@@ -123,7 +165,8 @@ void Base::run()
                "thrown:" << std::endl;
          std::cout << e.what() << std::endl;
          build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_ERROR);
-         status = STATUS_ERROR;
+         //status = STATUS_ERROR;
+         set_status(STATUS_ERROR);
       }
       build_stage->set_ended_at(std::chrono::high_resolution_clock::now());
 
@@ -135,7 +178,8 @@ void Base::run()
    }
 
    // set the status to STATUS_FINISHED when all the stages are completed (without error)
-   status = STATUS_FINISHED;
+   //status = STATUS_FINISHED;
+   set_status(STATUS_FINISHED);
    ended_at = std::chrono::high_resolution_clock::now();
    return;
 }
@@ -185,7 +229,8 @@ void Base::run_all_in_parallel()
 
    //TODO: check for error status
 
-   status = STATUS_FINISHED;
+   // status = STATUS_FINISHED;
+   set_status(STATUS_FINISHED);
    ended_at = std::chrono::high_resolution_clock::now();
    return;
 }

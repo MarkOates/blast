@@ -36,6 +36,23 @@ properties:
     type: std::string
     init_with: STATUS_WAITING_TO_START
     getter: true
+    setter: explicit
+
+  - name: status_change_count
+    type: int
+    init_with: 0
+    getter: true
+
+  - name: on_status_change_callback
+    type: std::function<void(std::string, std::chrono::high_resolution_clock::time_point, int, void*)>
+    init_with: '{}'
+    getter: true
+    setter: true
+
+  - name: on_status_change_callback_user_data
+    type: void*
+    init_with: nullptr
+    getter: true
     setter: true
 
   - name: STATUS_UNDEFINED
@@ -82,10 +99,28 @@ functions:
       return (possible_type == get_type());
 
 
+  - name: set_status
+    parameters:
+      - name: status
+        type: std::string
+        default_argument: '"[unset-status]"'
+    body: |
+      // TODO: Should this be private?
+      // TODO: Should this be wrapped in a mutex?
+      this->status = status;
+      std::chrono::high_resolution_clock::time_point time_now = std::chrono::high_resolution_clock::now();
+      if (on_status_change_callback)
+      {
+         on_status_change_callback(status, time_now, status_change_count, on_status_change_callback_user_data);
+      }
+      return;
+
+
   - name: run
     body: |
       started_at = std::chrono::high_resolution_clock::now();
-      status = STATUS_RUNNING;
+      //status = STATUS_RUNNING;
+      set_status(STATUS_RUNNING);
 
       // set all the statuses to STATUS_NOT_STARTED
       for (auto &build_stage : build_stages)
@@ -108,7 +143,8 @@ functions:
             else
             {
                build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_FAILED);
-               status = STATUS_ERROR;
+               //status = STATUS_ERROR;
+               set_status(STATUS_ERROR);
             }
          }
          catch (const std::exception& e)
@@ -117,7 +153,8 @@ functions:
                   "thrown:" << std::endl;
             std::cout << e.what() << std::endl;
             build_stage->set_status(Blast::BuildSystem::BuildStages::Base::STATUS_ERROR);
-            status = STATUS_ERROR;
+            //status = STATUS_ERROR;
+            set_status(STATUS_ERROR);
          }
          build_stage->set_ended_at(std::chrono::high_resolution_clock::now());
 
@@ -129,7 +166,8 @@ functions:
       }
 
       // set the status to STATUS_FINISHED when all the stages are completed (without error)
-      status = STATUS_FINISHED;
+      //status = STATUS_FINISHED;
+      set_status(STATUS_FINISHED);
       ended_at = std::chrono::high_resolution_clock::now();
       return;
     body_dependency_symbols:
@@ -186,7 +224,8 @@ functions:
 
       //TODO: check for error status
 
-      status = STATUS_FINISHED;
+      // status = STATUS_FINISHED;
+      set_status(STATUS_FINISHED);
       ended_at = std::chrono::high_resolution_clock::now();
       return;
     body_dependency_symbols:
