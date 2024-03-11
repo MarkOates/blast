@@ -121,6 +121,7 @@ void Base::set_status(std::string status)
    // TODO: Should this be wrapped in a mutex?
    this->status = status;
    std::chrono::high_resolution_clock::time_point time_now = std::chrono::high_resolution_clock::now();
+   status_change_count++;
    if (on_status_change_callback)
    {
       on_status_change_callback(status, time_now, status_change_count, on_status_change_callback_user_data);
