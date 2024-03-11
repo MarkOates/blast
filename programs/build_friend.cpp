@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <filesystem>
 #include <Blast/ShellCommandExecutorWithCallback.hpp>
 
 
@@ -34,19 +35,28 @@ namespace BuildWorkers
           curl_signal_command.execute();
        }
 
-      class ExecuteTask : public Blast::BuildSystem::BuildStages::Base
+      class ExecuteTaskAndLogToFile : public Blast::BuildSystem::BuildStages::Base
       {
+      private:
+         std::string command;
+         std::string log_filename;
+
+      public:
+         ExecuteTaskAndLogToFile(std::string command, std::string log_filename)
+            : command(command)
+            , log_filename(log_filename) //"tmp/build_log_from_build_friend_callback.log")
+         {}
+
          virtual bool execute() override
          {
-            std::string log_filename = "tmp/build_log_from_build_friend_callback.log";
-            std::string command = "ls";
+            //std::string command = "ls";
             std::ofstream outfile;
             outfile.open(log_filename);
 
             if (!outfile.is_open())
             {
                std::cerr << "Error opening file: " << log_filename << std::endl;
-               return 1;
+               return false;
             }
 
             Blast::ShellCommandExecutorWithCallback executor(command, [&outfile](std::string content){
@@ -62,27 +72,53 @@ namespace BuildWorkers
             return true;
          }
       };
+
+      class UploadLogFileToGCloud : public Blast::BuildSystem::BuildStages::Base
+      {
+      private:
+         std::string log_filename;
+
+      public:
+         UploadLogFileToGCloud(std::string log_filename)
+            : log_filename(log_filename) //"tmp/build_log_from_build_friend_callback.log")
+         {}
+
+         virtual bool execute() override
+         {
+            // TODO: Improve sanitizing of postdata string
+            // CRITICAL: Improve sanitizing of log_filename string
+
+            std::stringstream command;
+            if (!std::filesystem::exists(log_filename))
+            {
+               std::cout << "The expected generated log file \"" << log_filename << "\" does not exist.";
+               return false;
+            }
+            command << "gcloud storage cp " << log_filename << " gs://clubcatt-build-status-and-logs-bucket/";
+
+            Blast::ShellCommandExecutorWithCallback curl_signal_command(command.str());
+            curl_signal_command.execute();
+
+            return true;
+         }
+      };
    } // namespace Stage
 } // namespace BuildWorkers
 
-
-
-
-// TODO: Stages
-// - signal to parent accepting task
-// - execute command
-//   - upload output log to location (possibly through gcloud)
-//   - if success, signal success
-//   - if failure, signal failure
-// - signal completion of task with status
 
 
 int main(int argc, char** argv)
 {
    Blast::BuildSystem::Builds::Base build;
 
+   // TODO: Allow using differnet commands from the pilot computer
+   std::string command = "ls";
+   // TODO: Make this a temporary filename (locally) and do not pass in in here when creating the build stages
+   std::string log_filename = "./tmp/build_log_from_build_friend_callback-12345.log";
+
    build.set_build_stages({
-      new BuildWorkers::Stages::ExecuteTask(),
+      new BuildWorkers::Stages::ExecuteTaskAndLogToFile(command, log_filename),
+      new BuildWorkers::Stages::UploadLogFileToGCloud(log_filename),
    });
 
    build.set_on_status_change_callback(BuildWorkers::Stages::curl_signal_to_host_of_status_change);
