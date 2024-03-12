@@ -9,7 +9,8 @@ int main(int argc, char** argv)
 {
    std::stringstream command;
 
-   command << "pwd" << std::endl;
+   //command << "pwd" << std::endl;
+   command << "gcloud -v" << std::endl;
 
    // The following commands do not work in MSYS2 using the ShellCommandExecutorWithCallback:
    //command << "\"\\C\\Users\\Mark\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud\" -v";
