@@ -162,8 +162,8 @@ public:
 
       // TODO: Generate a random log_file
       set_build_stages({
-         // TODO: Add stage to validate gcloud presence
-         // TODO: Add stage to validate gcloud's current project is set to the expected project
+         // TODO: Somehow aquire or confirm access_token to google cloud:
+         // https://stackoverflow.com/questions/42418493/how-do-i-upload-to-google-cloud-storage-with-curl-and-an-api-key
          new BuildWorkers::Stages::ExecuteTaskAndLogToFile(command, log_filename),
          new BuildWorkers::Stages::UploadLogFileToGCloud(log_filename, gcloud_executable_name, gcloud_destination_bucket),
       });
