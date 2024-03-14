@@ -123,6 +123,8 @@ namespace BuildWorkers
 
             // CRITICAL: validate the presence of "gcloud_executable" before running this command
 
+            // TODO: Replace this usage of "gcloud" with token-based access, see:
+            // https://stackoverflow.com/questions/42418493/how-do-i-upload-to-google-cloud-storage-with-curl-and-an-api-key
             command << "\"" << gcloud_executable_name << "\" storage cp \"" << log_filename << "\" \"" << gcloud_destination_bucket << "\""; //gs://clubcatt-build-status-and-logs-bucket/";
             std::cout << "========= executing begin ==========" << std::endl;
             std::cout << command.str() << std::endl;
