@@ -470,6 +470,7 @@ void create_directories(Generator &generator)
    system(generator.mkprojdir_and_keep_file("bin/data/samples/sound_effects").c_str());
    system(generator.mkprojdir_and_keep_file("lib").c_str());
    system(generator.mkprojdir_and_keep_file("tmp").c_str());
+   system(generator.mkprojdir_and_keep_file("tmp/test_snapshots").c_str());
    system(generator.mkprojdir_and_keep_file("docs").c_str());
    system(generator.mkprojdir_and_keep_file("include").c_str());
    system(generator.mkprojdir_and_keep_file("examples").c_str());
