@@ -213,6 +213,7 @@ methods:
     guards: [ initialized ]
     body: |
       // Update stuff here (take into account delta_time)
+      update();
       return;
 
 
