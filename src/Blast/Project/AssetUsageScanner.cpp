@@ -55,6 +55,8 @@ std::string AssetUsageScanner::get_git_command()
               << "git grep --untracked --break \"asset_studio::\" "
               << "\":(exclude)./documentation/*\" "
               << "\":(exclude)./include/lib/*\" "
+              << "\":(exclude)./project_files/*\" "
+              << "\":(exclude)./tmp/*\" "
               << "\":(exclude)./scripts/*\" "
               << "\":(exclude)./tests/*\" " // NOTE: Excluding tests, consider removing this exclusion
            << ")"

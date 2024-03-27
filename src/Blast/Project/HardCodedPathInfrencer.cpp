@@ -54,6 +54,8 @@ std::string HardCodedPathInfrencer::get_git_command()
    command << "(cd " << project_directory << " && "
               << "git grep --untracked --break \"/Users/markoates\" "
               << "\":(exclude)./documentation/*\" "
+              << "\":(exclude)./project_files/*\" "
+              << "\":(exclude)./tmp/*\" "
               << "\":(exclude)./include/lib/*\" "
               << "\":(exclude)./scripts/*\" "
               << "\":(exclude)./tests/*\" " // NOTE: Excluding tests, consider removing this exclusion

@@ -14,9 +14,7 @@ TEST(Blast_Project_AssetUsageScannerTest, can_be_created_without_blowing_up)
 TEST(Blast_Project_AssetUsageScannerTest, get_git_command__returns_the_expected_command)
 {
    Blast::Project::AssetUsageScanner asset_usage_scanner;
-   std::string expected_command = "(cd /Users/markoates/Repos/SomePlatformer && git grep --untracked "
-      "--break \"asset_studio::\" \":(exclude)./documentation/*\" \":(exclude)./include/lib/*\" "
-      "\":(exclude)./scripts/*\" \":(exclude)./tests/*\" )";
+   std::string expected_command = "(cd /Users/markoates/Repos/SomePlatformer && git grep --untracked --break \"asset_studio::\" \":(exclude)./documentation/*\" \":(exclude)./include/lib/*\" \":(exclude)./project_files/*\" \":(exclude)./tmp/*\" \":(exclude)./scripts/*\" \":(exclude)./tests/*\" )";
    EXPECT_EQ(expected_command, asset_usage_scanner.get_git_command());
 }
 
