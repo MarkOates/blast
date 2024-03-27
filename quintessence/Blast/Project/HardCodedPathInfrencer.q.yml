@@ -9,6 +9,13 @@ properties:
     setter: true
 
 
+documentation:
+
+
+  - todos:
+      - fix typo in this class name "Infrencer" -> "Inferencer"
+
+
 methods:
 
 
