@@ -7,6 +7,7 @@
 #include <Blast/DirectoryExistenceChecker.hpp>
 #include <Blast/Errors.hpp>
 #include <Blast/FileExistenceChecker.hpp>
+#include <Blast/Project/AssetUsageScanner.hpp>
 #include <Blast/Project/HardCodedPathInfrencer.hpp>
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <Blast/Project/SourceReleaseAppInfoFile.hpp>
@@ -696,6 +697,7 @@ bool SourceReleaseBuilder::generate_source_release()
    bool validate_readme_exists_in_source_folder = true;
    bool validate_zip_command_exists = true;
    bool check_for_hard_coded_paths = true;
+   bool check_for_prefixed_assets = true;
    bool copy_allegro_flare_source_and_header_files_from_source = true;
    bool copy_allegro_flare_include_lib_nlohmann_json_from_source = true;
    bool copy_allegro_flare_include_lib_ordered_map_from_source = true;
@@ -735,6 +737,47 @@ bool SourceReleaseBuilder::generate_source_release()
                     message << result << std::endl;
                  }
          message << "===============================" << std::endl
+                 << std::endl
+                 ;
+
+         Blast::Errors::throw_error(
+            "Blast::Project::SourceReleaseBuilder::generate_source_release",
+            message.str()
+         );
+      }
+   }
+
+
+   if (check_for_prefixed_assets)
+   {
+      Blast::Project::AssetUsageScanner asset_usage_scanner;
+      //hard_coded_path_infrencer.set_project_directory("/Users/markoates/Repos/Pipeline");
+      asset_usage_scanner.set_project_directory(source_project_directory);
+      std::pair<bool, std::vector<std::string>> hard_coded_path_check_result =
+         asset_usage_scanner.check_for_prefixed_assets();
+
+      bool hard_coded_paths_detected = (!hard_coded_path_check_result.first);
+      if (hard_coded_paths_detected)
+      {
+         int num_infractions = hard_coded_path_check_result.second.size();
+         std::string plural_s = (num_infractions != 1) ? "s" : "";
+         std::stringstream message;
+         message << "Prefixed assets were detected "
+                     << "(" << num_infractions << " infraction" << plural_s << ")." << std::endl
+                 << "The command used to detect:" << std::endl
+                 << "===============================" << std::endl
+                 << asset_usage_scanner.get_git_command() << std::endl
+                 << "===============================" << std::endl
+                 << "Here are the detected locations of the hard-coded paths:" << std::endl
+                 << std::endl
+                 << "===============================" << std::endl;
+                 for (auto &result : hard_coded_path_check_result.second)
+                 {
+                    message << result << std::endl;
+                 }
+         message << "===============================" << std::endl
+                 << "These prefixed assets indicate that assets are located in outside of the project's directory "
+                 << "and should be copied into a project-local folder."
                  << std::endl
                  ;
 

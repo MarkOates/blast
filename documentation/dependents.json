@@ -422,6 +422,9 @@
   "Blast/Project/HardCodedPathInfrencer": [
     "Blast/Project/SourceReleaseBuilder"
   ],
+  "Blast/Project/AssetUsageScanner": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker",
     "Blast/Testing/TemporaryDirectoryCreator"
