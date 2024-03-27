@@ -31,7 +31,7 @@ methods:
       - std::stringstream
 
 
-  - name: check_for_hard_coded_paths
+  - name: check_for_prefixed_assets
     type: std::pair<bool, std::vector<std::string>>
     body: |
       Blast::ShellCommandExecutorWithCallback executor(

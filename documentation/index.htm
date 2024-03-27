@@ -88,6 +88,7 @@ table td
   <li><a href="#quintessence/Blast/FileLastWriteTime.q.yml">quintessence/Blast/FileLastWriteTime.q.yml</a></li>
   <li><a href="#quintessence/Blast/Inflector.q.yml">quintessence/Blast/Inflector.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ActionCreator.q.yml">quintessence/Blast/Project/ActionCreator.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Project/AssetUsageScanner.q.yml">quintessence/Blast/Project/AssetUsageScanner.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/Component.q.yml">quintessence/Blast/Project/Component.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ComponentBasenameExtractor.q.yml">quintessence/Blast/Project/ComponentBasenameExtractor.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ComponentCreator.q.yml">quintessence/Blast/Project/ComponentCreator.q.yml</a></li>
@@ -1796,6 +1797,55 @@ table td
 <div class="property-box dependencies">     <table>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::Project::Component&quot;, &quot;headers&quot;=&gt;[&quot;Blast/Project/Component.hpp&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/AssetUsageScanner.q.yml">quintessence/Blast/Project/AssetUsageScanner.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">project_directory</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>get_git_command</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::pair&lt;bool, std::vector&lt;std::string&gt;&gt;</td>
+  <td class="method"><b>check_for_prefixed_assets</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>trim_each</b>(std::vector&lt;std::string&gt; tokens={})</td>
+</tr>
+<tr>
+  <td class="private_method">std::vector&lt;std::string&gt;</td>
+  <td class="private_method"><b>remove_empty</b>(std::vector&lt;std::string&gt; strVector={})</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ShellCommandExecutorWithCallback&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ShellCommandExecutorWithCallback.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::find_if&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -5053,6 +5103,7 @@ table td
   ],
   "Blast/ShellCommandExecutorWithCallback": [
     "Blast/BuildSystem/BuildStages/ShellCommand",
+    "Blast/Project/AssetUsageScanner",
     "Blast/Project/ComponentLister",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/ProgramLister",
@@ -5123,6 +5174,7 @@ table td
   ],
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
+    "Blast/Project/AssetUsageScanner",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/String/Unindenter",
@@ -5191,6 +5243,22 @@ table td
     "Blast/Project/ComponentLister",
     "Blast/Project/ComponentRelativeLister",
     "Blast/Project/ComponentRelativeLister"
+  ],
+  "Blast/String/Trimmer": [
+    "Blast/Project/AssetUsageScanner",
+    "Blast/Project/HardCodedPathInfrencer",
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "std/find_if": [
+    "Blast/Project/AssetUsageScanner",
+    "Blast/Project/HardCodedPathInfrencer",
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "Blast/String/Trimmer"
   ],
   "vector": [
     "Blast/Project/Component"
@@ -5263,20 +5331,6 @@ table td
     "Blast/Project/ProgramLister",
     "NcursesArt/GithubRepoStatusFetcher",
     "StringVectorIntersection"
-  ],
-  "Blast/String/Trimmer": [
-    "Blast/Project/HardCodedPathInfrencer",
-    "Blast/Project/SourceReleaseAppInfoFile",
-    "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher",
-    "Quizes/MultiplexQuestionCollectionHelper",
-    "Quizes/MultiplexQuizRunner",
-    "Quizes/MultiplexSheetLoader"
-  ],
-  "std/find_if": [
-    "Blast/Project/HardCodedPathInfrencer",
-    "Blast/Project/SourceReleaseAppInfoFile",
-    "Blast/String/Trimmer"
   ],
   "std/filesystem": [
     "Blast/Project/ProjectSymlinkFixer",

@@ -133,6 +133,7 @@
   ],
   "Blast/ShellCommandExecutorWithCallback": [
     "Blast/BuildSystem/BuildStages/ShellCommand",
+    "Blast/Project/AssetUsageScanner",
     "Blast/Project/ComponentLister",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/ProgramLister",
@@ -203,6 +204,7 @@
   ],
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
+    "Blast/Project/AssetUsageScanner",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/String/Unindenter",
@@ -271,6 +273,22 @@
     "Blast/Project/ComponentLister",
     "Blast/Project/ComponentRelativeLister",
     "Blast/Project/ComponentRelativeLister"
+  ],
+  "Blast/String/Trimmer": [
+    "Blast/Project/AssetUsageScanner",
+    "Blast/Project/HardCodedPathInfrencer",
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "HostnameExtractor",
+    "NcursesArt/GithubRepoStatusFetcher",
+    "Quizes/MultiplexQuestionCollectionHelper",
+    "Quizes/MultiplexQuizRunner",
+    "Quizes/MultiplexSheetLoader"
+  ],
+  "std/find_if": [
+    "Blast/Project/AssetUsageScanner",
+    "Blast/Project/HardCodedPathInfrencer",
+    "Blast/Project/SourceReleaseAppInfoFile",
+    "Blast/String/Trimmer"
   ],
   "vector": [
     "Blast/Project/Component"
@@ -343,20 +361,6 @@
     "Blast/Project/ProgramLister",
     "NcursesArt/GithubRepoStatusFetcher",
     "StringVectorIntersection"
-  ],
-  "Blast/String/Trimmer": [
-    "Blast/Project/HardCodedPathInfrencer",
-    "Blast/Project/SourceReleaseAppInfoFile",
-    "HostnameExtractor",
-    "NcursesArt/GithubRepoStatusFetcher",
-    "Quizes/MultiplexQuestionCollectionHelper",
-    "Quizes/MultiplexQuizRunner",
-    "Quizes/MultiplexSheetLoader"
-  ],
-  "std/find_if": [
-    "Blast/Project/HardCodedPathInfrencer",
-    "Blast/Project/SourceReleaseAppInfoFile",
-    "Blast/String/Trimmer"
   ],
   "std/filesystem": [
     "Blast/Project/ProjectSymlinkFixer",

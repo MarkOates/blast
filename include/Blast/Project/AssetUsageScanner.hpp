@@ -26,7 +26,7 @@ namespace Blast
          void set_project_directory(std::string project_directory);
          std::string get_project_directory() const;
          std::string get_git_command();
-         std::pair<bool, std::vector<std::string>> check_for_hard_coded_paths();
+         std::pair<bool, std::vector<std::string>> check_for_prefixed_assets();
          static std::vector<std::string> trim_each(std::vector<std::string> tokens={});
       };
    }

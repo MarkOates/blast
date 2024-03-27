@@ -62,7 +62,7 @@ std::string AssetUsageScanner::get_git_command()
    return command.str();
 }
 
-std::pair<bool, std::vector<std::string>> AssetUsageScanner::check_for_hard_coded_paths()
+std::pair<bool, std::vector<std::string>> AssetUsageScanner::check_for_prefixed_assets()
 {
    Blast::ShellCommandExecutorWithCallback executor(
          get_git_command(),
