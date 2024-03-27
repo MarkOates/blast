@@ -1,0 +1,103 @@
+properties:
+
+
+  - name: project_directory
+    type: std::string
+    init_with: '"/Users/markoates/Repos/SomePlatformer"'
+    constructor_arg: true
+    getter: true
+    setter: true
+
+
+methods:
+
+
+  - name: get_git_command
+    type: std::string
+    guards: [ 'std::filesystem::exists(project_directory)' ]
+    body: |
+      std::stringstream command;
+      command << "(cd " << project_directory << " && "
+                 << "git grep --untracked --break \"asset_studio::\" "
+                 << "\":(exclude)./documentation/*\" "
+                 << "\":(exclude)./include/lib/*\" "
+                 << "\":(exclude)./scripts/*\" "
+                 << "\":(exclude)./tests/*\" " // NOTE: Excluding tests, consider removing this exclusion
+              << ")"
+              ;
+      return command.str();
+    body_dependency_symbols:
+      - std::filesystem
+      - std::stringstream
+
+
+  - name: check_for_hard_coded_paths
+    type: std::pair<bool, std::vector<std::string>>
+    body: |
+      Blast::ShellCommandExecutorWithCallback executor(
+            get_git_command(),
+            ShellCommandExecutorWithCallback::simple_silent_callback
+         );
+      std::string execution_result = executor.execute();
+      std::vector<std::string> tokens = Blast::StringSplitter(execution_result, '\n').split();
+      tokens = remove_empty(trim_each(tokens));
+
+      return { tokens.empty(), tokens };
+    body_dependency_symbols:
+      - Blast::StringSplitter
+      - Blast::ShellCommandExecutorWithCallback
+      - Blast::String::Trimmer
+
+
+  - name: trim_each
+    type: std::vector<std::string>
+    static: true
+    parameters:
+      - name: tokens
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      for (auto &s : tokens)
+      {
+         // ltrim
+         s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) {return !std::isspace(c);}));
+         // rtrim
+         s.erase(std::find_if(s.rbegin(), s.rend(), [](int c) {return !std::isspace(c);}).base(), s.end());
+      }
+      return tokens;
+    body_dependency_symbols:
+      - std::find_if
+
+
+  - name: remove_empty
+    static: true
+    private: true
+    type: std::vector<std::string>
+    parameters:
+      - name: strVector
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      // Use the erase-remove idiom to remove empty strings
+      strVector.erase(
+            std::remove_if(strVector.begin(), strVector.end(), [](const std::string& str)
+                  {
+                     return str.empty();
+                  }),
+                  strVector.end());
+      return strVector;
+
+
+dependencies:
+
+
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: Blast::String::Trimmer
+    headers: [ Blast/String/Trimmer.hpp ]
+  - symbol: Blast::StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]
+  - symbol: std::find_if
+    headers: [ algorithm ]
+
+
