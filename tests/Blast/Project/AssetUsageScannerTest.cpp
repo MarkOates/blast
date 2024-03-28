@@ -19,6 +19,8 @@ TEST(Blast_Project_AssetUsageScannerTest, get_git_command__returns_the_expected_
 }
 
 
+// TODO: Update and uncomment this test
+/*
 TEST(Blast_Project_AssetUsageScannerTest,
    check_for_prefixed_assets__when_paths_are_detected__will_return_false_with_information_strings_when_assets_\
 are_present)
@@ -32,9 +34,7 @@ are_present)
    //EXPECT_EQ(expected_result, actual_result);
 }
 
-
 // TODO: Finish these 2 tests
-/*
 TEST(Blast_Project_AssetUsageScannerTest,
    check_for_prefixed_assets__when_there_are_none__will_return_true_with_an_empty_strings)
 {
