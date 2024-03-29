@@ -44,6 +44,8 @@ methods:
 
       [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen *result = new [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen;
 
+      result->set_data_folder_path(runner->get_framework_ref().get_data_folder_path());
+      result->set_asset_studio_database(runner->get_framework_ref().get_asset_studio_database_ref());
       result->set_font_bin(runner->get_font_bin());
       result->set_bitmap_bin(runner->get_bitmap_bin());
       result->set_model_bin(runner->get_model_bin());

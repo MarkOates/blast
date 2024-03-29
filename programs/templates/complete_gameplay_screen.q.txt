@@ -9,32 +9,43 @@ parent_classes:
 properties:
 
 
+  - name: data_folder_path
+    type: std::string
+    init_with: DEFAULT_DATA_FOLDER_PATH
+    getter: true
+    setter: before_initialized
+
+  - name: asset_studio_database
+    type: AllegroFlare::AssetStudio::Database*
+    init_with: nullptr
+    getter_ref: true
+    setter: before_initialized
+
   - name: event_emitter
     type: AllegroFlare::EventEmitter*
     init_with: nullptr
-    constructor_arg: true
+    setter: before_initialized
 
   - name: bitmap_bin
     type: AllegroFlare::BitmapBin*
     init_with: nullptr
-    constructor_arg: true
+    setter: before_initialized
 
   - name: font_bin
     type: AllegroFlare::FontBin*
     init_with: nullptr
-    constructor_arg: true
+    setter: before_initialized
 
   - name: model_bin
     type: AllegroFlare::ModelBin*
     init_with: nullptr
-    constructor_arg: true
+    setter: before_initialized
 
   - name: game_configuration
     type: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main*
     init_with: nullptr
-    constructor_arg: true
     getter: true
-    setter: true
+    setter: before_initialized
 
   - name: current_level_identifier
     type: std::string
@@ -47,6 +58,13 @@ properties:
   - name: initialized
     type: bool
     init_with: false
+    getter: true
+
+  - name: DEFAULT_DATA_FOLDER_PATH
+    type: char*
+    init_with: '(char*)"[unset-data_folder_path]"'
+    static: true
+    constexpr: true
 
   - name: TYPE
     type: char*
@@ -56,51 +74,6 @@ properties:
 
 
 methods:
-
-
-  - name: set_event_emitter
-    guards: [ (!initialized) ]
-    parameters:
-      - name: event_emitter
-        type: AllegroFlare::EventEmitter*
-        default_argument: nullptr
-    body: |
-      this->event_emitter = event_emitter;
-      return;
-
-
-  - name: set_bitmap_bin
-    guards: [ (!initialized) ]
-    parameters:
-      - name: bitmap_bin
-        type: AllegroFlare::BitmapBin*
-        default_argument: nullptr
-    body: |
-      this->bitmap_bin = bitmap_bin;
-      return;
-
-
-  - name: set_font_bin
-    guards: [ (!initialized) ]
-    parameters:
-      - name: font_bin
-        type: AllegroFlare::FontBin*
-        default_argument: nullptr
-    body: |
-      this->font_bin = font_bin;
-      return;
-
-
-  - name: set_model_bin
-    guards: [ (!initialized) ]
-    parameters:
-      - name: model_bin
-        type: AllegroFlare::ModelBin*
-        default_argument: nullptr
-    body: |
-      this->model_bin = model_bin;
-      return;
-      return;
 
 
   - name: load_level_by_identifier
