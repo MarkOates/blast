@@ -401,6 +401,12 @@ void copy_resource_files(Generator &generator)
    std::string new_project_fixtures_folder = generator.get_project_name() + "/tests/fixtures/";
    std::string asset_name = "";
 
+   std::filesystem::copy(resource_file_folder + "assets/assets_db.csv", new_project_data_folder + "assets/assets_db.csv");
+
+   std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ./../../bin/data/assets ./tests/fixtures/assets )";
+   Blast::ShellCommandExecutorWithCallback assets_folder_symlink_command_executor(command);
+   assets_folder_symlink_command_executor.execute();
+
    std::filesystem::copy(resource_file_folder + "fonts/fa-solid-900.ttf", new_project_data_folder + "fonts/fa-solid-900.ttf");
    std::filesystem::copy(resource_file_folder + "fonts/fa-solid-900.ttf", new_project_fixtures_folder + "fonts/fa-solid-900.ttf");
 
@@ -461,6 +467,7 @@ void create_directories(Generator &generator)
    system(generator.get_command_for_make_dir().c_str());
    system(generator.mkprojdir_and_keep_file("bin").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data").c_str());
+   system(generator.mkprojdir_and_keep_file("bin/data/assets").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/bitmaps").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/fonts").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/models").c_str());
