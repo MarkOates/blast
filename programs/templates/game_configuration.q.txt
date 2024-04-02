@@ -63,6 +63,40 @@ methods:
       - AllegroFlare::DialogTree::NodeBankFactory
 
 
+  - name: handle_primary_gameplay_screen_finished
+    virtual: true
+    override: true
+    guards: [ primary_gameplay_screen ]
+    body: |
+      // TODO: Consider if this should be moved to the router, and this configuration should
+      // be called to consider if "game_is_won" is true
+      // TODO: Document how this routing takes place from the EVENT_GAMEPLAY_SCREEN_FINISHED to here
+
+      // TODO: Avoid using the primary_gameplay_screen's event emitter
+      AllegroFlare::EventEmitter* event_emitter = primary_gameplay_screen->get_event_emitter();
+
+      bool game_is_won = false; // TODO: Create the evaluation for this
+      if (game_is_won)
+      {
+         // TODO: Test this emission works as expected
+         event_emitter->emit_router_event(
+            AllegroFlare::Routers::Standard::EVENT_WIN_GAME,
+            nullptr,
+            al_get_time()
+         );
+      }
+      else
+      {
+         // Emit the event to return to the level select screen
+         event_emitter->emit_router_event(
+            AllegroFlare::Routers::Standard::EVENT_ACTIVATE_LEVEL_SELECT_SCREEN,
+            nullptr,
+            al_get_time()
+         );
+      }
+      return;
+
+
   - name: load_level_by_identifier
     virtual: true
     override: true
