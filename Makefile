@@ -147,6 +147,7 @@ else
 
 	#TODO: Consider adding -Wheader-hygine to catch instances where a header may be present on clang but not on other systems
 	# https://chat.openai.com/c/eb58fb9d-507d-4361-bcc9-a8d87556d1e8
+	#TODO: Consider -Werror=literal-conversion e.g. ./include/AllegroFlare/AssetStudio/Asset.hpp:42:403: warning: implicit conversion from 'float' to 'int' changes value from 0.5 to 0 [-Wliteral-conversion]
 
 	#TODO: update to this line that includes an out-of-order ctor error promotion
 	#TODO: include -Woverloaded-virtual -Winconsistent-missing-override to promoted errors
