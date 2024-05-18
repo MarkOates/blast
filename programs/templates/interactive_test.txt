@@ -1,0 +1,109 @@
+#include <AllegroFlare/EventEmitter.hpp>
+#include <AllegroFlare/EventNames.hpp>
+
+TEST_F(AllegroFlare_Elements_Backgrounds_MultiLayer_Layers_SingleObjectTestWithAllegroRenderingFixture,
+   FOCUS__INTERACTIVE__will_work_as_expected)
+{
+   al_install_keyboard();
+   ALLEGRO_EVENT_QUEUE *event_queue = al_create_event_queue();
+   ALLEGRO_TIMER *primary_timer = al_create_timer(ALLEGRO_BPS_TO_SECS(60));
+   AllegroFlare::EventEmitter event_emitter;
+   event_emitter.initialize();
+   al_register_event_source(event_queue, al_get_timer_event_source(primary_timer));
+   al_register_event_source(event_queue, al_get_keyboard_event_source());
+   al_register_event_source(event_queue, &event_emitter.get_event_source_ref());
+
+   //AllegroFlare::Inventory af_inventory;
+   //AllegroFlare::InventoryIndex index = AllegroFlare::InventoryIndex::build_placeholder_inventory_index();
+   //AllegroFlare::Elements::Inventory inventory(
+      //&get_font_bin_ref(),
+      //&get_bitmap_bin_ref(),
+      //&af_inventory,
+      //&index,
+      //nullptr,
+      //&event_emitter
+   //);
+
+   //af_inventory.add_item(1);
+   //af_inventory.add_item(2);
+   //af_inventory.add_item(3);
+   //af_inventory.add_item(4);
+
+   al_start_timer(primary_timer);
+   bool abort = false;
+   while(!abort)
+   {
+      ALLEGRO_EVENT current_event;
+      al_wait_for_event(event_queue, &current_event);
+      switch(current_event.type)
+      {
+         case ALLEGRO_EVENT_TIMER:
+         {
+            clear();
+            //inventory.update();
+            //inventory.render();
+            al_flip_display();
+         }
+         break;
+
+         case ALLEGRO_FLARE_EVENT_PLAY_SOUND_EFFECT:
+         {
+            std::cout << "[AllegroFlare_Elements_InventoryWithAllegroRenderingFixtureTest]: INFO: "
+                      << "Play sound effect event was emitted. "
+                      << std::endl;
+         }
+
+         case ALLEGRO_EVENT_KEY_CHAR:
+         {
+            switch(current_event.keyboard.keycode)
+            {
+               case ALLEGRO_KEY_A:
+                  //inventory.activate();
+               break;
+
+               case ALLEGRO_KEY_D:
+                  //inventory.deactivate();
+               break;
+
+               case ALLEGRO_KEY_S:
+                  //inventory.show();
+               break;
+
+               case ALLEGRO_KEY_H:
+                  //inventory.hide();
+               break;
+
+               case ALLEGRO_KEY_T:
+                  //inventory.toggle_show_hide();
+               break;
+
+               case ALLEGRO_KEY_UP:
+                  //inventory.move_cursor_up();
+               break;
+
+               case ALLEGRO_KEY_DOWN:
+                  //inventory.move_cursor_down();
+               break;
+
+               case ALLEGRO_KEY_LEFT:
+                  //inventory.move_cursor_left();
+               break;
+
+               case ALLEGRO_KEY_RIGHT:
+                  //inventory.move_cursor_right();
+               break;
+
+               case ALLEGRO_KEY_ESCAPE:
+                  abort = true;
+               break;
+            }
+         }
+         break;
+      }
+   }
+
+   al_unregister_event_source(event_queue, &event_emitter.get_event_source_ref());
+   al_destroy_timer(primary_timer);
+}
+
+
