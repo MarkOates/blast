@@ -56,7 +56,10 @@ methods:
          break;
 
          default:
-            throw std::runtime_error("weird error");
+            AllegroFlare::Logger::throw_error(
+               "ClassName::set_state",
+               "Unable to handle case for state \"" + state + "\""
+            );
          break;
       }
 
@@ -64,6 +67,8 @@ methods:
       state_changed_at = al_get_time();
 
       return;
+    body_dependency_symbols:
+      - AllegroFlare::Logger
 
 
   - name: update_state
@@ -87,11 +92,16 @@ methods:
          break;
 
          default:
-            throw std::runtime_error("weird error");
+            AllegroFlare::Logger::throw_error(
+               "ClassName::update_state",
+               "Unable to handle case for state \"" + state + "\""
+            );
          break;
       }
 
       return;
+    body_dependency_symbols:
+      - AllegroFlare::Logger
 
 
   - name: is_valid_state
@@ -131,5 +141,12 @@ methods:
         default_argument: al_get_time()
     body: |
       return (time_now - state_changed_at);
+
+
+dependencies:
+
+
+  - symbol: AllegroFlare::Logger
+    headers: [ AllegroFlare/Logger.hpp ]
 
 
