@@ -17,11 +17,13 @@ if [ $# -ne 3 ]; then
     echo ""
     echo "Example:"
     echo ""
-    echo "    ./scripts/build_win64_release.sh <expected-folder-name-inside-the-zip> <version-number-string> <final-zip-name>"
+    #echo "    ./scripts/build_win64_release.sh <expected-folder-name-inside-the-zip> <version-number-string> <final-zip-name>"
+    echo "    ./scripts/build_win64_release.sh <project-name> <version-number>"
     echo ""
     echo "Example 2:"
     echo ""
-    echo "    ./scripts/build_win64_release.sh CubeShooter-0.1.2-SourceRelease 0.1.2 CubeShooter-0.1.2-win64"
+    #echo "    ./scripts/build_win64_release.sh CubeShooter-0.1.2-SourceRelease 0.1.2 CubeShooter-0.1.2-win64"
+    echo "    ./scripts/build_win64_release.sh CubeShooter 0.1.2"
     echo ""
     echo ""
     echo "NOTE: Releases can be found at:"
@@ -35,14 +37,26 @@ fi
 
 # TODO: ping -c 1 google.com
 
-SOURCE_URL="https://storage.googleapis.com/clubcatt-games-bucket/$1.zip";
+
+
+
+
+#SOURCE_URL="https://storage.googleapis.com/clubcatt-games-bucket/$1.zip";
 # SOURCE_URL="https://drive.google.com/uc?export=download&id=$SOURCE_TOKEN";
 # TEMP_BUILD_DIR="/c/Users/Mark/Desktop/temp_location_for_building/"
 TEMP_BUILD_DIR="/home/Mark/Releases/"
-FOOBAR="$1.zip"
-FOOBAR_WITHOUT_ZIP="$1"
-SOURCE_FOLDER_NAME="$1"
-FINAL_FOLDER_NAME="$3"
+# ZIP_FILENAME="$1.zip"
+# SOURCE_FOLDER_NAME="$1"
+# FINAL_FOLDER_NAME="$3"
+
+
+SOURCE_FOLDER_NAME="$1-$2-SourceRelease"
+ZIP_FILENAME="$SOURCE_FOLDER_NAME.zip"
+FINAL_FOLDER_NAME="$1-$2-win64"
+SOURCE_URL="https://storage.googleapis.com/clubcatt-games-bucket/$SOURCE_FOLDER_NAME.zip";
+
+
+VERSION_NUMBER=$2
 
 
 # TODO: validate characters in $1
@@ -66,7 +80,7 @@ mkdir -p $TEMP_BUILD_DIR || exit 3
 # Download the source release
 
 echo "===== Downloading $SOURCE_URL"
-curl -L -o $TEMP_BUILD_DIR$FOOBAR $SOURCE_URL || exit 4
+curl -L -o $TEMP_BUILD_DIR$ZIP_FILENAME $SOURCE_URL || exit 4
 
 
 # Go to the temp location, unzip the folder, and make
@@ -75,7 +89,7 @@ cd $TEMP_BUILD_DIR || exit 1
 
 
 ## TODO: Validate unzip
-unzip $FOOBAR || exit 2
+unzip $ZIP_FILENAME || exit 2
 
 
 ## TODO: CRITICAL: verify and validate that the expected folder exists in the zip file

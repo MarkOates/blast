@@ -533,7 +533,8 @@ source_release:
 
 win64_release:
 	# Note: these parameters are expected to be passed during execution time
-	$(WIN64_RELEASER_EXECUTABLE) $(EXPECTED_RELEASE_FOLDER_NAME) $(RELEASE_VERSION_NUMBER) $(RELEASE_FOLDER_NAME)
+	# $(WIN64_RELEASER_EXECUTABLE) $(EXPECTED_RELEASE_FOLDER_NAME) $(RELEASE_VERSION_NUMBER) $(RELEASE_FOLDER_NAME)
+	@echo "NOTICE: This build proceedure has changed. Please see blast repos's scripts/build_win64_release.sh."
 
 
 
