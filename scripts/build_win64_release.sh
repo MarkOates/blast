@@ -114,7 +114,7 @@ cd $TEMP_BUILD_DIR || exit 1
 
 
 ## TODO: Validate unzip
-unzip $ZIP_FILENAME || exit 2
+(cd $TEMP_BUILD_DIR && (unzip $ZIP_FILENAME) || exit 2)
 
 
 ## TODO: CRITICAL: verify and validate that the expected folder exists in the zip file
