@@ -136,7 +136,7 @@ fi
 echo "Building the ico file - STARTING"
 
 SOURCE_ICON_PNG=$(cd "$TEMP_BUILD_DIR" && cd "$SOURCE_FOLDER_NAME" && (~/Repos/blast/scripts/extract_key_from_app_info.sh app_icon_filename || exit 7))
-FULL_PATH_TO_ICON_PNG=$TEMP_BUILD_DIR$SOURCE_FOLDER_NAME/$SOURCE_ICON_PNG
+FULL_PATH_TO_ICON_PNG=$TEMP_BUILD_DIR/$SOURCE_FOLDER_NAME/$SOURCE_ICON_PNG
 
 echo "SOURCE_ICON_PNG extracted: \"$SOURCE_ICON_PNG\""
 echo "FULL_PATH_TO_ICON_PNG: \"$FULL_PATH_TO_ICON_PNG\""
