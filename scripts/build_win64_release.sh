@@ -7,6 +7,18 @@ command -v zip >/dev/null 2>&1 || { echo >&2 "\"zip\" command not found. Abortin
 command -v unzip >/dev/null 2>&1 || { echo >&2 "\"unzip\" command not found. Aborting."; exit 1; }
 command -v convert >/dev/null 2>&1 || { echo >&2 "\"convert\" command not found. Aborting."; exit 1; }
 command -v windres >/dev/null 2>&1 || { echo >&2 "\"windres\" command not found. Aborting."; exit 1; }
+# TODO: ping -c 1 google.com
+
+
+
+# Note a "share link":
+#"Krampus22_test1-SourceRelease-221209225033UTC.zip"
+#"https://drive.google.com/uc?export=download&id=1NyqegdnLt8auGmsZfq9aeIBAbUmv-I6N"
+
+# https://drive.google.com/file/d/1NyqegdnLt8auGmsZfq9aeIBAbUmv-I6N/view?usp=share_link
+# ... converted into a direct download link:
+# "https://drive.google.com/uc?export=download&id=1NyqegdnLt8auGmsZfq9aeIBAbUmv-I6N"
+
 
 
 ## CRITICAL: validate an arg is present representing the download token
@@ -53,15 +65,16 @@ if [[ ! "$2" =~ ^[0-9]+(\.[0-9]+)*$ ]]; then
 fi
 
 
+# Build
 
-# TODO: ping -c 1 google.com
 
 
 
 #SOURCE_URL="https://storage.googleapis.com/clubcatt-games-bucket/$1.zip";
 # SOURCE_URL="https://drive.google.com/uc?export=download&id=$SOURCE_TOKEN";
 # TEMP_BUILD_DIR="/c/Users/Mark/Desktop/temp_location_for_building/"
-TEMP_BUILD_DIR="/home/Mark/Releases/"
+# TEMP_BUILD_DIR="/home/Mark/Releases/"
+FINAL_RELEASES_DIR="/home/Mark/Releases/"
 # ZIP_FILENAME="$1.zip"
 # SOURCE_FOLDER_NAME="$1"
 # FINAL_FOLDER_NAME="$3"
@@ -73,25 +86,19 @@ FINAL_FOLDER_NAME="$1-$2-win64"
 SOURCE_URL="https://storage.googleapis.com/clubcatt-games-bucket/$SOURCE_FOLDER_NAME.zip";
 
 
-VERSION_NUMBER=$2
+TEMP_BUILD_DIR =$(mktemp -d -t $SOURCE_FOLDER_NAME-win64_build-XXXXXX)
+if [ ! -d "$TEMP_BUILD_DIR" ]; then
+  echo "Failed to create temporary directory"
+  exit 1
+fi
 
+echo "Temporary directory created at \"$TEMP_BUILD_DIR\""
 
-# TODO: validate characters in $1
-
-
-#"Krampus22_test1-SourceRelease-221209225033UTC.zip"
-#"https://drive.google.com/uc?export=download&id=1NyqegdnLt8auGmsZfq9aeIBAbUmv-I6N"
-
-
-# Note a "share link":
-# https://drive.google.com/file/d/1NyqegdnLt8auGmsZfq9aeIBAbUmv-I6N/view?usp=share_link
-# ... converted into a direct download link:
-# "https://drive.google.com/uc?export=download&id=1NyqegdnLt8auGmsZfq9aeIBAbUmv-I6N"
 
 
 # Create the necessary temp build folder if it does not exist
 
-mkdir -p $TEMP_BUILD_DIR || exit 3
+# mkdir -p $TEMP_BUILD_DIR || exit 3
 
 
 # Download the source release
