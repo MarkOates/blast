@@ -86,7 +86,8 @@ FINAL_FOLDER_NAME="$1-$2-win64"
 SOURCE_URL="https://storage.googleapis.com/clubcatt-games-bucket/$SOURCE_FOLDER_NAME.zip";
 
 
-$TEMP_BUILD_DIR =$(mktemp -d -t $SOURCE_FOLDER_NAME-win64_build-XXXXXX)
+TEMP_BUILD_DIR=$(mktemp -d -t $SOURCE_FOLDER_NAME-win64_build-XXXXXX)
+@echo $TEMP_BUILD_DIR
 if [ ! -d "$TEMP_BUILD_DIR" ]; then
   echo "Failed to create temporary directory"
   exit 1
