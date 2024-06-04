@@ -105,7 +105,7 @@ echo "Temporary directory created at \"$TEMP_BUILD_DIR\""
 # Download the source release
 
 echo "===== Downloading $SOURCE_URL"
-curl -L -o $TEMP_BUILD_DIR$ZIP_FILENAME $SOURCE_URL || exit 4
+curl -L -o $TEMP_BUILD_DIR/$ZIP_FILENAME $SOURCE_URL || exit 4
 
 
 # Go to the temp location, unzip the folder, and make
