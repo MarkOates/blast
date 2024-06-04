@@ -11,7 +11,7 @@ command -v windres >/dev/null 2>&1 || { echo >&2 "\"windres\" command not found.
 
 ## CRITICAL: validate an arg is present representing the download token
 
-if [ $# -ne 3 ]; then
+if [ $# -ne 2 ]; then
     echo ""
     echo "!! Error: Incorrect number of arguments provided. You must provide one."
     echo ""
@@ -34,10 +34,25 @@ if [ $# -ne 3 ]; then
 fi
 
 
+# Verify that the project name contains only letters and numbers
+if [[ ! "$1" =~ ^[a-zA-Z0-9]+$ ]]; then
+    echo ""
+    echo "!! Error: Project name (first argument) contains invalid characters. Only letters and numbers are allowed."
+    echo ""
+    exit 3
+fi
+
+# Verify that the version number contains only numbers and dots
+if [[ ! "$2" =~ ^[0-9]+(\.[0-9]+)*$ ]]; then
+    echo ""
+    echo "!! Error: Version number (second argument) contains invalid characters. Only numbers and dots are allowed."
+    echo ""
+    exit 4
+fi
+
+
 
 # TODO: ping -c 1 google.com
-
-
 
 
 
