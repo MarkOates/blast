@@ -24,6 +24,8 @@ if [ $# -ne 2 ]; then
     echo ""
     #echo "    ./scripts/build_win64_release.sh CubeShooter-0.1.2-SourceRelease 0.1.2 CubeShooter-0.1.2-win64"
     echo "    ./scripts/build_win64_release.sh CubeShooter 0.1.2"
+    echo "    ./scripts/build_win64_release.sh CubeShooter 0.1.2 2>&1 | tee build_terminal_output.txt"
+    echo "    ./scripts/build_win64_release.sh CubeShooter 0.1.2 2>&1 | tee \"output_\$(date +'%I-%M-%p-%b-%d').txt\""
     echo ""
     echo ""
     echo "NOTE: Releases can be found at:"
