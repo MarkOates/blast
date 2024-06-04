@@ -277,6 +277,8 @@ ifeq ($(OS),Windows_NT)
 else
 	ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm +111 -type f)
 endif
+OBJECTS_RESPONSE_FILE=tmp/response_file_for_build-object_files.lst
+
 
 
 
@@ -471,6 +473,10 @@ quintessences: $(QUINTESSENCE_SOURCES)
 	@find quintessence -name '*.q.yml' | xargs $(QUINTESSENCE_BUILDER_EXECUTABLE) --less_verbose -f
 	@echo "(finished)"
 
+
+
+$(OBJECTS_RESPONSE_FILE): $(OBJECTS)
+	@echo $(OBJECTS) > $(OBJECTS_RESPONSE_FILE)
 
 
 programs: $(PROGRAMS)
@@ -712,23 +718,23 @@ obj/tests/$(TEST_RUNNER_PROGRAM_NAME).o: tests/$(TEST_RUNNER_PROGRAM_NAME).cpp
 
 
 
-$(LIBRARY_FOR_TESTS_NAME): $(OBJECTS)
+$(LIBRARY_FOR_TESTS_NAME): $(OBJECTS) $(OBJECTS_RESPONSE_FILE)
 	@printf "Compiling library-for-tests \e[1m\e[36m$@\033[0m\n"
 ifeq ($(OBJECTS),)
 	@printf "\033[1m\033[32mnothing to be done, there are no objects to build into a library-for-tests\033[0m."
 else
-	@ar rs $(LIBRARY_FOR_TESTS_NAME) $^
+	@ar rs $(LIBRARY_FOR_TESTS_NAME) @$(OBJECTS_RESPONSE_FILE)
 	@printf "done. Library-for-tests file at \033[1m\033[32m$@\033[0m\n"
 endif
 
 
 
-$(LIBRARY_NAME): $(OBJECTS)
+$(LIBRARY_NAME): $(OBJECTS) $(OBJECTS_RESPONSE_FILE)
 	@printf "Compiling library \e[1m\e[36m$@\033[0m\n"
 ifeq ($(OBJECTS),)
 	@printf "\033[1m\033[32mnothing to be done, there are no objects to build into a library\033[0m."
 else
-	@ar rs $(LIBRARY_NAME) $^
+	@ar rs $(LIBRARY_NAME) @$(OBJECTS_RESPONSE_FILE)
 	@printf "done. Library file at \033[1m\033[32m$@\033[0m\n"
 endif
 
@@ -842,6 +848,7 @@ clean:
 	-rm $(DEMOS)
 	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
 	-rm $(DEPS)
+	-rm $(OBJECTS_RESPONSE_FILE)
 
 
 newlib:
