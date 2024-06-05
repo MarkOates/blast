@@ -718,7 +718,7 @@ obj/tests/$(TEST_RUNNER_PROGRAM_NAME).o: tests/$(TEST_RUNNER_PROGRAM_NAME).cpp
 
 
 
-$(LIBRARY_FOR_TESTS_NAME): $(OBJECTS) $(OBJECTS_RESPONSE_FILE)
+$(LIBRARY_FOR_TESTS_NAME): $(OBJECTS) $(OBJECTS_RESPONSE_FILE) # NOTE: This response file here is not necessary on macos
 	@printf "Compiling library-for-tests \e[1m\e[36m$@\033[0m\n"
 ifeq ($(OBJECTS),)
 	@printf "\033[1m\033[32mnothing to be done, there are no objects to build into a library-for-tests\033[0m."
