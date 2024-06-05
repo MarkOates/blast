@@ -723,7 +723,11 @@ $(LIBRARY_FOR_TESTS_NAME): $(OBJECTS) $(OBJECTS_RESPONSE_FILE)
 ifeq ($(OBJECTS),)
 	@printf "\033[1m\033[32mnothing to be done, there are no objects to build into a library-for-tests\033[0m."
 else
+ifeq ($(OS),Windows_NT)
 	@ar rs $(LIBRARY_FOR_TESTS_NAME) @$(OBJECTS_RESPONSE_FILE)
+else
+	@ar rs $(LIBRARY_FOR_TESTS_NAME) $(OBJECTS)
+endif
 	@printf "done. Library-for-tests file at \033[1m\033[32m$@\033[0m\n"
 endif
 
@@ -734,7 +738,11 @@ $(LIBRARY_NAME): $(OBJECTS) $(OBJECTS_RESPONSE_FILE)
 ifeq ($(OBJECTS),)
 	@printf "\033[1m\033[32mnothing to be done, there are no objects to build into a library\033[0m."
 else
+ifeq ($(OS),Windows_NT)
 	@ar rs $(LIBRARY_NAME) @$(OBJECTS_RESPONSE_FILE)
+else
+	@ar rs $(LIBRARY_NAME) $(OBJECTS)
+endif
 	@printf "done. Library file at \033[1m\033[32m$@\033[0m\n"
 endif
 
