@@ -1014,6 +1014,24 @@ bool SourceReleaseBuilder::generate_source_release()
       // headers
       std::string allegro_flare_include_directory = "/Users/markoates/Repos/allegro_flare/include/AllegroFlare/*";
       std::string allegro_flare_include_destination_directory = destination_directory + "/include/AllegroFlare";
+
+      // Create the include folder if it does not exist (TODO: Test this behavior)
+      if (std::filesystem::exists(allegro_flare_include_destination_directory)) {
+          if (!std::filesystem::is_directory(allegro_flare_include_destination_directory)) {
+              throw std::runtime_error("Destination \"" +
+                 allegro_flare_include_destination_directory + "\" exists but is not a directory.");
+          }
+      } else {
+          // Create the destination directory if it does not exist
+          std::cout << "When copying the AllegroFlare source into the source release, The expected folder \"" +
+             allegro_flare_include_destination_directory + "\" did not exist so it will be created..." << std::endl;
+          // Create the destination directory if it does not exist
+          std::filesystem::create_directory(allegro_flare_include_destination_directory);
+          std::cout << "... The folder \"" +
+             allegro_flare_include_destination_directory + "\" created successfully." << std::endl;
+      }
+
+      // Build the command
       std::stringstream copy_allegro_flare_include_files_command;
       copy_allegro_flare_include_files_command << "cp -R "
          << allegro_flare_include_directory << " " << allegro_flare_include_destination_directory;
@@ -1024,6 +1042,23 @@ bool SourceReleaseBuilder::generate_source_release()
       // src
       std::string allegro_flare_src_directory = "/Users/markoates/Repos/allegro_flare/src/AllegroFlare/*";
       std::string allegro_flare_src_destination_directory = destination_directory + "/src/AllegroFlare";
+
+      // Create the src folder if it does not exist (TODO: Test this behavior)
+      if (std::filesystem::exists(allegro_flare_src_destination_directory)) {
+          if (!std::filesystem::is_directory(allegro_flare_src_destination_directory)) {
+              throw std::runtime_error("Destination \"" +
+                 allegro_flare_src_destination_directory + "\" exists but is not a directory.");
+          }
+      } else {
+          std::cout << "When copying the AllegroFlare source into the source release, The expected folder \"" +
+             allegro_flare_src_destination_directory + "\" did not exist so it will be created..." << std::endl;
+          // Create the destination directory if it does not exist
+          std::filesystem::create_directory(allegro_flare_src_destination_directory);
+          std::cout << "... The folder \"" +
+             allegro_flare_src_destination_directory + "\" created successfully." << std::endl;
+      }
+
+      // Build the command
       std::stringstream copy_allegro_flare_src_files_command;
       copy_allegro_flare_src_files_command << "cp -R "
          << allegro_flare_src_directory << " " << allegro_flare_src_destination_directory;
