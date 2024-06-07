@@ -660,6 +660,18 @@ std::string get_rails_version()
 }
 
 
+std::string get_git_default_branch_name()
+{
+   std::string command = "git config --global init.defaultBranch";
+
+   Blast::ShellCommandExecutorWithCallback executor(command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output;
+}
+
+
 bool check_beebot_response_ping()
 {
    std::string command = "ruby /Users/markoates/Repos/beebot/lib/runner.rb ping";
@@ -704,6 +716,15 @@ bool check_hexagon_app_package_symlink_destination()
    std::string trimmed_output = trim(output);
 
    return trimmed_output == expected_destination;
+}
+
+
+bool run_git_default_branch_name_is_master_test()
+{
+   std::string match_expression = "master";
+   std::string actual_string = get_git_default_branch_name();
+   last_test_result = new TestResultMatcher(match_expression, actual_string);
+   return last_test_result->assessment();
 }
 
 
@@ -1041,6 +1062,12 @@ std::string sanitize_test_name(std::string source_test_name)
    //}
 //}
 
+
+
+TEST(SystemTest, git_is_configured_to_use_master_as_the_default_new_branch_name)
+{
+   EXPECT_EQ(true, run_git_default_branch_name_is_master_test()) << "Test: Git default new branch name is master (run \"git config --global init.defaultBranch master\")";
+}
 
 
 
