@@ -838,6 +838,10 @@ list_test_executables:
 
 
 
+entire:
+	# make clean && mkdir -p tmp && make 2>&1 | tee "tmp/$(PROJECT_LIB_NAME)-make_output-$\(date +'%I_%M_%p_%b_%d').log"
+	make clean && mkdir -p tmp && make 2>&1 | tee "tmp/$(PROJECT_LIB_NAME)-make_output-$(date +'%I_%M_%p_%b_%d').log"
+
 universe:
 	# make blast
 	(cd /Users/markoates/Repos/blast && git pull && make clean && make programs -j && make)
