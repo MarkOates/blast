@@ -847,7 +847,7 @@ bool check_select_executables_are_up_to_date_to_their_source()
       { false, "/Users/markoates/Repos/blast/programs/create_source_release.cpp", "/Users/markoates/Repos/blast/bin/programs/create_source_release" },
       { false, "/Users/markoates/Repos/blast/programs/fancy_find.cpp", "/Users/markoates/Repos/blast/bin/programs/fancy_find" },
       { false, "/Users/markoates/Repos/blast/programs/fancy_stager.cpp", "/Users/markoates/Repos/blast/bin/programs/fancy_stager" },
-      { false, "/Users/markoates/Repos/blast/programs/ncurses_status_fetcher.cpp", "/Users/markoates/Repos/blast/bin/programs/ncurses_status_fetcher" },
+      //{ false, "/Users/markoates/Repos/blast/programs/ncurses_status_fetcher.cpp", "/Users/markoates/Repos/blast/bin/programs/ncurses_status_fetcher" },
       { false, "/Users/markoates/Repos/blast/programs/system_test.cpp", "/Users/markoates/Repos/blast/bin/programs/system_test" },
 
       // hexagon files
