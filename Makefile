@@ -864,6 +864,8 @@ clean:
 	-rm $(ALL_COMPILED_EXECUTABLES_IN_BIN)
 	-rm $(DEPS)
 	-rm $(OBJECTS_RESPONSE_FILE)
+	-rm $(LIBRARY_FOR_TESTS_NAME)
+	-rm $(LIBRARY_NAME)
 
 
 newlib:
