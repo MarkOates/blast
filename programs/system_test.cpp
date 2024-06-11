@@ -1199,11 +1199,12 @@ TEST(SystemTest, the_systems_Applications_folder_contains_a_symlink_to_the_hexag
 }
 
 
-TEST(SystemTest, the_systems_Tiled_extensions_folder_contains_a_targed_extsion_symlink)
-{
-   EXPECT_EQ(true, check_tiled_extensions_symlinks_exist()) << "Test: the system\'s ~/Library/Preferences/Tiled/extensions/list_map_properties.js folder contains a symlink to allegro_flare's list_map_properties.js tiled script. "
-                                                           << "Use \"ln -s /Users/markoates/Repos/allegro_flare/scripts/tiled/extensions/list_map_properties.js ~/Library/Preferences/Tiled/extensions/list_map_properties.js\" to add it.";
-}
+//// This test is no longer relvant, but it is kept here as a clue for managing symlinks for Tiled in the future
+//TEST(SystemTest, the_systems_Tiled_extensions_folder_contains_a_targed_extsion_symlink)
+//{
+   //EXPECT_EQ(true, check_tiled_extensions_symlinks_exist()) << "Test: the system\'s ~/Library/Preferences/Tiled/extensions/list_map_properties.js folder contains a symlink to allegro_flare's list_map_properties.js tiled script. "
+                                                           //<< "Use \"ln -s /Users/markoates/Repos/allegro_flare/scripts/tiled/extensions/list_map_properties.js ~/Library/Preferences/Tiled/extensions/list_map_properties.js\" to add it.";
+//}
 
 
 TEST(SystemTest, vims_firstvimplugin_is_in_sync_to_the_latest_version_run_PluginUpdate_in_vim)
