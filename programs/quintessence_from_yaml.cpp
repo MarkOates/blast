@@ -118,7 +118,7 @@ std::vector<std::string> extract_default_argument_dependency_symbols(YAML::Node 
 class GuardCodeCreator
 {
 public:
-   static std::string guard(std::string condition, std::string class_name, std::string function_name, std::string message)
+   static std::string guard(std::string condition, std::string class_name_last_fragment, std::string function_name, std::string message)
    {
       std::string template_content = R"END(if (!({{CONDITION}}))
 {
@@ -130,7 +130,7 @@ public:
 
       std::vector<std::pair<std::string, std::string>> insertion_variables = {
          { "{{CONDITION}}", condition },
-         { "{{CLASS_NAME}}", class_name },
+         { "{{CLASS_NAME}}", class_name_last_fragment },
          { "{{FUNCTION_NAME}}", function_name },
          { "{{MESSAGE}}", message },
       };
@@ -145,14 +145,14 @@ public:
       return { "std::runtime_error", "std::stringstream", "std::cerr" };
    }
 
-   static std::string generate_guards_code(std::vector<std::string> guard_conditionals, std::string class_name, std::string function_name)
+   static std::string generate_guards_code(std::vector<std::string> guard_conditionals, std::string class_name_last_fragment, std::string function_name)
    {
       std::string result;
 
       for (auto &guard_conditional : guard_conditionals)
       {
          std::string guard_message = std::string("guard \\\"") + guard_conditional + "\\\" not met";
-         result += guard(guard_conditional, class_name, function_name, guard_message) + "\n";
+         result += guard(guard_conditional, class_name_last_fragment, function_name, guard_message) + "\n";
       }
 
       return result;
@@ -173,7 +173,37 @@ public:
       : yaml_filename(yaml_filename)
    {}
 
-   std::string infer_class_name()
+   std::string infer_full_class_name()
+   {
+
+      std::vector<std::string> tokens = Blast::StringSplitter(yaml_filename, '/').split();
+      if (tokens.empty()) throw std::runtime_error("quintessence_from_yaml: Can't parse tokens as expected from the filename (1)");
+      if (tokens[0] != "quintessence") throw std::runtime_error("quintessence_from_yaml: expecting first token to be \"quintessence\" but was not.");
+      tokens.erase(tokens.begin());
+      if (tokens.empty()) throw std::runtime_error("quintessence_from_yaml: Can't parse tokens as expected from the filename (2)");
+
+      // accumulate all the tokens
+      //for (int i=0; i<(tokens.size()-1)
+
+
+      std::string &basename_and_extension = tokens[tokens.size()-1];
+      std::vector<std::string> basename_and_extension_components = Blast::StringSplitter(basename_and_extension, '.').split();
+      if (basename_and_extension_components.empty()) throw std::runtime_error("Can't parse basename and extensions");
+      basename_and_extension = basename_and_extension_components[0];
+
+      std::string result = "";
+      for (auto &token : tokens)
+      {
+         result += token;
+         if (token != tokens.back()) result += "::";
+      }
+
+      std::cout << "infer_class_name_last_fragment: \"" << yaml_filename << "\" -> \"" << result << "\"" << std::endl;
+
+      return result;
+   }
+
+   std::string infer_class_name_last_fragment()
    {
       std::vector<std::string> tokens = Blast::StringSplitter(yaml_filename, '/').split();
       if (tokens.empty()) throw std::runtime_error("Can't parse tokens as expected from the filename");
@@ -1141,7 +1171,7 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
 
 
 
-Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &source, std::string quintessence_filename)
+Blast::Cpp::Class convert_yaml_to_class(std::string class_name_last_fragment, YAML::Node &source, std::string quintessence_filename)
 {
    // declare variables
 
@@ -1149,7 +1179,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
    std::vector<Blast::Cpp::EnumClass> enum_classes = extract_enum_classes(source, quintessence_filename);
-   std::vector<ParsedMethodInfo> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name, quintessence_filename);
+   std::vector<ParsedMethodInfo> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name_last_fragment, quintessence_filename);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
 
@@ -1327,7 +1357,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name, YAML::Node &sour
    // build the actual class
 
    Blast::Cpp::Class klass(
-         class_name,
+         class_name_last_fragment,
          namespaces,
          parent_classes_properties,
          attribute_properties,
@@ -1385,12 +1415,14 @@ int main(int argc, char **argv)
       // infer the class name from the filename
 
       QuintessenceClassNameFromYAMLFilenameInferer class_name_inferer(filename_args[i]);
-      std::string class_name = class_name_inferer.infer_class_name();
+      std::string class_name_last_fragment = class_name_inferer.infer_class_name_last_fragment();
+      std::string full_class_name = class_name_inferer.infer_full_class_name(); // TODO
 
 
       // convert the yaml structure to the class
 
-      Blast::Cpp::Class klass = convert_yaml_to_class(class_name, source, quintessence_filename);
+      // TODO: Pass along full_class_name
+      Blast::Cpp::Class klass = convert_yaml_to_class(class_name_last_fragment, source, quintessence_filename);
 
 
       //// generate and write the files
