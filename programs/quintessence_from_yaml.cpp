@@ -118,19 +118,19 @@ std::vector<std::string> extract_default_argument_dependency_symbols(YAML::Node 
 class GuardCodeCreator
 {
 public:
-   static std::string guard(std::string condition, std::string class_name_last_fragment, std::string function_name, std::string message)
+   static std::string guard(std::string condition, std::string full_class_name, std::string function_name, std::string message)
    {
       std::string template_content = R"END(if (!({{CONDITION}}))
 {
    std::stringstream error_message;
-   error_message << "[{{CLASS_NAME}}::{{FUNCTION_NAME}}]: error: {{MESSAGE}}.";
+   error_message << "[{{FULL_CLASS_NAME}}::{{FUNCTION_NAME}}]: error: {{MESSAGE}}.";
    std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-   throw std::runtime_error("{{CLASS_NAME}}::{{FUNCTION_NAME}}: error: {{MESSAGE}}");
+   throw std::runtime_error("[{{FULL_CLASS_NAME}}::{{FUNCTION_NAME}}]: error: {{MESSAGE}}");
 })END";
 
       std::vector<std::pair<std::string, std::string>> insertion_variables = {
          { "{{CONDITION}}", condition },
-         { "{{CLASS_NAME}}", class_name_last_fragment },
+         { "{{FULL_CLASS_NAME}}", full_class_name },
          { "{{FUNCTION_NAME}}", function_name },
          { "{{MESSAGE}}", message },
       };
@@ -145,14 +145,14 @@ public:
       return { "std::runtime_error", "std::stringstream", "std::cerr" };
    }
 
-   static std::string generate_guards_code(std::vector<std::string> guard_conditionals, std::string class_name_last_fragment, std::string function_name)
+   static std::string generate_guards_code(std::vector<std::string> guard_conditionals, std::string full_class_name, std::string function_name)
    {
       std::string result;
 
       for (auto &guard_conditional : guard_conditionals)
       {
          std::string guard_message = std::string("guard \\\"") + guard_conditional + "\\\" not met";
-         result += guard(guard_conditional, class_name_last_fragment, function_name, guard_message) + "\n";
+         result += guard(guard_conditional, full_class_name, function_name, guard_message) + "\n";
       }
 
       return result;
@@ -198,7 +198,7 @@ public:
          if (token != tokens.back()) result += "::";
       }
 
-      std::cout << "infer_class_name_last_fragment: \"" << yaml_filename << "\" -> \"" << result << "\"" << std::endl;
+      //std::cout << "infer_class_name_last_fragment: \"" << yaml_filename << "\" -> \"" << result << "\"" << std::endl;
 
       return result;
    }
@@ -857,7 +857,8 @@ public:
 
 std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
       YAML::Node &source,
-      std::string this_class_name="UnknownClass",
+      std::string full_class_name="Full::UnknownClass",
+      std::string this_class_name_last_fragment="UnknownClass",
       std::string quintessence_filename="UnknownQuintessenceFilename.yml"
    )
 {
@@ -889,7 +890,7 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
    //for (YAML::const_iterator it=source_functions.begin(); it!=source_functions.end(); ++it)
    {
       ParsedMethodInfo parsed_method_info_result;
-      parsed_method_info_result.class_name = this_class_name;
+      parsed_method_info_result.class_name = this_class_name_last_fragment;
       parsed_method_info_result.quintessence_filename = quintessence_filename;
 
       YAML::Node it = source_functions_and_methods[i];
@@ -961,7 +962,7 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
       validate(!(is_protected && is_protected), this_func_name, "Function properties \"private\" and \"protected\" cannot both be true.");
 
       std::vector<std::string> guards_conditionals = extract_sequence_as_string_array(guards_node);
-      std::string guards_code = GuardCodeCreator::generate_guards_code(guards_conditionals, this_class_name, name);
+      std::string guards_code = GuardCodeCreator::generate_guards_code(guards_conditionals, full_class_name, name);
 
       std::string body_with_guard_code = guards_code + body;
 
@@ -1171,7 +1172,7 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
 
 
 
-Blast::Cpp::Class convert_yaml_to_class(std::string class_name_last_fragment, YAML::Node &source, std::string quintessence_filename)
+Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string class_name_last_fragment, YAML::Node &source, std::string quintessence_filename)
 {
    // declare variables
 
@@ -1179,7 +1180,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string class_name_last_fragment, YA
    std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties = extract_parent_classes_properties(source);
    std::vector<Blast::Cpp::ClassAttributes> attribute_properties = extract_attribute_properties(source, quintessence_filename);
    std::vector<Blast::Cpp::EnumClass> enum_classes = extract_enum_classes(source, quintessence_filename);
-   std::vector<ParsedMethodInfo> functions_and_dependencies = extract_functions_and_dependency_info(source, class_name_last_fragment, quintessence_filename);
+   std::vector<ParsedMethodInfo> functions_and_dependencies = extract_functions_and_dependency_info(source, full_class_name, class_name_last_fragment, quintessence_filename);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
 
@@ -1421,8 +1422,7 @@ int main(int argc, char **argv)
 
       // convert the yaml structure to the class
 
-      // TODO: Pass along full_class_name
-      Blast::Cpp::Class klass = convert_yaml_to_class(class_name_last_fragment, source, quintessence_filename);
+      Blast::Cpp::Class klass = convert_yaml_to_class(full_class_name, class_name_last_fragment, source, quintessence_filename);
 
 
       //// generate and write the files
