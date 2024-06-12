@@ -192,10 +192,10 @@ public:
       basename_and_extension = basename_and_extension_components[0];
 
       std::string result = "";
-      for (auto &token : tokens)
+      for (unsigned i=0; i<tokens.size(); i++)
       {
-         result += token;
-         if (token != tokens.back()) result += "::";
+         result += tokens[i];
+         if (i != (tokens.size()-1)) result += "::";
       }
 
       //std::cout << "infer_class_name_last_fragment: \"" << yaml_filename << "\" -> \"" << result << "\"" << std::endl;
