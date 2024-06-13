@@ -45,16 +45,16 @@ void VersionYAMLLoaderEmitter::load()
    if (!((!loaded)))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::load]: error: guard \"(!loaded)\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::load]: error: guard \"(!loaded)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::load: error: guard \"(!loaded)\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::load]: error: guard \"(!loaded)\" not met");
    }
    if (!(Blast::FileExistenceChecker(yaml_filename).exists()))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::load]: error: guard \"Blast::FileExistenceChecker(yaml_filename).exists()\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::load]: error: guard \"Blast::FileExistenceChecker(yaml_filename).exists()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::load: error: guard \"Blast::FileExistenceChecker(yaml_filename).exists()\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::load]: error: guard \"Blast::FileExistenceChecker(yaml_filename).exists()\" not met");
    }
    root = YAML::LoadFile(yaml_filename);
 
@@ -99,9 +99,9 @@ void VersionYAMLLoaderEmitter::save()
    if (!(loaded))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::save]: error: guard \"loaded\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::save]: error: guard \"loaded\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::save: error: guard \"loaded\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::save]: error: guard \"loaded\" not met");
    }
    std::ofstream fout(yaml_filename);
    YAML::Emitter emitter(fout);
@@ -114,9 +114,9 @@ int VersionYAMLLoaderEmitter::get_major()
    if (!(loaded))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::get_major]: error: guard \"loaded\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::get_major]: error: guard \"loaded\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::get_major: error: guard \"loaded\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::get_major]: error: guard \"loaded\" not met");
    }
    return major;
 }
@@ -126,9 +126,9 @@ int VersionYAMLLoaderEmitter::get_minor()
    if (!(loaded))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::get_minor]: error: guard \"loaded\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::get_minor]: error: guard \"loaded\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::get_minor: error: guard \"loaded\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::get_minor]: error: guard \"loaded\" not met");
    }
    return minor;
 }
@@ -138,9 +138,9 @@ int VersionYAMLLoaderEmitter::get_patch()
    if (!(loaded))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::get_patch]: error: guard \"loaded\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::get_patch]: error: guard \"loaded\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::get_patch: error: guard \"loaded\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::get_patch]: error: guard \"loaded\" not met");
    }
    return patch;
 }
@@ -150,9 +150,9 @@ std::set<std::string> VersionYAMLLoaderEmitter::get_labels()
    if (!(loaded))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::get_labels]: error: guard \"loaded\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::get_labels]: error: guard \"loaded\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::get_labels: error: guard \"loaded\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::get_labels]: error: guard \"loaded\" not met");
    }
    return labels;
 }
@@ -162,9 +162,9 @@ std::set<std::string> VersionYAMLLoaderEmitter::get_metadata()
    if (!(loaded))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::get_metadata]: error: guard \"loaded\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::get_metadata]: error: guard \"loaded\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::get_metadata: error: guard \"loaded\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::get_metadata]: error: guard \"loaded\" not met");
    }
    return metadata;
 }
@@ -174,9 +174,9 @@ void VersionYAMLLoaderEmitter::increment()
    if (!(loaded))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::increment]: error: guard \"loaded\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::increment]: error: guard \"loaded\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::increment: error: guard \"loaded\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::increment]: error: guard \"loaded\" not met");
    }
    static const std::string INTERNAL_DEVELOPMENT_VERSION_LABEL = "wip";
 
@@ -271,9 +271,9 @@ void VersionYAMLLoaderEmitter::add_label(std::string label)
    if (!(is_valid_label(label)))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::add_label]: error: guard \"is_valid_label(label)\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::add_label]: error: guard \"is_valid_label(label)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::add_label: error: guard \"is_valid_label(label)\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::add_label]: error: guard \"is_valid_label(label)\" not met");
    }
    labels.insert(label);
    return;
@@ -284,9 +284,9 @@ void VersionYAMLLoaderEmitter::add_metadata(std::string metadata_element)
    if (!(is_valid_label(metadata_element)))
    {
       std::stringstream error_message;
-      error_message << "[VersionYAMLLoaderEmitter::add_metadata]: error: guard \"is_valid_label(metadata_element)\" not met.";
+      error_message << "[Blast::VersionYAMLLoaderEmitter::add_metadata]: error: guard \"is_valid_label(metadata_element)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("VersionYAMLLoaderEmitter::add_metadata: error: guard \"is_valid_label(metadata_element)\" not met");
+      throw std::runtime_error("[Blast::VersionYAMLLoaderEmitter::add_metadata]: error: guard \"is_valid_label(metadata_element)\" not met");
    }
    metadata.insert(metadata_element);
    return;

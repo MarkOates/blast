@@ -268,9 +268,9 @@ std::string SourceReleaseBuilder::get_released_version_string()
    if (!(build_process_completed_successfully))
    {
       std::stringstream error_message;
-      error_message << "[SourceReleaseBuilder::get_released_version_string]: error: guard \"build_process_completed_successfully\" not met.";
+      error_message << "[Blast::Project::SourceReleaseBuilder::get_released_version_string]: error: guard \"build_process_completed_successfully\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("SourceReleaseBuilder::get_released_version_string: error: guard \"build_process_completed_successfully\" not met");
+      throw std::runtime_error("[Blast::Project::SourceReleaseBuilder::get_released_version_string]: error: guard \"build_process_completed_successfully\" not met");
    }
    return release_info.build_project_version_string();
 }
@@ -639,9 +639,9 @@ std::string SourceReleaseBuilder::get_generated_source_release_zip_filename()
    if (!(build_process_completed_successfully))
    {
       std::stringstream error_message;
-      error_message << "[SourceReleaseBuilder::get_generated_source_release_zip_filename]: error: guard \"build_process_completed_successfully\" not met.";
+      error_message << "[Blast::Project::SourceReleaseBuilder::get_generated_source_release_zip_filename]: error: guard \"build_process_completed_successfully\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("SourceReleaseBuilder::get_generated_source_release_zip_filename: error: guard \"build_process_completed_successfully\" not met");
+      throw std::runtime_error("[Blast::Project::SourceReleaseBuilder::get_generated_source_release_zip_filename]: error: guard \"build_process_completed_successfully\" not met");
    }
    return generated_release_folder_name + ".zip";
 }

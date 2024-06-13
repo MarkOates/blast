@@ -211,9 +211,9 @@ std::string Celebrator::build_patterned_line(int length)
    if (!((length > 0)))
    {
       std::stringstream error_message;
-      error_message << "[Celebrator::build_patterned_line]: error: guard \"(length > 0)\" not met.";
+      error_message << "[Blast::Build::Celebrator::build_patterned_line]: error: guard \"(length > 0)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("Celebrator::build_patterned_line: error: guard \"(length > 0)\" not met");
+      throw std::runtime_error("[Blast::Build::Celebrator::build_patterned_line]: error: guard \"(length > 0)\" not met");
    }
    // NOTE: this function is WIP
    std::stringstream result;

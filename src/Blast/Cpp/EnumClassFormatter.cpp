@@ -30,9 +30,9 @@ std::string EnumClassFormatter::build_enum_definition(int indent_num_spaces)
    if (!((indent_num_spaces >= 0)))
    {
       std::stringstream error_message;
-      error_message << "[EnumClassFormatter::build_enum_definition]: error: guard \"(indent_num_spaces >= 0)\" not met.";
+      error_message << "[Blast::Cpp::EnumClassFormatter::build_enum_definition]: error: guard \"(indent_num_spaces >= 0)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClassFormatter::build_enum_definition: error: guard \"(indent_num_spaces >= 0)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClassFormatter::build_enum_definition]: error: guard \"(indent_num_spaces >= 0)\" not met");
    }
    std::stringstream result;
    result << "enum";
@@ -111,9 +111,9 @@ std::string EnumClassFormatter::output_nth_bit_as_hex_string(int n)
    if (!((n >= 0)))
    {
       std::stringstream error_message;
-      error_message << "[EnumClassFormatter::output_nth_bit_as_hex_string]: error: guard \"(n >= 0)\" not met.";
+      error_message << "[Blast::Cpp::EnumClassFormatter::output_nth_bit_as_hex_string]: error: guard \"(n >= 0)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClassFormatter::output_nth_bit_as_hex_string: error: guard \"(n >= 0)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClassFormatter::output_nth_bit_as_hex_string]: error: guard \"(n >= 0)\" not met");
    }
    std::stringstream output;
    int i=0;

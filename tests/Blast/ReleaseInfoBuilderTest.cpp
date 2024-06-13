@@ -17,7 +17,7 @@ TEST(Blast_ReleaseInfoBuilderTest, build__when_a_project_folder_does_not_exist__
    Blast::ReleaseInfoBuilder release_info_builder("ProjectThatDoesNotExist");
    EXPECT_THROW_GUARD_ERROR(
       release_info_builder.build(),
-      "ReleaseInfoBuilder::build",
+      "Blast::ReleaseInfoBuilder::build",
       "project_folder_exists()"
    );
 }
@@ -29,7 +29,7 @@ TEST(Blast_ReleaseInfoBuilderTest, build__with_an_invalid_project_name__throws_a
    Blast::ReleaseInfoBuilder release_info_builder(" ");
    EXPECT_THROW_GUARD_ERROR(
       release_info_builder.build(),
-      "ReleaseInfoBuilder::build",
+      "Blast::ReleaseInfoBuilder::build",
       "project_name_is_valid()"
    );
 }
@@ -40,7 +40,7 @@ TEST(Blast_ReleaseInfoBuilderTest, build__with_an_empty_project_name__throws_an_
    Blast::ReleaseInfoBuilder release_info_builder("");
    EXPECT_THROW_GUARD_ERROR(
       release_info_builder.build(),
-      "ReleaseInfoBuilder::build",
+      "Blast::ReleaseInfoBuilder::build",
       "project_name_is_valid()"
    );
 }

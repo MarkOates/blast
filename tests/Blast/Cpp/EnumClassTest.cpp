@@ -52,7 +52,7 @@ TEST(Blast_Cpp_EnumClassTest, set_element__with_a_list_that_does_not_contain_uni
    Blast::Cpp::EnumClass enum_class;
    EXPECT_THROW_GUARD_ERROR(
       enum_class.set_enumerators({ "FOO", "FOO" }),
-      "EnumClass::set_enumerators",
+      "Blast::Cpp::EnumClass::set_enumerators",
       "validate_elements_are_unique(enumerators)"
    );
 }

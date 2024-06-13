@@ -86,9 +86,9 @@ YAML::Node FunctionArgumentParser::fetch_node(YAML::Node* node, std::string key,
    if (!(node))
    {
       std::stringstream error_message;
-      error_message << "[FunctionArgumentParser::fetch_node]: error: guard \"node\" not met.";
+      error_message << "[Blast::Quintessence::YAMLParsers::FunctionArgumentParser::fetch_node]: error: guard \"node\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("FunctionArgumentParser::fetch_node: error: guard \"node\" not met");
+      throw std::runtime_error("[Blast::Quintessence::YAMLParsers::FunctionArgumentParser::fetch_node]: error: guard \"node\" not met");
    }
    if (node->operator[](key))
    {

@@ -27,37 +27,37 @@ Blast::BuildInfo BuildInfoBuilder::build()
    if (!(project_git_repo_active()))
    {
       std::stringstream error_message;
-      error_message << "[BuildInfoBuilder::build]: error: guard \"project_git_repo_active()\" not met.";
+      error_message << "[Blast::BuildInfoBuilder::build]: error: guard \"project_git_repo_active()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("BuildInfoBuilder::build: error: guard \"project_git_repo_active()\" not met");
+      throw std::runtime_error("[Blast::BuildInfoBuilder::build]: error: guard \"project_git_repo_active()\" not met");
    }
    if (!(allegro_folder_exists()))
    {
       std::stringstream error_message;
-      error_message << "[BuildInfoBuilder::build]: error: guard \"allegro_folder_exists()\" not met.";
+      error_message << "[Blast::BuildInfoBuilder::build]: error: guard \"allegro_folder_exists()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("BuildInfoBuilder::build: error: guard \"allegro_folder_exists()\" not met");
+      throw std::runtime_error("[Blast::BuildInfoBuilder::build]: error: guard \"allegro_folder_exists()\" not met");
    }
    if (!(allegro_git_repo_active()))
    {
       std::stringstream error_message;
-      error_message << "[BuildInfoBuilder::build]: error: guard \"allegro_git_repo_active()\" not met.";
+      error_message << "[Blast::BuildInfoBuilder::build]: error: guard \"allegro_git_repo_active()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("BuildInfoBuilder::build: error: guard \"allegro_git_repo_active()\" not met");
+      throw std::runtime_error("[Blast::BuildInfoBuilder::build]: error: guard \"allegro_git_repo_active()\" not met");
    }
    if (!(allegro_flare_folder_exists()))
    {
       std::stringstream error_message;
-      error_message << "[BuildInfoBuilder::build]: error: guard \"allegro_flare_folder_exists()\" not met.";
+      error_message << "[Blast::BuildInfoBuilder::build]: error: guard \"allegro_flare_folder_exists()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("BuildInfoBuilder::build: error: guard \"allegro_flare_folder_exists()\" not met");
+      throw std::runtime_error("[Blast::BuildInfoBuilder::build]: error: guard \"allegro_flare_folder_exists()\" not met");
    }
    if (!(allegro_flare_git_repo_active()))
    {
       std::stringstream error_message;
-      error_message << "[BuildInfoBuilder::build]: error: guard \"allegro_flare_git_repo_active()\" not met.";
+      error_message << "[Blast::BuildInfoBuilder::build]: error: guard \"allegro_flare_git_repo_active()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("BuildInfoBuilder::build: error: guard \"allegro_flare_git_repo_active()\" not met");
+      throw std::runtime_error("[Blast::BuildInfoBuilder::build]: error: guard \"allegro_flare_git_repo_active()\" not met");
    }
    Blast::BuildInfo result;
 

@@ -45,9 +45,9 @@ std::vector<Quizes::MultiplexQuestion> MultiplexSheetLoader::get_questions()
    if (!(loaded))
    {
       std::stringstream error_message;
-      error_message << "[MultiplexSheetLoader::get_questions]: error: guard \"loaded\" not met.";
+      error_message << "[Quizes::MultiplexSheetLoader::get_questions]: error: guard \"loaded\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("MultiplexSheetLoader::get_questions: error: guard \"loaded\" not met");
+      throw std::runtime_error("[Quizes::MultiplexSheetLoader::get_questions]: error: guard \"loaded\" not met");
    }
    return questions;
 }
@@ -57,9 +57,9 @@ bool MultiplexSheetLoader::load()
    if (!((!loaded)))
    {
       std::stringstream error_message;
-      error_message << "[MultiplexSheetLoader::load]: error: guard \"(!loaded)\" not met.";
+      error_message << "[Quizes::MultiplexSheetLoader::load]: error: guard \"(!loaded)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("MultiplexSheetLoader::load: error: guard \"(!loaded)\" not met");
+      throw std::runtime_error("[Quizes::MultiplexSheetLoader::load]: error: guard \"(!loaded)\" not met");
    }
    const int EXPECTED_NUM_COLUMNS = 6;
    std::vector<std::string> lines = Blast::StringSplitter(raw_csv, '\n').split();
