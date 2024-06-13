@@ -107,9 +107,9 @@ void EnumClass::set_enumerators(std::vector<std::string> enumerators)
    if (!(validate_elements_are_unique(enumerators)))
    {
       std::stringstream error_message;
-      error_message << "[EnumClass::set_enumerators]: error: guard \"validate_elements_are_unique(enumerators)\" not met.";
+      error_message << "[Blast::Cpp::EnumClass::set_enumerators]: error: guard \"validate_elements_are_unique(enumerators)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClass::set_enumerators: error: guard \"validate_elements_are_unique(enumerators)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClass::set_enumerators]: error: guard \"validate_elements_are_unique(enumerators)\" not met");
    }
    this->enumerators = enumerators;
    return;
@@ -161,9 +161,9 @@ void EnumClass::set_start_from(int start_from)
    if (!((start_from >= 0)))
    {
       std::stringstream error_message;
-      error_message << "[EnumClass::set_start_from]: error: guard \"(start_from >= 0)\" not met.";
+      error_message << "[Blast::Cpp::EnumClass::set_start_from]: error: guard \"(start_from >= 0)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClass::set_start_from: error: guard \"(start_from >= 0)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClass::set_start_from]: error: guard \"(start_from >= 0)\" not met");
    }
    // TODO: add test for this method
    validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(enumerators_are_bitwise, start_from);
@@ -204,16 +204,16 @@ Blast::Cpp::Function EnumClass::build_to_string_method()
    if (!(validate(name)))
    {
       std::stringstream error_message;
-      error_message << "[EnumClass::build_to_string_method]: error: guard \"validate(name)\" not met.";
+      error_message << "[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClass::build_to_string_method: error: guard \"validate(name)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name)\" not met");
    }
    if (!(validate(name_of_to_string_method)))
    {
       std::stringstream error_message;
-      error_message << "[EnumClass::build_to_string_method]: error: guard \"validate(name_of_to_string_method)\" not met.";
+      error_message << "[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name_of_to_string_method)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClass::build_to_string_method: error: guard \"validate(name_of_to_string_method)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name_of_to_string_method)\" not met");
    }
    // TODO: finish implementing this function
    Blast::Cpp::Function result(
@@ -267,9 +267,9 @@ bool EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise
    if (!(start_from >= 0))
    {
       std::stringstream error_message;
-      error_message << "[EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise]: error: guard \"start_from >= 0\" not met.";
+      error_message << "[Blast::Cpp::EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise]: error: guard \"start_from >= 0\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise: error: guard \"start_from >= 0\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClass::validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise]: error: guard \"start_from >= 0\" not met");
    }
    // TODO: Test this
    if (!enumerators_are_bitwise) return true;

@@ -55,51 +55,51 @@ Blast::ReleaseInfo ReleaseInfoBuilder::build()
    if (!(project_name_is_valid()))
    {
       std::stringstream error_message;
-      error_message << "[ReleaseInfoBuilder::build]: error: guard \"project_name_is_valid()\" not met.";
+      error_message << "[Blast::ReleaseInfoBuilder::build]: error: guard \"project_name_is_valid()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"project_name_is_valid()\" not met");
+      throw std::runtime_error("[Blast::ReleaseInfoBuilder::build]: error: guard \"project_name_is_valid()\" not met");
    }
    if (!(project_folder_exists()))
    {
       std::stringstream error_message;
-      error_message << "[ReleaseInfoBuilder::build]: error: guard \"project_folder_exists()\" not met.";
+      error_message << "[Blast::ReleaseInfoBuilder::build]: error: guard \"project_folder_exists()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"project_folder_exists()\" not met");
+      throw std::runtime_error("[Blast::ReleaseInfoBuilder::build]: error: guard \"project_folder_exists()\" not met");
    }
    if (!(project_git_repo_active()))
    {
       std::stringstream error_message;
-      error_message << "[ReleaseInfoBuilder::build]: error: guard \"project_git_repo_active()\" not met.";
+      error_message << "[Blast::ReleaseInfoBuilder::build]: error: guard \"project_git_repo_active()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"project_git_repo_active()\" not met");
+      throw std::runtime_error("[Blast::ReleaseInfoBuilder::build]: error: guard \"project_git_repo_active()\" not met");
    }
    if (!(allegro_folder_exists()))
    {
       std::stringstream error_message;
-      error_message << "[ReleaseInfoBuilder::build]: error: guard \"allegro_folder_exists()\" not met.";
+      error_message << "[Blast::ReleaseInfoBuilder::build]: error: guard \"allegro_folder_exists()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"allegro_folder_exists()\" not met");
+      throw std::runtime_error("[Blast::ReleaseInfoBuilder::build]: error: guard \"allegro_folder_exists()\" not met");
    }
    if (!(allegro_git_repo_active()))
    {
       std::stringstream error_message;
-      error_message << "[ReleaseInfoBuilder::build]: error: guard \"allegro_git_repo_active()\" not met.";
+      error_message << "[Blast::ReleaseInfoBuilder::build]: error: guard \"allegro_git_repo_active()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"allegro_git_repo_active()\" not met");
+      throw std::runtime_error("[Blast::ReleaseInfoBuilder::build]: error: guard \"allegro_git_repo_active()\" not met");
    }
    if (!(allegro_flare_folder_exists()))
    {
       std::stringstream error_message;
-      error_message << "[ReleaseInfoBuilder::build]: error: guard \"allegro_flare_folder_exists()\" not met.";
+      error_message << "[Blast::ReleaseInfoBuilder::build]: error: guard \"allegro_flare_folder_exists()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"allegro_flare_folder_exists()\" not met");
+      throw std::runtime_error("[Blast::ReleaseInfoBuilder::build]: error: guard \"allegro_flare_folder_exists()\" not met");
    }
    if (!(allegro_flare_git_repo_active()))
    {
       std::stringstream error_message;
-      error_message << "[ReleaseInfoBuilder::build]: error: guard \"allegro_flare_git_repo_active()\" not met.";
+      error_message << "[Blast::ReleaseInfoBuilder::build]: error: guard \"allegro_flare_git_repo_active()\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("ReleaseInfoBuilder::build: error: guard \"allegro_flare_git_repo_active()\" not met");
+      throw std::runtime_error("[Blast::ReleaseInfoBuilder::build]: error: guard \"allegro_flare_git_repo_active()\" not met");
    }
    Blast::ReleaseInfo result;
 

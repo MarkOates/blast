@@ -46,9 +46,9 @@ std::string AssetUsageScanner::get_git_command()
    if (!(std::filesystem::exists(project_directory)))
    {
       std::stringstream error_message;
-      error_message << "[AssetUsageScanner::get_git_command]: error: guard \"std::filesystem::exists(project_directory)\" not met.";
+      error_message << "[Blast::Project::AssetUsageScanner::get_git_command]: error: guard \"std::filesystem::exists(project_directory)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("AssetUsageScanner::get_git_command: error: guard \"std::filesystem::exists(project_directory)\" not met");
+      throw std::runtime_error("[Blast::Project::AssetUsageScanner::get_git_command]: error: guard \"std::filesystem::exists(project_directory)\" not met");
    }
    std::stringstream command;
    command << "(cd " << project_directory << " && "
