@@ -417,6 +417,7 @@ int main(int argc, char **argv)
       { "beebot",           { false, ProjectStatus("beebot", base_dir) } },
       { "blast",            { false, ProjectStatus("blast", base_dir) } },
       { "ArtGalleryOfCats", { false, ProjectStatus("ArtGalleryOfCats", base_dir) } },
+      { "SurviveTheCity", { false, ProjectStatus("SurviveTheCity", base_dir) } },
       //{ "dungeon",            { false, ProjectStatus("dungeon", base_dir) } },
       { "hexagon",          { false, ProjectStatus("hexagon", base_dir) } },
       { "lightracer-max",       { false, ProjectStatus("lightracer-max", base_dir) } },
