@@ -403,6 +403,8 @@ int main(int argc, char **argv)
       { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21", base_dir) } },
       { ".dotfiles",        { false, ProjectStatus(".dotfiles", base_dir) } },
       { "Railway",  { false, ProjectStatus("Railway", base_dir) } },
+      { "TileFPS",      { false, ProjectStatus("TileFPS", base_dir) } },
+      { "Planar",      { false, ProjectStatus("Planar", base_dir) } },
       { "DragonWrath",      { false, ProjectStatus("DragonWrath", base_dir) } },
       { "AssetStudio",      { false, ProjectStatus("AssetStudio", base_dir) } },
       { "JourneyOfTheCat",      { false, ProjectStatus("JourneyOfTheCat", base_dir) } },
