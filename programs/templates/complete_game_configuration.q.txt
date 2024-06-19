@@ -193,6 +193,40 @@ methods:
       return pause_screen;
 
 
+  - name: handle_primary_gameplay_screen_paused
+    virtual: true
+    override: true
+    guards: [ primary_gameplay_screen ]
+    body: |
+      // TODO: Add tests for this behavior
+      // TODO: Consider having and using event_emitter from self
+      AllegroFlare::EventEmitter* event_emitter = primary_gameplay_screen->get_event_emitter();
+      primary_gameplay_screen->suspend_gameplay();
+      event_emitter->emit_router_event(
+         AllegroFlare::Routers::Standard::EVENT_ACTIVATE_PAUSE_SCREEN,
+         //AllegroFlare::Routers::Standard::EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SUBSCREEN,
+         nullptr,
+         al_get_time()
+      );
+      return;
+
+
+  - name: handle_primary_gameplay_screen_unpaused
+    virtual: true
+    override: true
+    guards: [ primary_gameplay_screen ]
+    body: |
+      // TODO: Add tests for this behavior
+      // TODO: Consider having and using event_emitter from self
+      AllegroFlare::EventEmitter* event_emitter = primary_gameplay_screen->get_event_emitter();
+      primary_gameplay_screen->resume_suspended_gameplay();
+      event_emitter->emit_router_event(
+         AllegroFlare::Routers::Standard::EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN,
+         nullptr,
+         al_get_time()
+      );
+      return;
+
 
   - name: create_intro_logos_storyboard_pages
     virtual: true
