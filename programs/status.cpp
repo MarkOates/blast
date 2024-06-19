@@ -408,7 +408,7 @@ int main(int argc, char **argv)
       { "DragonWrath",      { false, ProjectStatus("DragonWrath", base_dir) } },
       { "AssetStudio",      { false, ProjectStatus("AssetStudio", base_dir) } },
       { "JourneyOfTheCat",      { false, ProjectStatus("JourneyOfTheCat", base_dir) } },
-      { "Subscreen",      { false, ProjectStatus("Subscreen", base_dir) } },
+      //{ "Subscreen",      { false, ProjectStatus("Subscreen", base_dir) } },
       { "SomePlatformer",      { false, ProjectStatus("SomePlatformer", base_dir) } },
       { "AssetForgeCustomBlocks",      { false, ProjectStatus("AssetForgeCustomBlocks", base_dir) } },
       { "ChatGPT",      { false, ProjectStatus("ChatGPT", base_dir) } },
