@@ -35,7 +35,7 @@ methods:
       return {};
     body_dependency_symbols:
       - AllegroFlare::Achievement
-
+ 
 
   - name: create_primary_gameplay_screen
     type: AllegroFlare::Screens::Gameplay*
@@ -61,6 +61,7 @@ methods:
       result->set_game_configuration(this);
 
       result->initialize();
+
       return result;
     body_dependency_symbols:
       - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen

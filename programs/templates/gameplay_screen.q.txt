@@ -116,39 +116,6 @@ methods:
       return;
 
 
-  - name: load_level_by_identifier
-    parameters:
-      - name: level_identifier
-        type: std::string
-        default_argument: '"[unset-level_identifier]"'
-    guards: [ game_configuration ]
-    body: |
-      // Destroy the current level
-      if (current_level)
-      {
-         // TODO: Shutdown current level
-         delete current_level;
-      }
-
-      // Load the new level
-      AllegroFlare::Levels::Base *loaded_level = game_configuration->load_level_by_identifier(level_identifier);
-      if (loaded_level)
-      {
-         // TODO: Consider how to have this level loading mechanism removed, specifically the dependency on the configuration
-         // For now, confirm the type, and cast
-         if (!loaded_level->is_type([[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level::TYPE))
-         {
-            throw std::runtime_error("Loaded level not of expected type");
-         }
-         current_level_identifier = level_identifier;
-         current_level = static_cast<[[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level*>(loaded_level);
-      }
-      return;
-    body_dependency_symbols:
-     - [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
-     - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
-
-
   - name: initialize
     guards:
       - (!initialized)
@@ -308,8 +275,8 @@ dependencies:
     headers: [ [[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]].hpp ]
   - symbol: AllegroFlare::GameConfigurations::Base
     headers: [ AllegroFlare/GameConfigurations/Base.hpp ]
-  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameConfigurations::Main
-    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/GameConfigurations/Main.hpp ]
+  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Game::Configurations::Main
+    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Game/Configurations/Main.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Level.hpp ]
   - symbol: AllegroFlare::GameEvent

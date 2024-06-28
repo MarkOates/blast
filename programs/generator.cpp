@@ -186,7 +186,7 @@ int main(int argc, char **argv)
 std::string main_file_content_template_with_configuration = R"END(
 
 #include <AllegroFlare/Runners/Complete.hpp>
-#include <[[PROJECT_NAME]]/GameConfigurations/Main.hpp>
+#include <[[PROJECT_NAME]]/Game/Configurations/Main.hpp>
 #include <allegro5/allegro.h>
 #include <vector> // for parsing command line args
 #include <algorithm> // for parsing command line args
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
 
    // TODO: improve this to return an error when an unrecognized flag is present
 
-   [[PROJECT_NAME]]::GameConfigurations::Main main_configuration;
+   [[PROJECT_NAME]]::Game::Configurations::Main main_configuration;
 
    std::string deployment_environment =
          contains_development_flag
@@ -547,7 +547,7 @@ void generate_gameplay_level_factory_class(std::string project_name)
 
 void generate_complete_game_configurations_main_class(std::string project_name)
 {
-   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/GameConfigurations/Main complete_game_configuration";
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Game/Configurations/Main complete_game_configuration";
    std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
    Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
@@ -556,7 +556,7 @@ void generate_complete_game_configurations_main_class(std::string project_name)
 
 void generate_game_configurations_main_class(std::string project_name)
 {
-   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/GameConfigurations/Main game_configuration";
+   std::string cmd = "~/Repos/blast/bin/programs/component_generator " + project_name + "/Game/Configurations/Main game_configuration";
    std::string command = std::string("(cd ") + project_name + " && " + cmd + ")";
    Blast::ShellCommandExecutorWithCallback shell_command_executor(command);
    shell_command_executor.execute();
