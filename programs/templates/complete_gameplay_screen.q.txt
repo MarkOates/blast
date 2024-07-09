@@ -25,6 +25,7 @@ properties:
     type: AllegroFlare::EventEmitter*
     init_with: nullptr
     setter: before_initialized
+    getter: true
 
   - name: bitmap_bin
     type: AllegroFlare::BitmapBin*
