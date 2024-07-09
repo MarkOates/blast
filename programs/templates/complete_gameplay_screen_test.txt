@@ -70,15 +70,11 @@ TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]], type__has_the_expected_value_matchin
 TEST_F([[COMPONENT_TEST_DESCRIPTION_NAME]]WithAllegroFrameworksFullFixture,
    TIMED_INTERACTIVE__will_run_as_expected)
 {
-   [[COMPONENT_NAME_FIRST_FRAGMENT]]::Game:Configurations::Main game_configuration;
-   //TestGameConfiguration game_configuration;
-   //game_configuration;
    [[COMPONENT_CLASS_NAME]] [[COMPONENT_BASENAME_SNAKE_CASE]];
    [[COMPONENT_BASENAME_SNAKE_CASE]].set_event_emitter(get_framework_event_emitter());
    [[COMPONENT_BASENAME_SNAKE_CASE]].set_bitmap_bin(get_framework_bitmap_bin());
    [[COMPONENT_BASENAME_SNAKE_CASE]].set_font_bin(get_framework_font_bin());
    [[COMPONENT_BASENAME_SNAKE_CASE]].set_model_bin(get_framework_model_bin());
-   [[COMPONENT_BASENAME_SNAKE_CASE]].set_game_configuration(&game_configuration),
    [[COMPONENT_BASENAME_SNAKE_CASE]].initialize();
 
    framework_register_and_activate_screen("[[COMPONENT_BASENAME_SNAKE_CASE]]", &[[COMPONENT_BASENAME_SNAKE_CASE]]);

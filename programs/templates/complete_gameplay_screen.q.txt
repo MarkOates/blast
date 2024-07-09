@@ -41,12 +41,6 @@ properties:
     init_with: nullptr
     setter: before_initialized
 
-  - name: game_configuration
-    type: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Game::Configurations::Main*
-    init_with: nullptr
-    getter: true
-    setter: before_initialized
-
   - name: current_level_identifier
     type: std::string
     init_with: '"[unset-current_level]"'
@@ -102,11 +96,9 @@ methods:
       - name: level_identifier
         type: std::string
         default_argument: '"[unset-level_identifier]"'
-    guards: [ game_configuration ]
     body: |
       return false;
     body_dependency_symbols:
-     - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Game::Configurations::Main
      - [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
 
 
@@ -150,7 +142,6 @@ methods:
         default_argument: nullptr
     guards: [ game_event ]
     body: |
-      // game_configuration->handle_game_event(game_event);
       return;
 
 
@@ -299,8 +290,6 @@ dependencies:
     headers: [ AllegroFlare/VirtualControllers/GenericController.hpp ]
   - symbol: [[COMPONENT_CLASS_NAME]]
     headers: [ [[COMPONENT_NAME_UP_TO_LAST_FRAGMENT]]/[[COMPONENT_NAME_LAST_FRAGMENT]].hpp ]
-  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Game::Configurations::Main
-    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Game/Configurations/Main.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Level
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Level.hpp ]
   - symbol: AllegroFlare::GameEvent
