@@ -400,6 +400,7 @@ int main(int argc, char **argv)
       //{ "fullscore",        { false, ProjectStatus("fullscore", base_dir) } },
       //{ "motris",               { false, ProjectStatus("motris", base_dir) } },
       //{ "tilemap",              { false, ProjectStatus("tilemap") } },
+      { "Golf2",  { false, ProjectStatus("Golf2", base_dir) } },
       { "RotateWorld",  { false, ProjectStatus("RotateWorld", base_dir) } },
       { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21", base_dir) } },
       { ".dotfiles",        { false, ProjectStatus(".dotfiles", base_dir) } },
