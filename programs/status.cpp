@@ -406,6 +406,7 @@ int main(int argc, char **argv)
       { ".dotfiles",        { false, ProjectStatus(".dotfiles", base_dir) } },
       { "Railway",  { false, ProjectStatus("Railway", base_dir) } },
       { "TileFPS",      { false, ProjectStatus("TileFPS", base_dir) } },
+      { "AlphaMesh",      { false, ProjectStatus("AlphaMesh", base_dir) } },
       { "Planar",      { false, ProjectStatus("Planar", base_dir) } },
       { "DragonWrath",      { false, ProjectStatus("DragonWrath", base_dir) } },
       { "AssetStudio",      { false, ProjectStatus("AssetStudio", base_dir) } },
