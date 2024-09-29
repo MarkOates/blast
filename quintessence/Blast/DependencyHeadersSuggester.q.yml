@@ -84,6 +84,7 @@ functions:
          { "ALLEGRO_DISPLAY", { "allegro5/allegro.h" }, },
          { "ALLEGRO_COLOR", { "allegro5/allegro.h" }, },
          { "ALLEGRO_STATE", { "allegro5/allegro.h" }, },
+         { "ALLEGRO_TRANSFORM", { "allegro5/allegro.h" }, },
          { "al_color_html", { "allegro5/allegro_color.h" }, },
          { "al_draw_rectangle", { "allegro5/allegro_primitives.h" }, },
          { "al_draw_filled_rectangle", { "allegro5/allegro_primitives.h" }, },
