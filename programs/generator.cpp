@@ -215,6 +215,7 @@ int main(int argc, char **argv)
 
 
 // TODO: Include this file when generating:
+// TODO: Add dynamically set project name
 
 //std::string ProjectMakefile_file_content_template = R"END(
 //PROJECT_LIB_NAME=blast
