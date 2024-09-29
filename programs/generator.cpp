@@ -294,6 +294,21 @@ void create_test_runner(Generator &generator)
 }
 
 
+void create_test_runner_with_preflight_check_or_all(Generator &generator)
+{
+   std::string command = std::string("(cd ") + generator.get_project_name() + " && ln -s ../../blast/tests/TestRunnerWithFocusedTestPreflightCheckOrAll.cpp ./tests/TestRunnerWithFocusedTestPreflightCheckOrAll.cpp)";
+   Blast::ShellCommandExecutorWithCallback makefile_symlink_command_executor(command);
+
+   makefile_symlink_command_executor.execute();
+
+   //std::ofstream outfile6;
+   //outfile6.open(generator.get_project_name() + "/tests/" + TEST_RUNNER_CLASS_NAME + ".cpp", std::ios::binary);
+   //outfile6 << TEST_RUNNER_FILE_CONTENT;
+   //outfile6.close();
+}
+
+
+
 void create_version_yaml(Generator &generator)
 {
    std::ofstream outfile;
@@ -603,6 +618,7 @@ int main(int argc, char **argv)
    create_appinfo_yml(generator);
    create_readme_file(generator);
    create_test_runner(generator);
+   create_test_runner_with_preflight_check_or_all(generator);
    copy_resource_files(generator);
    create_version_yaml(generator);
 
