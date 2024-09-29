@@ -214,6 +214,18 @@ int main(int argc, char **argv)
 
 
 
+// TODO: Include this file when generating:
+
+//std::string ProjectMakefile_file_content_template = R"END(
+//PROJECT_LIB_NAME=blast
+//VERSION_NUMBER=0.0.1wip
+//TEST_RUNNER_PROGRAM_NAME=TestRunnerWithFocusedTestPreflightCheckOrAll
+//#USING_NCURSES=FALSE
+//#USING_ALLEGRO_FLARE=FALSE
+//#USING_SQLITE=FALSE
+//)END";
+
+
 
 std::string README_FILE_CONTENT_TEMPLATE = R"END(# [[PROJECT_NAME]]
 )END";
