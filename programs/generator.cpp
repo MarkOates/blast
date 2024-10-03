@@ -36,6 +36,7 @@ std::string const GITIGNORE_FILE_CONTENT = R"END(
 
 build/tmp*
 tmp/*
+!tmp/test_snapshots/.keep
 obj/**
 *.a
 
