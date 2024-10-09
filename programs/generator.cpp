@@ -502,6 +502,7 @@ void create_directories(Generator &generator)
    system(generator.mkprojdir_and_keep_file("bin/data/models").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/samples").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/icons").c_str());
+   system(generator.mkprojdir_and_keep_file("bin/data/maps").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/samples/music_tracks").c_str());
    system(generator.mkprojdir_and_keep_file("bin/data/samples/sound_effects").c_str());
    system(generator.mkprojdir_and_keep_file("lib").c_str());
@@ -521,6 +522,7 @@ void create_directories(Generator &generator)
    system(generator.mkprojdir_and_keep_file("tests/fixtures/fonts").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/samples").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/icons").c_str());
+   system(generator.mkprojdir_and_keep_file("tests/fixtures/maps").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/samples/music_tracks").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/samples/sound_effects").c_str());
    system(generator.mkprojdir_and_keep_file("tests/fixtures/models").c_str());
