@@ -422,6 +422,7 @@ int main(int argc, char **argv)
       { "allegro_flare",    { false, ProjectStatus("allegro_flare", base_dir) } },
       { "beebot",           { false, ProjectStatus("beebot", base_dir) } },
       { "blast",            { false, ProjectStatus("blast", base_dir) } },
+      { "Layouts",            { false, ProjectStatus("Layouts", base_dir) } },
       { "ArtGalleryOfCats", { false, ProjectStatus("ArtGalleryOfCats", base_dir) } },
       { "SurviveTheCity", { false, ProjectStatus("SurviveTheCity", base_dir) } },
       //{ "dungeon",            { false, ProjectStatus("dungeon", base_dir) } },
