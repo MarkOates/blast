@@ -775,7 +775,7 @@ bin/run_all_tests: $(TEST_OBJECTS) obj/tests/$(TEST_RUNNER_PROGRAM_NAME).o
 
 
 
-bin/programs/%: programs/%.cpp $(OBJECTS)
+bin/programs/%: programs/%.cpp
 	@mkdir -p $(@D)
 	@printf "Compiling program executable \e[1m\e[36m$@\033[0m\n"
 	@$(BIGLINE)
@@ -783,7 +783,7 @@ bin/programs/%: programs/%.cpp $(OBJECTS)
 
 
 
-bin/examples/%: examples/%.cpp $(OBJECTS)
+bin/examples/%: examples/%.cpp
 	@mkdir -p $(@D)
 	@printf "Compiling example executable \e[1m\e[36m$@\033[0m\n"
 	@$(BIGLINE)
@@ -791,7 +791,7 @@ bin/examples/%: examples/%.cpp $(OBJECTS)
 
 
 
-bin/demos/%: demos/%.cpp $(OBJECTS)
+bin/demos/%: demos/%.cpp
 	@mkdir -p $(@D)
 	@printf "Compiling demo executable at \e[1m\e[36m$@\033[0m\n"
 	@$(BIGLINE)
