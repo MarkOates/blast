@@ -271,7 +271,9 @@ PROGRAMS := $(PROGRAM_SOURCES:programs/%.cpp=bin/programs/%)
 EXAMPLES := $(EXAMPLE_SOURCES:examples/%.cpp=bin/examples/%)
 DEMOS := $(DEMO_SOURCES:demos/%.cpp=bin/demos/%)
 TEST_OBJECTS := $(TEST_SOURCES:tests/%.cpp=obj/tests/%.o)
-LIBRARY_FOR_TESTS_FOR_LINKING_NAME := $(PROJECT_LIB_NAME)-$(VERSION_NUMBER)-for_tests
+LIBRARY_FOR_LINKING_NAME := $(PROJECT_LIB_NAME)-$(VERSION_NUMBER)
+LIBRARY_FOR_TESTS_FOR_LINKING_NAME := $(LIBRARY_FOR_LINKING_NAME)-for_tests
+LIBRARY_DIR := lib/
 LIBRARY_FOR_TESTS_NAME := lib/lib$(PROJECT_LIB_NAME)-$(VERSION_NUMBER)-for_tests.a
 LIBRARY_NAME := lib/lib$(PROJECT_LIB_NAME)-$(VERSION_NUMBER).a
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
@@ -755,7 +757,7 @@ endif
 
 
 
-BIGLINE=g++ -g -std=c++17 $(ERROR_LIMIT_FLAG) $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) -Wall $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) $(DISABLE_UNUSED_WARNINGS_FLAG) $^ -o $@  $(NCURSES_BUILD_ARGS) $(NCURSES_LINK_ARGS) -I./include -I$(ASIO_INCLUDE_DIR) -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) $(REQUIRED_WINDOWS_NETWORK_FLAGS) $(ALLEGRO_FLARE_BUILD_ARGS) $(ALLEGRO_FLARE_LINK_ARGS) -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_MAIN_ARGS) $(CURL_BUILD_ARGS) $(CURL_LINK_ARGS) $(SQLITE_LINK_ARGS) -D_XOPEN_SOURCE_EXTENDED $(OPENGL_LIB) $(MIDI_AUDIO_LIB) -l$(GOOGLE_MOCK_LIBS) -l$(GOOGLE_TEST_LIBS) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) $(RPATH_STATEMENT)
+BIGLINE=g++ -g -std=c++17 $(ERROR_LIMIT_FLAG) $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) -Wall $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) $(DISABLE_UNUSED_WARNINGS_FLAG) $< -o $@ $(NCURSES_BUILD_ARGS) $(NCURSES_LINK_ARGS) -I./include -I$(ASIO_INCLUDE_DIR) -I$(ALLEGRO_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) $(REQUIRED_WINDOWS_NETWORK_FLAGS) $(ALLEGRO_FLARE_BUILD_ARGS) $(ALLEGRO_FLARE_LINK_ARGS) -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_MAIN_ARGS) $(CURL_BUILD_ARGS) $(CURL_LINK_ARGS) $(SQLITE_LINK_ARGS) -D_XOPEN_SOURCE_EXTENDED $(OPENGL_LIB) $(MIDI_AUDIO_LIB) -L$(LIBRARY_DIR) -l$(LIBRARY_FOR_LINKING_NAME) -l$(GOOGLE_MOCK_LIBS) -l$(GOOGLE_TEST_LIBS) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) $(RPATH_STATEMENT)
 
 
 
@@ -775,26 +777,26 @@ bin/run_all_tests: $(TEST_OBJECTS) obj/tests/$(TEST_RUNNER_PROGRAM_NAME).o
 
 
 
-bin/programs/%: programs/%.cpp
+bin/programs/%: programs/%.cpp $(LIBRARY_NAME)
 	@mkdir -p $(@D)
 	@printf "Compiling program executable \e[1m\e[36m$@\033[0m\n"
-	@$(BIGLINE)
+	$(BIGLINE)
 	@printf "Program executable at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
 
-bin/examples/%: examples/%.cpp
+bin/examples/%: examples/%.cpp $(LIBRARY_NAME)
 	@mkdir -p $(@D)
 	@printf "Compiling example executable \e[1m\e[36m$@\033[0m\n"
-	@$(BIGLINE)
+	$(BIGLINE)
 	@printf "Example executable at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
 
-bin/demos/%: demos/%.cpp
+bin/demos/%: demos/%.cpp $(LIBRARY_NAME)
 	@mkdir -p $(@D)
 	@printf "Compiling demo executable at \e[1m\e[36m$@\033[0m\n"
-	@$(BIGLINE)
+	$(BIGLINE)
 	@printf "Demo executable at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
