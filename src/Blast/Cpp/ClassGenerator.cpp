@@ -764,8 +764,17 @@ std::string ClassGenerator::destructor_declaration(int indent_level)
 
 std::string ClassGenerator::destructor_definition(int indent_level)
 {
+   Blast::Cpp::Function destructor = cpp_class.get_destructor();
    std::stringstream result;
-   result << std::string(3*indent_level, ' ') << cpp_class.get_class_name() << "::~" << cpp_class.get_class_name() << "()\n" << std::string(3*indent_level, ' ') << "{\n" << std::string(3*indent_level, ' ') << "}\n";
+
+   std::string final_body = "";
+   if (destructor.get_body() != "return;") final_body = destructor.get_body();
+
+   result << std::string(3*indent_level, ' ')
+          << cpp_class.get_class_name() << "::~" << cpp_class.get_class_name() << "()\n"
+          << std::string(3*indent_level, ' ') << "{\n";
+   result << __indent(3, indent_level+1, final_body); // TODO: review indent level here
+   result << std::string(3*indent_level, ' ') << "}\n";
    return result.str();
 }
 

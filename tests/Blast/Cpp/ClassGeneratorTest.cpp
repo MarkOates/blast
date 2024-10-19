@@ -18,10 +18,11 @@ class ClassGeneratorTest : public ::testing::Test
 {
 protected:
    static Blast::Cpp::ClassGenerator class_generator_fixture;
+   Blast::Cpp::Class cpp_class;
 
    virtual void SetUp()
    {
-      Blast::Cpp::Class cpp_class(
+      cpp_class = Blast::Cpp::Class(
          "User",
          { "ProjectName" },
          {},
@@ -663,10 +664,73 @@ TEST_F(ClassGeneratorTest, destructor_declaration__when_virtual_or_pure_virtual_
 }
 
 
-TEST_F(ClassGeneratorTest, destructor_definition_returns_the_expected_string)
+TEST_F(ClassGeneratorTest,
+   destructor_definition__when_the_destructor_has_a_functions_default_body__returns_the_expected_string)
 {
-   std::string expected_destructor_definition = "User::~User()\n{\n}\n";
-   ASSERT_EQ(expected_destructor_definition, class_generator_fixture.destructor_definition());
+   Blast::Cpp::Class cpp_class("Happiness");
+   Blast::Cpp::ClassGenerator class_generator(cpp_class);
+   ASSERT_EQ("return;", cpp_class.get_destructor().get_body());
+
+   std::string expected_destructor_definition = "Happiness::~Happiness()\n{\n}\n";
+   EXPECT_EQ(expected_destructor_definition, class_generator.destructor_definition());
+}
+
+
+TEST_F(ClassGeneratorTest, destructor_definition__when_a_destructor_body_is_non_default__returns_the_expected_string)
+{
+   std::string destructor_body =
+      "std::cout << \"some content in the destructor body\" << std::endl;\n"
+      "return;\n";
+   Blast::Cpp::Function destructor("void", "~my_destructor", {}, destructor_body, false, false, false, false, true);
+   Blast::Cpp::Class cpp_class(
+      "ClassWithDestructorBody",
+      {},
+      {},
+      { // class attributes
+         //std::string datatype,
+         //  std::string variable_name,
+         //    std::string initialization_value,
+         //      bool is_static,
+         //        bool is_constructor_parameter,
+         //          bool has_getter,
+         //            bool has_setter,
+         //              bool is_constexpr,
+         //                 bool is_exposed
+         //{ "int", "last_id", "0", true, false, false, false, false, false, false, false, false },
+         //{ "int", "id", "last_id++", false, false, true, false, false, false, false, false, false },
+         //{ "std::string", "name", "\"[unnamed]\"", false, true, true, false, false, true, false, false, false },
+         //{ "type_t", "type", "MAGE", false, true, true, false, false, true, false, false, false },
+         //{ "float", "an_exposed_variable", "0.25f", false, false, false, false, false, false, false, false, true },
+      },
+      {}, // enum classes
+      destructor, // destructor
+      {}, // functions (should be renamed to "methods", btw)
+      { // symbol dependencies
+         //{ "float" },
+         //{ "int" },
+         //{ "std::string", { "string" } },
+         //{ "type_t" }, // TODO: Come up with something resembling a header for a "type_t"
+      },
+      {} // function body symbol dependencies
+   );
+   //Blast::Cpp::Class cpp_class("ClassWithDestructorBody");
+      //Blast::Cpp::Function("void", "unnamed_function",         {}, "return;", false, false, false, false, true),
+   //std::string destructor_body =
+      //"std::cout << \"some content in the destructor body\" << std::endl;\n"
+      //"return;\n";
+   //Blast::Cpp::Function destructor("void", "~my_destructor", {}, destructor_body, false, false, false, false, true);
+   //Blast::Cpp::Function destructor;
+   //destructor.set_body(destructor_body);
+   //cpp_class.set_destructor(destructor);
+   ASSERT_EQ(destructor_body, cpp_class.get_destructor().get_body());
+
+   Blast::Cpp::ClassGenerator class_generator(cpp_class);
+   std::string expected_destructor_definition =
+      "ClassWithDestructorBody::~ClassWithDestructorBody()\n{\n"
+      "   std::cout << \"some content in the destructor body\" << std::endl;\n"
+      "   return;\n"
+      "}\n";
+   ASSERT_EQ(expected_destructor_definition, class_generator.destructor_definition());
 }
 
 
