@@ -846,6 +846,7 @@ public:
    std::map<std::string, CodePoint> node_key_code_points;
    std::string class_name;
    std::string quintessence_filename;
+   bool is_destructor;
 
    void add_node_key_code_point(const std::string &name, const CodePoint &code_point)
    {
@@ -890,8 +891,10 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
    //for (YAML::const_iterator it=source_functions.begin(); it!=source_functions.end(); ++it)
    {
       ParsedMethodInfo parsed_method_info_result;
+
       parsed_method_info_result.class_name = this_class_name_last_fragment;
       parsed_method_info_result.quintessence_filename = quintessence_filename;
+      parsed_method_info_result.is_destructor = false;
 
       YAML::Node it = source_functions_and_methods[i];
       YAML::Mark this_method_mark = it.Mark();
@@ -945,6 +948,8 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
       std::string type = fetch_string(it, TYPE, "void");
       std::string name = name_node.as<std::string>();
       std::vector<Blast::Cpp::FunctionArgument> signature = convert_function_arguments(parameters_node);
+
+      if (!name.empty() && name[0] == '~') parsed_method_info_result.is_destructor = true;
 
       std::string body = body_node.as<std::string>();
       YAML::Mark body_mark = body_node.Mark();
@@ -1198,8 +1203,10 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
       }
    }
 
+
+   // Validate explicit getter functions exist
+
    std::vector<std::string> explicit_getter_function_names_that_do_not_exist;
-   // TODO: validate the function names exist
    for (auto &expected_explicit_getter_function_name : expected_explicit_getter_function_names)
    {
       bool function_has_been_explicitly_declared = false;
@@ -1248,13 +1255,16 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
    }
 
 
+   // Validate explicit setter functions exist
+
    std::vector<std::string> explicit_setter_function_names_that_do_not_exist;
-   // TODO: validate the function names exist
    for (auto &expected_explicit_setter_function_name : expected_explicit_setter_function_names)
    {
       bool function_has_been_explicitly_declared = false;
       for (auto &parsed_method_info : functions_and_dependencies)
       {
+         if (parsed_method_info.is_destructor) continue;
+
          //ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
          //ParsedMethodInfo &parsed_method_info = function_and_dependency;
          std::string this_function_name = parsed_method_info.function.get_name();
@@ -1269,7 +1279,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
       if (!function_has_been_explicitly_declared) explicit_setter_function_names_that_do_not_exist.push_back(expected_explicit_setter_function_name);
    }
 
-   // throw error if explicit_setter functions are missing
+   // Throw error if explicit_setter functions are missing
    if (!explicit_setter_function_names_that_do_not_exist.empty())
    {
       std::stringstream error_message;
@@ -1305,6 +1315,43 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
          per_function_dependency_symbols.push_back(dependency_symbol);
       }
    }
+
+
+
+   // Validate there is only one destructor method provided
+   // TODO: Test this
+   std::vector<std::string> functions_tagged_as_destructors;
+   for (auto &parsed_method_info : functions_and_dependencies)
+   {
+      if (parsed_method_info.is_destructor) functions_tagged_as_destructors.push_back(parsed_method_info.function.get_name());
+   }
+   if (functions_tagged_as_destructors.size() > 1)
+   {
+      std::stringstream error_message;
+      error_message << "[blast/quintessence_from_yaml]: error: Multiple destructors appear to be present (method names "
+                    << "prefixed with the '~' character). Only one destructor can be present in a class.";
+      throw std::runtime_error(error_message.str());
+   }
+
+
+   // Validate the destructor has no parametrs
+   // TODO: Test this
+   for (auto &parsed_method_info : functions_and_dependencies)
+   {
+      if (!parsed_method_info.is_destructor) continue;
+
+      if (parsed_method_info.function.get_signature().size() != 0)
+      {
+         std::string function_name = parsed_method_info.function.get_name();
+         std::stringstream error_message;
+         error_message << "[blast/quintessence_from_yaml]: error: There is a destructor present (\"" << function_name << "\") "
+                       << "but it contains parameters. A destructor must have an empty parameter list."; // HERE
+         throw std::runtime_error(error_message.str());
+      }
+   }
+
+
+   // TODO: Validate the destructor is of a void return type
 
 
 
