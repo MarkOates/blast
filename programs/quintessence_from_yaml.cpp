@@ -1190,6 +1190,25 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
 
 
 
+
+
+   // TODO: Validate that only a single destructor exists
+   std::vector<std::string> methods_tagged_as_destructor;
+   for (auto &function_and_dependency : functions_and_dependencies)
+   {
+      if (function_and_dependency.is_destructor) methods_tagged_as_destructor.push_back(function_and_dependency.function.get_name());
+   }
+   if (methods_tagged_as_destructor.size() > 1)
+   {
+      std::stringstream error_message;
+      error_message << "[blast/quintessence_from_yaml]: error: More than one destructor (function prefixed with '~') is present. There can be only one destructor per class";
+      throw std::runtime_error(error_message.str());
+   }
+
+
+
+
+
    // validate that for any <ClassAttribtes> that have explicit_getters, there is a get_[attribute_name] function that has been declared
    
    std::vector<std::string> expected_explicit_getter_function_names;
