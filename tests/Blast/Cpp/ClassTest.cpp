@@ -18,12 +18,12 @@ TEST(ClassTest, can_be_created)
 
 TEST(ClassTest, infer_has_virtual_functions__returns_true_if_virtual_or_pure_virtual_functions_exist_in_the_class)
 {
-   Blast::Cpp::Class cpp_class_with_virtual_function("User", { "ProjectName" }, {}, {}, {}, {
+   Blast::Cpp::Class cpp_class_with_virtual_function("User", { "ProjectName" }, {}, {}, {}, {}, {
       Blast::Cpp::Function("void", "unnamed_function",         {}, "return;", false, false, false, true, false),
       Blast::Cpp::Function("void", "another_unnamed_function", {}, "return;", false, false, false, false, false),
    });
 
-   Blast::Cpp::Class cpp_class_with_pure_virtual_function("User", { "ProjectName" }, {}, {}, {}, {
+   Blast::Cpp::Class cpp_class_with_pure_virtual_function("User", { "ProjectName" }, {}, {}, {}, {}, {
       Blast::Cpp::Function("void", "unnamed_function",         {}, "return;", false, false, false, false, false),
       Blast::Cpp::Function("void", "another_unnamed_function", {}, "return;", false, false, false, false, true),
    });

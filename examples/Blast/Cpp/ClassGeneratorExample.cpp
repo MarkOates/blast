@@ -37,6 +37,7 @@ int main(int argc, char **argv)
          { "ALLEGRO_BITMAP*", "bmp", "nullptr", false, true, true, false, false, true, false, false, false },
       },
       { /* enum_classes */ },
+      { /* destructor */ },
       { /* functions */ },
       symbol_dependencies
    );

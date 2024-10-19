@@ -15,6 +15,7 @@ Class::Class(
       std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties,
       std::vector<Blast::Cpp::ClassAttributes> attribute_properties,
       std::vector<Blast::Cpp::EnumClass> enum_classes,
+      Blast::Cpp::Function destructor,
       std::vector<Blast::Cpp::Function> functions,
       std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies,
       std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies
@@ -24,6 +25,7 @@ Class::Class(
    , parent_classes_properties(parent_classes_properties)
    , attribute_properties(attribute_properties)
    , enum_classes(enum_classes)
+   , destructor(destructor)
    , functions(functions)
    , symbol_dependencies(symbol_dependencies)
    , function_body_symbol_dependencies(function_body_symbol_dependencies)
@@ -33,6 +35,12 @@ Class::Class(
 
 Class::~Class()
 {
+}
+
+
+bool Class::infer_has_destructor()
+{
+   return destructor.get_name() == "unnamed_function"; // TODO: Consider if this is good enough, it's a bit fragile
 }
 
 
@@ -80,6 +88,12 @@ std::vector<Blast::Cpp::ClassAttributes> Class::get_attribute_properties()
 std::vector<Blast::Cpp::EnumClass> Class::get_enum_classes()
 {
    return enum_classes;
+}
+
+
+Blast::Cpp::Function Class::get_destructor()
+{
+   return destructor;
 }
 
 

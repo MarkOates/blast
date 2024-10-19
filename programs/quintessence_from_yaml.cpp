@@ -1350,15 +1350,18 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
 
    
    
-   // consolidate functions and their dependencies
+   // consolidate the functions (with destructor) dependencies
 
-   std::vector<Blast::Cpp::Function> functions = {};
+   //Blast::Cpp::Function destructor = {};
+   //std::vector<Blast::Cpp::Function> functions = {};
    std::vector<std::string> per_function_dependency_symbols = {};
    for (auto &parsed_method_info : functions_and_dependencies)
    {
       //ParsedMethodInfo &parsed_method_info = std::get<3>(function_and_dependency);
 
-      functions.push_back(parsed_method_info.function);
+      //if (parsed_method_info.is_destructor) destructor = parsed_method_info;
+      //else functions.push_back(parsed_method_info.function);
+
       //functions.push_back(std::get<0>(function_and_dependency));
       for (auto &dependency_symbol : parsed_method_info.body_dependency_symbols)
       //for (auto &dependency_symbol : std::get<1>(function_and_dependency))
@@ -1416,6 +1419,19 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
       );
 
 
+
+   // Extract the destructor from the functions
+
+   Blast::Cpp::Function destructor = {};
+   std::vector<Blast::Cpp::Function> functions = {};
+   for (auto &parsed_method_info : functions_and_dependencies)
+   {
+      if (parsed_method_info.is_destructor) destructor = parsed_method_info.function;
+      else functions.push_back(parsed_method_info.function);
+   }
+
+
+
    // build the actual class
 
    Blast::Cpp::Class klass(
@@ -1424,6 +1440,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
          parent_classes_properties,
          attribute_properties,
          enum_classes,
+         destructor,
          functions,
          symbol_dependencies,
          function_body_symbol_dependencies

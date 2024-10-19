@@ -69,6 +69,7 @@ Blast::Cpp::Class ReleaseInfoCppFileGenerator::build_cpp_class()
       {},
       build_cpp_class_attribute_properties(), // attribute_properties
       {}, // enum_classes
+      {}, // destructor
       {}, // functions
       build_cpp_class_symbol_dependencies(), // symbol_dependencies
       {} // function_body_symbol_dependencies

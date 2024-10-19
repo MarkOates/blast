@@ -60,6 +60,7 @@ Blast::Cpp::Class BuildInfoCppFileGenerator::build_cpp_class()
       //std::vector<Blast::Cpp::ParentClassProperties> parent_classes_properties={},
       //std::vector<Blast::Cpp::ClassAttributes> attribute_properties={},
       //std::vector<Blast::Cpp::EnumClass> enum_classes={},
+      //Blast::Cpp::Function destructor={},
       //std::vector<Blast::Cpp::Function> functions={},
       //std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies={},
       //std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies={}
@@ -70,6 +71,7 @@ Blast::Cpp::Class BuildInfoCppFileGenerator::build_cpp_class()
       {},
       build_cpp_class_attribute_properties(), // attribute_properties
       {}, // enum_classes
+      {}, // destructor
       build_cpp_class_functions(), // functions
       build_cpp_class_symbol_dependencies(), // symbol_dependencies
       {} // function_body_symbol_dependencies
