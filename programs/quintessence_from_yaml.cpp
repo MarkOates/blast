@@ -1224,6 +1224,27 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
    }
 
 
+   // TODO: Validate destructor is of return type void
+   for (auto &function_and_dependency : functions_and_dependencies)
+   {
+      if (function_and_dependency.is_destructor)
+      {
+         if (function_and_dependency.function.get_type() != "void")
+         {
+            std::string function_name = function_and_dependency.function.get_name();
+            std::string function_type = function_and_dependency.function.get_type();
+            std::stringstream error_message;
+            error_message << "[blast/quintessence_from_yaml]: error: A destructor is present (\"" << function_name << "\") but it has a "
+                          << "return type of \"" << function_type << "\" which is not valid. The return type must be \"void\" "
+                          << "(or left blank and thus be implicitly void)";
+            throw std::runtime_error(error_message.str());
+         }
+      }
+   }
+
+
+
+
 
 
    // validate that for any <ClassAttribtes> that have explicit_getters, there is a get_[attribute_name] function that has been declared
