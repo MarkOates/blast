@@ -1208,6 +1208,23 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
 
 
 
+   // TODO: Validate destructor has no parameters
+   for (auto &function_and_dependency : functions_and_dependencies)
+   {
+      if (function_and_dependency.is_destructor)
+      {
+         if (!function_and_dependency.function.get_signature().empty())
+         {
+            std::string function_name = function_and_dependency.function.get_name();
+            std::stringstream error_message;
+            error_message << "[blast/quintessence_from_yaml]: error: A destructor is present (\"" + function_name + "\") but it contains parameters. The destructor's parameter list must be empty";
+            throw std::runtime_error(error_message.str());
+         }
+      }
+   }
+
+
+
 
    // validate that for any <ClassAttribtes> that have explicit_getters, there is a get_[attribute_name] function that has been declared
    
