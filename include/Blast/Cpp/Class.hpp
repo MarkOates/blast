@@ -23,7 +23,6 @@ namespace Blast
          std::vector<Blast::Cpp::ClassAttributes> attribute_properties;
          std::vector<Blast::Cpp::EnumClass> enum_classes;
          std::vector<Blast::Cpp::Function> functions;
-         Blast::Cpp::Function destructor;
          std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies;
          std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies;
 
