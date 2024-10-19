@@ -846,6 +846,7 @@ public:
    std::map<std::string, CodePoint> node_key_code_points;
    std::string class_name;
    std::string quintessence_filename;
+   bool is_destructor;
 
    void add_node_key_code_point(const std::string &name, const CodePoint &code_point)
    {
@@ -892,6 +893,7 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
       ParsedMethodInfo parsed_method_info_result;
       parsed_method_info_result.class_name = this_class_name_last_fragment;
       parsed_method_info_result.quintessence_filename = quintessence_filename;
+      parsed_method_info_result.is_destructor = false;
 
       YAML::Node it = source_functions_and_methods[i];
       YAML::Mark this_method_mark = it.Mark();
@@ -958,6 +960,8 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
       bool is_pure_virtual = fetch_bool(it, PURE_VIRTUAL, false);
       bool is_private = fetch_bool(it, PRIVATE, false);
       bool is_protected = fetch_bool(it, PROTECTED, false);
+
+      if (!name.empty() && name[0] == '~') parsed_method_info_result.is_destructor = true;
 
       validate(!(is_protected && is_protected), this_func_name, "Function properties \"private\" and \"protected\" cannot both be true.");
 
