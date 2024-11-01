@@ -93,7 +93,9 @@ if [ ! -d "$TEMP_BUILD_DIR" ]; then
   exit 1
 fi
 
+echo "#################################################"
 echo "Temporary directory created at \"$TEMP_BUILD_DIR\""
+echo "#################################################"
 
 
 
@@ -253,7 +255,17 @@ echo "Compressing ZIP - STARTING"
 echo "Compressing ZIP - DONE"
 
 
-
+echo ""
 echo "WIN64 Build successful!"
+echo ""
+echo "View the final build here:"
+echo ""
+echo "      $TEMP_BUILD_DIR"
+echo ""
+echo "Releases are located at"
+echo ""
+echo "      /msys64/home/Mark/Releases/"
+echo ""
+
 
 
