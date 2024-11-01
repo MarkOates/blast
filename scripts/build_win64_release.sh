@@ -231,6 +231,7 @@ echo "Copying necessary DLLs - STARTING"
 echo "Copying necessary DLLs - DONE"
 
 
+echo ""
 echo "Cleaning up - STARTING"
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf include/)
 (cd $TEMP_BUILD_DIR && cd $SOURCE_FOLDER_NAME && rm -rdf programs/)
@@ -243,12 +244,15 @@ echo "Cleaning up - STARTING"
 echo "Cleaning up - DONE"
 
 
+echo ""
 # TODO: VALIDATE folder names doesn't already exist
 echo "Renaming Folder - STARTING"
 (cd $TEMP_BUILD_DIR && (mv $SOURCE_FOLDER_NAME $FINAL_FOLDER_NAME) || exit 12)
 echo "Renaming Folder - DONE"
+echo ""
 
 
+echo ""
 # TODO: VALIDATE Final zip doesn't already exist
 echo "Compressing ZIP - STARTING"
 (cd $TEMP_BUILD_DIR && (zip -r $FINAL_FOLDER_NAME.zip $FINAL_FOLDER_NAME) || exit 13)
@@ -256,16 +260,32 @@ echo "Compressing ZIP - DONE"
 
 
 echo ""
-echo "WIN64 Build successful!"
-echo ""
-echo "View the final build here:"
-echo ""
-echo "      $TEMP_BUILD_DIR"
-echo ""
-echo "Releases are located at"
-echo ""
-echo "      /msys64/home/Mark/Releases/"
-echo ""
+# Copy into the releases folder
+echo "Compressing ZIP - STARTING"
+(cd $TEMP_BUILD_DIR && (cp $FINAL_FOLDER_NAME.zip $FINAL_RELEASES_DIR$FINAL_FOLDER_NAME.zip) || exit 13)
 
 
+
+# Color codes
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo ""
+echo -e  "${GREEN}############### WIN64 Build successful! ##############${NC}"
+echo     ""
+echo -e  "${GREEN}View the build in the temporary directory here:"
+echo     ""
+echo -e  "${GREEN}      $TEMP_BUILD_DIR"
+echo     ""
+echo -e  "${GREEN}Releases are located at"
+echo     ""
+echo -e  "${GREEN}   (through terminal):"
+echo -e  "${GREEN}      /home/Mark/Releases/"
+echo -e  "${GREEN}      /home/Mark/Releases/$FINAL_FOLDER_NAME.zip${NC}"
+echo     ""
+echo -e  "${GREEN}   (from within windows):"
+echo -e  "${GREEN}      /msys64/home/Mark/Releases/"
+echo -e "${YELLOW}      /msys64/home/Mark/Releases/$FINAL_FOLDER_NAME.zip${NC}"
+echo     ""
 
