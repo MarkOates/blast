@@ -706,6 +706,19 @@ bool check_bashrc_exists_with_terminfo_export()
 }
 
 
+bool check_tiled_ReverseVertexOrder_script_symlink()
+{
+   std::string expected_destination = "/Users/markoates/Repos/allegro_flare/scripts/tiled/ReverseVertexOrder.js";
+   std::string symlink_check_command = "readlink /Users/markoates/Library/Preferences/Tiled/extensions/ReverseVertexOrder.js";
+
+   Blast::ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output == expected_destination;
+}
+
+
 bool check_hexagon_app_package_symlink_destination()
 {
    std::string expected_destination = "/Users/markoates/Repos/hexagon/bin/Hexagon.app";
@@ -1179,17 +1192,6 @@ TEST(SystemTest, ripgrep_is_installed_through_homebrew)
    EXPECT_EQ(true, run_ripgrep_presence_test()) << "Test: ripgrep is installed through homebrew";
 }
 
-bool check_tiled_ReverseVertexOrder_script_symlink()
-{
-   std::string expected_destination = "/Users/markoates/Repos/allegro_flare/scripts/tiled/ReverseVertexOrder.js";
-   std::string symlink_check_command = "readlink /Users/markoates/Library/Preferences/Tiled/extensions/ReverseVertexOrder.js";
-
-   Blast::ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
-   std::string output = executor.execute();
-   std::string trimmed_output = trim(output);
-
-   return trimmed_output == expected_destination;
-}
 
 TEST(SystemTest, the_tiled_ReverseVertexOrder_script_symlink_points_to_the_expected_script)
 {
