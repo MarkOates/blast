@@ -1179,6 +1179,24 @@ TEST(SystemTest, ripgrep_is_installed_through_homebrew)
    EXPECT_EQ(true, run_ripgrep_presence_test()) << "Test: ripgrep is installed through homebrew";
 }
 
+bool check_tiled_ReverseVertexOrder_script_symlink()
+{
+   std::string expected_destination = "/Users/markoates/Repos/allegro_flare/scripts/tiled/ReverseVertexOrder.js";
+   std::string symlink_check_command = "readlink /Users/markoates/Library/Preferences/Tiled/extensions/ReverseVertexOrder.js";
+
+   Blast::ShellCommandExecutorWithCallback executor(symlink_check_command, command_callback);
+   std::string output = executor.execute();
+   std::string trimmed_output = trim(output);
+
+   return trimmed_output == expected_destination;
+}
+
+TEST(SystemTest, the_tiled_ReverseVertexOrder_script_symlink_points_to_the_expected_script)
+{
+   EXPECT_EQ(true, check_tiled_ReverseVertexOrder_script_symlink()) << "Test: There is a symlink in the tiled \"extensions\" "
+      "folder that points to the expected ReverseVertexOrder.js extension. (More info on this extension at https://discourse.mapeditor.org/t/polygons-can-point-order-be-reversed/6973)";
+}
+
 
 TEST(SystemTest, the_Applications_Hexagon_app_symlink_points_to_the_expected_hexagon_app_package)
 {
