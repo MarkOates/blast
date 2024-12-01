@@ -404,6 +404,7 @@ int main(int argc, char **argv)
       { "Golf2",  { false, ProjectStatus("Golf2", base_dir) } },
       { "RotateWorld",  { false, ProjectStatus("RotateWorld", base_dir) } },
       { "CollisionMesh",  { false, ProjectStatus("CollisionMesh", base_dir) } },
+      { "Krampus24", { false, ProjectStatus("Krampus24", base_dir) } },
       { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21", base_dir) } },
       { ".dotfiles",        { false, ProjectStatus(".dotfiles", base_dir) } },
       { "Railway",  { false, ProjectStatus("Railway", base_dir) } },
