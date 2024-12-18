@@ -312,6 +312,42 @@ methods:
       return {};
 
 
+  - name: handle_arbitrary_storyboard_screen_finished
+    virtual: true
+    override: true
+    body: |
+      AllegroFlare::Logger::throw_error(
+         "AllegroFlare::GameConfigurations::Base::handle_arbitrary_storyboard_screen_finished",
+         "Not implemented in the base class. This method must be implemented in the derived class"
+      );
+      // NOTE: To use, typically:
+      //router->emit_route_event(
+         //AllegroFlare::Routers::Standard::EVENT_ACTIVATE_LEVEL_SELECT_SCREEN,
+         //nullptr,
+         //al_get_time()
+      //);
+      return;
+
+
+  - name: create_arbitrary_storyboard_pages_by_identifier
+    virtual: true
+    override: true
+    type: std::vector<AllegroFlare::Elements::StoryboardPages::Base *>
+    parameters:
+      - name: identifier
+        type: std::string
+        default_argument: '"[unset-identifier]"'
+    body: |
+      // NOTE: At the time of this writing, identifier is not properly wired up, you will need to find
+      // a way to transmit the identifier you'd like to use. In the past, an identifier is stored
+      // at the point where the AllegroFlare::Routers::Standard::EVENT_ACTIVATE_ARBITRARY_STORYBOARD_SCREEN route
+      // event is emitted, and is somehow retrieved here, or, this method dispatches out to the object/class where the
+      // event was emitted.
+      // Ideally, you would wire up the identifier to be passed along here. Probably as a new
+      // AllegroFlare::RouteEventDatas::ActivateArbitraryStoryboardScreen or similar
+      return;
+
+
   - name: build_title_screen_menu_options
     virtual: true
     override: true
