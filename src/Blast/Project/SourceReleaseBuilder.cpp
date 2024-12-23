@@ -330,27 +330,31 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << std::endl;
    }
 
-   MAKEFILE_CONTENT
-                    << "SOURCES := $(shell find src -name '*.cpp')" << std::endl
-                    << "OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)" << std::endl
-                    << "NUM_OF_OBJECTS := $(words $(OBJECTS))" << std::endl
-                    << std::endl;
+   //MAKEFILE_CONTENT
+                    //<< "SOURCES := $(shell find src -name '*.cpp')" << std::endl
+                    //<< "OBJECTS := $(SOURCES:src/%.cpp=obj/%.o)" << std::endl
+                    //<< "NUM_OF_OBJECTS := $(words $(OBJECTS))" << std::endl
+                    //<< std::endl;
 
 
-   // the "main:" target
    MAKEFILE_CONTENT
                     << "SOURCES := $(shell find src -name '*.cpp')" << std::endl
                     << "OBJECTS := $(SOURCES:src/%.cpp=build/obj/%.o)" << std::endl
                     << "NUM_OF_OBJECTS := $(words $(OBJECTS))" << std::endl
                     << "" << std::endl
                     << "" << std::endl
+
+   // the "fast:" target
                     << "fast:" << std::endl
                       << "\tmake objects -j6" << std::endl
                     << "\tmake main" << std::endl
                     << "" << std::endl
                     << "" << std::endl
+
+   // the "main:" target
                     << "main: $(OBJECTS)" << std::endl
-                    << "\t@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $(OBJECTS) "
+                    << "\t@echo $(OBJECTS) > response_file.txt" << std::endl
+                    << "\t@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) @response_file.txt "
                        << main_program_filename
                        << " $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)"
                        << " "
@@ -381,8 +385,8 @@ std::string SourceReleaseBuilder::get_makefile_content()
    // the "legacy:" target
    MAKEFILE_CONTENT
                     << "legacy: $(SRC_FILES)" << std::endl
-                    << "\t"
-                    << "g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) $^ "
+                    << "\t@echo $^ > response_file.txt" << std::endl
+                    << "\tg++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) @response_file.txt "
                            << main_program_filename
                            << " "
                            << "$(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE)"
