@@ -326,7 +326,8 @@ methods:
          //nullptr,
          //al_get_time()
       //);
-      return;
+      return {};
+
 
 
   - name: create_arbitrary_storyboard_pages_by_identifier
