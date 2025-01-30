@@ -1,0 +1,332 @@
+properties:
+
+
+  - name: project_directory
+    type: std::string
+    init_with: '"/Users/markoates/Repos/SomePlatformer"'
+    constructor_arg: true
+    getter: true
+    setter: true
+
+
+methods:
+
+
+  - name: build_report
+    type: std::string
+    body: |
+      std::stringstream result_report;
+
+      std::unordered_map<std::string, std::string> common_required_headers = build_common_required_headers_list();
+      for (auto &common_required_header : common_required_headers)
+      {
+         std::string token = common_required_header.first;
+
+         Blast::ShellCommandExecutorWithCallback executor(
+               build_scan_shell_command(token),
+               ShellCommandExecutorWithCallback::simple_silent_callback
+            );
+         std::string execution_result = executor.execute();
+         std::vector<std::string> execution_result_as_lines = Blast::StringSplitter(execution_result, '\n').split();
+         std::vector<std::pair<std::string, std::string>> tokenized_found_occurrences =
+            tokenize_lines(&execution_result_as_lines);
+
+         for (auto &tokenized_found_occurrence : tokenized_found_occurrences)
+         {
+            std::string &filename = tokenized_found_occurrence.first;
+            std::string &line = tokenized_found_occurrence.second;
+
+            result_report << "\"" << token << "\"" << " found in \"" << filename << "\" with line " << line << std::endl;
+         }
+      }
+      std::cout << "============ Blast::Project::CodeUsageScanner::build_report ============" << std::endl;
+      std::cout << result_report.str() << std::endl;
+      return result_report.str();
+
+
+  - name: build_scan_shell_command
+    type: std::string
+    parameters:
+      - name: search_token
+        type: std::string
+        default_argument: '"std::vector"'
+    guards: [ 'std::filesystem::exists(project_directory)' ]
+    body: |
+      std::string sanitized_search_token = sanitize_search_token(search_token);
+      std::stringstream command;
+      command << "(cd " << project_directory << " && "
+                 << "git grep --untracked --break \"" << sanitized_search_token << "\" "
+                 << "\":(exclude)./documentation/*\" "
+                 << "\":(exclude)./include/lib/*\" "
+                 << "\":(exclude)./project_files/*\" "
+                 << "\":(exclude)./tmp/*\" "
+                 << "\":(exclude)./scripts/*\" "
+                 << "\":(exclude)./tests/*\" " // NOTE: Excluding tests, consider removing this exclusion
+              << ")"
+              ;
+      return command.str();
+    body_dependency_symbols:
+      - std::filesystem
+      - std::stringstream
+
+
+  - name: build_common_required_headers_list
+    type: std::unordered_map<std::string, std::string> 
+    body: |
+      std::unordered_map<std::string, std::string> required_headers =
+      {
+         {"ceil(", "<cmath>"},
+         {"floor(", "<cmath>"},
+         {"sin(", "<cmath>"},
+         {"cos(", "<cmath>"},
+         {"tan(", "<cmath>"},
+         {"sqrt(", "<cmath>"},
+         {"pow(", "<cmath>"},
+         {"fabs(", "<cmath>"},
+         //{"log", "<cmath>"},
+         
+         //{"memcpy", "<cstring>"},
+         //{"memset", "<cstring>"},
+         //{"memcmp", "<cstring>"},
+         //{"strlen", "<cstring>"},
+         //{"strcpy", "<cstring>"},
+         //{"strcmp", "<cstring>"},
+
+         {"isalpha(", "<cctype>"},
+         {"isdigit(", "<cctype>"},
+         {"toupper(", "<cctype>"},
+         {"tolower(", "<cctype>"},
+
+         //{"exit", "<cstdlib>"},
+         //{"abort", "<cstdlib>"},
+         //{"rand", "<cstdlib>"},
+         //{"srand", "<cstdlib>"},
+
+         //{"printf", "<cstdio>"},
+         //{"scanf", "<cstdio>"},
+         //{"sprintf", "<cstdio>"},
+         //{"sscanf", "<cstdio>"},
+
+         //{"cout", "<iostream>"},
+         //{"cin", "<iostream>"},
+         //{"endl", "<iostream>"},
+
+         //{"vector", "<vector>"},
+         //{"map", "<map>"},
+         //{"set", "<set>"},
+         //{"string", "<string>"}
+      };
+      return required_headers;
+
+
+  - name: tokenize_lines
+    static: true
+    type: std::vector<std::pair<std::string, std::string>>
+    parameters:
+      - name: lines
+        type: std::vector<std::string>*
+        default_argument: nullptr
+    guards: [ lines ]
+    body: |
+      std::vector<std::pair<std::string, std::string>> result;
+
+      for (const std::string &line : *lines)
+      {
+         size_t colon_pos = line.find(':');
+         if (colon_pos == std::string::npos || colon_pos + 1 >= line.size())
+         {
+            continue; // Skip malformed lines
+         }
+
+         // Extract filename
+         std::string filename = line.substr(0, colon_pos);
+
+         // Extract the contents after ":"
+         std::string contents = line.substr(colon_pos + 1);
+         while (!contents.empty() && std::isspace(contents.front()))
+         {
+            contents.erase(contents.begin()); // Trim leading spaces
+         }
+
+         // Extract first word (token)
+         //std::istringstream iss(contents);
+         //std::string token;
+         //iss >> token; // Get first word
+
+         result.emplace_back(filename, contents);
+      }
+
+      return result;
+
+
+  - name: sanitize_search_token
+    type: std::string
+    parameters:
+      - name: search_token
+        type: std::string
+        default_argument: '"std::vector"'
+    body: |
+      std::string sanitized;
+      for (char c : search_token)
+      {
+         switch (c)
+         {
+            case '\\': sanitized += "\\\\"; break; // Escape backslash
+            case '\"': sanitized += "\\\""; break; // Escape double quote
+            case '\'': sanitized += "\\'"; break;  // Escape single quote (optional)
+            case '`': sanitized += "\\`"; break;  // Escape backtick (optional)
+            case '$': sanitized += "\\$"; break;  // Escape dollar sign (optional)
+            default: sanitized += c; break;
+         }
+      }
+      return sanitized;
+    body_dependency_symbols:
+      - std::string
+
+
+  - name: build_comma_separated_unique_asset_identifier_list
+    type: std::string
+    static: true
+    parameters:
+      - name: asset_studio_data
+        type: std::vector<std::pair<std::string, std::string>>*
+        default_argument: nullptr
+      - name: separator
+        type: std::string
+        default_argument: '" "'
+    guards: [ asset_studio_data ]
+    body: |
+      if (!asset_studio_data) return "";
+
+      std::ostringstream result_stream;
+      std::set<std::string> unique_items;
+
+      // Extract unique elements
+      for (const auto &entry : *asset_studio_data)
+      {
+         unique_items.insert(entry.second);
+      }
+
+      // Format as quoted strings
+      auto it = unique_items.begin();
+      while (it != unique_items.end())
+      {
+         result_stream << "\"" << *it << "\"";
+         if (++it != unique_items.end())
+         {
+            result_stream << separator;
+         }
+      }
+
+      return result_stream.str();
+    body_dependency_symbols:
+      - std::set
+      - std::ostringstream
+
+
+  - name: extract_code_studio_data
+    type: std::vector<std::pair<std::string, std::string>>
+    static: true
+    parameters:
+      - name: lines
+        type: std::vector<std::string>*
+        default_argument: nullptr
+    guards: [ lines ]
+    body: |
+       std::vector<std::pair<std::string, std::string>> results;
+       std::regex asset_regex(R"(asset_studio::([^\"}]+))");
+
+       for (const std::string &line : *lines)
+       {
+          std::smatch match;
+          if (std::regex_search(line, match, asset_regex))
+          {
+             std::string full_match = match.str(0);
+             std::string trimmed_match = match.str(1);
+             results.emplace_back(full_match, trimmed_match);
+          }
+       }
+       return results;
+    body_dependency_symbols:
+      - std::regex
+      - std::regex_search
+
+
+  - name: check_for_prefixed_assets
+    type: std::pair<bool, std::vector<std::string>>
+    body: |
+      Blast::ShellCommandExecutorWithCallback executor(
+            build_scan_shell_command(),
+            ShellCommandExecutorWithCallback::simple_silent_callback
+         );
+      std::string execution_result = executor.execute();
+      std::vector<std::string> tokens = Blast::StringSplitter(execution_result, '\n').split();
+      tokens = remove_empty(trim_each(tokens));
+
+      return { tokens.empty(), tokens };
+    body_dependency_symbols:
+      - Blast::StringSplitter
+      - Blast::ShellCommandExecutorWithCallback
+      - Blast::String::Trimmer
+
+
+  - name: trim_each
+    type: std::vector<std::string>
+    static: true
+    parameters:
+      - name: tokens
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      for (auto &s : tokens)
+      {
+         // ltrim
+         s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) {return !std::isspace(c);}));
+         // rtrim
+         s.erase(std::find_if(s.rbegin(), s.rend(), [](int c) {return !std::isspace(c);}).base(), s.end());
+      }
+      return tokens;
+    body_dependency_symbols:
+      - std::find_if
+
+
+  - name: remove_empty
+    static: true
+    private: true
+    type: std::vector<std::string>
+    parameters:
+      - name: strVector
+        type: std::vector<std::string>
+        default_argument: '{}'
+    body: |
+      // Use the erase-remove idiom to remove empty strings
+      strVector.erase(
+            std::remove_if(strVector.begin(), strVector.end(), [](const std::string& str)
+                  {
+                     return str.empty();
+                  }),
+                  strVector.end());
+      return strVector;
+
+
+dependencies:
+
+
+  - symbol: Blast::ShellCommandExecutorWithCallback
+    headers: [ Blast/ShellCommandExecutorWithCallback.hpp ]
+  - symbol: Blast::String::Trimmer
+    headers: [ Blast/String/Trimmer.hpp ]
+  - symbol: Blast::StringSplitter
+    headers: [ Blast/StringSplitter.hpp ]
+  - symbol: std::find_if
+    headers: [ algorithm ]
+  - symbol: std::regex
+    headers: [ regex ]
+  - symbol: std::regex_search
+    headers: [ regex ]
+  - symbol: Blast::StringJoiner
+    headers: [ Blast/StringJoiner.hpp ]
+  - symbol: std::ostringstream
+    headers: [ sstream ]
+
+
