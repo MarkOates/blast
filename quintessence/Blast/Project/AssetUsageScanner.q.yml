@@ -33,6 +33,34 @@ methods:
       - std::stringstream
 
 
+  - name: extract_asset_studio_data
+    type: std::vector<std::pair<std::string, std::string>>
+    static: true
+    parameters:
+      - name: lines
+        type: std::vector<std::string>*
+        default_argument: nullptr
+    guards: [ lines ]
+    body: |
+       std::vector<std::pair<std::string, std::string>> results;
+       std::regex asset_regex(R"(asset_studio::([^\"}]+))");
+
+       for (const std::string &line : *lines)
+       {
+          std::smatch match;
+          if (std::regex_search(line, match, asset_regex))
+          {
+             std::string full_match = match.str(0);
+             std::string trimmed_match = match.str(1);
+             results.emplace_back(full_match, trimmed_match);
+          }
+       }
+       return results;
+    body_dependency_symbols:
+      - std::regex
+      - std::regex_search
+
+
   - name: check_for_prefixed_assets
     type: std::pair<bool, std::vector<std::string>>
     body: |
@@ -101,5 +129,9 @@ dependencies:
     headers: [ Blast/StringSplitter.hpp ]
   - symbol: std::find_if
     headers: [ algorithm ]
+  - symbol: std::regex
+    headers: [ regex ]
+  - symbol: std::regex_search
+    headers: [ regex ]
 
 

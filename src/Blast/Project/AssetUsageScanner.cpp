@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <iostream>
+#include <regex>
 #include <sstream>
 #include <stdexcept>
 
@@ -62,6 +63,31 @@ std::string AssetUsageScanner::get_git_command()
            << ")"
            ;
    return command.str();
+}
+
+std::vector<std::pair<std::string, std::string>> AssetUsageScanner::extract_asset_studio_data(std::vector<std::string>* lines)
+{
+   if (!(lines))
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::Project::AssetUsageScanner::extract_asset_studio_data]: error: guard \"lines\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Blast::Project::AssetUsageScanner::extract_asset_studio_data]: error: guard \"lines\" not met");
+   }
+   std::vector<std::pair<std::string, std::string>> results;
+   std::regex asset_regex(R"(asset_studio::([^\"}]+))");
+
+   for (const std::string &line : *lines)
+   {
+      std::smatch match;
+      if (std::regex_search(line, match, asset_regex))
+      {
+         std::string full_match = match.str(0);
+         std::string trimmed_match = match.str(1);
+         results.emplace_back(full_match, trimmed_match);
+      }
+   }
+   return results;
 }
 
 std::pair<bool, std::vector<std::string>> AssetUsageScanner::check_for_prefixed_assets()

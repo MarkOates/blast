@@ -44,6 +44,7 @@
   ],
   "std/regex": [
     "Blast/BuildInfoBuilder",
+    "Blast/Project/AssetUsageScanner",
     "Blast/RegexMatcher",
     "Blast/ReleaseInfoBuilder"
   ],
@@ -289,6 +290,9 @@
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/String/Trimmer"
+  ],
+  "std/regex_search": [
+    "Blast/Project/AssetUsageScanner"
   ],
   "vector": [
     "Blast/Project/Component"
