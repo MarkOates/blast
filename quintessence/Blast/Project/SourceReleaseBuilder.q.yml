@@ -718,6 +718,12 @@ functions:
          {
             int num_infractions = hard_coded_path_check_result.second.size();
             std::string plural_s = (num_infractions != 1) ? "s" : "";
+
+            std::vector<std::pair<std::string, std::string>> asset_studio_data =
+               asset_usage_scanner.extract_asset_studio_data(&hard_coded_path_check_result.second);
+            std::string assets_unique_list_in_string =
+               asset_usage_scanner.build_comma_separated_unique_asset_identifier_list(&asset_studio_data);
+
             std::stringstream message;
             message << "Prefixed assets were detected "
                         << "(" << num_infractions << " infraction" << plural_s << ")." << std::endl
@@ -734,7 +740,10 @@ functions:
                     }
             message << "===============================" << std::endl
                     << "These prefixed assets indicate that assets are located in outside of the project's directory "
-                    << "and should be copied into a project-local folder."
+                    << "and should be copied into a project-local folder." << std::endl;
+            message << "===============================" << std::endl
+                    << "The following command have been prepared and may be helpful:" << std::endl
+                    << "list_asset " << assets_unique_list_in_string << std::endl
                     << std::endl
                     ;
 

@@ -42,19 +42,6 @@ methods:
         default_argument: nullptr
     guards: [ asset_studio_data ]
     body: |
-      //std::ostringstream result_stream;
-      //auto &extracted_data = *asset_studio_data;
-
-      //for (size_t i = 0; i < extracted_data.size(); i++)
-      //{
-         //result_stream << "\"" << extracted_data[i].second << "\"";
-         //if (i < extracted_data.size() - 1)
-         //{
-            //result_stream << " ";
-         //}
-      //}
-
-
       if (!asset_studio_data) return "";
 
       std::ostringstream result_stream;
@@ -78,8 +65,6 @@ methods:
       }
 
       return result_stream.str();
-
-      //return result_stream.str();
     body_dependency_symbols:
       - std::set
       - std::ostringstream

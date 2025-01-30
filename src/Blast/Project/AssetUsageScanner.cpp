@@ -75,19 +75,6 @@ std::string AssetUsageScanner::build_comma_separated_unique_asset_identifier_lis
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[Blast::Project::AssetUsageScanner::build_comma_separated_unique_asset_identifier_list]: error: guard \"asset_studio_data\" not met");
    }
-   //std::ostringstream result_stream;
-   //auto &extracted_data = *asset_studio_data;
-
-   //for (size_t i = 0; i < extracted_data.size(); i++)
-   //{
-      //result_stream << "\"" << extracted_data[i].second << "\"";
-      //if (i < extracted_data.size() - 1)
-      //{
-         //result_stream << " ";
-      //}
-   //}
-
-
    if (!asset_studio_data) return "";
 
    std::ostringstream result_stream;
@@ -111,8 +98,6 @@ std::string AssetUsageScanner::build_comma_separated_unique_asset_identifier_lis
    }
 
    return result_stream.str();
-
-   //return result_stream.str();
 }
 
 std::vector<std::pair<std::string, std::string>> AssetUsageScanner::extract_asset_studio_data(std::vector<std::string>* lines)
