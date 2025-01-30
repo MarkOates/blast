@@ -33,6 +33,58 @@ methods:
       - std::stringstream
 
 
+  - name: build_comma_separated_unique_asset_identifier_list
+    type: std::string
+    static: true
+    parameters:
+      - name: asset_studio_data
+        type: std::vector<std::pair<std::string, std::string>>*
+        default_argument: nullptr
+    guards: [ asset_studio_data ]
+    body: |
+      //std::ostringstream result_stream;
+      //auto &extracted_data = *asset_studio_data;
+
+      //for (size_t i = 0; i < extracted_data.size(); i++)
+      //{
+         //result_stream << "\"" << extracted_data[i].second << "\"";
+         //if (i < extracted_data.size() - 1)
+         //{
+            //result_stream << " ";
+         //}
+      //}
+
+
+      if (!asset_studio_data) return "";
+
+      std::ostringstream result_stream;
+      std::set<std::string> unique_items;
+
+      // Extract unique elements
+      for (const auto &entry : *asset_studio_data)
+      {
+         unique_items.insert(entry.second);
+      }
+
+      // Format as quoted strings
+      auto it = unique_items.begin();
+      while (it != unique_items.end())
+      {
+         result_stream << "\"" << *it << "\"";
+         if (++it != unique_items.end())
+         {
+            result_stream << " ";
+         }
+      }
+
+      return result_stream.str();
+
+      //return result_stream.str();
+    body_dependency_symbols:
+      - std::set
+      - std::ostringstream
+
+
   - name: extract_asset_studio_data
     type: std::vector<std::pair<std::string, std::string>>
     static: true
@@ -133,5 +185,9 @@ dependencies:
     headers: [ regex ]
   - symbol: std::regex_search
     headers: [ regex ]
+  - symbol: Blast::StringJoiner
+    headers: [ Blast/StringJoiner.hpp ]
+  - symbol: std::ostringstream
+    headers: [ sstream ]
 
 

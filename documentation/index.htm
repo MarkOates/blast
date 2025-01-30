@@ -1821,6 +1821,10 @@ table td
   <td class="method"><b>get_git_command</b>()</td>
 </tr>
 <tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_comma_separated_unique_asset_identifier_list</b>(std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;* asset_studio_data=nullptr)</td>
+</tr>
+<tr>
   <td class="method">std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;</td>
   <td class="method"><b>extract_asset_studio_data</b>(std::vector&lt;std::string&gt;* lines=nullptr)</td>
 </tr>
@@ -1856,6 +1860,12 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::regex_search&quot;, &quot;headers&quot;=&gt;[&quot;regex&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringJoiner&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringJoiner.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::ostringstream&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;]}</td>
 </tr>
     </table>
 </div>  </div>
@@ -5181,6 +5191,7 @@ table td
   ],
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
+    "Blast/Project/AssetUsageScanner",
     "Blast/ReleaseInfo",
     "Blast/String/Unindenter",
     "Blast/VersionYAMLLoaderEmitter",
@@ -5275,6 +5286,9 @@ table td
     "Blast/String/Trimmer"
   ],
   "std/regex_search": [
+    "Blast/Project/AssetUsageScanner"
+  ],
+  "std/ostringstream": [
     "Blast/Project/AssetUsageScanner"
   ],
   "vector": [

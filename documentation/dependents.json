@@ -198,6 +198,7 @@
   ],
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
+    "Blast/Project/AssetUsageScanner",
     "Blast/ReleaseInfo",
     "Blast/String/Unindenter",
     "Blast/VersionYAMLLoaderEmitter",
@@ -292,6 +293,9 @@
     "Blast/String/Trimmer"
   ],
   "std/regex_search": [
+    "Blast/Project/AssetUsageScanner"
+  ],
+  "std/ostringstream": [
     "Blast/Project/AssetUsageScanner"
   ],
   "vector": [

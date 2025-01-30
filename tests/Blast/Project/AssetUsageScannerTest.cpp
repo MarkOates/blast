@@ -92,3 +92,35 @@ TEST(Blast_Project_AssetUsageScannerTest, extract_asset_studio_data__will_return
 }
 
 
+TEST(Blast_Project_AssetUsageScannerTest, build_comma_separated_unique_asset_identifier_list__will_do_that)
+{
+   Blast::Project::AssetUsageScanner asset_usage_scanner;
+   asset_usage_scanner.set_project_directory("/Users/markoates/Repos/FolderThatDoesNotExist");
+
+   std::vector<std::string> input_lines = {
+      R"(quintessence/AllegroFlare/Prototypes/Platforming2D/FXFactory.q.yml:         "asset_studio::ansimuz/warped-explosions-pack-8/explosion-g",)",
+      R"(quintessence/JourneyOfTheCat/Gameplay/TMJObjectLoadCallback.q.yml:         //"asset_studio::ansimuz/gothicvania-cemetery/tree-3",)",
+      R"(quintessence/JourneyOfTheCat/Gameplay/TMJObjectLoadCallback.q.yml:         { "tree-3", "asset_studio::ansimuz/gothicvania-cemetery/tree-3" },)",
+      R"(quintessence/JourneyOfTheCat/Gameplay/TMJObjectLoadCallback.q.yml:         { "tree-2", "asset_studio::ansimuz/gothicvania-cemetery/tree-2" },)",
+      R"(quintessence/JourneyOfTheCat/Gameplay/TMJObjectLoadCallback.q.yml:         { "tree-1", "asset_studio::ansimuz/gothicvania-cemetery/tree-1" },)",
+      R"(quintessence/JourneyOfTheCat/Gameplay/TMJObjectLoadCallback.q.yml:         { "stone-1", "asset_studio::ansimuz/gothicvania-cemetery/stone-1" },)",
+      R"(quintessence/JourneyOfTheCat/Gameplay/TMJObjectLoadCallback.q.yml:         { "stone-2", "asset_studio::ansimuz/gothicvania-cemetery/stone-2" },)",
+      R"(quintessence/JourneyOfTheCat/Gameplay/TMJObjectLoadCallback.q.yml:         { "stone-3", "asset_studio::ansimuz/gothicvania-cemetery/stone-3" },)"
+   };
+
+   std::vector<std::pair<std::string, std::string>> asset_studio_data =
+      asset_usage_scanner.extract_asset_studio_data(&input_lines);
+
+   //std::string expected_result_string = R"("ansimuz/warped-explosions-pack-8/explosion-g" "ansimuz/gothicvania-cemetery/tree-3" "ansimuz/gothicvania-cemetery/tree-3" "ansimuz/gothicvania-cemetery/tree-2" "ansimuz/gothicvania-cemetery/tree-1" "ansimuz/gothicvania-cemetery/stone-1" "ansimuz/gothicvania-cemetery/stone-2" "ansimuz/gothicvania-cemetery/stone-3")";
+   std::string expected_result_string = "\"ansimuz/gothicvania-cemetery/stone-1\" \"ansimuz/gothicvania-cemetery"
+      "/stone-2\" \"ansimuz/gothicvania-cemetery/stone-3\" \"ansimuz/gothicvania-cemetery/tree-1\" \"ansimuz/"
+      "gothicvania-cemetery/tree-2\" \"ansimuz/gothicvania-cemetery/tree-3\" \"ansimuz/warped-explosions-pack-8/"
+      "explosion-g\"";
+
+   std::string actual_result_string =
+      asset_usage_scanner.build_comma_separated_unique_asset_identifier_list(&asset_studio_data);
+
+   EXPECT_EQ(expected_result_string, actual_result_string);
+}
+
+

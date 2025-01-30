@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <iostream>
 #include <regex>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 
@@ -63,6 +64,55 @@ std::string AssetUsageScanner::get_git_command()
            << ")"
            ;
    return command.str();
+}
+
+std::string AssetUsageScanner::build_comma_separated_unique_asset_identifier_list(std::vector<std::pair<std::string, std::string>>* asset_studio_data)
+{
+   if (!(asset_studio_data))
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::Project::AssetUsageScanner::build_comma_separated_unique_asset_identifier_list]: error: guard \"asset_studio_data\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Blast::Project::AssetUsageScanner::build_comma_separated_unique_asset_identifier_list]: error: guard \"asset_studio_data\" not met");
+   }
+   //std::ostringstream result_stream;
+   //auto &extracted_data = *asset_studio_data;
+
+   //for (size_t i = 0; i < extracted_data.size(); i++)
+   //{
+      //result_stream << "\"" << extracted_data[i].second << "\"";
+      //if (i < extracted_data.size() - 1)
+      //{
+         //result_stream << " ";
+      //}
+   //}
+
+
+   if (!asset_studio_data) return "";
+
+   std::ostringstream result_stream;
+   std::set<std::string> unique_items;
+
+   // Extract unique elements
+   for (const auto &entry : *asset_studio_data)
+   {
+      unique_items.insert(entry.second);
+   }
+
+   // Format as quoted strings
+   auto it = unique_items.begin();
+   while (it != unique_items.end())
+   {
+      result_stream << "\"" << *it << "\"";
+      if (++it != unique_items.end())
+      {
+         result_stream << " ";
+      }
+   }
+
+   return result_stream.str();
+
+   //return result_stream.str();
 }
 
 std::vector<std::pair<std::string, std::string>> AssetUsageScanner::extract_asset_studio_data(std::vector<std::string>* lines)
