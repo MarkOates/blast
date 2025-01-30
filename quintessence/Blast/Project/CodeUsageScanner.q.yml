@@ -9,6 +9,15 @@ properties:
     setter: true
 
 
+documentation:
+
+
+  - notes:
+      - This class is partially complete and should be added to the Blast/Project/SourceReleaseBuilder to scan for
+        symbols in the C++ code that could potentially require headers in Windows (gcc) that would not otherwise appear
+        as required during build on Mac (clang).
+
+
 methods:
 
 
