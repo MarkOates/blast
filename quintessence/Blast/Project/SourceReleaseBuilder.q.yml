@@ -761,6 +761,27 @@ functions:
 
 
 
+      bool check_for_missing_headers_needed_in_gcc_but_not_needed_in_clang = true;
+      if (check_for_missing_headers_needed_in_gcc_but_not_needed_in_clang)
+      {
+         Blast::Project::CodeUsageScanner code_usage_scanner(source_project_directory);
+         bool all_clear;
+         std::string actual_report;
+         std::tie(all_clear, actual_report) = code_usage_scanner.build_report();
+
+         if (!all_clear)
+         {
+            Blast::Errors::throw_error(
+               "Blast::Project::SourceReleaseBuilder::generate_source_release",
+               "When scanning the source code for potential headers that might be required on gcc (but are not "
+                  "required in clang), a few locations were identified. Here is the report that was generated:\n\n"
+                  + actual_report
+            );
+         }
+      }
+
+
+
       // Increment the version.yml in the source repo location
       // TODO: Test this process
       // TODO: Offer a version alternative when no "version.yml" file is present... create new? etc...
@@ -1426,6 +1447,7 @@ functions:
       - Blast::ReleaseInfoBuilder
       - Blast::Project::HardCodedPathInfrencer
       - Blast::Project::AssetUsageScanner
+      - Blast::Project::CodeUsageScanner
 
 
   - name: get_top_level_folders_in_include
@@ -1526,5 +1548,7 @@ dependencies:
     headers: [ Blast/Project/HardCodedPathInfrencer.hpp ]
   - symbol: Blast::Project::AssetUsageScanner
     headers: [ Blast/Project/AssetUsageScanner.hpp ]
+  - symbol: Blast::Project::CodeUsageScanner
+    headers: [ Blast/Project/CodeUsageScanner.hpp ]
 
 

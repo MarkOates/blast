@@ -441,6 +441,9 @@
   "Blast/Project/AssetUsageScanner": [
     "Blast/Project/SourceReleaseBuilder"
   ],
+  "Blast/Project/CodeUsageScanner": [
+    "Blast/Project/SourceReleaseBuilder"
+  ],
   "std/filesystem/path": [
     "Blast/Project/SymlinkChecker",
     "Blast/Testing/TemporaryDirectoryCreator"

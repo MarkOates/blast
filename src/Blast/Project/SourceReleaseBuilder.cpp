@@ -8,6 +8,7 @@
 #include <Blast/Errors.hpp>
 #include <Blast/FileExistenceChecker.hpp>
 #include <Blast/Project/AssetUsageScanner.hpp>
+#include <Blast/Project/CodeUsageScanner.hpp>
 #include <Blast/Project/HardCodedPathInfrencer.hpp>
 #include <Blast/Project/ProjectSymlinkFixer.hpp>
 #include <Blast/Project/SourceReleaseAppInfoFile.hpp>
@@ -802,6 +803,27 @@ bool SourceReleaseBuilder::generate_source_release()
          Blast::Errors::throw_error(
             "Blast::Project::SourceReleaseBuilder::generate_source_release",
             message.str()
+         );
+      }
+   }
+
+
+
+   bool check_for_missing_headers_needed_in_gcc_but_not_needed_in_clang = true;
+   if (check_for_missing_headers_needed_in_gcc_but_not_needed_in_clang)
+   {
+      Blast::Project::CodeUsageScanner code_usage_scanner(source_project_directory);
+      bool all_clear;
+      std::string actual_report;
+      std::tie(all_clear, actual_report) = code_usage_scanner.build_report();
+
+      if (!all_clear)
+      {
+         Blast::Errors::throw_error(
+            "Blast::Project::SourceReleaseBuilder::generate_source_release",
+            "When scanning the source code for potential headers that might be required on gcc (but are not "
+               "required in clang), a few locations were identified. Here is the report that was generated:\n\n"
+               + actual_report
          );
       }
    }
