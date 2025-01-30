@@ -722,7 +722,9 @@ functions:
             std::vector<std::pair<std::string, std::string>> asset_studio_data =
                asset_usage_scanner.extract_asset_studio_data(&hard_coded_path_check_result.second);
             std::string assets_unique_list_in_string =
-               asset_usage_scanner.build_comma_separated_unique_asset_identifier_list(&asset_studio_data);
+               asset_usage_scanner.build_comma_separated_unique_asset_identifier_list(&asset_studio_data, " ");
+            std::string assets_unique_list_in_newline_list =
+               asset_usage_scanner.build_comma_separated_unique_asset_identifier_list(&asset_studio_data, "\n");
 
             std::stringstream message;
             message << "Prefixed assets were detected "
@@ -741,6 +743,9 @@ functions:
             message << "===============================" << std::endl
                     << "These prefixed assets indicate that assets are located in outside of the project's directory "
                     << "and should be copied into a project-local folder." << std::endl;
+            message << "===============================" << std::endl
+                    << "======== Unique list of asset identifiers ==========" << std::endl
+                    << assets_unique_list_in_newline_list << std::endl;
             message << "===============================" << std::endl
                     << "The following command have been prepared and may be helpful:" << std::endl
                     << "list_asset " << assets_unique_list_in_string << std::endl

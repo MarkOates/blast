@@ -66,7 +66,7 @@ std::string AssetUsageScanner::get_git_command()
    return command.str();
 }
 
-std::string AssetUsageScanner::build_comma_separated_unique_asset_identifier_list(std::vector<std::pair<std::string, std::string>>* asset_studio_data)
+std::string AssetUsageScanner::build_comma_separated_unique_asset_identifier_list(std::vector<std::pair<std::string, std::string>>* asset_studio_data, std::string separator)
 {
    if (!(asset_studio_data))
    {
@@ -93,7 +93,7 @@ std::string AssetUsageScanner::build_comma_separated_unique_asset_identifier_lis
       result_stream << "\"" << *it << "\"";
       if (++it != unique_items.end())
       {
-         result_stream << " ";
+         result_stream << separator;
       }
    }
 
