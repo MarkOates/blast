@@ -45,6 +45,7 @@
   "std/regex": [
     "Blast/BuildInfoBuilder",
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/RegexMatcher",
     "Blast/ReleaseInfoBuilder"
   ],
@@ -135,6 +136,7 @@
   "Blast/ShellCommandExecutorWithCallback": [
     "Blast/BuildSystem/BuildStages/ShellCommand",
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/Project/ComponentLister",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/ProgramLister",
@@ -199,6 +201,7 @@
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/ReleaseInfo",
     "Blast/String/Unindenter",
     "Blast/VersionYAMLLoaderEmitter",
@@ -207,6 +210,7 @@
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/String/Unindenter",
@@ -278,6 +282,7 @@
   ],
   "Blast/String/Trimmer": [
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "HostnameExtractor",
@@ -288,15 +293,18 @@
   ],
   "std/find_if": [
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/String/Trimmer"
   ],
   "std/regex_search": [
-    "Blast/Project/AssetUsageScanner"
+    "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner"
   ],
   "std/ostringstream": [
-    "Blast/Project/AssetUsageScanner"
+    "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner"
   ],
   "vector": [
     "Blast/Project/Component"

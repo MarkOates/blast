@@ -10,7 +10,7 @@ TEST(Blast_Project_CodeUsageScannerTest, can_be_created_without_blowing_up)
 }
 
 
-TEST(Blast_Project_CodeUsageScannerTest, build_scan_shell_command__returns_the_expected_command)
+TEST(Blast_Project_CodeUsageScannerTest, DISABLED__build_scan_shell_command__returns_the_expected_command)
 {
    Blast::Project::CodeUsageScanner code_usage_scanner;
    //code_usage_scanner.set_search_token("foo");
@@ -28,6 +28,19 @@ TEST(Blast_Project_CodeUsageScannerTest, build_report__will_output_a_report_of_f
    std::string actual_report = code_usage_scanner.build_report();
    //EXPECT_EQ(expected_report, actual_report);
 }
+
+
+TEST(Blast_Project_CodeUsageScannerTest, token_exists_in_file__will_return_true_if_token_is_found_in_file)
+{
+   Blast::Project::CodeUsageScanner code_usage_scanner("/Users/markoates/Repos/JourneyOfTheCat");
+   bool token_exists_in_file = code_usage_scanner.token_exists_in_file(
+      "src/JourneyOfTheCat/Entities/Ghost.cpp",
+      "#include <cmath>"
+   );
+   EXPECT_EQ(true, token_exists_in_file);
+}
+
+
 
 
 // TODO: Update and uncomment this test

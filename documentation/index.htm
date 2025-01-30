@@ -89,6 +89,7 @@ table td
   <li><a href="#quintessence/Blast/Inflector.q.yml">quintessence/Blast/Inflector.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ActionCreator.q.yml">quintessence/Blast/Project/ActionCreator.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/AssetUsageScanner.q.yml">quintessence/Blast/Project/AssetUsageScanner.q.yml</a></li>
+  <li><a href="#quintessence/Blast/Project/CodeUsageScanner.q.yml">quintessence/Blast/Project/CodeUsageScanner.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/Component.q.yml">quintessence/Blast/Project/Component.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ComponentBasenameExtractor.q.yml">quintessence/Blast/Project/ComponentBasenameExtractor.q.yml</a></li>
   <li><a href="#quintessence/Blast/Project/ComponentCreator.q.yml">quintessence/Blast/Project/ComponentCreator.q.yml</a></li>
@@ -1827,6 +1828,95 @@ table td
 <tr>
   <td class="method">std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;</td>
   <td class="method"><b>extract_asset_studio_data</b>(std::vector&lt;std::string&gt;* lines=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">std::pair&lt;bool, std::vector&lt;std::string&gt;&gt;</td>
+  <td class="method"><b>check_for_prefixed_assets</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;std::string&gt;</td>
+  <td class="method"><b>trim_each</b>(std::vector&lt;std::string&gt; tokens={})</td>
+</tr>
+<tr>
+  <td class="private_method">std::vector&lt;std::string&gt;</td>
+  <td class="private_method"><b>remove_empty</b>(std::vector&lt;std::string&gt; strVector={})</td>
+</tr>
+    </table>
+</div>    <h3>Dependencies</h3>
+<div class="property-box dependencies">     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::ShellCommandExecutorWithCallback&quot;, &quot;headers&quot;=&gt;[&quot;Blast/ShellCommandExecutorWithCallback.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::String::Trimmer&quot;, &quot;headers&quot;=&gt;[&quot;Blast/String/Trimmer.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringSplitter&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringSplitter.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::find_if&quot;, &quot;headers&quot;=&gt;[&quot;algorithm&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::regex&quot;, &quot;headers&quot;=&gt;[&quot;regex&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::regex_search&quot;, &quot;headers&quot;=&gt;[&quot;regex&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::StringJoiner&quot;, &quot;headers&quot;=&gt;[&quot;Blast/StringJoiner.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::ostringstream&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;]}</td>
+</tr>
+    </table>
+</div>  </div>
+</ul>
+<br><br><br>
+<br><br><br>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Blast/Project/CodeUsageScanner.q.yml">quintessence/Blast/Project/CodeUsageScanner.q.yml</h3>
+    <p>(This component does not include supplementary documentation)</p>
+    <h3>Properties</h3>
+<div class="property-box properties">     <table>
+<tr>
+  <td class="property">project_directory</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+</div>    <h3>Methods</h3>
+<div class="property-box methods">     <table>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_report</b>()</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>token_exists_in_file</b>(std::string filename=&quot;path/to/file.cpp&quot;, std::string search_token=&quot;#include &lt;cmath&gt;&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_scan_shell_command</b>(std::string search_token=&quot;std::vector&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::unordered_map&lt;std::string, std::string&gt;</td>
+  <td class="method"><b>build_common_required_headers_list</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;</td>
+  <td class="method"><b>tokenize_lines</b>(std::vector&lt;std::string&gt;* lines=nullptr)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>sanitize_search_token</b>(std::string search_token=&quot;std::vector&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>build_comma_separated_unique_asset_identifier_list</b>(std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;* asset_studio_data=nullptr, std::string separator=&quot; &quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::vector&lt;std::pair&lt;std::string, std::string&gt;&gt;</td>
+  <td class="method"><b>extract_code_studio_data</b>(std::vector&lt;std::string&gt;* lines=nullptr)</td>
 </tr>
 <tr>
   <td class="method">std::pair&lt;bool, std::vector&lt;std::string&gt;&gt;</td>
@@ -5038,6 +5128,7 @@ table td
   "std/regex": [
     "Blast/BuildInfoBuilder",
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/RegexMatcher",
     "Blast/ReleaseInfoBuilder"
   ],
@@ -5128,6 +5219,7 @@ table td
   "Blast/ShellCommandExecutorWithCallback": [
     "Blast/BuildSystem/BuildStages/ShellCommand",
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/Project/ComponentLister",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/ProgramLister",
@@ -5192,6 +5284,7 @@ table td
   "Blast/StringJoiner": [
     "Blast/DependencyHeadersSuggester",
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/ReleaseInfo",
     "Blast/String/Unindenter",
     "Blast/VersionYAMLLoaderEmitter",
@@ -5200,6 +5293,7 @@ table td
   "Blast/StringSplitter": [
     "Blast/DependencySymbolAtomizer",
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/String/Unindenter",
@@ -5271,6 +5365,7 @@ table td
   ],
   "Blast/String/Trimmer": [
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "HostnameExtractor",
@@ -5281,15 +5376,18 @@ table td
   ],
   "std/find_if": [
     "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner",
     "Blast/Project/HardCodedPathInfrencer",
     "Blast/Project/SourceReleaseAppInfoFile",
     "Blast/String/Trimmer"
   ],
   "std/regex_search": [
-    "Blast/Project/AssetUsageScanner"
+    "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner"
   ],
   "std/ostringstream": [
-    "Blast/Project/AssetUsageScanner"
+    "Blast/Project/AssetUsageScanner",
+    "Blast/Project/CodeUsageScanner"
   ],
   "vector": [
     "Blast/Project/Component"

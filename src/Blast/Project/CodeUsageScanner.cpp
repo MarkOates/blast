@@ -75,6 +75,31 @@ std::string CodeUsageScanner::build_report()
    return result_report.str();
 }
 
+bool CodeUsageScanner::token_exists_in_file(std::string filename, std::string search_token)
+{
+   std::string sanitized_search_token = sanitize_search_token(search_token);
+   std::string sanitized_filename = sanitize_search_token(filename);
+   //command << "(cd " << project_directory << " && "
+   std::string shell_command = "(cd " + project_directory + " && "
+                             + "grep --line-number \"" + sanitized_search_token + "\" \""
+                             + sanitized_filename + "\""
+                             + ")";
+   std::cout << "Executing: " << std::endl;
+   std::cout << "    " << shell_command << std::endl;
+   Blast::ShellCommandExecutorWithCallback executor(
+         shell_command,
+         ShellCommandExecutorWithCallback::simple_silent_callback
+      );
+
+   std::string execution_result = executor.execute();
+   std::vector<std::string> execution_result_as_lines = Blast::StringSplitter(execution_result, '\n').split();
+
+
+   ///execution_result_as_lines
+
+   return (executor.get_executed_successfully() && execution_result_as_lines.size() >= 1);
+}
+
 std::string CodeUsageScanner::build_scan_shell_command(std::string search_token)
 {
    if (!(std::filesystem::exists(project_directory)))
@@ -89,6 +114,7 @@ std::string CodeUsageScanner::build_scan_shell_command(std::string search_token)
    command << "(cd " << project_directory << " && "
               << "git grep --untracked --break \"" << sanitized_search_token << "\" "
               << "\":(exclude)./documentation/*\" "
+              << "\":(exclude)./quintessence/*\" " // NOTE: We're only looking in .cpp and .hpp files
               << "\":(exclude)./include/lib/*\" "
               << "\":(exclude)./project_files/*\" "
               << "\":(exclude)./tmp/*\" "
@@ -199,6 +225,8 @@ std::string CodeUsageScanner::sanitize_search_token(std::string search_token)
          case '\'': sanitized += "\\'"; break;  // Escape single quote (optional)
          case '`': sanitized += "\\`"; break;  // Escape backtick (optional)
          case '$': sanitized += "\\$"; break;  // Escape dollar sign (optional)
+         //case '<': sanitized += "\\<"; break;   // Escape less than
+         //case '>': sanitized += "\\>"; break;   // Escape greater than
          default: sanitized += c; break;
       }
    }
