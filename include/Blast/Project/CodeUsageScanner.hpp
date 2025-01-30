@@ -26,9 +26,10 @@ namespace Blast
 
          void set_project_directory(std::string project_directory);
          std::string get_project_directory() const;
-         std::string build_report();
+         std::pair<bool, std::string> build_report();
          bool token_exists_in_file(std::string filename="path/to/file.cpp", std::string search_token="#include <cmath>");
          std::string build_scan_shell_command(std::string search_token="std::vector");
+         std::string obtain_required_header_for_token(std::string token="[unset-token]");
          std::unordered_map<std::string, std::string> build_common_required_headers_list();
          static std::vector<std::pair<std::string, std::string>> tokenize_lines(std::vector<std::string>* lines=nullptr);
          static std::string sanitize_search_token(std::string search_token="std::vector");

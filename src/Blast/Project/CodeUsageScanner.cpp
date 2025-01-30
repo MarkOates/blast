@@ -44,11 +44,12 @@ std::string CodeUsageScanner::get_project_directory() const
 }
 
 
-std::string CodeUsageScanner::build_report()
+std::pair<bool, std::string> CodeUsageScanner::build_report()
 {
    std::stringstream result_report;
 
    std::unordered_map<std::string, std::string> common_required_headers = build_common_required_headers_list();
+   bool all_clear = true;
    for (auto &common_required_header : common_required_headers)
    {
       std::string token = common_required_header.first;
@@ -68,11 +69,25 @@ std::string CodeUsageScanner::build_report()
          std::string &line = tokenized_found_occurrence.second;
 
          result_report << "\"" << token << "\"" << " found in \"" << filename << "\" with line " << line << std::endl;
+
+         // See if required header is present in this file
+         std::string required_header_token = obtain_required_header_for_token(token);
+         bool header_token_exists_in_file = token_exists_in_file(filename, required_header_token);
+
+         if (!header_token_exists_in_file)
+         {
+            result_report << "    !! header token \"" << required_header_token << "\" not found" << std::endl;
+            all_clear = false;
+         }
+         else
+         {
+            result_report << "    PASS: header token \"" << required_header_token << "\" found." << std::endl;
+         }
       }
    }
    std::cout << "============ Blast::Project::CodeUsageScanner::build_report ============" << std::endl;
    std::cout << result_report.str() << std::endl;
-   return result_report.str();
+   return { all_clear, result_report.str(), };
 }
 
 bool CodeUsageScanner::token_exists_in_file(std::string filename, std::string search_token)
@@ -123,6 +138,21 @@ std::string CodeUsageScanner::build_scan_shell_command(std::string search_token)
            << ")"
            ;
    return command.str();
+}
+
+std::string CodeUsageScanner::obtain_required_header_for_token(std::string token)
+{
+   std::unordered_map<std::string, std::string> common_required_headers_list =
+      build_common_required_headers_list();
+   auto it = common_required_headers_list.find(token);
+   if (it == common_required_headers_list.end())
+   {
+      throw std::runtime_error(
+         "Blast::Project::CodeUsageScanner::obtain_required_header_for_token: error: "
+            "Token \"" + token + "\" not found"
+      );
+   }
+   return it->second;
 }
 
 std::unordered_map<std::string, std::string> CodeUsageScanner::build_common_required_headers_list()

@@ -25,7 +25,11 @@ TEST(Blast_Project_CodeUsageScannerTest, build_report__will_output_a_report_of_f
    //code_usage_scanner.set_search_token("foo");
    //std::string expected_command = "(cd /Users/markoates/Repos/SomePlatformer && git grep --untracked --break \"foo\" \":(exclude)./documentation/*\" \":(exclude)./include/lib/*\" \":(exclude)./project_files/*\" \":(exclude)./tmp/*\" \":(exclude)./scripts/*\" \":(exclude)./tests/*\" )";
    std::string expected_report = "asdfofa";
-   std::string actual_report = code_usage_scanner.build_report();
+   bool all_clear;
+   std::string actual_report;
+   std::tie(all_clear, actual_report) = code_usage_scanner.build_report();
+
+   //EXPECT_EQ(true, all_clear);
    //EXPECT_EQ(expected_report, actual_report);
 }
 
