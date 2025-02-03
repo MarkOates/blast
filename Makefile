@@ -350,6 +350,21 @@ define output_terminal_message
 endef
 
 
+# Capture the number of cores on this system
+ifeq ($(OS), Windows_NT)
+	CORES := $(shell nproc --all)
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		CORES = 4
+	else ifeq ($(UNAME_S),Darwin)
+    CORES := $(shell echo $$((`sysctl -n hw.ncpu` - 1)))
+	else
+		CORES = 4
+	endif
+endif
+$(info Using $(CORES) cores for parallel jobs)
+
 
 .PHONY: main quintessence programs objects examples demos library tests docs run_tests deps
 
@@ -357,29 +372,29 @@ endef
 
 main:
 	$(call output_terminal_message,"Compose componets from all quintessence files")
-	@make quintessences -j8
+	@make quintessences -j$(CORES)
 	$(call output_terminal_message,"Make all the dependency files")
-	@make deps -j8
+	@make deps -j$(CORES)
 	$(call output_terminal_message,"Make all the component object files")
-	@make objects -j8
+	@make objects -j$(CORES)
 	$(call output_terminal_message,"Make all the test object files")
-	@make test_objects -j8
+	@make test_objects -j$(CORES)
 	$(call output_terminal_message,"Build the library-for-tests")
-	@make library_for_tests -j8
+	@make library_for_tests -j$(CORES)
 	$(call output_terminal_message,"Make all the individual test executables")
-	@make tests -j8
+	@make tests -j$(CORES)
 	$(call output_terminal_message,"Make single test executable containing all tests")
-	@make all_tests -j8
+	@make all_tests -j$(CORES)
 	$(call output_terminal_message,"Run the tests for all the components")
 	@(bin/run_all_tests && (make celebrate_passing_tests) || (make signal_failing_tests && exit 1) )
 	$(call output_terminal_message,"Build the library")
-	@make library -j8
+	@make library -j$(CORES)
 	$(call output_terminal_message,"Make all the programs")
-	@make programs -j8
+	@make programs -j$(CORES)
 	$(call output_terminal_message,"Make all the example programs")
-	@make examples -j8
+	@make examples -j$(CORES)
 	$(call output_terminal_message,"Make all the demo programs")
-	@make demos -j8
+	@make demos -j$(CORES)
 	$(call output_terminal_message,"Update the documentation")
 	@make docs
 	$(call output_terminal_message,"Celebrate successful build")
@@ -419,16 +434,16 @@ focus:
 	@-rm $(BUILD_FILE_COMPONENT_TESTS_RUN)
 	$(call output_terminal_message,"Compose componets from all quintessence files")
 	@echo "generating_sources_files_from_quintessence" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	@set -o pipefail && (make quintessences -j8 2>&1 | tee $(BUILD_FILE_QUINTESSENCE_EXTRAPOLATION))
+	@set -o pipefail && (make quintessences -j$(CORES) 2>&1 | tee $(BUILD_FILE_QUINTESSENCE_EXTRAPOLATION))
 	$(call output_terminal_message,"Build dependency file for component")
 	@echo "building_dependency_file_for_component" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	@set -o pipefail && (make deps -j8 2>&1 | tee $(BUILD_FILE_DEPS_BUILD))
+	@set -o pipefail && (make deps -j$(CORES) 2>&1 | tee $(BUILD_FILE_DEPS_BUILD))
 	$(call output_terminal_message,"Make all the component object files")
 	@echo "building_component_object_files" > $(BUILD_STATUS_SIGNALING_FILENAME)
 	@set -o pipefail && (make objects 2>&1 | tee $(BUILD_FILE_COMPONENT_OBJECT_BUILD))
 	$(call output_terminal_message,"Make the library-for-tests")
 	@echo "make_library_for_tests" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	@make library_for_tests -j8
+	@make library_for_tests -j$(CORES)
 	$(call output_terminal_message, "Delete the existing focused component test object and test binary")
 	@echo "delete_focused_component_test_object_file_and_test_executable" > $(BUILD_STATUS_SIGNALING_FILENAME)
 	@-rm obj/tests/$(FOCUSED_COMPONENT_NAME)Test.o
@@ -458,10 +473,10 @@ focus:
 	fi
 	$(call output_terminal_message,"Make the library")
 	@echo "make_library" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	@make library -j8
+	@make library -j$(CORES)
 	$(call output_terminal_message,"Make all the programs")
 	@echo "make_all_programs" > $(BUILD_STATUS_SIGNALING_FILENAME)
-	@set -o pipefail && (make programs -j 2>&1 | tee $(BUILD_FILE_PROGRAMS_BUILD))
+	@set -o pipefail && (make programs -j$(CORES) 2>&1 | tee $(BUILD_FILE_PROGRAMS_BUILD))
 	$(call output_terminal_message,"Update the documentation")
 	@echo "make_documentation" > $(BUILD_STATUS_SIGNALING_FILENAME)
 	@make docs
@@ -484,8 +499,8 @@ version:
 
 fast:
 	make clean
-	make quintessences -j8
-	make objects -j8
+	make quintessences -j$(CORES)
+	make objects -j$(CORES)
 	make library
 
 
@@ -864,7 +879,7 @@ entire:
 
 universe:
 	# make blast
-	(cd /Users/markoates/Repos/blast && git pull && make clean && make programs -j && make)
+	(cd /Users/markoates/Repos/blast && git pull && make clean && make programs -j$(CORES) && make)
 	# make allegro_flare
 	(cd /Users/markoates/Repos/allegro_flare && git pull && make clean && make)
 	# make hexagon
@@ -894,5 +909,5 @@ newlib:
 
 fresh:
 	make clean
-	make -j8
+	make -j$(CORES)
 	make bin/run_all_tests
