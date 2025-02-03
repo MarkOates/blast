@@ -352,7 +352,7 @@ endef
 
 # Capture the number of cores on this system
 ifeq ($(OS), Windows_NT)
-	CORES := $(shell nproc --all)
+  CORES := $(shell expr $(shell nproc --all) - 1)
 else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
