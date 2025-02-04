@@ -16,7 +16,7 @@ void roll_roller(Blast::DiceRoller &dice_roller, int num_times)
       << " time(s)..."
       << std::endl;
 
-   for (unsigned i=0; i<num_times; i++)
+   for (int i=0; i<num_times; i++)
    {
       std::cout << "  Roll " << (i+1) << ": " << dice_roller.roll() << std::endl;
    }
