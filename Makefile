@@ -220,11 +220,13 @@ endif
 # BULLET PHYSICS
 
 # For now, using bullet physics on Mac by installing through homebrew "brew install bullet"
+# Note that the homebrew path is different depending on if you're using an Intel Mac or Apple Silicon Mac
 
 ifeq ($(USING_BULLET_PHYSICS),TRUE)
+	HOMEBREW_PATH_PREFIX := $(shell brew --prefix)
 	echo "Using Bullet physics (USING_BULLET_PHYSICS=TRUE in ProjectMakefile)"
-  BULLET_PHYSICS_LIB_DIR=/opt/homebrew/lib
-  BULLET_PHYSICS_INCLUDE_DIR=/opt/homebrew/include/bullet
+  BULLET_PHYSICS_LIB_DIR=$(HOMEBREW_PATH_PREFIX)/lib
+  BULLET_PHYSICS_INCLUDE_DIR=$(HOMEBREW_PATH_PREFIX)/include/bullet
   BULLET_PHYSICS_LIBS=BulletDynamics BulletCollision LinearMath
   BULLET_PHYSICS_LIBS_LINK_ARGS := $(BULLET_PHYSICS_LIBS:%=-l%)
 
