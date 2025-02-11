@@ -18,6 +18,37 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 
+# Detect the operating system once and store it in a variable
+ifeq ($(OS), Windows_NT)
+   SYSTEM_OS := Windows
+else
+   UNAME_S := $(shell uname -s)
+   ifeq ($(UNAME_S),Linux)
+      SYSTEM_OS := Linux
+   else ifeq ($(UNAME_S),Darwin)
+      SYSTEM_OS := macOS
+   else
+      SYSTEM_OS := Unknown
+   endif
+endif
+
+
+# Set the compilation message
+ifeq ($(SYSTEM_OS), Windows)
+   COMPILING_MSG := Compiling on Windows
+else ifeq ($(SYSTEM_OS), Linux)
+   COMPILING_MSG := Compiling on Linux
+else ifeq ($(SYSTEM_OS), macOS)
+   COMPILING_MSG := Compiling on macOS
+else
+   COMPILING_MSG := Compiling on an unknown OS
+endif
+
+
+# Print the message
+$(info $(COMPILING_MSG))
+
+
 PROJECT_LIB_NAME=mylibrary
 VERSION_NUMBER=0.0.1
 ## This is a temporary hack to have blast/Makefile build with allegro_flare
