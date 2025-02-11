@@ -1307,6 +1307,7 @@ TEST(SystemTest, ngrok_is_present_on_the_system)
          //{ "bashrc exports a TERMINFO system variable with the expected value", "just_a_failing_test" },
          //{ "pacman has the mingw-w64-x86_64-yaml-cpp package installed", "just_a_failing_test" },
          //{ "pacman has the ncurses-devel package installed", "just_a_failing_test" },
+         //{ "vim is set as the git default global editor", "just_a_failing_test" },
          //{ "~/.vimbackup folder exists", "check_vimbackup_folder_exists" },
       //};
 
