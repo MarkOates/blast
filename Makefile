@@ -254,15 +254,33 @@ endif
 # Note that the homebrew path is different depending on if you're using an Intel Mac or Apple Silicon Mac
 
 ifeq ($(USING_BULLET_PHYSICS),TRUE)
-	HOMEBREW_PATH_PREFIX := $(shell brew --prefix)
-	echo "Using Bullet physics (USING_BULLET_PHYSICS=TRUE in ProjectMakefile)"
-  BULLET_PHYSICS_LIB_DIR=$(HOMEBREW_PATH_PREFIX)/lib
-  BULLET_PHYSICS_INCLUDE_DIR=$(HOMEBREW_PATH_PREFIX)/include/bullet
-  BULLET_PHYSICS_LIBS=BulletDynamics BulletCollision LinearMath
-  BULLET_PHYSICS_LIBS_LINK_ARGS := $(BULLET_PHYSICS_LIBS:%=-l%)
+  ifeq ($(SYSTEM_OS), Windows)
+    #TODO: Check for presence of Bullet Physics installed via pacman
+    #TODO: Validate the shell is msys
+    #$(error Error: The Bullet Physics library is not present on this computer and is required by this project in order to build it.)
 
-  BULLET_PHYSICS_BUILD_ARGS=-I$(BULLET_PHYSICS_INCLUDE_DIR)
-  BULLET_PHYSICS_LINK_ARGS=-L$(BULLET_PHYSICS_LIB_DIR) $(BULLET_PHYSICS_LIBS_LINK_ARGS)
+    #TODO: Fix the hard-coded root path of mingw64 here to some more accurate extracted variable
+    BULLET_PHYSICS_PREFIX := /mingw64
+    BULLET_PHYSICS_LIB_DIR := $(BULLET_PHYSICS_PREFIX)/lib
+    BULLET_PHYSICS_INCLUDE_DIR := $(BULLET_PHYSICS_PREFIX)/include/bullet
+    BULLET_PHYSICS_LIBS := BulletDynamics BulletCollision LinearMath
+    BULLET_PHYSICS_LIBS_LINK_ARGS := $(BULLET_PHYSICS_LIBS:%=-l%)
+
+    BULLET_PHYSICS_BUILD_ARGS := -I$(BULLET_PHYSICS_INCLUDE_DIR)
+    BULLET_PHYSICS_LINK_ARGS := -L$(BULLET_PHYSICS_LIB_DIR) $(BULLET_PHYSICS_LIBS_LINK_ARGS)
+  else ifeq ($(SYSTEM_OS), macOS)
+    HOMEBREW_PATH_PREFIX := $(shell brew --prefix)
+    echo "Using Bullet physics (USING_BULLET_PHYSICS=TRUE in ProjectMakefile)"
+    BULLET_PHYSICS_LIB_DIR=$(HOMEBREW_PATH_PREFIX)/lib
+    BULLET_PHYSICS_INCLUDE_DIR=$(HOMEBREW_PATH_PREFIX)/include/bullet
+    BULLET_PHYSICS_LIBS=BulletDynamics BulletCollision LinearMath
+    BULLET_PHYSICS_LIBS_LINK_ARGS := $(BULLET_PHYSICS_LIBS:%=-l%)
+
+    BULLET_PHYSICS_BUILD_ARGS=-I$(BULLET_PHYSICS_INCLUDE_DIR)
+    BULLET_PHYSICS_LINK_ARGS=-L$(BULLET_PHYSICS_LIB_DIR) $(BULLET_PHYSICS_LIBS_LINK_ARGS)
+  else
+    $(error Error: The Bullet Physics library is required to compile this project on this computer and there is currently no implementation to verify its presence or location on this platform.)
+  endif
 endif
 
 
