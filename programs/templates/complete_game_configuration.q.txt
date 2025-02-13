@@ -104,6 +104,14 @@ methods:
       - AllegroFlare::Runners::Complete
 
 
+  - name: destroy_primary_gameplay_screen
+    virtual: true
+    override: true
+    body: |
+      if (primary_gameplay_screen) primary_gameplay_screen->destroy();
+      return;
+
+
   - name: create_primary_gameplay_subscreen
     virtual: true
     override: true
