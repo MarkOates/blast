@@ -18,7 +18,7 @@ properties:
     init_with: nullptr
 
   - name: pause_screen
-    type: AllegroFlare::Screens::PauseScreen*
+    type: AllegroFlare::Screens::TitledMenuScreen*
     init_with: nullptr
 
   - name: TYPE
@@ -94,6 +94,9 @@ methods:
       result->set_bitmap_bin(runner->get_bitmap_bin());
       result->set_model_bin(runner->get_model_bin());
       result->set_event_emitter(runner->get_event_emitter());
+      result->set_on_paused_callback_func([runner](AllegroFlare::Screens::Gameplay* screen, void* user_data){
+         runner->get_event_emitter()->emit_router_event(AllegroFlare::Routers::Standard::EVENT_PAUSE_GAME);
+      });
       result->initialize();
 
       primary_gameplay_screen = result;
@@ -159,42 +162,32 @@ methods:
   - name: create_pause_screen
     virtual: true
     override: true
-    type: AllegroFlare::Screens::PauseScreen*
+    type: AllegroFlare::Screens::Base*
     parameters:
       - name: runner
         type: AllegroFlare::Runners::Complete*
         default_argument: nullptr
     guards: [ (!pause_screen) ]
     body: |
-      AllegroFlare::FontBin* font_bin = runner->get_font_bin();
-      AllegroFlare::BitmapBin* bitmap_bin = runner->get_bitmap_bin();
       AllegroFlare::EventEmitter* event_emitter = runner->get_event_emitter();
 
-      std::vector<std::pair<std::string, std::string>> menu_options = {
-         { "Resume", "resume_gameplay" },
-         { "Exit to Title Screen", "exit_to_title_screen" },
-      };
-
-      // NOTE: No pause screen is used in this game, however, a pause screen is needed because upstream in the system
-      // a  cannot be registered as a screen. // TODO: Fix this
-      pause_screen = new AllegroFlare::Screens::PauseScreen;
-      pause_screen->set_font_bin(font_bin);
-      pause_screen->set_bitmap_bin(bitmap_bin);
-      pause_screen->set_event_emitter(event_emitter);
-      pause_screen->set_menu_options(menu_options);
+      pause_screen = AllegroFlare::Screens::TitledMenuScreenFactory::create_standard_pause_screen(
+         runner->get_framework()->get_data_folder_path()
+         //runner->get_framework()->get_data_folder_path(), // TODO: Add "NAME OF GAME   v0.2.5" as footer text
+      );
 
       //pause_screen->set_foreground(shared_foreground);
       //pause_screen->set_background(shared_background);
-      // TODO: Configure menu items
-      // TODO: Add actions to menu items
 
       pause_screen->set_on_menu_choice_callback_func(
-         [event_emitter](AllegroFlare::Screens::PauseScreen* pause_screen, void* user_data){
-            // TODO: Perform different action depending on selected menu item
-            // TODO: Use event emitter from pause_screen
+         [event_emitter](AllegroFlare::Screens::TitledMenuScreen* pause_screen, std::string value, void* user_data){
+            auto RESUME_PAUSED_GAMEPLAY_EVENT_NAME =
+               AllegroFlare::Screens::TitledMenuScreenFactory::RESUME_PAUSED_GAMEPLAY_EVENT_NAME;
+            auto EXIT_TO_TITLE_SCREEN_EVENT_NAME =
+               AllegroFlare::Screens::TitledMenuScreenFactory::EXIT_TO_TITLE_SCREEN_EVENT_NAME;
 
-            std::string current_menu_option_value = pause_screen->infer_current_menu_option_value();
-            if (current_menu_option_value == "resume_gameplay")
+            std::string current_menu_option_value = value;
+            if (current_menu_option_value == RESUME_PAUSED_GAMEPLAY_EVENT_NAME)
             {
                event_emitter->emit_router_event(
                   AllegroFlare::Routers::Standard::EVENT_UNPAUSE_GAME,
@@ -202,7 +195,7 @@ methods:
                   al_get_time()
                );
             }
-            else if (current_menu_option_value == "exit_to_title_screen")
+            else if (current_menu_option_value == EXIT_TO_TITLE_SCREEN_EVENT_NAME)
             {
                // TODO: Add a "are you sure?" step here
                event_emitter->emit_router_event(
@@ -224,8 +217,8 @@ methods:
       pause_screen->set_on_menu_choice_callback_func_user_data(nullptr);
 
       // Set the exit screen behavior
-      pause_screen->set_on_exit_callback_func(
-         [event_emitter](AllegroFlare::Screens::PauseScreen* pause_screen, void* user_data){
+      pause_screen->set_on_finished_callback_func(
+         [event_emitter](AllegroFlare::Screens::TitledMenuScreen* pause_screen, void* user_data){
             event_emitter->emit_router_event(
                AllegroFlare::Routers::Standard::EVENT_UNPAUSE_GAME,
                nullptr,
@@ -233,9 +226,19 @@ methods:
             );
          }
       );
-      pause_screen->set_on_exit_callback_func_user_data(nullptr);
+      pause_screen->set_on_finished_callback_func_user_data(nullptr);
 
       return pause_screen;
+    body_dependency_symbols:
+      - AllegroFlare::Screens::TitledMenuScreenFactory
+
+
+  - name: destroy_pause_screen
+    virtual: true
+    override: true
+    body: |
+      pause_screen->destroy();
+      return;
 
 
   - name: handle_primary_gameplay_screen_paused
@@ -675,9 +678,13 @@ dependencies:
     headers: [ AllegroFlare/GameEventDatas/AchievementUnlocked.hpp ]
   - symbol: AllegroFlare::GameEvent
     headers: [ AllegroFlare/GameEvent.hpp ]
-  - symbol: AllegroFlare::Screens::PauseScreen
-    headers: [ AllegroFlare/Screens/PauseScreen.hpp ]
   - symbol: AllegroFlare::Screens::Subscreen::Screen
     headers: [ AllegroFlare/Screens/Subscreen/Screen.hpp ]
+  - symbol: AllegroFlare::Screens::TitledMenuScreen
+    headers: [ AllegroFlare/Screens/TitledMenuScreen.hpp ]
+  - symbol: AllegroFlare::Screens::TitledMenuScreenFactory
+    headers: [ AllegroFlare/Screens/TitledMenuScreenFactory.hpp ]
+  - symbol: AllegroFlare::Screens::Base
+    headers: [ AllegroFlare/Screens/Base.hpp ]
 
 
