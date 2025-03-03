@@ -334,7 +334,7 @@ methods:
          //nullptr,
          //al_get_time()
       //);
-      return {};
+      return;
 
 
 
@@ -354,7 +354,7 @@ methods:
       // event was emitted.
       // Ideally, you would wire up the identifier to be passed along here. Probably as a new
       // AllegroFlare::RouteEventDatas::ActivateArbitraryStoryboardScreen or similar
-      return;
+      return {};
 
 
   - name: build_title_screen_menu_options
