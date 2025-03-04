@@ -428,7 +428,17 @@ methods:
       - AllegroFlare::GameProgressAndStateInfos::Base
 
 
-  - name: setup_new_game_progress_and_state_info
+  - name: create_game_progress_and_state_info_saver_loader
+    virtual: true
+    override: true
+    type: AllegroFlare::GameProgressAndStateInfos::Base*
+    body: |
+      return new [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo();
+    body_dependency_symbols:
+      - [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo
+
+
+  - name: setup_new_game_progress_and_state_info_DEPRECATED
     virtual: true
     override: true
     parameters:
@@ -438,10 +448,10 @@ methods:
     guards: [ game_session ]
     body: |
       // TODO: This method
-      //AllegroFlare::Logger::throw_error(
-         //"AllegroFlare::GameConfigurations::Base::setup_new_game_progress_and_state_info",
-         //"Not implemented in the base class. This method must be implemented in the derived class"
-      //);
+      AllegroFlare::Logger::throw_error(
+         "AllegroFlare::GameConfigurations::Base::setup_new_game_progress_and_state_info",
+         "This is DEPRECATED."
+      );
       //AllegroFlare::GameProgressAndStateInfos::Base *game_progress_and_state_info =
         //game_session->get_game_progress_and_state_info();
       return;
@@ -666,6 +676,8 @@ dependencies:
     headers: [ AllegroFlare/LoadASavedGame/SaveSlots/Base.hpp ]
   - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::Gameplay::Screen
     headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/Gameplay/Screen.hpp ]
+  - symbol: [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo
+    headers: [ [[COMPONENT_NAME_FIRST_FRAGMENT]]/GameProgressAndStateInfo.hpp ]
   - symbol: AllegroFlare::Screens::Gameplay
     headers: [ AllegroFlare/Screens/Gameplay.hpp ]
   - symbol: AllegroFlare::Runners::Complete
