@@ -115,6 +115,22 @@ methods:
       return;
 
 
+  - name: load_save_file_content_into_gameplay
+    virtual: true
+    override: true
+    parameters:
+      - name: save_file_content
+        type: std::string
+        default_argument: '"[unset-save_file_content]"'
+    guards: [ (!save_file_content.empty()) ]
+    body: |
+      // TODO: This method
+      AllegroFlare::Logger::info_from(THIS_CLASS_AND_METHOD_NAME,
+         "This method is called. Please implement this method."
+      );
+      return;
+
+
   - name: create_primary_gameplay_subscreen
     virtual: true
     override: true
@@ -381,22 +397,6 @@ methods:
          { "Quit",              "quit" },
       };
       return options;
-
-
-  - name: load_save_file_content_into_gameplay
-    virtual: true
-    override: true
-    parameters:
-      - name: save_file_content
-        type: std::string
-        default_argument: '"[unset-save_file_content]"'
-    guards: [ (!save_file_content.empty()) ]
-    body: |
-      // TODO: This method
-      AllegroFlare::Logger::info_from(THIS_CLASS_AND_METHOD_NAME,
-         "This method is called. Please implement this method."
-      );
-      return;
 
 
   - name: load_audio_controller
