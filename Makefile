@@ -184,6 +184,7 @@ else
 	ERROR_IF_IMPLICIT_CONVERSION_TO_WRONG_TYPE=-Werror=literal-conversion
 	WARN_IF_COMPARISON_OF_DIFFERENT_SIGNEDNESS=-Wsign-compare # gcc will enable this by default but clang apparently does not. This flag is added to align the two systems
 
+  #TODO: Detect building with clang and use -fcaret-diagnostics-max-lines=12 to show additional lines above and below error messages
 	#TODO: update to this line that includes an out-of-order ctor error promotion
 	#TODO: include -Woverloaded-virtual -Winconsistent-missing-override to promoted errors
 	#TODO: consider unused-but-set-variable
