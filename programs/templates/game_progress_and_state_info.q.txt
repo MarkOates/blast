@@ -9,6 +9,13 @@ parent_classes:
 properties:
 
 
+  - name: player_num_lives
+    type: int 
+    init_with: 0
+    getter: true
+    setter: true
+    getter_ref: true
+
   - name: player_inventory_items
     type: std::vector<std::string>
     init_with: '{}'
