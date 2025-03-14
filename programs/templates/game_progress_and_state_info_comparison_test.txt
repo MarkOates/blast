@@ -10,12 +10,13 @@ TEST(AllegroFlare_Testing_Comparison_[[COMPONENT_NAME_FIRST_FRAGMENT]]_GameProgr
    std::stringstream ss;
    [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo object;
    object.set_player_inventory_items({ "fruit", "veggie", "fork" });
-   object.set_player_num_lives();
+   object.set_player_num_lives(7);
 
    PrintTo(object, &ss);
 
    std::string expected_output =
-      "GameProgressAndStateInfo(player_inventory_items: {\"fruit\", \"veggie\", \"fork\", }, )";
+      "GameProgressAndStateInfo(player_inventory_items: {\"fruit\", \"veggie\", \"fork\", }, "
+        "player_num_lives: 7, )";
    std::string actual_output = ss.str();
    EXPECT_EQ(expected_output, actual_output);
 }

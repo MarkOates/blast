@@ -167,7 +167,7 @@ methods:
       //primary_gameplay_screen->set_player_inventory_items(player_inventory_items);
 
       return;
-   body_dependency_symbols:
+    body_dependency_symbols:
       - [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo
 
 
@@ -191,6 +191,20 @@ methods:
     body_dependency_symbols:
       - [[COMPONENT_NAME_FIRST_FRAGMENT]]::GameProgressAndStateInfo
 
+
+  - name: handle_save_file_loading_finished
+    virtual: true
+    override: true
+    body: |
+      // Typically, either go to the level select screen or go to the primary gameplay screen
+      AllegroFlare::EventEmitter* event_emitter = primary_gameplay_screen->get_event_emitter();
+      event_emitter->emit_router_event(
+         //AllegroFlare::Routers::Standard::EVENT_ACTIVATE_PRIMARY_GAMEPLAY_SCREEN,
+         AllegroFlare::Routers::Standard::EVENT_ACTIVATE_LEVEL_SELECT_SCREEN,
+         nullptr,
+         al_get_time()
+      );
+      return;
 
 
   - name: create_primary_gameplay_subscreen
