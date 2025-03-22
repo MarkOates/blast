@@ -69,7 +69,10 @@ YAML::Node fetch_node(YAML::Node &node, std::string key, YAML::NodeType::value e
       else
       {
          std::stringstream error_message;
-         error_message << "unexpected type expecting YAML:: " << expected_type << ", is a " << get_type_string(node) << " is present.";
+         YAML::Mark this_method_mark = node.Mark();
+         std::string quintessence_filename = "Unknown Filename (please implement)";
+         error_message << "[" << quintessence_filename << "]: error: unexpected type expecting YAML:: " << expected_type << ", is a " << get_type_string(node) << " is present. ";
+         error_message << "{ error_location: { filename: " << quintessence_filename << ", line: " << this_method_mark.line << ", column: " << this_method_mark.column << " } }";
          throw std::runtime_error(error_message.str());
       }
    }
