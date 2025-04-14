@@ -168,6 +168,8 @@ std::unordered_map<std::string, std::string> CodeUsageScanner::build_common_requ
       {"pow(", "<cmath>"},
       {"fabs(", "<cmath>"},
       //{"log", "<cmath>"},
+
+      {"std::sort(", "<algorithm>"},
       
       //{"memcpy", "<cstring>"},
       //{"memset", "<cstring>"},
