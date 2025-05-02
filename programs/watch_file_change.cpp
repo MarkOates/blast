@@ -45,19 +45,27 @@ void watch_file(const fs::path &file_path,
    }
 
    auto last_write_time = fs::last_write_time(file_path);
+   std::this_thread::sleep_for(interval);
 
    while (true)
    {
-      std::cout << "watching " << file_path << " at " << timestamp_now() << std::endl;
-      std::this_thread::sleep_for(interval);
+      std::cout << "Checking " << file_path << " at " << timestamp_now();
 
       auto current_write_time = fs::last_write_time(file_path);
 
       if (current_write_time != last_write_time)
       {
+         std::cout << " - FILE CHANGE DETECTED." << std::endl;
          last_write_time = current_write_time;
          callback();
       }
+      else
+      {
+         std::cout << " (no change found)." << std::endl;
+      }
+
+
+      std::this_thread::sleep_for(interval);
    }
 }
 
