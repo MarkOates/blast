@@ -415,6 +415,7 @@ int main(int argc, char **argv)
       { "AlphaMesh",      { false, ProjectStatus("AlphaMesh", base_dir) } },
       { "Planar",      { false, ProjectStatus("Planar", base_dir) } },
       { "DragonWrath",      { false, ProjectStatus("DragonWrath", base_dir) } },
+      { "PlateFlip",      { false, ProjectStatus("PlateFlip", base_dir) } },
       { "AssetStudio",      { false, ProjectStatus("AssetStudio", base_dir) } },
       { "JourneyOfTheCat",      { false, ProjectStatus("JourneyOfTheCat", base_dir) } },
       { "BulletPhysics",      { false, ProjectStatus("BulletPhysics", base_dir) } },
