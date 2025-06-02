@@ -405,6 +405,7 @@ int main(int argc, char **argv)
       { "RotateWorld",  { false, ProjectStatus("RotateWorld", base_dir) } },
       { "CollisionMesh",  { false, ProjectStatus("CollisionMesh", base_dir) } },
       { "Krampus24", { false, ProjectStatus("Krampus24", base_dir) } },
+      { "AllegroPrims", { false, ProjectStatus("AllegroPrims", base_dir) } },
       { "CygnusAtratus", { false, ProjectStatus("CygnusAtratus", base_dir) } },
       { "Atratus", { false, ProjectStatus("Atratus", base_dir) } },
       { "Fade to White (Krampus21)", { false, ProjectStatus("Krampus21", base_dir) } },
