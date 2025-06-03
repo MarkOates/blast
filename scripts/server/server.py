@@ -2,6 +2,18 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import socket
 
+
+# Notes on setting up virtual environment https://chatgpt.com/c/6839fa16-8b64-800f-9286-c0025778fc5f
+# Step 1: Create a virtual environment
+#   python3 -m venv venv
+# Step 2: Activate the virtual environment
+#   source venv/bin/activate
+# Step 3: Install the requests package
+#   pip install requests
+#   python client.py <target_ip>
+#   deactivate
+
+
 def get_local_ip():
    try:
       # Connect to an external address to get the proper interface
