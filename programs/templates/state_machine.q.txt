@@ -57,7 +57,7 @@ methods:
 
          default:
             AllegroFlare::Logger::throw_error(
-               "ClassName::set_state",
+               THIS_CLASS_AND_METHOD_NAME,
                "Unable to handle case for state \"" + std::to_string(state) + "\""
             );
          break;
@@ -93,7 +93,7 @@ methods:
 
          default:
             AllegroFlare::Logger::throw_error(
-               "ClassName::update_state",
+               THIS_CLASS_AND_METHOD_NAME,
                "Unable to handle case for state \"" + std::to_string(state) + "\""
             );
          break;
