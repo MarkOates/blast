@@ -94,6 +94,7 @@ TEST(Blast_Project_SourceReleaseBuilderTest, get_top_level_folders_in_include__w
    std::vector<std::string> expected_folder_names = {
       "Hexagon",
       "NcursesArt",
+      "lib",
       "Blast",
       "ncurses_art",
       "Quizes"

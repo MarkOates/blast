@@ -326,6 +326,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                     << "\tendif" << std::endl
                     << "\tifeq ($(UNAME_S),Darwin)" << std::endl
                     << "\t\tOPENGL_LIB=-framework OpenGL" << std::endl
+                    << "\t\tESSENTIAL_MACOS_FLAGS=-headerpad_max_install_names" << std::endl
                     << "\tendif" << std::endl
                     << "endif" << std::endl
                     << std::endl;
@@ -366,6 +367,7 @@ std::string SourceReleaseBuilder::get_makefile_content()
                        << "-I./include $(ALLEGRO_LIBS)";
                        if (include_opengl) MAKEFILE_CONTENT << " $(OPENGL_LIB)";
                        if (include_yaml_cpp) MAKEFILE_CONTENT << " $(YAML_CPP_LIB)";
+                       MAKEFILE_CONTENT << " $(ESSENTIAL_MACOS_FLAGS)";
                        //"-I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)"
                        MAKEFILE_CONTENT << std::endl;
                     MAKEFILE_CONTENT << "\t# rm -rdf build" << std::endl

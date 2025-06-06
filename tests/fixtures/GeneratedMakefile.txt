@@ -11,6 +11,7 @@ else
 	endif
 	ifeq ($(UNAME_S),Darwin)
 		OPENGL_LIB=-framework OpenGL
+		ESSENTIAL_MACOS_FLAGS=-headerpad_max_install_names
 	endif
 endif
 
@@ -26,7 +27,7 @@ fast:
 
 main: $(OBJECTS)
 	@echo $(OBJECTS) > response_file.txt
-	@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) @response_file.txt programs/main.cpp $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE) -o Flowers -I./include $(ALLEGRO_LIBS) $(OPENGL_LIB)
+	@g++ -std=c++17 $(WINDOWS_SUBSYSTEM_FLAGS) @response_file.txt programs/main.cpp $(WINDOWS_APP_ICON_RESOURCE_OBJECT_FILE) -o Flowers -I./include $(ALLEGRO_LIBS) $(OPENGL_LIB) $(ESSENTIAL_MACOS_FLAGS)
 	# rm -rdf build
 	# rm -rdf build/obj
 
