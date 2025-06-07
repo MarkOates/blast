@@ -79,6 +79,7 @@ void watch_file(const fs::path &file_path,
 
 int main(int argc, char** argv)
 {
+   /*
    std::string file_to_watch = "/Users/markoates/Desktop/odeya/odeya_composite_tileset-0x.psd";
 
    watch_file(file_to_watch, []()
@@ -108,6 +109,67 @@ int main(int argc, char** argv)
          if (command.get_executed_successfully())
          {
             std::cout << "  - Conversion command 2 appears to have executed successfully" << std::endl;
+         }
+      }
+
+   });
+   */
+
+   std::string file_to_watch = "/Users/markoates/Desktop/hello_friend-environment-0n.obj";
+
+   watch_file(file_to_watch, []()
+   {
+      std::cout << "File changed!" << std::endl;
+
+      {
+         Blast::ShellCommandExecutorWithCallback command(
+               "cp "
+               "/Users/markoates/Desktop/hello_friend-environment-0n.obj "
+               "/Users/markoates/Repos/TINS2025/tests/fixtures/models/hello_friend-environment-0n.obj"
+            );
+         command.execute();
+         if (command.get_executed_successfully())
+         {
+            std::cout << "  - Command 1 executed successfully" << std::endl;
+         }
+      }
+      
+      {
+         Blast::ShellCommandExecutorWithCallback command(
+               "cp "
+               "/Users/markoates/Desktop/hello_friend-environment-0n.obj "
+               "/Users/markoates/Repos/TINS2025/bin/data/models/hello_friend-environment-0n.obj"
+            );
+         command.execute();
+         if (command.get_executed_successfully())
+         {
+            std::cout << "  - Command 2 executed successfully" << std::endl;
+         }
+      }
+
+      {
+         Blast::ShellCommandExecutorWithCallback command(
+               "cp "
+               "/Users/markoates/Desktop/Textures/hello_friend-environment-0n.png "
+               "/Users/markoates/Repos/TINS2025/tests/fixtures/bitmaps/hello_friend-environment-0n.png"
+            );
+         command.execute();
+         if (command.get_executed_successfully())
+         {
+            std::cout << "  - Command 1 executed successfully" << std::endl;
+         }
+      }
+      
+      {
+         Blast::ShellCommandExecutorWithCallback command(
+               "cp "
+               "/Users/markoates/Desktop/Textures/hello_friend-environment-0n.png "
+               "/Users/markoates/Repos/TINS2025/bin/data/bitmaps/hello_friend-environment-0n.png"
+            );
+         command.execute();
+         if (command.get_executed_successfully())
+         {
+            std::cout << "  - Command 2 executed successfully" << std::endl;
          }
       }
 
