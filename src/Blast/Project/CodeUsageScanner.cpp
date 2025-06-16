@@ -170,6 +170,7 @@ std::unordered_map<std::string, std::string> CodeUsageScanner::build_common_requ
       //{"log", "<cmath>"},
 
       {"std::sort(", "<algorithm>"},
+      {"std::find(", "<algorithm>"},
       
       //{"memcpy", "<cstring>"},
       //{"memset", "<cstring>"},

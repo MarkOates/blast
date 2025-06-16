@@ -164,6 +164,7 @@ methods:
          //{"log", "<cmath>"},
 
          {"std::sort(", "<algorithm>"},
+         {"std::find(", "<algorithm>"},
          
          //{"memcpy", "<cstring>"},
          //{"memset", "<cstring>"},
