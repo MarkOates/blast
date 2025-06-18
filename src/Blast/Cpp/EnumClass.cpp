@@ -255,16 +255,27 @@ Blast::Cpp::Function EnumClass::build_to_string_method()
       throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate_permit_upper(name_of_to_string_method)\" not met");
    }
    // TODO: finish implementing this function
+   if (enumerators.empty())
+   {
+      throw std::runtime_error(
+         "[Blast::Cpp::EnumClass::build_to_string_method]: error: "
+            "\"enumerators\" cannot be empty because the first enumerator is used as a default value. Feel free "
+               "improve this feature possibly by expanding the \"to_string: \" feature with additional data, "
+               "adding a \"to_string_default_argument\", or another better idea."
+      );
+   }
+
+   std::string argument_default_value = name + "::" + enumerators[0]; // NOTE: Using the first enum as the default argument
    Blast::Cpp::Function result(
       "std::string",
       name_of_to_string_method,
       std::vector<Blast::Cpp::FunctionArgument>({
-         Blast::Cpp::FunctionArgument(name, "value"),
+         Blast::Cpp::FunctionArgument(name, "value", argument_default_value),
          Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
       }),
       build_to_string_method_body(),
       true, // is_static
-      true // is_const
+      false // is_const (false, static methods cannot be const)
    );
    return result;
 }
@@ -277,7 +288,8 @@ std::string EnumClass::build_to_string_method_body()
    {
       result << "if (value == " << name << "::" << enumerator << ") return \"" << to_lower(enumerator) << "\";" << std::endl;
    }
-   result << "return \"error\";" << std::endl;
+   result << "// TODO: Implement \"throw_on_error\" argument" << std::endl;
+   result << "return \"\";" << std::endl;
    //Blast::TemplatedFile templated_file(
       //"return \"unimplemented\";",
       //{}
@@ -303,16 +315,28 @@ Blast::Cpp::Function EnumClass::build_from_string_method()
       throw std::runtime_error("[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate_permit_upper(name_of_from_string_method)\" not met");
    }
    // TODO: finish implementing this function
+   if (enumerators.empty())
+   {
+      throw std::runtime_error(
+         "[Blast::Cpp::EnumClass::build_from_string_method]: error: "
+            "\"enumerators\" cannot be empty because the first enumerator is used as a default value. Feel free "
+               "improve this feature possibly by expanding the \"to_string: \" feature with additional data, "
+               "adding a \"to_string_default_argument\", or another better idea."
+      );
+   }
+   std::string argument_default_value = "\"[unset-value]\"";
+   //std::string argument_default_value = enumerators[0]; // NOTE: Using the first enum as the default argument
    Blast::Cpp::Function result(
-      "std::string",
+      name, //"std::string",
       name_of_from_string_method,
       std::vector<Blast::Cpp::FunctionArgument>({
-         Blast::Cpp::FunctionArgument("std::string", "value"),
+         //Blast::Cpp::FunctionArgument("std::string", "value"),
+         Blast::Cpp::FunctionArgument("std::string", "value", argument_default_value),
          Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
       }),
       build_from_string_method_body(),
       true, // is_static
-      true // is_const
+      false // is_const (false, static methods cannot be const)
    );
    return result;
 }
@@ -328,7 +352,7 @@ std::string EnumClass::build_from_string_method_body()
       enum_value << name << "::" << enumerator;
       result << "if (value == \"" << string_value << "\") return " << enum_value.str() << ";" << std::endl;
    }
-   result << "throw std::runtime_error(\"Blast/Cpp/EnumClass: ERROR: Could not find enum for \" + value + \");";
+   result << "throw std::runtime_error(\"Blast/Cpp/EnumClass: ERROR: Could not find enum for \\\" + value + \\\"\");";
    result << std::endl;
    //result << "return << " << name << "::" << \"error\";" << std::endl;
    //Blast::TemplatedFile templated_file(

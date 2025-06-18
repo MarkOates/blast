@@ -21,13 +21,14 @@ TEST(Blast_Cpp_EnumClassTest, build_to_string_method__will_return_a_cpp_function
    std::string expected_body = R"END(if (value == FooBar::FOO) return "foo";
 if (value == FooBar::BAR) return "bar";
 if (value == FooBar::BAZ) return "baz";
-return "error";
+// TODO: Implement "throw_on_error" argument
+return "";
 )END";
 
    EXPECT_EQ("std::string", method.get_type());
    EXPECT_EQ(expected_body, method.get_body());
    EXPECT_EQ(true, method.get_is_static());
-   EXPECT_EQ(true, method.get_is_const());
+   EXPECT_EQ(false, method.get_is_const()); // NOTE: static member function cannot have 'const' qualifier
 }
 
 
@@ -39,13 +40,13 @@ TEST(Blast_Cpp_EnumClassTest, build_from_string_method__will_return_a_cpp_functi
    std::string expected_body = R"END(if (value == "foo") return FooBar::FOO;
 if (value == "bar") return FooBar::BAR;
 if (value == "baz") return FooBar::BAZ;
-throw std::runtime_error("Blast/Cpp/EnumClass: ERROR: Could not find enum for " + value + ");
+throw std::runtime_error("Blast/Cpp/EnumClass: ERROR: Could not find enum for \" + value + \"");
 )END";
 
-   EXPECT_EQ("std::string", method.get_type());
+   EXPECT_EQ("FooBar", method.get_type());
    EXPECT_EQ(expected_body, method.get_body());
    EXPECT_EQ(true, method.get_is_static());
-   EXPECT_EQ(true, method.get_is_const());
+   EXPECT_EQ(false, method.get_is_const()); // NOTE: static member function cannot have 'const' qualifier
 }
 
 

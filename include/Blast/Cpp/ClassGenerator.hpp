@@ -58,6 +58,8 @@ namespace Blast
          std::string getter_ref_function_definitions(int indent_level=0);
          std::string setter_function_declarations(int indent_level=0);
          std::string setter_function_definitions(int indent_level=0);
+         std::string enum_function_declarations(int indent_level=0);
+         std::string enum_function_definitions(int indent_level=0);
          std::string initialization_list(int indent_level=0);
 
          std::string public_function_declarations(int indent_level=0);

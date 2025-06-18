@@ -33,6 +33,18 @@ Function::~Function()
 }
 
 
+void Function::set_type(std::string type)
+{
+   this->type = type;
+}
+
+
+void Function::set_name(std::string name)
+{
+   this->name = name;
+}
+
+
 std::string Function::get_type() const
 {
    return type;

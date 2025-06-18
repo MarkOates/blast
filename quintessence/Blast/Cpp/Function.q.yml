@@ -5,11 +5,13 @@ properties:
     init_with: '"void"'
     constructor_arg: true
     getter: true
+    setter: true
 
   - name: name
     init_with: '"unnamed_function"'
     constructor_arg: true
     getter: true
+    setter: true
 
   - name: signature
     type: std::vector<Blast::Cpp::FunctionArgument>

@@ -635,6 +635,68 @@ std::string ClassGenerator::setter_function_definitions(int indent_level)
 }
 
 
+std::string ClassGenerator::enum_function_declarations(int indent_level)
+{
+   std::stringstream result;
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.get_has_to_string_method())
+      {
+         result << std::string(3*indent_level, ' ')
+                << FunctionFormatter(enum_class.build_to_string_method()).get_function_declaration()
+                << std::endl;
+      }
+   }
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.get_has_from_string_method())
+      {
+         result << std::string(3*indent_level, ' ')
+                << FunctionFormatter(enum_class.build_from_string_method()).get_function_declaration()
+                << std::endl;
+      }
+   }
+   return result.str();
+}
+
+
+std::string ClassGenerator::enum_function_definitions(int indent_level)
+{
+   std::stringstream result;
+   std::string this_class_name = cpp_class.get_class_name();
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.get_has_to_string_method())
+      {
+         // Prefix the class name
+         // NOTE: There might be a cleaner way to do this on/at a different layer,
+         // This current technique requires adding a "setter: true" on Blast::Cpp::Function, which feels off.
+         Blast::Cpp::Function f = enum_class.build_to_string_method();
+         f.set_name(this_class_name + "::" + f.get_name());
+         result << std::string(3*indent_level, ' ')
+                << FunctionFormatter(f).get_function_definition()
+                << "\n\n";
+      }
+   }
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.get_has_from_string_method())
+      {
+         // Prefix the class name
+         // NOTE: There might be a cleaner way to do this on/at a different layer,
+         // This current technique requires adding a "setter: true" on Blast::Cpp::Function, which feels off.
+         Blast::Cpp::Function f = enum_class.build_from_string_method();
+         f.set_name(this_class_name + "::" + f.get_name());
+         f.set_type(this_class_name + "::" + f.get_type());
+         result << std::string(3*indent_level, ' ')
+                << FunctionFormatter(f).get_function_definition()
+                << "\n\n";
+      }
+   }
+   return result.str();
+}
+
+
 std::string ClassGenerator::initialization_list(int indent_level)
 {
    std::stringstream result;
@@ -835,6 +897,7 @@ DESTRUCTOR
 SETTER_FUNCTIONS
 GETTER_FUNCTIONS
 GETTER_REF_FUNCTIONS
+ENUM_FUNCTIONS
 FUNCTION_DEFINITIONS
 
 
@@ -857,6 +920,7 @@ NAMESPACES_CLOSER
    __replace(result, "GETTER_FUNCTIONS\n", getter_function_definitions(0));
    __replace(result, "FUNCTION_DEFINITIONS\n", function_definitions(0));
    __replace(result, "GETTER_REF_FUNCTIONS\n", getter_ref_function_definitions(0));
+   __replace(result, "ENUM_FUNCTIONS\n", enum_function_definitions(0));
 
    return result;
 }
@@ -893,6 +957,7 @@ DESTRUCTOR
 SETTER_FUNCTIONS
 GETTER_FUNCTIONS
 GETTER_REF_FUNCTIONS
+ENUM_FUNCTIONS
 PUBLIC_FUNCTION_DECLARATIONS
 CLASS_DECLARATION_CLOSER
 NAMESPACES_CLOSER
@@ -979,6 +1044,7 @@ NAMESPACES_CLOSER
    __replace(result, "SETTER_FUNCTIONS\n", setter_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "GETTER_FUNCTIONS\n", getter_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "GETTER_REF_FUNCTIONS\n", getter_ref_function_declarations(required_namespace_indentation_levels + 1));
+   __replace(result, "ENUM_FUNCTIONS\n", enum_function_declarations(required_namespace_indentation_levels + 1));
    __replace(result, "CLASS_DECLARATION_OPENER\n", class_declaration_opener(required_namespace_indentation_levels));
    __replace(result, "CLASS_DECLARATION_CLOSER\n", class_declaration_closer(required_namespace_indentation_levels));
 
