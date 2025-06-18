@@ -72,7 +72,6 @@ namespace Blast
          Blast::Cpp::Function build_from_string_method();
          std::string build_from_string_method_body();
          static bool validate(std::string method_name="[unset-method_name]");
-         static bool validate_permit_upper(std::string method_name="[unset-method_name]");
          std::string to_lower(std::string value="[unset-value]");
          static bool is_power_of_two(uint32_t n=0);
          static bool validate_start_from_is_a_power_of_two_if_enumerators_are_bitwise(bool enumerators_are_bitwise=false, int start_from=false);

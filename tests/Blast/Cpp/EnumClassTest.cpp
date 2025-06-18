@@ -27,8 +27,19 @@ return "";
 
    EXPECT_EQ("std::string", method.get_type());
    EXPECT_EQ(expected_body, method.get_body());
+   EXPECT_EQ("to_string", method.get_name());
    EXPECT_EQ(true, method.get_is_static());
    EXPECT_EQ(false, method.get_is_const()); // NOTE: static member function cannot have 'const' qualifier
+}
+
+
+TEST(Blast_Cpp_EnumClassTest,
+   build_to_string_method__with_a_custom_to_string_method_name__will_return_the_cpp_function_with_the_expected_name)
+{
+   Blast::Cpp::EnumClass enum_class("FooBar", { "FOO", "BAR", "BAZ" });
+   enum_class.set_name_of_to_string_method("FooBar_to_string");
+   Blast::Cpp::Function method = enum_class.build_to_string_method();
+   EXPECT_EQ("FooBar_to_string", method.get_name());
 }
 
 
@@ -47,6 +58,16 @@ throw std::runtime_error("Blast/Cpp/EnumClass: ERROR: Could not find enum for \"
    EXPECT_EQ(expected_body, method.get_body());
    EXPECT_EQ(true, method.get_is_static());
    EXPECT_EQ(false, method.get_is_const()); // NOTE: static member function cannot have 'const' qualifier
+}
+
+
+TEST(Blast_Cpp_EnumClassTest,
+   build_from_string_method__with_a_custom_from_string_method_name__will_return_the_cpp_function_with_the_expected_name)
+{
+   Blast::Cpp::EnumClass enum_class("FooBar", { "FOO", "BAR", "BAZ" });
+   enum_class.set_name_of_from_string_method("FooBar_from_string");
+   Blast::Cpp::Function method = enum_class.build_from_string_method();
+   EXPECT_EQ("FooBar_from_string", method.get_name());
 }
 
 

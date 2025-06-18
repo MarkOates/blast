@@ -199,7 +199,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
       else
       {
          // Use the "to_string: " value as the name of the to_string method
-         bool name_is_valid = Blast::Cpp::EnumClass::validate_permit_upper(to_string_value);
+         bool name_is_valid = Blast::Cpp::EnumClass::validate(to_string_value);
          if (!name_is_valid)
          {
             std::stringstream error_message;
@@ -225,7 +225,7 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
       else
       {
          // Use the "from_string: " value as the name of the from_string method
-         bool name_is_valid = Blast::Cpp::EnumClass::validate_permit_upper(from_string_value);
+         bool name_is_valid = Blast::Cpp::EnumClass::validate(from_string_value);
          if (!name_is_valid)
          {
             std::stringstream error_message;

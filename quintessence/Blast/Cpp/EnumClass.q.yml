@@ -227,7 +227,7 @@ functions:
 
   - name: build_to_string_method
     type: Blast::Cpp::Function
-    guards: [ validate(name), validate_permit_upper(name_of_to_string_method) ]
+    guards: [ validate(name), validate(name_of_to_string_method) ]
     body: |
       // TODO: finish implementing this function
       if (enumerators.empty())
@@ -282,7 +282,7 @@ functions:
 
   - name: build_from_string_method
     type: Blast::Cpp::Function
-    guards: [ validate(name), validate_permit_upper(name_of_from_string_method) ]
+    guards: [ validate(name), validate(name_of_from_string_method) ]
     body: |
       // TODO: finish implementing this function
       if (enumerators.empty())
@@ -358,30 +358,6 @@ functions:
       // Check if string has only lowercase and underscore characters
       for (char c : method_name) {
          if (!std::islower(c) && c != '_' && !std::isupper(c)) {
-            return false;
-         }
-      }
-      return true;
-
-
-  - name: validate_permit_upper
-    static: true
-    type: bool
-    parameters:
-      - name: method_name
-        type: std::string
-        default_argument: '"[unset-method_name]"'
-    body: |
-      // TODO: test this function
-
-      // Check if string is at least 3 characters long
-      if (method_name.length() < 3) {
-         return false;
-      }
-    
-      // Check if string has only lowercase and underscore characters
-      for (char c : method_name) {
-         if (!std::islower(c) && c != '_') {
             return false;
          }
       }

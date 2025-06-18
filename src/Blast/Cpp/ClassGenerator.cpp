@@ -644,7 +644,8 @@ std::string ClassGenerator::enum_function_declarations(int indent_level)
       {
          result << std::string(3*indent_level, ' ')
                 << FunctionFormatter(enum_class.build_to_string_method()).get_function_declaration()
-                << std::endl;
+                //<< std::endl
+                ;
       }
    }
    for (auto &enum_class : cpp_class.get_enum_classes())
@@ -653,7 +654,8 @@ std::string ClassGenerator::enum_function_declarations(int indent_level)
       {
          result << std::string(3*indent_level, ' ')
                 << FunctionFormatter(enum_class.build_from_string_method()).get_function_declaration()
-                << std::endl;
+                //<< std::endl
+                ;
       }
    }
    return result.str();

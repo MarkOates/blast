@@ -247,12 +247,12 @@ Blast::Cpp::Function EnumClass::build_to_string_method()
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name)\" not met");
    }
-   if (!(validate_permit_upper(name_of_to_string_method)))
+   if (!(validate(name_of_to_string_method)))
    {
       std::stringstream error_message;
-      error_message << "[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate_permit_upper(name_of_to_string_method)\" not met.";
+      error_message << "[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name_of_to_string_method)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate_permit_upper(name_of_to_string_method)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name_of_to_string_method)\" not met");
    }
    // TODO: finish implementing this function
    if (enumerators.empty())
@@ -307,12 +307,12 @@ Blast::Cpp::Function EnumClass::build_from_string_method()
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate(name)\" not met");
    }
-   if (!(validate_permit_upper(name_of_from_string_method)))
+   if (!(validate(name_of_from_string_method)))
    {
       std::stringstream error_message;
-      error_message << "[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate_permit_upper(name_of_from_string_method)\" not met.";
+      error_message << "[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate(name_of_from_string_method)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate_permit_upper(name_of_from_string_method)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate(name_of_from_string_method)\" not met");
    }
    // TODO: finish implementing this function
    if (enumerators.empty())
@@ -375,24 +375,6 @@ bool EnumClass::validate(std::string method_name)
    // Check if string has only lowercase and underscore characters
    for (char c : method_name) {
       if (!std::islower(c) && c != '_' && !std::isupper(c)) {
-         return false;
-      }
-   }
-   return true;
-}
-
-bool EnumClass::validate_permit_upper(std::string method_name)
-{
-   // TODO: test this function
-
-   // Check if string is at least 3 characters long
-   if (method_name.length() < 3) {
-      return false;
-   }
-
-   // Check if string has only lowercase and underscore characters
-   for (char c : method_name) {
-      if (!std::islower(c) && c != '_') {
          return false;
       }
    }
