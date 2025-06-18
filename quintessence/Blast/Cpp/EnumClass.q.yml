@@ -46,9 +46,21 @@ properties:
     getter: true
     setter: explicit
 
+  - name: has_to_string_method
+    type: bool
+    init_with: false
+    getter: true
+    setter: true
+
   - name: name_of_to_string_method
     type: std::string
     init_with: DEFAULT_NAME_OF_TO_STRING_METHOD
+    getter: true
+    setter: true
+
+  - name: has_from_string_method
+    type: bool
+    init_with: false
     getter: true
     setter: true
 

@@ -65,6 +65,10 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
    if (type_node_is_present) validate_node_type(node, "type", YAML::NodeType::Scalar);
    bool start_from_node_is_present = (bool)node["start_from"];
    if (start_from_node_is_present) validate_node_type(node, "start_from", YAML::NodeType::Scalar);
+   bool to_string_node_is_present = (bool)node["to_string"];
+   if (to_string_node_is_present) validate_node_type(node, "to_string", YAML::NodeType::Scalar);
+   bool from_string_node_is_present = (bool)node["from_string"];
+   if (from_string_node_is_present) validate_node_type(node, "from_string", YAML::NodeType::Scalar);
 
    // Extract the "start_from" value
    int start_from_value = 0;
@@ -181,6 +185,58 @@ Blast::Cpp::EnumClass EnumClassParser::parse()
 
    // Set the "enumerators" values
    result.set_enumerators(enum_enumerators);
+
+   // Extract the "to_string" value
+   if (to_string_node_is_present)
+   {
+      result.set_has_to_string_method(true);
+
+      std::string to_string_value = node["to_string"].as<std::string>();
+      if (to_string_value == "true")
+      {
+         // Do nothing, use defaults
+      }
+      else
+      {
+         // Use the "to_string: " value as the name of the to_string method
+         bool name_is_valid = Blast::Cpp::EnumClass::validate_permit_upper(to_string_value);
+         if (!name_is_valid)
+         {
+            std::stringstream error_message;
+            error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                          << "\"" << to_string_value << "\" is not a valid name for a to_string method.";
+                          // TODO: Consider adding additional debug info for valid or invalid name
+            throw std::runtime_error(error_message.str());
+         }
+         result.set_name_of_to_string_method(to_string_value);
+      }
+   }
+
+   // Extract the "from_string" value
+   if (from_string_node_is_present)
+   {
+      result.set_has_from_string_method(true);
+
+      std::string from_string_value = node["from_string"].as<std::string>();
+      if (from_string_value == "true")
+      {
+         // Do nothing, use defaults
+      }
+      else
+      {
+         // Use the "from_string: " value as the name of the from_string method
+         bool name_is_valid = Blast::Cpp::EnumClass::validate_permit_upper(from_string_value);
+         if (!name_is_valid)
+         {
+            std::stringstream error_message;
+            error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                          << "\"" << from_string_value << "\" is not a valid name for a from_string method.";
+                          // TODO: Consider adding additional debug info for valid or invalid name
+            throw std::runtime_error(error_message.str());
+         }
+         result.set_name_of_from_string_method(from_string_value);
+      }
+   }
 
    return result;
 }

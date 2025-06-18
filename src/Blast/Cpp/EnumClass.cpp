@@ -26,7 +26,9 @@ EnumClass::EnumClass(std::string name, std::vector<std::string> enumerators, boo
    , is_class(is_class)
    , start_from(0)
    , enumerators_are_bitwise(false)
+   , has_to_string_method(false)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
+   , has_from_string_method(false)
    , name_of_from_string_method(DEFAULT_NAME_OF_FROM_STRING_METHOD)
 {
 }
@@ -49,9 +51,21 @@ void EnumClass::set_is_class(bool is_class)
 }
 
 
+void EnumClass::set_has_to_string_method(bool has_to_string_method)
+{
+   this->has_to_string_method = has_to_string_method;
+}
+
+
 void EnumClass::set_name_of_to_string_method(std::string name_of_to_string_method)
 {
    this->name_of_to_string_method = name_of_to_string_method;
+}
+
+
+void EnumClass::set_has_from_string_method(bool has_from_string_method)
+{
+   this->has_from_string_method = has_from_string_method;
 }
 
 
@@ -103,9 +117,21 @@ bool EnumClass::get_enumerators_are_bitwise() const
 }
 
 
+bool EnumClass::get_has_to_string_method() const
+{
+   return has_to_string_method;
+}
+
+
 std::string EnumClass::get_name_of_to_string_method() const
 {
    return name_of_to_string_method;
+}
+
+
+bool EnumClass::get_has_from_string_method() const
+{
+   return has_from_string_method;
 }
 
 

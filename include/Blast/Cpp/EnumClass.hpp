@@ -28,7 +28,9 @@ namespace Blast
          bool is_class;
          int start_from;
          bool enumerators_are_bitwise;
+         bool has_to_string_method;
          std::string name_of_to_string_method;
+         bool has_from_string_method;
          std::string name_of_from_string_method;
 
       protected:
@@ -40,7 +42,9 @@ namespace Blast
 
          void set_name(std::string name);
          void set_is_class(bool is_class);
+         void set_has_to_string_method(bool has_to_string_method);
          void set_name_of_to_string_method(std::string name_of_to_string_method);
+         void set_has_from_string_method(bool has_from_string_method);
          void set_name_of_from_string_method(std::string name_of_from_string_method);
          std::string get_name() const;
          std::vector<std::string> get_enumerators() const;
@@ -49,7 +53,9 @@ namespace Blast
          bool get_is_class() const;
          int get_start_from() const;
          bool get_enumerators_are_bitwise() const;
+         bool get_has_to_string_method() const;
          std::string get_name_of_to_string_method() const;
+         bool get_has_from_string_method() const;
          std::string get_name_of_from_string_method() const;
          void set_enumerators(std::vector<std::string> enumerators={});
          bool has_name();

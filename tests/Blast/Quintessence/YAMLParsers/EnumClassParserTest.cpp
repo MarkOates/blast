@@ -220,6 +220,104 @@ TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest, parse__when_enumerators
 
 
 TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_a_to_string_is_present_with_a_value_of_true__will_set_the_expected_values)
+{
+   std::string yaml_content = "to_string: true\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass parsed_enum_class = enum_class_parser.parse();
+   EXPECT_EQ(true, parsed_enum_class.get_has_to_string_method());
+   EXPECT_EQ("to_string", parsed_enum_class.get_name_of_to_string_method());
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_a_to_string_is_present_with_a_custom_value__will_set_the_to_string_method_name_to_match)
+{
+   std::string yaml_content = "to_string: my_custom_to_string_method_name\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass parsed_enum_class = enum_class_parser.parse();
+   EXPECT_EQ(true, parsed_enum_class.get_has_to_string_method());
+   EXPECT_EQ("my_custom_to_string_method_name", parsed_enum_class.get_name_of_to_string_method());
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_a_to_string_is_present_with_an_invalid_value__will_raise_an_error)
+{
+   std::string yaml_content = "to_string: an_1nvalid_method_n4me\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   EXPECT_THROW_WITH_MESSAGE(
+      enum_class_parser.parse(),
+      std::runtime_error,
+      "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: \"an_1nvalid_method_n4me\" is not a "
+         "valid name for a to_string method."
+   );
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_a_from_string_is_present_with_a_value_of_true__will_set_the_expected_values)
+{
+   std::string yaml_content = "from_string: true\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass parsed_enum_class = enum_class_parser.parse();
+   EXPECT_EQ(true, parsed_enum_class.get_has_from_string_method());
+   EXPECT_EQ("from_string", parsed_enum_class.get_name_of_from_string_method());
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_a_from_string_is_present_with_a_custom_value__will_set_the_from_string_method_name_to_match)
+{
+   std::string yaml_content = "from_string: my_custom_from_string_method_name\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   Blast::Cpp::EnumClass parsed_enum_class = enum_class_parser.parse();
+   EXPECT_EQ(true, parsed_enum_class.get_has_from_string_method());
+   EXPECT_EQ("my_custom_from_string_method_name", parsed_enum_class.get_name_of_from_string_method());
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_a_from_string_is_present_with_an_invalid_value__will_raise_an_error)
+{
+   std::string yaml_content = "from_string: an_1nvalid_method_n4me\nenumerators: [ FOO, FOE, FUM ]\n";
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   EXPECT_THROW_WITH_MESSAGE(
+      enum_class_parser.parse(),
+      std::runtime_error,
+      "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: \"an_1nvalid_method_n4me\" is not a "
+         "valid name for a from_string method."
+   );
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_a_to_string_is_not_present__does_not_throw_an_error)
+{
+   std::string yaml_content = "to_shtring: true\nenumerators: [ FOO, FOE, FUM ]\n"; // NOTE: Intentional typo
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   enum_class_parser.parse();
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
+   parse__when_a_from_string_is_not_present__does_not_throw_an_error)
+{
+   std::string yaml_content = "from_shtring: true\nenumerators: [ FOO, FOE, FUM ]\n"; // NOTE: Intentional typo
+   YAML::Node node = YAML::Load(yaml_content);
+   Blast::Quintessence::YAMLParsers::EnumClassParser enum_class_parser(node);
+   enum_class_parser.parse();
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_EnumClassParserTest,
    validate_elements_are_unique__will_return_true_on_an_empty_vector)
 {
   std::vector<std::string> empty_vector;
