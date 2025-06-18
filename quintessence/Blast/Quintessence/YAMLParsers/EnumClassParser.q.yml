@@ -49,10 +49,18 @@ functions:
       if (type_node_is_present) validate_node_type(node, "type", YAML::NodeType::Scalar);
       bool start_from_node_is_present = (bool)node["start_from"];
       if (start_from_node_is_present) validate_node_type(node, "start_from", YAML::NodeType::Scalar);
+
       bool to_string_node_is_present = (bool)node["to_string"];
-      if (to_string_node_is_present) validate_node_type(node, "to_string", YAML::NodeType::Scalar);
+      if (to_string_node_is_present)
+      {
+         validate_node_type_is_any_of(node, "to_string", { YAML::NodeType::Scalar, YAML::NodeType::Map });
+      }
+
       bool from_string_node_is_present = (bool)node["from_string"];
-      if (from_string_node_is_present) validate_node_type(node, "from_string", YAML::NodeType::Scalar);
+      if (from_string_node_is_present)
+      {
+         validate_node_type_is_any_of(node, "from_string", { YAML::NodeType::Scalar, YAML::NodeType::Map });
+      }
 
       // Extract the "start_from" value
       int start_from_value = 0;
@@ -175,27 +183,115 @@ functions:
       {
          result.set_has_to_string_method(true);
 
-         std::string to_string_value = node["to_string"].as<std::string>();
-         if (to_string_value == "true")
+         bool value_is_simple_value = validate_node_type(node, "to_string", YAML::NodeType::Scalar, false);
+         bool value_is_map_value = validate_node_type(node, "to_string", YAML::NodeType::Map, false);
+         if (value_is_simple_value)
          {
-            // Do nothing, use defaults
+            std::string to_string_value = node["to_string"].as<std::string>();
+            if (to_string_value == "true")
+            {
+               // Do nothing, use defaults
+            }
+            else
+            {
+               // Use the "to_string: " value as the name of the to_string method
+               bool name_is_valid = Blast::Cpp::EnumClass::validate(to_string_value);
+               if (!name_is_valid)
+               {
+                  std::stringstream error_message;
+                  error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                                << "\"" << to_string_value << "\" is not a valid name for a to_string method.";
+                                // TODO: Consider adding additional debug info for valid or invalid name
+                  throw std::runtime_error(error_message.str());
+               }
+               result.set_name_of_to_string_method(to_string_value);
+            }
+         }
+         else if (value_is_map_value)
+         {
+            auto to_string_node = node["to_string"];
+            
+            bool remove_prefix_is_present = (bool)to_string_node["remove_prefix"];
+            if (remove_prefix_is_present)
+            {
+               validate_node_type(to_string_node, "remove_prefix", YAML::NodeType::Scalar);
+               result.set_to_string_prefix_to_remove(to_string_node["remove_prefix"].as<std::string>());
+            }
+
+            bool method_name_is_present = (bool)to_string_node["method_name"];
+            if (method_name_is_present)
+            {
+               validate_node_type(to_string_node, "method_name", YAML::NodeType::Scalar);
+               result.set_name_of_to_string_method(to_string_node["method_name"].as<std::string>());
+            }
          }
          else
          {
-            // Use the "to_string: " value as the name of the to_string method
-            bool name_is_valid = Blast::Cpp::EnumClass::validate(to_string_value);
-            if (!name_is_valid)
-            {
-               std::stringstream error_message;
-               error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
-                             << "\"" << to_string_value << "\" is not a valid name for a to_string method.";
-                             // TODO: Consider adding additional debug info for valid or invalid name
-               throw std::runtime_error(error_message.str());
-            }
-            result.set_name_of_to_string_method(to_string_value);
+            std::stringstream error_message;
+            error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                          << "Weird error 123";
+            throw std::runtime_error(error_message.str());
          }
       }
 
+
+      // Extract the "from_string" value
+      if (from_string_node_is_present)
+      {
+         result.set_has_from_string_method(true);
+
+         bool value_is_simple_value = validate_node_type(node, "from_string", YAML::NodeType::Scalar, false);
+         bool value_is_map_value = validate_node_type(node, "from_string", YAML::NodeType::Map, false);
+         if (value_is_simple_value)
+         {
+            std::string from_string_value = node["from_string"].as<std::string>();
+            if (from_string_value == "true")
+            {
+               // Do nothing, use defaults
+            }
+            else
+            {
+               // Use the "from_string: " value as the name of the from_string method
+               bool name_is_valid = Blast::Cpp::EnumClass::validate(from_string_value);
+               if (!name_is_valid)
+               {
+                  std::stringstream error_message;
+                  error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                                << "\"" << from_string_value << "\" is not a valid name for a from_string method.";
+                                // TODO: Consider adding additional debug info for valid or invalid name
+                  throw std::runtime_error(error_message.str());
+               }
+               result.set_name_of_from_string_method(from_string_value);
+            }
+         }
+         else if (value_is_map_value)
+         {
+            auto from_string_node = node["from_string"];
+            
+            bool remove_prefix_is_present = (bool)from_string_node["remove_prefix"];
+            if (remove_prefix_is_present)
+            {
+               validate_node_type(from_string_node, "remove_prefix", YAML::NodeType::Scalar);
+               result.set_from_string_prefix_to_remove(from_string_node["remove_prefix"].as<std::string>());
+            }
+
+            bool method_name_is_present = (bool)from_string_node["method_name"];
+            if (method_name_is_present)
+            {
+               validate_node_type(from_string_node, "method_name", YAML::NodeType::Scalar);
+               result.set_name_of_from_string_method(from_string_node["method_name"].as<std::string>());
+            }
+         }
+         else
+         {
+            std::stringstream error_message;
+            error_message << "[Blast::Quintessence::YAMLParsers::EnumClassParser::parse]: error: "
+                          << "Weird error 123";
+            throw std::runtime_error(error_message.str());
+         }
+      }
+
+      /*
       // Extract the "from_string" value
       if (from_string_node_is_present)
       {
@@ -221,6 +317,7 @@ functions:
             result.set_name_of_from_string_method(from_string_value);
          }
       }
+      */
 
       return result;
     body_dependency_symbols:

@@ -58,6 +58,12 @@ properties:
     getter: true
     setter: true
 
+  - name: to_string_prefix_to_remove
+    type: std::string
+    init_with: '""'
+    getter: true
+    setter: true
+
   - name: has_from_string_method
     type: bool
     init_with: false
@@ -67,6 +73,12 @@ properties:
   - name: name_of_from_string_method
     type: std::string
     init_with: DEFAULT_NAME_OF_FROM_STRING_METHOD
+    getter: true
+    setter: true
+
+  - name: from_string_prefix_to_remove
+    type: std::string
+    init_with: '""'
     getter: true
     setter: true
 
@@ -120,6 +132,25 @@ functions:
     body: |
       this->enumerators = enumerators;
       return;
+
+
+  - name: remove_prefix
+    type: std::string
+    parameters:
+      - name: value
+        type: std::string
+        default_argument: '"[unset-value]"'
+      - name: prefix
+        type: std::string
+        default_argument: '"[unset-prefix]"'
+    body: |
+      if (value.rfind(prefix, 0) == 0) {
+          value.erase(0, prefix.length());
+      }
+      //if (value.starts_with(prefix)) {
+         //value.erase(0, prefix.length());
+      //}
+      return value;
 
 
   - name: has_name
@@ -265,7 +296,8 @@ functions:
       std::stringstream result;
       for (auto &enumerator : enumerators)
       {
-         result << "if (value == " << name << "::" << enumerator << ") return \"" << to_lower(enumerator) << "\";" << std::endl;
+         std::string string_value = to_lower(remove_prefix(enumerator, to_string_prefix_to_remove));
+         result << "if (value == " << name << "::" << enumerator << ") return \"" << string_value << "\";" << std::endl;
       }
       result << "// TODO: Implement \"throw_on_error\" argument" << std::endl;
       result << "return \"\";" << std::endl;
@@ -290,8 +322,8 @@ functions:
          throw std::runtime_error(
             "[Blast::Cpp::EnumClass::build_from_string_method]: error: "
                "\"enumerators\" cannot be empty because the first enumerator is used as a default value. Feel free "
-                  "improve this feature possibly by expanding the \"to_string: \" feature with additional data, "
-                  "adding a \"to_string_default_argument\", or another better idea."
+                  "improve this feature possibly by expanding the \"from_string: \" feature with additional data, "
+                  "adding a \"from_string_default_argument\", or another better idea."
          );
       }
       std::string argument_default_value = "\"[unset-value]\"";
@@ -321,7 +353,7 @@ functions:
       std::stringstream result;
       for (auto &enumerator : enumerators)
       {
-         std::string string_value = to_lower(enumerator);
+         std::string string_value = to_lower(remove_prefix(enumerator, from_string_prefix_to_remove)); // HERE
          std::stringstream enum_value;
          enum_value << name << "::" << enumerator;
          result << "if (value == \"" << string_value << "\") return " << enum_value.str() << ";" << std::endl;

@@ -1133,11 +1133,19 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">to_string_prefix_to_remove</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
   <td class="property">has_from_string_method</td>
   <td class="property">bool</td>
 </tr>
 <tr>
   <td class="property">name_of_from_string_method</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">from_string_prefix_to_remove</td>
   <td class="property">std::string</td>
 </tr>
 <tr>
@@ -1166,6 +1174,10 @@ table td
 <tr>
   <td class="method">void</td>
   <td class="method"><b>set_enumerators</b>(std::vector&lt;std::string&gt; enumerators={})</td>
+</tr>
+<tr>
+  <td class="method">std::string</td>
+  <td class="method"><b>remove_prefix</b>(std::string value=&quot;[unset-value]&quot;, std::string prefix=&quot;[unset-prefix]&quot;)</td>
 </tr>
 <tr>
   <td class="method">bool</td>
@@ -4099,6 +4111,10 @@ table td
 <tr>
   <td class="method">bool</td>
   <td class="method"><b>validate_node_type</b>(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=true)</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>validate_node_type_is_any_of</b>(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, std::vector&lt;YAML::NodeType::value&gt; expected_types={}, bool throw_on_error=true)</td>
 </tr>
 <tr>
   <td class="method">bool</td>

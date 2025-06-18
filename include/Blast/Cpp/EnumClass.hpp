@@ -30,8 +30,10 @@ namespace Blast
          bool enumerators_are_bitwise;
          bool has_to_string_method;
          std::string name_of_to_string_method;
+         std::string to_string_prefix_to_remove;
          bool has_from_string_method;
          std::string name_of_from_string_method;
+         std::string from_string_prefix_to_remove;
 
       protected:
 
@@ -44,8 +46,10 @@ namespace Blast
          void set_is_class(bool is_class);
          void set_has_to_string_method(bool has_to_string_method);
          void set_name_of_to_string_method(std::string name_of_to_string_method);
+         void set_to_string_prefix_to_remove(std::string to_string_prefix_to_remove);
          void set_has_from_string_method(bool has_from_string_method);
          void set_name_of_from_string_method(std::string name_of_from_string_method);
+         void set_from_string_prefix_to_remove(std::string from_string_prefix_to_remove);
          std::string get_name() const;
          std::vector<std::string> get_enumerators() const;
          std::string get_scope() const;
@@ -55,9 +59,12 @@ namespace Blast
          bool get_enumerators_are_bitwise() const;
          bool get_has_to_string_method() const;
          std::string get_name_of_to_string_method() const;
+         std::string get_to_string_prefix_to_remove() const;
          bool get_has_from_string_method() const;
          std::string get_name_of_from_string_method() const;
+         std::string get_from_string_prefix_to_remove() const;
          void set_enumerators(std::vector<std::string> enumerators={});
+         std::string remove_prefix(std::string value="[unset-value]", std::string prefix="[unset-prefix]");
          bool has_name();
          void set_scope(std::string scope="[unset-scope]");
          void set_type(std::string type="[unset-type]");

@@ -28,8 +28,10 @@ EnumClass::EnumClass(std::string name, std::vector<std::string> enumerators, boo
    , enumerators_are_bitwise(false)
    , has_to_string_method(false)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
+   , to_string_prefix_to_remove("")
    , has_from_string_method(false)
    , name_of_from_string_method(DEFAULT_NAME_OF_FROM_STRING_METHOD)
+   , from_string_prefix_to_remove("")
 {
 }
 
@@ -63,6 +65,12 @@ void EnumClass::set_name_of_to_string_method(std::string name_of_to_string_metho
 }
 
 
+void EnumClass::set_to_string_prefix_to_remove(std::string to_string_prefix_to_remove)
+{
+   this->to_string_prefix_to_remove = to_string_prefix_to_remove;
+}
+
+
 void EnumClass::set_has_from_string_method(bool has_from_string_method)
 {
    this->has_from_string_method = has_from_string_method;
@@ -72,6 +80,12 @@ void EnumClass::set_has_from_string_method(bool has_from_string_method)
 void EnumClass::set_name_of_from_string_method(std::string name_of_from_string_method)
 {
    this->name_of_from_string_method = name_of_from_string_method;
+}
+
+
+void EnumClass::set_from_string_prefix_to_remove(std::string from_string_prefix_to_remove)
+{
+   this->from_string_prefix_to_remove = from_string_prefix_to_remove;
 }
 
 
@@ -129,6 +143,12 @@ std::string EnumClass::get_name_of_to_string_method() const
 }
 
 
+std::string EnumClass::get_to_string_prefix_to_remove() const
+{
+   return to_string_prefix_to_remove;
+}
+
+
 bool EnumClass::get_has_from_string_method() const
 {
    return has_from_string_method;
@@ -138,6 +158,12 @@ bool EnumClass::get_has_from_string_method() const
 std::string EnumClass::get_name_of_from_string_method() const
 {
    return name_of_from_string_method;
+}
+
+
+std::string EnumClass::get_from_string_prefix_to_remove() const
+{
+   return from_string_prefix_to_remove;
 }
 
 
@@ -152,6 +178,17 @@ void EnumClass::set_enumerators(std::vector<std::string> enumerators)
    }
    this->enumerators = enumerators;
    return;
+}
+
+std::string EnumClass::remove_prefix(std::string value, std::string prefix)
+{
+   if (value.rfind(prefix, 0) == 0) {
+       value.erase(0, prefix.length());
+   }
+   //if (value.starts_with(prefix)) {
+      //value.erase(0, prefix.length());
+   //}
+   return value;
 }
 
 bool EnumClass::has_name()
@@ -286,7 +323,8 @@ std::string EnumClass::build_to_string_method_body()
    std::stringstream result;
    for (auto &enumerator : enumerators)
    {
-      result << "if (value == " << name << "::" << enumerator << ") return \"" << to_lower(enumerator) << "\";" << std::endl;
+      std::string string_value = to_lower(remove_prefix(enumerator, to_string_prefix_to_remove));
+      result << "if (value == " << name << "::" << enumerator << ") return \"" << string_value << "\";" << std::endl;
    }
    result << "// TODO: Implement \"throw_on_error\" argument" << std::endl;
    result << "return \"\";" << std::endl;
@@ -320,8 +358,8 @@ Blast::Cpp::Function EnumClass::build_from_string_method()
       throw std::runtime_error(
          "[Blast::Cpp::EnumClass::build_from_string_method]: error: "
             "\"enumerators\" cannot be empty because the first enumerator is used as a default value. Feel free "
-               "improve this feature possibly by expanding the \"to_string: \" feature with additional data, "
-               "adding a \"to_string_default_argument\", or another better idea."
+               "improve this feature possibly by expanding the \"from_string: \" feature with additional data, "
+               "adding a \"from_string_default_argument\", or another better idea."
       );
    }
    std::string argument_default_value = "\"[unset-value]\"";
@@ -347,7 +385,7 @@ std::string EnumClass::build_from_string_method_body()
    std::stringstream result;
    for (auto &enumerator : enumerators)
    {
-      std::string string_value = to_lower(enumerator);
+      std::string string_value = to_lower(remove_prefix(enumerator, from_string_prefix_to_remove)); // HERE
       std::stringstream enum_value;
       enum_value << name << "::" << enumerator;
       result << "if (value == \"" << string_value << "\") return " << enum_value.str() << ";" << std::endl;

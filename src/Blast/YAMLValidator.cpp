@@ -56,6 +56,39 @@ bool YAMLValidator::validate_node_type(YAML::Node node, std::string key, YAML::N
    return false;
 }
 
+bool YAMLValidator::validate_node_type_is_any_of(YAML::Node node, std::string key, std::vector<YAML::NodeType::value> expected_types, bool throw_on_error)
+{
+   if (!((!expected_types.empty())))
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::YAMLValidator::validate_node_type_is_any_of]: error: guard \"(!expected_types.empty())\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Blast::YAMLValidator::validate_node_type_is_any_of]: error: guard \"(!expected_types.empty())\" not met");
+   }
+   for (auto &expected_type : expected_types)
+   {
+      if (node[key].Type() == expected_type) return true;
+   }
+
+   // TODO: test these validators
+   if (throw_on_error)
+   {
+      std::stringstream name_of_types;
+      for (auto &expected_type : expected_types)
+      {
+         std::string name_of_type = yaml_node_type_as_string(expected_type);
+         name_of_types << "\"" << name_of_type << "\", ";
+      }
+
+      std::stringstream error_message;
+      error_message << "[Blast::YAMLValidator::validate_node_type]: error: "
+                    << "expecting to find node \"" << key << "\" as one of [ " << name_of_types.str() << "], "
+                    << "but it is a \"" << node[key] << "\".";
+      throw std::runtime_error(error_message.str());
+   }
+   return false;
+}
+
 bool YAMLValidator::validate_node_has_unsigned_int_value(YAML::Node node, std::string key)
 {
    if (!node[key].IsScalar()) return false;

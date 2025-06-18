@@ -60,6 +60,48 @@ functions:
       return false;
 
 
+  - name: validate_node_type_is_any_of
+    static: true
+    type: bool
+    parameters:
+      - name: node
+        type: YAML::Node
+        default_argument: '{}'
+      - name: key
+        type: std::string
+        default_argument: '"[unset-key]"'
+      - name: expected_types
+        type: std::vector<YAML::NodeType::value>
+        default_argument: '{}'
+      - name: throw_on_error
+        type: bool
+        default_argument: true
+    guards: [ (!expected_types.empty()) ]
+    body: |
+      for (auto &expected_type : expected_types)
+      {
+         if (node[key].Type() == expected_type) return true;
+      }
+
+      // TODO: test these validators
+      if (throw_on_error)
+      {
+         std::stringstream name_of_types;
+         for (auto &expected_type : expected_types)
+         {
+            std::string name_of_type = yaml_node_type_as_string(expected_type);
+            name_of_types << "\"" << name_of_type << "\", ";
+         }
+
+         std::stringstream error_message;
+         error_message << "[Blast::YAMLValidator::validate_node_type]: error: "
+                       << "expecting to find node \"" << key << "\" as one of [ " << name_of_types.str() << "], "
+                       << "but it is a \"" << node[key] << "\".";
+         throw std::runtime_error(error_message.str());
+      }
+      return false;
+
+
   - name: validate_node_has_unsigned_int_value
     static: true
     type: bool
