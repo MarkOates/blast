@@ -27,6 +27,7 @@ EnumClass::EnumClass(std::string name, std::vector<std::string> enumerators, boo
    , start_from(0)
    , enumerators_are_bitwise(false)
    , name_of_to_string_method(DEFAULT_NAME_OF_TO_STRING_METHOD)
+   , name_of_from_string_method(DEFAULT_NAME_OF_FROM_STRING_METHOD)
 {
 }
 
@@ -51,6 +52,12 @@ void EnumClass::set_is_class(bool is_class)
 void EnumClass::set_name_of_to_string_method(std::string name_of_to_string_method)
 {
    this->name_of_to_string_method = name_of_to_string_method;
+}
+
+
+void EnumClass::set_name_of_from_string_method(std::string name_of_from_string_method)
+{
+   this->name_of_from_string_method = name_of_from_string_method;
 }
 
 
@@ -99,6 +106,12 @@ bool EnumClass::get_enumerators_are_bitwise() const
 std::string EnumClass::get_name_of_to_string_method() const
 {
    return name_of_to_string_method;
+}
+
+
+std::string EnumClass::get_name_of_from_string_method() const
+{
+   return name_of_from_string_method;
 }
 
 
@@ -208,12 +221,12 @@ Blast::Cpp::Function EnumClass::build_to_string_method()
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
       throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name)\" not met");
    }
-   if (!(validate(name_of_to_string_method)))
+   if (!(validate_permit_upper(name_of_to_string_method)))
    {
       std::stringstream error_message;
-      error_message << "[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name_of_to_string_method)\" not met.";
+      error_message << "[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate_permit_upper(name_of_to_string_method)\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate(name_of_to_string_method)\" not met");
+      throw std::runtime_error("[Blast::Cpp::EnumClass::build_to_string_method]: error: guard \"validate_permit_upper(name_of_to_string_method)\" not met");
    }
    // TODO: finish implementing this function
    Blast::Cpp::Function result(
@@ -222,19 +235,82 @@ Blast::Cpp::Function EnumClass::build_to_string_method()
       std::vector<Blast::Cpp::FunctionArgument>({
          Blast::Cpp::FunctionArgument(name, "value"),
          Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
-      })
+      }),
+      build_to_string_method_body(),
+      true, // is_static
+      true // is_const
    );
    return result;
 }
 
 std::string EnumClass::build_to_string_method_body()
 {
-   // TODO: implement this function, which will use a template
-   Blast::TemplatedFile templated_file(
-      "return \"unimplemented\";",
-      {}
+   // TODO: improve this function, consider using a static list of names rather that defining them in this method
+   std::stringstream result;
+   for (auto &enumerator : enumerators)
+   {
+      result << "if (value == " << name << "::" << enumerator << ") return \"" << to_lower(enumerator) << "\";" << std::endl;
+   }
+   result << "return \"error\";" << std::endl;
+   //Blast::TemplatedFile templated_file(
+      //"return \"unimplemented\";",
+      //{}
+   //);
+   //return templated_file.generate_content();
+   return result.str();
+}
+
+Blast::Cpp::Function EnumClass::build_from_string_method()
+{
+   if (!(validate(name)))
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate(name)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate(name)\" not met");
+   }
+   if (!(validate_permit_upper(name_of_from_string_method)))
+   {
+      std::stringstream error_message;
+      error_message << "[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate_permit_upper(name_of_from_string_method)\" not met.";
+      std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
+      throw std::runtime_error("[Blast::Cpp::EnumClass::build_from_string_method]: error: guard \"validate_permit_upper(name_of_from_string_method)\" not met");
+   }
+   // TODO: finish implementing this function
+   Blast::Cpp::Function result(
+      "std::string",
+      name_of_from_string_method,
+      std::vector<Blast::Cpp::FunctionArgument>({
+         Blast::Cpp::FunctionArgument("std::string", "value"),
+         Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
+      }),
+      build_from_string_method_body(),
+      true, // is_static
+      true // is_const
    );
-   return "";
+   return result;
+}
+
+std::string EnumClass::build_from_string_method_body()
+{
+   // TODO: improve this function, consider using a static list of names rather that defining them in this method
+   std::stringstream result;
+   for (auto &enumerator : enumerators)
+   {
+      std::string string_value = to_lower(enumerator);
+      std::stringstream enum_value;
+      enum_value << name << "::" << enumerator;
+      result << "if (value == \"" << string_value << "\") return " << enum_value.str() << ";" << std::endl;
+   }
+   result << "throw std::runtime_error(\"Blast/Cpp/EnumClass: ERROR: Could not find enum for \" + value + \");";
+   result << std::endl;
+   //result << "return << " << name << "::" << \"error\";" << std::endl;
+   //Blast::TemplatedFile templated_file(
+      //"return \"unimplemented\";",
+      //{}
+   //);
+   //return templated_file.generate_content();
+   return result.str();
 }
 
 bool EnumClass::validate(std::string method_name)
@@ -253,6 +329,37 @@ bool EnumClass::validate(std::string method_name)
       }
    }
    return true;
+}
+
+bool EnumClass::validate_permit_upper(std::string method_name)
+{
+   // TODO: test this function
+
+   // Check if string is at least 3 characters long
+   if (method_name.length() < 3) {
+      return false;
+   }
+
+   // Check if string has only lowercase and underscore characters
+   for (char c : method_name) {
+      if (!std::islower(c) && c != '_') {
+         return false;
+      }
+   }
+   return true;
+}
+
+std::string EnumClass::to_lower(std::string value)
+{
+   std::string result;
+   result.reserve(value.size());
+
+   for (char c : value)
+   {
+      result += std::tolower(static_cast<unsigned char>(c));
+   }
+
+   return result;
 }
 
 bool EnumClass::is_power_of_two(uint32_t n)

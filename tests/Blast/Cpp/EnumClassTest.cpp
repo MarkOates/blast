@@ -18,9 +18,34 @@ TEST(Blast_Cpp_EnumClassTest, build_to_string_method__will_return_a_cpp_function
    std::vector<std::string> enumerators = { "FOO", "BAR", "BAZ" };
    Blast::Cpp::EnumClass enum_class("FooBar", enumerators);
    Blast::Cpp::Function method = enum_class.build_to_string_method();
+   std::string expected_body = R"END(if (value == FooBar::FOO) return "foo";
+if (value == FooBar::BAR) return "bar";
+if (value == FooBar::BAZ) return "baz";
+return "error";
+)END";
 
    EXPECT_EQ("std::string", method.get_type());
-   EXPECT_EQ(enum_class.get_enumerators(), enumerators);
+   EXPECT_EQ(expected_body, method.get_body());
+   EXPECT_EQ(true, method.get_is_static());
+   EXPECT_EQ(true, method.get_is_const());
+}
+
+
+TEST(Blast_Cpp_EnumClassTest, build_from_string_method__will_return_a_cpp_function_with_the_expected_content)
+{
+   std::vector<std::string> enumerators = { "FOO", "BAR", "BAZ" };
+   Blast::Cpp::EnumClass enum_class("FooBar", enumerators);
+   Blast::Cpp::Function method = enum_class.build_from_string_method();
+   std::string expected_body = R"END(if (value == "foo") return FooBar::FOO;
+if (value == "bar") return FooBar::BAR;
+if (value == "baz") return FooBar::BAZ;
+throw std::runtime_error("Blast/Cpp/EnumClass: ERROR: Could not find enum for " + value + ");
+)END";
+
+   EXPECT_EQ("std::string", method.get_type());
+   EXPECT_EQ(expected_body, method.get_body());
+   EXPECT_EQ(true, method.get_is_static());
+   EXPECT_EQ(true, method.get_is_const());
 }
 
 
@@ -202,5 +227,22 @@ of_two__will_throw_an_error)
       );
    }
 }
+
+
+/*
+TEST(Blast_Cpp_EnumClassTest, build_to_string_method__will_return_a_function_definition_for_a_to_string_method)
+{
+   std::vector<std::string> enumerators = { "FOO", "BAR", "BAZ" };
+   Blast::Cpp::EnumClass enum_class("FooBar", enumerators);
+   Blast::Cpp::Function method = enum_class.build_to_string_method();
+
+   //Blast::Cpp::EnumClass enum_class;
+   //enum_class.set_name("Foo");
+   Blast::Cpp::Function function = enum_class.build_to_string_method();
+
+   EXPECT_EQ("to_string", function.get_name());
+   //EXPECT_EQ("uint32_t", enum_class.get_type());
+}
+*/
 
 

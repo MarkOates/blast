@@ -52,6 +52,12 @@ properties:
     getter: true
     setter: true
 
+  - name: name_of_from_string_method
+    type: std::string
+    init_with: DEFAULT_NAME_OF_FROM_STRING_METHOD
+    getter: true
+    setter: true
+
   - name: DEFAULT_CLASS_NAME
     constexpr: true
     static: true
@@ -63,6 +69,12 @@ properties:
     static: true
     type: const char*
     init_with: '(char*)"to_string"'
+
+  - name: DEFAULT_NAME_OF_FROM_STRING_METHOD
+    constexpr: true
+    static: true
+    type: const char*
+    init_with: '(char*)"from_string"'
 
   - name: DEFAULT_SCOPE
     constexpr: true
@@ -203,7 +215,7 @@ functions:
 
   - name: build_to_string_method
     type: Blast::Cpp::Function
-    guards: [ validate(name), validate(name_of_to_string_method) ]
+    guards: [ validate(name), validate_permit_upper(name_of_to_string_method) ]
     body: |
       // TODO: finish implementing this function
       Blast::Cpp::Function result(
@@ -212,7 +224,10 @@ functions:
          std::vector<Blast::Cpp::FunctionArgument>({
             Blast::Cpp::FunctionArgument(name, "value"),
             Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
-         })
+         }),
+         build_to_string_method_body(),
+         true, // is_static
+         true // is_const
       );
       return result;
     body_dependency_symbols:
@@ -223,14 +238,70 @@ functions:
   - name: build_to_string_method_body
     type: std::string
     body: |
-      // TODO: implement this function, which will use a template
-      Blast::TemplatedFile templated_file(
-         "return \"unimplemented\";",
-         {}
-      );
-      return "";
+      // TODO: improve this function, consider using a static list of names rather that defining them in this method
+      std::stringstream result;
+      for (auto &enumerator : enumerators)
+      {
+         result << "if (value == " << name << "::" << enumerator << ") return \"" << to_lower(enumerator) << "\";" << std::endl;
+      }
+      result << "return \"error\";" << std::endl;
+      //Blast::TemplatedFile templated_file(
+         //"return \"unimplemented\";",
+         //{}
+      //);
+      //return templated_file.generate_content();
+      return result.str();
     body_dependency_symbols:
       - Blast::TemplatedFile
+      - std::stringstream
+
+
+  - name: build_from_string_method
+    type: Blast::Cpp::Function
+    guards: [ validate(name), validate_permit_upper(name_of_from_string_method) ]
+    body: |
+      // TODO: finish implementing this function
+      Blast::Cpp::Function result(
+         "std::string",
+         name_of_from_string_method,
+         std::vector<Blast::Cpp::FunctionArgument>({
+            Blast::Cpp::FunctionArgument("std::string", "value"),
+            Blast::Cpp::FunctionArgument("bool", "throw_on_error", "true"),
+         }),
+         build_from_string_method_body(),
+         true, // is_static
+         true // is_const
+      );
+      return result;
+    body_dependency_symbols:
+      - std::vector
+      - Blast::Cpp::FunctionArgument
+
+
+  - name: build_from_string_method_body
+    type: std::string
+    body: |
+      // TODO: improve this function, consider using a static list of names rather that defining them in this method
+      std::stringstream result;
+      for (auto &enumerator : enumerators)
+      {
+         std::string string_value = to_lower(enumerator);
+         std::stringstream enum_value;
+         enum_value << name << "::" << enumerator;
+         result << "if (value == \"" << string_value << "\") return " << enum_value.str() << ";" << std::endl;
+      }
+      result << "throw std::runtime_error(\"Blast/Cpp/EnumClass: ERROR: Could not find enum for \" + value + \");";
+      result << std::endl;
+      //result << "return << " << name << "::" << \"error\";" << std::endl;
+      //Blast::TemplatedFile templated_file(
+         //"return \"unimplemented\";",
+         //{}
+      //);
+      //return templated_file.generate_content();
+      return result.str();
+    body_dependency_symbols:
+      - Blast::TemplatedFile
+      - std::stringstream
 
 
   - name: validate
@@ -255,6 +326,48 @@ functions:
          }
       }
       return true;
+
+
+  - name: validate_permit_upper
+    static: true
+    type: bool
+    parameters:
+      - name: method_name
+        type: std::string
+        default_argument: '"[unset-method_name]"'
+    body: |
+      // TODO: test this function
+
+      // Check if string is at least 3 characters long
+      if (method_name.length() < 3) {
+         return false;
+      }
+    
+      // Check if string has only lowercase and underscore characters
+      for (char c : method_name) {
+         if (!std::islower(c) && c != '_') {
+            return false;
+         }
+      }
+      return true;
+
+
+  - name: to_lower
+    type: std::string
+    parameters:
+      - name: value
+        type: std::string
+        default_argument: '"[unset-value]"'
+    body: |
+      std::string result;
+      result.reserve(value.size());
+
+      for (char c : value)
+      {
+         result += std::tolower(static_cast<unsigned char>(c));
+      }
+
+      return result;
 
 
   - name: is_power_of_two
