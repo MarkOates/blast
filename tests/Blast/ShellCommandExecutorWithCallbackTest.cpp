@@ -119,3 +119,21 @@ TEST(ShellCommandExecutorWithCallbackTest, capture_stderr__is_false_by_default)
 }
 
 
+TEST(ShellCommandExecutorWithCallbackTest, can_upload_a_file_with_curl)
+{
+   std::string file_path = "/Users/markoates/Desktop/funny.png";
+   std::string url = "http://12.34.56.789:8000/";
+
+   std::stringstream command;
+   command << "curl -s -o /dev/null -w \"%{http_code}\" -F \"file=@" << file_path << "\" " << url;
+
+   Blast::ShellCommandExecutorWithCallback executor(command.str());
+   executor.set_capture_stderr(true);
+
+   std::string result = executor.execute();
+
+   // Expect the HTTP status code returned from curl
+   EXPECT_EQ("200", result);
+   EXPECT_TRUE(executor.get_executed_successfully());
+}
+
