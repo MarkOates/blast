@@ -115,6 +115,40 @@ int main(int argc, char** argv)
    });
    */
 
+
+   std::string file_to_watch = "/Users/markoates/Repos/TileFPS/project_files/happy_world_experiment-0x.tmj";
+
+   watch_file(file_to_watch, []()
+   {
+      std::cout << "File changed!" << std::endl;
+
+      {
+         Blast::ShellCommandExecutorWithCallback command(
+               "echo \"reload_tmj_files\" | nc localhost 60000"
+            );
+         command.execute();
+         if (command.get_executed_successfully())
+         {
+            std::cout << "  - Command 1 executed successfully" << std::endl;
+         }
+      }
+
+      {
+         Blast::ShellCommandExecutorWithCallback command(
+               "echo \"export_level_data\" | nc localhost 60000"
+            );
+         command.execute();
+         if (command.get_executed_successfully())
+         {
+            std::cout << "  - Command 2 executed successfully" << std::endl;
+         }
+      }
+   },
+   std::chrono::milliseconds(1000)
+   );
+
+
+   /*
    std::string file_to_watch = "/Users/markoates/Desktop/hello_friend-environment-0n.obj";
 
    watch_file(file_to_watch, []()
@@ -174,6 +208,7 @@ int main(int argc, char** argv)
       }
 
    });
+   */
 
    return 0;
 }
