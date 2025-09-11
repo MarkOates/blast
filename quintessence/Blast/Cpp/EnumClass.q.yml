@@ -118,6 +118,7 @@ documentation:
 
   - todos:
       - Rename "elements" to "enumerators", Update callers
+      - In addition to biewise, add "bitset" so that this could be extended to any arbitrary amount of flags
 
 
 functions:
