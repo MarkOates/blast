@@ -187,7 +187,8 @@ functions:
     body: |
       // NOTE: this validation is not assured when the value is set during construction
       // TODO: add test for this method
-      static std::set<std::string> valid_types = { "", "int", "int16_t", "uint16_t", "int32_t", "uint32_t" };
+      static std::set<std::string> valid_types =
+         { "", "int", "int16_t", "uint16_t", "int32_t", "uint32_t", "int64_t", "uint64_t" };
       if (valid_types.count(type) == 0)
       {
          // TODO: include incorrect type, and valid types in error message

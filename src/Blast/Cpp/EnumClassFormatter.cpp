@@ -116,11 +116,13 @@ std::string EnumClassFormatter::output_nth_bit_as_hex_string(int n)
       throw std::runtime_error("[Blast::Cpp::EnumClassFormatter::output_nth_bit_as_hex_string]: error: guard \"(n >= 0)\" not met");
    }
    std::stringstream output;
-   int i=0;
+   //int i=0;
+   uint64_t i=0;
    if (n == 0) i = 0;
    else
    {
-      i = (1 << (n-1));
+      //i = (1 << (n-1));
+      i = (1ULL << (n-1));
    }
    output << "0x" << std::setfill('0') << std::setw(4) << std::hex << i;
    return output.str();

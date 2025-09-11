@@ -193,7 +193,7 @@ TEST(Blast_Cpp_EnumClassTest, set_type__when_setting_an_invalid_type__will_throw
       enum_class.set_type("an-invalid-type"),
       std::runtime_error,
       "[Blast::Cpp::EnumClass::set_type]: error: The provided type \"an-invalid-type\" is invalid. Permitted types "
-         "are [\"\", \"int\", \"int16_t\", \"int32_t\", \"uint16_t\", \"uint32_t\", ]"
+         "are [\"\", \"int\", \"int16_t\", \"int32_t\", \"int64_t\", \"uint16_t\", \"uint32_t\", \"uint64_t\", ]"
    );
 }
 
