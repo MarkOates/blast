@@ -117,7 +117,8 @@ int main(int argc, char** argv)
 
 
    //std::string file_to_watch = "/Users/markoates/Repos/TileFPS/project_files/happy_world_experiment-0x.tmj";
-   std::string file_to_watch = "/Users/markoates/Repos/TileFPS/project_files/fallen_hills-0x.tmj";
+   std::string file_to_watch = "/Users/markoates/Repos/TileFPS/project_files/temple_a-0x.tmj";
+   //std::string file_to_watch = "/Users/markoates/Repos/TileFPS/project_files/fallen_hills-0x.tmj";
 
    watch_file(file_to_watch, []()
    {
