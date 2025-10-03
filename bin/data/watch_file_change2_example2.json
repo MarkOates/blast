@@ -1,0 +1,12 @@
+{
+  "tasks": [
+    {
+      "file": "/Users/markoates/Repos/TileFPS/project_files/basement_8-0x.tmj",
+      "interval_ms": 1000,
+      "commands": [
+        "echo \"reload_tmj_files\" | nc localhost 60000",
+        "echo \"export_level_data\" | nc localhost 60000"
+      ]
+    }
+  ]
+}
