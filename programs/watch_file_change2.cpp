@@ -1,3 +1,11 @@
+/////////////////////////////////////////////////////
+//
+// Example usage:
+//
+// > bin/programs/watch_file_change2 /Users/markoates/Repos/blast/bin/data/watch_file_change2_example2.json
+//
+
+
 #include <iostream>
 #include <filesystem>
 #include <chrono>
