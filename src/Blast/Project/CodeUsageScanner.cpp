@@ -167,6 +167,10 @@ std::unordered_map<std::string, std::string> CodeUsageScanner::build_common_requ
       {"sqrt(", "<cmath>"},
       {"pow(", "<cmath>"},
       {"fabs(", "<cmath>"},
+      {"fmin(", "<cmath>"},
+      {"fmod(", "<cmath>"},
+      //{"round(", "<cmath>"}, // NOTE: Need to find a way to include this, but it gets triggered on a lot of false
+                               // positives, e.g. "foo_bar_background("
       //{"log", "<cmath>"},
 
       {"std::sort(", "<algorithm>"},
@@ -183,6 +187,8 @@ std::unordered_map<std::string, std::string> CodeUsageScanner::build_common_requ
       {"isdigit(", "<cctype>"},
       {"toupper(", "<cctype>"},
       {"tolower(", "<cctype>"},
+
+      {"std::numeric_limits<", "<limits>"}, // NOTE: The usage of '<' character and not '(' for this symbol
 
       //{"exit", "<cstdlib>"},
       //{"abort", "<cstdlib>"},
