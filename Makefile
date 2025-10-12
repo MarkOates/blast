@@ -347,6 +347,22 @@ LIBRARY_DIR := lib/
 LIBRARY_FOR_TESTS_NAME := lib/lib$(PROJECT_LIB_NAME)-$(VERSION_NUMBER)-for_tests.a
 LIBRARY_NAME := lib/lib$(PROJECT_LIB_NAME)-$(VERSION_NUMBER).a
 INDIVIDUAL_TEST_EXECUTABLES := $(TEST_SOURCES:tests/%.cpp=bin/tests/%)
+
+
+# --- Hotloadable code BEGIN --- #
+
+ifeq ($(SYSTEM_OS), macOS)
+# --- Hotloadable Shared Library ---
+HOTLOAD_SOURCES := $(shell find hotloadable_src -name '*.cpp')
+HOTLOAD_OBJECTS := $(HOTLOAD_SOURCES:hotloadable_src/%.cpp=obj/hotload/%.o)
+HOTLOAD_SHARED_LIB_NAME := hotloaded_functions
+SHARED_LIB_EXT := dylib
+SHARED_LIB_PATH := lib/lib$(HOTLOAD_SHARED_LIB_NAME).$(SHARED_LIB_EXT)
+endif
+
+# --- Hotloadable code END --- #
+
+
 ifeq ($(OS),Windows_NT)
 	ALL_COMPILED_EXECUTABLES_IN_BIN := $(shell find bin/**/* -perm /111 -type f)
 else
@@ -442,6 +458,10 @@ main:
 	@(bin/run_all_tests && (make celebrate_passing_tests) || (make signal_failing_tests && exit 1) )
 	$(call output_terminal_message,"Build the library")
 	@make library -j$(CORES)
+ifeq ($(SYSTEM_OS), macOS)
+	$(call output_terminal_message,"Build the hotloadable shared library")
+	@make $(SHARED_LIB_PATH) -j$(CORES)
+endif
 	$(call output_terminal_message,"Make all the programs")
 	@make programs -j$(CORES)
 	$(call output_terminal_message,"Make all the example programs")
@@ -796,6 +816,23 @@ obj/tests/%.o: tests/%.cpp
 
 
 
+# --- Hotloadable code BEGIN --- #
+
+ifeq ($(SYSTEM_OS), macOS)
+obj/hotload/%.o: hotloadable_src/%.cpp
+	@mkdir -p $(@D)
+	@printf "Compiling hotloadable object file \e[1m\e[34m$@\033[0m\n"
+	@g++ -g -c -std=c++17 $(DISABLE_UNUSED_LINK_ARGUMENTS_WARNING_FLAG) $(WARNINGS_PROMOTED_TO_ERRORS_FLAGS) -Wall $(DISABLE_UNUSED_WARNINGS_FLAG) -fPIC $< -o $@ -I./include -I$(ASIO_INCLUDE_DIR) -I$(ALLEGRO_INCLUDE_DIR) -I$(BULLET_PHYSICS_INCLUDE_DIR) -I$(ALLEGRO_PLATFORM_INCLUDE_DIR) -I$(YAML_CPP_INCLUDE_DIR) -D_XOPEN_SOURCE_EXTENDED -I$(ALLEGRO_FLARE_INCLUDE_DIR) $(NCURSES_BUILD_ARGS)
+	@printf "Hotloadable object file at \033[1m\033[32m$@\033[0m compiled successfully.\n"
+endif
+
+# --- Hotloadable code END --- #
+
+
+
+
+
+
 obj/tests/$(TEST_RUNNER_PROGRAM_NAME).o: tests/$(TEST_RUNNER_PROGRAM_NAME).cpp
 	@mkdir -p $(@D)
 	@printf "Compiling test object for $(TEST_RUNNER_PROGRAM_NAME) \e[1m\e[36m$@\033[0m\n"
@@ -835,6 +872,22 @@ else
 endif
 	@printf "done. Library file at \033[1m\033[32m$@\033[0m\n"
 endif
+
+
+
+# --- Hotloadable code BEGIN --- #
+
+ifeq ($(SYSTEM_OS), macOS)
+$(SHARED_LIB_PATH): $(HOTLOAD_OBJECTS)
+	@printf "Linking shared library \e[1m\e[36m$@\033[0m\n"
+	@g++ -g -shared -o $@ $^ -L./lib $(ALLEGRO_FLARE_LINK_ARGS) -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) $(BULLET_PHYSICS_LINK_ARGS) $(CURL_LINK_ARGS) $(SQLITE_LINK_ARGS) $(OPENGL_LIB) $(MIDI_AUDIO_LIB) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) $(RPATH_STATEMENT) $(NCURSES_LINK_ARGS)
+	@printf "Shared library at \033[1m\033[32m$@\033[0m linked successfully.\n"
+endif
+
+# --- Hotloadable code END --- #
+
+
+
 
 
 
@@ -941,6 +994,10 @@ universe:
 
 
 clean:
+ifeq ($(SYSTEM_OS), macOS)
+	-rm -rdf obj/hotload/
+	-rm $(SHARED_LIB_PATH)
+endif
 	-rm -rdf obj/
 	-rm $(PROGRAMS)
 	-rm $(EXAMPLES)
@@ -964,3 +1021,4 @@ fresh:
 	make clean
 	make -j$(CORES)
 	make bin/run_all_tests
+
