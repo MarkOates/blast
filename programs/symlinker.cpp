@@ -14,6 +14,29 @@ const std::string COLOR_ORANGE_YELLOW = "\033[93m";
 const std::string COLOR_LAVENDER = "\033[95m";
 const std::string COLOR_RESET = "\033[0m";
 
+// Core function to perform the move and symlink
+void perform_move_and_symlink(const fs::path& source_file, const fs::path& dest_folder)
+{
+   fs::path new_file_path = dest_folder / source_file.filename();
+
+   try
+   {
+      // Move the file
+      fs::rename(source_file, new_file_path);
+
+      // Create a symbolic link pointing to the new location
+      fs::create_symlink(new_file_path, source_file);
+
+      std::cout << "Moved file to: " << new_file_path.string() << "\n";
+      std::cout << "Created symlink at: " << source_file.string() << " -> " << new_file_path.string() << "\n";
+   }
+   catch (const fs::filesystem_error& e)
+   {
+      std::cerr << "Filesystem error: " << e.what() << "\n";
+   }
+}
+
+
 // Function to get the status of a single file
 std::string get_status(const fs::path& path)
 {
@@ -120,8 +143,8 @@ void display_status_ui(const std::string& category, const std::map<fs::path, fs:
     }
 }
 
-// Function to perform the original move and symlink operation
-void move_and_symlink_file(int argc, char* argv[], const std::map<fs::path, fs::path>& allowed_moves)
+// Function for the original manual move and symlink operation
+void manual_move_and_symlink_file(int argc, char* argv[], const std::map<fs::path, fs::path>& allowed_moves)
 {
    fs::path original_file = argv[1];
    fs::path destination_folder = argv[2];
@@ -186,24 +209,52 @@ void move_and_symlink_file(int argc, char* argv[], const std::map<fs::path, fs::
       return;
    }
 
-   fs::path new_file_path = destination_folder / original_file.filename();
+   perform_move_and_symlink(original_file, destination_folder);
+}
 
-   try
-   {
-      // Move the file
-      fs::rename(original_file, new_file_path);
+// Function for the new automatic symlinking by filename
+void auto_symlink_by_filename(const std::string& filename, const std::map<fs::path, fs::path>& allowed_moves)
+{
+    fs::path source_file_path;
+    fs::path dest_folder_path;
+    bool file_found_in_fixtures = false;
 
-      // Create a symbolic link pointing to the new location
-      fs::create_symlink(new_file_path, original_file);
+    // Search for the file in all allowed fixture directories
+    for (const auto& move_rule : allowed_moves)
+    {
+        fs::path potential_path = move_rule.first / filename;
+        if (fs::exists(potential_path) && fs::is_regular_file(potential_path))
+        {
+            source_file_path = potential_path;
+            dest_folder_path = move_rule.second;
+            file_found_in_fixtures = true;
+            break;
+        }
+    }
 
-      std::cout << "Moved file to: " << new_file_path.string() << "\n";
-      std::cout << "Created symlink at: " << original_file.string() << " -> " << new_file_path.string() << "\n";
-   }
-   catch (const fs::filesystem_error& e)
-   {
-      std::cerr << "Filesystem error: " << e.what() << "\n";
-      return;
-   }
+    if (!file_found_in_fixtures)
+    {
+        std::cerr << "Error: File '" << filename << "' not found in any of the configured fixture directories." << std::endl;
+        return;
+    }
+
+    // Check statuses
+    std::string fix_status = get_status(source_file_path);
+    std::string prod_status = get_status(dest_folder_path / filename);
+
+    // Conditionally perform the action
+    if (fix_status == "PRESENT" && prod_status == "MISSING")
+    {
+        std::cout << "File '" << filename << "' is present in fixtures and missing in production. Performing move..." << std::endl;
+        perform_move_and_symlink(source_file_path, dest_folder_path);
+    }
+    else
+    {
+        std::cout << "File '" << filename << "' does not meet the criteria for automatic symlinking." << std::endl;
+        std::cout << "  Production status: " << prod_status << std::endl;
+        std::cout << "  Fixtures status:   " << fix_status << std::endl;
+        std::cout << "No action taken." << std::endl;
+    }
 }
 
 int main(int argc, char* argv[])
@@ -222,18 +273,38 @@ int main(int argc, char* argv[])
 
    if (argc == 2)
    {
-      display_status_ui(argv[1], allowed_moves);
+      std::string arg = argv[1];
+      bool is_category = false;
+      for (const auto& move_rule : allowed_moves)
+      {
+         if (move_rule.first.filename() == arg)
+         {
+            is_category = true;
+            break;
+         }
+      }
+
+      if (is_category)
+      {
+         display_status_ui(arg, allowed_moves);
+      }
+      else
+      {
+         auto_symlink_by_filename(arg, allowed_moves);
+      }
    }
    else if (argc == 3)
    {
-      move_and_symlink_file(argc, argv, allowed_moves);
+      manual_move_and_symlink_file(argc, argv, allowed_moves);
    }
    else
    {
       std::cerr << "Usage: " << std::endl;
       std::cerr << "  To view status: " << argv[0] << " <category>" << std::endl;
       std::cerr << "    e.g. " << argv[0] << " bitmaps" << std::endl;
-      std::cerr << "  To move a file: " << argv[0] << " <file_to_move> <destination_folder>" << std::endl;
+      std::cerr << "  To move a file manually: " << argv[0] << " <file_to_move> <destination_folder>" << std::endl;
+      std::cerr << "  To auto-symlink a file: " << argv[0] << " <filename>" << std::endl;
+      std::cerr << "    e.g. " << argv[0] << " my_cool_image.png" << std::endl;
       return 1;
    }
 
