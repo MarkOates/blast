@@ -878,9 +878,9 @@ endif
 # --- Hotloadable code BEGIN --- #
 
 ifeq ($(SYSTEM_OS), macOS)
-$(SHARED_LIB_PATH): $(HOTLOAD_OBJECTS)
+$(SHARED_LIB_PATH): $(HOTLOAD_OBJECTS) obj/TileFPS/HotloadableContent.o
 	@printf "Linking shared library \e[1m\e[36m$@\033[0m\n"
-	@g++ -g -shared -o $@ $^ -L./lib $(ALLEGRO_FLARE_LINK_ARGS) -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) $(BULLET_PHYSICS_LINK_ARGS) $(CURL_LINK_ARGS) $(SQLITE_LINK_ARGS) $(OPENGL_LIB) $(MIDI_AUDIO_LIB) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) $(RPATH_STATEMENT) $(NCURSES_LINK_ARGS)
+	@g++ -g -shared -fvisibility=hidden -undefined dynamic_lookup -o $@ $^ -L./lib $(ALLEGRO_FLARE_LINK_ARGS) -L$(ALLEGRO_LIB_DIR) $(ALLEGRO_LIBS_LINK_ARGS) $(BULLET_PHYSICS_LINK_ARGS) $(CURL_LINK_ARGS) $(SQLITE_LINK_ARGS) $(OPENGL_LIB) $(MIDI_AUDIO_LIB) -L$(YAML_CPP_LIB_DIR) -l$(YAML_CPP_LIBS) $(RPATH_STATEMENT) $(NCURSES_LINK_ARGS)
 	@printf "Shared library at \033[1m\033[32m$@\033[0m linked successfully.\n"
 endif
 
