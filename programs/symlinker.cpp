@@ -8,6 +8,12 @@
 
 namespace fs = std::filesystem;
 
+const std::string COLOR_LIGHT_BLUE = "\033[94m";
+const std::string BG_DARK_RED = "\033[41m";
+const std::string COLOR_ORANGE_YELLOW = "\033[93m";
+const std::string COLOR_LAVENDER = "\033[95m";
+const std::string COLOR_RESET = "\033[0m";
+
 // Function to get the status of a single file
 std::string get_status(const fs::path& path)
 {
@@ -63,25 +69,54 @@ void display_status_ui(const std::string& category, const std::map<fs::path, fs:
         }
     }
 
-    std::cout << std::left
-              << std::setw(35) << "Filename"
-              << std::setw(20) << "Production"
-              << std::setw(20) << "Fixtures" << std::endl;
-    std::cout << std::string(75, '-') << std::endl;
-
+    // Determine column widths
+    size_t filename_col_width = std::string("Filename").length();
     for (const auto& filename : filenames)
     {
-        std::string prod_status = get_status(dest_dir / filename);
-        if (prod_status == "LINKED") {
-            prod_status = "ERROR_IS_LINK";
+        if (filename.string().length() > filename_col_width)
+        {
+            filename_col_width = filename.string().length();
+        }
+    }
+    filename_col_width += 3;
+
+    const int status_col_width = 20;
+
+    // Print table header
+    std::cout << std::left
+              << std::setw(filename_col_width) << "Filename"
+              << std::setw(status_col_width) << "Production"
+              << std::setw(status_col_width) << "Fixtures" << std::endl;
+    std::cout << std::string(filename_col_width + (status_col_width * 2), '-') << std::endl;
+
+    // Print table rows
+    for (const auto& filename : filenames)
+    {
+        std::string prod_status_str = get_status(dest_dir / filename);
+        std::string fix_status_str = get_status(source_dir / filename);
+
+        bool is_error = (prod_status_str == "LINKED");
+        bool is_synced = (prod_status_str == "PRESENT" && fix_status_str == "LINKED");
+        bool needs_linking = (prod_status_str == "PRESENT" && fix_status_str == "PRESENT");
+        bool needs_moving = (prod_status_str == "MISSING" && fix_status_str == "PRESENT");
+
+        if (is_error) {
+            std::cout << BG_DARK_RED;
+        } else if (is_synced) {
+            std::cout << COLOR_LIGHT_BLUE;
+        } else if (needs_linking) {
+            std::cout << COLOR_LAVENDER;
+        } else if (needs_moving) {
+            std::cout << COLOR_ORANGE_YELLOW;
         }
 
-        std::string fix_status = get_status(source_dir / filename);
+        std::string display_prod_status = is_error ? "ERROR_IS_LINK" : prod_status_str;
 
         std::cout << std::left
-                  << std::setw(35) << filename.string()
-                  << std::setw(20) << prod_status
-                  << std::setw(20) << fix_status << std::endl;
+                  << std::setw(filename_col_width) << filename.string()
+                  << std::setw(status_col_width) << display_prod_status
+                  << std::setw(status_col_width) << fix_status_str
+                  << COLOR_RESET << std::endl;
     }
 }
 
