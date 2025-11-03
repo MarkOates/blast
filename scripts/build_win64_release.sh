@@ -266,6 +266,14 @@ echo "Compressing ZIP - STARTING"
 
 
 
+# Unzip the release
+echo ""
+echo "Unzipping the released zip into a folder in the same directory - STARTING"
+(cd /home/Mark/Releases/ && (unzip "$FINAL_FOLDER_NAME.zip") || exit 14)
+echo "Unzipping the released zip into a folder in the same directory - DONE"
+
+
+
 # Color codes
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -283,18 +291,13 @@ echo     ""
 echo -e  "${GREEN}   (through terminal):"
 echo -e  "${GREEN}      /home/Mark/Releases/"
 echo -e  "${GREEN}      /home/Mark/Releases/$FINAL_FOLDER_NAME.zip${NC}"
+echo -e  "${GREEN}      /home/Mark/Releases/$FINAL_FOLDER_NAME${NC}"
 echo     ""
 echo -e  "${GREEN}   (from within windows):"
 echo -e  "${GREEN}      /msys64/home/Mark/Releases/"
 echo -e "${YELLOW}      /msys64/home/Mark/Releases/$FINAL_FOLDER_NAME.zip${NC}"
+echo -e "${YELLOW}      /msys64/home/Mark/Releases/$FINAL_FOLDER_NAME${NC}"
 echo     ""
 
-
-
-# Unzip the release
-echo ""
-echo "Unzipping the released zip into a folder in the same directory - STARTING"
-(cd /home/Mark/Releases/ && (unzip "$FINAL_FOLDER_NAME.zip" -d "$FINAL_FOLDER_NAME") || exit 14)
-echo "Unzipping the released zip into a folder in the same directory - DONE"
 
 
