@@ -289,3 +289,12 @@ echo -e  "${GREEN}      /msys64/home/Mark/Releases/"
 echo -e "${YELLOW}      /msys64/home/Mark/Releases/$FINAL_FOLDER_NAME.zip${NC}"
 echo     ""
 
+
+
+# Unzip the release
+echo ""
+echo "Unzipping the released zip into a folder in the same directory - STARTING"
+(cd /home/Mark/Releases/ && (unzip "$FINAL_FOLDER_NAME.zip" -d "$FINAL_FOLDER_NAME") || exit 14)
+echo "Unzipping the released zip into a folder in the same directory - DONE"
+
+
