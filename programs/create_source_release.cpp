@@ -137,7 +137,7 @@ int main(int argc, char **argv)
       //std::string project_testing_include_folder_name << 
       std::stringstream success_message;
 
-      success_message << std::endl;
+      success_message << CONSOLE_COLOR_CYAN << std::endl;
       success_message << "===============================================" << std::endl;
       success_message << "==    Source Release Created Successfully!   ==" << std::endl;
       success_message << "===============================================" << std::endl;
@@ -177,9 +177,13 @@ int main(int argc, char **argv)
       success_message << "Command to make Win64 release:" << std::endl;
       success_message << CONSOLE_COLOR_GREEN << "" << command_to_make_win64_release.str() << CONSOLE_COLOR_CYAN << std::endl;
       success_message << std::endl;
-      success_message << std::endl;
 
-      std::cout << CONSOLE_COLOR_CYAN << success_message.str() << CONSOLE_COLOR_DEFAULT << std::endl;
+      std::cout << success_message.str() << std::endl;
+
+      std::cout << CONSOLE_COLOR_DEFAULT << std::endl;
+
+      // TODO:
+      //stc::cout << "Would you like to upload the source to the gcloud location?" << std::endl;
    }
 
    return 0;
