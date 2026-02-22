@@ -373,6 +373,10 @@ YAML::Node default_dependencies()
   headers: [ 'cstdint' ]
 - symbol: uint32_t
   headers: [ 'cstdint' ]
+- symbol: int64_t
+  headers: [ 'cstdint' ]
+- symbol: uint64_t
+  headers: [ 'cstdint' ]
 - symbol: std::cout
   headers: [ 'iostream' ]
 - symbol: std::cerr
