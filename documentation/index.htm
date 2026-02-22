@@ -1149,6 +1149,10 @@ table td
   <td class="property">std::string</td>
 </tr>
 <tr>
+  <td class="property">valid_types_and_headers</td>
+  <td class="property">std::map&lt;std::string, std::string&gt;</td>
+</tr>
+<tr>
   <td class="property">DEFAULT_CLASS_NAME</td>
   <td class="property">const char*</td>
 </tr>
@@ -1186,6 +1190,18 @@ table td
 <tr>
   <td class="method">void</td>
   <td class="method"><b>set_scope</b>(std::string scope=&quot;[unset-scope]&quot;)</td>
+</tr>
+<tr>
+  <td class="method">std::map&lt;std::string, std::string&gt;</td>
+  <td class="method"><b>build_default_valid_types_and_headers</b>()</td>
+</tr>
+<tr>
+  <td class="method">bool</td>
+  <td class="method"><b>has_required_headers_for_type</b>()</td>
+</tr>
+<tr>
+  <td class="method">std::map&lt;std::string, std::string&gt;</td>
+  <td class="method"><b>get_required_symbols_and_headers_for_type</b>()</td>
 </tr>
 <tr>
   <td class="method">void</td>

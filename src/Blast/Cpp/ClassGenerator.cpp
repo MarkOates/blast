@@ -441,6 +441,20 @@ std::string ClassGenerator::dependency_include_directives()
    {
       present_symbols.insert(dependency_symbol);
    }
+   // include all the enum's unerlying type headers
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (!enum_class.has_required_headers_for_type()) continue;
+
+      std::map<std::string, std::string> required_symbols_and_headers =
+         enum_class.get_required_symbols_and_headers_for_type();
+
+      for (auto &required_symbol_and_header : required_symbols_and_headers)
+      {
+         if (required_symbol_and_header.second.empty()) continue;
+         present_symbols.insert(required_symbol_and_header.first);
+      }
+   }
 
 
    // atomize the dependencies
@@ -464,7 +478,11 @@ std::string ClassGenerator::dependency_include_directives()
             if (individual_symbol_dependencies.requires_header_files())
             {
                std::vector<std::string> include_directives = individual_symbol_dependencies.get_include_directives();
-               std::copy(include_directives.begin(), include_directives.end(), std::inserter(symbol_dependency_header_directives, symbol_dependency_header_directives.end()));
+               std::copy(
+                  include_directives.begin(),
+                  include_directives.end(),
+                  std::inserter(symbol_dependency_header_directives, symbol_dependency_header_directives.end())
+               );
             }
             break;
          }

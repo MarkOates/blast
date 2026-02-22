@@ -1070,11 +1070,26 @@ std::vector<std::string> extract_function_body_symbol_dependency_symbols(YAML::N
 }
 
 
+
+std::vector<std::string> extract_enum_types(std::vector<Blast::Cpp::EnumClass> &enum_classes)
+{
+   std::vector<std::string> result;
+   for (auto &enum_class : enum_classes)
+   {
+      if (enum_class.get_type().empty()) continue;
+      result.push_back(enum_class.get_type());
+   }
+   return result;
+}
+
+
+
+
 #include <Blast/DependencySymbolAtomizer.hpp>
 #include <Blast/StringJoiner.hpp>
 #include <Blast/DependencyHeadersSuggester.hpp>
 
-std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dependencies(
+std::vector<Blast::Cpp::SymbolDependencies> validate_symbol_dependencies_are_present_and_return_only_required(
       std::vector<std::string> dependency_symbols,
       std::vector<Blast::Cpp::SymbolDependencies> &known_listed_dependencies,
       std::string filename
@@ -1170,7 +1185,7 @@ std::vector<Blast::Cpp::SymbolDependencies> consolidate_function_body_symbol_dep
             << "    headers: [ " << headers << " ]\n";
       }
 
-      explode("consolidate_function_body_symbol_dependencies", error_message.str());
+      explode("validate_symbol_dependencies_are_present_and_return_only_required", error_message.str());
    }
 
 
@@ -1190,6 +1205,7 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
    std::vector<ParsedMethodInfo> functions_and_dependencies = extract_functions_and_dependency_info(source, full_class_name, class_name_last_fragment, quintessence_filename);
    std::vector<Blast::Cpp::SymbolDependencies> symbol_dependencies = extract_symbol_dependencies(source, quintessence_filename);
    std::vector<std::string> function_body_symbol_dependency_symbols = extract_function_body_symbol_dependency_symbols(source);
+   std::vector<std::string> enum_types = extract_enum_types(enum_classes);
 
 
 
@@ -1415,11 +1431,20 @@ Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string
 
 
 
-   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = consolidate_function_body_symbol_dependencies(
+   std::vector<Blast::Cpp::SymbolDependencies> function_body_symbol_dependencies = validate_symbol_dependencies_are_present_and_return_only_required(
          function_body_symbol_dependencies__and__per_function_dependency_symbols,
          symbol_dependencies,
          quintessence_filename
       );
+
+
+
+   validate_symbol_dependencies_are_present_and_return_only_required( // Not assigned to anything, just used to validate presence of type on enum?
+         enum_types,
+         symbol_dependencies,
+         quintessence_filename
+      );
+
 
 
 

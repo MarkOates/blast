@@ -24,6 +24,7 @@ properties:
   - name: type
     type: std::string
     init_with: DEFAULT_TYPE
+    constructor_arg: false       # <-- false because it requires validation
     getter: true
     setter: false
 
@@ -79,6 +80,12 @@ properties:
   - name: from_string_prefix_to_remove
     type: std::string
     init_with: '""'
+    getter: true
+    setter: true
+
+  - name: valid_types_and_headers
+    type: std::map<std::string, std::string> 
+    init_with: 'build_default_valid_types_and_headers()'
     getter: true
     setter: true
 
@@ -180,6 +187,39 @@ functions:
       - std::set
 
 
+  - name: build_default_valid_types_and_headers
+    static: true
+    type: std::map<std::string, std::string> 
+    body: |
+      return {
+          { "", "" },
+          { "int", "" },
+          { "int16_t", "cstdint" },
+          { "uint16_t", "cstdint" },
+          { "int32_t", "cstdint" },
+          { "uint32_t", "cstdint" },
+          { "int64_t", "cstdint" },
+          { "uint64_t", "cstdint" }
+      };
+
+
+  - name: has_required_headers_for_type
+    type: bool
+    body: |
+      // TODO: Test this method
+      auto it = valid_types_and_headers.find(type);
+      return it != valid_types_and_headers.end() && !it->second.empty();
+
+
+  - name: get_required_symbols_and_headers_for_type
+    type: std::map<std::string, std::string>
+    body: |
+      if (auto it = valid_types_and_headers.find(type); it != valid_types_and_headers.end() && !it->second.empty()) {
+          return {{it->first, it->second}};
+      }
+      return {};
+
+
   - name: set_type
     parameters:
       - name: type
@@ -188,17 +228,15 @@ functions:
     body: |
       // NOTE: this validation is not assured when the value is set during construction
       // TODO: add test for this method
-      static std::set<std::string> valid_types =
-         { "", "int", "int16_t", "uint16_t", "int32_t", "uint32_t", "int64_t", "uint64_t" };
-      if (valid_types.count(type) == 0)
+
+      if (valid_types_and_headers.find(type) == valid_types_and_headers.end())
       {
-         // TODO: include incorrect type, and valid types in error message
          std::stringstream error_message;
          error_message << "[Blast::Cpp::EnumClass::set_type]: error: The provided type \"" << type << "\" is invalid. ";
          error_message << "Permitted types are [";
-         for (auto &valid_type : valid_types)
+         for (auto &valid_type_and_header: valid_types_and_headers)
          {
-            error_message << "\"" << valid_type << "\"" << ", ";
+            error_message << "\"" << valid_type_and_header.first << "\"" << ", ";
          }
          error_message << "]";
          throw std::runtime_error(error_message.str());
@@ -206,7 +244,7 @@ functions:
       this->type = type;
       return;
     body_dependency_symbols:
-      - std::set
+      - std::map
 
 
   - name: set_start_from

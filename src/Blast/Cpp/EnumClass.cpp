@@ -5,6 +5,7 @@
 #include <Blast/Cpp/FunctionArgument.hpp>
 #include <Blast/TemplatedFile.hpp>
 #include <iostream>
+#include <map>
 #include <set>
 #include <sstream>
 #include <stdexcept>
@@ -32,6 +33,7 @@ EnumClass::EnumClass(std::string name, std::vector<std::string> enumerators, boo
    , has_from_string_method(false)
    , name_of_from_string_method(DEFAULT_NAME_OF_FROM_STRING_METHOD)
    , from_string_prefix_to_remove("")
+   , valid_types_and_headers(build_default_valid_types_and_headers())
 {
 }
 
@@ -86,6 +88,12 @@ void EnumClass::set_name_of_from_string_method(std::string name_of_from_string_m
 void EnumClass::set_from_string_prefix_to_remove(std::string from_string_prefix_to_remove)
 {
    this->from_string_prefix_to_remove = from_string_prefix_to_remove;
+}
+
+
+void EnumClass::set_valid_types_and_headers(std::map<std::string, std::string> valid_types_and_headers)
+{
+   this->valid_types_and_headers = valid_types_and_headers;
 }
 
 
@@ -167,6 +175,12 @@ std::string EnumClass::get_from_string_prefix_to_remove() const
 }
 
 
+std::map<std::string, std::string> EnumClass::get_valid_types_and_headers() const
+{
+   return valid_types_and_headers;
+}
+
+
 void EnumClass::set_enumerators(std::vector<std::string> enumerators)
 {
    if (!(validate_elements_are_unique(enumerators)))
@@ -210,21 +224,48 @@ void EnumClass::set_scope(std::string scope)
    return;
 }
 
+std::map<std::string, std::string> EnumClass::build_default_valid_types_and_headers()
+{
+   return {
+       { "", "" },
+       { "int", "" },
+       { "int16_t", "cstdint" },
+       { "uint16_t", "cstdint" },
+       { "int32_t", "cstdint" },
+       { "uint32_t", "cstdint" },
+       { "int64_t", "cstdint" },
+       { "uint64_t", "cstdint" }
+   };
+}
+
+bool EnumClass::has_required_headers_for_type()
+{
+   // TODO: Test this method
+   auto it = valid_types_and_headers.find(type);
+   return it != valid_types_and_headers.end() && !it->second.empty();
+}
+
+std::map<std::string, std::string> EnumClass::get_required_symbols_and_headers_for_type()
+{
+   if (auto it = valid_types_and_headers.find(type); it != valid_types_and_headers.end() && !it->second.empty()) {
+       return {{it->first, it->second}};
+   }
+   return {};
+}
+
 void EnumClass::set_type(std::string type)
 {
    // NOTE: this validation is not assured when the value is set during construction
    // TODO: add test for this method
-   static std::set<std::string> valid_types =
-      { "", "int", "int16_t", "uint16_t", "int32_t", "uint32_t", "int64_t", "uint64_t" };
-   if (valid_types.count(type) == 0)
+
+   if (valid_types_and_headers.find(type) == valid_types_and_headers.end())
    {
-      // TODO: include incorrect type, and valid types in error message
       std::stringstream error_message;
       error_message << "[Blast::Cpp::EnumClass::set_type]: error: The provided type \"" << type << "\" is invalid. ";
       error_message << "Permitted types are [";
-      for (auto &valid_type : valid_types)
+      for (auto &valid_type_and_header: valid_types_and_headers)
       {
-         error_message << "\"" << valid_type << "\"" << ", ";
+         error_message << "\"" << valid_type_and_header.first << "\"" << ", ";
       }
       error_message << "]";
       throw std::runtime_error(error_message.str());

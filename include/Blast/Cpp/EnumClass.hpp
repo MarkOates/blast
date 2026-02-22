@@ -3,6 +3,7 @@
 
 #include <Blast/Cpp/Function.hpp>
 #include <cstdint>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -34,6 +35,7 @@ namespace Blast
          bool has_from_string_method;
          std::string name_of_from_string_method;
          std::string from_string_prefix_to_remove;
+         std::map<std::string, std::string> valid_types_and_headers;
 
       protected:
 
@@ -50,6 +52,7 @@ namespace Blast
          void set_has_from_string_method(bool has_from_string_method);
          void set_name_of_from_string_method(std::string name_of_from_string_method);
          void set_from_string_prefix_to_remove(std::string from_string_prefix_to_remove);
+         void set_valid_types_and_headers(std::map<std::string, std::string> valid_types_and_headers);
          std::string get_name() const;
          std::vector<std::string> get_enumerators() const;
          std::string get_scope() const;
@@ -63,10 +66,14 @@ namespace Blast
          bool get_has_from_string_method() const;
          std::string get_name_of_from_string_method() const;
          std::string get_from_string_prefix_to_remove() const;
+         std::map<std::string, std::string> get_valid_types_and_headers() const;
          void set_enumerators(std::vector<std::string> enumerators={});
          std::string remove_prefix(std::string value="[unset-value]", std::string prefix="[unset-prefix]");
          bool has_name();
          void set_scope(std::string scope="[unset-scope]");
+         static std::map<std::string, std::string> build_default_valid_types_and_headers();
+         bool has_required_headers_for_type();
+         std::map<std::string, std::string> get_required_symbols_and_headers_for_type();
          void set_type(std::string type="[unset-type]");
          void set_start_from(int start_from=0);
          void set_enumerators_are_bitwise(bool enumerators_are_bitwise=false);

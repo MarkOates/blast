@@ -7,7 +7,7 @@ properties:
     init_with: '{}'
 
 
-functions:
+methods:
 
 
   - name: build_enum_definition

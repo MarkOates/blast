@@ -62,6 +62,12 @@ std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_
       { "std::sin", { "cmath" }, },
       { "std::cos", { "cmath" }, },
       { "std::fmod", { "cmath" }, },
+      { "int16_t", { "cstdint" }, },
+      { "uint16_t", { "cstdint" }, },
+      { "int32_t", { "cstdint" }, },
+      { "uint32_t", { "cstdint" }, },
+      { "int64_t", { "cstdint" }, },
+      { "uint64_t", { "cstdint" }, },
 
       { "std::numeric_limits", { "limits" }, },
 
