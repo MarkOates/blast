@@ -50,6 +50,7 @@ std::pair<bool, std::string> CodeUsageScanner::build_report()
 
    std::unordered_map<std::string, std::string> common_required_headers = build_common_required_headers_list();
    bool all_clear = true;
+   bool less_verbose = true;
    for (auto &common_required_header : common_required_headers)
    {
       std::string token = common_required_header.first;
@@ -76,7 +77,7 @@ std::pair<bool, std::string> CodeUsageScanner::build_report()
 
          if (!header_token_exists_in_file)
          {
-            result_report << "    !! header token \"" << required_header_token << "\" not found" << std::endl;
+            result_report << "    FAIL: header token \"" << required_header_token << "\" not found" << std::endl;
             all_clear = false;
          }
          else
@@ -132,6 +133,7 @@ std::string CodeUsageScanner::build_scan_shell_command(std::string search_token)
               << "\":(exclude)./quintessence/*\" " // NOTE: We're only looking in .cpp and .hpp files
               << "\":(exclude)./include/lib/*\" "
               << "\":(exclude)./project_files/*\" "
+              << "\":(exclude)./tools/*\" "
               << "\":(exclude)./tmp/*\" "
               << "\":(exclude)./scripts/*\" "
               << "\":(exclude)./tests/*\" " // NOTE: Excluding tests, consider removing this exclusion
