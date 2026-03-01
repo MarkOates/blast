@@ -524,6 +524,7 @@ int main(int argc, char* argv[])
       { "./tests/fixtures/bitmaps", "./bin/data/bitmaps" },
       { "./tests/fixtures/models", "./bin/data/models" },
       { "./tests/fixtures/samples", "./bin/data/samples" },
+      { "./tests/fixtures/fonts", "./bin/data/fonts" },
       { "./tests/fixtures/maps", "./bin/data/maps" },
       { "./tests/fixtures/animations", "./bin/data/animations" },
       { "./tests/fixtures/icons", "./bin/data/icons" },
