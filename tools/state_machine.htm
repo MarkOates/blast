@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Renderer</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+        #container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        #left-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #444;
+            padding: 10px;
+            gap: 10px;
+        }
+        #right-pane {
+            flex: 1;
+            padding: 20px;
+            overflow: auto;
+            background-color: #121212;
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .pane-section {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        textarea {
+            flex: 1;
+            background-color: #252526;
+            color: #d4d4d4;
+            border: 1px solid #333;
+            padding: 12px;
+            resize: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        textarea:focus {
+            border-color: #007acc;
+        }
+        label {
+            font-size: 11px;
+            margin-bottom: 4px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="left-pane">
+        <div class="pane-section" style="flex: 0 0 30%;">
+            <label for="variables">Insert Variables (foo=bar, one per line)</label>
+            <textarea id="variables" spellcheck="false" placeholder="foo=bar&#10;name=John Doe"></textarea>
+        </div>
+        <div class="pane-section" style="flex: 1;">
+            <label for="template">Raw Template Text</label>
+            <textarea id="template" spellcheck="false" placeholder="Hello foo, my name is name."></textarea>
+        </div>
+    </div>
+    <div id="right-pane"></div>
+</div>
+
+<script>
+    const variablesInput = document.getElementById('variables');
+    const templateInput = document.getElementById('template');
+    const outputPane = document.getElementById('right-pane');
+
+    function updateResult() {
+        const variablesText = variablesInput.value;
+        const templateText = templateInput.value;
+
+        // Parse variables
+        const lines = variablesText.split('\n');
+        const vars = [];
+        lines.forEach(line => {
+            const index = line.indexOf('=');
+            if (index !== -1) {
+                const key = line.substring(0, index).trim();
+                const value = line.substring(index + 1);
+                if (key) {
+                    vars.push({ key, value });
+                }
+            }
+        });
+
+        // Sort by key length descending to prevent partial matches replacing longer keys
+        vars.sort((a, b) => b.key.length - a.key.length);
+
+        // Replace literal keys with values
+        let result = templateText;
+        vars.forEach(({ key, value }) => {
+            // Escape key for regex
+            const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(escapedKey, 'g');
+            result = result.replace(regex, value);
+        });
+
+        outputPane.textContent = result;
+    }
+
+    variablesInput.addEventListener('input', updateResult);
+    templateInput.addEventListener('input', updateResult);
+
+    // Initial state
+    variablesInput.value = "foo=bar\nname=John Doe";
+    templateInput.value = "Hello name,\n\nWelcome to the foo project!";
+    updateResult();
+</script>
+
+</body>
+</html>
