@@ -68,13 +68,13 @@
 
 <div id="container">
     <div id="left-pane">
-        <div class="pane-section" style="flex: 0 0 30%;">
-            <label for="variables">Insert Variables (foo=bar, one per line)</label>
-            <textarea id="variables" spellcheck="false" placeholder="foo=bar&#10;name=John Doe"></textarea>
+        <div class="pane-section" style="flex: 0 0 35%;">
+            <label for="variables">Insert Variables (foo=bar, supports cascading)</label>
+            <textarea id="variables" spellcheck="false"></textarea>
         </div>
         <div class="pane-section" style="flex: 1;">
             <label for="template">Raw Template Text</label>
-            <textarea id="template" spellcheck="false" placeholder="Hello foo, my name is name."></textarea>
+            <textarea id="template" spellcheck="false"></textarea>
         </div>
     </div>
     <div id="right-pane"></div>
@@ -106,14 +106,38 @@
         // Sort by key length descending to prevent partial matches replacing longer keys
         vars.sort((a, b) => b.key.length - a.key.length);
 
-        // Replace literal keys with values
+        // Iterative replacement to handle cascading
         let result = templateText;
-        vars.forEach(({ key, value }) => {
-            // Escape key for regex
-            const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const regex = new RegExp(escapedKey, 'g');
-            result = result.replace(regex, value);
-        });
+        let currentVars = vars.map(v => ({ ...v }));
+        let changed = true;
+        let iterations = 0;
+        const maxIterations = 10; // Prevent infinite loops
+
+        while (changed && iterations < maxIterations) {
+            changed = false;
+            iterations++;
+
+            currentVars.forEach(v => {
+                const escapedKey = v.key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(escapedKey, 'g');
+
+                // Try replacing in the template result
+                const nextResult = result.replace(regex, v.value);
+                if (nextResult !== result) {
+                    result = nextResult;
+                    changed = true;
+                }
+
+                // Try replacing in other variable values (cascading)
+                currentVars.forEach(otherV => {
+                    const nextValue = otherV.value.replace(regex, v.value);
+                    if (nextValue !== otherV.value) {
+                        otherV.value = nextValue;
+                        changed = true;
+                    }
+                });
+            });
+        }
 
         outputPane.textContent = result;
     }
@@ -121,9 +145,10 @@
     variablesInput.addEventListener('input', updateResult);
     templateInput.addEventListener('input', updateResult);
 
-    // Initial state
-    variablesInput.value = "foo=bar\nname=John Doe";
-    templateInput.value = "Hello name,\n\nWelcome to the foo project!";
+    // Initial state matching the user's request
+    variablesInput.value = "[PREFIX_CAMEL_CASE]=Movement\n[PREFIX_SNAKE_CASE]=movement_\n[CLASS_NAMESPACE]=This::Class::Namespace\n[FULL_ENUM_NAME]=[CLASS_NAMESPACE]::[PREFIX_CAMEL_CASE]\n[ENUM_NAME]=[PREFIX_CAMEL_CASE]State";
+    templateInput.value = "class [PREFIX_CAMEL_CASE]\n{\n   enum [ENUM_NAME]\n   {\n      [PREFIX_SNAKE_CASE]NONE = 0,\n   };\n\n   // Full name is [FULL_ENUM_NAME]\n};";
+    
     updateResult();
 </script>
 
