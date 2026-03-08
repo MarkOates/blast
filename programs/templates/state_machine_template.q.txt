@@ -4,9 +4,9 @@
 [[PREFIX_CAMEL_CASE]]=Movement
 [[PREFIX_SNAKE_CASE]]=movement_
 [[CLASS_NAMESPACE]]=Breach::Gameplay::Entities::ElevatorShaft
+
 [[FULL_ENUM_NAME]]=[[CLASS_NAMESPACE]]::[[PREFIX_CAMEL_CASE]]State
 [[ENUM_NAME]]=[[PREFIX_CAMEL_CASE]]State
-
 
 
 properties:
