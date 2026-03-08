@@ -1,3 +1,6 @@
+## Use tools/state_machine.htm
+
+
 [[PREFIX_CAMEL_CASE]]=Movement
 [[PREFIX_SNAKE_CASE]]=movement_
 [[CLASS_NAMESPACE]]=Breach::Gameplay::Entities::ElevatorShaft
