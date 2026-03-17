@@ -529,7 +529,12 @@ int main(int argc, char* argv[])
       { "./tests/fixtures/animations", "./bin/data/animations" },
       { "./tests/fixtures/icons", "./bin/data/icons" },
       { "./tests/fixtures/saves", "./bin/data/saves" },
-      { "./tests/fixtures/text", "./bin/data/text" }
+      { "./tests/fixtures/text", "./bin/data/text" },
+      { "./tests/fixtures/dialogs", "./bin/data/dialogs" },
+
+      // TODO: Make these lines work (needs test)
+      //{ "./tests/fixtures/samples/music_tracks", "./bin/data/samples/music_tracks" },
+      //{ "./tests/fixtures/samples/sound_effects", "./bin/data/samples/sound_effects" },
    };
 
    if (argc == 2)
