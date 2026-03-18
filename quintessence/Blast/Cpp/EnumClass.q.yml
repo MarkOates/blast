@@ -119,6 +119,12 @@ properties:
     type: const char*
     init_with: '(char*)""'
 
+  - name: SYMBOL_AND_REQUIRED_HEADERS_FOR_TO_STRING_METHOD
+    const: true
+    static: true
+    type: std::vector<std::pair<std::string, std::string>>
+    init_with: '{{ "std::string", "string" }}'
+
 
 documentation:
 
@@ -129,6 +135,13 @@ documentation:
 
 
 functions:
+
+
+  - name: get_symbol_and_required_headers_for_to_string_method
+    static: true
+    type: std::vector<std::pair<std::string, std::string>>
+    body: |
+      return SYMBOL_AND_REQUIRED_HEADERS_FOR_TO_STRING_METHOD;
 
 
   - name: set_enumerators

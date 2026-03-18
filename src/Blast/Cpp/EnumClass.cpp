@@ -19,6 +19,9 @@ namespace Cpp
 {
 
 
+std::vector<std::pair<std::string, std::string>> EnumClass::SYMBOL_AND_REQUIRED_HEADERS_FOR_TO_STRING_METHOD = {{ "std::string", "string" }};
+
+
 EnumClass::EnumClass(std::string name, std::vector<std::string> enumerators, bool is_class)
    : name(name)
    , enumerators(enumerators)
@@ -180,6 +183,11 @@ std::map<std::string, std::string> EnumClass::get_valid_types_and_headers() cons
    return valid_types_and_headers;
 }
 
+
+std::vector<std::pair<std::string, std::string>> EnumClass::get_symbol_and_required_headers_for_to_string_method()
+{
+   return SYMBOL_AND_REQUIRED_HEADERS_FOR_TO_STRING_METHOD;
+}
 
 void EnumClass::set_enumerators(std::vector<std::string> enumerators)
 {

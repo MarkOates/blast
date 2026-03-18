@@ -455,6 +455,21 @@ std::string ClassGenerator::dependency_include_directives()
          present_symbols.insert(required_symbol_and_header.first);
       }
    }
+   // If an enum has a to_string method, be sure that <string> is included (and/or any other)
+   for (auto &enum_class : cpp_class.get_enum_classes())
+   {
+      if (enum_class.get_has_to_string_method())
+      {
+         std::vector<std::pair<std::string, std::string>> symbol_and_required_headers_for_to_string_method =
+            Blast::Cpp::EnumClass::get_symbol_and_required_headers_for_to_string_method();
+
+         for (auto &symbol_and_header : symbol_and_required_headers_for_to_string_method)
+         {
+            present_symbols.insert(symbol_and_header.first);
+         }
+      }
+   }
+  
 
 
    // atomize the dependencies

@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 
@@ -36,6 +37,7 @@ namespace Blast
          std::string name_of_from_string_method;
          std::string from_string_prefix_to_remove;
          std::map<std::string, std::string> valid_types_and_headers;
+         static std::vector<std::pair<std::string, std::string>> SYMBOL_AND_REQUIRED_HEADERS_FOR_TO_STRING_METHOD;
 
       protected:
 
@@ -67,6 +69,7 @@ namespace Blast
          std::string get_name_of_from_string_method() const;
          std::string get_from_string_prefix_to_remove() const;
          std::map<std::string, std::string> get_valid_types_and_headers() const;
+         static std::vector<std::pair<std::string, std::string>> get_symbol_and_required_headers_for_to_string_method();
          void set_enumerators(std::vector<std::string> enumerators={});
          std::string remove_prefix(std::string value="[unset-value]", std::string prefix="[unset-prefix]");
          bool has_name();
