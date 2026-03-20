@@ -417,7 +417,10 @@ void auto_symlink_by_filename(const std::string& filename, const std::map<fs::pa
    if (needs_symlink_in_fixtures)
    {
       //throw_error("Cannot operate: FILE_ONLY_IN_FIXTURES: The file exists in fixtures and needs to be moved into production.");
-      std::string symlink_target_as_relative_path = std::filesystem::path("../../../") / production_directory_and_file;
+      fs::path up_prefix;
+      for (const auto &part : fixtures_directory) if (part != ".") up_prefix /= "..";
+      std::string symlink_target_as_relative_path = (up_prefix / production_directory_and_file).string();
+
       std::string symlink_file_and_path = fixtures_directory_and_file;
 
       std::cout << COLOR_LIGHT_GREEN
@@ -532,9 +535,9 @@ int main(int argc, char* argv[])
       { "./tests/fixtures/text", "./bin/data/text" },
       { "./tests/fixtures/dialogs", "./bin/data/dialogs" },
 
-      // TODO: Make these lines work (needs test)
-      //{ "./tests/fixtures/samples/music_tracks", "./bin/data/samples/music_tracks" },
-      //{ "./tests/fixtures/samples/sound_effects", "./bin/data/samples/sound_effects" },
+      // TODO: Make these lines work
+      { "./tests/fixtures/samples/music_tracks", "./bin/data/samples/music_tracks" },
+      { "./tests/fixtures/samples/sound_effects", "./bin/data/samples/sound_effects" },
    };
 
    if (argc == 2)
