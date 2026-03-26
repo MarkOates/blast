@@ -4,22 +4,25 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
 
 int main(int argc, char** argv)
 {
-   std::string filename = "/Users/markoates/Desktop/screenshots/resizes/shot2.png";
+   if (argc < 2)
+   {
+      std::cout << "Usage: image_resizer <filename>" << std::endl;
+      return 1;
+   }
+
+   std::string filename = argv[1];
+
+   if (!std::filesystem::exists(filename))
+   {
+      throw std::runtime_error("The file \"" + filename + "\" does not exist.");
+   }
+
    std::string command = "magick \"" + filename + "\" -resize 1920x1080 -filter Lanczos -define filter:blur=0.75 \"/Users/markoates/Desktop/screenshot_output_1920x1080.png\"";
-
-   //std::stringstream command;
-
-   //command << "pwd" << std::endl;
-   //command << "gcloud -v" << std::endl;
-
-   // The following commands do not work in MSYS2 using the ShellCommandExecutorWithCallback:
-   //command << "\"\\C\\Users\\Mark\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud\" -v";
-   //command << "(cd \"/C/Users/Mark/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin\" && ./gcloud -v)";
-   //command << "(cd \"\\C\\Users\\Mark\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\" && ./gcloud -v)";
 
    std::cout << "============== command begin ===============" << std::endl;
    std::cout << command << std::endl;
