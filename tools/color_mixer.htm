@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Color Mixer</title>
+    <style>
+        :root {
+            --sidebar-width: 400px;
+            --bg-color: #f0f0f0;
+            --border-color: #ccc;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        #sidebar {
+            width: var(--sidebar-width);
+            min-width: var(--sidebar-width);
+            background: var(--bg-color);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .color-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .color-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .controls-top {
+            display: flex;
+            gap: 5px;
+        }
+
+        .input-group {
+            margin-bottom: 8px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .weight-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .weight-row input[type="range"] {
+            flex-grow: 1;
+        }
+
+        .weight-row input[type="number"] {
+            width: 60px;
+        }
+
+        .percentage-display {
+            font-size: 11px;
+            color: #888;
+            margin-left: 5px;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            gap: 5px;
+        }
+
+        .color-input-wrapper input[type="text"] {
+            flex-grow: 1;
+        }
+
+        .color-input-wrapper input[type="color"] {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #999;
+            background: #eee;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .btn:hover {
+            background: #ddd;
+        }
+
+        .btn-remove {
+            background: #fee;
+            border-color: #fcc;
+            color: #c00;
+        }
+
+        .btn-remove:hover {
+            background: #fdd;
+        }
+
+        .add-btn-container {
+            margin-top: 10px;
+            padding-bottom: 40px;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .btn-add:hover {
+            background: #45a049;
+        }
+
+        /* Preview Pane Styles */
+        #preview {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        #preview-info {
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .hex-display {
+            font-size: 32px;
+            font-family: monospace;
+            margin-bottom: 5px;
+        }
+
+        .rgb-display {
+            font-size: 18px;
+            font-family: monospace;
+        }
+
+        /* Drag handles (simplified as buttons for now as per "menu on the left") */
+        .reorder-btns {
+            display: flex;
+            gap: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="sidebar">
+        <h2>Color Mixer</h2>
+        <div id="color-list">
+            <!-- Color items will be injected here -->
+        </div>
+        <div class="add-btn-container">
+            <button class="btn btn-add" onclick="addColor()">+ Add Color</button>
+        </div>
+    </div>
+    <datalist id="x11-colors">
+        <option value="AliceBlue">
+        <option value="AntiqueWhite">
+        <option value="Aqua">
+        <option value="Aquamarine">
+        <option value="Azure">
+        <option value="Beige">
+        <option value="Bisque">
+        <option value="Black">
+        <option value="BlanchedAlmond">
+        <option value="Blue">
+        <option value="BlueViolet">
+        <option value="Brown">
+        <option value="BurlyWood">
+        <option value="CadetBlue">
+        <option value="Chartreuse">
+        <option value="Chocolate">
+        <option value="Coral">
+        <option value="CornflowerBlue">
+        <option value="Cornsilk">
+        <option value="Crimson">
+        <option value="Cyan">
+        <option value="DarkBlue">
+        <option value="DarkCyan">
+        <option value="DarkGoldenRod">
+        <option value="DarkGray">
+        <option value="DarkGreen">
+        <option value="DarkKhaki">
+        <option value="DarkMagenta">
+        <option value="DarkOliveGreen">
+        <option value="DarkOrange">
+        <option value="DarkOrchid">
+        <option value="DarkRed">
+        <option value="DarkSalmon">
+        <option value="DarkSeaGreen">
+        <option value="DarkSlateBlue">
+        <option value="DarkSlateGray">
+        <option value="DarkTurquoise">
+        <option value="DarkViolet">
+        <option value="DeepPink">
+        <option value="DeepSkyBlue">
+        <option value="DimGray">
+        <option value="DodgerBlue">
+        <option value="FireBrick">
+        <option value="FloralWhite">
+        <option value="ForestGreen">
+        <option value="Fuchsia">
+        <option value="Gainsboro">
+        <option value="GhostWhite">
+        <option value="Gold">
+        <option value="GoldenRod">
+        <option value="Gray">
+        <option value="Green">
+        <option value="GreenYellow">
+        <option value="HoneyDew">
+        <option value="HotPink">
+        <option value="IndianRed">
+        <option value="Indigo">
+        <option value="Ivory">
+        <option value="Khaki">
+        <option value="Lavender">
+        <option value="LavenderBlush">
+        <option value="LawnGreen">
+        <option value="LemonChiffon">
+        <option value="LightBlue">
+        <option value="LightCoral">
+        <option value="LightCyan">
+        <option value="LightGoldenRodYellow">
+        <option value="LightGray">
+        <option value="LightGreen">
+        <option value="LightPink">
+        <option value="LightSalmon">
+        <option value="LightSeaGreen">
+        <option value="LightSkyBlue">
+        <option value="LightSlateGray">
+        <option value="LightSteelBlue">
+        <option value="LightYellow">
+        <option value="Lime">
+        <option value="LimeGreen">
+        <option value="Linen">
+        <option value="Magenta">
+        <option value="Maroon">
+        <option value="MediumAquaMarine">
+        <option value="MediumBlue">
+        <option value="MediumOrchid">
+        <option value="MediumPurple">
+        <option value="MediumSeaGreen">
+        <option value="MediumSlateBlue">
+        <option value="MediumSpringGreen">
+        <option value="MediumTurquoise">
+        <option value="MediumVioletRed">
+        <option value="MidnightBlue">
+        <option value="MintCream">
+        <option value="MistyRose">
+        <option value="Moccasin">
+        <option value="NavajoWhite">
+        <option value="Navy">
+        <option value="OldLace">
+        <option value="Olive">
+        <option value="OliveDrab">
+        <option value="Orange">
+        <option value="OrangeRed">
+        <option value="Orchid">
+        <option value="PaleGoldenRod">
+        <option value="PaleGreen">
+        <option value="PaleTurquoise">
+        <option value="PaleVioletRed">
+        <option value="PapayaWhip">
+        <option value="PeachPuff">
+        <option value="Peru">
+        <option value="Pink">
+        <option value="Plum">
+        <option value="PowderBlue">
+        <option value="Purple">
+        <option value="RebeccaPurple">
+        <option value="Red">
+        <option value="RosyBrown">
+        <option value="RoyalBlue">
+        <option value="SaddleBrown">
+        <option value="Salmon">
+        <option value="SandyBrown">
+        <option value="SeaGreen">
+        <option value="SeaShell">
+        <option value="Sienna">
+        <option value="Silver">
+        <option value="SkyBlue">
+        <option value="SlateBlue">
+        <option value="SlateGray">
+        <option value="Snow">
+        <option value="SpringGreen">
+        <option value="SteelBlue">
+        <option value="Tan">
+        <option value="Teal">
+        <option value="Thistle">
+        <option value="Tomato">
+        <option value="Turquoise">
+        <option value="Violet">
+        <option value="Wheat">
+        <option value="White">
+        <option value="WhiteSmoke">
+        <option value="Yellow">
+        <option value="YellowGreen">
+    </datalist>
+    <div id="preview">
+        <div id="preview-info">
+            <div class="hex-display" id="mixed-hex">#000000</div>
+            <div class="rgb-display" id="mixed-rgb">rgb(0, 0, 0)</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let colors = [
+        { id: Date.now(), value: '#ff0000', weight: 1, name: 'red' },
+        { id: Date.now() + 1, value: '#0000ff', weight: 1, name: 'blue' }
+    ];
+
+    const colorListEl = document.getElementById('color-list');
+    const previewEl = document.getElementById('preview');
+    const mixedHexEl = document.getElementById('mixed-hex');
+    const mixedRgbEl = document.getElementById('mixed-rgb');
+
+    // Helper to convert any CSS color to RGB array
+    function colorToRGB(color) {
+        const div = document.createElement('div');
+        div.style.color = color;
+        document.body.appendChild(div);
+        const style = window.getComputedStyle(div).color;
+        document.body.removeChild(div);
+        
+        const match = style.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+        if (match) {
+            return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])];
+        }
+        const matchRgba = style.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+        if (matchRgba) {
+            return [parseInt(matchRgba[1]), parseInt(matchRgba[2]), parseInt(matchRgba[3])];
+        }
+        return [0, 0, 0];
+    }
+
+    function componentToHex(c) {
+        const hex = Math.round(c).toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+    }
+
+    function rgbToHex(r, g, b) {
+        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+
+    function updateMix() {
+        let totalWeight = 0;
+        let mixedR = 0;
+        let mixedG = 0;
+        let mixedB = 0;
+
+        colors.forEach(c => {
+            const rgb = colorToRGB(c.value);
+            const weight = parseFloat(c.weight) || 0;
+            mixedR += rgb[0] * weight;
+            mixedG += rgb[1] * weight;
+            mixedB += rgb[2] * weight;
+            totalWeight += weight;
+        });
+
+        if (totalWeight > 0) {
+            mixedR /= totalWeight;
+            mixedG /= totalWeight;
+            mixedB /= totalWeight;
+        } else {
+            mixedR = 0; mixedG = 0; mixedB = 0;
+        }
+
+        const finalR = Math.round(mixedR);
+        const finalG = Math.round(mixedG);
+        const finalB = Math.round(mixedB);
+
+        const hex = rgbToHex(finalR, finalG, finalB);
+        const rgbStr = `rgb(${finalR}, ${finalG}, ${finalB})`;
+
+        previewEl.style.backgroundColor = hex;
+        mixedHexEl.textContent = hex.toUpperCase();
+        mixedRgbEl.textContent = rgbStr;
+
+        // Update percentages in UI
+        const items = colorListEl.querySelectorAll('.color-item');
+        colors.forEach((c, index) => {
+            const perc = totalWeight > 0 ? (parseFloat(c.weight) || 0) / totalWeight * 100 : 0;
+            const percDisplay = items[index].querySelector('.percentage-display');
+            if (percDisplay) percDisplay.textContent = `(${perc.toFixed(1)}%)`;
+        });
+
+        // Contrast adjustment for text
+        const brightness = (finalR * 299 + finalG * 587 + finalB * 114) / 1000;
+        document.getElementById('preview-info').style.color = brightness > 128 ? 'black' : 'white';
+        document.getElementById('preview-info').style.backgroundColor = brightness > 128 ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
+    }
+
+    function renderColors() {
+        colorListEl.innerHTML = '';
+        colors.forEach((c, index) => {
+            const item = document.createElement('div');
+            item.className = 'color-item';
+            // Determine picker color (if c.value is valid, use it, else #000000)
+            const rgbArr = colorToRGB(c.value);
+            const hexForPicker = rgbToHex(rgbArr[0], rgbArr[1], rgbArr[2]);
+
+            item.innerHTML = `
+                <div class="color-item-header">
+                    <strong>Color ${index + 1} <span class="percentage-display"></span></strong>
+                    <div class="controls-top">
+                        <div class="reorder-btns">
+                            <button class="btn" onclick="moveColor(${index}, -1)" ${index === 0 ? 'disabled' : ''}>↑</button>
+                            <button class="btn" onclick="moveColor(${index}, 1)" ${index === colors.length - 1 ? 'disabled' : ''}>↓</button>
+                        </div>
+                        <button class="btn btn-remove" onclick="removeColor(${index})">✕</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Color (Hex, Name, or RGB)</label>
+                    <div class="color-input-wrapper">
+                        <input type="text" value="${c.value}" list="x11-colors" oninput="updateColorValue(${index}, this.value, true)" placeholder="e.g. red, #ff0000, rgb(255,0,0)">
+                        <input type="color" value="${hexForPicker}" oninput="updateColorValue(${index}, this.value, false)">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Weight (Contribution)</label>
+                    <div class="weight-row">
+                        <input type="range" min="0" max="10" step="0.1" value="${c.weight}" oninput="updateColorWeight(${index}, this.value)">
+                        <input type="number" min="0" step="0.1" value="${c.weight}" oninput="updateColorWeight(${index}, this.value)">
+                    </div>
+                </div>
+            `;
+            colorListEl.appendChild(item);
+        });
+        updateMix();
+    }
+
+    function addColor() {
+        colors.push({ id: Date.now(), value: '#ffffff', weight: 1 });
+        renderColors();
+    }
+
+    function removeColor(index) {
+        colors.splice(index, 1);
+        renderColors();
+    }
+
+    function moveColor(index, direction) {
+        const newIndex = index + direction;
+        if (newIndex >= 0 && newIndex < colors.length) {
+            const temp = colors[index];
+            colors[index] = colors[newIndex];
+            colors[newIndex] = temp;
+            renderColors();
+        }
+    }
+
+    function updateColorValue(index, value, fromText) {
+        colors[index].value = value;
+        const items = colorListEl.querySelectorAll('.color-item');
+        const textInput = items[index].querySelector('input[type="text"]');
+        const colorInput = items[index].querySelector('input[type="color"]');
+        
+        if (fromText) {
+            const rgbArr = colorToRGB(value);
+            colorInput.value = rgbToHex(rgbArr[0], rgbArr[1], rgbArr[2]);
+        } else {
+            textInput.value = value;
+        }
+        updateMix();
+    }
+
+    function updateColorWeight(index, weight) {
+        colors[index].weight = weight;
+        const items = colorListEl.querySelectorAll('.color-item');
+        const weightRange = items[index].querySelector('input[type="range"]');
+        const weightNumber = items[index].querySelector('input[type="number"]');
+        weightRange.value = weight;
+        weightNumber.value = weight;
+        updateMix();
+    }
+
+    // Initialize
+    renderColors();
+</script>
+
+</body>
+</html>
