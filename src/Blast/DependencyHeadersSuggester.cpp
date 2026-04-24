@@ -81,6 +81,7 @@ std::map<std::string, std::vector<std::string>> DependencyHeadersSuggester::get_
       { "ALLEGRO_BITMAP", { "allegro5/allegro.h" }, },
       { "ALLEGRO_DISPLAY", { "allegro5/allegro.h" }, },
       { "ALLEGRO_COLOR", { "allegro5/allegro.h" }, },
+      { "ALLEGRO_SAMPLE", { "allegro5/allegro_audio.h" }, },
       { "ALLEGRO_STATE", { "allegro5/allegro.h" }, },
       { "ALLEGRO_TRANSFORM", { "allegro5/allegro.h" }, },
       { "al_color_html", { "allegro5/allegro_color.h" }, },
