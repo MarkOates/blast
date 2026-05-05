@@ -534,6 +534,7 @@ int main(int argc, char* argv[])
       { "./tests/fixtures/saves", "./bin/data/saves" },
       { "./tests/fixtures/text", "./bin/data/text" },
       { "./tests/fixtures/dialogs", "./bin/data/dialogs" },
+      { "./tests/fixtures/datasets", "./bin/data/datasets" },
 
       // TODO: Make these lines work
       { "./tests/fixtures/samples/music_tracks", "./bin/data/samples/music_tracks" },
