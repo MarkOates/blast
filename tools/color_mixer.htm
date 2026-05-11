@@ -233,6 +233,12 @@
             font-family: monospace;
         }
 
+        .float-display {
+            font-size: 14px;
+            font-family: monospace;
+            margin-top: 10px;
+        }
+
         /* Drag handles (simplified as buttons for now as per "menu on the left") */
         .reorder-btns {
             display: flex;
@@ -399,6 +405,7 @@
         <div id="preview-info">
             <div class="hex-display" id="mixed-hex">#000000</div>
             <div class="rgb-display" id="mixed-rgb">rgb(0, 0, 0)</div>
+            <div class="float-display" id="mixed-float">{ 0.00f, 0.00f, 0.00f, 1.0f }</div>
         </div>
     </div>
 </div>
@@ -413,6 +420,7 @@
     const previewEl = document.getElementById('preview');
     const mixedHexEl = document.getElementById('mixed-hex');
     const mixedRgbEl = document.getElementById('mixed-rgb');
+    const mixedFloatEl = document.getElementById('mixed-float');
 
     // Helper to convert any CSS color to RGB array
     function colorToRGB(color) {
@@ -471,10 +479,12 @@
 
         const hex = rgbToHex(finalR, finalG, finalB);
         const rgbStr = `rgb(${finalR}, ${finalG}, ${finalB})`;
+        const floatStr = `{ ${finalR/255}f, ${finalG/255}f, ${finalB/255}f, 1.0f }`;
 
         previewEl.style.backgroundColor = hex;
         mixedHexEl.textContent = hex.toUpperCase();
         mixedRgbEl.textContent = rgbStr;
+        mixedFloatEl.textContent = floatStr;
 
         // Update percentages in UI
         const items = colorListEl.querySelectorAll('.color-item');
