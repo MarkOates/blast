@@ -4133,6 +4133,10 @@ table td
   <td class="method"><b>validate_presence_of_key</b>(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, bool throw_on_error=true)</td>
 </tr>
 <tr>
+  <td class="method">std::pair&lt;bool, std::string&gt;</td>
+  <td class="method"><b>validate_presence_of_only_one_of_mulitple_possible_keys</b>(YAML::Node node={}, std::vector&lt;std::string&gt; keys={&quot;[unset-keys]&quot;}, bool throw_on_error=true)</td>
+</tr>
+<tr>
   <td class="method">bool</td>
   <td class="method"><b>validate_node_type</b>(YAML::Node node={}, std::string key=&quot;[unset-key]&quot;, YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=true)</td>
 </tr>

@@ -79,3 +79,58 @@ TEST(Blast_YAMLValidatorTest,
 }
 
 
+// Gemini:
+
+
+TEST(Blast_YAMLValidatorTest, 
+   validate_presence_of_only_one_of_mulitple_possible_keys__with_exactly_one_key_present__will_return_true_with_the_found_key)
+{
+   YAML::Node node = YAML::Load("name: 'Hubert'\nage: 42\ncolor: 'blue'");
+   std::vector<std::string> keys_to_check = { "location", "age", "height" };
+
+   std::pair<bool, std::string> expected_result = { true, "age" };
+   std::pair<bool, std::string> actual_result = 
+      Blast::YAMLValidator::validate_presence_of_only_one_of_mulitple_possible_keys(node, keys_to_check);
+
+   EXPECT_EQ(expected_result, actual_result);
+}
+
+
+TEST(Blast_YAMLValidatorTest, 
+   validate_presence_of_only_one_of_mulitple_possible_keys__with_no_keys_present__returns_false)
+{
+   YAML::Node node = YAML::Load("name: 'Hubert'\ncolor: 'blue'");
+   std::vector<std::string> keys_to_check = { "location", "height" };
+
+   // We set throw_on_error to false so it returns the pair instead of throwing
+   std::pair<bool, std::string> actual_result = 
+      Blast::YAMLValidator::validate_presence_of_only_one_of_mulitple_possible_keys(node, keys_to_check, false);
+
+   EXPECT_FALSE(actual_result.first);
+}
+
+
+TEST(Blast_YAMLValidatorTest, 
+   validate_presence_of_only_one_of_mulitple_possible_keys__with_more_than_one_key_present__returns_false)
+{
+   YAML::Node node = YAML::Load("name: 'Hubert'\nage: 42\nheight: 180");
+   std::vector<std::string> keys_to_check = { "name", "age", "height" };
+
+   std::pair<bool, std::string> actual_result = 
+      Blast::YAMLValidator::validate_presence_of_only_one_of_mulitple_possible_keys(node, keys_to_check, false);
+
+   EXPECT_FALSE(actual_result.first);
+}
+
+
+TEST(Blast_YAMLValidatorTest, 
+   validate_presence_of_only_one_of_mulitple_possible_keys__when_throw_on_error_is_true__and_keys_are_not_valid__throws_an_exception)
+{
+   YAML::Node node = YAML::Load("name: 'Hubert'\nage: 42");
+   std::vector<std::string> keys_to_check = { "name", "age" }; // Two keys present, should trigger error
+
+   EXPECT_THROW({
+      Blast::YAMLValidator::validate_presence_of_only_one_of_mulitple_possible_keys(node, keys_to_check, true);
+   }, std::runtime_error);
+}
+

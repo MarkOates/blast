@@ -39,6 +39,33 @@ bool YAMLValidator::validate_presence_of_key(YAML::Node node, std::string key, b
    return false;
 }
 
+std::pair<bool, std::string> YAMLValidator::validate_presence_of_only_one_of_mulitple_possible_keys(YAML::Node node, std::vector<std::string> keys, bool throw_on_error)
+{
+   // TODO: test this function
+   std::vector<std::string> keys_found;
+   for (auto &key : keys)
+   {
+      if (node[key]) keys_found.push_back(key);
+   }
+
+   if (keys_found.size() != 1)
+   {
+      if (throw_on_error)
+      {
+         std::stringstream error_message;
+         error_message << "[Blast::YAMLValidator::validate_presence_of_only_one_of_mulitple_possible_keys]: error: "
+                       << "Expecting to find node with only one of possible keys ";
+         for (auto &key : keys) error_message << "\"" << key << "\", ";
+         error_message << "but \"" << keys_found.size() << "\" were present.";
+         throw std::runtime_error(error_message.str());
+      }
+
+      return { false, {} };
+   }
+
+   return { true, keys_found[0] };
+}
+
 bool YAMLValidator::validate_node_type(YAML::Node node, std::string key, YAML::NodeType::value expected_type, bool throw_on_error)
 {
    if (node[key].Type() == expected_type) return true;

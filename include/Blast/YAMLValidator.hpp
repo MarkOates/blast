@@ -2,6 +2,7 @@
 
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <yaml-cpp/yaml.h>
 
@@ -20,6 +21,7 @@ namespace Blast
       ~YAMLValidator();
 
       static bool validate_presence_of_key(YAML::Node node={}, std::string key="[unset-key]", bool throw_on_error=true);
+      static std::pair<bool, std::string> validate_presence_of_only_one_of_mulitple_possible_keys(YAML::Node node={}, std::vector<std::string> keys={"[unset-keys]"}, bool throw_on_error=true);
       static bool validate_node_type(YAML::Node node={}, std::string key="[unset-key]", YAML::NodeType::value expected_type=YAML::NodeType::Undefined, bool throw_on_error=true);
       static bool validate_node_type_is_any_of(YAML::Node node={}, std::string key="[unset-key]", std::vector<YAML::NodeType::value> expected_types={}, bool throw_on_error=true);
       static bool validate_node_has_unsigned_int_value(YAML::Node node={}, std::string key="[unset-key]");
