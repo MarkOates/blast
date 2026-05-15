@@ -34,7 +34,7 @@ TEST([[COMPONENT_TEST_DESCRIPTION_NAME]],
    //nlohmann::json parsed_json = nlohmann::json::parse(json);
    //parsed_json.get_to([[COMPONENT_BASENAME_SNAKE_CASE]]);
 
-   //[[COMPONENT_CLASS_NAME]] expected(1.5);
+   //[[JSON_LOADER_OPERAND_CLASS_NAME]] expected(1.5);
 
    //// TODO: add comparison
    //EXPECT_EQ(expected, [[COMPONENT_BASENAME_SNAKE_CASE]]);

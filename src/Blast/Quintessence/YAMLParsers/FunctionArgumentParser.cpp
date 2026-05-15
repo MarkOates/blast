@@ -47,6 +47,7 @@ Blast::Cpp::FunctionArgument FunctionArgumentParser::parse()
    const std::string TYPE = "type";
    const std::string NAME = "name";
    const std::string DEFAULT_ARGUMENT = "default_argument";
+   // NOTE: To add "default" key, also consider using "validate_presence_of_only_one_of_mulitple_possible_keys"
 
    validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.");
 
