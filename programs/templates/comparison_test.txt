@@ -5,26 +5,26 @@
 
 
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]],
-   PrintTo__with_an_AllegroFlare_[[COMPONENT_NAME_LAST_FRAGMENT]]__will_output_as_expected)
+   PrintTo__with_a_[[COMPONENT_NAME_LAST_FRAGMENT]]__will_output_as_expected)
 {
-   std::stringstream ss;
-   AllegroFlare::Vec2D object = {0.1, 0.2};
+   //std::stringstream ss;
+   //[[COMPARISON_OPERAND_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::[[COMPONENT_NAME_LAST_FRAGMENT]] object;
 
-   PrintTo(object, &ss);
+   //PrintTo(object, &ss);
 
-   std::string expected_output = "[[COMPONENT_NAME_LAST_TWO_FRAGMENTS]](0.1, 0.2)";
-   std::string actual_output = ss.str();
-   EXPECT_EQ(expected_output, actual_output);
+   //std::string expected_output = "[[COMPONENT_NAME_LAST_TWO_FRAGMENTS]](0.1, 0.2)";
+   //std::string actual_output = ss.str();
+   //EXPECT_EQ(expected_output, actual_output);
 }
 
 
 TEST([[COMPONENT_TEST_DESCRIPTION_NAME]],
    equality_operator__works_with_google_test_EXPECT_statement)
 {
-   AllegroFlare::Vec2D object;
-   AllegroFlare::Vec2D other_object;
+   //[[COMPARISON_OPERAND_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::[[COMPONENT_NAME_LAST_FRAGMENT]] object;
+   //[[COMPARISON_OPERAND_CLASS_NAME_UP_TO_LAST_FRAGMENT]]::[[COMPONENT_NAME_LAST_FRAGMENT]] other_object;
 
-   EXPECT_EQ(object, other_object);
+   //EXPECT_EQ(object, other_object);
 }
 
 

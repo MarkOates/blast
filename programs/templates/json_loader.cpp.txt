@@ -7,16 +7,16 @@ namespace [[JSON_LOADER_OPERAND_CLASS_NAME_UP_TO_LAST_FRAGMENT]]
 {
 
 
-void to_json(nlohmann::json& j, const [[JSON_LOADER_OPERAND_CLASS_NAME_LAST_FRAGMENT]]& v)
+void to_json(nlohmann::json& j, const [[JSON_LOADER_OPERAND_CLASS_NAME_LAST_FRAGMENT]]& object)
 {
    j = nlohmann::json{
-      //{ "position", v.get_position() },
+      //{ "position", object.get_position() },
    };
 }
 
-void from_json(const nlohmann::json& j, [[JSON_LOADER_OPERAND_CLASS_NAME_LAST_FRAGMENT]]& v)
+void from_json(const nlohmann::json& j, [[JSON_LOADER_OPERAND_CLASS_NAME_LAST_FRAGMENT]]& object)
 {
-   //j.at("position").get_to(v.get_position_ref());
+   //j.at("position").get_to(object.get_position_ref());
 }
 
 

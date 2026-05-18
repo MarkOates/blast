@@ -17,7 +17,9 @@ bool operator==(const [[COMPONENT_NAME_LAST_FRAGMENT]]& object, const [[COMPONEN
 
 void PrintTo(const [[COMPONENT_NAME_LAST_FRAGMENT]]& object, ::std::ostream* os)
 {
-   //*os << "[[COMPONENT_NAME_LAST_TWO_FRAGMENTS]](" << object.x << ", " << object.y << ")";
+   *os << "[[COMPONENT_NAME_LAST_TWO_FRAGMENTS]]("
+       //<< "saturation_multiplier: \"" << object.saturation_multiplier << "\", "
+       << ")";
 }
 
 
