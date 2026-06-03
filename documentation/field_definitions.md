@@ -17,12 +17,12 @@ hash
 
 
 
-## `members`
+## `properties`
 
 #### type: Array of Hashes
 #### default: `[]`
 
-The `members` field represents the members of the class - variables, constants.  Two
+The `properties` field represents the members of the class - variables, constants.  Two
 imporant things to know.  First, _all members are not directly accessible in the
 class and are scoped to `private` within the class_.  If you want to make the members
 accessible then you will need to add `getter: true` and/or `setter: true` for them.  Alternatively, for POD (plain-old-data) style classes, you can use the `exposed: true` qualifier on the member, which will make the member public (as well as prevent any getters or setters from being present by blocking compile if they are there). Also, note
