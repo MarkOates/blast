@@ -33,8 +33,10 @@ that all of the member's types (not including some defaults) will need to be def
 | `name` | String | required | The variable name for the member. |
 | `type` | String | required | Datatype for the preopty (something like `std::string`, `void`, `int`, `MyCustomType*`, `std::vector<int>`, etc.).  Note that the datatype will need to be defined in `dependencies`. |
 | `init_with` | String | required | A hard-injected string that is placed as the default value for this member.  If the member is a constructor argument, then the value is assigned as a default argument in the constructor (and thus appears in the header file), otherwise the value is assigned in the initialization list (and thus appears in the source file). |
-| `constructor_arg` | Boolean | `false` | `true` if the member will appear as an argument in the constructor, otherwise `false` |
+| `const` | Boolean | `false` | A value of `true` will make this a `const` variable. |
 | `static` | Boolean | `false` | A value of `true` will mark the member as a `static` member.  It's default value will be assigned in the `.cpp` source file. |
+| `constexpr` | Boolean | `false` | A value of `true` will make this a `constexpr` variable. |
+| `constructor_arg` | Boolean | `false` | `true` if the member will appear as an argument in the constructor, otherwise `false` |
 | `getter` | Boolean | `false` | A value of `true` will auto-generate a `get_*() const` function for this member. The returned value is thus a copy. |
 | `getter_ref` | Boolean | `false` | A value of `true` will auto-generate a `get_*_ref()` function that returns a non-const reference to the value. |
 | `setter` | Boolean | `false` | A value of `true` will auto-generate a `set_*()` function for this member. |
@@ -54,10 +56,13 @@ Defines the independently-implemented methods (not auto-generated) on the class.
 | `name` | String | required | The name of the method. |
 | `type` | String | `void` | the type of the method, (e.g. `std::string`, `void`, `int`, `MyCustomType`, `std::vector<int>`).  Any type declared must be included in the quintessence's `dependencies` field. |
 | `parameters` | Array of Hashes default | `[]` | Array containing definitions for each parameter in the method signature.  See below for more detail. |
-| `body` | String | required | the code body of the method.  No magic happens here, the text you write in this string is simply injected verbatum into the body of the method (though it is indented by 3 spaces, so this could affect heredocs or multiline strings). |
 | `static` | Bool | `false` | If `true`, defines the method as a `static`. |
+| `const` | Boolean | `false` | A value of `true` will make this a const method. |
 | `virtal` | Bool | `false` | If `true`, defines method as a `static`. |
-| `override` | Bool | `false` | If `true`, defines the method as `override`. |
+| `pure_virtal` | Bool | `false` | If `true`, defines method as a pure virtual function, meaning the method is deleted (`virtual void method_name() = 0;`) in the declaration.  Pure virtual methods must also be marked as `virtual: true` as well or they are invalid. |
+| `override` | Bool | `false` | If `true`, defines the method as `override`. Any method that overrides a virtual should be marked as such. |
+| `body` | String | required | the code body of the method.  No magic happens here, the text you write in this string is simply injected verbatum into the body of the method (though it is indented by 3 spaces, so this could affect heredocs or multiline strings). |
+| `body_dependency_symbols` | Array of Strings | `[]` | A list of symbol names used in the `body` of all the defined `method`s.  The symbol names listed will need to be included in the `dependencies` list (unless the `dependencies` have default definitions in that list). |
 
 TODO: Look into the codebase to see if `pure_virtual:` and `const:` are included, which I believe they are.
 
@@ -74,14 +79,6 @@ Parameters defining the elements of a method signature. All parameters are requi
 | `type` | String | required | datatype for the method parameter |
 | `default_argument` | String | required | a default argument be assigned to the value if none is present. |
 | `default_argument_dependency_symbols` | Array of strings | `[]` | Any dependencies that appear in the default argument (and thus need to be known at the level of the header file). |
-
-## `body_dependency_sybols`
-
-#### type: Array of Strings
-#### default: `[]`
-
-A list of symbol names used in the `body` of all the defined `method`s.  The symbol names listed will need to be included in the `dependencies` list (unless the `dependencies` have default definitions in that list.)
-
 
 
 ## `dependencies`
