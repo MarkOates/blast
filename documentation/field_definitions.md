@@ -44,6 +44,37 @@ that all of the member's types (not including some defaults) will need to be def
 
 
 
+## `enums`
+
+#### type: Array of Hashes
+#### default: `[]`
+
+Defines enum classes or regular enums.
+
+| field | type | default | description |
+| --- | --- | --- | --- |
+| `name` | String | | The name of the enum. Cannot be used if `class` is present. |
+| `class` | String | | The name of the enum class. Cannot be used if `name` is present. If used, the enum is defined as an `enum class`. |
+| `scope` | String | `public` | Defines the access scope of the enum (e.g., `public`, `protected`, `private`). |
+| `type` | String | | The underlying type for the enum. Valid values include `int`, `int16_t`, `uint16_t`, `int32_t`, `uint32_t`, `int64_t`, `uint64_t`, or empty (default). |
+| `start_from` | String/Int | `0` | The value to start the first enumerator from. Supports integers and hex strings (e.g., `"0x04"`). |
+| `bitwise` | Boolean | `false` | If `true`, the enumerators are treated as bitwise flags. If `true`, `start_from` must be a power of two. |
+| `enumerators` | Array of Strings | required | A list of the enumerator names. |
+| `to_string` | Boolean/String/Hash | `false` | Configuration for a `to_string` method. |
+| `from_string` | Boolean/String/Hash | `false` | Configuration for a `from_string` method. |
+
+
+## `enums` > `to_string` / `from_string`
+
+The `to_string` and `from_string` fields can be a Boolean (`true` to use defaults), a String (to specify the method name), or a Hash for more control:
+
+| field | type | default | description |
+| --- | --- | --- | --- |
+| `method_name` | String | | The name of the generated method. |
+| `remove_prefix` | String | | A prefix to remove from the enumerator names when converting to/from strings. |
+
+
+
 ## `methods`
 
 #### type: Array of Hashes
