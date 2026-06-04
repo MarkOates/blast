@@ -592,9 +592,14 @@ public:
          YAML::Node scope_node = it->operator[](SCOPE);
          YAML::Node init_with_node = it->operator[](INIT_WITH);
 
-         validate(class_node.IsScalar(), this_component_name, "Unexpected class_node, expected to be of YAML type Scalar.");
-         validate(scope_node.IsScalar(), this_component_name, "Unexpected scope_node, expected to be of YAML type Scalar.");
-         validate(init_with_node.IsScalar(), this_component_name, "Unexpected init_with_node, expected to be of YAML type Scalar.");
+         validate(class_node.IsDefined(), this_component_name, "Missing required key 'class' in parent_classes.");
+         validate(class_node.IsScalar(), this_component_name, "Unexpected type for 'class' in parent_classes, expected to be of YAML type Scalar.");
+
+         validate(scope_node.IsDefined(), this_component_name, "Missing required key 'scope' in parent_classes.");
+         validate(scope_node.IsScalar(), this_component_name, "Unexpected type for 'scope' in parent_classes, expected to be of YAML type Scalar.");
+
+         validate(init_with_node.IsDefined(), this_component_name, "Missing required key 'init_with' in parent_classes.");
+         validate(init_with_node.IsScalar(), this_component_name, "Unexpected type for 'init_with' in parent_classes, expected to be of YAML type Scalar.");
 
          Blast::Cpp::ParentClassProperties parent_class_properties(class_node.as<std::string>(), init_with_node.as<std::string>(), scope_node.as<std::string>());
 
@@ -678,19 +683,9 @@ std::vector<Blast::Cpp::ClassAttributes> extract_attribute_properties(YAML::Node
       YAML::Node type_node = it.operator[](TYPE);
       YAML::Node name_node = it.operator[](NAME);
       YAML::Node init_with_node = it.operator[](INIT_WITH);
-      //YAML::Node constructor_arg_node = it.operator[](CONSTRUCTOR_ARG);
-      //YAML::Node static_node = it.operator[](STATIC);
-      //YAML::Node getter_node = it.operator[](GETTER);
-      //YAML::Node setter_node = it.operator[](SETTER);
 
-      //validate(type_node.IsScalar(), this_func_name, "Unexpected type_node, expected to be of YAML type Scalar.");
-      validate(name_node.IsScalar(), this_func_name, "Unexpected name_node, expected to be of YAML type Scalar.");
-      //validate(init_with_node.IsScalar(), this_func_name, "Unexpected init_with_node, expected to be of YAML type Scalar.");
-      //validate(constructor_arg_node.IsScalar(), this_func_name, "Unexpected constructor_arg_node, expected to be of YAML type Scalar.");
-      //validate(static_node.IsScalar(), this_func_name, "Unexpected static_node, expected to be of YAML type Scalar.");
-      //validate(getter_node.IsScalar(), this_func_name, "Unexpected getter_node, expected to be of YAML type Scalar.");
-      //validate(setter_node.IsScalar(), this_func_name, "Unexpected setter_node, expected to be of YAML type Scalar.");
-
+      validate(name_node.IsDefined(), this_func_name, "Missing required key 'name' in properties.");
+      validate(name_node.IsScalar(), this_func_name, "Unexpected type for 'name' in properties, expected to be of YAML type Scalar.");
       std::string datatype = fetch_string(it, TYPE, "std::string");
       std::string variable_name = name_node.as<std::string>();
       std::string initialization_value = fetch_string(it, INIT_WITH, "\"\"");
@@ -945,10 +940,10 @@ std::vector<ParsedMethodInfo> extract_functions_and_dependency_info(
       }
 
 
-      //validate(type_node.IsScalar(), this_func_name, "Unexpected type for node \"type\", expected to be of YAML type Scalar.");
-      validate(name_node.IsScalar(), this_func_name, "Unexpected type for node \"name\", expected to be of YAML type Scalar.");
+      validate(name_node.IsDefined(), this_func_name, "Missing required key 'name' in methods.");
+      validate(name_node.IsScalar(), this_func_name, "Unexpected type for node 'name' in methods, expected to be of YAML type Scalar.");
       //validate(parameters_node.IsSequence(), this_func_name, "Unexpected parameters_node, expected to be of YAML type Sequence.");
-      validate(body_node.IsScalar(), this_func_name, "Unexpected type for node \"body\", expected to be of YAML type Scalar.");
+      validate(body_node.IsScalar(), this_func_name, "Unexpected type for node 'body' in methods, expected to be of YAML type Scalar.");
       //validate(body_node.IsScalar(), this_func_name, "Unexpected type for node \"dependency_symbols\", expected to be of YAML type Scalar.");
 
       std::string type = fetch_string(it, TYPE, "void");
@@ -1033,14 +1028,14 @@ std::vector<Blast::Cpp::SymbolDependencies> extract_symbol_dependencies(YAML::No
       const std::string INCLUDE_DIRECTORIES = "include_directories";
       const std::string LINKED_LIBRARIES = "linked_libraries";
 
-      validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.");
+      validate(node.IsMap(), this_func_name, "Unexpected sequence element in \"dependencies\", expected to be of a YAML Map.");
       YAML::Node symbol_node = node[SYMBOL];//it->operator[](SYMBOL);
       //YAML::Node headers_node = node[HEADERS];//it->operator[](HEADERS);
       //YAML::Node include_directories_node = it->operator[](INCLUDE_DIRECTORIES);
       //YAML::Node linked_libraries_node = it->operator[](LINKED_LIBRARIES);
 
-      validate(symbol_node.IsScalar(), this_func_name, "Unexpected symbol_node, expected to be of YAML type Scalar.");
-      //validate(headers_node.IsSequence(), this_func_name, "Unexpected headers_node, expected to be of YAML type Sequence.");
+      validate(symbol_node.IsDefined(), this_func_name, "Missing required key 'symbol' in dependencies.");
+      validate(symbol_node.IsScalar(), this_func_name, "Unexpected type for 'symbol' in dependencies, expected to be of YAML type Scalar.");      //validate(headers_node.IsSequence(), this_func_name, "Unexpected headers_node, expected to be of YAML type Sequence.");
       //validate(include_directories_node.IsSequence(), this_func_name, "Unexpected include_directories_node, expected to be of YAML type Sequence.");
 
       YAML::Node headers_node = fetch_node(node, HEADERS, YAML::NodeType::Sequence, YAML::Load("[]"));
