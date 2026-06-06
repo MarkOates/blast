@@ -6,8 +6,7 @@
 #### type: Array of Hashes
 #### default: `[]`
 
-Defines the parent classes that this class inherits from.  Each parent class
-hash
+Defines the parent classes that this class inherits from.
 
 | field | type | default | description |
 | --- | --- | --- | --- |
@@ -32,8 +31,8 @@ that all of the member's types (not including some defaults) will need to be def
 | --- | --- | --- | --- |
 | `name` | String | required | The variable name for the member. |
 | `type` | String | required | Datatype for the preopty (something like `std::string`, `void`, `int`, `MyCustomType*`, `std::vector<int>`, etc.).  Note that the datatype will need to be defined in `dependencies`. |
-| `init_with` | String | required | A hard-injected string that is placed as the default value for this member.  If the member is a constructor argument, then the value is assigned as a default argument in the constructor (and thus appears in the header file), otherwise the value is assigned in the initialization list (and thus appears in the source file). |
 | `const` | Boolean | `false` | A value of `true` will make this a `const` variable. |
+| `init_with` | String | required | A hard-injected string that is placed as the default value for this member.  If the member is a constructor argument, then the value is assigned as a default argument in the constructor (and thus appears in the header file), otherwise the value is assigned in the initialization list (and thus appears in the source file). |
 | `static` | Boolean | `false` | A value of `true` will mark the member as a `static` member.  It's default value will be assigned in the `.cpp` source file. |
 | `constexpr` | Boolean | `false` | A value of `true` will make this a `constexpr` variable. |
 | `constructor_arg` | Boolean | `false` | `true` if the member will appear as an argument in the constructor, otherwise `false` |
@@ -96,7 +95,6 @@ Defines the independently-implemented methods (not auto-generated) on the class.
 | `body` | String | required | the code body of the method.  No magic happens here, the text you write in this string is simply injected verbatum into the body of the method (though it is indented by 3 spaces, so this could affect heredocs or multiline strings). |
 | `body_dependency_symbols` | Array of Strings | `[]` | A list of symbol names used in the `body` of all the defined `method`s.  The symbol names listed will need to be included in the `dependencies` list (unless the `dependencies` have default definitions in that list). |
 
-TODO: Look into the codebase to see if `pure_virtual:` and `const:` are included, which I believe they are.
 
 
 ## `methods` > `parameters`
