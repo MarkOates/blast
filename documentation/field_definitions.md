@@ -92,7 +92,7 @@ Defines the independently-implemented methods (not auto-generated) on the class.
 | `virtal` | Bool | `false` | If `true`, defines method as a `static`. |
 | `pure_virtal` | Bool | `false` | If `true`, defines method as a pure virtual function, meaning the method is deleted (`virtual void method_name() = 0;`) in the declaration.  Pure virtual methods must also be marked as `virtual: true` as well or they are invalid. |
 | `override` | Bool | `false` | If `true`, defines the method as `override`. Any method that overrides a virtual should be marked as such. |
-| `guards` | Array of strings | Individual C++ conditional statements as if placed in an `if (condition)` assert block, and will cause an exception to be thrown on failure at runtime. as `true` or `false`. The logic to evaluate and throw are generated automatically. | 
+| `guards` | Array of strings | `[]` | Individual C++ conditional statements as if placed in an `if (condition)` assert block, and will cause an exception to be thrown on failure at runtime. as `true` or `false`. The logic to evaluate and throw are generated automatically. | 
 | `body` | String | required | the code body of the method.  No magic happens here, the text you write in this string is simply injected verbatum into the body of the method (though it is indented by 3 spaces, so this could affect heredocs or multiline strings). |
 | `body_dependency_symbols` | Array of Strings | `[]` | A list of symbol names used in the `body` of all the defined `method`s.  The symbol names listed will need to be included in the `dependencies` list (unless the `dependencies` have default definitions in that list). |
 
