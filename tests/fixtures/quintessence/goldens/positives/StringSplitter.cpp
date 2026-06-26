@@ -1,14 +1,12 @@
 
 
-#include <quintessences/StringSplitter.hpp>
+#include <StringSplitter.hpp>
 
 #include <sstream>
 #include <string>
 #include <vector>
 
 
-namespace quintessences
-{
 
 
 StringSplitter::StringSplitter(std::string string, char delimiter)
@@ -35,6 +33,5 @@ std::vector<std::string> StringSplitter::split()
 }
 
 
-} // namespace quintessences
 
 

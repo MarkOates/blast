@@ -1,12 +1,10 @@
 
 
-#include <quintessences/EnumObject.hpp>
+#include <EnumObject.hpp>
 
 
 
 
-namespace quintessences
-{
 
 
 EnumObject::EnumObject()
@@ -57,6 +55,5 @@ EnumObject::CustomConversionsEnum EnumObject::foo_from_name(std::string value, b
 
 
 
-} // namespace quintessences
 
 

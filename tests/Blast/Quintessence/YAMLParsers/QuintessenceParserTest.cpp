@@ -99,12 +99,12 @@ protected:
       std::filesystem::path temp_dir = create_sandbox_and_compile_helper();
       ASSERT_FALSE(temp_dir.empty());
 
-      std::filesystem::path sandbox_fixture_dir = temp_dir / "quintessence/quintessences";
-      std::filesystem::create_directories(sandbox_fixture_dir);
-
+      std::filesystem::path sandbox_fixture_dir = temp_dir / "quintessence";
       std::filesystem::path source_fixture = std::filesystem::path(project_root) / 
-         "tests/fixtures/quintessence/quintessences" / (fixture_name + ".q.yml");
+         "tests/fixtures/quintessence/quintessences/positives" / (fixture_name + ".q.yml");
       std::filesystem::path target_fixture = sandbox_fixture_dir / (fixture_name + ".q.yml");
+
+      std::filesystem::create_directories(target_fixture.parent_path());
       ASSERT_TRUE(std::filesystem::exists(source_fixture)) << "Source fixture missing: " << source_fixture.string();
       
       std::filesystem::copy(source_fixture, target_fixture);
@@ -112,7 +112,7 @@ protected:
 
       std::stringstream run_command;
       run_command << "cd " << temp_dir.string()
-                  << " && ./quintessence_from_yaml_for_tests -f quintessence/quintessences/"
+                  << " && ./quintessence_from_yaml_for_tests -f quintessence/"
                   << fixture_name << ".q.yml";
 
       Blast::ShellCommandExecutorWithCallback run_executor(
@@ -121,8 +121,8 @@ protected:
       );
       std::string run_output = run_executor.execute();
 
-      std::filesystem::path generated_header = temp_dir / "include/quintessences" / (fixture_name + ".hpp");
-      std::filesystem::path generated_source = temp_dir / "src/quintessences" / (fixture_name + ".cpp");
+      std::filesystem::path generated_header = temp_dir / "include" / (fixture_name + ".hpp");
+      std::filesystem::path generated_source = temp_dir / "src" / (fixture_name + ".cpp");
 
       EXPECT_TRUE(std::filesystem::exists(generated_header)) 
          << "Header was not generated in sandbox: " << generated_header.string();
@@ -130,9 +130,9 @@ protected:
          << "Source was not generated in sandbox: " << generated_source.string();
 
       std::filesystem::path golden_header = std::filesystem::path(project_root) / 
-         "tests/fixtures/quintessence/goldens" / (fixture_name + ".hpp");
+         "tests/fixtures/quintessence/goldens/positives" / (fixture_name + ".hpp");
       std::filesystem::path golden_source = std::filesystem::path(project_root) / 
-         "tests/fixtures/quintessence/goldens" / (fixture_name + ".cpp");
+         "tests/fixtures/quintessence/goldens/positives" / (fixture_name + ".cpp");
 
       ASSERT_TRUE(std::filesystem::exists(golden_header)) << "Golden header missing: " << golden_header.string();
       ASSERT_TRUE(std::filesystem::exists(golden_source)) << "Golden source missing: " << golden_source.string();
@@ -158,12 +158,12 @@ protected:
       std::filesystem::path temp_dir = create_sandbox_and_compile_helper();
       ASSERT_FALSE(temp_dir.empty());
 
-      std::filesystem::path sandbox_fixture_dir = temp_dir / "quintessence/quintessences/negative";
-      std::filesystem::create_directories(sandbox_fixture_dir);
-
+      std::filesystem::path sandbox_fixture_dir = temp_dir / "quintessence";
       std::filesystem::path source_fixture = std::filesystem::path(project_root) / 
          "tests/fixtures/quintessence/quintessences/negative" / (fixture_name + ".q.yml");
       std::filesystem::path target_fixture = sandbox_fixture_dir / (fixture_name + ".q.yml");
+
+      std::filesystem::create_directories(target_fixture.parent_path());
       ASSERT_TRUE(std::filesystem::exists(source_fixture)) << "Source fixture missing: " << source_fixture.string();
       
       std::filesystem::copy(source_fixture, target_fixture);
@@ -171,7 +171,7 @@ protected:
 
       std::stringstream run_command;
       run_command << "cd " << temp_dir.string()
-                  << " && ./quintessence_from_yaml_for_tests -f quintessence/quintessences/negative/"
+                  << " && ./quintessence_from_yaml_for_tests -f quintessence/"
                   << fixture_name << ".q.yml";
 
       Blast::ShellCommandExecutorWithCallback run_executor(
@@ -189,8 +189,8 @@ protected:
          << "Expected error message was not found in output!\n"
          << "Actual output: \n" << run_output;
 
-      std::filesystem::path generated_header = temp_dir / "include/quintessences" / (fixture_name + ".hpp");
-      std::filesystem::path generated_source = temp_dir / "src/quintessences" / (fixture_name + ".cpp");
+      std::filesystem::path generated_header = temp_dir / "include" / (fixture_name + ".hpp");
+      std::filesystem::path generated_source = temp_dir / "src" / (fixture_name + ".cpp");
       EXPECT_FALSE(std::filesystem::exists(generated_header)) 
          << "Header was unexpectedly generated: " << generated_header.string();
       EXPECT_FALSE(std::filesystem::exists(generated_source)) 
@@ -248,6 +248,21 @@ TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 {
    run_integration_test("MethodsObject");
 }
+
+
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__runs_successfully_on_nested_ComponentX_fixture)
+{
+   run_integration_test("FoobarBoobaz/ComponentX");
+}
+
+
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__runs_successfully_on_deeply_nested_ComponentY_fixture)
+{
+   run_integration_test("Foo/Bar/Baz/ComponentY");
+}
+
 
 
 TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,

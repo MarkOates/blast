@@ -1,12 +1,10 @@
 
 
-#include <quintessences/InheritanceObject.hpp>
+#include <InheritanceObject.hpp>
 
 
 
 
-namespace quintessences
-{
 
 
 InheritanceObject::InheritanceObject()
@@ -24,6 +22,5 @@ InheritanceObject::~InheritanceObject()
 
 
 
-} // namespace quintessences
 
 

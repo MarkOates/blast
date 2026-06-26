@@ -1,6 +1,6 @@
 
 
-#include <quintessences/MethodsObject.hpp>
+#include <MethodsObject.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -8,8 +8,6 @@
 #include <string>
 
 
-namespace quintessences
-{
 
 
 MethodsObject::MethodsObject()
@@ -51,21 +49,20 @@ bool MethodsObject::guarded_func(int* value, int threshold)
    if (!(value != nullptr))
    {
       std::stringstream error_message;
-      error_message << "[quintessences::MethodsObject::guarded_func]: error: guard \"value != nullptr\" not met.";
+      error_message << "[MethodsObject::guarded_func]: error: guard \"value != nullptr\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("[quintessences::MethodsObject::guarded_func]: error: guard \"value != nullptr\" not met");
+      throw std::runtime_error("[MethodsObject::guarded_func]: error: guard \"value != nullptr\" not met");
    }
    if (!(threshold > 0))
    {
       std::stringstream error_message;
-      error_message << "[quintessences::MethodsObject::guarded_func]: error: guard \"threshold > 0\" not met.";
+      error_message << "[MethodsObject::guarded_func]: error: guard \"threshold > 0\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("[quintessences::MethodsObject::guarded_func]: error: guard \"threshold > 0\" not met");
+      throw std::runtime_error("[MethodsObject::guarded_func]: error: guard \"threshold > 0\" not met");
    }
    return (*value) > threshold;
 }
 
 
-} // namespace quintessences
 
 

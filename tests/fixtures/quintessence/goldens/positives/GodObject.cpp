@@ -1,14 +1,12 @@
 
 
-#include <quintessences/GodObject.hpp>
+#include <GodObject.hpp>
 
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
 
 
-namespace quintessences
-{
 
 
 GodObject::GodObject(int my_int)
@@ -60,9 +58,9 @@ void GodObject::perform_action(int value)
    if (!(value >= 0))
    {
       std::stringstream error_message;
-      error_message << "[quintessences::GodObject::perform_action]: error: guard \"value >= 0\" not met.";
+      error_message << "[GodObject::perform_action]: error: guard \"value >= 0\" not met.";
       std::cerr << "\033[1;31m" << error_message.str() << " An exception will be thrown to halt the program.\033[0m" << std::endl;
-      throw std::runtime_error("[quintessences::GodObject::perform_action]: error: guard \"value >= 0\" not met");
+      throw std::runtime_error("[GodObject::perform_action]: error: guard \"value >= 0\" not met");
    }
    // perform action here
    return;
@@ -74,6 +72,5 @@ std::string& GodObject::get_exposed_string_ref() const
 }
 
 
-} // namespace quintessences
 
 
