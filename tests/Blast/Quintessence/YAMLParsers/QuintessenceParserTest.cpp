@@ -11,8 +11,16 @@
 #include <algorithm>
 
 
-namespace
+class Blast_Quintessence_YAMLParsers_QuintessenceParserTest : public ::testing::Test
 {
+protected:
+   std::string project_root;
+
+   void SetUp() override
+   {
+      project_root = Blast::DeveloperSystem().infer_projects_directory() + "blast";
+   }
+
    std::string normalize_line_endings(std::string str)
    {
       str.erase(std::remove(str.begin(), str.end(), '\r'), str.end());
@@ -21,47 +29,52 @@ namespace
 
    std::string get_next_sandbox_dir()
    {
+      static int current_max_num = -1;
       std::filesystem::path tmp_dir = Blast::DeveloperSystem().infer_projects_directory() + "blast/tmp";
       std::filesystem::create_directories(tmp_dir);
-      int max_num = 0;
-      for (const auto& entry : std::filesystem::directory_iterator(tmp_dir))
+      
+      if (current_max_num == -1)
       {
-         if (entry.is_directory())
+         int max_num = 0;
+         for (const auto& entry : std::filesystem::directory_iterator(tmp_dir))
          {
-            std::string dir_name = entry.path().filename().string();
-            if (dir_name.rfind("sandbox_", 0) == 0 && dir_name.length() == 13) // "sandbox_" + 5 digits
+            if (entry.is_directory())
             {
-               try
+               std::string dir_name = entry.path().filename().string();
+               if (dir_name.rfind("sandbox_", 0) == 0 && dir_name.length() == 13) // "sandbox_" + 5 digits
                {
-                  int num = std::stoi(dir_name.substr(8));
-                  if (num > max_num) max_num = num;
+                  try
+                  {
+                     int num = std::stoi(dir_name.substr(8));
+                     if (num > max_num) max_num = num;
+                  }
+                  catch (...) {}
                }
-               catch (...) {}
             }
          }
+         current_max_num = max_num;
       }
-      int next_num = max_num + 1;
+
+      current_max_num++;
       std::stringstream ss;
-      ss << "sandbox_" << std::setw(5) << std::setfill('0') << next_num;
+      ss << "sandbox_" << std::setw(5) << std::setfill('0') << current_max_num;
       return (tmp_dir / ss.str()).string();
    }
 
-   void run_integration_test(const std::string &fixture_name)
+   std::filesystem::path create_sandbox_and_compile_helper()
    {
-      std::string project_root = Blast::DeveloperSystem().infer_projects_directory() + "blast";
-
-      // 1. Determine and create the unique temporary sandbox directory under project-local tmp/
       std::filesystem::path temp_dir = get_next_sandbox_dir();
       std::filesystem::create_directories(temp_dir);
 
-      // Ensure the temp directory exists or FAIL immediately
       bool temp_dir_exists = std::filesystem::exists(temp_dir) && std::filesystem::is_directory(temp_dir);
-      ASSERT_TRUE(temp_dir_exists) << "Failed to create temporary directory: " << temp_dir.string();
+      if (!temp_dir_exists)
+      {
+         ADD_FAILURE() << "Failed to create temporary directory: " << temp_dir.string();
+         return "";
+      }
 
-      // Print debugging info about the sandbox
       std::cout << "[SANDBOX] Created dynamic directory: " << temp_dir.string() << std::endl;
 
-      // 2. Compile the test helper program using the real Makefile directly into the sandbox
       std::filesystem::path test_binary = temp_dir / "quintessence_from_yaml_for_tests";
       std::stringstream compile_cmd;
       compile_cmd << "make -C " << project_root << " " << test_binary.string() 
@@ -72,14 +85,23 @@ namespace
          Blast::ShellCommandExecutorWithCallback::simple_silent_callback
       );
       std::string compile_output = compile_executor.execute();
-      ASSERT_TRUE(std::filesystem::exists(test_binary)) 
-         << "Failed to compile test helper binary! Output:\n" << compile_output;
+      if (!std::filesystem::exists(test_binary))
+      {
+         ADD_FAILURE() << "Failed to compile test helper binary! Output:\n" << compile_output;
+         return "";
+      }
 
-      // 3. Create 'quintessence/quintessences' folders inside the sandbox
+      return temp_dir;
+   }
+
+   void run_integration_test(const std::string &fixture_name)
+   {
+      std::filesystem::path temp_dir = create_sandbox_and_compile_helper();
+      ASSERT_FALSE(temp_dir.empty());
+
       std::filesystem::path sandbox_fixture_dir = temp_dir / "quintessence/quintessences";
       std::filesystem::create_directories(sandbox_fixture_dir);
 
-      // 4. Copy the baseline fixture file into the sandbox
       std::filesystem::path source_fixture = std::filesystem::path(project_root) / 
          "tests/fixtures/quintessence/quintessences" / (fixture_name + ".q.yml");
       std::filesystem::path target_fixture = sandbox_fixture_dir / (fixture_name + ".q.yml");
@@ -88,7 +110,6 @@ namespace
       std::filesystem::copy(source_fixture, target_fixture);
       ASSERT_TRUE(std::filesystem::exists(target_fixture)) << "Failed to copy fixture: " << target_fixture.string();
 
-      // 5. Execute our sandboxed binary inside the sandbox using a shell command chain
       std::stringstream run_command;
       run_command << "cd " << temp_dir.string()
                   << " && ./quintessence_from_yaml_for_tests -f quintessence/quintessences/"
@@ -100,7 +121,6 @@ namespace
       );
       std::string run_output = run_executor.execute();
 
-      // 6. Verify outputs exist in sandbox
       std::filesystem::path generated_header = temp_dir / "include/quintessences" / (fixture_name + ".hpp");
       std::filesystem::path generated_source = temp_dir / "src/quintessences" / (fixture_name + ".cpp");
 
@@ -109,7 +129,6 @@ namespace
       EXPECT_TRUE(std::filesystem::exists(generated_source)) 
          << "Source was not generated in sandbox: " << generated_source.string();
 
-      // 7. Verify sandbox content matches goldens
       std::filesystem::path golden_header = std::filesystem::path(project_root) / 
          "tests/fixtures/quintessence/goldens" / (fixture_name + ".hpp");
       std::filesystem::path golden_source = std::filesystem::path(project_root) / 
@@ -136,38 +155,12 @@ namespace
 
    void run_negative_integration_test(const std::string &fixture_name, const std::string &expected_error_message)
    {
-      std::string project_root = Blast::DeveloperSystem().infer_projects_directory() + "blast";
+      std::filesystem::path temp_dir = create_sandbox_and_compile_helper();
+      ASSERT_FALSE(temp_dir.empty());
 
-      // 1. Determine and create the unique temporary sandbox directory under project-local tmp/
-      std::filesystem::path temp_dir = get_next_sandbox_dir();
-      std::filesystem::create_directories(temp_dir);
-
-      // Ensure the temp directory exists or FAIL immediately
-      bool temp_dir_exists = std::filesystem::exists(temp_dir) && std::filesystem::is_directory(temp_dir);
-      ASSERT_TRUE(temp_dir_exists) << "Failed to create temporary directory: " << temp_dir.string();
-
-      // Print debugging info about the sandbox
-      std::cout << "[SANDBOX] Created dynamic directory: " << temp_dir.string() << std::endl;
-
-      // 2. Compile the test helper program using the real Makefile directly into the sandbox
-      std::filesystem::path test_binary = temp_dir / "quintessence_from_yaml_for_tests";
-      std::stringstream compile_cmd;
-      compile_cmd << "make -C " << project_root << " " << test_binary.string() 
-                  << " TEST_BINARY_OUTPUT_PATH=" << test_binary.string();
-
-      Blast::ShellCommandExecutorWithCallback compile_executor(
-         compile_cmd.str(), 
-         Blast::ShellCommandExecutorWithCallback::simple_silent_callback
-      );
-      std::string compile_output = compile_executor.execute();
-      ASSERT_TRUE(std::filesystem::exists(test_binary)) 
-         << "Failed to compile test helper binary! Output:\n" << compile_output;
-
-      // 3. Create 'quintessence/quintessences/negative' folders inside the sandbox
       std::filesystem::path sandbox_fixture_dir = temp_dir / "quintessence/quintessences/negative";
       std::filesystem::create_directories(sandbox_fixture_dir);
 
-      // 4. Copy the baseline fixture file into the sandbox
       std::filesystem::path source_fixture = std::filesystem::path(project_root) / 
          "tests/fixtures/quintessence/quintessences/negative" / (fixture_name + ".q.yml");
       std::filesystem::path target_fixture = sandbox_fixture_dir / (fixture_name + ".q.yml");
@@ -176,7 +169,6 @@ namespace
       std::filesystem::copy(source_fixture, target_fixture);
       ASSERT_TRUE(std::filesystem::exists(target_fixture)) << "Failed to copy fixture: " << target_fixture.string();
 
-      // 5. Execute our sandboxed binary inside the sandbox using a shell command chain
       std::stringstream run_command;
       run_command << "cd " << temp_dir.string()
                   << " && ./quintessence_from_yaml_for_tests -f quintessence/quintessences/negative/"
@@ -189,17 +181,14 @@ namespace
       );
       std::string run_output = run_executor.execute();
 
-      // 6. Verify that the command FAILED (returned non-zero exit status)
       EXPECT_FALSE(run_executor.get_executed_successfully()) 
          << "Expected execution to fail, but it succeeded for: " << fixture_name;
 
-      // 7. Verify the output contains the expected error message
       std::string normalized_output = normalize_line_endings(run_output);
       EXPECT_THAT(normalized_output, ::testing::HasSubstr(expected_error_message)) 
          << "Expected error message was not found in output!\n"
-         << "Actual output:\n" << run_output;
+         << "Actual output: \n" << run_output;
 
-      // 8. Verify no output header or source files were generated
       std::filesystem::path generated_header = temp_dir / "include/quintessences" / (fixture_name + ".hpp");
       std::filesystem::path generated_source = temp_dir / "src/quintessences" / (fixture_name + ".cpp");
       EXPECT_FALSE(std::filesystem::exists(generated_header)) 
@@ -207,19 +196,18 @@ namespace
       EXPECT_FALSE(std::filesystem::exists(generated_source)) 
          << "Source was unexpectedly generated: " << generated_source.string();
 
-      // Cleanup
       std::filesystem::remove_all(temp_dir);
    }
-}
+};
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest, can_be_created_without_blowing_up)
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest, can_be_created_without_blowing_up)
 {
    Blast::Quintessence::YAMLParsers::QuintessenceParser quintessence_parser;
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest, parse__returns_a_default_class_instance_for_now)
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest, parse__returns_a_default_class_instance_for_now)
 {
    Blast::Quintessence::YAMLParsers::QuintessenceParser quintessence_parser;
    Blast::Cpp::Class parsed_class = quintessence_parser.parse();
@@ -227,49 +215,49 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest, parse__returns_a_def
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__runs_successfully_on_StringSplitter_fixture)
 {
    run_integration_test("StringSplitter");
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__runs_successfully_on_GodObject_fixture)
 {
    run_integration_test("GodObject");
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__runs_successfully_on_EnumObject_fixture)
 {
    run_integration_test("EnumObject");
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__runs_successfully_on_InheritanceObject_fixture)
 {
    run_integration_test("InheritanceObject");
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__runs_successfully_on_MethodsObject_fixture)
 {
    run_integration_test("MethodsObject");
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_InvalidYaml_fixture)
 {
    run_negative_integration_test("InvalidYaml", "ERROR: YAML Parse Failure");
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MissingMethodBody_fixture)
 {
    std::string expected_err = "[extract_function_body_dependency_symbols] parse failure: For this element";
@@ -277,7 +265,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_InvalidGetter_fixture)
 {
    std::string expected_err = "Attribute property \"getter\" can only be one of";
@@ -285,7 +273,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MissingExplicitGetterMethod_fixture)
 {
    std::string expected_err = "explicit getters have been set on some properties, yet the expected function";
@@ -293,7 +281,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MissingDependency_fixture)
 {
    std::string expected_err = "error: Could not find [ MissingType] dependency(s)";
@@ -301,7 +289,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MultipleDestructors_fixture)
 {
    std::string expected_err = "More than one destructor (function prefixed with '~') is present.";
@@ -309,7 +297,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_UnexpectedTypeNode_fixture)
 {
    std::string expected_err = "Unexpected type_node, expected to be of YAML type Scalar.";
@@ -317,7 +305,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_UnexpectedNameNode_fixture)
 {
    std::string expected_err = "Unexpected name_node, expected to be of YAML type Scalar.";
@@ -325,7 +313,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_UnexpectedDefaultArgumentNode_fixture)
 {
    std::string expected_err = "Unexpected default_argument_node, expected to be of YAML type Scalar.";
@@ -333,7 +321,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_UnexpectedParameterSequenceElement_fixture)
 {
    std::string expected_err = "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.";
@@ -341,7 +329,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ParentClassesNotSequence_fixture)
 {
    std::string expected_err = "unexpected type expecting YAML:: 3";
@@ -349,7 +337,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ParentClassesSequenceElementNotMap_fixture)
 {
    std::string expected_err = "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.";
@@ -357,7 +345,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ParentClassesMissingClass_fixture)
 {
    std::string expected_err = "Missing required key 'class' in parent_classes.";
@@ -365,7 +353,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ParentClassesClassNotScalar_fixture)
 {
    std::string expected_err = "Unexpected type for 'class' in parent_classes, expected to be of YAML type Scalar.";
@@ -373,7 +361,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ParentClassesMissingScope_fixture)
 {
    std::string expected_err = "Missing required key 'scope' in parent_classes.";
@@ -381,7 +369,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ParentClassesScopeNotScalar_fixture)
 {
    std::string expected_err = "Unexpected type for 'scope' in parent_classes, expected to be of YAML type Scalar.";
@@ -389,7 +377,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ParentClassesMissingInitWith_fixture)
 {
    std::string expected_err = "Missing required key 'init_with' in parent_classes.";
@@ -397,7 +385,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ParentClassesInitWithNotScalar_fixture)
 {
    std::string expected_err = "Unexpected type for 'init_with' in parent_classes, expected to be of YAML type Scalar.";
@@ -405,7 +393,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_PropertiesNotSequence_fixture)
 {
    std::string expected_err = "unexpected type expecting YAML:: 3";
@@ -413,7 +401,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_PropertiesSequenceElementNotMap_fixture)
 {
    std::string expected_err = "Unexpected sequence element in \"properties\", expected to be of a YAML Map.";
@@ -421,7 +409,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_PropertiesMissingName_fixture)
 {
    std::string expected_err = "Missing required key 'name' in properties.";
@@ -429,7 +417,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_PropertiesNameNotScalar_fixture)
 {
    std::string expected_err = "Unexpected type for 'name' in properties, expected to be of YAML type Scalar.";
@@ -437,7 +425,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ConstexprWithSetter_fixture)
 {
    std::string expected_err = "Attribute property \"constexpr\" can not also exist when \"setter\"";
@@ -445,7 +433,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ConstexprNotStatic_fixture)
 {
    std::string expected_err = "Attribute property \"constexpr\" must also be \"static\".";
@@ -453,7 +441,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ConstexprWithConstructorArg_fixture)
 {
    std::string expected_err = "Attribute property \"constexpr\" can not be included with \"constructor_arg\".";
@@ -461,7 +449,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ConstexprWithGetterRef_fixture)
 {
    std::string expected_err = "Attribute property \"constexpr\" can not be combined with \"getter_ref\".";
@@ -469,7 +457,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ConstexprWithGetter_fixture)
 {
    std::string expected_err = "Attribute property \"constexpr\" can not be combined with \"getter\".";
@@ -477,7 +465,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_GetterAndExplicitGetter_fixture)
 {
    std::string expected_err = "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".";
@@ -485,7 +473,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_SetterAndExplicitSetter_fixture)
 {
    std::string expected_err = "Attribute property cannot have both \"setter: true\" and \"explicit_setter: true\".";
@@ -493,7 +481,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_ExposedWithGetter_fixture)
 {
    std::string expected_err = "Property attribute \"exposed\" can only be used when";
@@ -501,7 +489,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MethodParametersNotSequence_fixture)
 {
    std::string expected_err = "unexpected type expecting YAML:: 3";
@@ -509,7 +497,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MethodsSequenceElementNotMap_fixture)
 {
    std::string expected_err = "Unexpected sequence element in \"functions\", expected to be of a YAML Map.";
@@ -517,7 +505,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MethodsMissingName_fixture)
 {
    std::string expected_err = "Missing required key 'name' in methods.";
@@ -525,7 +513,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MethodsNameNotScalar_fixture)
 {
    std::string expected_err = "Unexpected type for node 'name' in methods, expected to be of YAML type Scalar.";
@@ -533,7 +521,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MethodsBodyNotScalar_fixture)
 {
    std::string expected_err = "Unexpected type for node 'body' in methods, expected to be of YAML type Scalar.";
@@ -541,7 +529,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_MethodPrivateAndProtected_fixture)
 {
    std::string expected_err = "Function properties \"private\" and \"protected\" cannot both be true.";
@@ -549,7 +537,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_DependenciesSequenceElementNotMap_fixture)
 {
    std::string expected_err = "Unexpected sequence element in \"dependencies\", expected to be of a YAML Map.";
@@ -557,7 +545,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_DependenciesMissingSymbol_fixture)
 {
    std::string expected_err = "Missing required key 'symbol' in dependencies.";
@@ -565,7 +553,7 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 }
 
 
-TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_DependenciesSymbolNotScalar_fixture)
 {
    std::string expected_err = "Unexpected type for 'symbol' in dependencies, expected to be of YAML type Scalar.";
