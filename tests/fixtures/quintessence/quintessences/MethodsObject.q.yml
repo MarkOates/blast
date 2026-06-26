@@ -1,0 +1,58 @@
+properties:
+  - name: dummy_prop
+    type: int
+    init_with: 0
+methods:
+  - name: '~MethodsObject'
+    type: void
+    body: |
+      // Custom destructor logic here
+      dummy_prop = -1;
+  - name: static_func
+    type: float
+    static: true
+    parameters:
+      - name: factor
+        type: float
+        default_argument: 1.0f
+    body: |
+      return factor * 2.0f;
+  - name: const_func
+    type: std::string
+    const: true
+    body: |
+      return "const value";
+    body_dependency_symbols:
+      - std::string
+  - name: virtual_func
+    type: void
+    virtual: true
+    body: |
+      // base virtual func
+  - name: pure_virtual_func
+    type: void
+    virtual: true
+    pure_virtual: true
+    body: ""
+  - name: override_func
+    type: void
+    override: true
+    body: |
+      // overridden func
+  - name: guarded_func
+    type: bool
+    parameters:
+      - name: value
+        type: int*
+        default_argument: nullptr
+      - name: threshold
+        type: int
+        default_argument: 10
+    guards:
+      - value != nullptr
+      - threshold > 0
+    body: |
+      return (*value) > threshold;
+dependencies:
+  - symbol: std::string
+    headers: [ 'string' ]

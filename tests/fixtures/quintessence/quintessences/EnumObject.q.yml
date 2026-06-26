@@ -1,0 +1,41 @@
+enums:
+  - name: BasicEnum
+    enumerators:
+      - VALUE_X
+      - VALUE_Y
+  - class: ClassEnum
+    type: int16_t
+    start_from: 10
+    enumerators:
+      - VAL_A
+      - VAL_B
+      - VAL_C
+  - class: ConversionsEnum
+    scope: public
+    enumerators:
+      - STATE_INIT
+      - STATE_RUNNING
+      - STATE_STOPPED
+    to_string: true
+    from_string: true
+  - class: CustomConversionsEnum
+    scope: protected
+    enumerators:
+      - FOO_ONE
+      - FOO_TWO
+    to_string:
+      method_name: name_of_foo
+      remove_prefix: FOO_
+    from_string:
+      method_name: foo_from_name
+      remove_prefix: FOO_
+  - name: BitwiseFlags
+    bitwise: true
+    start_from: 2
+    enumerators:
+      - FLAG_X
+      - FLAG_Y
+      - FLAG_Z
+dependencies:
+  - symbol: int16_t
+    headers: [ 'cstdint' ]

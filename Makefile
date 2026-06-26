@@ -922,6 +922,15 @@ bin/programs/%: programs/%.cpp $(LIBRARY_NAME)
 	@printf "Program executable at \033[1m\033[32m$@\033[0m compiled successfully.\n"
 
 
+TEST_BINARY_OUTPUT_PATH ?= bin/programs/quintessence_from_yaml_for_tests
+$(TEST_BINARY_OUTPUT_PATH): programs/quintessence_from_yaml.cpp $(LIBRARY_FOR_TESTS_NAME)
+	@mkdir -p $(@D)
+	@printf "Compiling test helper program executable \e[1m\e[36m$@\033[0m\n"
+	$(subst -l$(LIBRARY_FOR_LINKING_NAME),-l$(LIBRARY_FOR_TESTS_FOR_LINKING_NAME),$(BIGLINE))
+	@printf "Test helper program executable at \033[1m\033[32m$@\033[0m compiled successfully.\n"
+
+
+
 
 bin/examples/%: examples/%.cpp $(LIBRARY_NAME)
 	@mkdir -p $(@D)

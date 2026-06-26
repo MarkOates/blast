@@ -1,0 +1,17 @@
+parent_classes:
+  - class: PublicBase
+    scope: public
+    init_with: '"arg1", 42'
+  - class: ProtectedBase
+    scope: protected
+    init_with: '"arg2"'
+  - class: PrivateBase
+    scope: private
+    init_with: ''
+dependencies:
+  - symbol: PublicBase
+    headers: [ 'PublicBase.hpp' ]
+  - symbol: ProtectedBase
+    headers: [ 'ProtectedBase.hpp' ]
+  - symbol: PrivateBase
+    headers: [ 'PrivateBase.hpp' ]

@@ -1,0 +1,67 @@
+parent_classes:
+  - class: BaseClass
+    scope: public
+    init_with: '"base_constructor_arg"'
+properties:
+  - name: my_int
+    type: int
+    init_with: 42
+    constructor_arg: true
+    getter: true
+    setter: true
+  - name: my_static_constexpr
+    type: const char*
+    static: true
+    constexpr: true
+    init_with: '"my_constant"'
+  - name: my_exposed_string
+    type: std::string
+    init_with: '"hello"'
+    exposed: true
+enums:
+  - class: Status
+    type: int32_t
+    start_from: 1
+    enumerators:
+      - ACTIVE
+      - INACTIVE
+      - PENDING
+    to_string:
+      method_name: get_status_string
+      remove_prefix: ""
+    from_string:
+      method_name: status_from_string
+      remove_prefix: ""
+  - name: flags
+    bitwise: true
+    start_from: 1
+    enumerators:
+      - FLAG_A
+      - FLAG_B
+      - FLAG_C
+methods:
+  - name: perform_action
+    type: void
+    parameters:
+      - name: value
+        type: int
+        default_argument: 0
+    guards:
+      - value >= 0
+    body: |
+      // perform action here
+      return;
+    body_dependency_symbols:
+      - std::cout
+  - name: get_exposed_string_ref
+    type: std::string&
+    const: true
+    body: |
+      return my_exposed_string;
+dependencies:
+  - symbol: BaseClass
+    headers: [ 'BaseClass.hpp' ]
+  - symbol: std::string
+    headers: [ 'string' ]
+  - symbol: std::cout
+    headers: [ 'iostream' ]
