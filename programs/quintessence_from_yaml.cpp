@@ -458,12 +458,6 @@ std::string fetch_string(YAML::Node &node, std::string key, std::string default_
 
 
 
-std::vector<std::string> extract_namespaces(YAML::Node &source)
-{
-   const std::string NAMESPACES = "namespaces";
-   YAML::Node result = fetch_node(source, NAMESPACES, YAML::NodeType::Sequence, YAML::Load("[]"));
-   return extract_sequence_as_string_array(result);
-}
 
 
 
@@ -1195,6 +1189,15 @@ std::vector<Blast::Cpp::SymbolDependencies> validate_symbol_dependencies_are_pre
 
 Blast::Cpp::Class convert_yaml_to_class(std::string full_class_name, std::string class_name_last_fragment, YAML::Node &source, std::string quintessence_filename)
 {
+   if (source["namespaces"])
+   {
+      std::stringstream error_message;
+      error_message << "[blast/quintessence_from_yaml]: error: The \"namespaces\" key is deprecated. "
+                    << "Namespaces are now strictly derived from the quintessence file's directory path "
+                    << "relative to the \"quintessence/\" folder.";
+      throw std::runtime_error(error_message.str());
+   }
+
    // declare variables
 
    std::vector<std::string> namespaces = extract_namespaces_from_quintessence_filename(quintessence_filename);

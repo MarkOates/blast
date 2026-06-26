@@ -1,0 +1,7 @@
+namespaces:
+  - Foo
+  - Bar
+properties:
+  - name: my_value
+    type: int
+    init_with: 42

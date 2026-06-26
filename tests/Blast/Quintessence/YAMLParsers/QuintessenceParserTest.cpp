@@ -266,6 +266,14 @@ TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 
 
 TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_DeprecatedNamespacesKey_fixture)
+{
+   std::string expected_err = "The \"namespaces\" key is deprecated.";
+   run_negative_integration_test("DeprecatedNamespacesKey", expected_err);
+}
+
+
+TEST_F(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
    bin_program__fails_on_InvalidYaml_fixture)
 {
    run_negative_integration_test("InvalidYaml", "ERROR: YAML Parse Failure");

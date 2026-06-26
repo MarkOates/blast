@@ -1,4 +1,3 @@
-namespaces: [ 'Blast' ]
 parent_classes: []
 properties:
   - name: directory_components
