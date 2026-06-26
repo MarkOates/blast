@@ -1,0 +1,9 @@
+methods:
+  - name: my_method
+    type: void
+    parameters:
+      - name: my_param
+        type: [ not_a_scalar_but_a_sequence ]
+        default_argument: 0
+    body: |
+      return;

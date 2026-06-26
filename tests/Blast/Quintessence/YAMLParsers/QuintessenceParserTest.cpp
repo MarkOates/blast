@@ -133,6 +133,83 @@ namespace
       EXPECT_EQ(expected_source_content, actual_source_content) 
          << "Source content mismatch for fixture: " << fixture_name;
    }
+
+   void run_negative_integration_test(const std::string &fixture_name, const std::string &expected_error_message)
+   {
+      std::string project_root = Blast::DeveloperSystem().infer_projects_directory() + "blast";
+
+      // 1. Determine and create the unique temporary sandbox directory under project-local tmp/
+      std::filesystem::path temp_dir = get_next_sandbox_dir();
+      std::filesystem::create_directories(temp_dir);
+
+      // Ensure the temp directory exists or FAIL immediately
+      bool temp_dir_exists = std::filesystem::exists(temp_dir) && std::filesystem::is_directory(temp_dir);
+      ASSERT_TRUE(temp_dir_exists) << "Failed to create temporary directory: " << temp_dir.string();
+
+      // Print debugging info about the sandbox
+      std::cout << "[SANDBOX] Created dynamic directory: " << temp_dir.string() << std::endl;
+
+      // 2. Compile the test helper program using the real Makefile directly into the sandbox
+      std::filesystem::path test_binary = temp_dir / "quintessence_from_yaml_for_tests";
+      std::stringstream compile_cmd;
+      compile_cmd << "make -C " << project_root << " " << test_binary.string() 
+                  << " TEST_BINARY_OUTPUT_PATH=" << test_binary.string();
+
+      Blast::ShellCommandExecutorWithCallback compile_executor(
+         compile_cmd.str(), 
+         Blast::ShellCommandExecutorWithCallback::simple_silent_callback
+      );
+      std::string compile_output = compile_executor.execute();
+      ASSERT_TRUE(std::filesystem::exists(test_binary)) 
+         << "Failed to compile test helper binary! Output:\n" << compile_output;
+
+      // 3. Create 'quintessence/quintessences/negative' folders inside the sandbox
+      std::filesystem::path sandbox_fixture_dir = temp_dir / "quintessence/quintessences/negative";
+      std::filesystem::create_directories(sandbox_fixture_dir);
+
+      // 4. Copy the baseline fixture file into the sandbox
+      std::filesystem::path source_fixture = std::filesystem::path(project_root) / 
+         "tests/fixtures/quintessence/quintessences/negative" / (fixture_name + ".q.yml");
+      std::filesystem::path target_fixture = sandbox_fixture_dir / (fixture_name + ".q.yml");
+      ASSERT_TRUE(std::filesystem::exists(source_fixture)) << "Source fixture missing: " << source_fixture.string();
+      
+      std::filesystem::copy(source_fixture, target_fixture);
+      ASSERT_TRUE(std::filesystem::exists(target_fixture)) << "Failed to copy fixture: " << target_fixture.string();
+
+      // 5. Execute our sandboxed binary inside the sandbox using a shell command chain
+      std::stringstream run_command;
+      run_command << "cd " << temp_dir.string()
+                  << " && ./quintessence_from_yaml_for_tests -f quintessence/quintessences/negative/"
+                  << fixture_name << ".q.yml";
+
+      Blast::ShellCommandExecutorWithCallback run_executor(
+         run_command.str(), 
+         Blast::ShellCommandExecutorWithCallback::simple_silent_callback,
+         true // capture_stderr
+      );
+      std::string run_output = run_executor.execute();
+
+      // 6. Verify that the command FAILED (returned non-zero exit status)
+      EXPECT_FALSE(run_executor.get_executed_successfully()) 
+         << "Expected execution to fail, but it succeeded for: " << fixture_name;
+
+      // 7. Verify the output contains the expected error message
+      std::string normalized_output = normalize_line_endings(run_output);
+      EXPECT_THAT(normalized_output, ::testing::HasSubstr(expected_error_message)) 
+         << "Expected error message was not found in output!\n"
+         << "Actual output:\n" << run_output;
+
+      // 8. Verify no output header or source files were generated
+      std::filesystem::path generated_header = temp_dir / "include/quintessences" / (fixture_name + ".hpp");
+      std::filesystem::path generated_source = temp_dir / "src/quintessences" / (fixture_name + ".cpp");
+      EXPECT_FALSE(std::filesystem::exists(generated_header)) 
+         << "Header was unexpectedly generated: " << generated_header.string();
+      EXPECT_FALSE(std::filesystem::exists(generated_source)) 
+         << "Source was unexpectedly generated: " << generated_source.string();
+
+      // Cleanup
+      std::filesystem::remove_all(temp_dir);
+   }
 }
 
 
@@ -183,3 +260,315 @@ TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
 {
    run_integration_test("MethodsObject");
 }
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_InvalidYaml_fixture)
+{
+   run_negative_integration_test("InvalidYaml", "ERROR: YAML Parse Failure");
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MissingMethodBody_fixture)
+{
+   std::string expected_err = "[extract_function_body_dependency_symbols] parse failure: For this element";
+   run_negative_integration_test("MissingMethodBody", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_InvalidGetter_fixture)
+{
+   std::string expected_err = "Attribute property \"getter\" can only be one of";
+   run_negative_integration_test("InvalidGetter", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MissingExplicitGetterMethod_fixture)
+{
+   std::string expected_err = "explicit getters have been set on some properties, yet the expected function";
+   run_negative_integration_test("MissingExplicitGetterMethod", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MissingDependency_fixture)
+{
+   std::string expected_err = "error: Could not find [ MissingType] dependency(s)";
+   run_negative_integration_test("MissingDependency", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MultipleDestructors_fixture)
+{
+   std::string expected_err = "More than one destructor (function prefixed with '~') is present.";
+   run_negative_integration_test("MultipleDestructors", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_UnexpectedTypeNode_fixture)
+{
+   std::string expected_err = "Unexpected type_node, expected to be of YAML type Scalar.";
+   run_negative_integration_test("UnexpectedTypeNode", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_UnexpectedNameNode_fixture)
+{
+   std::string expected_err = "Unexpected name_node, expected to be of YAML type Scalar.";
+   run_negative_integration_test("UnexpectedNameNode", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_UnexpectedDefaultArgumentNode_fixture)
+{
+   std::string expected_err = "Unexpected default_argument_node, expected to be of YAML type Scalar.";
+   run_negative_integration_test("UnexpectedDefaultArgumentNode", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_UnexpectedParameterSequenceElement_fixture)
+{
+   std::string expected_err = "Unexpected sequence element in \"parameters\", expected to be of a YAML Map.";
+   run_negative_integration_test("UnexpectedParameterSequenceElement", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ParentClassesNotSequence_fixture)
+{
+   std::string expected_err = "unexpected type expecting YAML:: 3";
+   run_negative_integration_test("ParentClassesNotSequence", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ParentClassesSequenceElementNotMap_fixture)
+{
+   std::string expected_err = "Unexpected sequence element in \"parent_classes\", expected to be of a YAML Map.";
+   run_negative_integration_test("ParentClassesSequenceElementNotMap", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ParentClassesMissingClass_fixture)
+{
+   std::string expected_err = "Missing required key 'class' in parent_classes.";
+   run_negative_integration_test("ParentClassesMissingClass", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ParentClassesClassNotScalar_fixture)
+{
+   std::string expected_err = "Unexpected type for 'class' in parent_classes, expected to be of YAML type Scalar.";
+   run_negative_integration_test("ParentClassesClassNotScalar", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ParentClassesMissingScope_fixture)
+{
+   std::string expected_err = "Missing required key 'scope' in parent_classes.";
+   run_negative_integration_test("ParentClassesMissingScope", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ParentClassesScopeNotScalar_fixture)
+{
+   std::string expected_err = "Unexpected type for 'scope' in parent_classes, expected to be of YAML type Scalar.";
+   run_negative_integration_test("ParentClassesScopeNotScalar", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ParentClassesMissingInitWith_fixture)
+{
+   std::string expected_err = "Missing required key 'init_with' in parent_classes.";
+   run_negative_integration_test("ParentClassesMissingInitWith", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ParentClassesInitWithNotScalar_fixture)
+{
+   std::string expected_err = "Unexpected type for 'init_with' in parent_classes, expected to be of YAML type Scalar.";
+   run_negative_integration_test("ParentClassesInitWithNotScalar", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_PropertiesNotSequence_fixture)
+{
+   std::string expected_err = "unexpected type expecting YAML:: 3";
+   run_negative_integration_test("PropertiesNotSequence", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_PropertiesSequenceElementNotMap_fixture)
+{
+   std::string expected_err = "Unexpected sequence element in \"properties\", expected to be of a YAML Map.";
+   run_negative_integration_test("PropertiesSequenceElementNotMap", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_PropertiesMissingName_fixture)
+{
+   std::string expected_err = "Missing required key 'name' in properties.";
+   run_negative_integration_test("PropertiesMissingName", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_PropertiesNameNotScalar_fixture)
+{
+   std::string expected_err = "Unexpected type for 'name' in properties, expected to be of YAML type Scalar.";
+   run_negative_integration_test("PropertiesNameNotScalar", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ConstexprWithSetter_fixture)
+{
+   std::string expected_err = "Attribute property \"constexpr\" can not also exist when \"setter\"";
+   run_negative_integration_test("ConstexprWithSetter", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ConstexprNotStatic_fixture)
+{
+   std::string expected_err = "Attribute property \"constexpr\" must also be \"static\".";
+   run_negative_integration_test("ConstexprNotStatic", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ConstexprWithConstructorArg_fixture)
+{
+   std::string expected_err = "Attribute property \"constexpr\" can not be included with \"constructor_arg\".";
+   run_negative_integration_test("ConstexprWithConstructorArg", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ConstexprWithGetterRef_fixture)
+{
+   std::string expected_err = "Attribute property \"constexpr\" can not be combined with \"getter_ref\".";
+   run_negative_integration_test("ConstexprWithGetterRef", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ConstexprWithGetter_fixture)
+{
+   std::string expected_err = "Attribute property \"constexpr\" can not be combined with \"getter\".";
+   run_negative_integration_test("ConstexprWithGetter", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_GetterAndExplicitGetter_fixture)
+{
+   std::string expected_err = "Attribute property cannot have both \"getter: true\" and \"explicit_getter: true\".";
+   run_negative_integration_test("GetterAndExplicitGetter", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_SetterAndExplicitSetter_fixture)
+{
+   std::string expected_err = "Attribute property cannot have both \"setter: true\" and \"explicit_setter: true\".";
+   run_negative_integration_test("SetterAndExplicitSetter", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_ExposedWithGetter_fixture)
+{
+   std::string expected_err = "Property attribute \"exposed\" can only be used when";
+   run_negative_integration_test("ExposedWithGetter", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MethodParametersNotSequence_fixture)
+{
+   std::string expected_err = "unexpected type expecting YAML:: 3";
+   run_negative_integration_test("MethodParametersNotSequence", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MethodsSequenceElementNotMap_fixture)
+{
+   std::string expected_err = "Unexpected sequence element in \"functions\", expected to be of a YAML Map.";
+   run_negative_integration_test("MethodsSequenceElementNotMap", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MethodsMissingName_fixture)
+{
+   std::string expected_err = "Missing required key 'name' in methods.";
+   run_negative_integration_test("MethodsMissingName", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MethodsNameNotScalar_fixture)
+{
+   std::string expected_err = "Unexpected type for node 'name' in methods, expected to be of YAML type Scalar.";
+   run_negative_integration_test("MethodsNameNotScalar", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MethodsBodyNotScalar_fixture)
+{
+   std::string expected_err = "Unexpected type for node 'body' in methods, expected to be of YAML type Scalar.";
+   run_negative_integration_test("MethodsBodyNotScalar", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_MethodPrivateAndProtected_fixture)
+{
+   std::string expected_err = "Function properties \"private\" and \"protected\" cannot both be true.";
+   run_negative_integration_test("MethodPrivateAndProtected", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_DependenciesSequenceElementNotMap_fixture)
+{
+   std::string expected_err = "Unexpected sequence element in \"dependencies\", expected to be of a YAML Map.";
+   run_negative_integration_test("DependenciesSequenceElementNotMap", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_DependenciesMissingSymbol_fixture)
+{
+   std::string expected_err = "Missing required key 'symbol' in dependencies.";
+   run_negative_integration_test("DependenciesMissingSymbol", expected_err);
+}
+
+
+TEST(Blast_Quintessence_YAMLParsers_QuintessenceParserTest,
+   bin_program__fails_on_DependenciesSymbolNotScalar_fixture)
+{
+   std::string expected_err = "Unexpected type for 'symbol' in dependencies, expected to be of YAML type Scalar.";
+   run_negative_integration_test("DependenciesSymbolNotScalar", expected_err);
+}
+

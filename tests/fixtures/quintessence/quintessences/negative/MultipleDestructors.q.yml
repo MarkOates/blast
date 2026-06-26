@@ -1,0 +1,9 @@
+methods:
+  - name: '~MultipleDestructors'
+    type: void
+    body: |
+      // first destructor
+  - name: '~AnotherDestructor'
+    type: void
+    body: |
+      // second destructor

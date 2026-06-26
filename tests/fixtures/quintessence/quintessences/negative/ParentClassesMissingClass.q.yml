@@ -1,0 +1,3 @@
+parent_classes:
+  - scope: public
+    init_with: my_val

@@ -1,0 +1,6 @@
+properties:
+  - name: my_prop
+    type: int
+    constexpr: true
+    static: true
+    getter: true

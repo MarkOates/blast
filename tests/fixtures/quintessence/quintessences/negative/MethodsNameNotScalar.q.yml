@@ -1,0 +1,4 @@
+methods:
+  - name: [ not_a_scalar ]
+    type: void
+    body: return;

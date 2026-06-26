@@ -1,0 +1,4 @@
+methods:
+  - name: my_method
+    type: void
+    body: [ not_a_scalar ]

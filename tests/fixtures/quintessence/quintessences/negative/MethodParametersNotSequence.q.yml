@@ -1,0 +1,6 @@
+methods:
+  - name: my_method
+    type: void
+    body: |
+      return;
+    parameters: not_a_sequence

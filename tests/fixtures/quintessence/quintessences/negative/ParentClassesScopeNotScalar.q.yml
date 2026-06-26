@@ -1,0 +1,4 @@
+parent_classes:
+  - class: MyParent
+    scope: [ not_a_scalar ]
+    init_with: my_val

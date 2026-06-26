@@ -1,0 +1,3 @@
+dependencies:
+  - symbol: [ not_a_scalar ]
+    headers: [ vector ]

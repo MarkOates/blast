@@ -1,0 +1,3 @@
+parent_classes:
+  - class: MyParent
+    init_with: my_val

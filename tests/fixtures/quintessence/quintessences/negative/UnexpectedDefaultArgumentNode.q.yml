@@ -1,0 +1,9 @@
+methods:
+  - name: my_method
+    type: void
+    body: |
+      return;
+    parameters:
+      - name: my_param
+        type: int
+        default_argument: [ not_a_scalar ]

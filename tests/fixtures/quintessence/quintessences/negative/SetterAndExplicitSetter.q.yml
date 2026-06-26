@@ -1,0 +1,5 @@
+properties:
+  - name: my_prop
+    type: int
+    setter: true
+    explicit_setter: true

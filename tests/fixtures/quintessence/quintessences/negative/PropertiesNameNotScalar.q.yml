@@ -1,0 +1,3 @@
+properties:
+  - name: [ not_a_scalar ]
+    type: int

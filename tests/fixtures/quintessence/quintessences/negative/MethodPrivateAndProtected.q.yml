@@ -1,0 +1,6 @@
+methods:
+  - name: my_method
+    type: void
+    private: true
+    protected: true
+    body: return;

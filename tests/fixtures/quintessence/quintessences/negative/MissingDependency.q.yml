@@ -1,0 +1,7 @@
+methods:
+  - name: do_something
+    type: void
+    body: |
+      MissingType value;
+    body_dependency_symbols:
+      - MissingType

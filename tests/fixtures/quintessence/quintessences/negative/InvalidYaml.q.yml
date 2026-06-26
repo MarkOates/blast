@@ -1,0 +1,3 @@
+properties
+  - name: my_int
+    type: int:
